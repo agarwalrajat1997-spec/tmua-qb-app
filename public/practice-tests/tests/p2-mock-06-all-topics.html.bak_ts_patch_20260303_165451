@@ -1,0 +1,1032 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MAT Exam</title>
+  <script type="text/javascript" async 
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+.top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+
+}
+.options label {
+  display: block;
+}
+
+#flag-btn {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#flag-btn.flagged {
+  background-color: yellow;
+  font-weight: bold;
+  border: 2px solid #999;
+}
+
+
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: white;
+    }
+    .header {
+      background: #0074c1;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .timer {
+      font-size: 14px;
+    }
+    .container {
+      padding: 20px 40px;
+    }
+    .question-number {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .options {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+    .option {
+      margin: 10px 0;
+    }
+    input[type="radio"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+    .footer {
+      background: #0074c1;
+      padding: 10px 20px;
+      text-align: right;
+    }
+    .footer button {
+      font-size: 16px;
+      padding: 6px 16px;
+      margin-left: 10px;
+      background: #005fa3;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    #instructions {
+      padding: 40px;
+      font-size: 18px;
+    }
+    #exam-interface {
+      display: none;
+    }
+
+/* ✅ START SCREEN ONLY — paste this at the VERY END of your <style> block.
+   It only targets #instructions and won’t affect the exam UI. */
+
+#instructions{
+  max-width: 1250px;
+  min-height: 560px;
+  margin: 60px auto;
+  background: #ffffff;
+  border: 2px solid #f2b233;
+  border-radius: 22px;
+  box-shadow:
+    0 18px 48px rgba(15, 23, 42, 0.12),
+    0 10px 26px rgba(242, 178, 51, 0.18);
+  padding: 64px 64px 70px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+}
+
+/* grey page backdrop ONLY while #instructions is visible */
+#instructions::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #f3f5f7;
+  z-index: -1;
+}
+
+/* title */
+#instructions #test-title{
+  margin: 0 0 18px 0;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0b1220;
+}
+
+/* paragraphs */
+#instructions p{
+  margin: 10px 0;
+  color: #0f172a;
+}
+
+/* keep your existing flex row, just make spacing nicer */
+#instructions > div:first-of-type{
+  margin: 34px 0 26px !important;
+}
+
+/* inputs/selects — only visual polish (keeps your widths/padding from inline styles) */
+#instructions input[type="text"],
+#instructions input[type="email"],
+#instructions select{
+  border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  outline: none !important;
+}
+
+#instructions input[type="text"]:focus,
+#instructions input[type="email"]:focus,
+#instructions select:focus{
+  border-color: #f2b233 !important;
+  box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
+}
+
+/* start button — only visuals (doesn’t change your inline font-size/padding if you keep them) */
+#instructions button{
+  background: #f6c44a !important;
+  color: #2b1a00 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
+  cursor: pointer !important;
+}
+
+#instructions button:hover{
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+#instructions button:active{
+  transform: translateY(0px);
+  box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
+}
+
+/* optional: make the table feel “card-like” but ONLY inside #instructions */
+#instructions table{
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* responsive */
+@media (max-width: 950px){
+  #instructions{
+    margin: 24px 16px;
+    padding: 40px 22px 44px;
+    min-height: auto;
+  }
+}
+/* ✅ Only affects images inside questions (won’t touch your start screen) */
+.question-media{
+  margin: 14px 0 18px;
+}
+
+.question-media img{
+  display: block;
+  max-width: 320px;         /* ✅ smaller image */
+  width: 100%;              /* responsive inside the max */
+  height: auto;
+  border: 1.5px solid #e5e7eb;   /* ✅ boxed */
+  border-radius: 12px;
+  padding: 10px;            /* ✅ space inside the box */
+  background: #ffffff;
+
+}
+
+/* Optional: center the boxed image */
+.question-media{
+  display: flex;
+  justify-content: center;
+}
+/* ✅ Bigger text for the QUESTION AREA only (safe: doesn’t touch header/footer/start screen) */
+.container{
+  font-size: 19px;           /* base size for question text */
+  line-height: 1.6;
+}
+
+/* Question number bigger */
+.container .question-number{
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+/* Paragraphs spacing + size */
+.container p{
+  font-size: 19px;
+  line-height: 1.65;
+  margin: 12px 0;
+}
+
+/* Options bigger */
+.container .options{
+  margin-top: 18px;
+  margin-bottom: 40px;
+}
+
+.container .options .option{
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+/* Radio slightly larger */
+.container input[type="radio"]{
+  transform: scale(1.35);
+  margin-right: 12px;
+}
+
+  </style>
+
+
+</head>
+<body>
+
+<div id="instructions">
+    <h2 id="test-title">TMUA MOCK TEST 6</h2>
+
+
+  <p><strong>Time allowed:</strong> 1 hour and 15 minutes</p>
+  <p><strong>Calculators are not permitted.</strong></p>
+
+
+<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+  <div>
+    <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
+    <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+  </div>
+
+  <div>
+    <label for="studentEmail" style="font-size: 16px;">Email (to receive results):</label><br>
+    <input type="email" id="studentEmail" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+  </div>
+
+  <div>
+    <label for="test-date" style="font-size: 16px;">Select your TMUA test session:</label><br>
+    <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+      <option value="October 2025">October 2026</option>
+      <option value="January 2026">January 2027</option>
+      <option value="October 2026">October 2027</option>
+    </select>
+  </div>
+
+  <div style="margin-top: 28px;">
+    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">🎯 Start Exam</button>
+  </div>
+</div>
+
+
+<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
+  <thead>
+    <tr style="background: #f2f2f2;">
+      <th style="border: 1px solid #ccc; padding: 10px;">Section</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">Topics Covered</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Paper 2</td>
+      <td style="border: 1px solid #ccc; padding: 10px;">
+        <ul style="margin: 0; padding-left: 18px;">
+          <li>All Topics</li>
+
+        </ul>
+      </td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20</td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 16px; margin-top: 20px;">
+ 
+  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> — marks are awarded only for correct responses.
+  You should attempt <strong>all 20 questions</strong>.
+</p>
+
+<p style="font-size: 16px;">
+  A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires.
+</p>
+
+
+  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
+
+</div>
+
+
+<div id="exam-interface">
+  <div class="header">
+    <div><strong>(TMUA) Test of Mathematics for University Admission</strong></div>
+    
+    <div class="top-right">
+      <div class="timer">
+        ⏲️ Time Remaining <span id="time">75:00</span><br>
+        📄 <span id="counter">1 of 20 (Paper 2)</span>
+      </div>
+      <button id="flag-btn" onclick="toggleFlag()">   ⚑ Flag for Review   </button>
+    </div>
+  </div>
+
+  <div class="container" id="question-container">
+    <!-- Questions will appear here -->
+  </div>
+
+  <div class="footer">
+    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
+    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
+    <button onclick="openNavigator()">Navigator</button>
+    <button onclick="confirmSubmit()">Submit</button>
+  </div>
+</div>
+
+
+<script>
+const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_2004fd64cd66479eb83caf96cfb214c9.pdf";
+
+let flags = new Array(20).fill(false); // Assuming 20 questions per section
+let timeSpent = new Array(20).fill(0); // 20 questions
+let lastTimestamp = Date.now(); // timestamp when current question was shown
+
+let studentName = "";
+let testSession = "";
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
+    current++;
+    lastTimestamp = Date.now(); // reset timestamp for new question
+    renderQuestion();
+  }
+}
+
+
+function openNavigator() {
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function jumpTo(index) {
+timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+current = index;
+lastTimestamp = Date.now();
+renderQuestion();
+closeNavigator();
+updateFlagButton();
+
+
+}
+
+
+function renderQuestion() {
+  container.innerHTML = questions[current];
+  counter.textContent = `${current + 1} of ${questions.length}`;
+  MathJax.typesetPromise();
+updateFlagButton();
+
+  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
+  inputs.forEach(input => {
+    if (userAnswers[current] === input.value) {
+      input.checked = true;
+    }
+    input.addEventListener('change', () => {
+      userAnswers[current] = input.value;
+    });
+  });
+
+  // Disable Next button on last question
+  const nextBtn = document.getElementById("next-btn");
+  if (nextBtn) nextBtn.disabled = (current === questions.length - 1);
+
+  // Disable Previous button on first question
+  const prevBtn = document.getElementById("prev-btn");
+  if (prevBtn) prevBtn.disabled = (current === 0);
+}
+
+function toggleFlag() {
+  flags[current] = !flags[current];
+  updateFlagButton();
+  updateNavigatorButton(current);
+}
+
+function updateFlagButton() {
+  const flagBtn = document.getElementById("flag-btn");
+  if (!flagBtn) return;
+  if (flags[current]) {
+    flagBtn.classList.add("flagged");
+  } else {
+    flagBtn.classList.remove("flagged");
+  }
+}
+
+  function confirmSubmit() {
+  const confirmBox = confirm("Are you sure you want to submit the test?");
+  if (confirmBox) {
+    submitExam();
+  }
+}
+  function confirmSubmit() {
+  const confirmBox = confirm("Are you sure you want to submit the test?");
+  if (confirmBox) {
+    submitExam();
+  }
+}
+  const correctAnswers = [
+    "D", "B", "A", "C", "A",
+    "D", "B", "D", "C", "E",
+    "E", "D", "E", "D", "D",
+    "B", "D", "E", "C", "C"
+  ];
+
+  let userAnswers = new Array(20).fill(null);
+  let current = 0;
+  let minutes = 75;
+  let seconds = 0;
+  let timerInterval;
+
+  const timerDisplay = document.getElementById("time");
+  const container = document.getElementById("question-container");
+  const counter = document.getElementById("counter");
+
+  const questions = [
+
+    `<div class="question-number">Question 1</div>
+<p>Which of the following is equivalent to &quot;If P is true, then Q is false.&quot;?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q1" value="A"> &quot;P is true or Q is false.&quot;</label>
+  <label class="option"><input type="radio" name="q1" value="B"> &quot;If Q is false then P is true.&quot;</label>
+  <label class="option"><input type="radio" name="q1" value="C"> &quot;If P is false then Q is true.&quot;</label>
+  <label class="option"><input type="radio" name="q1" value="D"> &quot;If Q is true then P is false.&quot;</label>
+  <label class="option"><input type="radio" name="q1" value="E"> &quot;If Q is true then P is true.&quot;</label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 2</div>
+<p>The remainder can be defined for all real numbers \\( x \\) and \\( y \\) with \\( y \\neq 0 \\) by</p>
+<p>\\[ \\operatorname{rem}(x, y) = x - y \\left\\lfloor \\dfrac{x}{y} \\right\\rfloor \\]</p>
+<p>where \\( \\left\\lfloor \\dfrac{x}{y} \\right\\rfloor \\) denotes the greatest integer less than or equal to \\( \\dfrac{x}{y} \\).</p>
+<p>What is the value of \\( \\operatorname{rem}\\!\\left( \\dfrac{3}{8}, -\\dfrac{2}{5} \\right) \\)?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q2" value="A"> \\( -\\dfrac{3}{8} \\)</label>
+  <label class="option"><input type="radio" name="q2" value="B"> \\( -\\dfrac{1}{40} \\)</label>
+  <label class="option"><input type="radio" name="q2" value="C"> 0</label>
+  <label class="option"><input type="radio" name="q2" value="D"> \\( \\dfrac{3}{8} \\)</label>
+  <label class="option"><input type="radio" name="q2" value="E"> \\( \\dfrac{31}{40} \\)</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 3</div>
+<p>Five cards are lying on a table as shown.</p>
+
+<div style="text-align:center; margin: 10px 0;">
+  <span style="border: 1px solid #000; padding: 5px 12px; margin: 5px; display:inline-block;">P</span>
+  <span style="border: 1px solid #000; padding: 5px 12px; margin: 5px; display:inline-block;">Q</span>
+</div>
+
+<div style="text-align:center; margin: 10px 0;">
+  <span style="border: 1px solid #000; padding: 5px 12px; margin: 5px; display:inline-block;">3</span>
+  <span style="border: 1px solid #000; padding: 5px 12px; margin: 5px; display:inline-block;">4</span>
+  <span style="border: 1px solid #000; padding: 5px 12px; margin: 5px; display:inline-block;">6</span>
+</div>
+
+<p>Each card has a letter on one side and a whole number on the other side. Jane said, &quot;If a vowel is on one side of any card, then an even number is on the other side.&quot; Mary showed Jane was wrong by turning over one card. Which card did Mary turn over? (Each card number is the one with the number on it. For example, card 4 is the one with 4 on it, not the fourth card from the left/right.)</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q3" value="A"> 3</label>
+  <label class="option"><input type="radio" name="q3" value="B"> 4</label>
+  <label class="option"><input type="radio" name="q3" value="C"> 6</label>
+  <label class="option"><input type="radio" name="q3" value="D"> P</label>
+  <label class="option"><input type="radio" name="q3" value="E"> Q</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 4</div>
+<p>Alan, Beth, Carlos, and Diana were discussing their possible grades in mathematics class this grading period. Alan said, &quot;If I get an A, then Beth will get an A.&quot; Beth said, &quot;If I get an A, then Carlos will get an A.&quot; Carlos said, &quot;If I get an A, then Diana will get an A.&quot; All of these statements were true, but only two of the students received an A. Which two received A&#39;s?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q4" value="A"> Alan, Beth</label>
+  <label class="option"><input type="radio" name="q4" value="B"> Beth, Carlos</label>
+  <label class="option"><input type="radio" name="q4" value="C"> Carlos, Diana</label>
+  <label class="option"><input type="radio" name="q4" value="D"> Alan, Diana</label>
+  <label class="option"><input type="radio" name="q4" value="E"> Beth, Diana</label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 5</div>
+<p>&quot;If a whole number \\( n \\) is not prime, then the whole number \\( n - 2 \\) is not prime.&quot; A value of \\( n \\) which shows this statement to be false is</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q5" value="A"> 9</label>
+  <label class="option"><input type="radio" name="q5" value="B"> 12</label>
+  <label class="option"><input type="radio" name="q5" value="C"> 13</label>
+  <label class="option"><input type="radio" name="q5" value="D"> 16</label>
+  <label class="option"><input type="radio" name="q5" value="E"> 23</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 6</div>
+<p>Abby, Bret, Carl, and Dana are seated in a row of four seats numbered #1 to #4. Joe looks at them and says:</p>
+
+<pre style="background:#f5f5f5; padding:10px; border:1px solid #ddd;">
+&quot;Bret is next to Carl.&quot;
+&quot;Abby is between Bret and Carl.&quot;
+</pre>
+
+<p>However each one of Joe&#39;s statements is false. Bret is actually sitting in seat #3. Who is sitting in seat #2?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q6" value="A"> Abby</label>
+  <label class="option"><input type="radio" name="q6" value="B"> Bret</label>
+  <label class="option"><input type="radio" name="q6" value="C"> Carl</label>
+  <label class="option"><input type="radio" name="q6" value="D"> Dana</label>
+  <label class="option"><input type="radio" name="q6" value="E"> There is not enough information</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 7</div>
+<p>Andy the Ant lives on a coordinate plane and is currently at \\( \\left( -20, 20 \\right) \\) facing east (that is, in the positive \\( x \\)-direction). Andy moves \\( 1 \\) unit and then turns \\( 90^{\\circ} \\) left. From there, Andy moves \\( 2 \\) units (north) and then turns \\( 90^{\\circ} \\) left. He then moves \\( 3 \\) units (west) and again turns \\( 90^{\\circ} \\) left. Andy continues his progress, increasing his distance each time by \\( 1 \\) unit and always turning left. What is the location of the point at which Andy makes the \\( 2020^{\\text{th}} \\) left turn?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q7" value="A"> \\( \\left( -1030, -994 \\right) \\)</label>
+  <label class="option"><input type="radio" name="q7" value="B"> \\( \\left( -1030, -990 \\right) \\)</label>
+  <label class="option"><input type="radio" name="q7" value="C"> \\( \\left( -1026, -994 \\right) \\)</label>
+  <label class="option"><input type="radio" name="q7" value="D"> \\( \\left( -1026, -990 \\right) \\)</label>
+  <label class="option"><input type="radio" name="q7" value="E"> \\( \\left( -1022, -994 \\right) \\)</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 8</div>
+<p>Define a sequence recursively by \\( F_{0} = 0, \\; F_{1} = 1 \\), and \\( F_{n} \\) = the remainder when \\( F_{n-1} + F_{n-2} \\) is divided by \\( 3 \\), for all \\( n \\geq 2 \\). Thus the sequence starts</p>
+<p>\\[ 0, 1, 1, 2, 0, 2, \\ldots \\]</p>
+<p>What is</p>
+<p>\\[ F_{2017} + F_{2018} + F_{2019} + F_{2020} + F_{2021} + F_{2022} + F_{2023} + F_{2024} \\; ? \\]</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q8" value="A"> 6</label>
+  <label class="option"><input type="radio" name="q8" value="B"> 7</label>
+  <label class="option"><input type="radio" name="q8" value="C"> 8</label>
+  <label class="option"><input type="radio" name="q8" value="D"> 9</label>
+  <label class="option"><input type="radio" name="q8" value="E"> 10</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 9</div>
+<p>Chlo\\&#233; chooses a real number uniformly at random from the interval \\( \\left[ 0, 2017 \\right] \\). Independently, Laurent chooses a real number uniformly at random from the interval \\( \\left[ 0, 4034 \\right] \\). What is the probability that Laurent&#39;s number is greater than Chlo\\&#233;&#39;s number?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q9" value="A"> \\( \\dfrac{1}{2} \\)</label>
+  <label class="option"><input type="radio" name="q9" value="B"> \\( \\dfrac{2}{3} \\)</label>
+  <label class="option"><input type="radio" name="q9" value="C"> \\( \\dfrac{3}{4} \\)</label>
+  <label class="option"><input type="radio" name="q9" value="D"> \\( \\dfrac{5}{6} \\)</label>
+  <label class="option"><input type="radio" name="q9" value="E"> \\( \\dfrac{7}{8} \\)</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 10</div>
+<p>Sides \\( \\overline{AB} \\) and \\( \\overline{AC} \\) of equilateral triangle \\( ABC \\) are tangent to a circle at points \\( B \\) and \\( C \\) respectively. What fraction of the area of \\( \\triangle ABC \\) lies outside the circle?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q10" value="A"> \\( \\dfrac{4 \\sqrt{3} \\pi}{27} - \\dfrac{1}{3} \\)</label>
+  <label class="option"><input type="radio" name="q10" value="B"> \\( \\dfrac{\\sqrt{3}}{2} - \\dfrac{\\pi}{8} \\)</label>
+  <label class="option"><input type="radio" name="q10" value="C"> \\( \\dfrac{1}{2} \\)</label>
+  <label class="option"><input type="radio" name="q10" value="D"> \\( \\sqrt{3} - \\dfrac{2 \\sqrt{3} \\pi}{9} \\)</label>
+  <label class="option"><input type="radio" name="q10" value="E"> \\( \\dfrac{4}{3} - \\dfrac{4 \\sqrt{3} \\pi}{27} \\)</label>
+</div>
+
+`,
+
+
+ `<div class="question-number">Question 11</div>
+<p>Real numbers \\( x, y, \\text{ and } z \\) satisfy the inequalities \\( 0 &lt; x &lt; 1, \\; -1 &lt; y &lt; 0, \\; \\text{and } 1 &lt; z &lt; 2 \\). Which of the following numbers is necessarily positive?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q11" value="A"> \\( y + x^{2} \\)</label>
+  <label class="option"><input type="radio" name="q11" value="B"> \\( y + xz \\)</label>
+  <label class="option"><input type="radio" name="q11" value="C"> \\( y + y^{2} \\)</label>
+  <label class="option"><input type="radio" name="q11" value="D"> \\( y + 2y^{2} \\)</label>
+  <label class="option"><input type="radio" name="q11" value="E"> \\( y + z \\)</label>
+</div>
+
+`,
+
+
+    `<div class="question-number">Question 12</div>
+<p>Supposed that \\( x \\) and \\( y \\) are nonzero real numbers such that</p>
+<p>\\[ \\dfrac{3x + y}{x - 3y} = -2. \\]</p>
+<p>What is the value of</p>
+<p>\\[ \\dfrac{x + 3y}{3x - y} \\; ? \\]</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q12" value="A"> \\( -3 \\)</label>
+  <label class="option"><input type="radio" name="q12" value="B"> \\( -1 \\)</label>
+  <label class="option"><input type="radio" name="q12" value="C"> \\( 1 \\)</label>
+  <label class="option"><input type="radio" name="q12" value="D"> \\( 2 \\)</label>
+  <label class="option"><input type="radio" name="q12" value="E"> \\( 3 \\)</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 13</div>
+<p>The lines with equations \\( ax - 2y = c \\) and \\( 2x + by = -c \\) are perpendicular and intersect at \\( \\left( 1, -5 \\right) \\). What is \\( c \\)?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q13" value="A"> \\( -13 \\)</label>
+  <label class="option"><input type="radio" name="q13" value="B"> \\( -8 \\)</label>
+  <label class="option"><input type="radio" name="q13" value="C"> \\( 2 \\)</label>
+  <label class="option"><input type="radio" name="q13" value="D"> \\( 8 \\)</label>
+  <label class="option"><input type="radio" name="q13" value="E"> \\( 13 \\)</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 14</div>
+<p>At Typico High School, \\( 60\\% \\) of the students like dancing, and the rest dislike it. Of those who like dancing, \\( 80\\% \\) say that they like it, and the rest say that they dislike it. Of those who dislike dancing, \\( 90\\% \\) say that they dislike it, and the rest say that they like it. What fraction of students who say they dislike dancing actually like it?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q14" value="A"> 10\\%</label>
+  <label class="option"><input type="radio" name="q14" value="B"> 12\\%</label>
+  <label class="option"><input type="radio" name="q14" value="C"> 20\\%</label>
+  <label class="option"><input type="radio" name="q14" value="D"> 25\\%</label>
+  <label class="option"><input type="radio" name="q14" value="E"> 33\\dfrac{1}{3}\\%</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 15</div>
+<p>The mean, median, and mode of the 7 data values \\( 60, 100, x, 40, 50, 200, 90 \\) are all equal to \\( x \\). What is the value of \\( x \\)?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q15" value="A"> \\( 50 \\)</label>
+  <label class="option"><input type="radio" name="q15" value="B"> \\( 60 \\)</label>
+  <label class="option"><input type="radio" name="q15" value="C"> \\( 75 \\)</label>
+  <label class="option"><input type="radio" name="q15" value="D"> \\( 90 \\)</label>
+  <label class="option"><input type="radio" name="q15" value="E"> \\( 100 \\)</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 16</div>
+<p>A rug is made with three different colors as shown. The areas of the three differently colored regions form an arithmetic progression. The inner rectangle is one foot wide, and each of the two shaded regions is 1 foot wide on all four sides. What is the length in feet of the inner rectangle?</p>
+<p style="text-align:center;">
+  <img src="https://static.wixstatic.com/media/98f2c5_94a7a5d9530648b184803a3e3fbbf04e~mv2.png" alt="Rug diagram" style="max-width:300px; height:auto; display:block; margin:auto;">
+</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q16" value="A"> \\( 1 \\)</label>
+  <label class="option"><input type="radio" name="q16" value="B"> \\( 2 \\)</label>
+  <label class="option"><input type="radio" name="q16" value="C"> \\( 4 \\)</label>
+  <label class="option"><input type="radio" name="q16" value="D"> \\( 6 \\)</label>
+  <label class="option"><input type="radio" name="q16" value="E"> \\( 8 \\)</label>
+</div>
+
+
+`,
+
+
+    `<div class="question-number">Question 17</div>
+<p>Find the area of the shaded region.</p>
+<p style="text-align:center;">
+  <img src="https://static.wixstatic.com/media/98f2c5_c8088ace355348aeb13021a3756215af~mv2.png" alt="Shaded region diagram" style="max-width:300px; height:auto; display:block; margin:auto;">
+</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q17" value="A"> \\( 4\\frac{3}{5} \\)</label>
+  <label class="option"><input type="radio" name="q17" value="B"> \\( 5 \\)</label>
+  <label class="option"><input type="radio" name="q17" value="C"> \\( 5\\frac{1}{4} \\)</label>
+  <label class="option"><input type="radio" name="q17" value="D"> \\( 6\\frac{1}{2} \\)</label>
+  <label class="option"><input type="radio" name="q17" value="E"> \\( 8 \\)</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 18</div>
+<p>Last year Isabella took 7 math tests and received 7 different scores, each an integer between \\( 91 \\) and \\( 100 \\), inclusive. After each test she noticed that the average of her test scores was an integer. Her score on the seventh test was \\( 95 \\). What was her score on the sixth test?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q18" value="A"> \\( 92 \\)</label>
+  <label class="option"><input type="radio" name="q18" value="B"> \\( 94 \\)</label>
+  <label class="option"><input type="radio" name="q18" value="C"> \\( 96 \\)</label>
+  <label class="option"><input type="radio" name="q18" value="D"> \\( 98 \\)</label>
+  <label class="option"><input type="radio" name="q18" value="E"> \\( 100 \\)</label>
+</div>
+
+`,
+
+
+    `<div class="question-number">Question 19</div>
+<p>The vertices of an equilateral triangle lie on the hyperbola \\( xy = 1 \\), and a vertex of this hyperbola is the centroid of the triangle. What is the square of the area of the triangle?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q19" value="A"> \\( 48 \\)</label>
+  <label class="option"><input type="radio" name="q19" value="B"> \\( 60 \\)</label>
+  <label class="option"><input type="radio" name="q19" value="C"> \\( 108 \\)</label>
+  <label class="option"><input type="radio" name="q19" value="D"> \\( 120 \\)</label>
+  <label class="option"><input type="radio" name="q19" value="E"> \\( 169 \\)</label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 20</div>
+<p>For certain real numbers \\( a, b, \\text{ and } c \\), the polynomial</p>
+<p>\\[ g(x) = x^{3} + ax^{2} + x + 10 \\]</p>
+<p>has three distinct roots, and each root of \\( g(x) \\) is also a root of the polynomial</p>
+<p>\\[ f(x) = x^{4} + x^{3} + bx^{2} + 100x + c \\]</p>
+<p>What is \\( f(1) \\)?</p>
+<div class="options">
+  <label class="option"><input type="radio" name="q20" value="A"> \\( -9009 \\)</label>
+  <label class="option"><input type="radio" name="q20" value="B"> \\( -8008 \\)</label>
+  <label class="option"><input type="radio" name="q20" value="C"> \\( -7007 \\)</label>
+  <label class="option"><input type="radio" name="q20" value="D"> \\( -6006 \\)</label>
+  <label class="option"><input type="radio" name="q20" value="E"> \\( -5005 \\)</label>
+</div>
+
+`,
+
+  ];
+
+
+
+
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("studentEmail").value.trim();
+  const testSelect = document.getElementById("test-date").value;
+
+  if (!nameInput) {
+    alert("Please enter your full name before starting the exam.");
+    return;
+  }
+
+  if (!emailInput || !emailInput.includes("@")) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  studentName = nameInput;
+  testSession = testSelect;
+
+  document.getElementById("instructions").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+  timerInterval = setInterval(updateTimer, 1000);
+  renderQuestion();
+}
+
+
+
+  function updateTimer() {
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(timerInterval);
+      submitExam();
+      return;
+    }
+    if (seconds === 0) {
+      minutes--;
+      seconds = 59;
+    } else {
+      seconds--;
+    }
+    const mm = minutes.toString().padStart(2, '0');
+    const ss = seconds.toString().padStart(2, '0');
+    timerDisplay.textContent = `${mm}:${ss}`;
+  }
+
+  
+function prevQuestion() {
+  if (current > 0) {
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
+    current--;
+    lastTimestamp = Date.now(); // reset timestamp for new question
+    renderQuestion();
+  }
+}
+
+function updateNavigatorButton(index) {
+  const btn = document.getElementById(`nav-btn-${index}`);
+  if (!btn) return;
+  if (flags[index]) {
+    btn.style.backgroundColor = "gold";
+    btn.style.fontWeight = "bold";
+    btn.textContent = `⚑ ${index + 1}`;
+  } else {
+    btn.style.backgroundColor = "";
+    btn.style.fontWeight = "normal";
+    btn.textContent = `${index + 1}`;
+  }
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+
+  // ⏱️ Record final question time
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+
+  // ✅ Calculate score
+  let score = 0;
+  for (let i = 0; i < correctAnswers.length; i++) {
+    if (userAnswers[i] === correctAnswers[i]) {
+      score++;
+    }
+  }
+
+  // ✅ Prepare timestamp
+  const timestamp = new Date().toLocaleString();
+
+  // ✅ Find incorrect question numbers
+  let incorrectList = [];
+  for (let i = 0; i < correctAnswers.length; i++) {
+    if (userAnswers[i] !== correctAnswers[i]) {
+      incorrectList.push(i + 1);
+    }
+  }
+
+let timeTableHTML = "";
+for (let i = 0; i < 20; i++) {
+  const seconds = Math.round(timeSpent[i]);
+  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const ss = String(seconds % 60).padStart(2, '0');
+  const yourAns = userAnswers[i] ?? "-";
+  const correctAns = correctAnswers[i];
+  const status = yourAns === correctAns ? "✅" : (yourAns === "-" ? "—" : "❌");
+
+  timeTableHTML += `
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 6px;">${i + 1}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${mm}:${ss}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${status}</td>
+    </tr>\n`; // ✅ Keep line break
+}
+
+let plainTextSummary = "Paper 2 Analysis\n";
+
+for (let i = 0; i < 20; i++) {
+  const seconds = Math.round(timeSpent[i]);
+  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const ss = String(seconds % 60).padStart(2, '0');
+  const yourAns = userAnswers[i] ?? "-";
+  const correctAns = correctAnswers[i];
+  plainTextSummary += `Q.${i + 1}  Correct: ${correctAns}   Yours: ${yourAns}   Time: ${mm}:${ss}\n`;
+}
+
+
+const studentEmail = document.getElementById("studentEmail").value;
+const testTitle = document.getElementById("test-title").textContent.trim();
+
+emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+  name: studentName,
+  session: testSession,
+  score: `${score} / ${correctAnswers.length}`,
+  timestamp: new Date().toLocaleString(),
+  incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
+  paper1: plainTextSummary.trim(),
+  to_email: studentEmail,
+  solution_link: solutionPDF,
+  test_title: testTitle
+})
+.then(res => console.log("✅ Email sent", res))
+.catch(err => console.error("❌ Email error", err));
+
+
+
+  // ✅ Select emoji
+  let emoji = score >= 14 ? "😊"  : "😐";
+
+  // ✅ Generate time table
+  let timeRows = "";
+  for (let i = 0; i < timeSpent.length; i++) {
+    const seconds = Math.round(timeSpent[i]);
+    const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const ss = String(seconds % 60).padStart(2, '0');
+    const status = userAnswers[i] ? (userAnswers[i] === correctAnswers[i] ? "✅" : "❌") : "—";
+    timeRows += `
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 8px;">${i + 1}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${userAnswers[i] || "-"}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${correctAnswers[i]}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${mm}:${ss}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${status}</td>
+      </tr>`;
+  }
+
+  // ✅ Display final screen
+  container.innerHTML = `
+    <div style="display: flex; flex-direction: column; align-items: center; padding: 40px;">
+      <div style="font-size: 160px;">${emoji}</div>
+      <h1>Exam Completed</h1>
+<h1>The detailed Score Report has been emailed to you ✅ </h1>
+
+      <table style="border-collapse: collapse; margin-top: 30px; font-size: 18px;">
+        <tr style="background: #f9f9f9;">
+          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">${studentName}</td>
+        </tr>
+        <tr style="background: #f9f9f9;">
+          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Your Score</strong></td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>${score} / 20</strong></td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">Threshold Score</td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">15+ / 20</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">Average Test Taker Score</td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">8 / 20</td>
+        </tr>
+      </table>
+
+      <h3 style="margin-top: 40px;">Paper 2 Analysis</h3>
+      <table style="border-collapse: collapse; margin-top: 10px; font-size: 16px; width: 100%; max-width: 600px;">
+        <thead style="background: #eee;">
+          <tr>
+            <th style="border: 1px solid #ccc; padding: 8px;">Q#</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Your Ans</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Correct</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Time</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
+          </tr>
+        </thead>
+        <tbody>${timeRows}</tbody>
+      </table>
+
+      <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
+  <iframe 
+  id="solution-frame"
+  width="100%" 
+  height="600px" 
+  style="border: 1px solid #ccc; margin-top: 10px;">
+</iframe>
+    </div>
+  `;
+document.getElementById("solution-frame").src = solutionPDF;
+
+  document.querySelector(".footer").style.display = "none";
+}
+
+function generateNavigatorButtons() {
+  const grid = document.getElementById("navigator-grid");
+  for (let i = 0; i < 20; i++) {
+    const btn = document.createElement("button");
+    btn.id = `nav-btn-${i}`;
+    btn.textContent = i + 1;
+    btn.style.padding = "10px";
+    btn.onclick = function () {
+      jumpTo(i);
+    };
+    grid.appendChild(btn);
+  }
+}
+
+window.onload = function () {
+  generateNavigatorButtons();
+  for (let i = 0; i < flags.length; i++) {
+    updateNavigatorButton(i);
+  }
+};
+
+
+</script>
+<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
+ background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+  <h3 style="margin-top: 0; color:#0074c1;">Jump to Question</h3>
+  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;">
+    <!-- Buttons will be generated here -->
+  </div>
+  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px;">Close</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("9jjn3yBHl6S88hITy"); // Replace with your actual public key
+  })();
+</script>
+
+</body>
+</html>

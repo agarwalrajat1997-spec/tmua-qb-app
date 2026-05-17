@@ -1,0 +1,57 @@
+import { NextResponse } from "next/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export const runtime = "nodejs";
+
+function badRequest(msg: string) {
+  return NextResponse.json({ error: msg }, { status: 400 });
+}
+
+export async function POST(req: Request) {
+  const supabase = await createSupabaseServerClient();
+
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (userErr || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  let body: any;
+  try {
+    body = await req.json();
+  } catch {
+    return badRequest("Invalid JSON");
+  }
+
+  const test_id = String(body?.test_id || "").trim();
+  if (!test_id) return badRequest("test_id is required");
+
+  const payload = {
+    user_id: user.id,
+    email: user.email ?? null,
+    test_id,
+    test_title: body?.test_title ?? null,
+    paper: body?.paper ?? null,
+    total_questions: Number(body?.total_questions ?? 0),
+    score: Number(body?.score ?? 0),
+    answers: body?.answers ?? [],
+    correct_answers: body?.correct_answers ?? [],
+    time_spent: body?.time_spent ?? [],
+    flags: body?.flags ?? [],
+    incorrect: body?.incorrect ?? [],
+    session_label: body?.session_label ?? null,
+    student_name: body?.student_name ?? null,
+    submitted_at: new Date().toISOString(),
+  };
+
+  const { data, error } = await supabase
+    .from("practice_test_attempts")
+    .insert(payload)
+    .select("id, submitted_at")
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true, attempt: data });
+}

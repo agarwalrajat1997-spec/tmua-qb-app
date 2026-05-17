@@ -1,0 +1,74 @@
+﻿import { NextResponse } from "next/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export const runtime = "nodejs";
+
+function badRequest(msg: string) {
+  return NextResponse.json({ error: msg }, { status: 400 });
+}
+
+export async function POST(req: Request) {
+  const supabase = await createSupabaseServerClient();
+
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (userErr || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  let body: any;
+  try {
+    body = await req.json();
+  } catch {
+    return badRequest("Invalid JSON");
+  }
+
+  const test_id = String(body?.test_id || "").trim();
+  if (!test_id) return badRequest("test_id is required");
+
+  const payload = {
+    user_id: user.id,
+    email: user.email ?? null,
+    test_id,
+    test_title: body?.test_title ?? null,
+    paper: body?.paper ?? null,
+    total_questions: Number(body?.total_questions ?? 0),
+    score: Number(body?.score ?? 0),
+    answers: body?.answers ?? [],
+    correct_answers: body?.correct_answers ?? [],
+    time_spent: body?.time_spent ?? [],
+    flags: body?.flags ?? [],
+    incorrect: body?.incorrect ?? [],
+    session_label: body?.session_label ?? null,
+    student_name: body?.student_name ?? null,
+    submitted_at: new Date().toISOString(),
+  };
+
+  const { data: inserted, error: insErr } = await supabase
+    .from("practice_test_attempts")
+    .insert(payload)
+    .select("id, submitted_at, test_id")
+    .single();
+
+  if (insErr) {
+    return NextResponse.json({ error: insErr.message }, { status: 500 });
+  }
+
+  // Compute attempt number (Attempt 1/2/3...) for THIS user + test_id
+  // (We count after insert so UI sees the new attempt number immediately.)
+  const { count, error: countErr } = await supabase
+    .from("practice_test_attempts")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("test_id", test_id);
+
+  if (countErr) {
+    // Still return ok; attempt is saved. Just omit attempt_no if count fails.
+    return NextResponse.json({ ok: true, attempt: inserted, attempt_no: null });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    attempt: inserted,
+    attempt_no: count ?? null,
+  });
+}

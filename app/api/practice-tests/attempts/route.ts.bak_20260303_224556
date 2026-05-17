@@ -1,0 +1,68 @@
+﻿import { NextResponse } from "next/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export const runtime = "nodejs";
+
+export async function GET(req: Request) {
+  const supabase = await createSupabaseServerClient();
+
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (userErr || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const url = new URL(req.url);
+  const testId = url.searchParams.get("test_id");
+
+  // If test_id provided: return attempts for that test with attempt_no (Attempt 1/2/3...)
+  if (testId) {
+    const { data, error } = await supabase
+      .from("practice_test_attempts")
+      .select("id, test_id, test_title, paper, total_questions, score, submitted_at, incorrect, time_spent, answers, correct_answers, flags")
+      .eq("user_id", user.id)
+      .eq("test_id", testId)
+      .order("submitted_at", { ascending: true }) // oldest -> newest so attempt_no is index+1
+      .limit(50);
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    const attempts = (data ?? []).map((row, idx) => ({
+      ...row,
+      attempt_no: idx + 1,
+    }));
+
+    return NextResponse.json({
+      ok: true,
+      test_id: testId,
+      total_attempts: attempts.length,
+      attempts,
+    });
+  }
+
+  // Otherwise: return latest attempt per test_id AND count attempts per test_id.
+  // We'll fetch a reasonable number of recent attempts and compute in JS.
+  const { data, error } = await supabase
+    .from("practice_test_attempts")
+    .select("id, test_id, test_title, paper, total_questions, score, submitted_at")
+    .eq("user_id", user.id)
+    .order("submitted_at", { ascending: false })
+    .limit(500);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  const counts: Record<string, number> = {};
+  const latestByTest: Record<string, any> = {};
+
+  for (const row of (data ?? [])) {
+    counts[row.test_id] = (counts[row.test_id] ?? 0) + 1;
+    if (!latestByTest[row.test_id]) latestByTest[row.test_id] = row; // first seen is latest due to desc sort
+  }
+
+  const latest = Object.values(latestByTest).map((row: any) => ({
+    ...row,
+    attempt_no: counts[row.test_id] ?? null,  // latest attempt number = total count
+    total_attempts: counts[row.test_id] ?? 0,
+  }));
+
+  return NextResponse.json({ ok: true, latest, counts });
+}

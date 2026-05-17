@@ -1,0 +1,708 @@
+﻿Thriving Scholars Next.js Audit Report
+Generated: 2026-02-27 23:13:47
+Project: C:\Users\agarw\tmua-qb-app
+
+==================== SYSTEM INFO ====================
+
+PowerShell: 5.1.26100.7705
+Node: v24.13.0
+NPM: 11.6.2
+Git: git version 2.53.0.windows.1
+
+==================== PROJECT TREE (excluding node_modules, .next, .git, .vercel) ====================
+
+.env.local
+.git
+.gitignore
+.next
+.vercel
+_audit
+_audit\AUDIT_REPORT_20260227_231347.txt
+app
+app\api
+app\api\check-answer
+app\api\logout
+app\api\logout\route.ts
+app\api\me
+app\api\practice-tests
+app\api\practice-tests\session
+app\api\practice-tests\submit
+app\api\progress
+app\api\progress\get
+app\api\progress\set
+app\api\ts-build
+app\api\ts-build\route.ts
+app\api\whoami
+app\api\wix
+app\api\wix\approve
+app\apple-icon.png
+app\auth
+app\auth\callback
+app\auth\callback\[...rest]
+app\auth\callback\exchange
+app\auth\callback\route.legacy.20260227131845.ts
+app\auth\callback\route.ts
+app\auth\callback\session
+app\dashboard
+app\dashboard\dashboard.module.css
+app\dashboard\DashboardClient.jsx
+app\dashboard\DashboardClient.jsx.bak.20260227164317
+app\dashboard\DashboardClient.jsx.bak.20260227164733
+app\dashboard\DashboardClient.jsx.bak.20260227165200
+app\dashboard\DashboardClient.jsx.bak.20260227170800
+app\dashboard\DashboardClient.tsx
+app\dashboard\DashboardClient.tsx.bak.20260227165200
+app\dashboard\head.tsx
+app\dashboard\page.tsx
+app\dashboard\page.tsx.bak-20260227010719
+app\favicon.ico
+app\globals.css
+app\head.tsx
+app\icon.png
+app\layout.tsx
+app\login
+app\login\head.tsx
+app\login\login.module.css
+app\login\LoginClient.tsx
+app\login\page.tsx
+app\login\page.tsx.bak.20260227134834
+app\logout
+app\logout\head.tsx
+app\logout\page.tsx
+app\page.tsx
+app\pending
+app\pending\head.tsx
+app\pending\page.tsx
+app\pending\pending.module.css
+app\practice-tests
+app\practice-tests\run
+app\practice-tests\run\[slug]
+app\tmua-question-bank
+app\tmua-question-bank\head.tsx
+app\tmua-question-bank\layout.module.css
+app\tmua-question-bank\layout.tsx
+app\tmua-question-bank\NoRightClick.tsx
+app\tmua-question-bank\page.tsx
+app\tmua-student-portal
+app\tmua-student-portal\callback
+app\tmua-student-portal\callback\session
+components
+eslint.config.mjs
+next.config.ts
+next-env.d.ts
+node_modules
+package.json
+package-lock.json
+postcss.config.mjs
+proxy.ts
+public
+public\apple-touch-icon.png
+public\favicon.ico
+public\favicon.png
+public\favicon-16x16.png
+public\favicon-192x192.png
+public\favicon-32x32.png
+public\favicon-512x512.png
+public\file.svg
+public\globe.svg
+public\next.svg
+public\practice-tests
+public\practice-tests\tests
+public\tmua
+public\tmua\practice-tests
+public\tmua-question-bank
+public\tmua-question-bank\index.html
+public\ts-upload-20260227004915.png
+public\ts-upload-20260227005238.png
+public\vercel.svg
+public\window.svg
+README.md
+supabase
+supabase\.gitignore
+supabase\.temp
+supabase\.temp\cli-latest
+supabase\.temp\gotrue-version
+supabase\.temp\pooler-url
+supabase\.temp\postgres-version
+supabase\.temp\project-ref
+supabase\.temp\rest-version
+supabase\.temp\storage-migration
+supabase\.temp\storage-version
+supabase\config.toml
+supabase\migrations
+supabase\migrations\20260225204130_tmua_secure_qb.sql
+supabase\migrations\20260225235001_student_access.sql
+supabase\schema.sql
+supabase\seed.sql
+supabase\tmua_tests_schema.sql
+supabase\tmua_tests_seed_13.sql
+tsconfig.json
+utils
+utils\supabase
+utils\supabase\browser.ts
+utils\supabase\client.ts
+utils\supabase\server.ts
+
+==================== KEY CONFIG FILES (redacted) ====================
+
+
+----- FILE: package.json -----
+{
+  "name": "tmua-qb-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.98.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "supabase": "^2.76.15",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+
+
+----- FILE: next.config.ts -----
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+
+
+----- FILE: tsconfig.json -----
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+
+
+----- FILE: app\layout.tsx -----
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: "Thriving Scholars Apps",
+  description: "Thriving Scholars student dashboard and learning apps.",
+  themeColor: "#fffaf2",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" }
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }]
+  }
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+
+----- FILE: app\page.tsx -----
+import { redirect } from "next/navigation";
+export default function Home() {
+  redirect("/dashboard");
+}
+
+==================== ENV VAR NAMES (from .env* files, values redacted) ====================
+
+
+----- FILE: .env.local -----
+NEXT_PUBLIC_APP_NAME
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+NEXT_PUBLIC_SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+SUPABASE_URL
+
+==================== APP ROUTES INVENTORY (app/**/page.* and route.*) ====================
+
+app\api\logout\route.ts
+app\api\ts-build\route.ts
+app\auth\callback\route.ts
+app\dashboard\page.tsx
+app\login\page.tsx
+app\logout\page.tsx
+app\page.tsx
+app\pending\page.tsx
+app\tmua-question-bank\page.tsx
+
+==================== API ENDPOINTS (app/api/**/route.*) ====================
+
+app\api\logout\route.ts
+app\api\ts-build\route.ts
+
+==================== MIDDLEWARE ANALYSIS (matchers, allowlist, redirects) ====================
+
+
+==================== CONNECTIONS & AUTH USAGE SCAN (file hits + snippets) ====================
+
+
+----- KEYWORD: createClient -----
+Hits: 3
+app\dashboard\DashboardClient.tsx
+app\login\LoginClient.tsx
+utils\supabase\client.ts
+
+----- KEYWORD: @supabase -----
+Hits: 9
+app\auth\callback\route.legacy.20260227131845.ts
+app\dashboard\DashboardClient.tsx
+app\login\LoginClient.tsx
+package.json
+package-lock.json
+proxy.ts
+utils\supabase\browser.ts
+utils\supabase\client.ts
+utils\supabase\server.ts
+
+----- KEYWORD: supabase -----
+Hits: 14
+app\api\logout\route.ts
+app\auth\callback\route.legacy.20260227131845.ts
+app\auth\callback\route.ts
+app\dashboard\DashboardClient.tsx
+app\login\LoginClient.tsx
+app\logout\page.tsx
+app\pending\page.tsx
+package.json
+package-lock.json
+proxy.ts
+supabase\config.toml
+utils\supabase\browser.ts
+utils\supabase\client.ts
+utils\supabase\server.ts
+
+----- KEYWORD: SUPABASE -----
+Hits: 14
+app\api\logout\route.ts
+app\auth\callback\route.legacy.20260227131845.ts
+app\auth\callback\route.ts
+app\dashboard\DashboardClient.tsx
+app\login\LoginClient.tsx
+app\logout\page.tsx
+app\pending\page.tsx
+package.json
+package-lock.json
+proxy.ts
+supabase\config.toml
+utils\supabase\browser.ts
+utils\supabase\client.ts
+utils\supabase\server.ts
+
+----- KEYWORD: resend -----
+(no hits)
+
+----- KEYWORD: RESEND -----
+(no hits)
+
+----- KEYWORD: cookies( -----
+Hits: 2
+app\auth\callback\route.legacy.20260227131845.ts
+utils\supabase\server.ts
+
+----- KEYWORD: headers( -----
+(no hits)
+
+----- KEYWORD: NextRequest -----
+Hits: 2
+app\api\logout\route.ts
+proxy.ts
+
+----- KEYWORD: NextResponse -----
+Hits: 5
+app\api\logout\route.ts
+app\api\ts-build\route.ts
+app\auth\callback\route.legacy.20260227131845.ts
+app\auth\callback\route.ts
+proxy.ts
+
+----- KEYWORD: authorization -----
+Hits: 1
+supabase\config.toml
+
+----- KEYWORD: bearer -----
+(no hits)
+
+----- KEYWORD: jwt -----
+Hits: 2
+package-lock.json
+supabase\config.toml
+
+----- KEYWORD: session -----
+Hits: 5
+app\auth\callback\route.legacy.20260227131845.ts
+app\auth\callback\route.ts
+app\dashboard\DashboardClient.tsx
+app\login\LoginClient.tsx
+supabase\config.toml
+
+----- KEYWORD: signInWithOtp -----
+Hits: 1
+app\login\LoginClient.tsx
+
+----- KEYWORD: magic link -----
+Hits: 2
+app\dashboard\DashboardClient.tsx
+supabase\config.toml
+
+----- KEYWORD: otp -----
+Hits: 3
+app\login\LoginClient.tsx
+package-lock.json
+supabase\config.toml
+
+----- KEYWORD: auth -----
+Hits: 10
+app\api\logout\route.ts
+app\auth\callback\route.legacy.20260227131845.ts
+app\auth\callback\route.ts
+app\dashboard\DashboardClient.tsx
+app\login\LoginClient.tsx
+app\logout\page.tsx
+app\pending\page.tsx
+package-lock.json
+proxy.ts
+supabase\config.toml
+
+----- KEYWORD: middleware -----
+Hits: 1
+utils\supabase\server.ts
+
+----- KEYWORD: matcher -----
+Hits: 1
+proxy.ts
+
+==================== SNIPPETS (Supabase/Resend/Auth/Middleware) — first matches with context ====================
+
+
+--- proxy.ts ---
+s")
+    .select("approved")
+    .eq("email", email)
+    .eq("product", product)
+    .maybeSingle();
+
+  if (error) return false;
+  return !!data?.approved;
+}
+
+export async function proxy(req: NextRequest) {
+  const res = NextResponse.next();
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+  if (!url || !key) {
+    // If env is missing, fail fast with a helpful redirect
+    const u = req.nextUrl.clone();
+    u.pathname = "/login";
+    u.searchParam
+
+--- app\api\logout\route.ts ---
+er } from "@/utils/supabase/server";
+
+export const runtime = "nodejs";
+
+export async function GET(req: NextRequest) {
+  const supabase = await supabaseServer();
+  try { await supabase.auth.signOut(); } catch {}
+  return NextResponse.redirect(new URL("/login?loggedout=1", req.url));
+}
+
+--- app\auth\callback\route.legacy.20260227131845.ts ---
+ue, options }) => {
+          cookieStore.set(name, value, options);
+        });
+      },
+    },
+  });
+
+  if (code) {
+    await supabase.auth.exchangeCodeForSession(code);
+  }
+
+  // After login, go to dashboard
+  return NextResponse.redirect(new URL("/dashboard", requestUrl.origin));
+}
+
+--- app\auth\callback\route.legacy.20260227131845.ts ---
+ew URL(request.url);
+  const code = requestUrl.searchParams.get("code");
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
+  const cookieStore = await cookies();
+
+  const supabase = createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          cookieStore.set(name, value, options);
+        });
+      },
+
+
+--- app\auth\callback\route.ts ---
+n "/dashboard";
+}
+
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const code = url.searchParams.get("code");
+  const next = safeNext(url.searchParams.get("next"));
+
+  if (!code) {
+    return NextResponse.redirect(new URL("/login?e=missing_code", url.origin));
+  }
+
+  const supabase = await supabaseServer();
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (error) {
+    return NextResponse.redirect(new URL("/login?e=callback_exchange_failed", url.origin));
+  }
+
+
+
+--- app\dashboard\DashboardClient.tsx ---
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
+import styles from "./dashboard.module.css";
+
+type TestRow = {
+  slug: string;
+  title: string;
+  kind: "topic" | "mock" | "official_sample" | "official_past_paper" | "full_mock";
+  paper: "paper1" | "paper2" | "paper1+paper2";
+  duration_minutes: number;
+  topics: string[];
+  test_url?: string | null;
+  sort_order: number;
+  is_free: boolean;
+
+--- app\dashboard\DashboardClient.tsx ---
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
+import styles from "./dashboard.module.css";
+
+type TestRow = {
+  slug: string;
+  title: string;
+  kind: "topic" | "mock" | "official_sample" | "official_past_paper" | "full_mock";
+  paper: "paper1" | "paper2" | "paper1+paper2";
+  duration_minutes: number;
+  topics: string[];
+  test_url?: string | null;
+  sort_order: number;
+  is_free: boolean;
+
+--- app\login\LoginClient.tsx ---
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
+import styles from "./login.module.css";
+
+type Props = { uiMark: string };
+
+const LINKS = {
+  tests: "https://www.thrivingscholars.com/_paylink/AZxDUeBg",
+  bank:  "https://www.thrivingscholars.com/_paylink/AZxDURwM",
+  both:  "https://www.thrivingscholars.com/_paylink/AZxDXYag",
+};
+
+const PRICE = { tests: 89, bank: 89, both: 
+
+--- app\login\LoginClient.tsx ---
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
+import styles from "./login.module.css";
+
+type Props = { uiMark: string };
+
+const LINKS = {
+  tests: "https://www.thrivingscholars.com/_paylink/AZxDUeBg",
+  bank:  "https://www.thrivingscholars.com/_paylink/AZxDURwM",
+  both:  "https://www.thrivingscholars.com/_paylink/AZxDXYag",
+};
+
+const PRICE = { tests: 89, bank: 89, both: 
+
+--- app\login\LoginClient.tsx ---
+   setBusy(true);
+    try {
+      // IMPORTANT: keep current working landing route (dashboard consumes tokens)
+      const redirectTo = `${window.location.origin}/dashboard`;
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email: em,
+        options: { emailRedirectTo: redirectTo },
+      });
+
+      if (error) throw error;
+
+      setMsg("Login link sent. Check inbox + spam. Click ONLY the newest email link.");
+    } catch (ex: any) {
+      setErr(ex?.message || "Could not send login link.");
+  
+
+--- utils\supabase\client.ts ---
+import { createBrowserClient } from "@supabase/ssr";
+
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  );
+}
+
+
+--- utils\supabase\server.ts ---
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
+
+export async function supabaseServer() {
+  const cookieStore = await cookies();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
+
+  return createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+    
+
+==================== DB / MIGRATIONS (Supabase folder patterns) ====================
+
+
+----- DIR: supabase -----
+supabase\.gitignore
+supabase\config.toml
+supabase\schema.sql
+supabase\seed.sql
+supabase\tmua_tests_schema.sql
+supabase\tmua_tests_seed_13.sql
+supabase\.temp\cli-latest
+supabase\.temp\gotrue-version
+supabase\.temp\pooler-url
+supabase\.temp\postgres-version
+supabase\.temp\project-ref
+supabase\.temp\rest-version
+supabase\.temp\storage-migration
+supabase\.temp\storage-version
+supabase\migrations\20260225204130_tmua_secure_qb.sql
+supabase\migrations\20260225235001_student_access.sql
+
+----- DIR: supabase\migrations -----
+supabase\migrations\20260225204130_tmua_secure_qb.sql
+supabase\migrations\20260225235001_student_access.sql
+
+==================== SCRIPTS (package.json -> scripts) ====================
+
+{
+  "name": "tmua-qb-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.98.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "supabase": "^2.76.15",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+
+
+==================== DONE ====================
+
+Report written to:
+C:\Users\agarw\tmua-qb-app\_audit\AUDIT_REPORT_20260227_231347.txt

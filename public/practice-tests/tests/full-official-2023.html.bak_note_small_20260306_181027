@@ -1,0 +1,2775 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TMUA Official 2023 - Paper 1 and Paper 2</title>
+  <script type="text/javascript" async 
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+   .top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+
+}
+.options label {
+  display: block;
+}
+
+#flag-btn {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#flag-btn.flagged {
+  background-color: yellow;
+  font-weight: bold;
+  border: 2px solid #999;
+}
+
+
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: white;
+    }
+    .header {
+      background: #0074c1;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .timer {
+      font-size: 14px;
+    }
+    .container {
+      padding: 20px 40px;
+    }
+    .question-number {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .options {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+    .option {
+      margin: 10px 0;
+    }
+    input[type="radio"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+    .footer {
+      background: #0074c1;
+      padding: 10px 20px;
+      text-align: right;
+    }
+    .footer button {
+      font-size: 16px;
+      padding: 6px 16px;
+      margin-left: 10px;
+      background: #005fa3;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    #instructions {
+      padding: 40px;
+      font-size: 18px;
+    }
+    #exam-interface {
+      display: none;
+    }
+
+/* ✅ START SCREEN ONLY — paste this at the VERY END of your <style> block.
+   It only targets #instructions and won’t affect the exam UI. */
+
+#instructions{
+  max-width: 1250px;
+  min-height: 560px;
+  margin: 60px auto;
+  background: #ffffff;
+  border: 2px solid #f2b233;
+  border-radius: 22px;
+  box-shadow:
+    0 18px 48px rgba(15, 23, 42, 0.12),
+    0 10px 26px rgba(242, 178, 51, 0.18);
+  padding: 64px 64px 70px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+}
+
+/* grey page backdrop ONLY while #instructions is visible */
+#instructions::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #f3f5f7;
+  z-index: -1;
+}
+
+/* title */
+#instructions #test-title{
+  margin: 0 0 18px 0;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0b1220;
+}
+
+/* paragraphs */
+#instructions p{
+  margin: 10px 0;
+  color: #0f172a;
+}
+
+/* keep your existing flex row, just make spacing nicer */
+#instructions > div:first-of-type{
+  margin: 34px 0 26px !important;
+}
+
+/* inputs/selects — only visual polish (keeps your widths/padding from inline styles) */
+#instructions input[type="text"],
+#instructions input[type="email"],
+#instructions select{
+  border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  outline: none !important;
+}
+
+#instructions input[type="text"]:focus,
+#instructions input[type="email"]:focus,
+#instructions select:focus{
+  border-color: #f2b233 !important;
+  box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
+}
+
+/* start button — only visuals (doesn’t change your inline font-size/padding if you keep them) */
+#instructions button{
+  background: #f6c44a !important;
+  color: #2b1a00 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
+  cursor: pointer !important;
+}
+
+#instructions button:hover{
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+#instructions button:active{
+  transform: translateY(0px);
+  box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
+}
+
+/* optional: make the table feel “card-like” but ONLY inside #instructions */
+#instructions table{
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* responsive */
+@media (max-width: 950px){
+  #instructions{
+    margin: 24px 16px;
+    padding: 40px 22px 44px;
+    min-height: auto;
+  }
+}
+/* ✅ Only affects images inside questions (won’t touch your start screen) */
+.question-media{
+  margin: 14px 0 18px;
+}
+
+.question-media img{
+  display: block;
+  max-width: 320px;         /* ✅ smaller image */
+  width: 100%;              /* responsive inside the max */
+  height: auto;
+  border: 1.5px solid #e5e7eb;   /* ✅ boxed */
+  border-radius: 12px;
+  padding: 10px;            /* ✅ space inside the box */
+  background: #ffffff;
+
+}
+
+/* Optional: center the boxed image */
+.question-media{
+  display: flex;
+  justify-content: center;
+}
+/* ✅ Bigger text for the QUESTION AREA only (safe: doesn’t touch header/footer/start screen) */
+.container{
+  font-size: 19px;           /* base size for question text */
+  line-height: 1.6;
+}
+
+/* Question number bigger */
+.container .question-number{
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+/* Paragraphs spacing + size */
+.container p{
+  font-size: 19px;
+  line-height: 1.65;
+  margin: 12px 0;
+}
+
+/* Options bigger */
+.container .options{
+  margin-top: 18px;
+  margin-bottom: 40px;
+}
+
+.container .options .option{
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+/* Radio slightly larger */
+.container input[type="radio"]{
+  transform: scale(1.35);
+  margin-right: 12px;
+}
+
+  </style>
+
+
+<!-- TS_PATCH_FOOTER_FIXED_V1 -->
+<style>
+/* TS_PATCH_FOOTER_FIXED_V1: keep footer pinned and prevent overlap */
+.footer{
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 999 !important;
+}
+#exam-interface .container{
+  padding-bottom: 110px !important;
+}
+</style>
+<!-- /TS_PATCH_FOOTER_FIXED_V1 -->
+<!-- TS_TMUA_SCORE9_BLOCK_CSS_V6 -->
+<style>
+.ts-score9-wrap{
+  margin:18px auto 30px;
+  padding:16px;
+  border:1px solid rgba(0,0,0,0.12);
+  border-radius:14px;
+  background:rgba(250,250,250,0.92);
+  max-width:760px;
+}
+.ts-score9-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:12px;
+}
+.ts-score9-title{
+  font-family:Arial,sans-serif;
+  font-weight:900;
+  font-size:16px;
+  margin:0;
+}
+.ts-score9-sub{
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  color:rgba(100,116,139,0.95);
+  margin-top:3px;
+}
+.ts-score9-chip{
+  font-family:Arial,sans-serif;
+  font-weight:900;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.14);
+  background:#fff;
+  white-space:nowrap;
+}
+.ts-score9-grid{
+  display:flex;
+  gap:12px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+.ts-score9-card{
+  flex:1 1 260px;
+  border:1px solid rgba(0,0,0,0.10);
+  border-radius:12px;
+  padding:12px;
+  background:#fff;
+}
+.ts-score9-card h4{
+  margin:0 0 6px 0;
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  letter-spacing:0.02em;
+  color:rgba(71,85,105,0.95);
+}
+.ts-score9-big{
+  font-family:Arial,sans-serif;
+  font-size:34px;
+  font-weight:900;
+  margin:0;
+}
+.ts-score9-small{
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  color:rgba(100,116,139,0.95);
+  margin-top:2px;
+}
+.ts-score9-note{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px dashed rgba(148,163,184,0.45);
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  line-height:1.25;
+  color:rgba(148,163,184,0.95);
+}
+.ts-score9-note__asterisk{
+  font-weight:900;
+  font-size:11px;
+  line-height:1;
+  margin-top:1px;
+  flex:0 0 auto;
+  color:rgba(148,163,184,0.95);
+}
+.ts-score9-note__text{ min-width:0; }
+.ts-score9-note__title{
+  margin:0;
+  font-weight:800;
+  font-size:10px;
+  letter-spacing:0.02em;
+  color:rgba(148,163,184,0.98);
+}
+.ts-score9-note__sub{
+  margin:2px 0 0 0;
+  font-size:10px;
+  color:rgba(148,163,184,0.92);
+}
+.ts-score9-note__link{
+  display:inline-block;
+  margin-top:5px;
+  font-size:10px;
+  font-weight:800;
+  color:rgba(100,116,139,0.95);
+  text-decoration:none;
+  border-bottom:1px solid rgba(148,163,184,0.55);
+}
+</style>
+<!-- /TS_TMUA_SCORE9_BLOCK_CSS_V6 -->
+</head>
+<body>
+
+<div id="instructions">
+<h2 id="test-title">TMUA Official 2023 Test</h2>
+
+
+
+  <p><strong>Time allowed:</strong> 2 hour and 30 minutes</p>
+  <p><strong>Calculators are not permitted.</strong></p>
+
+
+<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+  <div>
+    <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
+    <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+  </div>
+<div>
+  <label for="student-email" style="font-size: 16px;">Email (to receive results):</label><br>
+  <input type="email" id="student-email" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+</div>
+
+  <div>
+    <label for="test-date" style="font-size: 16px;">Select your TMUA test session:</label><br>
+    <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+      <option value="October 2025">October 2025</option>
+      <option value="January 2026">January 2026</option>
+      <option value="October 2026">October 2026</option>
+    </select>
+  </div>
+
+  <div style="margin-top: 28px;">
+    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">🎯 Start Exam</button>
+  </div>
+</div>
+
+
+<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
+  <thead>
+    <tr style="background: #f2f2f2;">
+      <th style="border: 1px solid #ccc; padding: 10px;">Paper</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">Topics Covered</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Paper 1 and 2</td>
+      <td style="border: 1px solid #ccc; padding: 10px;">
+        <ul style="margin: 0; padding-left: 18px;">
+          <li>All Topics</li>
+        </ul>
+      </td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20 on each Paper</td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes on each Paper </td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 16px; margin-top: 20px;">
+ 
+  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> — marks are awarded only for correct responses.
+  You should attempt <strong>all 20 questions</strong> on each Paper.
+</p>
+
+<p style="font-size: 16px;">
+  A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires. Attempt each paper for 75 minutes. After Paper 1, you’ll get an optional 5-minute break, then move to Paper 2 for another 75 minutes.
+</p>
+<p style="font-size: 16px;">
+
+This is the officially released 2023 paper, now converted into an online interface to give you a true digital practice experience.</p>
+  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
+
+</div>
+
+
+<div id="exam-interface">
+  <div class="header">
+    <div><strong>TMUA 2023</strong></div>
+    <div class="timer">
+      ⏲️ Time Remaining <span id="time">75:00</span><br>
+      📄 <span id="counter">1 of 20</span><br>
+      <button id="flag-btn" onclick="toggleFlag()" style="margin-top: 8px; padding: 4px 10px; font-size: 14px;">⚑ Flag for Review</button>
+    </div>
+  </div>
+
+  <div class="container" id="question-container">
+    <!-- Questions will be inserted here -->
+  </div>
+
+  <div class="footer">
+    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
+    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
+    <button onclick="openNavigator()">Navigator</button>
+    <button onclick="confirmSubmit()">Submit</button>
+  </div>
+</div>
+<div id="break-screen" style="display: none; text-align: center; padding: 40px;">
+  <h2>End of Paper 1</h2>
+  <p>You can take a 5-minute break before starting Paper 2.</p>
+  <p>Time Remaining: <span id="break-timer">05:00</span></p>
+  <button onclick="skipBreak()" style="font-size: 16px; padding: 10px 20px;">Skip Break</button>
+</div>
+
+
+
+
+<script>
+const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_81dcfaab3d9646228d9a3d73b60647de.pdf";
+// Placeholder — replace with real data if needed
+const averageScores = {
+  paper1: 13.2,  // average out of 20
+  paper2: 11.8
+};
+
+const thresholds = {
+  paper1: 14,
+  paper2: 14
+};
+
+let timeSpent = new Array(40).fill(0); // ✅ 40 questions: 0–39
+let lastTimestamp = Date.now(); // timestamp when current question was shown
+let paper = 1; // Paper 1 or 2
+let breakMinutes = 5;
+let breakSeconds = 0;
+let breakInterval;
+let studentName = "";
+let testSession = "";
+let flags = new Array(40).fill(false);
+function toggleFlag() {
+  flags[current] = !flags[current];
+  updateFlagButton();
+  updateNavigatorButton(current);
+}
+
+function updateFlagButton() {
+  const flagBtn = document.getElementById("flag-btn");
+  if (flags[current]) {
+    flagBtn.classList.add("flagged");
+  } else {
+    flagBtn.classList.remove("flagged");
+  }
+}
+
+function startBreak() {
+  document.getElementById("exam-interface").style.display = "none";
+  document.getElementById("break-screen").style.display = "block";
+  breakInterval = setInterval(updateBreakTimer, 1000);
+}
+
+function updateBreakTimer() {
+  if (breakMinutes === 0 && breakSeconds === 0) {
+    clearInterval(breakInterval);
+    skipBreak(); // ✅ acts like "Skip Break" button
+    return;
+  }
+
+  if (breakSeconds === 0) {
+    breakMinutes--;
+    breakSeconds = 59;
+  } else {
+    breakSeconds--;
+  }
+
+  const mm = breakMinutes.toString().padStart(2, '0');
+  const ss = breakSeconds.toString().padStart(2, '0');
+  document.getElementById("break-timer").textContent = `${mm}:${ss}`;
+}
+
+
+function skipBreak() {
+  clearInterval(breakInterval);
+
+  // ✅ Reset timer values for Paper 2
+  minutes = 75;
+  seconds = 0;
+
+  // ✅ Start new timer
+  timerInterval = setInterval(updateTimer, 1000);
+
+  paper = 2;
+  current = 20; // Question 21
+  renderQuestion();
+
+  document.getElementById("break-screen").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+}
+
+function nextQuestion() {
+  // ⏱️ Record time spent on current question
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+
+  if (current === 19 && paper === 1) {
+    showBreakScreen(); // go to break after Paper 1
+    return; // ✅ stop further execution
+  }
+
+  if (current < questions.length - 1) {
+    current++;
+    lastTimestamp = Date.now(); // ⏱️ Start timing next question
+    renderQuestion();
+  }
+}
+
+
+
+
+
+function openNavigator() {
+  document.getElementById("navigator-popup").style.display = "block";
+  generateNavigatorButtons(); // ✅ Generate correct buttons based on section
+}
+
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function jumpTo(index) {
+timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+current = index;
+lastTimestamp = Date.now();
+renderQuestion();
+closeNavigator();
+updateFlagButton();
+
+}
+const nextBtn = document.getElementById("next-btn");
+const prevBtn = document.getElementById("prev-btn");
+
+
+function renderQuestion() {
+  container.innerHTML = questions[current];
+  counter.textContent = `Q${paper === 1 ? current + 1 : current - 19} of 20 (Paper ${paper})`;
+
+  MathJax.typesetPromise();
+  updateFlagButton();
+
+  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
+  inputs.forEach(input => {
+    if (userAnswers[current] === input.value) {
+      input.checked = true;
+    }
+    input.addEventListener('change', () => {
+      userAnswers[current] = input.value;
+    });
+  });
+
+  if (nextBtn) {
+    nextBtn.disabled = (current === 19 && paper === 1) || current === questions.length - 1;
+  }
+  if (prevBtn) {
+    prevBtn.disabled = (current === 0);
+  }
+}
+
+
+
+
+function confirmSubmit() {
+  if (paper === 1) {
+    const confirmBox = confirm("You're about to submit Paper 1 and move to Paper 2. Do you want to continue?");
+    if (confirmBox) {
+      // ✅ Save time for last Paper 1 question only if user confirms
+      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+      lastTimestamp = Date.now(); // ✅ Reset for Paper 2
+      showBreakScreen();
+    }
+  } else {
+    const confirmBox = confirm("Are you sure you want to submit the entire test?");
+    if (confirmBox) {
+      // ✅ Save time for last Paper 2 question
+      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+      submitExam();
+    }
+  }
+}
+
+
+
+  const correctAnswers = [
+  "F", "A", "C", "C", "F", "E", "F", "B", "E", "B",
+  "B", "F", "F", "A", "F", "E", "E", "E", "D", "F",
+  // Paper 2 answers
+  "H", "F", "C", "G", "A", "F", "E", "D", "D", "A",
+  "G", "C", "C", "F", "B", "B", "F", "D", "H", "D"
+];
+
+
+  let userAnswers = new Array(40).fill(null);
+  let current = 0;
+  let minutes = 75;
+  let seconds = 0;
+  let timerInterval;
+
+  const timerDisplay = document.getElementById("time");
+  const container = document.getElementById("question-container");
+  const counter = document.getElementById("counter");
+
+  const questions = [
+
+    `<div class="question-number">Question 1</div>
+<p>Given that</p>
+<p>\\[ \\int\\limits_{0}^{1} \\left( ax + b \\right) \\, dx = 1 \\]</p>
+<p>and</p>
+<p>\\[ \\int\\limits_{0}^{1} x \\left( ax + b \\right) \\, dx = 1 \\]</p>
+<p>find the value of \\( a + b \\).</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q1" value="A"> \\(-1\\)</label>
+  <label class="option"><input type="radio" name="q1" value="B"> \\(0\\)</label>
+  <label class="option"><input type="radio" name="q1" value="C"> \\(1\\)</label>
+  <label class="option"><input type="radio" name="q1" value="D"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q1" value="E"> \\(3\\)</label>
+  <label class="option"><input type="radio" name="q1" value="F"> \\(4\\)</label>
+  <label class="option"><input type="radio" name="q1" value="G"> \\(5\\)</label>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 2</div>
+<p>The graphs of \\( y = x^{2} + 5x + 6 \\) and \\( y = mx - 3 \\), where \\( m \\) is a constant, are plotted on the same set of axes.</p>
+
+<p>Given that the graphs do not meet, what is the complete range of possible values of \\( m \\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q2" value="A"> \\(-1 < m < 11\\)</label>
+  <label class="option"><input type="radio" name="q2" value="B"> \\(m < -1,\\ m > 11\\)</label>
+  <label class="option"><input type="radio" name="q2" value="C"> \\(-\\sqrt{11} < m < \\sqrt{11}\\)</label>
+  <label class="option"><input type="radio" name="q2" value="D"> \\(m < -\\sqrt{11},\\ m > \\sqrt{11}\\)</label>
+  <label class="option"><input type="radio" name="q2" value="E"> \\(-11 < m < 1\\)</label>
+  <label class="option"><input type="radio" name="q2" value="F"> \\(m < -11,\\ m > 1\\)</label>
+</div>
+
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 3</div>
+<p>For any integer \\( n \\geq 0 \\),</p>
+
+<p>\\[ \\int\\limits_{n}^{n+1} f(x) \\, dx = n + 1 \\]</p>
+
+<p>Evaluate</p>
+
+<p>
+\\[
+\\int\\limits_{0}^{3} f(x) \\, dx
++ \\int\\limits_{1}^{3} f(x) \\, dx
++ \\int\\limits_{2}^{3} f(x) \\, dx
++ \\int\\limits_{4}^{3} f(x) \\, dx
++ \\int\\limits_{5}^{3} f(x) \\, dx
+\\]
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q3" value="A"> \\(-2\\)</label>
+  <label class="option"><input type="radio" name="q3" value="B"> \\(0\\)</label>
+  <label class="option"><input type="radio" name="q3" value="C"> \\(1\\)</label>
+  <label class="option"><input type="radio" name="q3" value="D"> \\(4\\)</label>
+  <label class="option"><input type="radio" name="q3" value="E"> \\(18\\)</label>
+  <label class="option"><input type="radio" name="q3" value="F"> \\(27\\)</label>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 4</div>
+<p>Evaluate</p>
+
+<p>
+\\[
+\\sum\\limits_{n = 0}^{\\infty}
+\\frac{\\sin\\left( n\\pi + \\frac{\\pi}{3} \\right)}{2^{n}}
+\\]
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q4" value="A"> \\(0\\)</label>
+  <label class="option"><input type="radio" name="q4" value="B"> \\(\\frac{1}{3}\\)</label>
+  <label class="option"><input type="radio" name="q4" value="C"> \\(\\frac{\\sqrt{3}}{3}\\)</label>
+  <label class="option"><input type="radio" name="q4" value="D"> \\(\\sqrt{3}\\)</label>
+  <label class="option"><input type="radio" name="q4" value="E"> \\(3\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 5</div>
+
+<p>The following shape has two lines of reflectional symmetry.</p>
+
+<p><img src="https://static.wixstatic.com/media/98f2c5_e48f1a349f26497dab57651613c3db64~mv2.png" alt="Square with rectangle RSTU on edges" style="max-width: 40%; height: auto;"></p>
+
+<p>\\(MNOP\\) is a square of perimeter \\(40 \\, \\text{cm}\\).</p>
+
+<p>The vertices of rectangle \\(RSTU\\) lie on the edge of square \\(MNOP\\).</p>
+
+<p>\\(MR\\) has length \\(x\\) cm.</p>
+
+<p>What is the largest possible value of \\(x\\) such that \\(RSTU\\) has area \\(20 \\, \\text{cm}^{2}\\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q5" value="A"> \\(\\sqrt{2}\\)</label>
+  <label class="option"><input type="radio" name="q5" value="B"> \\(\\sqrt{10}\\)</label>
+  <label class="option"><input type="radio" name="q5" value="C"> \\(2\\sqrt{15}\\)</label>
+  <label class="option"><input type="radio" name="q5" value="D"> \\(10\\sqrt{2}\\)</label>
+  <label class="option"><input type="radio" name="q5" value="E"> \\(5 + \\sqrt{5}\\)</label>
+  <label class="option"><input type="radio" name="q5" value="F"> \\(5 + \\sqrt{15}\\)</label>
+</div>
+
+
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 6</div>
+<p>In the simplified expansion of \\(\\left( 2 + 3x \\right)^{12}\\), how many of the terms have a coefficient that is divisible by \\(12\\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q6" value="A"> \\(0\\)</label>
+  <label class="option"><input type="radio" name="q6" value="B"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q6" value="C"> \\(5\\)</label>
+  <label class="option"><input type="radio" name="q6" value="D"> \\(10\\)</label>
+  <label class="option"><input type="radio" name="q6" value="E"> \\(11\\)</label>
+  <label class="option"><input type="radio" name="q6" value="F"> \\(12\\)</label>
+  <label class="option"><input type="radio" name="q6" value="G"> \\(13\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 7</div>
+<p>\\(P(x)\\) and \\(Q(x)\\) are defined as follows:</p>
+
+<p>\\[ P(x) = 2^{x} + 4 \\]</p>
+
+<p>\\[ Q(x) = 2^{(2x - 2)} - 2^{(x + 2)} + 16 \\]</p>
+
+<p>Find the largest value of \\(x\\) such that \\(P(x)\\) and \\(Q(x)\\) are in the ratio \\(4 : 1\\), respectively.</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q7" value="A"> \\(5\\)</label>
+  <label class="option"><input type="radio" name="q7" value="B"> \\(12\\)</label>
+  <label class="option"><input type="radio" name="q7" value="C"> \\(32\\)</label>
+  <label class="option"><input type="radio" name="q7" value="D"> \\(\\log_{2} 3\\)</label>
+  <label class="option"><input type="radio" name="q7" value="E"> \\(\\log_{2} 5\\)</label>
+  <label class="option"><input type="radio" name="q7" value="F"> \\(\\log_{2} 12\\)</label>
+  <label class="option"><input type="radio" name="q7" value="G"> \\(\\log_{2} 20\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 8</div>
+
+<p>
+A triangle \\( XYZ \\) is called <em>fun</em> if it has the following properties:
+</p>
+
+<p style="text-align: center;">
+\\( \\angle YXZ = 30^\\circ \\)<br>
+\\( XY = \\sqrt{3}a \\)<br>
+\\( YZ = a \\)
+</p>
+
+<p>
+where \\( a \\) is a constant.
+</p>
+
+<p>
+For a given value of \\( a \\), there are two distinct <em>fun</em> triangles \\( S \\) and \\( T \\), where the area of \\( S \\) is greater than the area of \\( T \\).
+</p>
+
+<p>
+Find the ratio:
+</p>
+
+<p style="text-align: center;">
+\\[
+\\text{area of } S : \\text{area of } T
+\\]
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q8" value="A"> \\( 1 : 1 \\)</label>
+  <label class="option"><input type="radio" name="q8" value="B"> \\( 2 : 1 \\)</label>
+  <label class="option"><input type="radio" name="q8" value="C"> \\( 2 : \\sqrt{3} \\)</label>
+  <label class="option"><input type="radio" name="q8" value="D"> \\( \\sqrt{3} : 1 \\)</label>
+  <label class="option"><input type="radio" name="q8" value="E"> \\( 3 : 1 \\)</label>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 9</div>
+
+<p>How many solutions are there to</p>
+
+<p>
+\\[
+\\left( 1 + 3 \\cos 3\\theta \\right)^2 = 4
+\\]
+</p>
+
+<p>in the interval \\( 0^\\circ \\leq \\theta \\leq 180^\\circ \\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q9" value="A"> \\(1\\)</label>
+  <label class="option"><input type="radio" name="q9" value="B"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q9" value="C"> \\(3\\)</label>
+  <label class="option"><input type="radio" name="q9" value="D"> \\(4\\)</label>
+  <label class="option"><input type="radio" name="q9" value="E"> \\(5\\)</label>
+  <label class="option"><input type="radio" name="q9" value="F"> \\(6\\)</label>
+</div>
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 10</div>
+
+<p>The trapezium rule with 4 strips is used to estimate the integral:</p>
+
+<p style="text-align: center;">
+\\[
+\\int\\limits_{-2}^{2} \\sqrt{4 - x^2} \\, dx
+\\]
+</p>
+
+<p>What is the positive difference between the estimate and the exact value of the integral?</p>
+
+
+<div class="options">
+  <label class="option"><input type="radio" name="q10" value="A"> \\(2\\left( \\pi - 2 - 2\\sqrt{3} \\right)\\)</label>
+  <label class="option"><input type="radio" name="q10" value="B"> \\(2\\left( \\pi - 1 - \\sqrt{3} \\right)\\)</label>
+  <label class="option"><input type="radio" name="q10" value="C"> \\(2\\left( 2\\pi - 1 - \\sqrt{3} \\right)\\)</label>
+  <label class="option"><input type="radio" name="q10" value="D"> \\(4\\left( \\pi - 1 - \\sqrt{3} \\right)\\)</label>
+  <label class="option"><input type="radio" name="q10" value="E"> \\(2\\pi - 3\\sqrt{3}\\)</label>
+  <label class="option"><input type="radio" name="q10" value="F"> \\(4\\pi - 6\\sqrt{3}\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 11</div>
+
+<p>It is given that \\( f(x) = x^2 - 6x \\)</p>
+
+<p>The curves \\( y = f(kx) \\) and \\( y = f(x - c) \\) have the same minimum point, where \\( k &gt; 0 \\) and \\( c &gt; 0 \\).</p>
+
+<p>Which of the following is a correct expression for \\(k\\) in terms of \\(c\\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q11" value="A"> \\(k = \\frac{3 - c}{3}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="B"> \\(k = \\frac{3}{c + 3}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="C"> \\(k = \\frac{c - 6}{6}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="D"> \\(k = \\frac{6}{6 - c}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="E"> \\(k = \\frac{c + 9}{9}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="F"> \\(k = \\frac{9}{c - 9}\\)</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 12</div>
+
+<p>How many solutions are there to the equation</p>
+
+<p>
+\\[
+\\frac{2^{\\tan^2 x}}{4^{\\sin^2 x}} = 1
+\\]
+</p>
+
+<p>in the range \\( 0 \\leq x \\leq 2\\pi \\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q12" value="A"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q12" value="B"> \\(3\\)</label>
+  <label class="option"><input type="radio" name="q12" value="C"> \\(4\\)</label>
+  <label class="option"><input type="radio" name="q12" value="D"> \\(5\\)</label>
+  <label class="option"><input type="radio" name="q12" value="E"> \\(6\\)</label>
+  <label class="option"><input type="radio" name="q12" value="F"> \\(7\\)</label>
+  <label class="option"><input type="radio" name="q12" value="G"> \\(8\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 13</div>
+
+<p>Point \\(P\\) lies on the circle with equation \\( (x - 2)^2 + (y - 1)^2 = 16 \\)</p>
+
+<p>Point \\(Q\\) lies on the circle with equation \\( (x - 4)^2 + (y + 5)^2 = 16 \\)</p>
+
+<p>What is the maximum possible length of \\(PQ\\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q13" value="A"> \\(10\\)</label>
+  <label class="option"><input type="radio" name="q13" value="B"> \\(14\\)</label>
+  <label class="option"><input type="radio" name="q13" value="C"> \\(16\\)</label>
+  <label class="option"><input type="radio" name="q13" value="D"> \\(2\\sqrt{34}\\)</label>
+  <label class="option"><input type="radio" name="q13" value="E"> \\(10\\sqrt{2}\\)</label>
+  <label class="option"><input type="radio" name="q13" value="F"> \\(8 + 2\\sqrt{10}\\)</label>
+  <label class="option"><input type="radio" name="q13" value="G"> \\(16 + 2\\sqrt{6}\\)</label>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 14</div>
+
+<p>The function</p>
+
+<p>
+\\[
+f(x) = \\frac{2}{3}x^3 + 2mx^2 + n, \\quad m &gt; 0
+\\]
+</p>
+
+<p>has three distinct real roots.</p>
+
+<p>What is the complete range of possible values of \\(n\\), in terms of \\(m\\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q14" value="A"> \\(-\\frac{8}{3}m^3 &lt; n &lt; 0\\)</label>
+  <label class="option"><input type="radio" name="q14" value="B"> \\(-\\frac{4}{3}m^3 &lt; n &lt; 0\\)</label>
+  <label class="option"><input type="radio" name="q14" value="C"> \\(0 &lt; n &lt; \\frac{3}{2}m^2\\)</label>
+  <label class="option"><input type="radio" name="q14" value="D"> \\(0 &lt; n &lt; \\frac{40}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="E"> \\(n &lt; -\\frac{8}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="F"> \\(n &lt; \\frac{3}{2}m^2\\)</label>
+  <label class="option"><input type="radio" name="q14" value="G"> \\(n &gt; -\\frac{4}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="H"> \\(n &gt; \\frac{40}{3}m^3\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 15</div>
+
+<p>The difference between the maximum and minimum values of the function \\( f(x) = a^{\\cos x} \\), where \\( a &gt; 0 \\) and \\( x \\) is real, is \\(3\\).</p>
+
+<p>Find the sum of the possible values of \\(a\\).</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q15" value="A"> \\(0\\)</label>
+  <label class="option"><input type="radio" name="q15" value="B"> \\(\\frac{3}{2}\\)</label>
+  <label class="option"><input type="radio" name="q15" value="C"> \\(\\frac{5}{2}\\)</label>
+  <label class="option"><input type="radio" name="q15" value="D"> \\(3\\)</label>
+  <label class="option"><input type="radio" name="q15" value="E"> \\(\\sqrt{10}\\)</label>
+  <label class="option"><input type="radio" name="q15" value="F"> \\(\\sqrt{13}\\)</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 16</div>
+
+<p>A right-angled triangle has vertices at \\((2,\\ 3)\\), \\((9,\\ -1)\\), and \\((5,\\ k)\\).</p>
+
+<p>Find the sum of all the possible values of \\(k\\).</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q16" value="A"> \\(-8\\)</label>
+  <label class="option"><input type="radio" name="q16" value="B"> \\(-6\\)</label>
+  <label class="option"><input type="radio" name="q16" value="C"> \\(0.25\\)</label>
+  <label class="option"><input type="radio" name="q16" value="D"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q16" value="E"> \\(2.25\\)</label>
+  <label class="option"><input type="radio" name="q16" value="F"> \\(8.25\\)</label>
+  <label class="option"><input type="radio" name="q16" value="G"> \\(10.25\\)</label>
+</div>
+
+
+
+
+`,
+
+
+    `<div class="question-number">Question 17</div>
+
+<p>A circle \\(C_n\\) is defined by</p>
+
+<p>\\[ x^2 + y^2 = 2n(x + y) \\]</p>
+
+<p>where \\(n\\) is a positive integer.</p>
+
+<p>\\(C_1\\) and \\(C_2\\) are drawn and the area between them is shaded.</p>
+
+<p>Next, \\(C_3\\) and \\(C_4\\) are drawn and the area between them is shaded.</p>
+
+<p>This is shown in the diagram.</p>
+
+<p><img src="https://static.wixstatic.com/media/98f2c5_0beb14cfb34b4c208253d770abefb340~mv2.png" alt="Concentric shaded circles diagram" style="max-width: 40%; height: auto;"></p>
+
+<p>This process continues until 100 circles have been drawn.</p>
+
+<p>What is the total shaded area?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q17" value="A"> \\(100\\pi\\)</label>
+  <label class="option"><input type="radio" name="q17" value="B"> \\(500\\pi\\)</label>
+  <label class="option"><input type="radio" name="q17" value="C"> \\(2500\\pi\\)</label>
+  <label class="option"><input type="radio" name="q17" value="D"> \\(5050\\pi\\)</label>
+  <label class="option"><input type="radio" name="q17" value="E"> \\(10100\\pi\\)</label>
+  <label class="option"><input type="radio" name="q17" value="F"> \\(40400\\pi\\)</label>
+</div>
+
+
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 18</div>
+
+<p>You are given that</p>
+
+<p>
+\\[
+S = 4 + \\frac{8k}{7} + \\frac{16k^2}{49} + \\frac{32k^3}{343} + \\cdots + 4 \\left( \\frac{2k}{7} \\right)^n + \\cdots
+\\]
+</p>
+
+<p>The value for \\(k\\) is chosen as an integer in the range \\(-5 \\leq k \\leq 5\\).</p>
+
+<p>All possible values for \\(k\\) are equally likely to be chosen.</p>
+
+<p>What is the probability that the value of \\(S\\) is a finite number greater than 3?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q18" value="A"> \\(\\frac{1}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="B"> \\(\\frac{1}{10}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="C"> \\(\\frac{3}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="D"> \\(\\frac{3}{10}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="E"> \\(\\frac{5}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="F"> \\(\\frac{1}{2}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="G"> \\(\\frac{7}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="H"> \\(\\frac{7}{10}\\)</label>
+</div>
+
+
+
+
+
+
+`,
+
+
+    `<div class="question-number">Question 19</div>
+
+<p>The solution to the differential equation</p>
+
+<p>
+\\[
+\\frac{dy}{dx} = |{-6x}| \\quad \\text{for all } x
+\\]
+</p>
+
+<p>is \\( y = f(x) + c \\), where \\( c \\) is a constant.</p>
+
+<p>Which one of the following is a correct expression for \\( f(x) \\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q19" value="A"> \\(-\\frac{6x}{\\lvert x \\rvert}\\)</label>
+  <label class="option"><input type="radio" name="q19" value="B"> \\(\\frac{6x}{\\lvert x \\rvert}\\)</label>
+  <label class="option"><input type="radio" name="q19" value="C"> \\(-3x\\lvert x \\rvert\\)</label>
+  <label class="option"><input type="radio" name="q19" value="D"> \\(3x\\lvert x \\rvert\\)</label>
+  <label class="option"><input type="radio" name="q19" value="E"> \\(-3x^2\\)</label>
+  <label class="option"><input type="radio" name="q19" value="F"> \\(3x^2\\)</label>
+  <label class="option"><input type="radio" name="q19" value="G"> \\(-x^3\\)</label>
+  <label class="option"><input type="radio" name="q19" value="H"> \\(x^3\\)</label>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 20</div>
+
+<p>The diagram shows the graph of \\( y = f(x) \\).</p>
+
+<p><img src="https://static.wixstatic.com/media/98f2c5_757b594cb7aa413eaff0742abc6dd210~mv2.png" alt="Graph of function" style="max-width: 60%; height: auto;"></p>
+
+<p>The function \\( f \\) attains its maximum value of 2 at \\( x = 1 \\), and its minimum value of \\(-2\\) at \\( x = -1 \\).</p>
+
+<p>Find the difference between the maximum and minimum values of \\( f(x)^2 - f(x) \\).</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q20" value="A"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q20" value="B"> \\(\\frac{9}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="C"> \\(4\\)</label>
+  <label class="option"><input type="radio" name="q20" value="D"> \\(\\frac{17}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="E"> \\(6\\)</label>
+  <label class="option"><input type="radio" name="q20" value="F"> \\(\\frac{25}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="G"> \\(8\\)</label>
+  <label class="option"><input type="radio" name="q20" value="H"> \\(\\frac{33}{4}\\)</label>
+</div>
+
+
+
+
+
+`,
+
+`<div class="question-number">Question 1</div>
+
+<p>Given that</p>
+
+<p>
+\\[
+\\frac{1}{\\sqrt{x} - 6} - \\frac{1}{\\sqrt{x} + 6} = \\frac{3}{11}
+\\]
+</p>
+
+<p>What is the value of \\( x \\)?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q21" value="A"> \\( 2\\sqrt{15} \\)</label>
+  <label class="option"><input type="radio" name="q21" value="B"> \\( 4\\sqrt{5} \\)</label>
+  <label class="option"><input type="radio" name="q21" value="C"> \\( 5\\sqrt{2} \\)</label>
+  <label class="option"><input type="radio" name="q21" value="D"> \\( \\sqrt{58} \\)</label>
+  <label class="option"><input type="radio" name="q21" value="E"> \\( 50 \\)</label>
+  <label class="option"><input type="radio" name="q21" value="F"> \\( 58 \\)</label>
+  <label class="option"><input type="radio" name="q21" value="G"> \\( 60 \\)</label>
+  <label class="option"><input type="radio" name="q21" value="H"> \\( 80 \\)</label>
+</div>
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 2</div>
+
+<p>Evaluate</p>
+
+<p>
+\\[
+\\int_{9}^{16} \\left( \\frac{1}{\\sqrt{x}} + \\sqrt{x} \\right)^2 \\, dx
+\\; - \\;
+\\int_{9}^{16} \\left( \\frac{1}{\\sqrt{x}} - \\sqrt{x} \\right)^2 \\, dx
+\\]
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q22" value="A"> \\( 0 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="B"> \\( 2 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="C"> \\( 4 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="D"> \\( 7 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="E"> \\( 14 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="F"> \\( 28 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="G"> \\( 75 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="H"> \\( 175 \\)</label>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 3</div>
+
+<p>Consider the claim:</p>
+
+<p style="margin-left: 2em;">
+For all positive real numbers \\( x \\) and \\( y \\), <br>
+\\[ \\sqrt{x^y} = x^{\\sqrt{y}} \\]
+</p>
+
+<p>Which of the following is/are a <strong>counterexample</strong> to the claim?</p>
+
+<ul>
+  <li>I &nbsp;&nbsp;&nbsp; \\( x = 1, \\; y = 16 \\)</li>
+  <li>II &nbsp;&nbsp; \\( x = 2, \\; y = 8 \\)</li>
+  <li>III &nbsp; \\( x = 3, \\; y = 4 \\)</li>
+</ul>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q23" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q23" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q23" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q23" value="D"> III only</label>
+  <label class="option"><input type="radio" name="q23" value="E"> I and II only</label>
+  <label class="option"><input type="radio" name="q23" value="F"> I and III only</label>
+  <label class="option"><input type="radio" name="q23" value="G"> II and III only</label>
+  <label class="option"><input type="radio" name="q23" value="H"> I, II and III</label>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 4</div>
+
+<p>A student attempts to answer the following question:</p>
+
+<p style="margin-left: 1em;">
+  What is the largest number of consecutive odd integers that are all prime?
+</p>
+
+<p>The student’s attempt is as follows:</p>
+
+<ol style="list-style-type: upper-roman; margin-left: 2em;">
+  <li>There are two consecutive odd integers that are prime (for example: 17, 19).</li>
+  <li>Any three consecutive odd integers can be written in the form <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;\\( n - 2, \\; n, \\; n + 2 \\) for some \\( n \\).</li>
+  <li>If \\( n \\) is one more than a multiple of 3, then \\( n + 2 \\) is a multiple of 3.</li>
+  <li>If \\( n \\) is two more than a multiple of 3, then \\( n - 2 \\) is a multiple of 3.</li>
+  <li>The only other possibility is that \\( n \\) is a multiple of 3.</li>
+  <li>In each case, one of the integers is a multiple of 3, so not prime.</li>
+  <li>Therefore the largest number of consecutive odd integers that are all prime is two.</li>
+</ol>
+
+<p>Which of the following best describes this attempt?</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q24" value="A"> It is completely correct.</label>
+  <label class="option"><input type="radio" name="q24" value="B"> It is incorrect, and the first error is on line I.</label>
+  <label class="option"><input type="radio" name="q24" value="C"> It is incorrect, and the first error is on line II.</label>
+  <label class="option"><input type="radio" name="q24" value="D"> It is incorrect, and the first error is on line III.</label>
+  <label class="option"><input type="radio" name="q24" value="E"> It is incorrect, and the first error is on line IV.</label>
+  <label class="option"><input type="radio" name="q24" value="F"> It is incorrect, and the first error is on line V.</label>
+  <label class="option"><input type="radio" name="q24" value="G"> It is incorrect, and the first error is on line VI.</label>
+  <label class="option"><input type="radio" name="q24" value="H"> It is incorrect, and the first error is on line VII.</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 5</div>
+
+<p>Consider the two statements:</p>
+
+<p>
+  R:&nbsp;&nbsp;\\( k \\) is an integer multiple of \\( \\pi \\)<br>
+  S:&nbsp;&nbsp;\\[ \\int_{0}^{k} \\sin 2x \\, dx = 0 \\]
+</p>
+
+<p>Which of the following statements is true?</p>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q25" value="A">
+    R is&nbsp;<strong>necessary and sufficient</strong>&nbsp;for S.
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q25" value="B">
+    R is&nbsp;<strong>necessary</strong>&nbsp;but&nbsp;<strong>not sufficient</strong>&nbsp;for S.
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q25" value="C">
+    R is&nbsp;<strong>sufficient</strong>&nbsp;but&nbsp;<strong>not necessary</strong>&nbsp;for S.
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q25" value="D">
+    R is&nbsp;<strong>not necessary</strong>&nbsp;and&nbsp;<strong>not sufficient</strong>&nbsp;for S.
+  </label>
+</div>
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 6</div>
+
+<p>
+  Consider the following equation where \\( a \\) is a real number and \\( a &gt; 1 \\):
+</p>
+
+<p>
+  \\[ (*) \\qquad a^x = x \\]
+</p>
+
+<p>
+  Which of the following equations must have the same number of real solutions as \\((*)\\)?
+</p>
+
+<p>
+  I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\( \\log_a x = x \\)<br>
+  II&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\( a^{2x} = x^2 \\)<br>
+  III&nbsp;&nbsp;&nbsp;\\( a^{2x} = 2x \\)
+</p>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q26" value="A">
+    none of them
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="B">
+    I only
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="C">
+    II only
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="D">
+    III only
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="E">
+    I and II only
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="F">
+    I and III only
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="G">
+    II and III only
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q26" value="H">
+    I, II and III
+  </label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 7</div>
+
+<p>
+  The graph of the line \\( ax + by = c \\) is drawn, where \\( a, b \\) and \\( c \\) are real non-zero constants.
+</p>
+
+<p>
+  Which one of the following is a <strong>necessary</strong> but <u>not sufficient</u> condition for the line to have a positive gradient <strong>and</strong> a positive \\( y \\)-intercept?
+</p>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q27" value="A">
+    \\( \\dfrac{c}{b} &gt; 0 \\quad \\text{and} \\quad \\dfrac{a}{b} &lt; 0 \\)
+  </label>
+  <label class="option">
+    <input type="radio" name="q27" value="B">
+    \\( \\dfrac{c}{b} &lt; 0 \\quad \\text{and} \\quad \\dfrac{a}{b} &gt; 0 \\)
+  </label>
+  <label class="option">
+    <input type="radio" name="q27" value="C">
+    \\( a &gt; b &gt; c \\)
+  </label>
+  <label class="option">
+    <input type="radio" name="q27" value="D">
+    \\( a &lt; b &lt; c \\)
+  </label>
+  <label class="option">
+    <input type="radio" name="q27" value="E">
+    \\( a \\text{ and } c \\text{ have opposite signs} \\)
+  </label>
+  <label class="option">
+    <input type="radio" name="q27" value="F">
+    \\( a \\text{ and } c \\text{ have the same sign} \\)
+  </label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 8</div>
+
+<p>
+  A student draws a triangle that is acute-angled or obtuse-angled but <strong>not</strong> right-angled.
+</p>
+
+<p>
+  The student counts the number of straight lines that divide the triangle into two triangles, <strong>at least one</strong> of which is right-angled.
+</p>
+
+<p>
+  Which of the following statements is/are true?
+</p>
+
+<ul>
+  <li>I. The student can draw a triangle for which there is exactly 1 such straight line.</li>
+  <li>II. The student can draw a triangle for which there are exactly 2 such straight lines.</li>
+  <li>III. The student can draw a triangle for which there are exactly 3 such straight lines.</li>
+</ul>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q28" value="A">
+    none of them
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="B">
+    I only
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="C">
+    II only
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="D">
+    III only
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="E">
+    I and II only
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="F">
+    I and III only
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="G">
+    II and III only
+  </label>
+  <label class="option">
+    <input type="radio" name="q28" value="H">
+    I, II and III
+  </label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 9</div>
+
+<p>
+  Consider the following statement about a pentagon P:
+</p>
+
+<p>
+  <strong>(∗)</strong>&nbsp; <em>If</em> at least one of the interior angles in P is 108°, <em>then</em> all the interior angles in P form an arithmetic sequence.
+</p>
+
+<p>
+  Which of the following is/are true?
+</p>
+
+<ul>
+  <li>I. The statement (∗)</li>
+  <li>II. The contrapositive of (∗)</li>
+  <li>III. The converse of (∗)</li>
+</ul>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q29" value="A">
+    none of them
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="B">
+    I only
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="C">
+    II only
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="D">
+    III only
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="E">
+    I and II only
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="F">
+    I and III only
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="G">
+     II and III only
+  </label>
+  <label class="option">
+    <input type="radio" name="q29" value="H">
+    I, II and III
+  </label>
+</div>
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 10</div>
+
+<p>
+Here is an attempt to solve the inequality
+</p>
+
+<p>\\[
+x^4 - 2x^2 - 3 < 0
+\\]</p>
+
+<p>by completing the square:</p>
+
+<p>\\[
+x^4 - 2x^2 - 3 < 0
+\\]</p>
+
+<ul>
+  <li>I &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( x^4 - 2x^2 + 1 < 4 \\)</li>
+  <li>II &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( (x^2 - 1)^2 < 4 \\)</li>
+  <li>III &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( -2 < x^2 - 1 < 2 \\)</li>
+  <li>IV &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( x^2 - 1 < 2 \\)</li>
+  <li>V &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( x^2 < 3 \\)</li>
+  <li>VI &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( -\\sqrt{3} < x < \\sqrt{3} \\)</li>
+</ul>
+
+<p>Which of the following statements is true?</p>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q30" value="A">
+     The argument is completely correct.
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q30" value="B">
+    The first error occurs in line I.
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q30" value="C">
+    The first error occurs in line II.
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q30" value="D">
+    The first error occurs in line III.
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q30" value="E">
+    The first error occurs in line IV.
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q30" value="F">
+    The first error occurs in line V.
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q30" value="G">
+    The first error occurs in line VI.
+  </label>
+</div>
+
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 11</div>
+
+<p>In this question, \\( k \\) is a positive integer.</p>
+
+<p>Consider the following theorem:</p>
+
+<p>
+  <strong>If</strong> \\( 2^k + 1 \\) is a prime, <strong>then</strong> \\( k \\) is a power of 2.
+  &nbsp;&nbsp;&nbsp;\\((\\ast)\\)
+</p>
+
+<p>Which of the following statements, taken individually, is/are equivalent to \\((\\ast)\\)?</p>
+
+<ul>
+  <li>I &nbsp;&nbsp;&nbsp; <strong>If</strong> \\( k \\) is a power of 2, <strong>then</strong> \\( 2^k + 1 \\) is prime.</li>
+  <li>II &nbsp;&nbsp;&nbsp; \\( 2^k + 1 \\) is <strong>not prime only if</strong> \\( k \\) is <strong>not</strong> a power of 2.</li>
+  <li>III &nbsp;&nbsp;&nbsp; A <strong>sufficient</strong> condition for \\( k \\) to be a power of 2 is that \\( 2^k + 1 \\) is prime.</li>
+</ul>
+
+<p>Select the row that correctly identifies which of these statements are logically equivalent to \\((\\ast)\\).</p>
+
+<table border="1" cellspacing="0" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Statement I<br>is equivalent to \\((\\ast)\\)</th>
+      <th>Statement II<br>is equivalent to \\((\\ast)\\)</th>
+      <th>Statement III<br>is equivalent to \\((\\ast)\\)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="A"> </label></td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="B"> </label></td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="C"> </label></td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="D"> </label></td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="E"> </label></td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="F"> </label></td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="G"> </label></td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><label class="option"><input type="radio" name="q31" value="H"> </label></td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 12</div>
+
+<p>In this question, \\( p \\) is a real constant.</p>
+
+<p>
+The equation
+\\[
+\\sin x \\cos^2 x = p^2 \\sin x
+\\]
+has \\( n \\) distinct solutions in the range \\( 0 \\leq x \\leq 2\\pi \\).
+</p>
+
+<p>Which of the following statements is/are true?</p>
+
+<ul>
+  <li>I &nbsp;&nbsp;&nbsp; \\( n = 3 \\) is <strong>sufficient</strong> for \\( p &gt; 1 \\)</li>
+  <li>II &nbsp;&nbsp;&nbsp; \\( n = 7 \\) <strong>only if</strong> \\( -1 &lt; p &lt; 1 \\)</li>
+</ul>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q32" value="A">
+    none of them
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q32" value="B">
+    I only
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q32" value="C">
+    II only
+  </label><br>
+  <label class="option">
+    <input type="radio" name="q32" value="D">
+    I and II
+  </label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 13</div>
+
+<p>Let \\( x \\) be a real number.</p>
+
+<p>
+Which <strong>one</strong> of the following statements is a <strong>sufficient</strong> condition for
+<strong>exactly three</strong> of the other four statements?
+</p>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q33" value="A">
+    \\( x \\geq 0 \\)
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q33" value="B">
+    \\( x = 1 \\)
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q33" value="C">
+    \\( x = 0 \\text{ or } x = 1 \\)
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q33" value="D">
+    \\( x \\geq 0 \\text{ or } x \\leq 1 \\)
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q33" value="E">
+    \\( x \\geq 0 \\text{ and } x \\leq 1 \\)
+  </label>
+</div>
+
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 14</div>
+
+<p>
+Three lines are given by the equations:
+</p>
+
+<p>
+\\[
+\\begin{aligned}
+ax + by + c &= 0 \\\\
+bx + cy + a &= 0 \\\\
+cx + ay + b &= 0
+\\end{aligned}
+\\]
+</p>
+
+<p>
+where \\( a, b, c \\) are non-zero real numbers.
+</p>
+
+<p>
+Which one of the following is correct?
+</p>
+
+<div class="options">
+  <label class="option">
+    <input type="radio" name="q34" value="A">
+    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; all three are parallel.
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q34" value="B">
+    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; the third is perpendicular to the other two.
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q34" value="C">
+    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; the third is parallel to &nbsp;\\( y = x \\).
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q34" value="D">
+    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; the third is perpendicular to &nbsp;\\( y = x \\).
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q34" value="E">
+    <strong>If</strong>&nbsp; two of the lines are perpendicular,&nbsp; <strong>then</strong>&nbsp; all three meet at a point.
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q34" value="F">
+    <strong>If</strong>&nbsp; two of the lines are perpendicular,&nbsp; <strong>then</strong>&nbsp; the third is parallel to &nbsp;\\( y = x \\).
+  </label><br>
+
+  <label class="option">
+    <input type="radio" name="q34" value="G">
+    <strong>If</strong>&nbsp; two of the lines are perpendicular,&nbsp; <strong>then</strong>&nbsp; the third is perpendicular to &nbsp;\\( y = x \\).
+  </label>
+</div>
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 15</div>
+
+<p>
+The base 10 number 0.03841 has the value
+</p>
+
+<p>
+\\[
+0 \\times 10^{-1} + 3 \\times 10^{-2} + 8 \\times 10^{-3} + 4 \\times 10^{-4} + 1 \\times 10^{-5} = 0.03841
+\\]
+</p>
+
+<p>
+Similarly, the base 2 number 0.01101 has the value
+</p>
+
+<p>
+\\[
+0 \\times 2^{-1} + 1 \\times 2^{-2} + 1 \\times 2^{-3} + 0 \\times 2^{-4} + 1 \\times 2^{-5} = \\frac{13}{32}
+\\]
+</p>
+
+<p>
+What is the value of the recurring base 2 number \\( 0.\\dot{0}\\dot{011} = 0.001100110011\\ldots \\)?
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q35" value="A"> \\( \\frac{1}{3} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="B"> \\( \\frac{1}{5} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="C"> \\( \\frac{1}{15} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="D"> \\( \\frac{2}{15} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="E"> \\( \\frac{4}{15} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="F"> \\( \\frac{3}{16} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="G"> \\( \\frac{5}{16} \\)</label>
+  <label class="option"><input type="radio" name="q35" value="H"> \\( \\frac{6}{31} \\)</label><br>
+</div>
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 16</div>
+
+<p>A sequence is defined by:</p>
+
+<p>
+\\[
+\\begin{aligned}
+u_1 &= a \\\\
+u_2 &= b \\\\
+u_{n+2} &= u_n + u_{n+1} \\quad \\text{for } n \\geq 1
+\\end{aligned}
+\\]
+</p>
+
+<p>
+where \\( a \\) and \\( b \\) are positive integers. The highest common factor of \\( a \\) and \\( b \\) is 7.
+</p>
+
+<p>Which of the following statements <strong>must</strong> be true?</p>
+
+<p>I.&nbsp;&nbsp;&nbsp;&nbsp;\\( u_{2023} \\) is a multiple of 7</p>
+<p>II.&nbsp;&nbsp;&nbsp;If \\( u_1 \\) is not a factor of \\( u_2 \\), then \\( u_1 \\) is not a factor of \\( u_n \\) for any \\( n > 1 \\)</p>
+<p>III.&nbsp;&nbsp;The highest common factor of \\( u_1 \\) and \\( u_5 \\) is 7</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q36" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q36" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q36" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q36" value="D"> III only</label>
+  <label class="option"><input type="radio" name="q36" value="E"> I and II only</label>
+  <label class="option"><input type="radio" name="q36" value="F"> I and III only</label>
+  <label class="option"><input type="radio" name="q36" value="G"> II and III only</label>
+  <label class="option"><input type="radio" name="q36" value="H"> I, II and III</label><br>
+</div>
+
+
+
+
+
+
+
+`,
+
+
+    `<div class="question-number">Question 17</div>
+
+<p>
+The ceiling of \\( x \\), written \\( \\lceil x \\rceil \\), is defined to be the value of \\( x \\) rounded up to the nearest integer.
+</p>
+
+<p>
+For example:
+\\[
+\\lceil \\pi \\rceil = 4, \\quad \\lceil 2.1 \\rceil = 3, \\quad \\lceil 8 \\rceil = 8
+\\]
+</p>
+
+<p>
+What is the value of the following integral?
+</p>
+
+<p>
+\\[
+\\int_0^{99} 2^{\\lceil x \\rceil} \\, dx
+\\]
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q37" value="A"> \\( 2^{99} \\)</label>
+  <label class="option"><input type="radio" name="q37" value="B"> \\( 2^{99} - 1 \\)</label>
+  <label class="option"><input type="radio" name="q37" value="C"> \\( 2^{99} - 2 \\)</label>
+  <label class="option"><input type="radio" name="q37" value="D"> \\( 2^{100} \\)</label>
+  <label class="option"><input type="radio" name="q37" value="E"> \\( 2^{100} - 1 \\)</label>
+  <label class="option"><input type="radio" name="q37" value="F"> \\( 2^{100} - 2 \\)</label><br>
+</div>
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 18</div>
+
+<p>
+The equation 
+\\[
+x^4 + bx^2 + c = 0
+\\]
+has four distinct real roots <strong>if and only if</strong> which of the following conditions is satisfied?
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q38" value="A"> \\( b^2 > 4c \\)</label>
+  <label class="option"><input type="radio" name="q38" value="B"> \\( b^2 < 4c \\)</label>
+  <label class="option"><input type="radio" name="q38" value="C"> \\( c > 0 \\quad \\text{and} \\quad b > 2\\sqrt{c} \\)</label>
+  <label class="option"><input type="radio" name="q38" value="D"> \\( c > 0 \\quad \\text{and} \\quad b < -2\\sqrt{c} \\)</label>
+  <label class="option"><input type="radio" name="q38" value="E"> \\( c < 0 \\quad \\text{and} \\quad b < 0 \\)</label>
+  <label class="option"><input type="radio" name="q38" value="F"> \\( c < 0 \\quad \\text{and} \\quad b > 0 \\)</label>
+</div>
+
+
+
+
+
+
+`,
+
+
+    `<div class="question-number">Question 19</div>
+
+<p>
+In this question, \\( f(x) \\) is a non-constant polynomial, and \\( g(x) = x f'(x) \\).
+</p>
+
+<p>
+\\[
+f(x) = 0 \\quad \\text{for exactly } M \\text{ real values of } x.
+\\]
+\\[
+g(x) = 0 \\quad \\text{for exactly } N \\text{ real values of } x.
+\\]
+</p>
+
+<p>
+Which of the following statements is/are true?
+</p>
+
+<p>
+I.&nbsp;&nbsp;&nbsp;It is possible that \\( M &lt; N \\)<br>
+II.&nbsp;&nbsp;It is possible that \\( M = N \\)<br>
+III.&nbsp;&nbsp;It is possible that \\( M &gt; N \\)
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q39" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q39" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q39" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q39" value="D"> III only</label>
+  <label class="option"><input type="radio" name="q39" value="E"> I and II only</label>
+  <label class="option"><input type="radio" name="q39" value="F"> I and III only</label>
+  <label class="option"><input type="radio" name="q39" value="G"> II and III only</label>
+  <label class="option"><input type="radio" name="q39" value="H">I, II and III</label>
+</div>
+
+
+
+
+
+
+`,
+
+    `<div class="question-number">Question 20</div>
+
+<p>
+Let \\( f \\) be a polynomial with real coefficients.
+</p>
+
+<p>
+The integral \\( I_{p,q} \\), where \\( p &lt; q \\), is defined by:
+</p>
+
+<p>
+\\[
+I_{p,q} = \\int_{p}^{q} \\left( (f(x))^2 - \\left( f(|x|) \\right)^2 \\right) \\, \\mathrm{d}x
+\\]
+</p>
+
+<p>
+Which of the following statements must be true?
+</p>
+
+<p>
+1.&emsp; \\( I_{p,q} = 0 \\) <strong>only if</strong> \\( 0 &lt; p \\)<br>
+2.&emsp; \\( f'(x) &lt; 0 \\) for all \\( x \\) <strong>only if</strong> \\( I_{p,q} &lt; 0 \\) for all \\( p &lt; q &lt; 0 \\)<br>
+3.&emsp; \\( I_{p,q} &gt; 0 \\) <strong>only if</strong> \\( p &lt; 0 \\)
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q40" value="A"> none of them</label><br>
+  <label class="option"><input type="radio" name="q40" value="B"> 1 only</label><br>
+  <label class="option"><input type="radio" name="q40" value="C"> 2 only</label><br>
+  <label class="option"><input type="radio" name="q40" value="D"> 3 only</label><br>
+  <label class="option"><input type="radio" name="q40" value="E"> 1 and 2 only</label><br>
+  <label class="option"><input type="radio" name="q40" value="F"> 1 and 3 only</label><br>
+  <label class="option"><input type="radio" name="q40" value="H"> 1, 2 and 3</label>
+</div>
+
+
+
+
+
+
+`,
+
+  ];
+
+  function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const testSelect = document.getElementById("test-date").value;	
+const emailInput = document.getElementById("student-email").value.trim();
+if (!emailInput) {
+  alert("Please enter your email address.");
+  return;
+}
+studentEmail = emailInput; // define this globally
+
+  if (!nameInput) {
+    alert("Please enter your full name before starting the exam.");
+    return;
+  }
+
+  studentName = nameInput;
+  testSession = testSelect;
+
+  document.getElementById("instructions").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+  timerInterval = setInterval(updateTimer, 1000);
+  renderQuestion();
+}
+
+
+  function updateTimer() {
+  if (minutes === 0 && seconds === 0) {
+    clearInterval(timerInterval);
+
+    // ⏱️ record time spent on the current question before leaving the paper
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+    lastTimestamp = Date.now();
+
+    if (paper === 1) {
+      // ⛔️ Don't submit here — go to the break screen
+      showBreakScreen();
+    } else {
+      // ✅ Paper 2 end: now submit the entire test
+      submitExam();
+    }
+    return;
+  }
+
+  if (seconds === 0) {
+    minutes--;
+    seconds = 59;
+  } else {
+    seconds--;
+  }
+
+  const mm = minutes.toString().padStart(2, '0');
+  const ss = seconds.toString().padStart(2, '0');
+  timerDisplay.textContent = `${mm}:${ss}`;
+}
+
+
+  
+function prevQuestion() {
+  // Prevent moving back from Paper 2 Question 1 to Paper 1
+  if (paper === 2 && current === 20) {
+    return; // Do nothing
+  }
+
+  if (current > 0) {
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // ⏱️ record time on current
+    current--;
+    lastTimestamp = Date.now(); // ⏱️ reset for previous question
+    renderQuestion();
+  }
+}
+
+
+
+function submitExam() {
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  clearInterval(timerInterval);
+
+  let paper1Score = 0;
+  let paper2Score = 0;
+  const timestamp = new Date().toLocaleString();
+
+  const paper1Rows = [];
+  const paper2Rows = [];
+
+  for (let i = 0; i < correctAnswers.length; i++) {
+    const yourAns = userAnswers[i] ?? "–";
+    const correctAns = correctAnswers[i];
+    const isCorrect = yourAns === correctAns;
+
+    const rawTime = Math.floor(timeSpent[i] ?? 0); // fallback if undefined
+    const mins = Math.floor(rawTime / 60);
+    const secs = rawTime % 60;
+
+    const row = `
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 6px;">${(i % 20) + 1}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${mins}m ${secs}s</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${isCorrect ? "✅" : "❌"}</td>
+      </tr>`;
+
+    if (i < 20) {
+      paper1Rows.push(row);
+      if (isCorrect) paper1Score++;
+    } else {
+      paper2Rows.push(row);
+      if (isCorrect) paper2Score++;
+    }
+  }
+let paper1Analysis = "Paper 1 Analysis\n";
+let paper2Analysis = "Paper 2 Analysis\n";
+
+for (let i = 0; i < 20; i++) {
+  const secs = Math.round(timeSpent[i]);
+  const mm = String(Math.floor(secs / 60)).padStart(2, '0');
+  const ss = String(secs % 60).padStart(2, '0');
+  const yourAns = userAnswers[i] ?? "-";
+  const correctAns = correctAnswers[i];
+  paper1Analysis += `Q.${i + 1} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}\n`;
+}
+
+for (let i = 20; i < 40; i++) {
+  const secs = Math.round(timeSpent[i]);
+  const mm = String(Math.floor(secs / 60)).padStart(2, '0');
+  const ss = String(secs % 60).padStart(2, '0');
+  const yourAns = userAnswers[i] ?? "-";
+  const correctAns = correctAnswers[i];
+  paper2Analysis += `Q.${i - 19} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}\n`;
+}
+
+  const totalScore = paper1Score + paper2Score;
+  const emoji = totalScore >= 30 ? "😊" : "😐";
+// TS_TMUA_SCORE9_FULL_SUBMIT_V6
+const score9Block = window.TS_TMUA_SCORE9_BLOCK
+  ? window.TS_TMUA_SCORE9_BLOCK({
+      overallRaw: totalScore,
+      totalQ: 40,
+      p1Raw: paper1Score,
+      p2Raw: paper2Score,
+      thr: 6,
+      scoringPdfUrl: window.TS_TMUA_SCORING_PDF || ""
+    })
+  : "";
+
+const testTitle = document.getElementById("test-title").textContent.trim();
+
+  // Email summary
+  emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+    name: studentName,
+ test_title: testTitle,
+to_email: studentEmail,
+solution_link: solutionPDF,
+    session: testSession,
+    score: `${totalScore} / 40`,
+    timestamp: timestamp,
+paper1: paper1Analysis.trim(),
+  paper2: paper2Analysis.trim()
+
+  });
+
+  // 📊 Score reference data
+  const scoreData = {
+    paper1: { threshold: 14, average: 8 },
+    paper2: { threshold: 14, average: 9 },
+  };
+
+  const makePaperTable = (title, score, rows, paperKey) => {
+    const { threshold, average } = scoreData[paperKey];
+    return `
+      <div style="margin-bottom: 50px;">
+        <h2>${title}</h2>
+        <table style="border-collapse: collapse; margin-bottom: 20px; font-size: 16px;">
+          <tr><td style="border: 1px solid #ccc; padding: 8px;">Your Score</td><td style="border: 1px solid #ccc; padding: 8px;">${score} / 20</td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 8px;">Threshold Score</td><td style="border: 1px solid #ccc; padding: 8px;">${threshold} / 20</td></tr>
+          <tr><td style="border: 1px solid #ccc; padding: 8px;">Average Test Taker Score</td><td style="border: 1px solid #ccc; padding: 8px;">${average} / 20</td></tr>
+        </table>
+        <table style="border-collapse: collapse; width: 100%; font-size: 15px;">
+          <thead style="background-color: #f0f0f0;">
+            <tr>
+              <th style="border: 1px solid #ccc; padding: 6px;">Q#</th>
+              <th style="border: 1px solid #ccc; padding: 6px;">Your Ans</th>
+              <th style="border: 1px solid #ccc; padding: 6px;">Correct</th>
+              <th style="border: 1px solid #ccc; padding: 6px;">Time</th>
+              <th style="border: 1px solid #ccc; padding: 6px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>${rows.join("")}</tbody>
+        </table>
+      </div>
+    `;
+  };
+
+  const html = `
+    <div style="padding: 40px; max-width: 900px; margin: auto;">
+      <div style="text-align: center;">
+        <div style="font-size: 160px;">${emoji}</div>
+        <h1>Exam Completed</h1>
+
+      ${score9Block}
+        <table style="border-collapse: collapse; margin: 20px auto; font-size: 18px;">
+          <tr style="background: #f9f9f9;">
+            <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
+            <td style="border: 1px solid #ccc; padding: 10px 20px;">${studentName}</td>
+          </tr>
+          <tr style="background: #f9f9f9;">
+            <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Total Score</strong></td>
+            <td style="border: 1px solid #ccc; padding: 10px 20px;">${totalScore} / 40</td>
+          </tr>
+        </table>
+      </div>
+
+      ${makePaperTable("Paper 1 Analysis", paper1Score, paper1Rows, "paper1")}
+      ${makePaperTable("Paper 2 Analysis", paper2Score, paper2Rows, "paper2")}
+
+      <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
+  <iframe 
+  id="solution-frame"
+  width="100%" 
+  height="600px" 
+  style="border: 1px solid #ccc; margin-top: 10px;">
+</iframe>
+    </div>
+  `;
+
+  container.innerHTML = html;
+document.getElementById("solution-frame").src = solutionPDF;
+  document.querySelector(".footer").style.display = "none";
+
+  try { window.__TS_SET_WARN_ON_LEAVE && window.__TS_SET_WARN_ON_LEAVE(false); } catch(e){}
+}
+
+
+
+
+
+function generateNavigatorButtons() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = ""; // Clear previous buttons
+
+  // ✅ Set heading to Paper 1 or Paper 2
+  document.getElementById("navigator-heading").textContent = (paper === 1) ? "Paper 1" : "Paper 2";
+
+  const offset = (paper === 1) ? 0 : 20;
+
+  for (let i = 0; i < 20; i++) {
+    const actualIndex = offset + i;
+
+    const btn = document.createElement("button");
+    btn.textContent = i + 1;
+    btn.dataset.index = actualIndex;
+    btn.id = `nav-btn-${actualIndex}`;
+    btn.style.padding = "10px";
+
+    btn.onclick = function () {
+      jumpTo(actualIndex);
+    };
+
+    grid.appendChild(btn);
+  }
+
+  // Update buttons’ flag styling
+  for (let i = 0; i < 20; i++) {
+    updateNavigatorButton(offset + i);
+  }
+}
+
+
+function showBreakScreen() {
+  clearInterval(timerInterval);
+
+  document.getElementById("exam-interface").style.display = "none";
+  document.getElementById("break-screen").style.display = "block";
+
+  breakMinutes = 5;
+  breakSeconds = 0;
+
+  breakInterval = setInterval(updateBreakTimer, 1000);
+}
+
+
+
+function skipBreak() {
+  clearInterval(breakInterval);
+  clearInterval(timerInterval); // stop any previous timer
+
+  // ✅ Reset timer to 75:00
+  minutes = 75;
+  seconds = 0;
+
+  // ✅ Start new 75-minute timer
+  timerInterval = setInterval(updateTimer, 1000);
+
+  // ✅ Switch to Paper 2
+  paper = 2;
+  current = 20;
+  lastTimestamp = Date.now(); // ✅ Start time tracking for Paper 2
+
+  renderQuestion();
+
+  // ✅ Regenerate navigator buttons for Paper 2
+  generateNavigatorButtons();
+
+  document.getElementById("break-screen").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+}
+
+
+
+
+function updateNavigatorButton(index) {
+  const btn = document.getElementById(`nav-btn-${index}`);
+  if (!btn) return;
+
+  if (flags[index]) {
+    btn.style.backgroundColor = "gold";
+    btn.style.fontWeight = "bold";
+    btn.textContent = `⚑ ${parseInt(btn.textContent)}`; // retain 1–20 display
+  } else {
+    btn.style.backgroundColor = "";
+    btn.style.fontWeight = "normal";
+    btn.textContent = btn.textContent.replace("⚑", "").trim();
+  }
+}
+
+window.onload = function () {
+  generateNavigatorButtons();
+  for (let i = 0; i < 20; i++) updateNavigatorButton(i);
+};
+
+
+</script>
+<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
+ background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+<h3 id="navigator-heading" style="margin-top: 0; color:#0074c1;"></h3>
+
+  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;">
+    <!-- Buttons will be generated here -->
+  </div>
+  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px;">Close</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("9jjn3yBHl6S88hITy"); // Replace with your actual public key
+  })();
+</script>
+
+<!-- TS_PATCH_KEYS_RC_V1 -->
+<script>
+(function(){
+  function disableRightClick(){
+    document.addEventListener("contextmenu", function(e){
+      e.preventDefault();
+    }, true);
+  }
+
+  function isTypingTarget(t){
+    if (!t) return false;
+    var tag = (t.tagName || "").toUpperCase();
+    return t.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+  }
+
+  function bindHotkeys(){
+    window.addEventListener("keydown", function(e){
+      if (!e.altKey) return;
+      if (e.ctrlKey || e.metaKey) return;
+      if (isTypingTarget(e.target)) return;
+
+      var k = (e.key || "").toLowerCase();
+      if (k === "n") {
+        e.preventDefault(); e.stopPropagation();
+        if (typeof nextQuestion === "function") nextQuestion();
+        else if (window.NAV && typeof window.NAV.next === "function") window.NAV.next();
+      } else if (k === "p") {
+        e.preventDefault(); e.stopPropagation();
+        if (typeof prevQuestion === "function") prevQuestion();
+        else if (window.NAV && typeof window.NAV.prev === "function") window.NAV.prev();
+      }
+    }, true);
+  }
+
+  function bootPatch(){
+    try { bindHotkeys(); } catch(_) {}
+    try { disableRightClick(); } catch(_) {}
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootPatch);
+  } else {
+    bootPatch();
+  }
+})();
+</script>
+<!-- /TS_PATCH_KEYS_RC_V1 -->
+<script>
+/* TS_TMUA_SCORE9_HELPER_V6 */
+(function(){
+  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
+  window.TS_TMUA_SCORING_PDF = "";
+
+  window.TS_TMUA_SCORE9 = function(rawCorrect, totalQuestions, thresholdRaw){
+    var raw = Number(rawCorrect || 0);
+    var total = Number(totalQuestions || 20);
+    var thr = Number(thresholdRaw || 6);
+    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
+    if (raw <= thr) return 1.0;
+    var frac = (raw - thr) / (total - thr);
+    var score9 = 1.0 + frac * 8.0;
+    score9 = clamp(score9, 1.0, 9.0);
+    return Math.round(score9 * 10) / 10;
+  };
+
+  window.TS_TMUA_SCORE9_BLOCK = function(opts){
+    opts = opts || {};
+    var totalQ = Number(opts.totalQ || 20);
+    var thr = Number(("thr" in opts) ? opts.thr : 6);
+    var scoringPdfUrl = String(opts.scoringPdfUrl || window.TS_TMUA_SCORING_PDF || "").trim();
+
+    function fmt(x){
+      var n = Number(x);
+      if (!isFinite(n)) n = 1.0;
+      return n.toFixed(1);
+    }
+
+    var overallRaw = Number(opts.overallRaw || 0);
+    var overall9 = window.TS_TMUA_SCORE9(overallRaw, totalQ, thr);
+
+    var p1Raw = ("p1Raw" in opts) ? Number(opts.p1Raw || 0) : null;
+    var p2Raw = ("p2Raw" in opts) ? Number(opts.p2Raw || 0) : null;
+    var hasPapers = (p1Raw !== null && p2Raw !== null);
+
+    var inner = ''
+      + '<div class="ts-score9-wrap">'
+      + '  <div class="ts-score9-row">'
+      + '    <div>'
+      + '      <div class="ts-score9-title">Estimated TMUA Score</div>'
+      + '      <div class="ts-score9-sub">Scale 1.0–9.0 (approx). Threshold anchored at raw ' + thr + '.</div>'
+      + '    </div>'
+      + '    <div class="ts-score9-chip">' + fmt(overall9) + ' / 9.0</div>'
+      + '  </div>';
+
+    if (hasPapers){
+      var p1_9 = window.TS_TMUA_SCORE9(p1Raw, 20, thr);
+      var p2_9 = window.TS_TMUA_SCORE9(p2Raw, 20, thr);
+      inner += ''
+        + '  <div class="ts-score9-grid">'
+        + '    <div class="ts-score9-card"><h4>Paper 1</h4><div class="ts-score9-big">' + fmt(p1_9) + '</div><div class="ts-score9-small">from ' + p1Raw + '/20</div></div>'
+        + '    <div class="ts-score9-card"><h4>Paper 2</h4><div class="ts-score9-big">' + fmt(p2_9) + '</div><div class="ts-score9-small">from ' + p2Raw + '/20</div></div>'
+        + '  </div>';
+    } else {
+      inner += '<div style="margin-top:12px;font-family:Arial,sans-serif;color:#555;font-size:12px;">Based on ' + overallRaw + ' / ' + totalQ + ' correct.</div>';
+    }
+
+    inner += ''
+      + '  <div class="ts-score9-note">'
+      + '    <div class="ts-score9-note__asterisk">*</div>'
+      + '    <div class="ts-score9-note__text">'
+      + '      <p class="ts-score9-note__title">Note</p>'
+      + '      <p class="ts-score9-note__sub">This TMUA score is an approximate mapping based on your raw correct count. It is not an official UAT-UK conversion.</p>'
+      + (scoringPdfUrl ? ('<a class="ts-score9-note__link" href="' + scoringPdfUrl + '" target="_blank" rel="noopener noreferrer">View scoring PDF</a>') : '')
+      + '    </div>'
+      + '  </div>'
+      + '</div>';
+
+    return inner;
+  };
+})();
+</script>
+<!-- TS_PATCH_WORKSPACE_BTN_V6 -->
+<style>
+.ts-workspace-btn{
+  position: fixed;
+  left: 14px;
+  bottom: 7px;
+  z-index: 2000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(17,24,39,0.18);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+  color: rgba(17,24,39,0.86);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  user-select: none;
+}
+body.ts-exam-done .ts-workspace-btn{
+  background: rgba(246, 196, 74, 0.95);
+  border: 1px solid rgba(146, 98, 0, 0.30);
+  color: rgba(43, 26, 0, 0.92);
+  font-weight: 800;
+}
+</style>
+
+<button type="button" class="ts-workspace-btn" id="tsWorkspaceBtn" aria-label="Back to TMUA Workspace">
+  &larr; TMUA Workspace
+</button>
+
+<script>
+(function(){
+  var DASH_URL = "https://apps.thrivingscholars.com/dashboard";
+  if (typeof window.__TS_EXAM_DONE === "undefined") window.__TS_EXAM_DONE = false;
+
+  function examDone(){
+    return !!window.__TS_EXAM_DONE || !!window.__TS_SUBMIT_ONCE;
+  }
+
+  function applyDoneUI(){
+    try {
+      if (examDone()) document.body.classList.add("ts-exam-done");
+      else document.body.classList.remove("ts-exam-done");
+    } catch(_) {}
+  }
+
+  function goWorkspace(){
+    window.location.href = DASH_URL;
+  }
+
+  function wrapSubmitExam(){
+    var orig = window.submitExam;
+    if (typeof orig !== "function") return;
+    if (orig.__TS_WRAPPED_DONE) return;
+
+    function wrappedSubmitExam(){
+      try { window.__TS_EXAM_DONE = true; } catch(_) {}
+      applyDoneUI();
+      return orig.apply(this, arguments);
+    }
+    wrappedSubmitExam.__TS_WRAPPED_DONE = true;
+    try { window.submitExam = wrappedSubmitExam; } catch(_) {}
+  }
+
+  function bindBtn(){
+    var b = document.getElementById("tsWorkspaceBtn");
+    if (!b) return;
+    if (b.getAttribute("data-bound")) return;
+    b.setAttribute("data-bound","1");
+
+    b.addEventListener("click", function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      if (examDone()) {
+        goWorkspace();
+        return;
+      }
+      if (window.confirm("Are you sure you want to go back? Your progress on the current test will be lost.")) {
+        goWorkspace();
+      }
+    }, true);
+  }
+
+  window.addEventListener("beforeunload", function(e){
+    if (examDone()) return;
+    e.preventDefault();
+    e.returnValue = "";
+    return "";
+  });
+
+  function boot(){
+    applyDoneUI();
+    wrapSubmitExam();
+    bindBtn();
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- /TS_PATCH_WORKSPACE_BTN_V6 -->
+</body>
+</html>
+

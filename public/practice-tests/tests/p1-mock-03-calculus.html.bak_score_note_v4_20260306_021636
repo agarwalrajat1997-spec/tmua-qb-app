@@ -1,0 +1,2047 @@
+﻿
+<!-- 
+1. <h2 id="test-title">TMUA MOCK TEST 2</h2>
+2. const correctAnswers
+3. const questions = [
+4. const solutionPDF =
+5. let plainTextSummary =
+6. <ul style="margin: 0; padding-left: 18px;">
+7. <td style="border:
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TMUA Mock Test 3 - Calculus</title>
+  <script type="text/javascript" async 
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+.top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+
+}
+.options label {
+  display: block;
+}
+
+#flag-btn {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#flag-btn.flagged {
+  background-color: yellow;
+  font-weight: bold;
+  border: 2px solid #999;
+}
+
+
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: white;
+    }
+    .header {
+      background: #0074c1;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .timer {
+      font-size: 14px;
+    }
+    .container {
+      padding: 20px 40px;
+    }
+    .question-number {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .options {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+    .option {
+      margin: 10px 0;
+    }
+    input[type="radio"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+    .footer {
+      background: #0074c1;
+      padding: 10px 20px;
+      text-align: right;
+    }
+    .footer button {
+      font-size: 16px;
+      padding: 6px 16px;
+      margin-left: 10px;
+      background: #005fa3;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    #instructions {
+      padding: 40px;
+      font-size: 18px;
+    }
+    #exam-interface {
+      display: none;
+    }
+
+/* âœ… START SCREEN ONLY â€” paste this at the VERY END of your <style> block.
+   It only targets #instructions and wonâ€™t affect the exam UI. */
+
+#instructions{
+  max-width: 1250px;
+  min-height: 560px;
+  margin: 60px auto;
+  background: #ffffff;
+  border: 2px solid #f2b233;
+  border-radius: 22px;
+  box-shadow:
+    0 18px 48px rgba(15, 23, 42, 0.12),
+    0 10px 26px rgba(242, 178, 51, 0.18);
+  padding: 64px 64px 70px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+}
+
+/* grey page backdrop ONLY while #instructions is visible */
+#instructions::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #f3f5f7;
+  z-index: -1;
+}
+
+/* title */
+#instructions #test-title{
+  margin: 0 0 18px 0;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0b1220;
+}
+
+/* paragraphs */
+#instructions p{
+  margin: 10px 0;
+  color: #0f172a;
+}
+
+/* keep your existing flex row, just make spacing nicer */
+#instructions > div:first-of-type{
+  margin: 34px 0 26px !important;
+}
+
+/* inputs/selects â€” only visual polish (keeps your widths/padding from inline styles) */
+#instructions input[type="text"],
+#instructions input[type="email"],
+#instructions select{
+  border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  outline: none !important;
+}
+
+#instructions input[type="text"]:focus,
+#instructions input[type="email"]:focus,
+#instructions select:focus{
+  border-color: #f2b233 !important;
+  box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
+}
+
+/* start button â€” only visuals (doesnâ€™t change your inline font-size/padding if you keep them) */
+#instructions button{
+  background: #f6c44a !important;
+  color: #2b1a00 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
+  cursor: pointer !important;
+}
+
+#instructions button:hover{
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+#instructions button:active{
+  transform: translateY(0px);
+  box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
+}
+
+/* optional: make the table feel â€œcard-likeâ€ but ONLY inside #instructions */
+#instructions table{
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* responsive */
+@media (max-width: 950px){
+  #instructions{
+    margin: 24px 16px;
+    padding: 40px 22px 44px;
+    min-height: auto;
+  }
+}
+/* âœ… Only affects images inside questions (wonâ€™t touch your start screen) */
+.question-media{
+  margin: 14px 0 18px;
+}
+
+.question-media img{
+  display: block;
+  max-width: 320px;         /* âœ… smaller image */
+  width: 100%;              /* responsive inside the max */
+  height: auto;
+  border: 1.5px solid #e5e7eb;   /* âœ… boxed */
+  border-radius: 12px;
+  padding: 10px;            /* âœ… space inside the box */
+  background: #ffffff;
+
+}
+
+/* Optional: center the boxed image */
+.question-media{
+  display: flex;
+  justify-content: center;
+}
+/* âœ… Bigger text for the QUESTION AREA only (safe: doesnâ€™t touch header/footer/start screen) */
+.container{
+  font-size: 19px;           /* base size for question text */
+  line-height: 1.6;
+}
+
+/* Question number bigger */
+.container .question-number{
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+/* Paragraphs spacing + size */
+.container p{
+  font-size: 19px;
+  line-height: 1.65;
+  margin: 12px 0;
+}
+
+/* Options bigger */
+.container .options{
+  margin-top: 18px;
+  margin-bottom: 40px;
+}
+
+.container .options .option{
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+/* Radio slightly larger */
+.container input[type="radio"]{
+  transform: scale(1.35);
+  margin-right: 12px;
+}
+
+  </style>
+
+<!-- TS_PATCH_FOOTER_FIXED_V1 -->
+<style>
+/* TS_PATCH_FOOTER_FIXED_V1: keep footer pinned and prevent overlap */
+.footer{
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 999 !important;
+}
+#exam-interface .container{
+  padding-bottom: 110px !important;
+}
+</style>
+<!-- /TS_PATCH_FOOTER_FIXED_V1 -->
+<!-- TS_TMUA_SCORE9_BLOCK_CSS_V1 -->
+<style>
+  .ts-score9-wrap{
+    margin:18px auto 30px;
+    padding:16px;
+    border:1px solid rgba(0,0,0,0.12);
+    border-radius:14px;
+    background:rgba(250,250,250,0.92);
+    max-width: 760px;
+  }
+  .ts-score9-row{display:flex; justify-content:space-between; align-items:baseline; gap:12px;}
+  .ts-score9-title{font-family:Arial,sans-serif;font-weight:900;font-size:16px;}
+  .ts-score9-sub{font-family:Arial,sans-serif;color:#555;font-size:12px;margin-top:2px;}
+  .ts-score9-chip{
+    font-family:Arial,sans-serif;font-weight:900;
+    padding:6px 12px;border-radius:999px;
+    border:1px solid rgba(0,0,0,0.14);
+    background:#fff;
+    white-space:nowrap;
+  }
+  .ts-score9-grid{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px;}
+  .ts-score9-card{
+    flex:1; min-width:220px;
+    border:1px solid rgba(0,0,0,0.10);
+    border-radius:12px;
+    padding:12px;
+    background:#fff;
+  }
+  .ts-score9-card h4{margin:0;font-family:Arial,sans-serif;font-weight:900;}
+  .ts-score9-big{font-family:Arial,sans-serif;font-size:34px;font-weight:900;margin-top:6px;}
+  .ts-score9-small{font-family:Arial,sans-serif;color:#555;font-size:12px;}
+</style>
+<!-- /TS_TMUA_SCORE9_BLOCK_CSS_V1 -->
+<!-- TS_SCORE_NOTE_CSS_V1 -->
+<style>
+  .ts-score-note{
+    margin: 8px auto 0;
+    max-width: 860px;                     /* ✅ wider */
+    width: 100%;
+    padding: 7px 10px;                    /* subtle */
+    border: 1px dashed rgba(148,163,184,0.38); /* light grey dotted */
+    border-radius: 12px;
+    background: rgba(255,255,255,0.35);   /* very subtle */
+    box-shadow: none;
+  }
+
+  .ts-score-note__row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .ts-score-note__left{
+    display:flex;
+    gap:8px;
+    min-width:0;
+    flex:1;
+  }
+
+  .ts-score-note__asterisk{
+    font-weight:800;
+    font-size: 10px;                      /* ✅ smaller */
+    color: rgba(148,163,184,0.95);        /* grey */
+    line-height: 1;
+    margin-top: 2px;
+    flex: 0 0 auto;
+  }
+
+  .ts-score-note__text{ min-width:0; }
+
+  .ts-score-note__title{
+    margin:0;
+    font-weight:800;
+    font-size:9px;                        /* ✅ much smaller */
+    letter-spacing:0.02em;
+    color: rgba(148,163,184,0.95);        /* ✅ grey */
+    text-transform: none;
+  }
+
+  .ts-score-note__sub{
+    margin:2px 0 0 0;
+    font-size:9px;                        /* ✅ much smaller */
+    line-height:1.2;
+    color: rgba(148,163,184,0.92);        /* ✅ grey */
+  }
+
+  .ts-score-note__btn{
+    flex:0 0 auto;
+    width:26px;                           /* smaller button */
+    height:26px;
+    border-radius:9px;
+    border:1px solid rgba(148,163,184,0.28);
+    background: rgba(255,255,255,0.22);
+    box-shadow: none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    text-decoration:none;
+    user-select:none;
+    opacity: 0.65;                        /* ✅ duller */
+  }
+  .ts-score-note__btn:hover{
+    background: rgba(255,255,255,0.35);
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+  .ts-score-note__btn:active{
+    transform: translateY(0px);
+  }
+
+  .ts-score-note__icon{
+    width:14px;
+    height:14px;
+    opacity:0.55;                         /* ✅ dull icon */
+  }
+</style>
+<!-- /TS_SCORE_NOTE_CSS_V1 -->
+</head>
+<body>
+
+<div id="instructions">
+    <h2 id="test-title">TMUA MOCK TEST 3</h2>
+
+
+  <p><strong>Time allowed:</strong> 1 hour and 15 minutes</p>
+  <p><strong>Calculators are not permitted.</strong></p>
+
+
+<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+  <div>
+    <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
+    <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+  </div>
+
+  <div>
+    <label for="studentEmail" style="font-size: 16px;">Email (to receive results):</label><br>
+    <input type="email" id="studentEmail" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+  </div>
+
+  <div>
+    <label for="test-date" style="font-size: 16px;">Select your TMUA test session:</label><br>
+    <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+      <option value="October 2025">October 2026</option>
+      <option value="January 2026">January 2027</option>
+      <option value="October 2026">October 2027</option>
+    </select>
+  </div>
+
+  <div style="margin-top: 28px;">
+    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
+  </div>
+</div>
+
+
+<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
+  <thead>
+    <tr style="background: #f2f2f2;">
+      <th style="border: 1px solid #ccc; padding: 10px;">Section</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">Topics Covered</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
+      <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Paper 1</td>
+      <td style="border: 1px solid #ccc; padding: 10px;">
+        <ul style="margin: 0; padding-left: 18px;">
+          <li>Differentiation</li>
+          <li>Integration</li>
+        </ul>
+      </td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20</td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 16px; margin-top: 20px;">
+ 
+  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> â€” marks are awarded only for correct responses.
+  You should attempt <strong>all 20 questions</strong>.
+</p>
+
+<p style="font-size: 16px;">
+  A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires.
+</p>
+
+
+  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
+
+</div>
+
+
+<div id="exam-interface">
+  <div class="header">
+    <div><strong>(TMUA) Test of Mathematics for University Admission</strong></div>
+    
+    <div class="top-right">
+      <div class="timer">
+        â²ï¸ Time Remaining <span id="time">75:00</span><br>
+        ðŸ“„ <span id="counter">1 of 20 (Paper 1)</span>
+      </div>
+      <button id="flag-btn" onclick="toggleFlag()">   âš‘ Flag for Review   </button>
+    </div>
+  </div>
+
+  <div class="container" id="question-container">
+    <!-- Questions will appear here -->
+  </div>
+
+  <div class="footer">
+    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
+    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
+    <button onclick="openNavigator()">Navigator</button>
+    <button onclick="confirmSubmit()">Submit</button>
+  </div>
+</div>
+
+
+<script>
+const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_2a8749f281094595b291eafbcc738688.pdf";
+
+let flags = new Array(20).fill(false); // Assuming 20 questions per section
+let timeSpent = new Array(20).fill(0); // 20 questions
+let lastTimestamp = Date.now(); // timestamp when current question was shown
+
+let studentName = "";
+let testSession = "";
+
+function nextQuestion() {
+  if (current < questions.length - 1) {
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
+    current++;
+    lastTimestamp = Date.now(); // reset timestamp for new question
+    renderQuestion();
+  }
+}
+
+
+function openNavigator() {
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function jumpTo(index) {
+timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+current = index;
+lastTimestamp = Date.now();
+renderQuestion();
+closeNavigator();
+updateFlagButton();
+
+
+}
+
+
+function renderQuestion() {
+  container.innerHTML = questions[current];
+  counter.textContent = `${current + 1} of ${questions.length}`;
+  MathJax.typesetPromise();
+updateFlagButton();
+
+  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
+  inputs.forEach(input => {
+    if (userAnswers[current] === input.value) {
+      input.checked = true;
+    }
+    input.addEventListener('change', () => {
+      userAnswers[current] = input.value;
+    });
+  });
+
+  // Disable Next button on last question
+  const nextBtn = document.getElementById("next-btn");
+  if (nextBtn) nextBtn.disabled = (current === questions.length - 1);
+
+  // Disable Previous button on first question
+  const prevBtn = document.getElementById("prev-btn");
+  if (prevBtn) prevBtn.disabled = (current === 0);
+}
+
+function toggleFlag() {
+  flags[current] = !flags[current];
+  updateFlagButton();
+  updateNavigatorButton(current);
+}
+
+function updateFlagButton() {
+  const flagBtn = document.getElementById("flag-btn");
+  if (!flagBtn) return;
+  if (flags[current]) {
+    flagBtn.classList.add("flagged");
+  } else {
+    flagBtn.classList.remove("flagged");
+  }
+}
+
+  function confirmSubmit() {
+  const confirmBox = confirm("Are you sure you want to submit the test?");
+  if (confirmBox) {
+    submitExam();
+  }
+}
+  function confirmSubmit() {
+  const confirmBox = confirm("Are you sure you want to submit the test?");
+  if (confirmBox) {
+    submitExam();
+  }
+}
+  const correctAnswers = [
+    "A", "C", "C", "D", "C",
+    "B", "F", "C", "A", "A",
+    "D", "A", "D", "B", "D",
+    "F", "A", "D", "D", "E"
+  ];
+
+  let userAnswers = new Array(20).fill(null);
+  let current = 0;
+  let minutes = 75;
+  let seconds = 0;
+  let timerInterval;
+
+  const timerDisplay = document.getElementById("time");
+  const container = document.getElementById("question-container");
+  const counter = document.getElementById("counter");
+
+  const questions = [
+
+    `<div class="question-number">Question 1</div>
+<p>Compute the integral</p>
+
+<p>
+\\[
+\\int_{0}^{1} \\frac{x - 4}{\\sqrt{x}\\,(\\sqrt{x} + 2)} \\, dx
+\\]
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q1" value="A"> \\((-3)\\)</label><br>
+  <label class="option"><input type="radio" name="q1" value="B"> \\((-1)\\)</label><br>
+  <label class="option"><input type="radio" name="q1" value="C"> \\(2\\)</label><br>
+  <label class="option"><input type="radio" name="q1" value="D"> \\(3\\)</label><br>
+  <label class="option"><input type="radio" name="q1" value="E"> \\(1\\)</label>
+</div>
+
+
+
+
+`,
+
+    `<div class="question-number">Question 2</div>
+<p>
+  Given \\( f(x) = \\left( 9x^2 + 12 + \\frac{4}{x^2} \\right)^{\\frac{1}{2}} \\) and  
+  \\( \\frac{d^n f}{dx^n}(2) = -\\frac{3}{4} \\), find \\( n \\).
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q2" value="A"> \\( 1 \\)</label><br>
+  <label class="option"><input type="radio" name="q2" value="B"> \\( 2 \\)</label><br>
+  <label class="option"><input type="radio" name="q2" value="C"> \\( 3 \\)</label><br>
+  <label class="option"><input type="radio" name="q2" value="D"> \\( 4 \\)</label><br>
+  <label class="option"><input type="radio" name="q2" value="E"> \\( 5 \\)</label>
+</div>
+
+
+
+
+`,
+
+    ` <div class="question-number">Question 3</div>
+<p>
+  For \\( p > 0 \\), find the area enclosed by the curves \\( y = px^2 \\) and \\( x = py^2 \\).
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q3" value="A"> \\( \\frac{1}{3p} \\)</label><br>
+  <label class="option"><input type="radio" name="q3" value="B"> \\( 3p \\)</label><br>
+  <label class="option"><input type="radio" name="q3" value="C"> \\( \\frac{1}{3p^2} \\)</label><br>
+  <label class="option"><input type="radio" name="q3" value="D"> \\( \\frac{1}{2}p^2 \\)</label><br>
+  <label class="option"><input type="radio" name="q3" value="E"> \\( 3p \\)</label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 4</div>
+
+<p>
+  What is the complete set of values for which \\( \\frac{x^2 + 2x}{\\sqrt{x^3}} \\) is increasing?
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q4" value="A"> \\( x &gt; 3 \\)</label><br>
+  <label class="option"><input type="radio" name="q4" value="B"> \\( x &lt; 2 \\)</label><br>
+  <label class="option"><input type="radio" name="q4" value="C"> \\( 2 &lt; x &lt; 4 \\)</label><br>
+  <label class="option"><input type="radio" name="q4" value="D"> \\( x &gt; 2 \\)</label><br>
+  <label class="option"><input type="radio" name="q4" value="E"> \\( 0 &lt; x &lt; 2 \\)</label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 5</div>
+<p>
+  Compute the shortest distance between the curves  
+  \\( x^2 + 4x + y^2 + 6y + 10 = 0 \\) and  
+  \\( x^2 - 4x + y^2 - 8y + 12 = 0 \\).
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q5" value="A"> \\( \\sqrt{65} - \\sqrt{2} - \\sqrt{3} \\)</label><br>
+  <label class="option"><input type="radio" name="q5" value="B"> \\( \\sqrt{65} - 2\\sqrt{2} - 2\\sqrt{3} \\)</label><br>
+  <label class="option"><input type="radio" name="q5" value="C"> \\( \\sqrt{65} - 2\\sqrt{2} - \\sqrt{3} \\)</label><br>
+  <label class="option"><input type="radio" name="q5" value="D"> \\( \\sqrt{65} \\)</label><br>
+  <label class="option"><input type="radio" name="q5" value="E"> \\( \\sqrt{65} - 4\\sqrt{2} - 2\\sqrt{3} \\)</label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 6</div>
+<p>
+  Given that \\( \\frac{dV}{dt} = (1 + t)^4 \\), and \\( V(1) = 5 \\), what is \\( V(2) \\)?
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q6" value="A"> \\( \\frac{174}{5} \\)</label><br>
+  <label class="option"><input type="radio" name="q6" value="B"> \\( \\frac{236}{5} \\)</label><br>
+  <label class="option"><input type="radio" name="q6" value="C"> \\( \\frac{112}{3} \\)</label><br>
+  <label class="option"><input type="radio" name="q6" value="D"> \\( \\frac{89}{4} \\)</label><br>
+  <label class="option"><input type="radio" name="q6" value="E"> \\( \\frac{17}{32} \\)</label>
+</div>
+
+
+`,
+
+    `<div class="question-number">Question 7</div>
+<p>
+  Let
+  \\[
+  y = \\left( \\frac{1}{3}k^3 + 1 \\right)x^3 - (2k^2 + 3)x^2 + (31 - 25k)x + 43
+  \\]
+  have a turning point, that is a maximum, when \\( x = 1 \\), precisely for
+</p>
+
+<div class="options">
+  <label class="option"><input type="radio" name="q7" value="A"> \\(-4 &lt; k &lt; 7\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="B"> \\(k = 1 \\text{ or } 7\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="C"> \\(k &gt; 7\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="D"> \\(k = -4 \\text{ or } 7\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="E"> \\(k &lt; 1\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="F"> \\(k = -4 \\text{ or } 1\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="G"> \\(k &lt; -4\\)</label><br>
+  <label class="option"><input type="radio" name="q7" value="H"> \\(k = -4, 1 \\text{ or } 7\\)</label>
+</div>
+`,
+
+    `<div class="question-number">Question 8</div>
+<p>
+  Which of the following integrals has the largest value?
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q8" value="A">
+    \\( \\int_{0}^{\\frac{\\pi}{3}} \\cos\\left( \\frac{\\pi}{2} - x \\right) \\, dx \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q8" value="B">
+\\( \\int_{\\frac{\\pi}{3}}^{\\frac{2\\pi}{3}} \\cos^2 x \\, dx \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q8" value="C">
+    \\( \\int_{\\frac{2\\pi}{3}}^{\\pi} -\\sin\\left( \\frac{\\pi}{2} - x \\right) \\, dx \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q8" value="D">
+    \\( \\int_{0}^{\\pi} \\sin\\left( \\frac{\\pi}{2} - x \\right) \\, dx \\)
+  </label>
+</div>
+
+
+`,
+
+    ` <div class="question-number">Question 9</div>
+<p>
+  Find the value of
+  \\[
+    \\int_{-1}^{1} \\frac{(x^2 - 2)^2}{\\sqrt[3]{x}} \\, dx
+  \\]
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q9" value="A"> \\( 0 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q9" value="B"> \\( 1 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q9" value="C"> \\( 2 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q9" value="D"> \\( 3 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q9" value="E"> \\( \\frac{3}{7} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q9" value="F"> \\( 12 \\)
+  </label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 10</div>
+<p>
+  A curve has equation \\( y = (2a - x)(2a + x) \\) where \\( a \\) is a constant.  
+  <br><br>
+  A different curve has the equation \\( y = (2a - x)(3a + x) \\).  
+  <br><br>
+  Find the value(s) of \\( a \\) for which the maximum point on the first curve is closest to the maximum point on the second.
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q10" value="A"> \\( 0 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q10" value="B"> \\( \\pm \\frac{1}{2} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q10" value="C"> \\( \\pm \\frac{\\sqrt{38}}{10} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q10" value="D"> \\( \\pm 0.8 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q10" value="E"> \\( \\pm 1 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q10" value="F"> \\( \\pm \\frac{2\\sqrt{5}}{5} \\)
+  </label>
+</div>
+`,
+
+
+ `<div class="question-number">Question 11</div>
+<p>
+  A function \\( f \\) is such that:
+</p>
+<p>
+  \\[ \\int_{0}^{4} f(x)\\, dx = 10, \\quad \\int_{-1}^{4} f(x)\\, dx = 13, \\quad \\int_{-4}^{3} f(-x)\\, dx = 2. \\]
+</p>
+<p>
+  The value of \\( \\int_{-3}^{0} f(x)\\, dx \\) is:
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q11" value="A"> \\( 2 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q11" value="B"> \\( 3 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q11" value="C"> \\( 5 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q11" value="D"> \\( 8 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q11" value="E"> \\( 11 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q11" value="F"> \\( 12 \\)
+  </label>
+</div>
+
+
+`,
+
+
+    `<div class="question-number">Question 12</div>
+<p>
+  The trapezium rule approximation for
+</p>
+<p>
+  \\[ \\int_{0}^{6} \\left| x(x - 3)(x - 6) \\right| \\, dx \\]
+</p>
+<p>
+  using four trapezia is equal to:
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q12" value="A"> \\( \\frac{3^{5}}{2^{3}} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q12" value="B"> \\( \\left( \\frac{3}{2} \\right)^4 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q12" value="C"> \\( \\frac{3^{5}}{4} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q12" value="D"> \\( \\frac{3^{3}}{2^{5}} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q12" value="E"> \\( \\left( \\frac{3}{2} \\right)^5 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q12" value="F"> \\( 30 \\)
+  </label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 13</div>
+<p>
+  Find the complete set of values of \\( k \\) for which the cubic equation
+</p>
+<p>
+  \\[ 2x^3 - 3x^2 - 36x + k = 0 \\]
+</p>
+<p>
+  has three distinct real solutions.
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q13" value="A"> \\( x &lt; 44 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q13" value="B"> \\( x &lt; 81 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q13" value="C"> \\( -81 &lt; x &lt; 44 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q13" value="D"> \\( -44 &lt; x &lt; 81 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q13" value="E"> \\( x &gt; 44 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q13" value="F"> \\( x &gt; 81 \\)
+  </label>
+</div>
+`,
+
+    `<div class="question-number">Question 14</div>
+<p>
+  Solve the differential equation, given that when \\( y = 5 \\) and \\( x = 3 \\). What is the value of the constant of integration?
+</p>
+
+<p>
+  \\[ \\frac{dy}{dx} = \\frac{(7x + 3)y^{\\frac{2}{5}}}{x} \\]
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q14" value="A"> \\( 8(5)^{\\frac{2}{5}} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q14" value="B"> \\( \\frac{1}{3}(5)^{\\frac{8}{5}} - 21 - 3\\ln 3 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q14" value="C"> \\( \\frac{1}{8}(5)^{\\frac{4}{5}} - 7 + \\ln 3 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q14" value="D"> \\( \\frac{1}{8}(5)^{\\frac{4}{5}} - 21 - 3\\ln 3 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q14" value="E"> \\( \\frac{5}{3}(5)^{\\frac{3}{5}} + 21 + \\ln 3 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q14" value="F"> \\( -8(5)^{\\frac{2}{5}} \\)
+  </label>
+</div>
+`,
+
+    `<div class="question-number">Question 15</div>
+<p>
+  What is the value of the integral below?
+</p>
+
+<p>
+  \\[
+    \\int_0^2 \\left| x - 1 \\right| \\left( 3\\sqrt{x} - x\\sqrt{x} \\right) \\, dx
+  \\]
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q15" value="A">
+    \\( \\frac{48 - 4\\sqrt{2}}{35} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q15" value="B">
+    \\( \\frac{4\\sqrt{2}}{35} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q15" value="C">
+    \\( \\frac{24}{35} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q15" value="D">
+    \\( \\frac{48 + 4\\sqrt{2}}{35} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q15" value="E">
+    \\( \\frac{24 + 4\\sqrt{2}}{35} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q15" value="F">
+    \\( \\frac{24 - 4\\sqrt{2}}{35} \\)
+  </label>
+</div>
+
+`,
+
+    `<div class="question-number">Question 16</div>
+<p>
+  For a function \\( f(x) \\), it is given that 
+  \\[ \\left( \\int_{0}^{2} f(x)\\,dx \\right) \\left( \\int_{0}^{1} f(x)\\,dx + 4 \\right) = 24. \\]
+  <br>
+  You are also told that, for this function, \\( f(x+1) = f(1 - x) \\).
+</p>
+
+<p>
+  Which of the following could the value of 
+  \\[ \\int_{1}^{2} f(x)\\,dx \\]
+  be?
+</p>
+
+<p>I. \\( -6 \\)<br>II. \\( 8 \\)<br>III. \\( 2 \\)</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="A"> None
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="B"> I only
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="C"> II only
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="D"> III only
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="E"> I &amp; II only
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="F"> I &amp; III only
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="G"> II &amp; III only
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q16" value="H"> All three
+  </label>
+</div>
+
+
+
+`,
+
+
+    `<div class="question-number">Question 17</div>
+
+<p>
+  \\[ \\frac{dx}{dt} = 3 \\left( \\frac{1}{1 - \\sin t} + \\frac{1}{1 + \\sin t} \\right). \\]
+  If \\( x = 0 \\) when \\( t = \\frac{\\pi}{6} \\), find \\( x \\) when \\( t = \\frac{\\pi}{3} \\). 
+  <br><br>
+  [The integral of \\( \\frac{1}{\\cos^2 t} \\) is \\( \\tan t \\)]
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="A"> \\( 4\\sqrt{3} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="B"> \\( 6\\sqrt{3} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="C"> \\( \\frac{6}{\\sqrt{3}} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="D"> \\( 3\\sqrt{3} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="E"> \\( \\sqrt{3} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="F"> \\( \\frac{4}{\\sqrt{3}} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q17" value="G"> \\( 12\\sqrt{3} \\)
+  </label>
+</div>
+
+
+
+`,
+
+    `<div class="question-number">Question 18</div>
+
+<p>
+  Given that 
+  \\[
+  \\int_0^4 \\left( x^3 + ax^2 + bx + 1 \\right) \\, dx = 0,
+  \\]
+  and that \\( a \\leq 0 \\), \\( b \\leq 0 \\), what is the maximum value of 
+  \\[
+  \\int_0^3 \\left( x^3 + ax^2 + bx + 1 \\right) \\, dx \\ ?
+  \\]
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q18" value="A"> \\( -15 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q18" value="B"> \\( 15 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q18" value="C"> \\( 100 \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q18" value="D"> \\( -\\frac{87}{16} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q18" value="E"> \\( \\frac{123}{2} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q18" value="F"> \\( -\\frac{123}{2} \\)
+  </label>
+</div>
+
+`,
+
+
+    `<div class="question-number">Question 19</div>
+<p>
+  \\[
+  f(x) = \\frac{\\left(x^2 - \\frac{1}{x} \\right)^2}{\\frac{1}{x^3}}
+  \\]
+</p>
+
+
+<p>
+  \\[
+  f'(x) = \\frac{x^{\\frac{2}{3}}}{3} \\left[ ax^p + bx^q + cx^r \\right]
+  \\]
+</p>
+
+<p>What is the value of \\( abc + pqr \\)?</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q19" value="A"> 388
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q19" value="B"> \\( \\frac{520}{3} \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q19" value="C"> 288
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q19" value="D"> 316
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q19" value="E"> 300
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q19" value="F"> -80
+  </label>
+</div>
+`,
+
+    `<div class="question-number">Question 20</div>
+
+<p>
+  Consider the function: <br>
+  \\( g(x) = \\int_{0}^{x} (t - p) f(t) \\, dt \\) <br><br>
+  where \\( 0 \\le p \\le 7 \\). <br><br>
+  Find: <br>
+  \\( \\int_{0}^{7} |x - p| f(x) \\, dx \\)
+</p>
+
+<div class="options">
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q20" value="A"> \\( g(7) - g(0) \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q20" value="B"> \\( g(7) - p\\,g(0) \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q20" value="C"> \\( g(0) - p\\,g(7) \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q20" value="D"> \\( 2g(0) - g(7) + g(p) \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q20" value="E"> \\( g(7) + g(0) - 2g(p) \\)
+  </label>
+
+  <label class="option" style="display: block; margin-bottom: 12px;">
+    <input type="radio" name="q20" value="F"> \\( g(p) + g(7) - 2g(0) \\)
+  </label>
+</div>
+
+
+
+
+
+
+
+
+
+`,
+
+  ];
+
+
+
+
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("studentEmail").value.trim();
+  const testSelect = document.getElementById("test-date").value;
+
+  if (!nameInput) {
+    alert("Please enter your full name before starting the exam.");
+    return;
+  }
+
+  if (!emailInput || !emailInput.includes("@")) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  studentName = nameInput;
+  testSession = testSelect;
+
+  document.getElementById("instructions").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+  timerInterval = setInterval(updateTimer, 1000);
+  renderQuestion();
+}
+
+
+
+  function updateTimer() {
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(timerInterval);
+      submitExam();
+      return;
+    }
+    if (seconds === 0) {
+      minutes--;
+      seconds = 59;
+    } else {
+      seconds--;
+    }
+    const mm = minutes.toString().padStart(2, '0');
+    const ss = seconds.toString().padStart(2, '0');
+    timerDisplay.textContent = `${mm}:${ss}`;
+  }
+
+  
+function prevQuestion() {
+  if (current > 0) {
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
+    current--;
+    lastTimestamp = Date.now(); // reset timestamp for new question
+    renderQuestion();
+  }
+}
+
+function updateNavigatorButton(index) {
+  const btn = document.getElementById(`nav-btn-${index}`);
+  if (!btn) return;
+  if (flags[index]) {
+    btn.style.backgroundColor = "gold";
+    btn.style.fontWeight = "bold";
+    btn.textContent = `âš‘ ${index + 1}`;
+  } else {
+    btn.style.backgroundColor = "";
+    btn.style.fontWeight = "normal";
+    btn.textContent = `${index + 1}`;
+  }
+}
+
+function submitExam() {
+  
+  /* TS_SUBMIT_MOCK3_V1 */
+  // One-time lock to prevent duplicate submits (multiple click handlers, double calls, etc.)
+  if (window.__TS_SUBMIT_LOCK_MOCK3) { return; }
+  window.__TS_SUBMIT_LOCK_MOCK3 = true;
+  /* /TS_SUBMIT_MOCK3_V1 */
+clearInterval(timerInterval);
+
+  // â±ï¸ Record final question time
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+
+  // âœ… Calculate score
+  let score = 0;
+  for (let i = 0; i < correctAnswers.length; i++) {
+    if (userAnswers[i] === correctAnswers[i]) {
+      score++;
+    }
+  }
+
+  // âœ… Prepare timestamp
+  const timestamp = new Date().toLocaleString();
+
+  // âœ… Find incorrect question numbers
+  let incorrectList = [];
+  for (let i = 0; i < correctAnswers.length; i++) {
+    if (userAnswers[i] !== correctAnswers[i]) {
+      incorrectList.push(i + 1);
+    }
+
+  /* TS_SUBMIT_MOCK3_V1 */
+  try {
+    var ca = (Array.isArray(window.correctAnswers) ? window.correctAnswers : (typeof correctAnswers !== "undefined" ? correctAnswers : []));
+    var ua = (Array.isArray(window.userAnswers) ? window.userAnswers : (typeof userAnswers !== "undefined" ? userAnswers : []));
+    var ts = (Array.isArray(window.timeSpent) ? window.timeSpent : (typeof timeSpent !== "undefined" ? timeSpent : []));
+    var fl = (Array.isArray(window.flags) ? window.flags : (typeof flags !== "undefined" ? flags : []));
+
+    var computedScore = 0;
+    for (var i = 0; i < ca.length; i++) { if (ua[i] === ca[i]) computedScore++; }
+
+    var incorrectLocal = [];
+    for (var j = 0; j < ca.length; j++) { if (ua[j] !== ca[j]) incorrectLocal.push(j + 1); }
+
+    fetch("/api/practice-tests/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        test_id: "tmua-mock-test-3",
+        test_title: (document.getElementById("test-title") && document.getElementById("test-title").textContent)
+          ? document.getElementById("test-title").textContent.trim()
+          : "TMUA Mock Test 3",
+        paper: "1",
+        total_questions: ca.length,
+        score: computedScore,
+        answers: ua,
+        correct_answers: ca,
+        time_spent: ts,
+        flags: fl,
+        incorrect: incorrectLocal
+      })
+    })
+    .then(function(r){
+      return r.text().then(function(t){
+        console.log("TS_SUBMIT status:", r.status);
+        console.log("TS_SUBMIT body:", t);
+      });
+    })
+    .catch(function(e){ console.error("TS_SUBMIT error:", e); });
+
+  } catch (e) {
+    console.error("TS_SUBMIT exception:", e);
+  }
+  /* /TS_SUBMIT_MOCK3_V1 */
+  }
+
+let timeTableHTML = "";
+for (let i = 0; i < 20; i++) {
+  const seconds = Math.round(timeSpent[i]);
+  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const ss = String(seconds % 60).padStart(2, '0');
+  const yourAns = userAnswers[i] ?? "-";
+  const correctAns = correctAnswers[i];
+  const status = yourAns === correctAns ? "âœ…" : (yourAns === "-" ? "â€”" : "âŒ");
+
+  timeTableHTML += `
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 6px;">${i + 1}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${mm}:${ss}</td>
+      <td style="border: 1px solid #ccc; padding: 6px;">${status}</td>
+    </tr>\n`; // âœ… Keep line break
+}
+
+let plainTextSummary = "Paper 1 Analysis\n";
+
+for (let i = 0; i < 20; i++) {
+  const seconds = Math.round(timeSpent[i]);
+  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const ss = String(seconds % 60).padStart(2, '0');
+  const yourAns = userAnswers[i] ?? "-";
+  const correctAns = correctAnswers[i];
+  plainTextSummary += `Q.${i + 1}  Correct: ${correctAns}   Yours: ${yourAns}   Time: ${mm}:${ss}\n`;
+}
+
+
+const studentEmail = document.getElementById("studentEmail").value;
+const testTitle = document.getElementById("test-title").textContent.trim();
+
+emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+  name: studentName,
+  session: testSession,
+  score: `${score} / ${correctAnswers.length}`,
+  timestamp: new Date().toLocaleString(),
+  incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
+  paper1: plainTextSummary.trim(),
+  to_email: studentEmail,
+  solution_link: solutionPDF,
+  test_title: testTitle
+})
+.then(res => console.log("âœ… Email sent", res))
+.catch(err => console.error("âŒ Email error", err));
+
+
+
+  // âœ… Select emoji
+  let emoji = score >= 14 ? "ðŸ˜Š"  : "ðŸ˜";
+
+  // âœ… Generate time table
+  let timeRows = "";
+  for (let i = 0; i < timeSpent.length; i++) {
+    const seconds = Math.round(timeSpent[i]);
+    const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const ss = String(seconds % 60).padStart(2, '0');
+    const status = userAnswers[i] ? (userAnswers[i] === correctAnswers[i] ? "âœ…" : "âŒ") : "â€”";
+    timeRows += `
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 8px;">${i + 1}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${userAnswers[i] || "-"}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${correctAnswers[i]}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${mm}:${ss}</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">${status}</td>
+      </tr>`;
+  }
+
+  // âœ… Display final screen
+  container.innerHTML = `
+    <div style="display: flex; flex-direction: column; align-items: center; padding: 40px;">
+      <div style="font-size: 160px;">${emoji}</div>
+      <h1>Exam Completed</h1>
+<!-- TS_TMUA_SCORE9_IN_RESULTS_V1 -->
+${(window.TS_TMUA_SCORE9_BLOCK)
+  ? window.TS_TMUA_SCORE9_BLOCK({ overallRaw: (typeof score !== "undefined" ? score : 0), totalQ: (typeof correctAnswers !== "undefined" ? (correctAnswers.length || 20) : 20), thr: 6 })
+  : ""}
+<!-- /TS_TMUA_SCORE9_IN_RESULTS_V1 -->
+<h1>The detailed Score Report has been emailed to you âœ… </h1>
+
+      <table style="border-collapse: collapse; margin-top: 30px; font-size: 18px;">
+        <tr style="background: #f9f9f9;">
+          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">${studentName}</td>
+        </tr>
+        <tr style="background: #f9f9f9;">
+          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Your Score</strong></td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>${score} / 20</strong></td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">Threshold Score</td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">16+ / 20</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">Average Test Taker Score</td>
+          <td style="border: 1px solid #ccc; padding: 10px 20px;">9 / 20</td>
+        </tr>
+      </table>
+
+      <h3 style="margin-top: 40px;">Paper 1 Analysis</h3>
+      <table style="border-collapse: collapse; margin-top: 10px; font-size: 16px; width: 100%; max-width: 600px;">
+        <thead style="background: #eee;">
+          <tr>
+            <th style="border: 1px solid #ccc; padding: 8px;">Q#</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Your Ans</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Correct</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Time</th>
+            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
+          </tr>
+        </thead>
+        <tbody>${timeRows}</tbody>
+      </table>
+
+      <h3 style="margin-top: 40px;">ðŸ“„ View Full Solutions</h3>
+  <iframe 
+  id="solution-frame"
+  width="100%" 
+  height="600px" 
+  style="border: 1px solid #ccc; margin-top: 10px;">
+</iframe>
+    </div>
+  `;
+document.getElementById("solution-frame").src = solutionPDF;
+
+  document.querySelector(".footer").style.display = "none";
+}
+
+function generateNavigatorButtons() {
+  const grid = document.getElementById("navigator-grid");
+  for (let i = 0; i < 20; i++) {
+    const btn = document.createElement("button");
+    btn.id = `nav-btn-${i}`;
+    btn.textContent = i + 1;
+    btn.style.padding = "10px";
+    btn.onclick = function () {
+      jumpTo(i);
+    };
+    grid.appendChild(btn);
+  }
+}
+
+window.onload = function () {
+  generateNavigatorButtons();
+  for (let i = 0; i < flags.length; i++) {
+    updateNavigatorButton(i);
+  }
+};
+
+
+</script>
+<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
+ background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+  <h3 style="margin-top: 0; color:#0074c1;">Jump to Question</h3>
+  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;">
+    <!-- Buttons will be generated here -->
+  </div>
+  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px;">Close</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("9jjn3yBHl6S88hITy"); // Replace with your actual public key
+  })();
+</script>
+
+<!-- TS_PATCH_KEYS_RC_V1 -->
+<script>
+(function(){
+  function disableRightClick(){
+    document.addEventListener("contextmenu", function(e){
+      e.preventDefault();
+    }, true);
+  }
+
+  function isTypingTarget(t){
+    if (!t) return false;
+    var tag = (t.tagName || "").toUpperCase();
+    return t.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+  }
+
+  function bindHotkeys(){
+    window.addEventListener("keydown", function(e){
+      if (!e.altKey) return;
+      if (e.ctrlKey || e.metaKey) return;
+      if (isTypingTarget(e.target)) return;
+
+      var k = (e.key || "").toLowerCase();
+      if (k === "n") {
+        e.preventDefault(); e.stopPropagation();
+        if (typeof nextQuestion === "function") nextQuestion();
+        else if (window.NAV && typeof window.NAV.next === "function") window.NAV.next();
+      } else if (k === "p") {
+        e.preventDefault(); e.stopPropagation();
+        if (typeof prevQuestion === "function") prevQuestion();
+        else if (window.NAV && typeof window.NAV.prev === "function") window.NAV.prev();
+      }
+    }, true);
+  }
+
+  function bootPatch(){
+    try { bindHotkeys(); } catch(_) {}
+    try { disableRightClick(); } catch(_) {}
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootPatch);
+  } else {
+    bootPatch();
+  }
+})();
+</script>
+<!-- /TS_PATCH_KEYS_RC_V1 -->
+<!-- TS_PATCH_WORKSPACE_BTN_V4 -->
+<style>
+  /* ✅ Default (during test): original white/grey */
+  .ts-workspace-btn{
+    position: fixed;
+    left: 14px;
+    bottom: 7px;
+    z-index: 2000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 12px;
+    border-radius: 999px;
+
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(17,24,39,0.18);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+
+    color: rgba(17,24,39,0.86);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+
+    cursor: pointer;
+    user-select: none;
+  }
+  .ts-workspace-btn:hover{ background: rgba(255,255,255,0.98); }
+  .ts-workspace-btn:active{ transform: translateY(1px); }
+  .ts-workspace-btn:focus{ outline: none; }
+
+  /* ✅ AFTER SUBMIT (results): turn gold */
+  body.ts-exam-done .ts-workspace-btn{
+    background: rgba(246, 196, 74, 0.95);
+    border: 1px solid rgba(146, 98, 0, 0.30);
+    color: rgba(43, 26, 0, 0.92);
+    font-weight: 800;
+  }
+  body.ts-exam-done .ts-workspace-btn:hover{
+    background: rgba(246, 196, 74, 1);
+    filter: brightness(0.98);
+  }
+</style>
+
+<button type="button" class="ts-workspace-btn" id="tsWorkspaceBtn" aria-label="Back to TMUA Workspace">
+  &larr; TMUA Workspace
+</button>
+
+<script>
+(function(){
+  var DASH_URL = "https://apps.thrivingscholars.com/dashboard";
+
+  if (typeof window.__TS_EXAM_DONE === "undefined") window.__TS_EXAM_DONE = false;
+
+  function examDone(){
+    return !!window.__TS_EXAM_DONE || !!window.__TS_SUBMIT_ONCE;
+  }
+
+  function applyDoneUI(){
+    try {
+      if (examDone()) document.body.classList.add("ts-exam-done");
+      else document.body.classList.remove("ts-exam-done");
+    } catch(_) {}
+  }
+
+  function confirmLeave(){
+    return window.confirm("Are you sure you want to go back? Your progress on the current test will be lost.");
+  }
+
+  function goWorkspace(){
+    window.location.href = DASH_URL;
+  }
+
+  // ✅ Wrap submitExam so the moment submission happens:
+  // - warnings are disabled
+  // - button becomes gold (via body class)
+  function wrapSubmitExam(){
+    var orig = window.submitExam;
+    if (typeof orig !== "function") return;
+    if (orig.__TS_WRAPPED_DONE) return;
+
+    function wrappedSubmitExam(){
+      try { window.__TS_EXAM_DONE = true; } catch(_) {}
+      applyDoneUI();
+      return orig.apply(this, arguments);
+    }
+    wrappedSubmitExam.__TS_WRAPPED_DONE = true;
+
+    try { window.submitExam = wrappedSubmitExam; } catch(_) {}
+  }
+
+  function bindBtn(){
+    var b = document.getElementById("tsWorkspaceBtn");
+    if (!b) return;
+    if (b.getAttribute("data-bound")) return;
+    b.setAttribute("data-bound","1");
+
+    b.addEventListener("click", function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      // ✅ If already submitted, no warning
+      if (examDone()) {
+        goWorkspace();
+        return;
+      }
+
+      // Otherwise warn
+      if (confirmLeave()) goWorkspace();
+    }, true);
+  }
+
+  // ✅ Refresh/close/tab warnings only while exam is NOT done
+  window.addEventListener("beforeunload", function(e){
+    if (examDone()) return;
+    e.preventDefault();
+    e.returnValue = "";
+    return "";
+  });
+
+  function boot(){
+    applyDoneUI();      // in case the flag is already set
+    wrapSubmitExam();   // hook submitExam
+    bindBtn();          // bind button
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+<!-- /TS_PATCH_WORKSPACE_BTN_V4 -->
+
+<!-- TS_PATCH_PORTAL_SUBMIT_V4 -->
+<script>
+(function(){
+  try { window.TS_TEST_ID = "tmua-mock-test-3"; } catch(_) {}
+  try { window.TS_PAPER = "1"; } catch(_) {}
+
+  function getVar(name){
+    try { return Function("return (typeof " + name + " !== 'undefined') ? " + name + " : undefined;")(); }
+    catch(e){ return undefined; }
+  }
+  function safeArr(x){ return Array.isArray(x) ? x : []; }
+
+  function computePayload(){
+    var ca = safeArr(window.correctAnswers || getVar("correctAnswers"));
+    var ua = safeArr(window.userAnswers || getVar("userAnswers"));
+    var ts = safeArr(window.timeSpent || getVar("timeSpent"));
+    var fl = safeArr(window.flags || getVar("flags"));
+
+    var n = ca.length || ua.length || 0;
+
+    var score = 0;
+    var incorrect = [];
+    for (var i=0; i<n; i++){
+      if (ua[i] === ca[i] && ua[i] !== null && typeof ua[i] !== "undefined") score++;
+      if (ua[i] !== ca[i]) incorrect.push(i+1);
+    }
+
+    var title = "TMUA Practice Test";
+    try {
+      var el = document.getElementById("test-title");
+      if (el && el.textContent) title = el.textContent.trim();
+    } catch(_) {}
+
+    var studentEmail = "";
+    try {
+      var em = document.getElementById("studentEmail");
+      if (em && em.value) studentEmail = String(em.value).trim();
+    } catch(_) {}
+
+    return {
+      test_id: (window.TS_TEST_ID || "tmua-mock-test-3"),
+      test_title: title,
+      paper: (window.TS_PAPER || "1"),
+      total_questions: n,
+      score: score,
+      answers: ua,
+      correct_answers: ca,
+      time_spent: ts,
+      flags: fl,
+      incorrect: incorrect,
+      student_email: studentEmail
+    };
+  }
+
+  function submitToPortal(){
+    if (window.__TS_SUBMIT_ONCE) return;
+    window.__TS_SUBMIT_ONCE = true;
+
+    var payload = computePayload();
+
+    fetch("/api/practice-tests/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){
+      return r.text().then(function(t){
+        console.log("TS_SUBMIT status:", r.status);
+        if (t) console.log("TS_SUBMIT body:", t);
+      });
+    })
+    .catch(function(e){
+      console.error("TS_SUBMIT error:", e);
+    });
+  }
+
+  function wrapSubmitExam(){
+    var orig = window.submitExam || getVar("submitExam");
+    if (typeof orig !== "function") return;
+    if (orig.__TS_WRAPPED) return;
+
+    function wrappedSubmitExam(){
+      var ret;
+      try { ret = orig.apply(this, arguments); }
+      finally { try { submitToPortal(); } catch(_) {} }
+      return ret;
+    }
+    wrappedSubmitExam.__TS_WRAPPED = true;
+    try { window.submitExam = wrappedSubmitExam; } catch(_) {}
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wrapSubmitExam);
+  } else {
+    wrapSubmitExam();
+  }
+})();
+</script>
+<!-- /TS_PATCH_PORTAL_SUBMIT_V4 -->
+<script>
+/* TS_TMUA_SCORE9_HELPER_V1 */
+(function(){
+  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
+
+  // raw <= thr => 1.0 ; raw == total => 9.0 ; linear in between
+  window.TS_TMUA_SCORE9 = function(rawCorrect, totalQuestions, thresholdRaw){
+    var raw = Number(rawCorrect || 0);
+    var total = Number(totalQuestions || 20);
+    var thr = (typeof thresholdRaw === "number") ? thresholdRaw : Number(thresholdRaw || 6);
+
+    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
+    if (raw <= thr) return 1.0;
+
+    var frac = (raw - thr) / (total - thr);
+    var score9 = 1.0 + frac * 8.0;
+    score9 = clamp(score9, 1.0, 9.0);
+    return Math.round(score9 * 10) / 10;
+  };
+
+  // Build the HTML block. If you pass paper scores it shows Paper1/Paper2; otherwise just overall.
+  window.TS_TMUA_SCORE9_BLOCK = function(opts){
+    opts = opts || {};
+    var totalQ = Number(opts.totalQ || 20);
+    var thr = Number(("thr" in opts) ? opts.thr : 6);
+
+    function fmt(x){
+      var n = Number(x);
+      if (!isFinite(n)) n = 1.0;
+      return n.toFixed(1);
+    }
+
+    var overallRaw = Number(opts.overallRaw || 0);
+    var overall9 = window.TS_TMUA_SCORE9(overallRaw, totalQ, thr);
+
+    var p1Raw = ("p1Raw" in opts) ? Number(opts.p1Raw || 0) : null;
+    var p2Raw = ("p2Raw" in opts) ? Number(opts.p2Raw || 0) : null;
+
+    var hasPapers = (p1Raw !== null && p2Raw !== null);
+
+    var inner = ''
+      + '<div class="ts-score9-wrap">'
+      + '  <div class="ts-score9-row">'
+      + '    <div>'
+      + '      <div class="ts-score9-title">Estimated TMUA Score</div>'
+      + '      <div class="ts-score9-sub">Scale 1.0–9.0 (approx). Threshold anchored at raw ' + thr + '.</div>'
+      + '    </div>'
+      + '    <div class="ts-score9-chip">' + fmt(overall9) + ' / 9.0</div>'
+      + '  </div>';
+
+    if (hasPapers){
+      var p1_9 = window.TS_TMUA_SCORE9(p1Raw, 20, thr);
+      var p2_9 = window.TS_TMUA_SCORE9(p2Raw, 20, thr);
+      inner += ''
+        + '  <div class="ts-score9-grid">'
+        + '    <div class="ts-score9-card">'
+        + '      <h4>Paper 1</h4>'
+        + '      <div class="ts-score9-big">' + fmt(p1_9) + '</div>'
+        + '      <div class="ts-score9-small">from ' + p1Raw + '/20</div>'
+        + '    </div>'
+        + '    <div class="ts-score9-card">'
+        + '      <h4>Paper 2</h4>'
+        + '      <div class="ts-score9-big">' + fmt(p2_9) + '</div>'
+        + '      <div class="ts-score9-small">from ' + p2Raw + '/20</div>'
+        + '    </div>'
+        + '  </div>';
+    } else {
+      inner += ''
+        + '  <div style="margin-top:12px;font-family:Arial,sans-serif;color:#555;font-size:12px;">'
+        + '    Based on ' + overallRaw + ' / ' + totalQ + ' correct.'
+        + '  </div>';
+    }
+
+    inner += '</div>';
+    return inner;
+  };
+})();
+</script>
+<!-- TS_SCORE_NOTE_JS_V1 -->
+<script>
+(function(){
+  var PDF_URL = "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2025/11/14082812/TMUA_Explanation_of_Results-October2025.pdf";
+
+  function makeNoteEl(){
+    var wrap = document.createElement("div");
+    wrap.className = "ts-score-note";
+    wrap.setAttribute("role","note");
+    wrap.setAttribute("aria-label","TMUA score scaling note");
+
+    wrap.innerHTML =
+      '<div class="ts-score-note__row">' +
+      '  <div class="ts-score-note__left">' +
+      '    <div class="ts-score-note__asterisk">*</div>' +
+      '    <div class="ts-score-note__text">' +
+      '      <p class="ts-score-note__title">TMUA scoring note</p>' +
+      '      <p class="ts-score-note__sub">The /9.0 estimate is an approximate scaling reference. See the official “Explanation of Results” PDF for how TMUA scores are reported.</p>' +
+      '    </div>' +
+      '  </div>' +
+      '  <a class="ts-score-note__btn" href="' + PDF_URL + '" target="_blank" rel="noopener noreferrer" aria-label="Open official TMUA score explanation PDF">' +
+      '    <svg class="ts-score-note__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+      '      <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>' +
+      '      <path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>' +
+      '      <path d="M21 14v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>' +
+      '    </svg>' +
+      '  </a>' +
+      '</div>';
+
+    return wrap;
+  }
+
+  function injectOnce(){
+    try {
+      if (document.getElementById("tsScoreNoteInjected")) return;
+
+      var anchor = document.querySelector(".ts-score9-wrap"); // your TMUA /9 UI block
+      if (!anchor) return;
+
+      // prevent duplicates
+      var existing = document.querySelector(".ts-score-note");
+      if (existing) return;
+
+      var note = makeNoteEl();
+      note.id = "tsScoreNoteInjected";
+
+      // insert right after the TMUA score block
+      if (anchor.parentNode) {
+        anchor.parentNode.insertBefore(note, anchor.nextSibling);
+      }
+    } catch(e){}
+  }
+
+  function wrapSubmitExam(){
+    var orig = window.submitExam;
+    if (typeof orig !== "function") return;
+    if (orig.__TS_SCORE_NOTE_WRAPPED) return;
+
+    function wrappedSubmitExam(){
+      var ret = orig.apply(this, arguments);
+      // results HTML is rendered inside submitExam -> wait a tick then inject
+      setTimeout(injectOnce, 0);
+      setTimeout(injectOnce, 50);
+      return ret;
+    }
+    wrappedSubmitExam.__TS_SCORE_NOTE_WRAPPED = true;
+    try { window.submitExam = wrappedSubmitExam; } catch(e){}
+  }
+
+  function boot(){
+    wrapSubmitExam();
+    // If results are already on screen for any reason, try once
+    setTimeout(injectOnce, 100);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+<!-- /TS_SCORE_NOTE_JS_V1 -->
+</body>
+</html>
+
+
+
+
+
+

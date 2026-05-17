@@ -1,0 +1,2 @@
+export default function Head() { return ( <> {/* TS_FORCE_FAVICON_ALL 20260227022445 */} <link rel="icon" href="/favicon.ico?v=20260227022445" sizes="any" /> <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20260227022445" /> <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20260227022445" /> <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260227022445" /> <link rel="icon" type="image/png" href="/icon.png?v=20260227022445" /> </> );
+}

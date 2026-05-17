@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice Tests · Thriving Scholars</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f172a;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --text:#e8edf6;
+      --accent:#f2b233;
+      --line:rgba(255,255,255,.10);
+      --good:#22c55e;
+      --warn:#f59e0b;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(242,178,51,.18), transparent 55%),
+                  radial-gradient(900px 600px at 120% 10%, rgba(59,130,246,.12), transparent 45%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{ max-width:1100px; margin:0 auto; padding:28px 16px 60px; }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:14px 14px; border:1px solid var(--line);
+      background:rgba(15,23,42,.65); border-radius:16px; backdrop-filter: blur(10px);
+      position:sticky; top:10px; z-index:10;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .brand .kicker{ color:var(--muted); font-size:12px; letter-spacing:.16em; text-transform:uppercase; }
+    .brand .title{ font-size:18px; font-weight:800; }
+    .actions{ display:flex; gap:10px; align-items:center; }
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:12px; border:1px solid var(--line);
+      background:rgba(11,18,32,.65); color:var(--text);
+      text-decoration:none; font-weight:700; font-size:13px;
+      cursor:pointer;
+    }
+    .btn:hover{ border-color:rgba(242,178,51,.5); }
+    .btn--accent{ background:rgba(242,178,51,.14); border-color:rgba(242,178,51,.45); }
+    .stats{
+      margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;
+    }
+    .stat{
+      flex:1 1 220px;
+      border:1px solid var(--line);
+      background:rgba(15,23,42,.55);
+      border-radius:16px;
+      padding:14px 14px;
+      min-width:220px;
+    }
+    .stat .label{ color:var(--muted); font-size:12px; }
+    .stat .value{ font-size:22px; font-weight:900; margin-top:6px; }
+    .section{ margin-top:22px; }
+    .sectionHead{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:12px;
+      margin-bottom:10px;
+    }
+    .sectionHead h2{ margin:0; font-size:16px; font-weight:900; }
+    .sectionHead p{ margin:0; color:var(--muted); font-size:13px; }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:12px;
+    }
+    @media (max-width: 880px){
+      .grid{ grid-template-columns: 1fr; }
+      .topbar{ position:relative; top:auto; }
+    }
+    .card{
+      border:1px solid var(--line);
+      background:rgba(11,18,32,.55);
+      border-radius:16px;
+      padding:14px 14px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .card .meta{ display:flex; flex-direction:column; gap:6px; }
+    .name{ font-weight:900; font-size:15px; line-height:1.2; }
+    .sub{ color:var(--muted); font-size:13px; }
+    .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:2px; }
+    .tag{
+      font-size:12px; font-weight:800;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--text);
+      background:rgba(15,23,42,.55);
+    }
+    .tag--accent{ border-color:rgba(242,178,51,.45); background:rgba(242,178,51,.12); }
+    .tag--good{ border-color:rgba(34,197,94,.45); background:rgba(34,197,94,.10); }
+    .right{ display:flex; flex-direction:column; align-items:flex-end; justify-content:space-between; gap:10px; min-width:150px; }
+    .status{
+      font-weight:900; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--muted);
+    }
+    .status.attempted{ color:rgba(34,197,94,.95); }
+    .go{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(242,178,51,.45);
+      background:rgba(242,178,51,.14);
+      color:var(--text);
+      font-weight:900;
+      text-decoration:none;
+      cursor:pointer;
+      min-width:128px;
+    }
+    .go:hover{ filter:brightness(1.05); }
+    .fine{ margin-top:18px; color:var(--muted); font-size:13px; line-height:1.55; }
+    .divider{ margin-top:18px; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="kicker">TMUA 2026</div>
+        <div class="title">Practice Tests</div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="/dashboard">← Back to Dashboard</a>
+        <button class="btn btn--accent" id="resetBtn" type="button">Reset Attempted</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="label">Done</div>
+        <div class="value" id="doneCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Left</div>
+        <div class="value" id="leftCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Total</div>
+        <div class="value" id="totalCount">0</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div>
+          <h2>Topic Tests</h2>
+          <p>Shorter mocks grouped by Paper track and sub-topics.</p>
+        </div>
+      </div>
+      <div class="grid" id="topicGrid"></div>
+    </div>
+
+    <div class="section">
+      <div class="sectionHead">
+        <div>
+          <h2>Full-Length Tests</h2>
+          <p>150-minute (Paper 1 + Paper 2) — save for later in your roadmap.</p>
+        </div>
+      </div>
+      <div class="grid" id="fullGrid"></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="fine">
+      Note: “Attempted” is tracked locally in your browser (per device) for now.
+      Later we can switch this to Supabase so it syncs across devices.
+    </div>
+  </div>
+
+<script>
+  // Files (from your repo)
+  const TESTS = {
+    topic: [
+      {
+        id: "p1_mock_01",
+        name: "Paper 1 Mock 01",
+        sub: "Algebra · Sequences · Functions · Geometry",
+        dur: "75 min",
+        file: "p1-mock-01-algebra-sequences-functions-geometry.html",
+        tags: ["PAPER 1", "Mixed Topics"]
+      },
+      {
+        id: "p1_mock_02",
+        name: "Paper 1 Mock 02",
+        sub: "Graphs · Trigonometry · Logarithms",
+        dur: "75 min",
+        file: "p1-mock-02-graphs-trig-logs.html",
+        tags: ["PAPER 1", "Graphs/Trig/Logs"]
+      },
+      {
+        id: "p1_mock_03",
+        name: "Paper 1 Mock 03",
+        sub: "Calculus",
+        dur: "75 min",
+        file: "p1-mock-03-calculus.html",
+        tags: ["PAPER 1", "Calculus"]
+      },
+      {
+        id: "p1_mock_05",
+        name: "Paper 1 Mock 05",
+        sub: "All Topics (Paper 1)",
+        dur: "75 min",
+        file: "p1-mock-05-all-topics.html",
+        tags: ["PAPER 1", "All Topics"]
+      },
+      {
+        id: "p2_logic",
+        name: "Paper 2 Topic — Logic & Proofs",
+        sub: "Logic · Proofs",
+        dur: "75 min",
+        file: "p2-mock-04-logic-proofs.html",
+        tags: ["PAPER 2", "Logic/Proofs"]
+      },
+      {
+        id: "p2_all",
+        name: "Paper 2 Mock — All Topics",
+        sub: "All Topics (Paper 2)",
+        dur: "75 min",
+        file: "p2-mock-06-all-topics.html",
+        tags: ["PAPER 2", "All Topics"]
+      }
+    ],
+    full: [
+      {
+        id: "full_mock_01",
+        name: "Full Mock 01",
+        sub: "Paper 1 + Paper 2 · All Topics",
+        dur: "150 min",
+        file: "full-mock-01-all-topics.html",
+        tags: ["FULL", "Mock"]
+      },
+      {
+        id: "full_mock_02",
+        name: "Full Mock 02",
+        sub: "Paper 1 + Paper 2 · All Topics",
+        dur: "150 min",
+        file: "full-mock-02-all-topics.html",
+        tags: ["FULL", "Mock"]
+      },
+      {
+        id: "official_2022",
+        name: "Official TMUA 2022",
+        sub: "Paper 1 + Paper 2 · All Topics",
+        dur: "150 min",
+        file: "full-official-2022.html",
+        tags: ["FULL", "Official"]
+      },
+      {
+        id: "official_2023",
+        name: "Official TMUA 2023",
+        sub: "Paper 1 + Paper 2 · All Topics",
+        dur: "150 min",
+        file: "full-official-2023.html",
+        tags: ["FULL", "Official"]
+      }
+    ]
+  };
+
+  const KEY = "ts_practice_attempted_v1";
+
+  function loadState(){
+    try { return JSON.parse(localStorage.getItem(KEY) || "{}"); }
+    catch { return {}; }
+  }
+  function saveState(s){
+    localStorage.setItem(KEY, JSON.stringify(s));
+  }
+
+  function markAttempted(id){
+    const s = loadState();
+    s[id] = { attempted: true, at: new Date().toISOString() };
+    saveState(s);
+    renderAll();
+  }
+
+  function isAttempted(id){
+    const s = loadState();
+    return Boolean(s[id]?.attempted);
+  }
+
+  function cardHTML(t){
+    const attempted = isAttempted(t.id);
+    const statusClass = attempted ? "status attempted" : "status";
+    const statusText = attempted ? "Attempted" : "Not attempted yet";
+
+    const tags = (t.tags || []).map(tag => {
+      const cls = tag.includes("PAPER 2") ? "tag tag--accent" : "tag";
+      return <span class=""></span>;
+    }).join("");
+
+    const href = "/practice-tests/tests/" + t.file;
+
+    return 
+      <div class="card" data-id="">
+        <div class="meta">
+          <div class="name"></div>
+          <div class="sub"> · </div>
+          <div class="tags"></div>
+        </div>
+        <div class="right">
+          <div class=""></div>
+          <a class="go" href="" data-go="1">Start →</a>
+        </div>
+      </div>
+    ;
+  }
+
+  function renderGrid(elId, arr){
+    const el = document.getElementById(elId);
+    el.innerHTML = arr.map(cardHTML).join("");
+
+    // mark attempted when user clicks "Start"
+    el.querySelectorAll("a[data-go='1']").forEach(a => {
+      a.addEventListener("click", () => {
+        const card = a.closest(".card");
+        const id = card?.getAttribute("data-id");
+        if (id) markAttempted(id);
+      });
+    });
+  }
+
+  function renderStats(){
+    const all = [...TESTS.topic, ...TESTS.full];
+    const attempted = all.filter(t => isAttempted(t.id)).length;
+    const total = all.length;
+    document.getElementById("doneCount").textContent = String(attempted);
+    document.getElementById("leftCount").textContent = String(total - attempted);
+    document.getElementById("totalCount").textContent = String(total);
+  }
+
+  function renderAll(){
+    renderGrid("topicGrid", TESTS.topic);
+    renderGrid("fullGrid", TESTS.full);
+    renderStats();
+  }
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    if (confirm("Reset Attempted status for all tests on this device?")) {
+      localStorage.removeItem(KEY);
+      renderAll();
+    }
+  });
+
+  renderAll();
+</script>
+</body>
+</html>

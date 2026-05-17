@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice Tests</title>
+  <style>
+    :root{
+      --ts-saffron:#FEC94F;
+      --ts-saffron-soft:#FFF3D1;
+      --ts-maroon:#7A1F24;
+      --ts-ink:#141414;
+      --ts-muted:#5E5E5E;
+      --ts-border:#E7E7E7;
+      --ts-panel:#FFFFFF;
+      --ts-bg:#FFFDF7;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ts-ink);
+      background:var(--ts-bg);
+    }
+    .topbar{
+      background:var(--ts-saffron);
+      border-bottom:1px solid rgba(0,0,0,.06);
+      padding:18px 22px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .left{display:flex; flex-direction:column; gap:4px;}
+    .kicker{font-weight:900; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,20,.72);}
+    .h1{font-weight:950; font-size:34px; letter-spacing:-.02em; text-transform:uppercase;}
+    .sub{color:rgba(20,20,20,.70); font-weight:800; font-size:13px;}
+    .right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      background:#fff;
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:rgba(20,20,20,.70);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--ts-maroon);}
+    .ghost{
+      border:1px solid rgba(0,0,0,.16);
+      background:rgba(255,255,255,.55);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .ghost:hover{background:rgba(255,255,255,.72)}
+    .wrap{max-width:1100px; margin:0 auto; padding:22px 18px 50px;}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin:14px 0 20px;
+    }
+    .stat{
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10);
+      border-radius:var(--radius);
+      padding:14px 14px;
+      box-shadow:0 1px 0 rgba(0,0,0,.04);
+    }
+    .stat-wide{grid-column: span 4;}
+    .label{font-weight:900; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:rgba(20,20,20,.55);}
+    .value{font-weight:950; font-size:28px; margin-top:6px;}
+    .value.small{font-size:14px; font-weight:950; margin-top:8px; color:rgba(20,20,20,.72); text-transform:uppercase; letter-spacing:.06em;}
+    .section{margin-top:18px;}
+    .sectionHead{display:flex; align-items:flex-end; justify-content:space-between; gap:10px; margin-bottom:10px;}
+    .sectionHead h2{margin:0; font-size:18px; font-weight:950; text-transform:uppercase; letter-spacing:-.01em;}
+    .sectionHead p{margin:0; color:rgba(20,20,20,.55); font-weight:900; font-size:12px; letter-spacing:.12em; text-transform:uppercase;}
+    .grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px;}
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr;}
+      .stats{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .stat-wide{grid-column: span 2;}
+      .h1{font-size:28px;}
+    }
+    .card{
+      background:#fff;
+      border:2px solid var(--ts-border);
+      border-radius:var(--radius);
+      padding:18px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      box-shadow:0 1px 0 rgba(0,0,0,.04);
+    }
+    .card.done{
+      border-color: rgba(34,197,94,.35);
+      background: linear-gradient(0deg, rgba(34,197,94,.05), rgba(255,255,255,1));
+    }
+    .cardLeft{display:flex; flex-direction:column; gap:8px;}
+    .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+    h3{margin:0; font-size:18px; font-weight:950; letter-spacing:-.01em;}
+    .meta{color:rgba(20,20,20,.62); font-weight:900; font-size:13px;}
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      border:1px solid rgba(0,0,0,.10);
+      background:#fff;
+    }
+    .badge-p2{border-color: rgba(122,31,36,.25); background: var(--ts-saffron-soft);}
+    .badge-off{border-color: rgba(242,178,51,.5); background: rgba(242,178,51,.12);}
+    .status{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      border:1px solid rgba(0,0,0,.10);
+      width: fit-content;
+    }
+    .status.no{color:rgba(20,20,20,.60); background:rgba(0,0,0,.03);}
+    .status.ok{color:rgba(20,20,20,.78); background:rgba(34,197,94,.10); border-color:rgba(34,197,94,.25);}
+    .go{
+      width:122px; height:52px;
+      border-radius:12px;
+      border:0;
+      cursor:pointer;
+      background:var(--ts-saffron);
+      box-shadow:var(--shadow);
+      font-weight:950;
+    }
+    .go:hover{filter:brightness(.98)}
+    .go:active{transform:scale(.99)}
+    .foot{
+      margin-top:20px;
+      color:rgba(20,20,20,.55);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" data-ui="TS_PRACTICE_STATIC_20260301_083546">
+    <div class="left">
+      <div class="kicker">TMUA 2026</div>
+      <div class="h1">Practice Tests</div>
+      <div class="sub">Pick a set, start the timer, build speed and accuracy.</div>
+    </div>
+    <div class="right">
+      <button class="ghost" id="backBtn" type="button">← Back</button>
+      <div class="pill"><span class="dot"></span><span id="paperPill">Paper: —</span></div>
+      <button class="ghost" id="resetBtn" type="button">Reset</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="stats">
+      <div class="stat"><div class="label">Done</div><div class="value" id="done">0</div></div>
+      <div class="stat"><div class="label">Left</div><div class="value" id="left">0</div></div>
+      <div class="stat"><div class="label">Total</div><div class="value" id="total">0</div></div>
+      <div class="stat stat-wide">
+        <div class="label">Roadmap</div>
+        <div class="value small">Topic Tests → Paper mocks → Full mocks → Official (2022/2023) last</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sectionHead">
+        <h2>Topic Tests</h2>
+        <p id="topicHint">—</p>
+      </div>
+      <div class="grid" id="topicGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="sectionHead">
+        <h2>Full-Length Tests</h2>
+        <p>Paper 1 + Paper 2 (150 minutes)</p>
+      </div>
+      <div class="grid" id="fullGrid"></div>
+    </section>
+
+    <div class="foot">Build: 2026-03-01 08:35:47 UTC</div>
+  </main>
+
+<script>
+  const STORAGE_KEY = "ts_practice_attempted_v1";
+
+  const TOPIC = [
+      { id: "p1_mock_01_algebra_sequences_functions_geometry", file: "p1-mock-01-algebra-sequences-functions-geometry.html", title: "TMUA Mock Test 1", meta: "PAPER 1 • 75 min • Algebra • Sequences • Functions • Geometry", badge: "PAPER 1" },
+      { id: "p1_mock_02_graphs_trig_logs", file: "p1-mock-02-graphs-trig-logs.html", title: "TMUA Mock Test 2", meta: "PAPER 1 • 75 min • Graphs • Trigonometry • Logarithms", badge: "PAPER 1" },
+      { id: "p1_mock_03_calculus", file: "p1-mock-03-calculus.html", title: "TMUA Mock Test 3", meta: "PAPER 1 • 75 min • Calculus", badge: "PAPER 1" },
+      { id: "p1_mock_05_all_topics", file: "p1-mock-05-all-topics.html", title: "TMUA Mock Test 5", meta: "PAPER 1 • 75 min • All Topics", badge: "PAPER 1" },
+      { id: "p2_mock_04_logic_proofs", file: "p2-mock-04-logic-proofs.html", title: "TMUA Mock Test 4", meta: "PAPER 2 • 75 min • Logic • Proofs", badge: "PAPER 2" },
+      { id: "p2_mock_06_all_topics", file: "p2-mock-06-all-topics.html", title: "TMUA Mock Test 6", meta: "PAPER 2 • 75 min • All Topics", badge: "PAPER 2" },
+  ];
+
+  const FULL = [
+      { id: "full_mock_01_all_topics", file: "full-mock-01-all-topics.html", title: "TMUA Mock Full Test 1", meta: "PAPER 1 + PAPER 2 • 150 min • All Topics", badge: "FULL" },
+      { id: "full_mock_02_all_topics", file: "full-mock-02-all-topics.html", title: "TMUA Mock Full Test 2", meta: "PAPER 1 + PAPER 2 • 150 min • All Topics", badge: "FULL" },
+      { id: "full_official_2022", file: "full-official-2022.html", title: "TMUA Official 2022", meta: "PAPER 1 + PAPER 2 • 150 min • All Topics", badge: "OFFICIAL" },
+      { id: "full_official_2023", file: "full-official-2023.html", title: "TMUA Official 2023", meta: "PAPER 1 + PAPER 2 • 150 min • All Topics", badge: "OFFICIAL" },
+  ];
+
+  function qs(k){ return new URLSearchParams(location.search).get(k); }
+
+  function readAttempted(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; }
+  }
+  function writeAttempted(map){ localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); }
+
+  function badgeClass(b){
+    if (b === "PAPER 2") return "badge badge-p2";
+    if (b === "OFFICIAL") return "badge badge-off";
+    return "badge";
+  }
+
+  function render(){
+    const attempted = readAttempted();
+    const paper = (qs("paper") === "2") ? "2" : "1";
+
+    document.getElementById("paperPill").textContent = "Paper: " + (paper === "2" ? "Paper 2" : "Paper 1");
+    document.getElementById("topicHint").textContent = paper === "2" ? "Paper 2 sub-topics" : "Paper 1 mocks";
+
+    const visibleTopic = TOPIC.filter(t => paper === "2" ? (t.badge === "PAPER 2") : (t.badge === "PAPER 1"));
+    const total = visibleTopic.length + FULL.length;
+
+    let done = 0;
+    Object.keys(attempted).forEach(k => { if (attempted[k]) done++; });
+
+    document.getElementById("done").textContent = String(done);
+    document.getElementById("left").textContent = String(Math.max(0, total - done));
+    document.getElementById("total").textContent = String(total);
+
+    function card(t){
+      const isDone = !!attempted[t.id];
+      const status = isDone ? "Attempted" : "Not attempted yet";
+      const statusCls = isDone ? "status ok" : "status no";
+      return 
+        <article class="card ">
+          <div class="cardLeft">
+            <div class="row">
+              <h3></h3>
+              <span class=""></span>
+            </div>
+            <div class="meta"></div>
+            <div class=""></div>
+          </div>
+          <button class="go" type="button" data-id="" data-file="">Start →</button>
+        </article>
+      ;
+    }
+
+    document.getElementById("topicGrid").innerHTML = visibleTopic.map(card).join("");
+    document.getElementById("fullGrid").innerHTML  = FULL.map(card).join("");
+
+    document.querySelectorAll("button.go").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        const file = btn.getAttribute("data-file");
+        if (!id || !file) return;
+        attempted[id] = true;
+        writeAttempted(attempted);
+        location.href = file;
+      });
+    });
+  }
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    if (confirm("Reset Attempted status on this device?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      render();
+    }
+  });
+
+  document.getElementById("backBtn").addEventListener("click", () => {
+    // If inside iframe, go parent dashboard; otherwise same window
+    try { if (window.parent && window.parent !== window) window.parent.location.href = "/dashboard";
+          else location.href = "/dashboard";
+    } catch { location.href = "/dashboard"; }
+  });
+
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { supabaseBrowser } from "@/utils/supabase/browser";
+
+type Props = { uiMark?: string };
+
+export default function LoginClient(_props: Props) {
+  const router = useRouter();
+  const search = useSearchParams();
+
+  const nextPath = search.get("next") || "/dashboard";
+  const supabase = useMemo(() => supabaseBrowser(), []);
+
+  const [email, setEmail] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+
+  // If already signed in, go where user wanted (NOT always /dashboard)
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (data?.session) router.replace(nextPath);
+      } catch {}
+    })();
+  }, [supabase, router, nextPath]);
+
+  async function sendLink(e: React.FormEvent) {
+    e.preventDefault();
+    setErr(null);
+
+    const em = email.trim().toLowerCase();
+    if (!em) return;
+
+    setBusy(true);
+    try {
+      const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email: em,
+        options: { emailRedirectTo: redirectTo },
+      });
+
+      if (error) throw error;
+
+      setSent(true);
+    } catch (ex: any) {
+      setErr(ex?.message || "Login failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div style={{ maxWidth: 520, margin: "40px auto", padding: 20 }}>
+      <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>Sign in</h1>
+      <p style={{ marginBottom: 16, color: "#475569" }}>
+        We’ll email you a magic link. After you click it, you’ll be taken to: <b>{nextPath}</b>
+      </p>
+
+      <form onSubmit={sendLink} style={{ display: "flex", gap: 10 }}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          style={{ flex: 1, padding: "12px 12px", borderRadius: 10, border: "1px solid #cbd5e1" }}
+        />
+        <button
+          type="submit"
+          disabled={busy}
+          style={{
+            padding: "12px 14px",
+            borderRadius: 10,
+            border: "1px solid #111827",
+            fontWeight: 800,
+            cursor: busy ? "not-allowed" : "pointer",
+          }}
+        >
+          {busy ? "Sending..." : "Send link"}
+        </button>
+      </form>
+
+      {sent && (
+        <div style={{ marginTop: 14, padding: 12, borderRadius: 10, background: "#ecfeff", border: "1px solid #67e8f9" }}>
+          ✅ Link sent. Please check your email and click the magic link.
+        </div>
+      )}
+
+      {err && (
+        <div style={{ marginTop: 14, padding: 12, borderRadius: 10, background: "#fff1f2", border: "1px solid #fecdd3" }}>
+          ❌ {err}
+        </div>
+      )}
+    </div>
+  );
+}
