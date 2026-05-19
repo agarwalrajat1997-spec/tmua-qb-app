@@ -4,18 +4,8 @@
   <title>TMUA Question Bank</title>
 
   <!-- MathJax (same delimiters you already use) -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['\\(','\\)']],
-        displayMath: [['\\[','\\]']]
-      },
-      options: {
-        skipHtmlTags: ['script','noscript','style','textarea','pre','code']
-      }
-    };
-  </script>
-  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  
 
 <style>
 .hint-box{
@@ -1377,7 +1367,343 @@ mjx-c.mjx-c31::before {
   padding: 0.666em 0.5em 0 0;
   content: "1";
 }
-</style></head>
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']]
+  },
+  options: {
+    skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+  }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<style>
+#navGrid { display:block !important; }
+
+#navGrid .nav-group-body .nav-grid{
+  display:grid !important;
+  grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+  gap:8px !important;
+}
+
+@media(max-width:820px){
+  #navGrid .nav-group-body .nav-grid{
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+}
+@media(max-width:520px){
+  #navGrid .nav-group-body .nav-grid{
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
+#navOverlay .modal-body{
+  max-height:70vh;
+  overflow:auto;
+}
+
+#qSolution.solution{
+  margin-top:12px;
+}
+
+#hintBox.hint-box{
+  margin-top:12px;
+}
+</style>
+
+
+<style id="ts-dom-card-fix-v1">
+.qcard .feedback,
+.qcard .hint-box,
+.qcard .solution {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.qcard .solution {
+  overflow-x: auto;
+}
+
+.qbody > #qOptions,
+.qbody > #qFeedback,
+.qbody > #hintBox,
+.qbody > #qSolution,
+.qbody > #qHintLine {
+  width: 100%;
+}
+
+.container {
+  padding-bottom: 130px;
+}
+
+.footer {
+  min-height: 44px;
+}
+
+#qSolutionBody p:last-child {
+  margin-bottom: 0;
+}
+</style>
+
+
+<!-- TS_BUG_REPORT_EMAILJS_V1 -->
+<script id="ts-emailjs-sdk" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style id="ts-bug-report-css-v1">
+.bug-floating-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 86px;
+  z-index: 80;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,.18);
+  background: #fff7ed;
+  color: #9a3412;
+  box-shadow: 0 10px 26px rgba(15,23,42,.18);
+  cursor: pointer;
+  font-size: 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bug-floating-btn:hover {
+  background: #ffedd5;
+  transform: translateY(-1px);
+}
+
+.bug-report-note {
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #334155;
+}
+
+.bug-report-textarea {
+  width: 100%;
+  min-height: 130px;
+  resize: vertical;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.bug-report-thanks {
+  margin-top: 10px;
+  color: #166534;
+  font-weight: 800;
+}
+
+.bug-report-error {
+  margin-top: 10px;
+  color: #991b1b;
+  font-weight: 800;
+  white-space: pre-wrap;
+}
+
+@media(max-width:700px) {
+  .bug-floating-btn {
+    right: 12px;
+    bottom: 78px;
+    width: 40px;
+    height: 40px;
+  }
+}
+</style>
+<!-- /TS_BUG_REPORT_EMAILJS_V1 -->
+
+
+
+<style id="ts-canonical-chapter-nav-v2">
+#navGrid {
+  display: block !important;
+}
+
+#navGrid .nav-group {
+  margin-bottom: 16px;
+  border: 1px solid #dbe7f5;
+  border-radius: 14px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+#navGrid .nav-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f8fbff;
+  border-bottom: 1px solid #e5eef8;
+}
+
+#navGrid .nav-group-title {
+  font-weight: 900;
+  font-size: 16px;
+  color: #0f2744;
+}
+
+#navGrid .nav-group-count {
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #dbe7f5;
+  border-radius: 999px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+#navGrid .nav-group-body {
+  padding: 12px;
+}
+
+#navGrid .nav-group-body .nav-grid {
+  display: grid !important;
+  grid-template-columns: repeat(10, minmax(74px, 1fr)) !important;
+  gap: 8px !important;
+}
+
+#navGrid .nav-btn .nav-unit {
+  font-size: 10px;
+  font-weight: 800;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 14px;
+}
+
+#navGrid .nav-btn .nav-num {
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+#navGrid .nav-btn.current {
+  outline: 2px solid #0074c1;
+  outline-offset: 1px;
+}
+
+@media(max-width:900px) {
+  #navGrid .nav-group-body .nav-grid {
+    grid-template-columns: repeat(7, minmax(64px, 1fr)) !important;
+  }
+}
+
+@media(max-width:560px) {
+  #navGrid .nav-group-body .nav-grid {
+    grid-template-columns: repeat(5, minmax(58px, 1fr)) !important;
+  }
+}
+</style>
+
+
+<style id="ts-topic-filter-order-fix-v1">
+#fTopics {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+#fTopics .chk {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  justify-content: flex-start !important;
+}
+
+#fTopics .chk input {
+  margin-right: 8px !important;
+}
+</style>
+
+
+<style id="ts-final-chapter-order-nav-v1">
+#navGrid {
+  display: block !important;
+}
+
+#navGrid .nav-group {
+  margin-bottom: 16px;
+  border: 1px solid #dbe7f5;
+  border-radius: 14px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+#navGrid .nav-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f8fbff;
+  border-bottom: 1px solid #e5eef8;
+}
+
+#navGrid .nav-group-title {
+  font-weight: 900;
+  font-size: 16px;
+  color: #0f2744;
+}
+
+#navGrid .nav-group-count {
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #dbe7f5;
+  border-radius: 999px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+#navGrid .nav-group-body {
+  padding: 12px;
+}
+
+#navGrid .nav-group-body .nav-grid {
+  display: grid !important;
+  grid-template-columns: repeat(10, minmax(74px, 1fr)) !important;
+  gap: 8px !important;
+}
+
+#navGrid .nav-btn .nav-unit {
+  font-size: 10px;
+  font-weight: 800;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 14px;
+}
+
+#navGrid .nav-btn .nav-num {
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+#navGrid .nav-btn.current {
+  outline: 2px solid #0074c1;
+  outline-offset: 1px;
+}
+</style>
+
+</head>
 
 <body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
 
@@ -1389,39 +1715,8 @@ mjx-c.mjx-c31::before {
          b) ["Graph 1","Graph 2"]  (strings are shown as captions only)
        ============================= -->
 <!-- TMUA / Question Bank Data -->
-<script id="qb-data" type="application/json">[]</script>
-<script>
-  const qbScript = document.getElementById('qb-data');
-  const questions = JSON.parse(qbScript.textContent);
 
-  questions.sort((a, b) => {
-    // 1) topic number first, e.g. 1_, 2_, ..., 10_
-    const getTopicNum = (topic) => {
-      const m = String(topic || "").match(/^(\d+)_/);
-      return m ? parseInt(m[1], 10) : 999;
-    };
-
-    const topicNumA = getTopicNum(a.topic);
-    const topicNumB = getTopicNum(b.topic);
-
-    if (topicNumA !== topicNumB) {
-      return topicNumA - topicNumB;
-    }
-
-    // 2) then full topic text as fallback
-    const topicTextCompare = String(a.topic || "").localeCompare(String(b.topic || ""));
-    if (topicTextCompare !== 0) {
-      return topicTextCompare;
-    }
-
-    // 3) then difficulty
-    return (a.difficulty || 0) - (b.difficulty || 0);
-  });
-
-  qbScript.textContent = JSON.stringify(questions, null, 2);
-
-  console.log(questions);
-</script><div class="header">
+<div class="header">
   <div class="header-left">
     <div>
       <div class="brand">TMUA Question Bank</div>
@@ -1448,6 +1743,7 @@ mjx-c.mjx-c31::before {
   </div>
 </div>
 
+
 <div class="container">
 
   <div class="topbar">
@@ -1455,37 +1751,39 @@ mjx-c.mjx-c31::before {
     <div class="chips">
       <span class="chip">
         <span class="dot"></span>
-        Filter Showing <strong><span id="visibleCount">323</span></strong> of <strong><span id="poolCount">323</span></strong>
+        Filter Showing <strong><span id="visibleCount">0</span></strong> of <strong><span id="poolCount">0</span></strong>
       </span>
 
-      <span class="chip"><span class="dot"></span>Q&nbsp;<span id="posCounter">210</span>/<span id="posTotal">323</span></span>
+      <span class="chip"><span class="dot"></span>Q&nbsp;<span id="posCounter">0</span>/<span id="posTotal">0</span></span>
     </div>
   </div>
 
-  <div class="qcard" id="qCard" style="display: block;">
+  <div class="qcard" id="qCard" style="display:block;">
     <div class="qhead">
       <h2 class="qtitle">
         <span class="calc"></span>
-        <span id="qTitle">Question 210</span>
+        <span id="qTitle">Loading...</span>
       </h2>
 
       <div class="qmeta">
-        <span class="meta-pill" id="metaPaper">Paper 1</span>
-        <span class="meta-pill" id="metaTopic">3_Geometry • Coordinate Geometry</span>
-        <span class="meta-pill" id="metaDiff">Difficulty 2/5</span>
-        <span class="meta-pill" id="metaStatus">Unattempted</span>
+        <span class="meta-pill" id="metaPaper">Paper</span>
+        <span class="meta-pill" id="metaTopic">Topic</span>
+        <span class="meta-pill" id="metaDiff">Difficulty</span>
+        <span class="meta-pill" id="metaStatus">Loading</span>
       </div>
     </div>
 
     <div class="qbody">
-      <div id="qPrompt"><p>A rectangle is divided into three smaller congruent rectangles as shown.</p><p>Each smaller rectangle is similar to the large rectangle.</p><p>In each of the four rectangles, what is the ratio of the length of a longer side to that of a shorter side?</p><p><img src="https://static.wixstatic.com/media/98f2c5_ab9f2f1336304783b2ea9bdbd811832e~mv2.png" alt="Shape made from five unit cubes" style="width:360px; height:auto;"></p></div>
-      <div id="qMedia"><div class="small" style="margin-top: 6px;"></div></div>
-      <div class="options" id="qOptions"><label class="option"><div class="option-row"><input type="radio" name="qb_PAPER1-Q210" value="A"><div><strong style="margin-right:8px;">A.</strong> <mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="0" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-msqrt><mjx-sqrt><mjx-surd><mjx-mo class="mjx-n"><mjx-c class="mjx-c221A"></mjx-c></mjx-mo></mjx-surd><mjx-box style="padding-top: 0.164em;"><mjx-mn class="mjx-n"><mjx-c class="mjx-c33"></mjx-c></mjx-mn></mjx-box></mjx-sqrt></mjx-msqrt><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><msqrt><mn>3</mn></msqrt><mo>:</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></div></div></label><label class="option"><div class="option-row"><input type="radio" name="qb_PAPER1-Q210" value="B"><div><strong style="margin-right:8px;">B.</strong> <mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="1" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c33"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>:</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></div></div></label><label class="option"><div class="option-row"><input type="radio" name="qb_PAPER1-Q210" value="C"><div><strong style="margin-right:8px;">C.</strong> <mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="2" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>:</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></div></div></label><label class="option"><div class="option-row"><input type="radio" name="qb_PAPER1-Q210" value="D"><div><strong style="margin-right:8px;">D.</strong> <mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="3" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msqrt><mjx-sqrt><mjx-surd><mjx-mo class="mjx-n"><mjx-c class="mjx-c221A"></mjx-c></mjx-mo></mjx-surd><mjx-box style="padding-top: 0.164em;"><mjx-mn class="mjx-n"><mjx-c class="mjx-c33"></mjx-c></mjx-mn></mjx-box></mjx-sqrt></mjx-msqrt><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>3</mn></msqrt><mo>:</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></div></div></label><label class="option"><div class="option-row"><input type="radio" name="qb_PAPER1-Q210" value="E"><div><strong style="margin-right:8px;">E.</strong> <mjx-container class="MathJax CtxtMenu_Attached_0" jax="CHTML" tabindex="0" ctxtmenu_counter="4" style="font-size: 109%; position: relative;"><mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msqrt><mjx-sqrt><mjx-surd><mjx-mo class="mjx-n"><mjx-c class="mjx-c221A"></mjx-c></mjx-mo></mjx-surd><mjx-box style="padding-top: 0.174em;"><mjx-mn class="mjx-n"><mjx-c class="mjx-c32"></mjx-c></mjx-mn></mjx-box></mjx-sqrt></mjx-msqrt><mjx-mo class="mjx-n" space="4"><mjx-c class="mjx-c3A"></mjx-c></mjx-mo><mjx-mn class="mjx-n" space="4"><mjx-c class="mjx-c31"></mjx-c></mjx-mn></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>2</mn></msqrt><mo>:</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container></div></div></label></div>
+      <div id="qPrompt"><p>Loading question from Supabase...</p></div>
+      <div id="qMedia"></div>
+
+      <div class="options" id="qOptions"></div>
 
       <div id="qFeedback" class="feedback" style="display:none;"></div>
 
       <div id="hintBox" class="hint-box" style="display:none;"></div>
-      <div id="qSolution" class="solution" style="display: none;">
+
+      <div id="qSolution" class="solution" style="display:none;">
         <h4>Solution</h4>
         <div id="qSolutionBody"></div>
       </div>
@@ -1501,6 +1799,52 @@ mjx-c.mjx-c31::before {
   </div>
 
 </div>
+
+
+<!-- TS_BUG_REPORT_MODAL_V1 -->
+<button
+  type="button"
+  id="bugFloatingBtn"
+  class="bug-floating-btn"
+  title="Report a problem in this question"
+  aria-label="Report a problem in this question"
+  onclick="BUG_REPORT.open()"
+>🐞</button>
+
+<div class="overlay" id="bugOverlay" onclick="BUG_REPORT.overlayClick(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Report a problem</h3>
+      <button class="modal-close" type="button" onclick="BUG_REPORT.close()">Close</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="bug-report-note">
+        <strong id="bugQuestionLabel">Current question</strong><br>
+        Use this to report a typo, wrong answer, broken diagram, or unclear solution.
+      </div>
+
+      <label for="bugComment" style="display:block;font-weight:900;margin-bottom:8px;">
+        Comment
+      </label>
+
+      <textarea
+        id="bugComment"
+        class="bug-report-textarea"
+      >Report a problem in this question.</textarea>
+
+      <div id="bugReportThanks" class="bug-report-thanks" style="display:none;"></div>
+      <div id="bugReportError" class="bug-report-error" style="display:none;"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn light" type="button" onclick="BUG_REPORT.close()">Cancel</button>
+      <button class="btn" id="bugSubmitBtn" type="button" onclick="BUG_REPORT.submit()">Submit</button>
+    </div>
+  </div>
+</div>
+<!-- /TS_BUG_REPORT_MODAL_V1 -->
+
 
 <div class="footer">
   <div class="footer-inner">
@@ -1539,7 +1883,7 @@ mjx-c.mjx-c31::before {
           <h4>Status</h4>
           <select class="select" id="fStatus">
             <option value="all">All</option>
-            <option value="unattempted">Unattempted</option>
+            <option value="unseen">Unattempted</option>
             <option value="attempted">Attempted</option>
             <option value="correct">Correct</option>
             <option value="incorrect">Incorrect</option>
@@ -1578,7 +1922,7 @@ mjx-c.mjx-c31::before {
 
       <div class="modal-footer">
         <button class="btn light" onclick="STATE.clearFilters()">Clear All Filters</button>
-        <button class="btn" onclick="STATE.applyFiltersFromUI()">Apply Filters</button>
+        <button class="btn" onclick="STATE.applyFilters()">Apply Filters</button>
       </div>
     </div>
   </div>
@@ -1716,2059 +2060,1212 @@ mjx-c.mjx-c31::before {
     </div>
   </div>
 
-  <script>
-    /***********************************************************************
-     * TMUA QUESTION BANK (NO CMS)
-     * - Autosaves progress in localStorage (per device/browser).
-     * - Filters: topic, paper, difficulty, status, search.
-     * - Navigator grid with color states.
-     * - Flag + Save (bookmark).
-     * - Check answer + optional solution.
-     * - Dashboard with accuracy by topic/difficulty + copy/email draft report.
-     * - Export/Import progress for cross-device.
-     ***********************************************************************/
-const Media = {
-  enhanceHTML(rawHtml){
-    if (!rawHtml) return "";
-
-    // Wrap so DOMParser always has a single root
-    const doc = new DOMParser().parseFromString(`<div id="__r">${rawHtml}</div>`, "text/html");
-    const root = doc.getElementById("__r");
-
-    // A) Upgrade existing <img> tags
-    root.querySelectorAll("img").forEach(img => {
-      img.loading = img.loading || "lazy";
-      img.decoding = img.decoding || "async";
-      img.classList.add("qa-img", "zoomable");
-
-      // Wrap in figure if not already wrapped
-      if (!img.closest("figure.qa-figure")) {
-        const fig = doc.createElement("figure");
-        fig.className = "qa-figure";
-
-        const alt = (img.getAttribute("alt") || "").trim();
-
-        img.replaceWith(fig);
-        fig.appendChild(img);
-
-        // optional caption (remove if you don’t want captions)
-        if (alt) {
-          const cap = doc.createElement("figcaption");
-          cap.className = "qa-cap";
-          cap.textContent = alt;
-          fig.appendChild(cap);
-        }
-      }
-    });
-
-    // B) Convert plain image URLs in text into <img> figures
-    const IMG_URL = /(https?:\/\/[^\s"'<>]+?\.(?:png|jpe?g|webp|gif|svg))(?:\?[^\s"'<>]*)?/ig;
-
-    // collect text nodes (TreeWalker)
-    const walker = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node => {
-      const txt = node.nodeValue;
-      if (!txt) return;
-
-      // quick check
-      if (!IMG_URL.test(txt)) return;
-      IMG_URL.lastIndex = 0;
-
-      const frag = doc.createDocumentFragment();
-      let last = 0;
-      let m;
-
-      while ((m = IMG_URL.exec(txt))) {
-        const before = txt.slice(last, m.index);
-        if (before) frag.appendChild(doc.createTextNode(before));
-
-        const url = m[0];
-
-        const fig = doc.createElement("figure");
-        fig.className = "qa-figure";
-
-        const img = doc.createElement("img");
-        img.className = "qa-img zoomable";
-        img.loading = "lazy";
-        img.decoding = "async";
-        img.src = url;
-        img.alt = "Image";
-
-        fig.appendChild(img);
-        frag.appendChild(fig);
-
-        last = m.index + url.length;
-      }
-
-      const after = txt.slice(last);
-      if (after) frag.appendChild(doc.createTextNode(after));
-
-      node.parentNode.replaceChild(frag, node);
-    });
-
-    return root.innerHTML;
-  }
-};
-
-    const CONFIG = {
-      QUESTION_BANK_ID: "tmua_qb_v1",               // change this if you have multiple banks
-      STORAGE_STATE_KEY: null,
-      STORAGE_EXPORT_VERSION: 1,
-      NAV_DEFAULT_POOL: "filtered",                // "filtered" or "all"
-      ALLOW_SOLUTION_BEFORE_CHECK: false            // set false if you want solution only after checking
-    };
-    CONFIG.STORAGE_STATE_KEY = `tmua_qb_state__${CONFIG.QUESTION_BANK_ID}`;
-
-    // ---------- Parse questions JSON ----------
-    function safeParseJSON(text){
-      try { return JSON.parse(text); } catch(e){ return null; }
-    }
-
-    let baseRaw = [];
-function isTypingTarget(t){
-  if (!t) return false;
-  const tag = (t.tagName || "").toUpperCase();
-  return t.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
-}
-
-function bindHotkeys(){
-  // capture=true helps “beat” some default handlers
-  window.addEventListener("keydown", (e) => {
-    if (!e.altKey) return;
-    if (e.ctrlKey || e.metaKey) return;     // avoid collisions like Ctrl/Command combos
-    if (isTypingTarget(e.target)) return;   // don’t hijack typing
-
-    const k = (e.key || "").toLowerCase();
-    if (k === "n") {
-      e.preventDefault();
-      e.stopPropagation();
-      NAV.next();
-    } else if (k === "p") {
-      e.preventDefault();
-      e.stopPropagation();
-      NAV.prev();
-    }
-  }, true);
-}
-    // Normalize question objects to ensure stable qid + consistent fields
-    function normalizeQuestion(q, idx){
-      const paper = (q.paper || q.section || "Paper 1").trim();
-      const topic = (q.topic || "General").trim();
-      const subtopic = (q.subtopic || "").trim();
-      const diff = clampInt(q.difficulty ?? 3, 1, 5);
-      const numberStr = String(q.number ?? (idx+1));
-      const numForSort = parseInt(numberStr, 10);
-      const numberSort = Number.isFinite(numForSort) ? numForSort : (idx+1);
-
-      // qid: best is user-supplied; else PaperShort + number
-      const paperShort = paper.replace(/\s+/g,'').replace(/[^a-zA-Z0-9]/g,'').toUpperCase(); // e.g., PAPER1
-      const qid = (q.qid && String(q.qid).trim())
-        ? String(q.qid).trim()
-        : `${paperShort}-Q${numberStr}`;
-
-      const options = Array.isArray(q.options) ? q.options.map(o => ({
-        label: String(o.label ?? "").trim(),
-        html: String(o.html ?? "")
-      })) : [];
-
-    return {
-  kind: q.kind || "mcq",
-  qid,
-  paper,
-  topic,
-  subtopic,
-  tags: Array.isArray(q.tags) ? q.tags.map(String) : [],
-  difficulty: diff,
-  number: numberStr,
-  numberSort,
-  prompt_html: String(q.prompt_html ?? ""),
-  options,
-  answer: String(q.answer ?? "").trim(),
-  solution_html: String(q.solution_html ?? ""),
-  page_assets: Array.isArray(q.page_assets) ? q.page_assets : [],
-
-  //  fields
-  answer_verified: q.answer_verified === true,
-  shortcut_available: q.shortcut_available === true,
-  nice_tip_html: String(q.nice_tip_html ?? ""),
-  checker_flags: Array.isArray(q.checker_flags) ? q.checker_flags.map(String) : []
-};
-    }
-
-    function clampInt(v, a, b){
-      const n = parseInt(v, 10);
-      if (!Number.isFinite(n)) return a;
-      return Math.max(a, Math.min(b, n));
-    }
-// ---------- SORT HELPERS ----------
-const DIFF_RANK = { easy: 0, medium: 1, hard: 2 };
-
-function diffRank(d) {
-  return DIFF_RANK[String(d || "").trim().toLowerCase()] ?? 999;
-}
-
-function topicParts(topic) {
-  const s = String(topic || "");
-  const m = s.match(/^(\d+)[\s_:-]?(.*)$/); // handles "10_Proof", "10 Proof", "10-Proof"
-  const n = m ? parseInt(m[1], 10) : 9999;
-  const rest = (m ? m[2] : s).trim();
-  return { n, rest, raw: s };
-}
-
-function compareTopic(a, b) {
-  const A = topicParts(a);
-  const B = topicParts(b);
-  if (A.n !== B.n) return A.n - B.n;
-  // if same number (or both missing), compare the text part
-  return A.rest.localeCompare(B.rest, undefined, { numeric: true, sensitivity: "base" });
-}
-
-    
-let QUESTIONS_ALL = [];
-
-const QUESTION_CACHE = new Map();
-
-async function qbApiJson(url, options = {}) {
-  const r = await fetch(url, {
-    credentials: "include",
-    cache: "no-store",
-    ...options
-  });
-
-  const j = await r.json().catch(() => null);
-
-  if (!r.ok || !j || !j.ok) {
-    throw new Error((j && j.error) || `Request failed: ${url}`);
-  }
-
-  return j;
-}
-
-function normalizeQuestionMeta(q, idx) {
-  return normalizeQuestion({
-    qid: q.qid,
-    kind: q.kind || "mcq",
-    paper: q.paper || "Paper 1",
-    topic: q.topic || "General",
-    subtopic: q.subtopic || "",
-    tags: Array.isArray(q.tags) ? q.tags : [],
-    difficulty: q.difficulty || 3,
-    number: String(q.paper_question_number || q.display_order || (idx + 1)),
-    prompt_html: "",
-    options: [],
-    answer: "",
-    solution_html: "",
-    page_assets: [],
-    answer_verified: false,
-    shortcut_available: false,
-    nice_tip_html: "",
-    checker_flags: []
-  }, idx);
-}
-
-async function loadQuestionListFromServer() {
-  const j = await qbApiJson("/api/tmua/qb/list");
-  QUESTIONS_ALL = (j.questions || []).map(normalizeQuestionMeta);
-  buildIndex();
-}
-
-async function hydrateQuestionIntoIndex(qid) {
-  const existing = INDEX.byQid.get(qid);
-  if (!existing) return null;
-
-  if (existing._hydrated === true) return existing;
-
-  if (QUESTION_CACHE.has(qid)) {
-    Object.assign(existing, QUESTION_CACHE.get(qid));
-    existing._hydrated = true;
-    return existing;
-  }
-
-  const j = await qbApiJson("/api/tmua/qb/question?qid=" + encodeURIComponent(qid));
-  const q = j.question || {};
-
-  const full = {
-    prompt_html: String(q.prompt_html || ""),
-    options: Array.isArray(q.options) ? q.options.map(o => ({
-      label: String(o.label || "").trim(),
-      html: String(o.html || "")
-    })) : [],
-    page_assets: Array.isArray(q.page_assets) ? q.page_assets : [],
-    shortcut_available: q.shortcut_available === true,
-    nice_tip_html: String(q.nice_tip_html || ""),
-    _hydrated: true
-  };
-
-  QUESTION_CACHE.set(qid, full);
-  Object.assign(existing, full);
-
-  return existing;
-}
-
-async function checkAnswerOnServer(qid, selected) {
-  return qbApiJson("/api/tmua/qb/check", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ qid, selected })
-  });
-}
-
-
-    // ---------- State ----------
-    function defaultState(){
-      return {
-        version: CONFIG.STORAGE_EXPORT_VERSION,
-        updatedAt: Date.now(),
-        // answers[qid] = { selected, checked, isCorrect, flagged, saved }
-        answers: {},
-        lastQid: null,
-
-        filters: {
-          status: "all",
-          papers: [],        // if empty => all
-          diffs: [],         // if empty => all
-          topics: [],        // if empty => all
-          sort: "topic",
-          pool: CONFIG.NAV_DEFAULT_POOL
-        },
-
-        ui: {
-          showSolution: false
-        }
-      };
-    }
- function loadState(){
-  /* TS_CLOUD_SYNC_V1 */
-// Cloud progress sync (account-based) for TMUA Question Bank
-// - Reads logged-in user via /api/me (cookie-based session on apps.thrivingscholars.com)
-// - Loads/saves per paper via /api/progress/tmua?paper=1|2
-(function(){
-  const CLOUD = {
-    enabled: true,
-    saving: false,
-    lastPushTs: 0,
-    timer: null,
-    // derive paper from URL (?paper=2) else paper=1
-    paperParam(){
-      try {
-        const u = new URL(window.location.href);
-        return (u.searchParams.get("paper") === "2") ? "2" : "1";
-      } catch(e) { return "1"; }
-    },
-    async me(){
-      const r = await fetch("/api/me", { credentials: "include" });
-      if (!r.ok) return null;
-      const j = await r.json();
-      return j && j.user ? j.user : null;
-    },
-    async pull(){
-      const p = this.paperParam();
-      const r = await fetch("/api/progress/tmua?paper=" + encodeURIComponent(p), { credentials: "include" });
-      if (!r.ok) return null;
-      const j = await r.json();
-      if (!j || !j.ok) return null;
-      return { data: j.data, updated_at: j.updated_at, scope: j.scope };
-    },
-    async push(stateObj){
-      const p = this.paperParam();
-      const r = await fetch("/api/progress/tmua?paper=" + encodeURIComponent(p), {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: stateObj })
-      });
-      if (!r.ok) return false;
-      const j = await r.json();
-      return !!(j && j.ok);
-    },
-    // Called on startup: if cloud has newer, replace local; if cloud empty, upload local once
-    async init(){
-      try {
-        const user = await this.me();
-        if (!user) return; // not logged in
-        const localRaw = localStorage.getItem(CONFIG.STORAGE_STATE_KEY);
-        const local = localRaw ? JSON.parse(localRaw) : null;
-
-        const remote = await this.pull();
-        const remoteData = remote ? remote.data : null;
-
-        // Our state will carry a timestamp for conflict resolution
-        const localTs = local && local._ts ? Number(local._ts) : 0;
-        const remoteTs = remoteData && remoteData._ts ? Number(remoteData._ts) : 0;
-
-        if (remoteData && remoteTs >= localTs) {
-          // Remote wins -> overwrite localStorage so the app loads remote progress
-          localStorage.setItem(CONFIG.STORAGE_STATE_KEY, JSON.stringify(remoteData));
-        } else if (!remoteData && local) {
-          // First-time: push local up so progress is on the account
-          await this.push(local);
-        } else if (remoteData && local && localTs > remoteTs) {
-          // Local newer -> push it
-          await this.push(local);
-        }
-      } catch(e) {
-        // silent
-      }
-    },
-    // Called when the app saves to localStorage
-    queueSave(stateObj){
-      try {
-        if (!this.enabled) return;
-        // stamp for conflict resolution
-        stateObj._ts = Date.now();
-
-        // debounce pushes
-        if (this.timer) clearTimeout(this.timer);
-        this.timer = setTimeout(async () => {
-          try {
-            const user = await this.me();
-            if (!user) return;
-            await this.push(stateObj);
-          } catch(e) {}
-        }, 700);
-      } catch(e) {}
-    }
-  };
-
-  // Expose for hook
-  window.__TS_CLOUD = CLOUD;
-
-  // Start sync ASAP (won't break if not logged in)
-  setTimeout(() => CLOUD.init(), 50);
-})();
-
-const raw = localStorage.getItem(CONFIG.STORAGE_STATE_KEY);
-  if (!raw) return defaultState();
-  const parsed = safeParseJSON(raw);
-  if (!parsed || typeof parsed !== "object") return defaultState();
-
-  // merge with defaults to stay future-proof
-  const d = defaultState();
-  const merged = {
-    ...d,
-    ...parsed,
-    filters: { ...d.filters, ...(parsed.filters||{}) },
-    ui: { ...d.ui, ...(parsed.ui||{}) },
-    answers: parsed.answers && typeof parsed.answers === "object" ? parsed.answers : {}
-  };
-
-  // ---- MIGRATION: if user had "saved", convert to "flagged" and remove "saved" ----
-  Object.keys(merged.answers).forEach(qid => {
-    const a = merged.answers[qid];
-    if (!a || typeof a !== "object") return;
-    if (a.saved) {
-      a.flagged = true;   // merge saved into flagged
-      delete a.saved;     // remove saved field
-    }
-  });
-merged.filters.pool = "filtered";
-// If older saved state had "number", force it to topic (since option removed)
-if (!["topic","difficulty"].includes(merged.filters.sort)) merged.filters.sort = "topic";
-
-  // If filters had "saved", reset to "flagged" or "all"
-  if (merged.filters?.status === "saved") merged.filters.status = "flagged";
-
-  return merged;
-}
-
-
-    let state = loadState();
-
-    // ---------- Derived sets ----------
-    const INDEX = {
-      byQid: new Map(),
-      papers: [],
-      topics: []
-    };
-function topicIndex(topic){
-  const m = String(topic).match(/^(\d+)_/);
-  return m ? parseInt(m[1], 10) : 999; // non-number topics go last
-}
-
-function buildIndex() {
-  INDEX.byQid.clear();
-  QUESTIONS_ALL.forEach(q => INDEX.byQid.set(q.qid, q));
-
-  INDEX.papers = unique(QUESTIONS_ALL.map(q => q.paper)).sort();
-
-  // Sort topics numerically by leading number (so 9 before 10),
-  // then by the remaining text (case-insensitive, numeric-aware).
-  INDEX.topics = unique(QUESTIONS_ALL.map(q => q.topic)).sort((a, b) => {
-    const sa = String(a || "");
-    const sb = String(b || "");
-
-    const ma = sa.match(/^(\d+)\s*[-_.:]?\s*(.*)$/);
-    const mb = sb.match(/^(\d+)\s*[-_.:]?\s*(.*)$/);
-
-    const na = ma ? parseInt(ma[1], 10) : 9999;
-    const nb = mb ? parseInt(mb[1], 10) : 9999;
-    if (na !== nb) return na - nb;
-
-    const ta = (ma ? ma[2] : sa).trim();
-    const tb = (mb ? mb[2] : sb).trim();
-    return ta.localeCompare(tb, undefined, { numeric: true, sensitivity: "base" });
-  });
-}
-
-    function unique(arr){
-      return Array.from(new Set(arr.filter(Boolean)));
-    }
-
-    // buildIndex() now runs after /api/tmua/qb/list loads.
-
-    // ---------- Filtering / Ordering ----------
-    function stripHtml(html){
-      return String(html).replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim();
-    }
-
-    function matchesFilters(q){
-      const f = state.filters;
-
-      // paper
-      if (f.papers.length && !f.papers.includes(q.paper)) return false;
-
-      // difficulty
-      if (f.diffs.length && !f.diffs.includes(String(q.difficulty))) return false;
-
-      // topic
-      if (f.topics.length && !f.topics.includes(q.topic)) return false;
-
-      // status
-      const a = state.answers[q.qid] || null;
-      const selected = a?.selected ?? null;
-      const checked = !!a?.checked;
-      const isCorrect = !!a?.isCorrect;
-      const flagged = !!a?.flagged;
-
-
-      if (f.status === "unattempted" && selected) return false;
-      if (f.status === "attempted" && !selected) return false;
-      if (f.status === "correct" && !(checked && isCorrect)) return false;
-      if (f.status === "incorrect" && !(checked && !isCorrect)) return false;
-      if (f.status === "flagged" && !flagged) return false;
-
-
   
-
-      return true;
-    }
-function renderDifficultyLabel(d){
-  const diff = Math.max(1, Math.min(5, d || 3));
-  if (diff === 1) return "Easy";
-  if (diff === 2 || diff === 3) return "Medium";
-  return "Hard"; // 4 or 5
-}
-
-
-  function sortQuestions(list) {
-  const s = state?.filters?.sort || "topic";   // default = topic
-  const copy = list.slice();
-
-  // helper: numeric-safe comparator for question numbers (so 10 > 9)
-  const cmpNum = (a, b) => {
-    const na = Number(a?.numberSort);
-    const nb = Number(b?.numberSort);
-    if (!Number.isNaN(na) && !Number.isNaN(nb)) return na - nb;
-    return String(a?.qid ?? "").localeCompare(String(b?.qid ?? ""), undefined, { numeric: true });
-  };
-
-  // helper: difficulty rank (supports strings or numbers)
-  const diffKey = (q) => {
-    const d = q?.difficulty;
-    if (typeof d === "number") return d;
-
-    const s = String(d ?? "").toLowerCase();
-    if (s.startsWith("e")) return 1; // easy
-    if (s.startsWith("m")) return 2; // medium
-    if (s.startsWith("h")) return 3; // hard
-    return 999; // unknown last
-  };
-
-  // helper: topic order (uses your topicIndex if present; otherwise numeric-aware)
-  const topicKey = (q) => {
-    if (typeof topicIndex === "function") return topicIndex(q?.topic);
-    return String(q?.topic ?? "");
-  };
-
-  if (s === "difficulty") {
-    // Difficulty first, then Topic, then Question #
-    copy.sort((a, b) => {
-      const d = diffKey(a) - diffKey(b);
-      if (d !== 0) return d;
-
-      const ta = topicKey(a);
-      const tb = topicKey(b);
-
-      // topicIndex returns numbers; fallback returns strings
-      if (typeof ta === "number" && typeof tb === "number") {
-        if (ta !== tb) return ta - tb;
-      } else {
-        const t = String(ta).localeCompare(String(tb), undefined, { numeric: true, sensitivity: "base" });
-        if (t !== 0) return t;
-      }
-
-      return cmpNum(a, b);
-    });
-  } else if (s === "topic") {
-    // Topic first, then Difficulty (inside topic), then Question #
-    copy.sort((a, b) => {
-      const ta = topicKey(a);
-      const tb = topicKey(b);
-
-      if (typeof ta === "number" && typeof tb === "number") {
-        if (ta !== tb) return ta - tb;
-      } else {
-        const t = String(ta).localeCompare(String(tb), undefined, { numeric: true, sensitivity: "base" });
-        if (t !== 0) return t;
-      }
-
-      const d = diffKey(a) - diffKey(b);
-      if (d !== 0) return d;
-
-      return cmpNum(a, b);
-    });
-  } else {
-    // number
-    copy.sort((a, b) => cmpNum(a, b));
-  }
-
-  return copy;
-}
-
-
-    function getVisibleList(){
-      const filtered = sortQuestions(QUESTIONS_ALL.filter(matchesFilters));
-      return filtered;
-    }
-
-function getNavPoolList(){
-  return getVisibleList(); // always filtered
-}
-
-
-    // Current pointer is always by qid (stable)
-    let visibleList = getVisibleList();
-    let navPoolList = getNavPoolList();
-    let currentQid = null;
-
-    function setCurrentQid(qid){
-      if (!INDEX.byQid.has(qid)) return;
-      currentQid = qid;
-      state.lastQid = qid;
-      state.updatedAt = Date.now();
-      saveState();
-      render();
-    }
-
-    // ---------- Save with tiny "Saved ✓" indicator ----------
-    let saveTimer = null;
-    function saveState(){
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => {
-        try{
-          localStorage.setItem(CONFIG.STORAGE_STATE_KEY, JSON.stringify(state));
-  try { if (window.__TS_CLOUD && window.__TS_CLOUD.queueSave) window.__TS_CLOUD.queueSave(state); } catch(e) {}
-          UI.flashSaved();
-        }catch(e){}
-      }, 60);
-    }
-
-    // ---------- UI Helpers ----------
-    function el(id){ return document.getElementById(id); }
-
-    const UI = {
-      flashSaved(){
-        const s = el("saveIndicator");
-        if (!s) return;
-        s.style.display = "inline-flex";
-        clearTimeout(UI._t);
-        UI._t = setTimeout(() => { s.style.display="none"; }, 800);
-      },
-
-      overlayClick(evt, overlayId){
-        if (evt.target && evt.target.id === overlayId) {
-          if (overlayId === "filtersOverlay") UI.closeFilters();
-          if (overlayId === "navOverlay") UI.closeNavigator();
-          if (overlayId === "dashOverlay") UI.closeDashboard();
-          if (overlayId === "backupOverlay") UI.closeBackup();
-        }
-      },
-
-      openFilters(){
-        STATE.syncFiltersToUI();
-        el("filtersOverlay").style.display = "block";
-      },
-      closeFilters(){ el("filtersOverlay").style.display = "none"; },
-
-      openNavigator(){
-        NAV.renderNavigator();
-        el("navOverlay").style.display = "block";
-      },
-      closeNavigator(){ el("navOverlay").style.display = "none"; },
-
-      openDashboard(){
-        DASH.render();
-        el("dashOverlay").style.display = "block";
-      },
-      closeDashboard(){ el("dashOverlay").style.display = "none"; },
-
-      openBackup(){
-        el("backupOverlay").style.display = "block";
-        el("backupText").value = "";
-        el("importText").value = "";
-      },
-      closeBackup(){ el("backupOverlay").style.display = "none"; }
-    };
-
-    // ---------- Actions ----------
-    const ACTIONS = {
-      setSelected(optionLabel){
-      if (currentQid) {
-        try {
-          await hydrateQuestionIntoIndex(currentQid);
-        } catch (e) {
-          console.error("Could not load question:", e);
-          alert("Could not load this question. Please refresh or sign in again.");
-          return;
-        }
-      }
-
-
-        const q = INDEX.byQid.get(currentQid);
-        if (!q) return;
-
-        const a = state.answers[q.qid] || {};
-        a.selected = optionLabel;
-        state.answers[q.qid] = a;
-        state.updatedAt = Date.now();
-        saveState();
-        render(); // update option highlight
-      },
-showHint(){
-  const q = INDEX.byQid.get(currentQid);
-  const hintBox = el("hintBox");
-
-  if (!hintBox || !q) return;
-
-  if (q.shortcut_available && q.nice_tip_html) {
-    hintBox.style.display = "block";
-    hintBox.innerHTML = `<h4></h4>${q.nice_tip_html}`;
-  } else {
-    hintBox.style.display = "block";
-    hintBox.innerHTML = `<h4>Hint</h4><p>No quick hint is available for this question.</p>`;
-  }
-
-  if (window.MathJax && MathJax.typesetPromise) {
-    MathJax.typesetPromise([hintBox]);
-  }
-},
-     checkAnswer(){
-  const q = INDEX.byQid.get(currentQid);
-  if (!q) return;
-
-  const a = state.answers[q.qid] || {};
-  if (!a.selected){
-    alert("Please select an option first.");
-    return;
-  }
-
-  // ✅ freeze after check
-  a.checked = true;
-  a.locked = true;   // add this flag
-  a.isCorrect = (String(a.selected).trim() === String(q.answer).trim());
-
-  state.answers[q.qid] = a;
-  state.updatedAt = Date.now();
-  saveState();
-  render();
-},
-
-
-
-      toggleFlag(){
-        const q = INDEX.byQid.get(currentQid);
-        if (!q) return;
-        const a = state.answers[q.qid] || {};
-        a.flagged = !a.flagged;
-        state.answers[q.qid] = a;
-        saveState();
-        render();
-      },
-
-  
-
-      clearAnswer(){
-        const q = INDEX.byQid.get(currentQid);
-        if (!q) return;
-        const a = state.answers[q.qid] || {};
-        delete a.selected;
-        delete a.checked;
-        delete a.isCorrect;
-        state.answers[q.qid] = a;
-        state.ui.showSolution = false;
-        saveState();
-        render();
-      }
-    };
-
-    // ---------- Navigation ----------
-    const NAV = {
-      prev(){
-        const pool = getNavPoolList();
-        if (!pool.length) return;
-        const idx = pool.findIndex(x => x.qid === currentQid);
-        const nextIdx = Math.max(0, idx - 1);
-        setCurrentQid(pool[nextIdx].qid);
-      },
-      next(){
-        const pool = getNavPoolList();
-        if (!pool.length) return;
-        const idx = pool.findIndex(x => x.qid === currentQid);
-        const nextIdx = Math.min(pool.length - 1, idx + 1);
-        setCurrentQid(pool[nextIdx].qid);
-      },
-
-      jumpToQid(qid){
-        setCurrentQid(qid);
-        UI.closeNavigator();
-      },
-
-      _jumpByPredicate(pred){
-        const pool = getNavPoolList();
-        if (!pool.length) return;
-        const startIdx = Math.max(0, pool.findIndex(x => x.qid === currentQid));
-        for (let k=1; k<=pool.length; k++){
-          const j = (startIdx + k) % pool.length;
-          if (pred(pool[j])) { setCurrentQid(pool[j].qid); return; }
-        }
-        alert("No matching question found in current navigation pool.");
-      },
-
-      jumpToNextUnattempted(){
-        NAV._jumpByPredicate(q => !(state.answers[q.qid]?.selected));
-      },
-      jumpToNextIncorrect(){
-        NAV._jumpByPredicate(q => {
-          const a = state.answers[q.qid];
-          return a?.checked && !a?.isCorrect;
-        });
-      },
-      jumpToNextFlagged(){
-        NAV._jumpByPredicate(q => !!state.answers[q.qid]?.flagged);
-      },
-
-      startReview(kind){
-        // sets filters to a quick status and uses filtered pool
-        state.filters.status = kind;
-        state.filters.pool = "filtered";
-        saveState();
-        STATE.applyFilters(); // recompute lists & move
-        UI.openNavigator();
-        UI.closeDashboard();
-      },
-
-    renderNavigator(){
-  const pool = getNavPoolList();
-  el("navShowingLabel").textContent = (state.filters.pool === "all") ? "All" : "Filtered";
-
-  const root = el("navGrid");
-  root.innerHTML = "";
-
-  // Group by topic (fallbacks included just in case your key name differs)
-  const getTopic = (q) =>
-    (q.topic ?? q.Topic ?? q.topicName ?? q.unit ?? q.unitName ?? "General");
-
-  const groups = new Map();
-  for (const q of pool){
-    const t = String(getTopic(q) || "General").trim();
-    if (!groups.has(t)) groups.set(t, []);
-    groups.get(t).push(q);
-  }
-
-const topicsSorted = Array.from(groups.keys())
-  .sort((a,b) => a.localeCompare(b, undefined, { numeric:true, sensitivity:"base" }));
-
-
-  topicsSorted.forEach(topicName => {
-    const list = groups.get(topicName) || [];
-
-    const groupWrap = document.createElement("div");
-    groupWrap.className = "nav-group";
-
-    groupWrap.innerHTML = `
-      <div class="nav-group-header">
-        <div class="nav-group-title">${topicName}</div>
-        <div class="nav-group-count">${list.length} questions</div>
-      </div>
-      <div class="nav-group-body">
-        <div class="nav-grid"></div>
-      </div>
-    `;
-
-    const grid = groupWrap.querySelector(".nav-grid");
-
-    list.forEach((q) => {
-      const a = state.answers[q.qid] || {};
-
-      const btn = document.createElement("button");
-      btn.className = "nav-btn";
-
-      btn.innerHTML = `
-        <div class="nav-unit">${q.subtopic || "Unit"}</div>
-        <div class="nav-num">${q.number}</div>
-        <div class="nav-stars">${renderDifficultyLabel(q.difficulty)}</div>
-      `;
-
-      // states
-      const selected = !!a.selected;
-      const checked = !!a.checked;
-
-      if (!selected) btn.classList.add("unseen");
-      else btn.classList.add("attempted");
-
-      if (checked && a.isCorrect) btn.classList.add("correct");
-      if (checked && !a.isCorrect) btn.classList.add("incorrect");
-      if (a.flagged) btn.classList.add("flagged");
-
-      if (q.qid === currentQid) btn.classList.add("current");
-
-      const icons = document.createElement("div");
-      icons.className = "nav-icons";
-      icons.innerHTML = (a.flagged ? "⚑" : "");
-      btn.appendChild(icons);
-
-      btn.onclick = () => NAV.jumpToQid(q.qid);
-      grid.appendChild(btn);
-    });
-
-    root.appendChild(groupWrap);
-  });
-}
-
-    };
-
-    // ---------- Filters State ----------
-    const STATE = {
-      syncFiltersToUI(){
-        // Search
-        el("fStatus").value = state.filters.status || "all";
-        el("fSort").value = state.filters.sort || "number";
-
-
-        // Papers
-        buildChecks("fPapers", INDEX.papers, state.filters.papers, (v) => {
-          toggleInArray(state.filters.papers, v);
-          saveState();
-        });
-
-        // Difficulties 1-5
-        const diffs = ["1","2","3","4","5"];
-        buildChecks("fDiffs", diffs, state.filters.diffs, (v) => {
-          toggleInArray(state.filters.diffs, v);
-          saveState();
-        }, (v)=>`Level ${v}`);
-
-        // Topics
-        buildChecks("fTopics", INDEX.topics, state.filters.topics, (v) => {
-          toggleInArray(state.filters.topics, v);
-          saveState();
-        });
-      },
-
-
-      applyFiltersFromUI(){
-        state.filters.status = el("fStatus").value;
-        state.filters.sort = el("fSort").value;
-   
-        saveState();
-        STATE.applyFilters();
-        UI.closeFilters();
-      },
-
-      applyFilters(){
-        visibleList = getVisibleList();
-        navPoolList = getNavPoolList();
-
-        // If nothing visible and filtered pool is selected, show empty state
-        if (visibleList.length === 0){
-          render();
-          return;
-        }
-
-        // Keep current if still in the navigation pool; else move to first
-        const pool = getNavPoolList();
-        if (!pool.find(x => x.qid === currentQid)){
-          setCurrentQid(pool[0].qid);
-        } else {
-          render();
-        }
-      },
-
-      clearFilters(){
-        state.filters.status = "all";
-        state.filters.papers = [];
-        state.filters.diffs = [];
-        state.filters.topics = [];
-        state.filters.sort = "topic";
-        state.filters.pool = CONFIG.NAV_DEFAULT_POOL;
-        saveState();
-        STATE.applyFilters();
-        UI.closeFilters();
-      },
-
-      resetProgress(){
-        if (!confirm("Reset all progress for this question bank on this device?")) return;
-        const fresh = defaultState();
-        // preserve filters if you want:
-        fresh.filters = { ...state.filters };
-        state = fresh;
-        saveState();
-        STATE.applyFilters();
-        UI.closeDashboard();
-      },
-
-      generateExport(){
-        const payload = {
-          version: CONFIG.STORAGE_EXPORT_VERSION,
-          exportedAt: new Date().toISOString(),
-          bankId: CONFIG.QUESTION_BANK_ID,
-          state
-        };
-        el("backupText").value = JSON.stringify(payload, null, 2);
-      },
-
-      copyExport(){
-        const t = el("backupText");
-        if (!t.value.trim()) STATE.generateExport();
-        t.select();
-        document.execCommand("copy");
-        alert("Copied export JSON to clipboard.");
-      },
-
-      clearImportBox(){
-        el("importText").value = "";
-      },
-
-      importProgress(){
-        const text = el("importText").value.trim();
-        if (!text) return alert("Paste export JSON first.");
-        const payload = safeParseJSON(text);
-        if (!payload || !payload.state) return alert("Invalid import JSON.");
-
-        if (payload.bankId && payload.bankId !== CONFIG.QUESTION_BANK_ID){
-          const ok = confirm("This export appears to be from a different bankId. Import anyway?");
-          if (!ok) return;
-        }
-
-        // basic validation
-        if (!payload.state || typeof payload.state !== "object") return alert("Invalid state in import.");
-        state = {
-          ...defaultState(),
-          ...payload.state,
-          filters: { ...defaultState().filters, ...(payload.state.filters||{}) },
-          ui: { ...defaultState().ui, ...(payload.state.ui||{}) },
-          answers: payload.state.answers && typeof payload.state.answers === "object" ? payload.state.answers : {}
-        };
-
-        saveState();
-        STATE.applyFilters();
-        UI.closeBackup();
-        alert("Import complete.");
-      }
-    };
-
-    function toggleInArray(arr, value){
-      const i = arr.indexOf(value);
-      if (i >= 0) arr.splice(i, 1);
-      else arr.push(value);
-    }
-
-    function buildChecks(containerId, values, selectedArr, onToggle, labelFn){
-      const box = el(containerId);
-      box.innerHTML = "";
-      values.forEach(v => {
-        const wrap = document.createElement("label");
-        wrap.className = "chk";
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.checked = selectedArr.includes(v);
-        input.onchange = () => onToggle(v);
-
-        const span = document.createElement("span");
-        span.textContent = labelFn ? labelFn(v) : v;
-
-        wrap.appendChild(input);
-        wrap.appendChild(span);
-        box.appendChild(wrap);
-      });
-    }
-// ---------- Server-side answer checking override ----------
-ACTIONS.checkAnswer = async function(){
-  const q = INDEX.byQid.get(currentQid);
-  if (!q) return;
-
-  const a = state.answers[q.qid] || {};
-
-  if (!a.selected) {
-    alert("Please select an answer first.");
-    return;
-  }
-
-  let result;
-  try {
-    result = await checkAnswerOnServer(q.qid, a.selected);
-  } catch(e) {
-    console.error("Server answer check failed:", e);
-    alert("Could not check answer. Please refresh or sign in again.");
-    return;
-  }
-
-  q.answer = String(result.answer || "");
-  q.solution_html = String(result.solution_html || "");
-  q._solutionUnlocked = true;
-
-  a.checked = true;
-  a.locked = true;
-  a.isCorrect = result.isCorrect === true;
-
-  state.answers[q.qid] = a;
-  state.ui.showSolution = true;
-  state.updatedAt = Date.now();
-
-  saveState();
-  render();
-};
-
-
-
-    // ---------- Dashboard + Report ----------
-const DASH = {
-  render(){
-    const stats = computeStats();
-
-    el("dAttempted").textContent = stats.attempted;
-    el("dCorrect").textContent = stats.correct;
-    el("dAcc").textContent = `${stats.acc}%`;
-    el("dFlagged").textContent = stats.flagged;
-
-    el("topicBreakdown").innerHTML = formatBreakdown(stats.byTopic);
-    el("diffBreakdown").innerHTML = formatBreakdown(stats.byDiff);
-  }
-};
-
-
-    const REPORT = {
-      buildText(){
-        const stats = computeStats();
-        const now = new Date().toLocaleString();
-
-        let lines = [];
-        lines.push(`TMUA Question Bank Report`);
-        lines.push(`Date: ${now}`);
-        lines.push(`Bank: ${CONFIG.QUESTION_BANK_ID}`);
-        lines.push(``);
-lines.push(`Overall: Attempted ${stats.attempted} | Checked ${stats.checked} | Correct ${stats.correct} | Accuracy ${stats.acc}%`);
-lines.push(`Flagged: ${stats.flagged}`);
-        lines.push(``);
-        lines.push(`Accuracy by Topic (checked only):`);
-        lines.push(formatBreakdownText(stats.byTopic));
-        lines.push(``);
-        lines.push(`Accuracy by Difficulty (checked only):`);
-        lines.push(formatBreakdownText(stats.byDiff));
-        lines.push(``);
-        lines.push(`Incorrect questions (checked): ${stats.incorrectList.join(", ") || "None"}`);
-        lines.push(`Flagged questions: ${stats.flaggedList.join(", ") || "None"}`);
-        lines.push(`Saved questions: ${stats.savedList.join(", ") || "None"}`);
-        lines.push(``);
-
-        // per-question short summary (only attempted)
-        lines.push(`Per-question (attempted):`);
-        const attempted = QUESTIONS_ALL.filter(q => state.answers[q.qid]?.selected);
-        attempted.sort((a,b)=>a.numberSort-b.numberSort);
-        attempted.forEach(q => {
-          const a = state.answers[q.qid];
-          const status = a.checked ? (a.isCorrect ? "OK" : "WRONG") : "UN-CHECKED";
-          lines.push(`Q${q.number} (${q.paper}) | Your: ${a.selected} | Ans: ${q.answer || "-"} | ${status}`);
-        });
-
-        return lines.join("\n");
-      },
-
-      copy(){
-        const text = REPORT.buildText();
-        navigator.clipboard?.writeText(text).then(()=>{
-          alert("Report copied to clipboard.");
-        }).catch(()=>{
-          // fallback
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          document.body.removeChild(ta);
-          alert("Report copied to clipboard.");
-        });
-      },
-
-      openMailto(){
-        const subject = encodeURIComponent("TMUA Question Bank Report");
-        const body = encodeURIComponent(REPORT.buildText());
-        // NOTE: mailto has length limits; for very large banks, copy instead.
-        window.open(`mailto:?subject=${subject}&body=${body}`, "_blank");
-      }
-    };
-
-    function formatBreakdown(mapObj){
-      // mapObj: {key:{correct, total}}
-      const rows = Object.keys(mapObj).sort().map(k => {
-        const v = mapObj[k];
-        const acc = v.total ? Math.round(100*v.correct/v.total) : 0;
-        return `<div class="stat-row"><span>${escapeHtml(k)}</span><strong>${v.correct}/${v.total} (${acc}%)</strong></div>`;
-      });
-      return rows.join("") || `<div class="small">No checked questions yet.</div>`;
-    }
-
-    function formatBreakdownText(mapObj){
-      const keys = Object.keys(mapObj).sort();
-      if (!keys.length) return "  (No checked questions yet.)";
-      return keys.map(k => {
-        const v = mapObj[k];
-        const acc = v.total ? Math.round(100*v.correct/v.total) : 0;
-        return `  - ${k}: ${v.correct}/${v.total} (${acc}%)`;
-      }).join("\n");
-    }
-
-    function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, c => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
-      }[c]));
-    }
-
-   function computeStats(){
-  let attempted = 0, checked = 0, correct = 0, flagged = 0;
-  const byTopic = {};
-  const byDiff = {};
-  const incorrectList = [];
-  const flaggedList = [];
-
-  QUESTIONS_ALL.forEach(q => {
-    const a = state.answers[q.qid] || {};
-    if (a.selected) attempted++;
-    if (a.flagged) { flagged++; flaggedList.push(q.number); }
-
-    if (a.checked){
-      checked++;
-      if (!byTopic[q.topic]) byTopic[q.topic] = {correct:0,total:0};
-      if (!byDiff[String(q.difficulty)]) byDiff[String(q.difficulty)] = {correct:0,total:0};
-      byTopic[q.topic].total++;
-      byDiff[String(q.difficulty)].total++;
-
-      if (a.isCorrect){
-        correct++;
-        byTopic[q.topic].correct++;
-        byDiff[String(q.difficulty)].correct++;
-      } else {
-        incorrectList.push(q.number);
-      }
-    }
-  });
-
-  const acc = checked ? Math.round(100 * correct / checked) : 0;
-  return { attempted, checked, correct, acc, flagged, byTopic, byDiff, incorrectList, flaggedList };
-}
-
-
-    // ---------- Render ----------
-    async function render(){
-      // Refresh lists
-      visibleList = getVisibleList();
-      navPoolList = getNavPoolList();
-
-      // Pool counts
-      el("poolCount").textContent = QUESTIONS_ALL.length;
-      el("visibleCount").textContent = visibleList.length;
-
-      // Empty state handling
-      const empty = (visibleList.length === 0);
-      el("emptyState").style.display = empty ? "block" : "none";
-      el("qCard").style.display = empty ? "none" : "block";
-      if (empty){
-        el("posCounter").textContent = "0";
-        el("posTotal").textContent = "0";
-        renderTopChips();
-        renderHeaderStats();
-        return;
-      }
-
-      // Determine current qid
-      if (!currentQid){
-        // prefer last saved, else first in pool
-        const candidate = state.lastQid && INDEX.byQid.has(state.lastQid) ? state.lastQid : null;
-        const pool = getNavPoolList();
-        currentQid = (candidate && pool.find(x=>x.qid===candidate)) ? candidate : pool[0].qid;
-      }
-
-      const q = INDEX.byQid.get(currentQid);
-      const a = state.answers[q.qid] || {};
-
-      // Position counter based on navigation pool
-      const pool = getNavPoolList();
-      const idx = pool.findIndex(x => x.qid === currentQid);
-      el("posCounter").textContent = String(idx + 1);
-      el("posTotal").textContent = String(pool.length);
-
-      // Meta
-      el("qTitle").textContent = `Question ${q.number}`;
-      el("metaPaper").textContent = q.paper;
-      el("metaTopic").textContent = q.topic + (q.subtopic ? ` • ${q.subtopic}` : "");
-      el("metaDiff").textContent = `Difficulty ${q.difficulty}/5`;
-
-      // Status pill
-      const statusEl = el("metaStatus");
-      statusEl.className = "meta-pill";
-      const status = computeQuestionStatus(q);
-      statusEl.textContent = status.label;
-      if (status.kind === "correct") statusEl.classList.add("good");
-      if (status.kind === "incorrect") statusEl.classList.add("bad");
-      if (status.kind === "flagged" || status.kind === "saved") statusEl.classList.add("warn");
-
-      // Prompt
-      el("qPrompt").innerHTML = q.prompt_html || "";
-
-      // Media
-      renderMedia(q);
-
-      // Options
-      renderOptions(q, a);
-
-      // Feedback
-      renderFeedback(q, a);
-
-      // Solution
-      renderSolution(q, a);
-// Hint / 
-const hintBox = el("hintBox");
-if (hintBox) {
-  hintBox.style.display = "none";
-  hintBox.innerHTML = "";
-}
-
-const hintBtn = el("hintBtn");
-if (hintBtn) {
-  hintBtn.style.display = (q.shortcut_available && q.nice_tip_html) ? "inline-block" : "none";
-}
-      // Footer toggles
-      updateToggleButtons(a);
-
-      // Disable prev/next at edges (within nav pool)
-      const prevBtn = document.querySelector(".footer-left button:nth-child(1)");
-      const nextBtn = document.querySelector(".footer-left button:nth-child(2)");
-      if (prevBtn) prevBtn.disabled = (idx <= 0);
-      if (nextBtn) nextBtn.disabled = (idx >= pool.length - 1);
-
-      // Chips + header stats
-      renderTopChips();
-      renderHeaderStats();
-
-      // MathJax typeset
-      if (window.MathJax && window.MathJax.typesetPromise){
-        MathJax.typesetClear?.();
-        MathJax.typesetPromise();
-      }
-    }
-function computeQuestionStatus(q){
-  const a = state.answers[q.qid] || {};
-  if (a.checked){
-    return a.isCorrect ? {kind:"correct", label:"Checked • Correct"} : {kind:"incorrect", label:"Checked • Incorrect"};
-  }
-  if (a.flagged) return {kind:"flagged", label:"Flagged"};
-  if (a.selected) return {kind:"attempted", label:"Attempted"};
-  return {kind:"unseen", label:"Unattempted"};
-}
-
-    function renderMedia(q){
-      const wrap = el("qMedia");
-      wrap.innerHTML = "";
-      const assets = q.page_assets || [];
-      if (!assets.length) return;
-
-      // support both object assets + string assets
-      const objAssets = assets.filter(x => x && typeof x === "object" && x.url);
-      const strAssets = assets.filter(x => typeof x === "string");
-
-      // show images (if provided)
-      objAssets.forEach((a) => {
-        const box = document.createElement("div");
-        box.className = "question-media";
-        const img = document.createElement("img");
-        img.src = a.url;
-        img.alt = a.label || "asset";
-        box.appendChild(img);
-
-        const cap = document.createElement("div");
-        cap.className = "media-caption";
-        cap.textContent = a.label || "";
-        wrap.appendChild(box);
-        if (a.label) wrap.appendChild(cap);
-      });
-
-      // show string captions (if any)
-      if (strAssets.length){
-        const cap = document.createElement("div");
-        cap.className = "small";
-        cap.style.marginTop = "6px";
-        wrap.appendChild(cap);
-      }
-    }
-
-    function renderOptions(q, a){
-      const optionsEl = el("qOptions");
-      optionsEl.innerHTML = "";
-
-      q.options.forEach(opt => {
-        const label = document.createElement("label");
-        label.className = "option";
-
-        const row = document.createElement("div");
-        row.className = "option-row";
-
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = `qb_${q.qid}`;
-        input.value = opt.label;
-
-        if (a.selected === opt.label) input.checked = true;
-
-        input.addEventListener("change", () => ACTIONS.setSelected(opt.label));
-        label.addEventListener("click", (e) => {
-          // allow clicking the whole card
-          if (e.target && e.target.tagName !== "INPUT"){
-            input.checked = true;
-            ACTIONS.setSelected(opt.label);
-          }
-        });
-
-        const content = document.createElement("div");
-        content.innerHTML = `<strong style="margin-right:8px;">${escapeHtml(opt.label)}.</strong> ${opt.html || ""}`;
-
-        row.appendChild(input);
-        row.appendChild(content);
-        label.appendChild(row);
-
-        // after check: highlight correct/wrong
-        if (a.checked){
-          const isCorrectOpt = (opt.label === q.answer);
-          const isSelected = (a.selected === opt.label);
-          if (isCorrectOpt) label.classList.add("correct");
-          if (isSelected && !isCorrectOpt) label.classList.add("wrong");
-        }
-
-        optionsEl.appendChild(label);
-      });
-    }
-
-    function renderFeedback(q, a){
-      const fb = el("qFeedback");
-      fb.style.display = "none";
-      fb.className = "feedback";
-
-      if (!a.selected){
-        return;
-      }
-
-  if (!a.checked){
-  // Keep the state logic (selected but not checked), but show no message
-  fb.style.display = "none";
-  fb.innerHTML = "";
-  return;
-}
-
-
-      fb.style.display = "block";
-      if (a.isCorrect){
-        fb.classList.add("good");
-        fb.innerHTML = `✅ Correct. Your answer: <strong>${escapeHtml(a.selected)}</strong>`;
-      } else {
-        fb.classList.add("bad");
-        fb.innerHTML = `❌ Incorrect. Your answer: <strong>${escapeHtml(a.selected)}</strong> &nbsp;|&nbsp; Correct: <strong>${escapeHtml(q.answer)}</strong>`;
-      }
-    }
-
-function renderSolution(q, a){
-  const solWrap = el("qSolution");
-  const solBody = el("qSolutionBody");
-
-  // Show solution automatically ONLY after the student has checked the answer
-  if (!a.checked || !q.solution_html){
-    solWrap.style.display = "none";
-    solBody.innerHTML = "";
-
-    // Optional hint line (only when an option is selected but not checked)
-    if (a.selected && !a.checked){
-      el("qHintLine").textContent = "Click “Check” to reveal the solution.";
-    } else {
-      el("qHintLine").textContent = "";
-    }
-    return;
-  }
-
-  el("qHintLine").textContent = "";
-  solWrap.style.display = "block";
-  solBody.innerHTML = q.solution_html || "";
-}
-
-function updateToggleButtons(a){
-  const flagBtn = el("btnFlag");
-  if (!flagBtn) return;
-
-  if (a.flagged) flagBtn.classList.add("active");
-  else flagBtn.classList.remove("active");
-}
-
-function disableRightClick(){
-  document.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-  }, true);
-}
-    function renderTopChips(){
-      const chips = el("activeChips");
-      chips.innerHTML = "";
-
-      const f = state.filters;
-      const add = (text) => {
-        const c = document.createElement("span");
-        c.className = "chip";
-        c.innerHTML = `<span class="dot"></span>${escapeHtml(text)}`;
-        chips.appendChild(c);
-      };
-
-      if (f.status && f.status !== "all") add(`Status: ${f.status}`);
-      if (f.papers.length) add(`Paper: ${f.papers.join(", ")}`);
-      if (f.diffs.length) add(`Difficulty: ${f.diffs.join(", ")}`);
-      if (f.topics.length) add(`Topics: ${f.topics.join(", ")}`);
-    }
-
-    function renderHeaderStats(){
-      const s = computeStats();
-      el("statAttempted").textContent = s.attempted;
-      el("statCorrect").textContent = s.correct;
-      el("statAcc").textContent = `${s.acc}%`;
-    }
-
-    // ---------- Init ----------
-    async function boot(){
-  bindHotkeys();
-  disableRightClick();   // ✅ add this line
-      try {
-        await loadQuestionListFromServer();
-      } catch (e) {
-        console.error("Could not load TMUA Question Bank metadata:", e);
-        alert("Could not load TMUA Question Bank. Please sign in again or refresh.");
-        return;
-      }
-
-
-   
-      // Build initial UI filter checklists
-      STATE.syncFiltersToUI();
-
-      // Resolve starting qid
-      const pool = getNavPoolList();
-      if (!pool.length){
-        currentQid = null;
-      } else {
-        const candidate = state.lastQid && INDEX.byQid.has(state.lastQid) ? state.lastQid : null;
-        currentQid = (candidate && pool.find(x=>x.qid===candidate)) ? candidate : pool[0].qid;
-      }
-      render();
-
-      // Persist current once on load
-      if (currentQid){
-        state.lastQid = currentQid;
-        saveState();
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", boot);
-  </script>
 
 
 <!-- TS_QB_PROGRESS_SYNC_V1 -->
-<script>
-(function(){
-  // ---- TMUA QB Progress Sync (V1) ----
-  // Strategy: mirror localStorage keys (prefix-based) to Supabase through Next API.
-  // Requires: /api/me, /api/qb/progress/load, /api/qb/progress/save
-  // Important: fetch uses credentials: "include" so Supabase cookies attach.
 
-  var PREFIXES = ["TMUA_QB_", "TS_QB_", "QB_"]; // adjust if your QB uses different keys
-  var SAVE_DEBOUNCE_MS = 800;
-  var isHydrating = false;
-  var saveTimer = null;
-
-  function getPaper(){
-    try {
-      var u = new URL(window.location.href);
-      var p = u.searchParams.get("paper");
-      if (p === "2") return "2";
-      return "1";
-    } catch(e){
-      return "1";
-    }
-  }
-
-  function keyMatches(k){
-    if (!k) return false;
-    for (var i=0;i<PREFIXES.length;i++){
-      if (k.indexOf(PREFIXES[i]) === 0) return true;
-    }
-    return false;
-  }
-
-  function snapshot(){
-    var out = {};
-    try {
-      for (var i=0; i<localStorage.length; i++){
-        var k = localStorage.key(i);
-        if (!keyMatches(k)) continue;
-        out[k] = localStorage.getItem(k);
-      }
-    } catch(e){}
-    return out;
-  }
-
-  function applySnapshot(kv){
-    if (!kv) return;
-    isHydrating = true;
-    try {
-      for (var k in kv){
-        if (!kv.hasOwnProperty(k)) continue;
-        if (!keyMatches(k)) continue;
-        try { localStorage.setItem(k, kv[k]); } catch(e){}
-      }
-    } finally {
-      isHydrating = false;
-    }
-  }
-
-  function safeJsonParse(x){
-    try { return JSON.parse(x); } catch(e){ return null; }
-  }
-
-  function scheduleSave(){
-    if (isHydrating) return;
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(doSave, SAVE_DEBOUNCE_MS);
-  }
-
-  function doSave(){
-    var paper = getPaper();
-    var kv = snapshot();
-
-    fetch("/api/qb/progress/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ paper: paper, state: { kv: kv } })
-    })
-    .then(function(r){ return r.text().then(function(t){ console.log("QB_SAVE", r.status, t || ""); }); })
-    .catch(function(e){ console.error("QB_SAVE_ERR", e); });
-  }
-
-  function wrapLocalStorage(){
-    // Wrap setItem/removeItem/clear to detect state changes
-    try {
-      var _set = localStorage.setItem.bind(localStorage);
-      localStorage.setItem = function(k, v){
-        var ret = _set(k, v);
-        if (keyMatches(k)) scheduleSave();
-        return ret;
-      };
-    } catch(e){}
-
-    try {
-      var _rem = localStorage.removeItem.bind(localStorage);
-      localStorage.removeItem = function(k){
-        var ret = _rem(k);
-        if (keyMatches(k)) scheduleSave();
-        return ret;
-      };
-    } catch(e){}
-
-    try {
-      var _clr = localStorage.clear.bind(localStorage);
-      localStorage.clear = function(){
-        var ret = _clr();
-        scheduleSave();
-        return ret;
-      };
-    } catch(e){}
-  }
-
-  function loadFromServer(){
-    var paper = getPaper();
-
-    // 1) confirm logged-in (useful debug)
-    fetch("/api/me", { credentials: "include" })
-      .then(function(r){ return r.json().catch(function(){ return null; }).then(function(j){ return {r:r, j:j}; }); })
-      .then(function(x){
-        if (!x || !x.r || !x.r.ok) {
-          console.warn("QB_ME not ok. Status:", x && x.r ? x.r.status : "unknown");
-          return;
-        }
-        console.log("QB_ME ok:", x.j && (x.j.email || x.j.user && x.j.user.email) ? (x.j.email || x.j.user.email) : "signed-in");
-      })
-      .catch(function(e){ console.warn("QB_ME error", e); });
-
-    // 2) load progress
-    fetch("/api/qb/progress/load?paper=" + encodeURIComponent(paper), { credentials: "include", cache: "no-store" })
-      .then(function(r){ return r.json().catch(function(){ return null; }).then(function(j){ return {r:r, j:j}; }); })
-      .then(function(x){
-        if (!x || !x.r || !x.r.ok) {
-          console.warn("QB_LOAD not ok. Status:", x && x.r ? x.r.status : "unknown");
-          return;
-        }
-
-        // Accept multiple shapes:
-        //  - { state: { kv: {...} } }
-        //  - { kv: {...} }
-        //  - { state: {...} } where state itself is kv
-        var j = x.j || {};
-        var kv = null;
-
-        if (j.state && j.state.kv) kv = j.state.kv;
-        else if (j.kv) kv = j.kv;
-        else if (j.state && typeof j.state === "object") kv = j.state;
-
-        if (kv) {
-          applySnapshot(kv);
-          console.log("QB_LOAD applied keys:", Object.keys(kv).length);
-        } else {
-          console.log("QB_LOAD no kv found (ok if first time).");
-        }
-      })
-      .catch(function(e){ console.warn("QB_LOAD error", e); });
-  }
-
-  function boot(){
-    wrapLocalStorage();
-    loadFromServer();
-
-    // Optional: force-save when user leaves page
-    window.addEventListener("beforeunload", function(){
-      try { doSave(); } catch(e){}
-    });
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
-})();
-</script>
 <!-- /TS_QB_PROGRESS_SYNC_V1 -->
 
 <!-- TS_QB_PROGRESS_SYNC_V2 -->
-<script>
-(function(){
-  // QB Progress Sync (V2) — sync ONLY the key below to Supabase via Next API.
-  var ALLOWED_KEYS = ["tmua_qb_state__tmua_qb_v1"];
-  var SAVE_DEBOUNCE_MS = 800;
-  var isHydrating = false;
-  var saveTimer = null;
 
-  function getPaper(){
-    try {
-      var u = new URL(window.location.href);
-      var p = u.searchParams.get("paper");
-      if (p === "2") return "2";
-      return "1";
-    } catch(e){ return "1"; }
-  }
-
-  function keyAllowed(k){
-    for (var i=0;i<ALLOWED_KEYS.length;i++){
-      if (ALLOWED_KEYS[i] === k) return true;
-    }
-    return false;
-  }
-
-  function snapshot(){
-    var out = {};
-    try {
-      for (var i=0;i<ALLOWED_KEYS.length;i++){
-        var k = ALLOWED_KEYS[i];
-        var v = localStorage.getItem(k);
-        if (v !== null && typeof v !== "undefined") out[k] = v;
-      }
-    } catch(e){}
-    return out;
-  }
-
-  function applySnapshot(kv){
-    if (!kv) return;
-    isHydrating = true;
-    try {
-      for (var k in kv){
-        if (!kv.hasOwnProperty(k)) continue;
-        if (!keyAllowed(k)) continue;
-        try { localStorage.setItem(k, kv[k]); } catch(e){}
-      }
-    } finally { isHydrating = false; }
-  }
-
-  function scheduleSave(){
-    if (isHydrating) return;
-    if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(doSave, SAVE_DEBOUNCE_MS);
-  }
-
-  function doSave(){
-    var paper = getPaper();
-    var kv = snapshot();
-
-    fetch("/api/qb/progress/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ paper: paper, state: { kv: kv } })
-    })
-    .then(function(r){
-      return r.text().then(function(t){
-        console.log("QB_SAVE", r.status, t || "");
-      });
-    })
-    .catch(function(e){ console.error("QB_SAVE_ERR", e); });
-  }
-
-  function wrapLocalStorage(){
-    try {
-      var _set = localStorage.setItem.bind(localStorage);
-      localStorage.setItem = function(k, v){
-        var ret = _set(k, v);
-        if (keyAllowed(k)) scheduleSave();
-        return ret;
-      };
-    } catch(e){}
-
-    try {
-      var _rem = localStorage.removeItem.bind(localStorage);
-      localStorage.removeItem = function(k){
-        var ret = _rem(k);
-        if (keyAllowed(k)) scheduleSave();
-        return ret;
-      };
-    } catch(e){}
-
-    try {
-      var _clr = localStorage.clear.bind(localStorage);
-      localStorage.clear = function(){
-        var ret = _clr();
-        scheduleSave();
-        return ret;
-      };
-    } catch(e){}
-  }
-
-  function loadFromServer(){
-    var paper = getPaper();
-
-    // Debug: confirm logged-in
-    fetch("/api/me", { credentials: "include" })
-      .then(function(r){ return r.json().catch(function(){ return null; }).then(function(j){ return {r:r,j:j}; }); })
-      .then(function(x){
-        if (!x || !x.r || !x.r.ok) { console.warn("QB_ME not ok", x && x.r ? x.r.status : ""); return; }
-        console.log("QB_ME ok", (x.j && x.j.user && x.j.user.email) ? x.j.user.email : "");
-      })
-      .catch(function(e){ console.warn("QB_ME error", e); });
-
-    // Load progress
-    fetch("/api/qb/progress/load?paper=" + encodeURIComponent(paper), { credentials: "include", cache: "no-store" })
-      .then(function(r){ return r.json().catch(function(){ return null; }).then(function(j){ return {r:r,j:j}; }); })
-      .then(function(x){
-        if (!x || !x.r || !x.r.ok) { console.warn("QB_LOAD not ok", x && x.r ? x.r.status : ""); return; }
-        var j = x.j || {};
-        var kv = (j.state && j.state.kv) ? j.state.kv : (j.kv ? j.kv : null);
-        if (kv) {
-          applySnapshot(kv);
-          console.log("QB_LOAD applied keys:", Object.keys(kv).length);
-        } else {
-          console.log("QB_LOAD no state yet (first time ok).");
-        }
-      })
-      .catch(function(e){ console.warn("QB_LOAD error", e); });
-  }
-
-  function boot(){
-    wrapLocalStorage();
-    loadFromServer();
-    window.addEventListener("beforeunload", function(){ try { doSave(); } catch(e){} });
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
-})();
-</script>
 <!-- /TS_QB_PROGRESS_SYNC_V2 -->
 
 <!-- TS_QB_SAVE_FIX_V1 -->
-<script>
-(function(){
-  // TS QB Save Fix V1
-  // Repairs bad save payloads sent by the static QB bundle.
-  // - If /api/qb/progress/save is called WITHOUT {updates:[...]} we generate updates from localStorage.
-  // - Also rewrites legacy /api/progress/tmua -> /api/qb/progress/save
 
-  if (window.__TS_QB_SAVE_FIX_V1) return;
-  window.__TS_QB_SAVE_FIX_V1 = true;
-
-  var QB_KEY = "tmua_qb_state__tmua_qb_v1";
-  var origFetch = window.fetch.bind(window);
-
-  function safeJsonParse(t){
-    try { return JSON.parse(t); } catch(_) { return null; }
-  }
-
-  function getPaper(){
-    try {
-      var u = new URL(location.href);
-      return (u.searchParams.get("paper") || "1").toString();
-    } catch(_) { return "1"; }
-  }
-
-  function toInt(x){
-    var n = (typeof x === "number") ? x : parseInt(String(x || "0"), 10);
-    return isFinite(n) ? n : 0;
-  }
-
-  // Map your QB localStorage answer object -> qb_progress row shape
-  function mapAnswer(qid, a){
-    a = a || {};
-    var selected =
-      (a.selected_answer != null ? a.selected_answer :
-      (a.selected != null ? a.selected :
-      (a.answer != null ? a.answer :
-      (a.ans != null ? a.ans :
-      (a.choice != null ? a.choice :
-      (a.value != null ? a.value : null))))));
-
-    if (selected != null) selected = String(selected);
-
-    var flagged =
-      (typeof a.flagged === "boolean") ? a.flagged :
-      (typeof a.flag === "boolean") ? a.flag :
-      (typeof a.f === "boolean") ? a.f :
-      false;
-
-    var timeSpent =
-      (a.time_spent != null) ? toInt(a.time_spent) :
-      (a.timeSpent != null) ? toInt(a.timeSpent) :
-      (a.t != null) ? toInt(a.t) :
-      0;
-
-    var lastSeen =
-      (a.last_seen_at != null) ? String(a.last_seen_at) :
-      (a.lastSeenAt != null) ? String(a.lastSeenAt) :
-      (a.seenAt != null) ? String(a.seenAt) :
-      new Date().toISOString();
-
-    var status =
-      (a.status != null) ? String(a.status) :
-      (selected ? "answered" : "seen");
-
-    return {
-      question_id: String(qid),
-      status: status,
-      selected_answer: selected || null,
-      flagged: !!flagged,
-      time_spent: timeSpent,
-      last_seen_at: lastSeen
-    };
-  }
-
-  function buildUpdatesFromLocalStorage(){
-    var raw = localStorage.getItem(QB_KEY) || "";
-    var j = safeJsonParse(raw) || {};
-    var answers = j.answers && typeof j.answers === "object" ? j.answers : {};
-    var out = [];
-
-    for (var qid in answers){
-      if (!Object.prototype.hasOwnProperty.call(answers, qid)) continue;
-      out.push(mapAnswer(qid, answers[qid]));
-    }
-    return out;
-  }
-
-  async function readRequestBody(init){
-    if (!init || !init.body) return null;
-
-    // body may be string already
-    if (typeof init.body === "string") return safeJsonParse(init.body);
-
-    // If body is ReadableStream etc, don't break; skip patch
-    return null;
-  }
-
-  window.fetch = async function(input, init){
-    var url = String(input || "");
-    var isLegacy = url.indexOf("/api/progress/tmua") !== -1;
-    var isSave   = url.indexOf("/api/qb/progress/save") !== -1;
-
-    // Rewrite legacy route to new route (keeps method/body)
-    if (isLegacy) {
-      url = url.replace("/api/progress/tmua", "/api/qb/progress/save");
-      input = url;
-      isSave = true;
-    }
-
-    if (isSave && init && (init.method || "GET").toUpperCase() === "POST") {
-      var bodyObj = await readRequestBody(init);
-
-      // If missing updates, generate them
-      var needsFix = !bodyObj || !Array.isArray(bodyObj.updates) || bodyObj.updates.length === 0;
-
-      if (needsFix) {
-        var paper = (bodyObj && bodyObj.paper) ? String(bodyObj.paper) : getPaper();
-        var updates = buildUpdatesFromLocalStorage();
-
-        // If no answers yet, still send a small ping row
-        if (!updates || updates.length === 0) {
-          updates = [{
-            question_id: "__ping__",
-            status: "seen",
-            selected_answer: null,
-            flagged: false,
-            time_spent: 0,
-            last_seen_at: new Date().toISOString()
-          }];
-        }
-
-        var fixed = { paper: paper, updates: updates };
-
-        // force JSON body + include cookies
-        init.headers = init.headers || {};
-        try { init.headers["Content-Type"] = "application/json"; } catch(_) {}
-        init.credentials = "include";
-        init.body = JSON.stringify(fixed);
-
-        // console help
-        try {
-          console.log("TS_QB_SAVE_FIX applied:", { paper: paper, updates: updates.length });
-        } catch(_){}
-      }
-    }
-
-    return origFetch(input, init);
-  };
-
-  console.log("TS_QB_SAVE_FIX_V1 enabled");
-})();
-</script>
 <!-- /TS_QB_SAVE_FIX_V1 -->
 
 
 
 
+
+
+<script>
+(function(){
+  "use strict";
+
+  const SUPABASE_URL = "https://pnkzxzigpkvhlmhsmzdd.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_bferrEWIyBKOcNvfOByGow_70SSxWRN";
+  const STORAGE_KEY = "ts_tmua_supabase_exact_ui_v4";
+
+  let allMeta = [];
+  let visibleList = [];
+  let currentIndex = 0;
+  let currentQuestion = null;
+  let questionCache = new Map();
+
+  let state = {
+    answers: {},
+    filters: {
+      status: "all",
+      papers: [],
+      topics: [],
+      difficulties: []
+    }
+  };
+
+  function el(id) {
+    return document.getElementById(id);
+  }
+
+  function setText(id, value) {
+    const node = el(id);
+    if (node) node.textContent = String(value ?? "");
+  }
+
+  function setHtml(id, value) {
+    const node = el(id);
+    if (node) node.innerHTML = String(value ?? "");
+  }
+
+  function escapeHtml(s) {
+    return String(s ?? "").replace(/[&<>"']/g, function(c) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[c];
+    });
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      UI.flashSaved();
+    } catch(e) {}
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) state = Object.assign(state, JSON.parse(raw));
+    } catch(e) {}
+  }
+
+  function typeset() {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      try { window.MathJax.typesetClear && window.MathJax.typesetClear(); } catch(e) {}
+      window.MathJax.typesetPromise().catch(console.error);
+    }
+  }
+
+  async function rpc(name, body) {
+    const response = await fetch(SUPABASE_URL + "/rest/v1/rpc/" + name, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body || {})
+    });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      throw new Error("Supabase RPC failed: " + name + "\nStatus: " + response.status + "\n" + text);
+    }
+
+    return text ? JSON.parse(text) : null;
+  }
+
+  async function loadAllMeta() {
+    const pageSize = 1000;
+    let offset = 0;
+    let all = [];
+
+    while (true) {
+      const rows = await rpc("tmua_qb_public_list_page", {
+        p_offset: offset,
+        p_limit: pageSize
+      });
+
+      const page = Array.isArray(rows) ? rows : [];
+      all = all.concat(page);
+
+      if (page.length < pageSize) break;
+
+      offset += pageSize;
+
+      if (offset > 10000) throw new Error("Pagination safety stop.");
+    }
+
+    return all.map(function(q, idx) {
+      return {
+        qid: "SB-" + String(q.display_order),
+        display_order: q.display_order,
+        paper_question_number: q.paper_question_number || q.display_order,
+        number: String(q.paper_question_number || q.display_order || (idx + 1)),
+        kind: q.kind || "mcq",
+        paper: q.paper || "Paper 1",
+        topic: q.topic || "General",
+        subtopic: q.subtopic || "",
+        difficulty: q.difficulty || 3,
+        tags: Array.isArray(q.tags) ? q.tags : []
+      };
+    });
+  }
+
+  async function loadQuestion(displayOrder) {
+    if (questionCache.has(displayOrder)) return questionCache.get(displayOrder);
+
+    const result = await rpc("tmua_qb_public_question", {
+      p_display_order: displayOrder
+    });
+
+    const q = Array.isArray(result) ? result[0] : result;
+
+    if (!q) throw new Error("Question not found for display_order " + displayOrder);
+
+    questionCache.set(displayOrder, q);
+    return q;
+  }
+
+  function questionKey(meta) {
+    return String(meta.display_order);
+  }
+
+  function currentMeta() {
+    return visibleList[currentIndex] || null;
+  }
+
+  function renderDifficultyLabel(difficulty) {
+    const d = Math.max(1, Math.min(5, Number(difficulty || 1)));
+    return "★".repeat(d) + "☆".repeat(5-d);
+  }
+
+  
+  // TS_TOPIC_FILTER_ORDER_FIX_V1
+  function tsTopicNumber(topic) {
+    const m = String(topic || "").trim().match(/^(\d+)/);
+    return m ? Number(m[1]) : 999;
+  }
+
+  function tsTopicSort(a, b) {
+    const na = tsTopicNumber(a);
+    const nb = tsTopicNumber(b);
+    if (na !== nb) return na - nb;
+
+    return String(a || "").localeCompare(String(b || ""), undefined, {
+      numeric: true,
+      sensitivity: "base"
+    });
+  }
+
+function uniqueSorted(arr) {
+    return Array.from(new Set(arr.filter(Boolean))).sort(function(a,b){
+      return String(a).localeCompare(String(b), undefined, { numeric:true, sensitivity:"base" });
+    });
+  }
+
+  function answerFor(meta) {
+    return state.answers[questionKey(meta)] || {};
+  }
+
+  
+  // TS_FINAL_CHAPTER_ORDER_FIX_V1
+  const TS_CHAPTER_ORDER = [
+    "1_Algebra & Functions",
+    "2_Sequences",
+    "3_Geometry",
+    "4_Graphs",
+    "5_Exponentials and Logarithms",
+    "6_Trigonometry",
+    "7_Calculus",
+    "8_Logic",
+    "9_Statistics & Probability",
+    "10_Miscellaneous",
+    "11_Proofs"
+  ];
+
+  function tsChapterNumber(topic) {
+    const raw = String(topic || "").trim();
+    const m = raw.match(/^\s*(\d+)/);
+    if (m) return Number(m[1]);
+
+    const lower = raw.toLowerCase();
+
+    if (lower.includes("algebra") || lower.includes("function")) return 1;
+    if (lower.includes("sequence")) return 2;
+    if (lower.includes("geometry") || lower.includes("coordinate")) return 3;
+    if (lower.includes("graph")) return 4;
+    if (lower.includes("exponential") || lower.includes("logarithm") || lower.includes("log")) return 5;
+    if (lower.includes("trig")) return 6;
+    if (lower.includes("calculus") || lower.includes("differentiation") || lower.includes("integration")) return 7;
+    if (lower.includes("logic")) return 8;
+    if (lower.includes("statistic") || lower.includes("probability")) return 9;
+    if (lower.includes("misc")) return 10;
+    if (lower.includes("proof")) return 11;
+
+    return 999;
+  }
+
+  function tsCanonicalTopic(topic) {
+    const n = tsChapterNumber(topic);
+    if (n >= 1 && n <= TS_CHAPTER_ORDER.length) {
+      return TS_CHAPTER_ORDER[n - 1];
+    }
+    return String(topic || "General").trim() || "General";
+  }
+
+  function tsCanonicalSortQuestions(a, b) {
+    const ca = tsChapterNumber(a.topic);
+    const cb = tsChapterNumber(b.topic);
+
+    if (ca !== cb) return ca - cb;
+
+    const da = Number(a.display_order || 0);
+    const db = Number(b.display_order || 0);
+
+    if (da !== db) return da - db;
+
+    return String(a.subtopic || "").localeCompare(String(b.subtopic || ""), undefined, {
+      numeric: true,
+      sensitivity: "base"
+    });
+  }
+
+  function tsApplyFinalChapterOrder() {
+    allMeta = allMeta
+      .slice()
+      .sort(tsCanonicalSortQuestions)
+      .map(function(q, idx) {
+        q.topic_rank = tsChapterNumber(q.topic);
+        q.topic_canonical = tsCanonicalTopic(q.topic);
+        q.global_number = idx + 1;
+        q.number = String(idx + 1);
+        q.paper_question_number = idx + 1;
+        return q;
+      });
+  }
+
+function applyFilters() {
+    visibleList = allMeta.filter(function(q) {
+      const a = answerFor(q);
+
+      if (state.filters.papers.length && !state.filters.papers.includes(q.paper)) return false;
+      if (state.filters.topics.length && !state.filters.topics.includes(tsCanonicalTopic(q.topic))) return false;
+      if (state.filters.difficulties.length && !state.filters.difficulties.includes(String(q.difficulty))) return false;
+
+      if (state.filters.status === "unseen" && a.selected) return false;
+      if (state.filters.status === "attempted" && !a.selected) return false;
+      if (state.filters.status === "correct" && !(a.checked && a.isCorrect)) return false;
+      if (state.filters.status === "incorrect" && !(a.checked && !a.isCorrect)) return false;
+      if (state.filters.status === "flagged" && !a.flagged) return false;
+
+      return true;
+    });
+
+    visibleList.sort(function(a, b) {
+      return Number(a.global_number || 0) - Number(b.global_number || 0);
+    });
+
+    if (currentIndex >= visibleList.length) currentIndex = 0;
+  }
+
+  function updateCounts() {
+    setText("poolCount", allMeta.length);
+    setText("visibleCount", visibleList.length);
+    setText("posCounter", visibleList.length ? currentIndex + 1 : 0);
+    setText("posTotal", visibleList.length);
+  }
+
+  function updateHeaderStats() {
+    const answers = Object.values(state.answers || {});
+    const attempted = answers.filter(a => a && a.selected).length;
+    const checked = answers.filter(a => a && a.checked).length;
+    const correct = answers.filter(a => a && a.checked && a.isCorrect).length;
+    const acc = checked ? Math.round(100 * correct / checked) : 0;
+
+    setText("statAttempted", attempted);
+    setText("statCorrect", correct);
+    setText("statAcc", acc + "%");
+
+    setText("attemptedCount", attempted);
+    setText("checkedCount", checked);
+    setText("correctCount", correct);
+    setText("accuracyPct", acc + "%");
+    setText("answeredCount", attempted);
+    setText("accuracyCount", acc + "%");
+  }
+
+  function renderStatus(meta) {
+    const a = answerFor(meta);
+    const status = el("metaStatus");
+    const flagBtn = el("btnFlag");
+
+    if (flagBtn) {
+      if (a.flagged) {
+        flagBtn.classList.add("active");
+        flagBtn.textContent = "⚑ Flagged";
+      } else {
+        flagBtn.classList.remove("active");
+        flagBtn.textContent = "⚑ Flag for Review";
+      }
+    }
+
+    if (!status) return;
+
+    status.className = "meta-pill";
+
+    if (a.checked && a.isCorrect) {
+      status.textContent = "Checked • Correct";
+      status.classList.add("good");
+    } else if (a.checked && !a.isCorrect) {
+      status.textContent = "Checked • Incorrect";
+      status.classList.add("bad");
+    } else if (a.flagged) {
+      status.textContent = "Flagged";
+      status.classList.add("warn");
+    } else if (a.selected) {
+      status.textContent = "Attempted";
+    } else {
+      status.textContent = "Unattempted";
+    }
+  }
+
+  function renderMedia(q) {
+    const wrap = el("qMedia");
+    if (!wrap) return;
+
+    wrap.innerHTML = "";
+
+    const promptHtml = String(q.prompt_html || "");
+    const assets = Array.isArray(q.page_assets) ? q.page_assets : [];
+
+    assets.forEach(function(asset) {
+      let url = "";
+      let label = "";
+
+      if (typeof asset === "string" && /^https?:\/\//.test(asset)) {
+        url = asset;
+      } else if (asset && typeof asset === "object" && asset.url) {
+        url = asset.url;
+        label = asset.label || "";
+      }
+
+      if (!url) return;
+
+      // Safety guard: if the image is already inline in prompt_html,
+      // do not render it a second time as page media.
+      if (promptHtml.includes(url)) return;
+
+      const box = document.createElement("div");
+      box.className = "question-media";
+      box.innerHTML =
+        '<div><img src="' + escapeHtml(url) + '" alt="' + escapeHtml(label || "Question diagram") + '">' +
+        (label ? '<div class="media-caption">' + escapeHtml(label) + '</div>' : '') +
+        '</div>';
+
+      wrap.appendChild(box);
+    });
+  }
+
+  function renderOptions(meta, q) {
+    const box = el("qOptions");
+    if (!box) return;
+
+    const key = questionKey(meta);
+    const a = answerFor(meta);
+    const options = Array.isArray(q.options) ? q.options : [];
+
+    box.innerHTML = options.map(function(opt) {
+      const label = String(opt.label || "").trim();
+      const checked = a.selected === label ? "checked" : "";
+      const selectedClass = a.selected === label ? " selected" : "";
+      const locked = a.checked ? "disabled" : "";
+
+      let cls = "option" + selectedClass;
+      if (a.checked && label === a.answer) cls += " correct";
+      if (a.checked && a.selected === label && label !== a.answer) cls += " wrong";
+
+      return '<label class="' + cls + '">' +
+        '<div class="option-row">' +
+        '<input type="radio" name="qb_' + escapeHtml(key) + '" value="' + escapeHtml(label) + '" ' + checked + ' ' + locked + ' onchange="ACTIONS.setSelected(this.value)">' +
+        '<div><strong style="margin-right:8px;">' + escapeHtml(label) + '.</strong> ' + (opt.html || "") + '</div>' +
+        '</div>' +
+        '</label>';
+    }).join("");
+  }
+
+  function renderFeedback(meta) {
+    const fb = el("qFeedback");
+    if (!fb) return;
+
+    const a = answerFor(meta);
+
+    if (!a.checked) {
+      fb.style.display = "none";
+      fb.innerHTML = "";
+      fb.className = "feedback";
+      return;
+    }
+
+    fb.style.display = "block";
+    fb.className = "feedback " + (a.isCorrect ? "good" : "bad");
+    fb.innerHTML = a.isCorrect
+      ? "<strong>Correct.</strong>"
+      : "<strong>Incorrect.</strong> Correct answer: " + escapeHtml(a.answer);
+  }
+
+  function renderSolution(meta) {
+    const sol = el("qSolution");
+    const body = el("qSolutionBody");
+    if (!sol || !body) return;
+
+    const a = answerFor(meta);
+
+    if (!a.checked) {
+      sol.style.display = "none";
+      body.innerHTML = "";
+      return;
+    }
+
+    sol.style.display = "block";
+    body.innerHTML = a.solution_html || "";
+  }
+
+  function renderHintLine(q) {
+    const line = el("qHintLine");
+    if (!line) return;
+    line.textContent = q.shortcut_available ? "Hint available for this question." : "";
+  }
+
+  async function render() {
+    updateCounts();
+    updateHeaderStats();
+
+    const empty = el("emptyState");
+    const card = el("qCard");
+
+    if (!visibleList.length) {
+      if (empty) empty.style.display = "block";
+      if (card) card.style.display = "none";
+      return;
+    }
+
+    if (empty) empty.style.display = "none";
+    if (card) card.style.display = "block";
+
+    const meta = currentMeta();
+    currentQuestion = await loadQuestion(meta.display_order);
+
+    setText("qTitle", "Question " + (meta.global_number || meta.paper_question_number || meta.display_order));
+    setText("metaPaper", meta.paper || "");
+    setText("metaTopic", (meta.topic || "") + (meta.subtopic ? " • " + meta.subtopic : ""));
+    setText("metaDiff", "Difficulty " + (meta.difficulty || "") + "/5");
+
+    renderStatus(meta);
+    setHtml("qPrompt", currentQuestion.prompt_html || "");
+    renderMedia(currentQuestion);
+    renderOptions(meta, currentQuestion);
+    renderFeedback(meta);
+    renderSolution(meta);
+    renderHintLine(currentQuestion);
+
+    const hintBox = el("hintBox");
+    if (hintBox) {
+      hintBox.style.display = "none";
+      hintBox.innerHTML = "";
+    }
+
+    typeset();
+  }
+
+  async function go(delta) {
+    if (!visibleList.length) return;
+    currentIndex = Math.max(0, Math.min(visibleList.length - 1, currentIndex + delta));
+    await render();
+  }
+
+  function buildFilterCheckbox(containerId, values, currentValues, prefix) {
+    const box = el(containerId);
+    if (!box) return;
+
+    box.innerHTML = values.map(function(v, i) {
+      const checked = currentValues.includes(String(v)) ? "checked" : "";
+      return '<label class="chk">' +
+        '<input type="checkbox" value="' + escapeHtml(v) + '" ' + checked + ' data-filter-kind="' + prefix + '">' +
+        escapeHtml(v) +
+        '</label>';
+    }).join("");
+  }
+
+  function buildFilters() {
+    buildFilterCheckbox(
+      "fTopics",
+      TS_CHAPTER_ORDER.filter(function(topic) {
+        return allMeta.some(function(q) { return tsCanonicalTopic(q.topic) === topic; });
+      }),
+      state.filters.topics,
+      "topic"
+    );
+    buildFilterCheckbox("fDiffs", ["1","2","3","4","5"], state.filters.difficulties, "difficulty");
+
+    const papers = uniqueSorted(allMeta.map(q => q.paper));
+    const paperBox = el("fPapers") || el("fPaper");
+    if (paperBox && !paperBox.tagName.match(/^select$/i)) {
+      paperBox.innerHTML = papers.map(function(p) {
+        const checked = state.filters.papers.includes(String(p)) ? "checked" : "";
+        return '<label class="chk">' +
+          '<input type="checkbox" value="' + escapeHtml(p) + '" ' + checked + ' data-filter-kind="paper">' +
+          '<span>' + escapeHtml(p) + '</span>' +
+          '</label>';
+      }).join("");
+    }
+
+    const statusSelect = el("fStatus");
+    if (statusSelect) statusSelect.value = state.filters.status || "all";
+
+    const sortSelect = el("fSort");
+    if (sortSelect && state.filters.sort) sortSelect.value = state.filters.sort;
+  }
+
+  function readFiltersFromUI() {
+    const selected = function(kind) {
+      return Array.from(document.querySelectorAll('input[data-filter-kind="' + kind + '"]:checked'))
+        .map(x => String(x.value));
+    };
+
+    state.filters.topics = selected("topic");
+    state.filters.difficulties = selected("difficulty");
+    state.filters.papers = selected("paper");
+
+    const statusSelect = el("fStatus");
+    state.filters.status = statusSelect ? statusSelect.value : "all";
+
+    const sortSelect = el("fSort");
+    if (sortSelect) state.filters.sort = sortSelect.value || "topic";
+  }
+
+  const UI = {
+    flashSaved: function() {
+      const s = el("saveIndicator");
+      if (!s) return;
+      s.style.display = "inline-flex";
+      clearTimeout(UI._t);
+      UI._t = setTimeout(function() { s.style.display = "none"; }, 800);
+    },
+    overlayClick: function(evt, overlayId) {
+      if (evt.target && evt.target.id === overlayId) {
+        const node = el(overlayId);
+        if (node) node.style.display = "none";
+      }
+    },
+    openFilters: function() {
+      buildFilters();
+      const node = el("filtersOverlay");
+      if (node) node.style.display = "block";
+    },
+    closeFilters: function() {
+      const node = el("filtersOverlay");
+      if (node) node.style.display = "none";
+    },
+    openNavigator: function() {
+      NAV.renderNavigator();
+      const node = el("navOverlay");
+      if (node) node.style.display = "block";
+    },
+    closeNavigator: function() {
+      const node = el("navOverlay");
+      if (node) node.style.display = "none";
+    },
+    openDashboard: function() {
+      DASH.render();
+      const node = el("dashOverlay");
+      if (node) node.style.display = "block";
+    },
+    closeDashboard: function() {
+      const node = el("dashOverlay");
+      if (node) node.style.display = "none";
+    },
+    openBackup: function() {
+      const node = el("backupOverlay");
+      if (node) node.style.display = "block";
+    },
+    closeBackup: function() {
+      const node = el("backupOverlay");
+      if (node) node.style.display = "none";
+    }
+  };
+
+  const NAV = {
+    prev: function() { go(-1); },
+    next: function() { go(1); },
+    jumpToQid: async function(qid) {
+      const idx = visibleList.findIndex(q => q.qid === qid);
+      if (idx >= 0) {
+        currentIndex = idx;
+        UI.closeNavigator();
+        await render();
+      }
+    },
+    renderNavigator: function() {
+      const root = el("navGrid");
+      if (!root) return;
+
+      const label = el("navShowingLabel");
+      if (label) label.textContent = "Grouped by chapter";
+
+      root.innerHTML = "";
+
+      const sorted = visibleList.slice().sort(function(a, b) {
+        return Number(a.global_number || 0) - Number(b.global_number || 0);
+      });
+
+      const groups = new Map();
+
+      TS_CHAPTER_ORDER.forEach(function(topic, idx) {
+        groups.set(topic, {
+          topic: topic,
+          rank: idx + 1,
+          questions: []
+        });
+      });
+
+      sorted.forEach(function(q) {
+        const topic = tsCanonicalTopic(q.topic);
+
+        if (!groups.has(topic)) {
+          groups.set(topic, {
+            topic: topic,
+            rank: tsChapterNumber(topic),
+            questions: []
+          });
+        }
+
+        groups.get(topic).questions.push(q);
+      });
+
+      Array.from(groups.values())
+        .filter(function(group) {
+          return group.questions.length > 0;
+        })
+        .sort(function(a, b) {
+          return a.rank - b.rank;
+        })
+        .forEach(function(group) {
+          const groupWrap = document.createElement("div");
+          groupWrap.className = "nav-group";
+
+          groupWrap.innerHTML =
+            '<div class="nav-group-header">' +
+              '<div class="nav-group-title">' + escapeHtml(group.topic) + '</div>' +
+              '<div class="nav-group-count">' + group.questions.length + ' questions</div>' +
+            '</div>' +
+            '<div class="nav-group-body">' +
+              '<div class="nav-grid"></div>' +
+            '</div>';
+
+          const grid = groupWrap.querySelector(".nav-grid");
+
+          group.questions
+            .slice()
+            .sort(function(a, b) {
+              return Number(a.global_number || 0) - Number(b.global_number || 0);
+            })
+            .forEach(function(q) {
+              const a = answerFor(q);
+              const btn = document.createElement("button");
+              btn.className = "nav-btn";
+
+              const n = q.global_number || q.display_order;
+              const chapterLabel = tsCanonicalTopic(q.topic);
+
+              btn.title = "Question " + n + " · " + chapterLabel + (q.subtopic ? " · " + q.subtopic : "");
+
+              btn.innerHTML =
+                '<div class="nav-unit">' + escapeHtml(chapterLabel) + '</div>' +
+                '<div class="nav-num">' + escapeHtml(n) + '</div>' +
+                '<div class="nav-stars">' + renderDifficultyLabel(q.difficulty) + '</div>';
+
+              if (!a.selected) btn.classList.add("unseen");
+              else btn.classList.add("attempted");
+
+              if (a.checked && a.isCorrect) btn.classList.add("correct");
+              if (a.checked && !a.isCorrect) btn.classList.add("incorrect");
+              if (a.flagged) btn.classList.add("flagged");
+
+              if (q === currentMeta()) btn.classList.add("current");
+
+              const icons = document.createElement("div");
+              icons.className = "nav-icons";
+              icons.innerHTML = a.flagged ? "⚑" : "";
+              btn.appendChild(icons);
+
+              btn.onclick = function() {
+                NAV.jumpToQid(q.qid);
+              };
+
+              grid.appendChild(btn);
+            });
+
+          root.appendChild(groupWrap);
+        });
+    }
+  };
+
+  const ACTIONS = {
+    setSelected: function(label) {
+      const meta = currentMeta();
+      if (!meta) return;
+
+      const key = questionKey(meta);
+      if (!state.answers[key]) state.answers[key] = {};
+
+      if (state.answers[key].checked) return;
+
+      state.answers[key].selected = label;
+      saveState();
+      render();
+    },
+    checkAnswer: async function() {
+      const meta = currentMeta();
+      if (!meta) return;
+
+      const key = questionKey(meta);
+      const a = state.answers[key] || {};
+
+      if (!a.selected) {
+        alert("Please select an answer first.");
+        return;
+      }
+
+      const result = await rpc("tmua_qb_public_check", {
+        p_display_order: meta.display_order,
+        p_selected: a.selected
+      });
+
+      const checked = Array.isArray(result) ? result[0] : result;
+
+      state.answers[key] = {
+        ...a,
+        checked: true,
+        locked: true,
+        isCorrect: checked.is_correct === true,
+        answer: checked.answer,
+        solution_html: checked.solution_html || ""
+      };
+
+      saveState();
+      await render();
+    },
+    showHint: function() {
+      const hintBox = el("hintBox");
+      if (!hintBox || !currentQuestion) return;
+
+      hintBox.style.display = "block";
+
+      if (currentQuestion.shortcut_available && currentQuestion.nice_tip_html) {
+        hintBox.innerHTML = "<h4>Hint</h4>" + currentQuestion.nice_tip_html;
+      } else {
+        hintBox.innerHTML = "<h4>Hint</h4>No hint is available for this question.";
+      }
+
+      typeset();
+    },
+    toggleFlag: function() {
+      const meta = currentMeta();
+      if (!meta) return;
+
+      const key = questionKey(meta);
+      if (!state.answers[key]) state.answers[key] = {};
+      state.answers[key].flagged = !state.answers[key].flagged;
+
+      saveState();
+      render();
+    },
+    toggleSolution: function() {
+      const sol = el("qSolution");
+      if (!sol) return;
+      sol.style.display = sol.style.display === "none" ? "block" : "none";
+    }
+  };
+
+  const STATE = {
+    applyFilters: function() {
+      readFiltersFromUI();
+      applyFilters();
+      currentIndex = 0;
+      saveState();
+      UI.closeFilters();
+      render();
+    },
+    clearFilters: function() {
+      state.filters = {
+        status: "all",
+        papers: [],
+        topics: [],
+        difficulties: []
+      };
+      applyFilters();
+      currentIndex = 0;
+      saveState();
+      buildFilters();
+      render();
+    },
+    syncFiltersToUI: buildFilters,
+    resetProgress: function() {
+      if (!confirm("Reset progress on this device?")) return;
+      state.answers = {};
+      saveState();
+      render();
+    },
+    generateExport: function() {
+      const t = el("backupText");
+      if (t) t.value = JSON.stringify(state, null, 2);
+    },
+    copyExport: function() {
+      STATE.generateExport();
+      const t = el("backupText");
+      if (t) {
+        t.select();
+        document.execCommand("copy");
+      }
+    },
+    clearImportBox: function() {
+      const t = el("importText");
+      if (t) t.value = "";
+    },
+    importProgress: function() {
+      const t = el("importText");
+      if (!t || !t.value.trim()) return;
+      try {
+        state = JSON.parse(t.value);
+        saveState();
+        render();
+      } catch(e) {
+        alert("Invalid import JSON.");
+      }
+    }
+  };
+
+  const DASH = {
+    render: function() {
+      const answers = Object.values(state.answers || {});
+      const attempted = answers.filter(a => a && a.selected).length;
+      const checked = answers.filter(a => a && a.checked).length;
+      const correct = answers.filter(a => a && a.checked && a.isCorrect).length;
+      const flagged = answers.filter(a => a && a.flagged).length;
+      const acc = checked ? Math.round(100 * correct / checked) : 0;
+
+      setText("dAttempted", attempted);
+      setText("dCorrect", correct);
+      setText("dAcc", acc + "%");
+      setText("dFlagged", flagged);
+
+      const topicBreakdown = el("topicBreakdown");
+      if (topicBreakdown) {
+        const byTopic = new Map();
+        allMeta.forEach(q => {
+          if (!byTopic.has(q.topic)) byTopic.set(q.topic, { total:0, done:0 });
+          const row = byTopic.get(q.topic);
+          row.total++;
+          if (state.answers[questionKey(q)]?.checked) row.done++;
+        });
+
+        topicBreakdown.innerHTML = Array.from(byTopic.entries()).map(([topic, row]) =>
+          '<div class="stat-row"><span>' + escapeHtml(topic) + '</span><strong>' + row.done + ' / ' + row.total + '</strong></div>'
+        ).join("");
+      }
+
+      const diffBreakdown = el("diffBreakdown");
+      if (diffBreakdown) {
+        const byDiff = new Map();
+        allMeta.forEach(q => {
+          const d = String(q.difficulty || "3");
+          if (!byDiff.has(d)) byDiff.set(d, { total:0, done:0 });
+          const row = byDiff.get(d);
+          row.total++;
+          if (state.answers[questionKey(q)]?.checked) row.done++;
+        });
+
+        diffBreakdown.innerHTML = Array.from(byDiff.entries()).sort().map(([d, row]) =>
+          '<div class="stat-row"><span>Difficulty ' + escapeHtml(d) + '</span><strong>' + row.done + ' / ' + row.total + '</strong></div>'
+        ).join("");
+      }
+    }
+  };
+
+  window.UI = UI;
+  window.NAV = NAV;
+  window.ACTIONS = ACTIONS;
+  window.STATE = STATE;
+  window.DASH = DASH;
+
+  async function boot() {
+    try {
+      loadState();
+
+      setText("qTitle", "Loading Questions...");
+      setHtml("qPrompt", "<p>Loading Questions...</p>");
+      setHtml("qOptions", "");
+
+      allMeta = await loadAllMeta();
+      tsApplyFinalChapterOrder();
+      applyFilters();
+      buildFilters();
+
+      currentIndex = 0;
+
+      await render();
+    } catch(e) {
+      console.error(e);
+      setHtml("qPrompt",
+        '<p style="color:#b91c1c;"><strong>Could not load Supabase bank.</strong></p>' +
+        '<pre style="white-space:pre-wrap;">' + escapeHtml(e && e.stack ? e.stack : e) + '</pre>'
+      );
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", boot);
+})();
+</script>
+
+
+<!-- TS_BUG_REPORT_STANDALONE_JS_V1 -->
+<script>
+(function(){
+  "use strict";
+
+  const EMAILJS_PUBLIC_KEY = "9jjn3yBHl6S88hITy";
+  const EMAILJS_SERVICE_ID = "service_5l4w8x2";
+  const EMAILJS_TEMPLATE_ID = "template_z2l4lf8";
+  const BUG_REPORT_TO_EMAIL = "rajat.agarwal@thrivingscholars.com";
+
+  function el(id) {
+    return document.getElementById(id);
+  }
+
+  function text(id) {
+    const node = el(id);
+    return node ? String(node.innerText || node.textContent || "").trim() : "";
+  }
+
+  function selectedAnswer() {
+    const checked = document.querySelector('#qOptions input[type="radio"]:checked');
+    return checked ? String(checked.value || "") : "Not selected";
+  }
+
+  function promptPreview() {
+    const node = el("qPrompt");
+    return node ? String(node.innerText || "").replace(/\s+/g, " ").trim().slice(0, 1200) : "";
+  }
+
+  function currentPayload() {
+    const qTitle = text("qTitle") || "Current question";
+    const paper = text("metaPaper");
+    const topic = text("metaTopic");
+    const difficulty = text("metaDiff");
+    const pos = text("posCounter");
+    const total = text("posTotal");
+    const status = text("metaStatus");
+
+    return {
+      to_email: BUG_REPORT_TO_EMAIL,
+      email_subject: "TMUA bug report — " + qTitle,
+      report_message: "Report a problem in this question.",
+      comment: "",
+      question_label: qTitle,
+      question_number: pos,
+      display_order: pos,
+      qid: qTitle + " / " + pos + " of " + total,
+      paper: paper,
+      topic: topic,
+      subtopic: "",
+      difficulty: difficulty,
+      selected_answer: selectedAnswer(),
+      checked_status: status || "Not checked",
+      page_url: String(window.location.href || ""),
+      prompt_preview: promptPreview(),
+      submitted_at: new Date().toISOString()
+    };
+  }
+
+  window.BUG_REPORT = {
+    _inited: false,
+
+    open: function() {
+      const payload = currentPayload();
+
+      const label = el("bugQuestionLabel");
+      if (label) {
+        label.textContent = payload.question_label + " · " + payload.paper + " · " + payload.topic;
+      }
+
+      const ta = el("bugComment");
+      if (ta) ta.value = "Report a problem in this question.\n\n";
+
+      const thanks = el("bugReportThanks");
+      const err = el("bugReportError");
+
+      if (thanks) {
+        thanks.style.display = "none";
+        thanks.textContent = "";
+      }
+
+      if (err) {
+        err.style.display = "none";
+        err.textContent = "";
+      }
+
+      const overlay = el("bugOverlay");
+      if (overlay) overlay.style.display = "block";
+
+      setTimeout(function() {
+        if (ta) ta.focus();
+      }, 50);
+    },
+
+    close: function() {
+      const overlay = el("bugOverlay");
+      if (overlay) overlay.style.display = "none";
+    },
+
+    overlayClick: function(evt) {
+      if (evt && evt.target && evt.target.id === "bugOverlay") {
+        BUG_REPORT.close();
+      }
+    },
+
+    submit: async function() {
+      const btn = el("bugSubmitBtn");
+      const thanks = el("bugReportThanks");
+      const err = el("bugReportError");
+      const ta = el("bugComment");
+
+      if (thanks) {
+        thanks.style.display = "none";
+        thanks.textContent = "";
+      }
+
+      if (err) {
+        err.style.display = "none";
+        err.textContent = "";
+      }
+
+      const comment = ta ? String(ta.value || "").trim() : "";
+
+      if (!comment) {
+        alert("Please add a short comment before submitting.");
+        return;
+      }
+
+      try {
+        if (!window.emailjs) {
+          throw new Error("EmailJS SDK has not loaded. Refresh the page and try again.");
+        }
+
+        if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
+          throw new Error("EmailJS keys are missing in the HTML file.");
+        }
+
+        if (!BUG_REPORT._inited) {
+          emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+          BUG_REPORT._inited = true;
+        }
+
+        const payload = currentPayload();
+        payload.comment = comment;
+
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "Submitting...";
+        }
+
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          payload
+        );
+
+        if (thanks) {
+          thanks.style.display = "block";
+          thanks.textContent = "Thanks. The report has been submitted.";
+        }
+
+        if (ta) ta.value = "";
+
+        setTimeout(function() {
+          BUG_REPORT.close();
+        }, 1200);
+
+      } catch(e) {
+        console.error("Bug report failed:", e);
+
+        if (err) {
+          err.style.display = "block";
+          err.textContent = "Could not submit the report. " + (e && (e.text || e.message) ? (e.text || e.message) : String(e));
+        }
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Submit";
+        }
+      }
+    }
+  };
+})();
+</script>
+<!-- /TS_BUG_REPORT_STANDALONE_JS_V1 -->
+
+
+<!-- TS_KEYBOARD_SHORTCUTS_V1 -->
+<script>
+(function () {
+  "use strict";
+
+  function isTypingTarget(target) {
+    if (!target) return false;
+
+    const tag = String(target.tagName || "").toLowerCase();
+
+    return (
+      tag === "input" ||
+      tag === "textarea" ||
+      tag === "select" ||
+      target.isContentEditable === true
+    );
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (isTypingTarget(event.target)) return;
+
+    const key = String(event.key || "").toLowerCase();
+
+    const isCtrlShift = event.ctrlKey === true && event.shiftKey === true;
+
+    if (!isCtrlShift) return;
+
+    // Ctrl + Shift + P = Previous question
+    if (key === "p") {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (window.NAV && typeof window.NAV.prev === "function") {
+        window.NAV.prev();
+      }
+
+      return;
+    }
+
+    // Ctrl + Shift + N = Next question
+    // Note: Chrome/Edge may reserve this for Incognito/InPrivate in some cases.
+    if (key === "n") {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (window.NAV && typeof window.NAV.next === "function") {
+        window.NAV.next();
+      }
+
+      return;
+    }
+  }, true);
+})();
+</script>
+<!-- /TS_KEYBOARD_SHORTCUTS_V1 -->
 
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
