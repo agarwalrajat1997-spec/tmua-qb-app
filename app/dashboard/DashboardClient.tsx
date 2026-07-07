@@ -17,6 +17,30 @@ type PracticeTest = {
 };
 
 type Product = "practice-tests" | "tmua-question-bank" | "tmua-classes";
+type ResourcePdf = {
+  title: string;
+  description: string;
+  href: string;
+};
+
+const TMUA_RESOURCE_PDFS: ResourcePdf[] = [
+  {
+    title: "TMUA Formula Sheet",
+    description: "Key formulas and compact reference notes for TMUA revision.",
+    href: "/tmua-resources/tmua-formula-sheet.pdf",
+  },
+  {
+    title: "TMUA Content Specification",
+    description: "Official TMUA specification and topic coverage.",
+    href: "/tmua-resources/tmua-content-specification.pdf",
+  },
+  {
+    title: "TMUA Top 80 Mistakes",
+    description: "Thriving Scholars guide to the most common TMUA mistakes and traps.",
+    href: "/tmua-resources/tmua-top-80-mistakes-thriving-scholars.pdf",
+  },
+];
+
 
 type LatestAttemptSummary = {
   id: string;
@@ -113,7 +137,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [active, setActive] = useState<"practice" | "bank" | "classes">("practice");
+  const [active, setActive] = useState<"practice" | "bank" | "classes" | "resources">("practice");
   const [err, setErr] = useState<string | null>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -549,7 +573,54 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 <span className={styles.navLabel}>Classes</span>
               </button>
             </li>
-          </ul>
+            <li
+              style={{
+                marginTop: 22,
+                paddingTop: 18,
+                borderTop: "1px solid #E5E7EB",
+              }}
+            >
+              <button
+                onClick={() => setActive("resources")}
+                type="button"
+                title="TMUA Resources"
+                style={{
+                  width: "100%",
+                  border: active === "resources" ? "1px solid #D0D5DD" : "1px solid #E5E7EB",
+                  borderLeft: active === "resources" ? "5px solid #98A2B3" : "1px solid #E5E7EB",
+                  background: active === "resources" ? "#F2F4F7" : "#FFFFFF",
+                  color: "#344054",
+                  borderRadius: 18,
+                  padding: "14px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 14,
+                  cursor: "pointer",
+                  fontWeight: 950,
+                  fontSize: 20,
+                  boxShadow: active === "resources" ? "0 10px 24px rgba(16,24,39,.06)" : "none",
+                }}
+              >
+                <span
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: 999,
+                    display: "grid",
+                    placeItems: "center",
+                    background: "#F9FAFB",
+                    border: "1px solid #D0D5DD",
+                    color: "#667085",
+                    fontSize: 17,
+                    flex: "0 0 auto",
+                  }}
+                >
+                  📁
+                </span>
+                <span>Resources</span>
+              </button>
+            </li>
+</ul>
 
           <div className={styles.card} style={{ margin: "16px 18px 0" }}>
             <div className={styles.muted}>
@@ -791,7 +862,104 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 </div>
               </div>
             </>
-                  ) : (
+                  ) : active === "resources" ? (
+            <>
+              <div className={styles.h1}>Resources</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> Downloadable TMUA PDFs
+                </div>
+                <div className={styles.meta}>Formula sheet · Specification · Mistakes guide</div>
+              </div>
+
+              <section
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
+                  gap: 14,
+                  maxWidth: 980,
+                }}
+              >
+                {TMUA_RESOURCE_PDFS.map((pdf) => (
+                  <a
+                    key={pdf.href}
+                    href={pdf.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    download
+                    style={{
+                      display: "block",
+                      background: "#ffffff",
+                      border: "1px solid #E5E7EB",
+                      borderRadius: 18,
+                      padding: 18,
+                      color: "#141414",
+                      textDecoration: "none",
+                      boxShadow: "0 1px 0 rgba(0,0,0,.04)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: 14,
+                        display: "grid",
+                        placeItems: "center",
+                        background: "#FFF3D1",
+                        border: "1px solid #F0DC8C",
+                        fontSize: 22,
+                        marginBottom: 14,
+                      }}
+                    >
+                      📄
+                    </div>
+
+                    <div
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 950,
+                        letterSpacing: "-.02em",
+                        marginBottom: 8,
+                        lineHeight: 1.15,
+                      }}
+                    >
+                      {pdf.title}
+                    </div>
+
+                    <div
+                      style={{
+                        color: "#667085",
+                        fontSize: 13,
+                        fontWeight: 750,
+                        lineHeight: 1.45,
+                        marginBottom: 14,
+                      }}
+                    >
+                      {pdf.description}
+                    </div>
+
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        borderRadius: 999,
+                        padding: "9px 12px",
+                        background: "#FEC94F",
+                        color: "#141414",
+                        fontSize: 12,
+                        fontWeight: 950,
+                        textTransform: "uppercase",
+                        letterSpacing: ".06em",
+                      }}
+                    >
+                      Download PDF →
+                    </div>
+                  </a>
+                ))}
+              </section>
+            </>
+          ) : (
             <>
               <div className={styles.h1}>Classes</div>
 
@@ -858,8 +1026,7 @@ src="/tmua-classes/index.html"
             setModalErr(null);
           }}
         >
-          <div
-            className={styles.card}
+          <div className={styles.card}
             style={{ width: "min(900px, 96vw)", maxHeight: "85vh", overflow: "auto" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -958,8 +1125,7 @@ src="/tmua-classes/index.html"
             setSolUrl("");
           }}
         >
-          <div
-            className={styles.card}
+          <div className={styles.card}
             style={{ width: "min(1100px, 98vw)", height: "min(86vh, 900px)", overflow: "hidden", padding: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -998,3 +1164,8 @@ src="/tmua-classes/index.html"
     </div>
   );
 }
+
+
+
+
+

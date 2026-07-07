@@ -1,0 +1,169 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ESAT Classes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111827;background:white;}
+    .wrap{padding:0;}
+    .grid{display:grid;gap:14px;}
+    .section{border:1px solid #e5e7eb;border-radius:14px;background:#fff;padding:16px;}
+    .sectionTitle{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;font-size:17px;font-weight:900;}
+    .pill{display:inline-flex;align-items:center;border:1px solid #dbeafe;background:#eff6ff;color:#1e40af;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800;white-space:nowrap;}
+    .item{border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:14px;}
+    .title{font-size:15px;font-weight:900;margin:0 0 8px;}
+    .meta{font-size:13px;color:#4b5563;margin:4px 0;}
+    .desc{font-size:13px;color:#374151;margin:8px 0 0;}
+    .btnRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:9px;padding:9px 12px;font-size:13px;font-weight:850;text-decoration:none;color:white;background:#991b1b;border:1px solid #991b1b;}
+    .btn:hover{background:#7f1d1d;}
+    .btn.secondary{background:#fff;color:#1d4ed8;border-color:#bfdbfe;}
+    .empty{border:1px dashed #cbd5e1;border-radius:12px;padding:14px;color:#4b5563;background:#fff;font-size:14px;}
+    .loading{color:#4b5563;font-size:14px;padding:12px 0;}
+    .error{border:1px solid #fecaca;background:#fef2f2;color:#991b1b;border-radius:12px;padding:12px;font-size:14px;font-weight:700;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="app" class="grid">
+      <div class="loading">Loading schedule...</div>
+    </div>
+  </div>
+
+  <script>
+    const app = document.getElementById("app");
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatDateRange(start, end, timezone) {
+      if (!start) return "Timing to be confirmed";
+
+      const zone = timezone || "Europe/London";
+      const startDate = new Date(start);
+      const endDate = end ? new Date(end) : null;
+
+      const datePart = new Intl.DateTimeFormat("en-GB", {
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        timeZone: zone
+      }).format(startDate);
+
+      const startTime = new Intl.DateTimeFormat("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: zone
+      }).format(startDate);
+
+      const endTime = endDate
+        ? new Intl.DateTimeFormat("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: zone
+          }).format(endDate)
+        : "";
+
+      return endTime
+        ? `${datePart} · ${startTime}–${endTime} UK time`
+        : `${datePart} · ${startTime} UK time`;
+    }
+
+    function renderSession(session) {
+      const title = escapeHtml(session.title || "ESAT Class");
+      const batch = escapeHtml(session.batch_name || "ESAT Group");
+      const desc = session.description ? `<div class="desc">${escapeHtml(session.description)}</div>` : "";
+      const time = escapeHtml(formatDateRange(session.starts_at, session.ends_at, session.timezone));
+
+      const zoom = session.zoom_url
+        ? `<a class="btn" href="${escapeHtml(session.zoom_url)}" target="_blank" rel="noopener">${escapeHtml(session.zoom_label || "Join Zoom Meeting")}</a>`
+        : `<span class="empty">Join link will appear here.</span>`;
+
+      return `
+        <div class="item">
+          <div class="title">${title}</div>
+          <div class="meta"><b>${batch}</b></div>
+          <div class="meta">${time}</div>
+          ${desc}
+          <div class="btnRow">${zoom}</div>
+        </div>
+      `;
+    }
+
+    function renderRecording(session) {
+      const title = escapeHtml(session.recording_title || session.title || "Class Recording");
+      const notes = session.recording_notes ? `<div class="desc">${escapeHtml(session.recording_notes)}</div>` : "";
+      const time = escapeHtml(formatDateRange(session.starts_at, session.ends_at, session.timezone));
+
+      return `
+        <div class="item">
+          <div class="title">${title}</div>
+          <div class="meta">${time}</div>
+          ${notes}
+          <div class="btnRow">
+            <a class="btn secondary" href="${escapeHtml(session.recording_url)}" target="_blank" rel="noopener">Watch Recording</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function render(data) {
+      const upcoming = data.upcoming || [];
+      const recordings = data.recordings || [];
+
+      app.innerHTML = `
+        <section class="section">
+          <div class="sectionTitle">
+            <span>Next Live Session</span>
+            <span class="pill">ESAT Classes</span>
+          </div>
+          ${
+            upcoming.length
+              ? renderSession(upcoming[0])
+              : `<div class="empty">No upcoming ESAT class is currently scheduled.</div>`
+          }
+        </section>
+
+        <section class="section">
+          <div class="sectionTitle">
+            <span>Recordings</span>
+            <span class="pill">${recordings.length}</span>
+          </div>
+          ${
+            recordings.length
+              ? recordings.map(renderRecording).join("")
+              : `<div class="empty">Recordings will appear here after sessions are completed.</div>`
+          }
+        </section>
+      `;
+    }
+
+    async function load() {
+      try {
+        const res = await fetch("/api/esat/classes", { cache: "no-store" });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || "Could not load ESAT classes");
+        }
+
+        render(data);
+      } catch (err) {
+        app.innerHTML = `<div class="error">${escapeHtml(err.message || "Could not load schedule.")}</div>`;
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

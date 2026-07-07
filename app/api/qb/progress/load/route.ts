@@ -32,11 +32,23 @@ export async function GET(req: Request) {
     const { data: auth, error: authErr } = await supabase.auth.getUser();
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
+    const url = new URL(req.url);
+    const requestedProduct = String(url.searchParams.get("product") || "tmua-question-bank");
+
+    const allowedProducts = new Set([
+      "tmua-question-bank",
+      "esat-question-bank"
+    ]);
+
+    const product = allowedProducts.has(requestedProduct)
+      ? requestedProduct
+      : "tmua-question-bank";
+
     const { data, error } = await supabase
       .from("qb_progress")
-      .select("question_id,status,selected_answer,flagged,time_spent,last_seen_at,updated_at")
+      .select("question_id,status,selected_answer,flagged,time_spent,last_seen_at,updated_at,email")
       .eq("user_id", auth.user.id)
-      .eq("product", "tmua-question-bank");
+      .eq("product", product);
 
     if (error) {
       return jsonErr(500, "Supabase load failed", { message: error.message });
@@ -54,7 +66,7 @@ export async function GET(req: Request) {
       };
     }
 
-    return NextResponse.json({ ok: true, product: "tmua-question-bank", progress });
+    return NextResponse.json({ ok: true, product, progress });
   } catch (e: any) {
     return NextResponse.json(
       { error: "Unhandled error in /api/qb/progress/load", message: String(e?.message || e), stack: String(e?.stack || "") },
@@ -62,3 +74,4 @@ export async function GET(req: Request) {
     );
   }
 }
+

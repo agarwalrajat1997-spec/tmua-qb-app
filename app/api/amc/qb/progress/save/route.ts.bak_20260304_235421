@@ -1,0 +1,61 @@
+import { NextResponse } from "next/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export const runtime = "nodejs";
+
+function badRequest(msg: string) {
+  return NextResponse.json({ error: msg }, { status: 400 });
+}
+
+export async function POST(req: Request) {
+  const supabase = await createSupabaseServerClient();
+
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (userErr || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  let body: any;
+  try {
+    body = await req.json();
+  } catch {
+    return badRequest("Invalid JSON");
+  }
+
+  const product = String(body?.product ?? "tmua-question-bank");
+  const updates = body?.updates;
+
+  if (!updates) return badRequest("updates is required");
+
+  // Allow either a single object or an array
+  const rows = Array.isArray(updates) ? updates : [updates];
+
+  // Minimal validation + shape
+  const payload = rows.map((u: any) => {
+    const question_id = String(u?.question_id ?? "").trim();
+    if (!question_id) throw new Error("question_id missing in one update");
+
+    return {
+      user_id: user.id,
+      product,
+      question_id,
+      status: u?.status ?? "seen",
+      selected_answer: u?.selected_answer ?? null,
+      flagged: Boolean(u?.flagged ?? false),
+      time_spent: Number(u?.time_spent ?? 0),
+      last_seen_at: u?.last_seen_at ?? new Date().toISOString(),
+    };
+  });
+
+  try {
+    const { error } = await supabase
+      .from("qb_progress")
+      .upsert(payload, { onConflict: "user_id,product,question_id" });
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    return NextResponse.json({ ok: true, saved: payload.length });
+  } catch (e: any) {
+    return NextResponse.json({ error: e?.message ?? "Unknown error" }, { status: 400 });
+  }
+}

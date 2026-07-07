@@ -54,6 +54,18 @@ export async function POST(req: Request) {
     const body = await req.json().catch(() => null);
     const updates = body?.updates as QBUpdate[] | undefined;
 
+    const email = String(auth.user.email || "").toLowerCase();
+    const requestedProduct = String(body?.product || "tmua-question-bank");
+
+    const allowedProducts = new Set([
+      "tmua-question-bank",
+      "esat-question-bank"
+    ]);
+
+    const product = allowedProducts.has(requestedProduct)
+      ? requestedProduct
+      : "tmua-question-bank";
+
     if (!Array.isArray(updates) || updates.length === 0) {
       return jsonErr(400, "updates is required");
     }
@@ -72,7 +84,8 @@ export async function POST(req: Request) {
 
         rows.push({
           user_id: auth.user.id,
-          product: "tmua-question-bank",
+          email,
+          product,
           question_id: qid,
           status: v.status ?? null,
           selected_answer: v.selected_answer ?? v.selectedAnswer ?? null,
@@ -90,7 +103,8 @@ export async function POST(req: Request) {
 
       rows.push({
         user_id: auth.user.id,
-        product: "tmua-question-bank",
+          email,
+        product,
         question_id: qid,
         status: (u as any).status ?? null,
         selected_answer: (u as any).selected_answer ?? null,
@@ -121,3 +135,4 @@ export async function POST(req: Request) {
     );
   }
 }
+

@@ -1,0 +1,143 @@
+
+============================================================
+1. Patch status
+============================================================
+File patched: public\esat-question-bank\index.html
+Backup: public\esat-question-bank\index.html.backup_followup_mojibake_20260702_052318
+Bug/report button replacement count before replace: 1
+Pattern used: (?is)<button\b(?=[^>]*BUG_REPORT\.open\(\))[^>]*>.*?</button>
+
+============================================================
+2. Bug report area now
+============================================================
+
+  public\esat-question-bank\index.html:1705:
+  public\esat-question-bank\index.html:1706:<!-- TS_ESAT_BUG_REPORT_ASCII_FIX -->
+  public\esat-question-bank\index.html:1707:<style id="ts-esat-bug-report-ascii-fix">
+> public\esat-question-bank\index.html:1708:  .ts-bug-report-ascii {
+  public\esat-question-bank\index.html:1709:    display: inline-flex !important;
+  public\esat-question-bank\index.html:1710:    align-items: center !important;
+  public\esat-question-bank\index.html:1711:    justify-content: center !important;
+  public\esat-question-bank\index.html:1712:    gap: 7px !important;
+  public\esat-question-bank\index.html:1713:    min-width: 118px !important;
+  public\esat-question-bank\index.html:1725:    font-family: Arial, Helvetica, sans-serif !important;
+  public\esat-question-bank\index.html:1726:  }
+  public\esat-question-bank\index.html:1727:
+> public\esat-question-bank\index.html:1728:  .ts-bug-report-ascii:hover {
+  public\esat-question-bank\index.html:1729:    background: #ffefc2 !important;
+  public\esat-question-bank\index.html:1730:  }
+  public\esat-question-bank\index.html:1731:
+> public\esat-question-bank\index.html:1732:  .ts-bug-report-mark {
+  public\esat-question-bank\index.html:1733:    width: 18px !important;
+  public\esat-question-bank\index.html:1734:    height: 18px !important;
+  public\esat-question-bank\index.html:1735:    border-radius: 50% !important;
+  public\esat-question-bank\index.html:1736:    display: inline-flex !important;
+  public\esat-question-bank\index.html:1737:    align-items: center !important;
+  public\esat-question-bank\index.html:3225:
+  public\esat-question-bank\index.html:3226:<!-- TS_BUG_REPORT_MODAL_V1 -->
+  public\esat-question-bank\index.html:3227:<button
+> public\esat-question-bank\index.html:3228:  class="bug-report-fab ts-bug-report-ascii"
+  public\esat-question-bank\index.html:3229:  type="button"
+> public\esat-question-bank\index.html:3230:  title="Report error"
+  public\esat-question-bank\index.html:3231:  aria-label="Report a problem in this question"
+> public\esat-question-bank\index.html:3232:  onclick="BUG_REPORT.open()"
+  public\esat-question-bank\index.html:3233:>
+> public\esat-question-bank\index.html:3234:  <span class="ts-bug-report-mark" aria-hidden="true">!</span>
+> public\esat-question-bank\index.html:3235:  <span class="ts-bug-report-label">Report error</span>
+  public\esat-question-bank\index.html:3236:</button>
+  public\esat-question-bank\index.html:3237:
+> public\esat-question-bank\index.html:3238:<div class="overlay" id="bugOverlay" onclick="BUG_REPORT.overlayClick(event)">
+  public\esat-question-bank\index.html:3239:  <div class="modal" onclick="event.stopPropagation()">
+  public\esat-question-bank\index.html:3240:    <div class="modal-header">
+  public\esat-question-bank\index.html:3241:      <h3>Report a problem</h3>
+  public\esat-question-bank\index.html:3242:      <button class="modal-close" type="button" onclick="BUG_REPORT.close()">Close</button>
+  public\esat-question-bank\index.html:3243:    </div>
+  public\esat-question-bank\index.html:3248:        Use this to report a typo, wrong answer, broken diagram, or unclear solution.
+  public\esat-question-bank\index.html:3249:      </div>
+  public\esat-question-bank\index.html:3250:
+> public\esat-question-bank\index.html:3251:      <label for="bugComment" style="display:block;font-weight:900;margin-bottom:8px;">
+  public\esat-question-bank\index.html:3252:        Comment
+  public\esat-question-bank\index.html:3253:      </label>
+  public\esat-question-bank\index.html:3254:
+  public\esat-question-bank\index.html:3255:      <textarea
+> public\esat-question-bank\index.html:3256:        id="bugComment"
+  public\esat-question-bank\index.html:3257:        class="bug-report-textarea"
+  public\esat-question-bank\index.html:3258:      >Report a problem in this question.</textarea>
+  public\esat-question-bank\index.html:3259:
+  public\esat-question-bank\index.html:3260:      <div id="bugReportThanks" class="bug-report-thanks" style="display:none;"></div>
+  public\esat-question-bank\index.html:3261:      <div id="bugReportError" class="bug-report-error" style="display:none;"></div>
+  public\esat-question-bank\index.html:3263:
+  public\esat-question-bank\index.html:3264:    <div class="modal-footer">
+  public\esat-question-bank\index.html:3265:      <button class="btn light" type="button" onclick="BUG_REPORT.close()">Cancel</button>
+> public\esat-question-bank\index.html:3266:      <button class="btn" id="bugSubmitBtn" type="button" onclick="BUG_REPORT.submit()">Submit</button>
+  public\esat-question-bank\index.html:3267:    </div>
+  public\esat-question-bank\index.html:3268:  </div>
+  public\esat-question-bank\index.html:3269:</div>
+  public\esat-question-bank\index.html:3270:<!-- /TS_BUG_REPORT_MODAL_V1 -->
+  public\esat-question-bank\index.html:3271:
+  public\esat-question-bank\index.html:4551:        label.textContent = payload.question_label + " · " + payload.paper + " · " + payload.topic;
+  public\esat-question-bank\index.html:4552:      }
+  public\esat-question-bank\index.html:4553:
+> public\esat-question-bank\index.html:4554:      const ta = el("bugComment");
+  public\esat-question-bank\index.html:4555:      if (ta) ta.value = "Report a problem in this question.\n\n";
+  public\esat-question-bank\index.html:4556:
+  public\esat-question-bank\index.html:4557:      const thanks = el("bugReportThanks");
+  public\esat-question-bank\index.html:4558:      const err = el("bugReportError");
+  public\esat-question-bank\index.html:4559:
+  public\esat-question-bank\index.html:4567:        err.textContent = "";
+  public\esat-question-bank\index.html:4568:      }
+  public\esat-question-bank\index.html:4569:
+> public\esat-question-bank\index.html:4570:      const overlay = el("bugOverlay");
+  public\esat-question-bank\index.html:4571:      if (overlay) overlay.style.display = "block";
+  public\esat-question-bank\index.html:4572:
+  public\esat-question-bank\index.html:4573:      setTimeout(function() {
+  public\esat-question-bank\index.html:4574:        if (ta) ta.focus();
+  public\esat-question-bank\index.html:4575:      }, 50);
+  public\esat-question-bank\index.html:4576:    },
+  public\esat-question-bank\index.html:4577:
+  public\esat-question-bank\index.html:4578:    close: function() {
+> public\esat-question-bank\index.html:4579:      const overlay = el("bugOverlay");
+  public\esat-question-bank\index.html:4580:      if (overlay) overlay.style.display = "none";
+  public\esat-question-bank\index.html:4581:    },
+  public\esat-question-bank\index.html:4582:
+  public\esat-question-bank\index.html:4583:    overlayClick: function(evt) {
+> public\esat-question-bank\index.html:4584:      if (evt && evt.target && evt.target.id === "bugOverlay") {
+  public\esat-question-bank\index.html:4585:        BUG_REPORT.close();
+  public\esat-question-bank\index.html:4586:      }
+  public\esat-question-bank\index.html:4587:    },
+  public\esat-question-bank\index.html:4588:
+  public\esat-question-bank\index.html:4589:    submit: async function() {
+> public\esat-question-bank\index.html:4590:      const btn = el("bugSubmitBtn");
+  public\esat-question-bank\index.html:4591:      const thanks = el("bugReportThanks");
+  public\esat-question-bank\index.html:4592:      const err = el("bugReportError");
+> public\esat-question-bank\index.html:4593:      const ta = el("bugComment");
+  public\esat-question-bank\index.html:4594:
+  public\esat-question-bank\index.html:4595:      if (thanks) {
+  public\esat-question-bank\index.html:4596:        thanks.style.display = "none";
+  public\esat-question-bank\index.html:4597:        thanks.textContent = "";
+  public\esat-question-bank\index.html:4598:      }
+
+
+
+
+============================================================
+3. Likely mojibake markers in ESAT page
+============================================================
+Markers checked by char code: C2, C3, E2, F0, FFFD.
+Some hits may be inside the intentional cleaner function. Visible UI hits are the ones to fix.
+
+Total likely mojibake marker lines in ESAT page: 0
+
+============================================================
+4. Non-ASCII lines in visible HTML near bug/report/question UI
+============================================================
+This is a focused scan around visible UI words.
+C:\Users\agarw\tmua-qb-app\public\esat-question-bank\index.html:4206: btn.title = "Question " + n + " · " + chapterLabel + (q.subtopic ? " · " + q.subtopic : "");
+C:\Users\agarw\tmua-qb-app\public\esat-question-bank\index.html:4551: label.textContent = payload.question_label + " · " + payload.paper + " · " + payload.topic;
+
+============================================================
+5. Likely mojibake markers in ESAT API server
+============================================================
+80: export function cleanRows(rows: any[]) {
+
+Total marker/cleaner lines in ESAT API server: 1

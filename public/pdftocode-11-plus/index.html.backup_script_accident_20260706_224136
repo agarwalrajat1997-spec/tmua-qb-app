@@ -1,0 +1,1135 @@
+cd C:\Users\agarw\tmua-qb-app
+
+$Stamp = Get-Date -Format "yyyyMMdd_HHmmss"
+
+# Find the current pitch-style HTML page.
+$Candidates = Get-ChildItem . -Recurse -File -Filter *.html |
+  Where-Object {
+    $_.FullName -notmatch "\\node_modules\\|\\.next\\|\\.vercel\\|\\dist\\|\\build\\"
+  } |
+  Where-Object {
+    $txt = Get-Content $_.FullName -Raw -ErrorAction SilentlyContinue
+    $txt -match "CLIENT PROOF-OF-CONCEPT|From 11\+ worksheets|Quality control layer|Live sample quiz|What this proves"
+  }
+
+if ($Candidates.Count -eq 0) {
+  New-Item -ItemType Directory -Force "public\pdftocode-11-plus" | Out-Null
+  $File = "public\pdftocode-11-plus\index.html"
+  Write-Host "No existing page found. Creating new page at $File"
+}
+elseif ($Candidates.Count -eq 1) {
+  $File = $Candidates[0].FullName
+  Write-Host "Found page:"
+  Write-Host $File
+}
+else {
+  Write-Host "Multiple possible pages found:"
+  $Candidates | Select-Object FullName, Length | Format-Table -AutoSize
+  throw "Set `$File manually to the correct HTML page, then rerun the replacement part."
+}
+
+if (Test-Path $File) {
+  Copy-Item $File "$File.backup_student_quiz_$Stamp" -Force
+}
+
+$Html = @'
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDFtoCode 11+ Practice Quiz</title>
+
+  <style>
+    :root {
+      --bg: #faf8f2;
+      --ink: #101827;
+      --muted: #667085;
+      --line: #e6e8ee;
+      --card: #ffffff;
+      --yellow: #ffc83d;
+      --yellow-soft: #fff4c7;
+      --navy: #101827;
+      --green: #087443;
+      --red: #b42318;
+      --shadow: 0 18px 45px rgba(16, 24, 39, .08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top left, #fff5cf 0, #faf8f2 32%, #f7f7f9 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 26px 0 38px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand strong {
+      font-size: 24px;
+      letter-spacing: -.04em;
+      font-weight: 950;
+    }
+
+    .brand span {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .home-btn {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 14px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 2px 0 rgba(16, 24, 39, .04);
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, .76);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #f0dc8c;
+      background: #fff9de;
+      color: #8a4a00;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: .92;
+      letter-spacing: -.07em;
+      font-weight: 1000;
+      max-width: 850px;
+    }
+
+    .intro {
+      margin: 14px 0 0;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--muted);
+      max-width: 760px;
+      font-weight: 650;
+    }
+
+    .setup {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(16, 24, 39, .05);
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: -.03em;
+      font-weight: 950;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      font-weight: 950;
+      margin-bottom: 7px;
+    }
+
+    select {
+      width: 100%;
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--ink);
+      padding: 13px 12px;
+      font-size: 15px;
+      font-weight: 850;
+      outline: none;
+    }
+
+    .start-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+    .primary {
+      background: var(--yellow);
+      color: var(--ink);
+      box-shadow: 0 10px 20px rgba(255, 200, 61, .25);
+    }
+
+    .secondary {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .dark {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .status-card {
+      background: linear-gradient(135deg, #101827, #24324a);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 20px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .status-score {
+      font-size: 54px;
+      letter-spacing: -.06em;
+      font-weight: 1000;
+      line-height: .95;
+    }
+
+    .status-text {
+      color: rgba(255,255,255,.75);
+      font-weight: 750;
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+
+    .quiz-shell {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .quiz-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .quiz-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .progress-title {
+      font-weight: 950;
+      letter-spacing: -.02em;
+      font-size: 18px;
+    }
+
+    .timer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 92px;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: var(--yellow-soft);
+      border: 1px solid #f0dc8c;
+      font-weight: 950;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar {
+      height: 8px;
+      background: #ebeef3;
+    }
+
+    .bar > div {
+      height: 100%;
+      width: 0%;
+      background: var(--yellow);
+      transition: width .2s ease;
+    }
+
+    .question {
+      padding: 24px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 950;
+      color: #344054;
+    }
+
+    .passage {
+      border-left: 5px solid var(--yellow);
+      background: #fffaf0;
+      padding: 14px 16px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      color: #344054;
+      line-height: 1.55;
+      font-weight: 650;
+    }
+
+    .q-text {
+      font-size: 24px;
+      line-height: 1.35;
+      font-weight: 850;
+      letter-spacing: -.025em;
+      margin-bottom: 18px;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 18px;
+      padding: 15px 16px;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: center;
+      box-shadow: 0 1px 0 rgba(16, 24, 39, .03);
+    }
+
+    .option.selected {
+      border-color: #d29d00;
+      background: #fff7d8;
+      box-shadow: 0 0 0 3px rgba(255, 200, 61, .22);
+    }
+
+    .letter {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #f2f4f7;
+      font-weight: 1000;
+    }
+
+    .option.selected .letter {
+      background: var(--yellow);
+    }
+
+    .option-text {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .navigator {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(16, 24, 39, .05);
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .qnav {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 950;
+      padding: 0;
+    }
+
+    .qnav.current {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .qnav.answered {
+      border-color: #f0c341;
+      background: var(--yellow-soft);
+    }
+
+    .breakdown {
+      display: grid;
+      gap: 10px;
+    }
+
+    .break-row {
+      display: grid;
+      grid-template-columns: 145px 1fr 45px;
+      gap: 10px;
+      align-items: center;
+      font-weight: 900;
+    }
+
+    .mini-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-bar > div {
+      height: 100%;
+      background: var(--yellow);
+      width: 0%;
+    }
+
+    .results {
+      margin-top: 18px;
+      display: none;
+    }
+
+    .results.show {
+      display: block;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .review-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 8px 22px rgba(16, 24, 39, .04);
+    }
+
+    .review-title {
+      font-weight: 1000;
+      margin-bottom: 6px;
+    }
+
+    .correct { color: var(--green); }
+    .wrong { color: var(--red); }
+
+    .review-meta {
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .review-exp {
+      line-height: 1.55;
+      font-weight: 650;
+      color: #344054;
+    }
+
+    .bottom-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+      font-weight: 650;
+    }
+
+    @media (max-width: 880px) {
+      .setup,
+      .quiz-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 14px;
+      }
+
+      .hero,
+      .panel,
+      .question {
+        padding: 16px;
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .q-text {
+        font-size: 20px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <strong>PDFtoCode</strong>
+        <span>11+ practice quiz</span>
+      </div>
+      <a class="home-btn" href="/">PDFtoCode Home</a>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Student practice</div>
+      <h1>Choose a quiz and start practising.</h1>
+      <p class="intro">
+        Pick a subject, choose the number of questions, set a timer, and submit when ready.
+        Your score and explanations appear instantly after the quiz.
+      </p>
+    </section>
+
+    <section class="setup">
+      <div class="panel">
+        <h2 class="panel-title">Quiz settings</h2>
+
+        <div class="controls">
+          <div>
+            <label for="subjectSelect">Subject</label>
+            <select id="subjectSelect">
+              <option value="Mixed">Mixed</option>
+              <option value="Maths">Maths</option>
+              <option value="English">English</option>
+              <option value="Verbal Reasoning">Verbal Reasoning</option>
+              <option value="Non-Verbal Reasoning">Non-Verbal Reasoning</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="modeSelect">Mode</label>
+            <select id="modeSelect">
+              <option value="practice">Practice</option>
+              <option value="timed">Timed Quiz</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="countSelect">Questions</label>
+            <select id="countSelect">
+              <option value="4">4 Questions</option>
+              <option value="8" selected>8 Questions</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="timerSelect">Timer</label>
+            <select id="timerSelect">
+              <option value="0">Off</option>
+              <option value="300">5 minutes</option>
+              <option value="600" selected>10 minutes</option>
+              <option value="900">15 minutes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="start-row">
+          <button class="primary" id="startBtn">Start quiz</button>
+          <button class="secondary" id="resetBtn">Reset</button>
+        </div>
+      </div>
+
+      <div class="status-card">
+        <div>
+          <div class="status-score" id="scoreText">0/0</div>
+          <div class="status-text" id="scoreHelp">
+            Start a quiz to see your progress, timer and instant result.
+          </div>
+        </div>
+        <button class="primary" id="jumpBtn" disabled>Go to current question</button>
+      </div>
+    </section>
+
+    <section class="quiz-shell">
+      <main class="quiz-card" id="quizCard">
+        <div class="quiz-head">
+          <div class="progress-title" id="progressTitle">No quiz started</div>
+          <div class="timer" id="timerBox">Timer off</div>
+        </div>
+        <div class="bar"><div id="progressBar"></div></div>
+
+        <div class="question">
+          <div class="tag-row" id="tagRow"></div>
+          <div class="passage" id="passageBox" style="display:none;"></div>
+          <div class="q-text" id="questionText">Choose your quiz settings and press Start quiz.</div>
+          <div class="options" id="optionsBox"></div>
+        </div>
+
+        <div class="nav-row">
+          <button class="secondary" id="prevBtn" disabled>← Previous</button>
+          <button class="secondary" id="nextBtn" disabled>Next →</button>
+          <button class="dark" id="submitBtn" disabled>Submit quiz</button>
+        </div>
+      </main>
+
+      <aside class="side">
+        <div class="navigator">
+          <h2 class="panel-title">Navigator</h2>
+          <div class="nav-grid" id="navGrid"></div>
+        </div>
+
+        <div class="navigator">
+          <h2 class="panel-title">Subject breakdown</h2>
+          <div class="breakdown" id="breakdownBox">
+            <div class="review-meta">Submit the quiz to see your breakdown.</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="results" id="results">
+      <div class="panel">
+        <h2 class="panel-title">Answer review</h2>
+        <div class="review-list" id="reviewList"></div>
+      </div>
+    </section>
+
+    <p class="bottom-note">
+      Tip: in practice mode, take your time. In timed mode, treat it like a short test and submit before the clock runs out.
+    </p>
+  </div>
+
+  <script>
+    const QUESTION_BANK = [
+      {
+        id: 1,
+        subject: "Maths",
+        topic: "Money",
+        prompt: "A shop sells pencils for 45p each. Riya buys 3 pencils and a ruler costing £1.20. How much does she spend altogether?",
+        options: [
+          ["A", "£2.35"],
+          ["B", "£2.45"],
+          ["C", "£2.55"],
+          ["D", "£2.65"]
+        ],
+        answer: "C",
+        explanation: "3 × 45p = 135p = £1.35. Then £1.35 + £1.20 = £2.55."
+      },
+      {
+        id: 2,
+        subject: "Maths",
+        topic: "Time",
+        prompt: "A train leaves at 09:18. The journey takes 42 minutes, then Sam walks for 5 minutes. What time does Sam arrive?",
+        options: [
+          ["A", "10:00"],
+          ["B", "10:05"],
+          ["C", "10:10"],
+          ["D", "10:15"]
+        ],
+        answer: "B",
+        explanation: "09:18 + 42 minutes = 10:00. Add 5 more minutes to get 10:05."
+      },
+      {
+        id: 3,
+        subject: "English",
+        topic: "Vocabulary in context",
+        passage: "Maya stood at the edge of the garden, clutching the old map. She was reluctant to step through the gate, even though the others were already waiting on the path.",
+        prompt: "In the passage, what does the word reluctant most nearly mean?",
+        options: [
+          ["A", "Excited"],
+          ["B", "Unwilling"],
+          ["C", "Careless"],
+          ["D", "Confident"]
+        ],
+        answer: "B",
+        explanation: "Maya does not want to leave or step through the gate, so reluctant means unwilling."
+      },
+      {
+        id: 4,
+        subject: "English",
+        topic: "Inference",
+        passage: "Maya found the map hidden inside a forgotten book. It showed a narrow path behind the garden wall, but nobody in the house had ever mentioned it.",
+        prompt: "What detail best suggests that the path is secret?",
+        options: [
+          ["A", "The map is hidden and shows a path nobody mentions."],
+          ["B", "Maya is standing in a garden."],
+          ["C", "The book is old."],
+          ["D", "The wall is behind the garden."]
+        ],
+        answer: "A",
+        explanation: "A hidden map and an unmentioned path both suggest secrecy."
+      },
+      {
+        id: 5,
+        subject: "Verbal Reasoning",
+        topic: "Number sequence",
+        prompt: "Find the next number in the sequence: 4, 7, 13, 22, 34, ?",
+        options: [
+          ["A", "43"],
+          ["B", "45"],
+          ["C", "47"],
+          ["D", "49"]
+        ],
+        answer: "D",
+        explanation: "The differences are +3, +6, +9, +12, so the next difference is +15. Therefore 34 + 15 = 49."
+      },
+      {
+        id: 6,
+        subject: "Verbal Reasoning",
+        topic: "Move a letter",
+        prompt: "Move one letter from PLANE to ANT to make two new words. Which letter should be moved?",
+        options: [
+          ["A", "P"],
+          ["B", "L"],
+          ["C", "A"],
+          ["D", "E"]
+        ],
+        answer: "A",
+        explanation: "Move P from PLANE to ANT. PLANE becomes LANE and ANT becomes PANT."
+      },
+      {
+        id: 7,
+        subject: "Non-Verbal Reasoning",
+        topic: "Pattern",
+        prompt: "A shape rotates one quarter-turn clockwise each step, and the shaded part swaps from inside to outside. Which option follows the rule?",
+        options: [
+          ["A", "Same rotation, no shade swap"],
+          ["B", "Quarter-turn clockwise with shade swapped"],
+          ["C", "Quarter-turn anticlockwise with shade swapped"],
+          ["D", "No rotation, shade swapped"]
+        ],
+        answer: "B",
+        explanation: "The rule requires both changes: a clockwise quarter-turn and a swap in the shaded part. Option B follows both."
+      },
+      {
+        id: 8,
+        subject: "Non-Verbal Reasoning",
+        topic: "Odd one out",
+        prompt: "Four figures show a circle with a small marker. A, B and C use the same rectangular marker. D uses a triangular marker. Which is the odd one out?",
+        options: [
+          ["A", "Figure A"],
+          ["B", "Figure B"],
+          ["C", "Figure C"],
+          ["D", "Figure D"]
+        ],
+        answer: "D",
+        explanation: "A, B and C use the same small rectangular marker around the circle. D uses a triangle, so D is different."
+      }
+    ];
+
+    let quiz = [];
+    let answers = {};
+    let current = 0;
+    let submitted = false;
+    let timerSeconds = 0;
+    let timerHandle = null;
+
+    const subjectSelect = document.getElementById("subjectSelect");
+    const modeSelect = document.getElementById("modeSelect");
+    const countSelect = document.getElementById("countSelect");
+    const timerSelect = document.getElementById("timerSelect");
+
+    const startBtn = document.getElementById("startBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const jumpBtn = document.getElementById("jumpBtn");
+
+    const scoreText = document.getElementById("scoreText");
+    const scoreHelp = document.getElementById("scoreHelp");
+    const progressTitle = document.getElementById("progressTitle");
+    const timerBox = document.getElementById("timerBox");
+    const progressBar = document.getElementById("progressBar");
+    const tagRow = document.getElementById("tagRow");
+    const passageBox = document.getElementById("passageBox");
+    const questionText = document.getElementById("questionText");
+    const optionsBox = document.getElementById("optionsBox");
+    const navGrid = document.getElementById("navGrid");
+    const breakdownBox = document.getElementById("breakdownBox");
+    const reviewList = document.getElementById("reviewList");
+    const results = document.getElementById("results");
+
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function shuffleCopy(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function formatTime(seconds) {
+      if (seconds <= 0) return "00:00";
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    }
+
+    function pickQuestions() {
+      const subject = subjectSelect.value;
+      const count = Number(countSelect.value);
+
+      let pool = QUESTION_BANK;
+      if (subject !== "Mixed") {
+        pool = QUESTION_BANK.filter(q => q.subject === subject);
+      }
+
+      if (pool.length < count) {
+        pool = QUESTION_BANK.filter(q => subject === "Mixed" || q.subject === subject);
+      }
+
+      return shuffleCopy(pool).slice(0, Math.min(count, pool.length));
+    }
+
+    function startQuiz() {
+      quiz = pickQuestions();
+      answers = {};
+      current = 0;
+      submitted = false;
+      results.classList.remove("show");
+      reviewList.innerHTML = "";
+      jumpBtn.disabled = false;
+      submitBtn.disabled = false;
+
+      clearInterval(timerHandle);
+      timerHandle = null;
+
+      if (modeSelect.value === "timed") {
+        timerSeconds = Number(timerSelect.value || 0);
+      } else {
+        timerSeconds = 0;
+      }
+
+      if (timerSeconds > 0) {
+        timerHandle = setInterval(() => {
+          timerSeconds -= 1;
+          timerBox.textContent = formatTime(timerSeconds);
+
+          if (timerSeconds <= 0) {
+            clearInterval(timerHandle);
+            timerHandle = null;
+            submitQuiz();
+          }
+        }, 1000);
+      }
+
+      renderQuestion();
+      updateScorePanel(false);
+    }
+
+    function resetQuiz() {
+      clearInterval(timerHandle);
+      timerHandle = null;
+      quiz = [];
+      answers = {};
+      current = 0;
+      submitted = false;
+
+      scoreText.textContent = "0/0";
+      scoreHelp.textContent = "Start a quiz to see your progress, timer and instant result.";
+      progressTitle.textContent = "No quiz started";
+      timerBox.textContent = "Timer off";
+      progressBar.style.width = "0%";
+      tagRow.innerHTML = "";
+      passageBox.style.display = "none";
+      passageBox.innerHTML = "";
+      questionText.textContent = "Choose your quiz settings and press Start quiz.";
+      optionsBox.innerHTML = "";
+      navGrid.innerHTML = "";
+      breakdownBox.innerHTML = '<div class="review-meta">Submit the quiz to see your breakdown.</div>';
+      reviewList.innerHTML = "";
+      results.classList.remove("show");
+
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      submitBtn.disabled = true;
+      jumpBtn.disabled = true;
+    }
+
+    function renderQuestion() {
+      if (!quiz.length) return;
+
+      const q = quiz[current];
+      const selected = answers[q.id];
+
+      progressTitle.textContent = "Question " + (current + 1) + " of " + quiz.length;
+      timerBox.textContent = timerSeconds > 0 ? formatTime(timerSeconds) : "Timer off";
+      progressBar.style.width = (((current + 1) / quiz.length) * 100) + "%";
+
+      tagRow.innerHTML = `
+        <span class="tag">${q.subject}</span>
+        <span class="tag">${q.topic}</span>
+      `;
+
+      if (q.passage) {
+        passageBox.style.display = "block";
+        passageBox.textContent = q.passage;
+      } else {
+        passageBox.style.display = "none";
+        passageBox.innerHTML = "";
+      }
+
+      questionText.textContent = q.prompt;
+
+      optionsBox.innerHTML = q.options.map(([letter, text]) => `
+        <button class="option ${selected === letter ? "selected" : ""}" data-letter="${letter}" ${submitted ? "disabled" : ""}>
+          <span class="letter">${letter}</span>
+          <span class="option-text">${text}</span>
+        </button>
+      `).join("");
+
+      optionsBox.querySelectorAll(".option").forEach(btn => {
+        btn.addEventListener("click", () => {
+          answers[q.id] = btn.dataset.letter;
+          renderQuestion();
+          updateScorePanel(false);
+        });
+      });
+
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === quiz.length - 1;
+      submitBtn.disabled = submitted || quiz.length === 0;
+
+      renderNavigator();
+    }
+
+    function renderNavigator() {
+      navGrid.innerHTML = quiz.map((q, index) => {
+        const cls = [
+          "qnav",
+          index === current ? "current" : "",
+          answers[q.id] ? "answered" : ""
+        ].join(" ");
+
+        return `<button class="${cls}" data-index="${index}">${index + 1}</button>`;
+      }).join("");
+
+      navGrid.querySelectorAll(".qnav").forEach(btn => {
+        btn.addEventListener("click", () => {
+          current = Number(btn.dataset.index);
+          renderQuestion();
+        });
+      });
+    }
+
+    function scoreQuiz() {
+      let score = 0;
+      quiz.forEach(q => {
+        if (answers[q.id] === q.answer) score += 1;
+      });
+      return score;
+    }
+
+    function updateScorePanel(showScore) {
+      if (!quiz.length) {
+        scoreText.textContent = "0/0";
+        return;
+      }
+
+      if (showScore) {
+        const score = scoreQuiz();
+        scoreText.textContent = score + "/" + quiz.length;
+        scoreHelp.textContent = score === quiz.length
+          ? "Excellent. All answers correct."
+          : "Review the explanations below and try again.";
+      } else {
+        const answered = Object.keys(answers).length;
+        scoreText.textContent = answered + "/" + quiz.length;
+        scoreHelp.textContent = "Questions answered so far.";
+      }
+    }
+
+    function renderBreakdown() {
+      const subjects = [...new Set(quiz.map(q => q.subject))];
+
+      breakdownBox.innerHTML = subjects.map(subject => {
+        const rows = quiz.filter(q => q.subject === subject);
+        const correct = rows.filter(q => answers[q.id] === q.answer).length;
+        const total = rows.length;
+        const pct = total ? (correct / total) * 100 : 0;
+
+        return `
+          <div class="break-row">
+            <div>${subject}</div>
+            <div class="mini-bar"><div style="width:${pct}%"></div></div>
+            <div>${correct}/${total}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function submitQuiz() {
+      if (!quiz.length || submitted) return;
+
+      submitted = true;
+      clearInterval(timerHandle);
+      timerHandle = null;
+
+      updateScorePanel(true);
+      renderBreakdown();
+      renderQuestion();
+
+      reviewList.innerHTML = quiz.map((q, index) => {
+        const user = answers[q.id] || "Not answered";
+        const ok = user === q.answer;
+
+        return `
+          <article class="review-card">
+            <div class="review-title">
+              Q${index + 1}. ${q.subject}
+              <span class="${ok ? "correct" : "wrong"}">${ok ? "Correct" : "Needs review"}</span>
+            </div>
+            <div class="review-meta">
+              Your answer: ${user} | Correct answer: ${q.answer}
+            </div>
+            <div class="review-exp">${q.explanation}</div>
+          </article>
+        `;
+      }).join("");
+
+      results.classList.add("show");
+      results.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    startBtn.addEventListener("click", startQuiz);
+    resetBtn.addEventListener("click", resetQuiz);
+    jumpBtn.addEventListener("click", () => document.getElementById("quizCard").scrollIntoView({ behavior: "smooth" }));
+
+    prevBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current -= 1;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (current < quiz.length - 1) {
+        current += 1;
+        renderQuestion();
+      }
+    });
+
+    submitBtn.addEventListener("click", submitQuiz);
+
+    resetQuiz();
+  </script>
+</body>
+</html>
+'@
+
+Set-Content $File $Html -Encoding UTF8
+
+Write-Host "Updated student-facing quiz page:"
+Write-Host $File
+
+Write-Host "`nBackup:"
+Write-Host "$File.backup_student_quiz_$Stamp"
+
+Write-Host "`nChecking old pitch wording is removed:"
+Select-String -Path $File -Pattern "CLIENT PROOF-OF-CONCEPT|What this proves|Quality control layer|From 11\+ worksheets" -CaseSensitive:$false
+
+Write-Host "`nChecking new student-facing quiz wording exists:"
+Select-String -Path $File -Pattern "Student practice|Quiz settings|Start quiz|Submit quiz|Answer review|Subject breakdown" -CaseSensitive:$false

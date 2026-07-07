@@ -1,4 +1,4 @@
-:root{ --ts-saffron:#FEC94F; --ts-saffron-soft:#FFF3D1; --ts-maroon:#7A1F24; --ts-ink:#141414; --ts-muted:#5E5E5E; --ts-border: rgba(0,0,0,.10); --ts-bg:#FFFDF7; --ts-panel:#ffffff; --shadow-1: 0 1px 0 rgba(0,0,0,.04); --shadow-2: 0 14px 34px rgba(0,0,0,.06); --r: 18px;
+﻿:root{ --ts-saffron:#FEC94F; --ts-saffron-soft:#FFF3D1; --ts-maroon:#7A1F24; --ts-ink:#141414; --ts-muted:#5E5E5E; --ts-border: rgba(0,0,0,.10); --ts-bg:#FFFDF7; --ts-panel:#ffffff; --shadow-1: 0 1px 0 rgba(0,0,0,.04); --shadow-2: 0 14px 34px rgba(0,0,0,.06); --r: 18px;
 }
 .page{ min-height:100vh; background:var(--ts-bg); color:var(--ts-ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
@@ -14,7 +14,7 @@
 }
 .btnPrimary{ background:var(--ts-maroon); color:#fff; border-color:var(--ts-maroon);
 }
-.shell{ height:calc(100vh - 84px); display:grid; grid-template-columns:360px 1fr;
+.shell{ min-height:calc(100vh - 84px); display:grid; grid-template-columns:360px 1fr;
 }
 .sidebar{ background:var(--ts-panel); border-right:1px solid var(--ts-border); padding:22px 0;
 }
@@ -30,7 +30,7 @@
 .step{ width:38px;height:38px;border-radius:999px; border:2px solid var(--ts-maroon); display:grid; place-items:center; font-weight:950; color:var(--ts-maroon); background:#fff; flex:0 0 auto;
 }
 .navLabel{ font-size:20px; font-weight:950; color:rgba(20,20,20,.88); }
-.main{ overflow:auto; padding:26px 28px 44px;
+.main{ overflow:visible; padding:26px 28px 44px;
 }
 .h1{ margin:0 0 10px; font-size:44px; font-weight:950; letter-spacing:-.03em; text-transform:uppercase; color:rgba(20,20,20,.85);
 }
@@ -68,65 +68,51 @@
 .support{ margin-top:10px; color:var(--ts-muted); font-weight:900; font-size:13px;
 }
 
-/* ============================================================
-   TS_DASH_SCROLLFIX_20260302_142658
-   Fix double scrollbar: make dashboard a fixed 100vh app shell
-   - Browser/page scroll disabled
-   - Sidebar can scroll independently
-   - Main content is the primary scroller
-   ============================================================ */
-
-:global(html), :global(body){
-  height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important; /* kill browser scrollbar */
+/* ts-dashboard-browser-scroll-v3 */
+/* Use the browser/page scrollbar at the far right. Do not trap scroll inside dashboard main. */
+:global(html),
+:global(body) {
+  min-height: 100%;
 }
 
-/* Next.js root wrapper height */
-:global(body > div){
-  height: 100% !important;
+:global(body) {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-/* Make the whole page a fixed viewport shell */
-.page{
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; /* prevent page-level scroll */
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+.page {
+  min-height: 100vh;
 }
 
-/* Keep topbar from contributing to outer scroll */
-.topbar{
-  flex: 0 0 auto;
+.shell {
+  min-height: calc(100vh - 84px);
 }
 
-/* The area beneath topbar fills remaining height */
-.shell{
-  flex: 1 1 auto;
-  min-height: 0;     /* CRITICAL: allow child scrollers */
-  overflow: hidden;  /* prevent shell from creating extra scrollbar */
-  display: flex;     /* you already have aside+main inside */
-}
-
-/* Sidebar gets its own scroll when needed */
-.sidebar{
-  min-height: 0;
-  overflow: auto;
-}
-
-/* Main is the primary scroll container */
-.main{
-  min-height: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Optional: avoid "scrollbar inside cards" from accidental overflow */
-.card{
+.main {
   overflow: visible;
 }
+
+
+/* TS_TMUA_NO_RIGHT_PANEL_SCROLL_FIX */
+.page {
+  overflow-x: hidden;
+}
+
+.shell {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.main {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.main > * {
+  max-width: 100%;
+}
+
+.card {
+  max-width: 100%;
+}
+

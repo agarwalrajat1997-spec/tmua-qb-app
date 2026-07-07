@@ -1,0 +1,306 @@
+﻿"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { supabaseBrowser } from "@/utils/supabase/browser";
+import styles from "../dashboard/dashboard.module.css";
+
+type EsatProduct = "esat-practice-tests" | "esat-question-bank" | "esat-classes";
+type Section = "practice" | "bank" | "classes";
+
+export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
+  const supabase = useMemo(() => supabaseBrowser(), []);
+
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState<Section>("practice");
+  const [products, setProducts] = useState<EsatProduct[]>([]);
+  const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function run() {
+      try {
+        const {
+          data: { user },
+          error: userErr,
+        } = await supabase.auth.getUser();
+
+        if (userErr || !user?.email) {
+          window.location.href = "/login?next=/esat";
+          return;
+        }
+
+        setEmail(user.email);
+
+        const { data, error } = await supabase
+          .from("student_access")
+          .select("product, approved, expires_at")
+          .ilike("email", user.email)
+          .eq("approved", true);
+
+        if (cancelled) return;
+
+        if (error) {
+          setErr(error.message || "Could not load ESAT access.");
+          setProducts([]);
+          setLoading(false);
+          return;
+        }
+
+        const now = Date.now();
+
+        const ps = (data || [])
+          .filter((r: any) => {
+            if (!r?.approved) return false;
+            if (!r?.expires_at) return true;
+            return new Date(r.expires_at).getTime() > now;
+          })
+          .map((r: any) => String(r.product || ""))
+          .filter(
+            (p): p is EsatProduct =>
+              p === "esat-practice-tests" ||
+              p === "esat-question-bank" ||
+              p === "esat-classes"
+          );
+
+        const unique = Array.from(new Set(ps));
+        setProducts(unique);
+
+        if (unique.includes("esat-practice-tests")) setActive("practice");
+        else if (unique.includes("esat-question-bank")) setActive("bank");
+        else if (unique.includes("esat-classes")) setActive("classes");
+        else setActive("practice");
+
+        setLoading(false);
+      } catch (e: any) {
+        setErr(String(e?.message || e));
+        setLoading(false);
+      }
+    }
+
+    run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [supabase]);
+
+  const hasPractice = products.includes("esat-practice-tests");
+  const hasBank = products.includes("esat-question-bank");
+  const hasClasses = products.includes("esat-classes");
+
+  const showNoAccess = !loading && !hasPractice && !hasBank && !hasClasses;
+  const lockStyle: React.CSSProperties = { opacity: 0.45, cursor: "not-allowed" };
+
+  if (loading) {
+    return (
+      <div className={styles.page} data-ui={uiMark}>
+        <div className={styles.topbar}>
+          <div className={styles.brand}>
+            <div className={styles.brandName}>Thriving Scholars</div>
+            <div className={styles.brandTag}>ESAT Student Portal</div>
+          </div>
+          <div className={styles.right}>
+            <div className={styles.pill}>Loading...</div>
+          </div>
+        </div>
+
+        <div className={styles.main}>
+          <div className={styles.card}>
+            <div className={styles.cardTitle}>Loading your ESAT portal...</div>
+            <div className={styles.muted}>Checking your ESAT product access.</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.page} data-ui={uiMark}>
+      <div className={styles.topbar}>
+        <div className={styles.brand}>
+          <div className={styles.brandName}>Thriving Scholars</div>
+          <div className={styles.brandTag}>ESAT Student Portal</div>
+        </div>
+
+        <div className={styles.right}>
+          <div className={styles.pill}>Signed in as {email || "student"}</div>
+          <a className={styles.btn} href="/api/logout">
+            Logout
+          </a>
+        </div>
+      </div>
+
+      <div className={styles.shell}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sideTitle}>
+            Your ESAT
+            <br />
+            Workspace
+          </div>
+
+          <div className={styles.sideSub}>
+            Practice tests + question bank + live classes. Clean, focused, tracked.
+          </div>
+
+          <ul className={styles.nav}>
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`}
+                onClick={() => hasPractice && setActive("practice")}
+                type="button"
+                aria-disabled={!hasPractice}
+                disabled={!hasPractice}
+                style={!hasPractice ? lockStyle : undefined}
+                title={!hasPractice ? "Locked: esat-practice-tests not enabled" : "Practice Tests"}
+              >
+                <span className={styles.step}>1</span>
+                <span className={styles.navLabel}>Practice Tests</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "bank" ? styles.navBtnOn : ""}`}
+                onClick={() => hasBank && setActive("bank")}
+                type="button"
+                aria-disabled={!hasBank}
+                disabled={!hasBank}
+                style={!hasBank ? lockStyle : undefined}
+                title={!hasBank ? "Locked: esat-question-bank not enabled" : "Question Bank"}
+              >
+                <span className={styles.step}>2</span>
+                <span className={styles.navLabel}>Question Bank</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "classes" ? styles.navBtnOn : ""}`}
+                onClick={() => hasClasses && setActive("classes")}
+                type="button"
+                aria-disabled={!hasClasses}
+                disabled={!hasClasses}
+                style={!hasClasses ? lockStyle : undefined}
+                title={!hasClasses ? "Locked: esat-classes not enabled" : "Classes"}
+              >
+                <span className={styles.step}>3</span>
+                <span className={styles.navLabel}>Classes</span>
+              </button>
+            </li>
+          </ul>
+        </aside>
+
+        <main className={styles.main}>
+          {showNoAccess ? (
+            <div className={styles.card}>
+              <div className={styles.cardTitle}>No ESAT products enabled</div>
+              <div className={styles.muted}>
+                Signed in as <b>{email}</b>, but no active ESAT product access was found.
+                {err ? (
+                  <>
+                    <br />
+                    Error: <b>{err}</b>
+                  </>
+                ) : null}
+              </div>
+            </div>
+          ) : active === "practice" ? (
+            <>
+              <div className={styles.h1}>Practice Tests</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> ESAT Practice Tests
+                </div>
+                <div className={styles.meta}>Timed sections · Mock practice · Review</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>ESAT Practice Tests</div>
+                <div className={styles.muted} style={{ marginBottom: 14 }}>
+                  This section is ready in the ESAT portal layout. Add ESAT test files/API later when the practice-test pack is final.
+                </div>
+
+                <button
+                  className={`${styles.btn} ${styles.btnPrimary}`}
+                  onClick={() => (window.location.href = "/esat-practice-tests")}
+                >
+                  Open ESAT Practice Tests
+                </button>
+              </div>
+            </>
+          ) : active === "bank" ? (
+            <>
+              <div className={styles.h1}>Question Bank</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> ESAT Question Bank
+                </div>
+                <div className={styles.meta}>Topic practice · Difficulty filters · Solutions</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>ESAT Digital Question Bank</div>
+                <div className={styles.muted} style={{ marginBottom: 14 }}>
+                  Practise ESAT-style Maths questions with filters, navigator, checking, and worked solutions.
+                </div>
+
+                <button
+                  className={`${styles.btn} ${styles.btnPrimary}`}
+                  onClick={() => (window.location.href = "/esat-question-bank")}
+                >
+                  Open ESAT Question Bank
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.h1}>Classes</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> ESAT Live Classes
+                </div>
+                <div className={styles.meta}>Batches · Schedule · Join Zoom</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>ESAT Group Sessions</div>
+                <div className={styles.muted} style={{ marginBottom: 14 }}>
+                  View the upcoming ESAT schedule below. Join links are shown against each session.
+                </div>
+
+                <div
+                  style={{
+                    width: "100%",
+                    height: "78vh",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: 14,
+                    overflow: "hidden",
+                    background: "#fff",
+                  }}
+                >
+                  <iframe
+                    src="/esat-classes/index.html"
+                    title="ESAT Classes Schedule"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      border: "none",
+                      display: "block",
+                      background: "white",
+                    }}
+                    allow="clipboard-read; clipboard-write; fullscreen"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </main>
+      </div>
+    </div>
+  );
+}

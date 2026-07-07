@@ -3,6 +3,40 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+
+function tsSortKey(value: unknown) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/^\d+[_\-\s]*/, "")
+    .trim();
+}
+
+function tsDifficultyValue(value: unknown) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 999;
+}
+
+function tsDefaultSort(a: any, b: any) {
+  const topicA = tsSortKey(a.topic);
+  const topicB = tsSortKey(b.topic);
+
+  if (topicA !== topicB) {
+    return topicA.localeCompare(topicB);
+  }
+
+  const diffA = tsDifficultyValue(a.difficulty);
+  const diffB = tsDifficultyValue(b.difficulty);
+
+  if (diffA !== diffB) {
+    return diffA - diffB;
+  }
+
+  const orderA = Number(a.display_order ?? a.original_index ?? 999999);
+  const orderB = Number(b.display_order ?? b.original_index ?? 999999);
+
+  return orderA - orderB;
+}
+
 export async function GET() {
   const access = await requireTmuaAccess();
   if (!access.ok) return access.response;
@@ -56,3 +90,4 @@ export async function GET() {
     questions: allQuestions,
   });
 }
+

@@ -1,0 +1,1901 @@
+
+
+==============================
+DASHBOARD CLIENT - FULL FILE
+PATH: app\dashboard\DashboardClient.tsx
+==============================
+
+    1: "use client";
+    2: 
+    3: import React, { useEffect, useMemo, useState } from "react";
+    4: import { useRouter } from "next/navigation";
+    5: import { supabaseBrowser } from "@/utils/supabase/browser";
+    6: import styles from "./dashboard.module.css";
+    7: 
+    8: type PracticeTest = {
+    9:   id: string;
+   10:   test_id: string;
+   11:   title: string;
+   12:   section: "topic" | "full";
+   13:   badge: "PAPER 1" | "PAPER 2" | "FULL" | "OFFICIAL";
+   14:   duration_minutes: number;
+   15:   topics: string[];
+   16:   file: string;
+   17: };
+   18: 
+   19: type Product = "practice-tests" | "tmua-question-bank" | "tmua-classes";
+   20: 
+   21: type LatestAttemptSummary = {
+   22:   id: string;
+   23:   test_id: string;
+   24:   test_title?: string | null;
+   25:   paper?: string | null;
+   26:   total_questions: number;
+   27:   score: number;
+   28:   tmua_score9?: number | null;
+   29:   submitted_at: string;
+   30:   attempt_no?: number | null;
+   31:   total_attempts?: number;
+   32:   incorrect?: any[];
+   33: };
+   34: 
+   35: type AttemptRow = {
+   36:   id: string;
+   37:   test_id: string;
+   38:   test_title?: string | null;
+   39:   paper?: string | null;
+   40:   total_questions: number;
+   41:   score: number;
+   42:   tmua_score9?: number | null;
+   43:   submitted_at: string;
+   44:   incorrect: any[];
+   45:   time_spent: any[];
+   46:   answers: any[];
+   47:   correct_answers: any[];
+   48:   flags: any[];
+   49:   attempt_no: number;
+   50: };
+   51: 
+   52: function getSupabase() {
+   53:   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+   54:   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+   55:   if (!url || !key) return null;
+   56:   return supabaseBrowser();
+   57: }
+   58: 
+   59: function parseHash(hash: string) {
+   60:   const h = (hash || "").startsWith("#") ? (hash || "").slice(1) : hash || "";
+   61:   try {
+   62:     return new URLSearchParams(h);
+   63:   } catch {
+   64:     return new URLSearchParams();
+   65:   }
+   66: }
+   67: 
+   68: function fmtDate(iso: string) {
+   69:   try {
+   70:     const d = new Date(iso);
+   71:     return d.toLocaleString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+   72:   } catch {
+   73:     return iso;
+   74:   }
+   75: }
+   76: 
+   77: function uniqNums(x: any): number[] {
+   78:   if (!Array.isArray(x)) return [];
+   79:   const out: number[] = [];
+   80:   for (const v of x) {
+   81:     const n = typeof v === "number" ? v : parseInt(String(v), 10);
+   82:     if (Number.isFinite(n) && n > 0) out.push(n);
+   83:   }
+   84:   return Array.from(new Set(out)).sort((a, b) => a - b);
+   85: }
+   86: 
+   87: /**
+   88:  * Extract solutionPDF from test HTML.
+   89:  * Supports: const/let/var solutionPDF = "https://...pdf" [; optional]
+   90:  * Also works if whitespace varies.
+   91:  */
+   92: async function fetchSolutionPdfForFile(file: string): Promise<string | null> {
+   93:   try {
+   94:     const res = await fetch(`/practice-tests/tests/${file}`, { method: "GET" });
+   95:     if (!res.ok) return null;
+   96:     const html = await res.text();
+   97: 
+   98:     const re = /\b(?:const|let|var)\s+solutionPDF\s*=\s*["']([^"']+)["']\s*;?/i;
+   99:     const m = html.match(re);
+  100: 
+  101:     const url = m?.[1]?.trim();
+  102:     if (!url) return null;
+  103:     if (!/^https?:\/\//i.test(url)) return null;
+  104:     return url;
+  105:   } catch {
+  106:     return null;
+  107:   }
+  108: }
+  109: 
+  110: export default function DashboardClient({ uiMark }: { uiMark: string }) {
+  111:   const router = useRouter();
+  112:   const supabase = useMemo(() => getSupabase(), []);
+  113: 
+  114:   const [email, setEmail] = useState<string>("");
+  115:   const [loading, setLoading] = useState(true);
+  116:   const [active, setActive] = useState<"practice" | "bank" | "classes">("practice");
+  117:   const [err, setErr] = useState<string | null>(null);
+  118: 
+  119:   const [products, setProducts] = useState<Product[]>([]);
+  120:   const [accessLoading, setAccessLoading] = useState(true);
+  121:   const [accessErr, setAccessErr] = useState<string | null>(null);
+  122: 
+  123:   const [attemptsLoading, setAttemptsLoading] = useState(false);
+  124:   const [attemptsErr, setAttemptsErr] = useState<string | null>(null);
+  125:   const [latestByTestId, setLatestByTestId] = useState<Record<string, LatestAttemptSummary>>({});
+  126: 
+  127:   const [solutionByTestId, setSolutionByTestId] = useState<Record<string, string>>({});
+  128:   const [solutionsLoading, setSolutionsLoading] = useState(false);
+  129: 
+  130:   const [modalOpen, setModalOpen] = useState(false);
+  131:   const [modalTest, setModalTest] = useState<PracticeTest | null>(null);
+  132:   const [modalLoading, setModalLoading] = useState(false);
+  133:   const [modalErr, setModalErr] = useState<string | null>(null);
+  134:   const [modalAttempts, setModalAttempts] = useState<AttemptRow[]>([]);
+  135: 
+  136:   const [solOpen, setSolOpen] = useState(false);
+  137:   const [solTitle, setSolTitle] = useState<string>("");
+  138:   const [solUrl, setSolUrl] = useState<string>("");
+  139: 
+  140:   const ARROW = "\u2192";
+  141: 
+  142:   const TESTS: PracticeTest[] = useMemo(
+  143:     () => [
+  144:       {
+  145:         id: "p1-mock-01",
+  146:         test_id: "p1-mock-01-algebra-sequences-functions-geometry",
+  147:         title: "TMUA Mock Test 1 (Paper 1)",
+  148:         section: "topic",
+  149:         badge: "PAPER 1",
+  150:         duration_minutes: 75,
+  151:         topics: ["Algebra", "Sequences", "Functions", "Geometry"],
+  152:         file: "p1-mock-01-algebra-sequences-functions-geometry.html",
+  153:       },
+  154:       {
+  155:         id: "p1-mock-02",
+  156:         test_id: "p1-mock-02-graphs-trig-logs",
+  157:         title: "TMUA Mock Test 2 (Paper 1)",
+  158:         section: "topic",
+  159:         badge: "PAPER 1",
+  160:         duration_minutes: 75,
+  161:         topics: ["Graphs", "Trigonometry", "Logarithms"],
+  162:         file: "p1-mock-02-graphs-trig-logs.html",
+  163:       },
+  164:       {
+  165:         id: "p1-mock-03",
+  166:         test_id: "p1-mock-03-calculus",
+  167:         title: "TMUA Mock Test 3 (Paper 1)",
+  168:         section: "topic",
+  169:         badge: "PAPER 1",
+  170:         duration_minutes: 75,
+  171:         topics: ["Calculus"],
+  172:         file: "p1-mock-03-calculus.html",
+  173:       },
+  174:       {
+  175:         id: "p1-mock-05",
+  176:         test_id: "p1-mock-05-all-topics",
+  177:         title: "TMUA Mock Test 5 (Paper 1 · All Topics)",
+  178:         section: "topic",
+  179:         badge: "PAPER 1",
+  180:         duration_minutes: 75,
+  181:         topics: ["All Topics"],
+  182:         file: "p1-mock-05-all-topics.html",
+  183:       },
+  184:       {
+  185:         id: "p2-mock-04",
+  186:         test_id: "p2-mock-04-logic-proofs",
+  187:         title: "TMUA Mock Test 4 (Paper 2 · Logic & Proofs)",
+  188:         section: "topic",
+  189:         badge: "PAPER 2",
+  190:         duration_minutes: 75,
+  191:         topics: ["Logic", "Proofs"],
+  192:         file: "p2-mock-04-logic-proofs.html",
+  193:       },
+  194:       {
+  195:         id: "p2-mock-06",
+  196:         test_id: "p2-mock-06-all-topics",
+  197:         title: "TMUA Mock Test 6 (Paper 2 · All Topics)",
+  198:         section: "topic",
+  199:         badge: "PAPER 2",
+  200:         duration_minutes: 75,
+  201:         topics: ["All Topics"],
+  202:         file: "p2-mock-06-all-topics.html",
+  203:       },
+  204:       {
+  205:         id: "full-mock-01",
+  206:         test_id: "full-mock-01-all-topics",
+  207:         title: "TMUA Mock Full Test 1 (P1 + P2)",
+  208:         section: "full",
+  209:         badge: "FULL",
+  210:         duration_minutes: 150,
+  211:         topics: ["All Topics"],
+  212:         file: "full-mock-01-all-topics.html",
+  213:       },
+  214:       {
+  215:         id: "full-mock-02",
+  216:         test_id: "full-mock-02-all-topics",
+  217:         title: "TMUA Mock Full Test 2 (P1 + P2)",
+  218:         section: "full",
+  219:         badge: "FULL",
+  220:         duration_minutes: 150,
+  221:         topics: ["All Topics"],
+  222:         file: "full-mock-02-all-topics.html",
+  223:       },
+  224:       {
+  225:         id: "full-official-2022",
+  226:         test_id: "full-official-2022",
+  227:         title: "TMUA Official 2022 (P1 + P2)",
+  228:         section: "full",
+  229:         badge: "OFFICIAL",
+  230:         duration_minutes: 150,
+  231:         topics: ["All Topics"],
+  232:         file: "full-official-2022.html",
+  233:       },
+  234:       {
+  235:         id: "full-official-2023",
+  236:         test_id: "full-official-2023",
+  237:         title: "TMUA Official 2023 (P1 + P2)",
+  238:         section: "full",
+  239:         badge: "OFFICIAL",
+  240:         duration_minutes: 150,
+  241:         topics: ["All Topics"],
+  242:         file: "full-official-2023.html",
+  243:       },
+  244:     ],
+  245:     []
+  246:   );
+  247: 
+  248:   useEffect(() => {
+  249:     (async () => {
+  250:       setErr(null);
+  251: 
+  252:       if (!supabase) {
+  253:         setErr("Supabase env vars missing: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  254:         setLoading(false);
+  255:         return;
+  256:       }
+  257: 
+  258:       try {
+  259:         const url = new URL(window.location.href);
+  260:         const q = url.searchParams;
+  261:         const hp = parseHash(url.hash);
+  262: 
+  263:         const e = q.get("error") || hp.get("error");
+  264:         const ed = q.get("error_description") || hp.get("error_description");
+  265:         if (e) {
+  266:           router.replace(`/login?e=${encodeURIComponent(ed || e)}`);
+  267:           return;
+  268:         }
+  269: 
+  270:         const code = q.get("code");
+  271:         if (code) {
+  272:           const { error } = await supabase.auth.exchangeCodeForSession(code);
+  273:           if (error) {
+  274:             router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+  275:             return;
+  276:           }
+  277:           try {
+  278:             window.history.replaceState({}, "", "/dashboard");
+  279:           } catch {}
+  280:         } else {
+  281:           const access_token = hp.get("access_token");
+  282:           const refresh_token = hp.get("refresh_token");
+  283:           if (access_token && refresh_token) {
+  284:             const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+  285:             if (error) {
+  286:               router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+  287:               return;
+  288:             }
+  289:             try {
+  290:               window.history.replaceState({}, "", "/dashboard");
+  291:             } catch {}
+  292:           }
+  293:         }
+  294:       } catch {}
+  295: 
+  296:       const { data } = await supabase.auth.getSession();
+  297:       if (!data.session) {
+  298:         router.replace("/login");
+  299:         return;
+  300:       }
+  301: 
+  302:       const userEmail = (data.session.user.email || "").toLowerCase();
+  303:       setEmail(userEmail);
+  304: 
+  305:       setAccessLoading(true);
+  306:       setAccessErr(null);
+  307: 
+  308:       try {
+  309:         const { data: rows, error } = await supabase
+  310:           .from("student_access")
+  311:           .select("product,approved")
+  312:           .eq("email", userEmail)
+  313:           .eq("approved", true);
+  314: 
+  315:         if (error) {
+  316:           setProducts([]);
+  317:           setAccessErr(error.message);
+  318:         } else {
+  319:           const ps = (rows || [])
+  320:             .map((r: any) => r.product as Product)
+  321:             .filter(
+  322:               (p) =>
+  323:                 p === "practice-tests" ||
+  324:                 p === "tmua-question-bank" ||
+  325:                 p === "tmua-classes"
+  326:             );
+  327:           setProducts(Array.from(new Set(ps)));
+  328:         }
+  329:       } catch (e: any) {
+  330:         setProducts([]);
+  331:         setAccessErr(e?.message || "Failed to load access.");
+  332:       } finally {
+  333:         setAccessLoading(false);
+  334:       }
+  335: 
+  336:       setLoading(false);
+  337:     })();
+  338:   }, [router, supabase]);
+  339: 
+  340:   const hasPractice = products.includes("practice-tests");
+  341:   const hasBank = products.includes("tmua-question-bank");
+  342:   const hasClasses = products.includes("tmua-classes");
+  343: 
+  344:   useEffect(() => {
+  345:     if (accessLoading) return;
+  346:     if (hasPractice) setActive("practice");
+  347:     else if (hasBank) setActive("bank");
+  348:     else if (hasClasses) setActive("classes");
+  349:     else setActive("practice");
+  350:   }, [accessLoading, hasPractice, hasBank, hasClasses]);
+  351: 
+  352:   useEffect(() => {
+  353:     if (loading || accessLoading) return;
+  354:     if (!hasPractice) return;
+  355: 
+  356:     (async () => {
+  357:       setAttemptsLoading(true);
+  358:       setAttemptsErr(null);
+  359:       try {
+  360:         const res = await fetch("/api/practice-tests/attempts", { method: "GET", credentials: "include" });
+  361:         const json = await res.json();
+  362:         if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
+  363: 
+  364:         const map: Record<string, LatestAttemptSummary> = {};
+  365:         for (const row of json?.latest || []) {
+  366:           if (row?.test_id) map[row.test_id] = row;
+  367:         }
+  368:         setLatestByTestId(map);
+  369:       } catch (e: any) {
+  370:         setLatestByTestId({});
+  371:         setAttemptsErr(e?.message || "Failed to load attempts.");
+  372:       } finally {
+  373:         setAttemptsLoading(false);
+  374:       }
+  375:     })();
+  376:   }, [loading, accessLoading, hasPractice]);
+  377: 
+  378:   useEffect(() => {
+  379:     if (loading || accessLoading) return;
+  380:     if (!hasPractice) return;
+  381:     if (solutionsLoading) return;
+  382: 
+  383:     (async () => {
+  384:       setSolutionsLoading(true);
+  385:       try {
+  386:         const entries = await Promise.all(
+  387:           TESTS.map(async (t) => {
+  388:             const url = await fetchSolutionPdfForFile(t.file);
+  389:             return [t.test_id, url] as const;
+  390:           })
+  391:         );
+  392:         const map: Record<string, string> = {};
+  393:         for (const [tid, url] of entries) {
+  394:           if (url) map[tid] = url;
+  395:         }
+  396:         setSolutionByTestId(map);
+  397:       } finally {
+  398:         setSolutionsLoading(false);
+  399:       }
+  400:     })();
+  401:     // eslint-disable-next-line react-hooks/exhaustive-deps
+  402:   }, [loading, accessLoading, hasPractice]);
+  403: 
+  404:   const topicTests = useMemo(() => TESTS.filter((t) => t.section === "topic"), [TESTS]);
+  405:   const fullTests = useMemo(() => TESTS.filter((t) => t.section === "full"), [TESTS]);
+  406: 
+  407:   const doneCount = useMemo(() => TESTS.filter((t) => !!latestByTestId[t.test_id]).length, [TESTS, latestByTestId]);
+  408:   const leftCount = useMemo(() => Math.max(0, TESTS.length - doneCount), [TESTS.length, doneCount]);
+  409: 
+  410:   const nextRecommended = useMemo(() => {
+  411:     const next = TESTS.find((t) => !latestByTestId[t.test_id]);
+  412:     return next ? `Next recommended: ${next.title}` : "All tests completed.";
+  413:   }, [TESTS, latestByTestId]);
+  414: 
+  415:   function openTest(t: PracticeTest) {
+  416:     window.location.href = `/practice-tests/tests/${t.file}`;
+  417:   }
+  418: 
+  419:   function openSolutionEmbed(t: PracticeTest) {
+  420:     const url = solutionByTestId[t.test_id];
+  421:     if (!url) return;
+  422:     setSolTitle(`${t.title} — Solutions`);
+  423:     setSolUrl(url);
+  424:     setSolOpen(true);
+  425:   }
+  426: 
+  427:   async function openAttemptsModal(t: PracticeTest) {
+  428:     setModalOpen(true);
+  429:     setModalTest(t);
+  430:     setModalLoading(true);
+  431:     setModalErr(null);
+  432:     setModalAttempts([]);
+  433: 
+  434:     try {
+  435:       const res = await fetch(`/api/practice-tests/attempts?test_id=${encodeURIComponent(t.test_id)}`, {
+  436:         credentials: "include",
+  437:       });
+  438:       const json = await res.json();
+  439:       if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
+  440:       setModalAttempts((json?.attempts || []) as AttemptRow[]);
+  441:     } catch (e: any) {
+  442:       setModalErr(e?.message || "Failed to load attempts.");
+  443:       setModalAttempts([]);
+  444:     } finally {
+  445:       setModalLoading(false);
+  446:     }
+  447:   }
+  448: 
+  449:   async function logout() {
+  450:     if (!supabase) return;
+  451:     await supabase.auth.signOut();
+  452:     router.replace("/login");
+  453:   }
+  454: 
+  455:   if (loading) {
+  456:     return (
+  457:       <div className={styles.page} data-ui={uiMark}>
+  458:         <div className={styles.topbar}>
+  459:           <div className={styles.brand}>
+  460:             <div className={styles.brandName}>Thriving Scholars</div>
+  461:             <div className={styles.brandTag}>TMUA Student Portal</div>
+  462:           </div>
+  463:           <div className={styles.right}>
+  464:             <div className={styles.pill}>Loading...</div>
+  465:           </div>
+  466:         </div>
+  467:         <div className={styles.main}>
+  468:           <div className={styles.card}>
+  469:             <div className={styles.cardTitle}>Loading TMUA Student Portal...</div>
+  470:             <div className={styles.muted}>If this takes longer than usual, refresh the page and try again.</div>
+  471:           </div>
+  472:         </div>
+  473:       </div>
+  474:     );
+  475:   }
+  476: 
+  477:   const showNoAccess = !accessLoading && !hasPractice && !hasBank && !hasClasses;
+  478: 
+  479:   const lockStyle: React.CSSProperties = { opacity: 0.45, cursor: "not-allowed" };
+  480: 
+  481:   return (
+  482:     <div className={styles.page} data-ui={uiMark}>
+  483:       <div className={styles.topbar}>
+  484:         <div className={styles.brand}>
+  485:           <div className={styles.brandName}>Thriving Scholars</div>
+  486:           <div className={styles.brandTag}>TMUA Student Portal</div>
+  487:         </div>
+  488:         <div className={styles.right}>
+  489:           <div className={styles.pill}>
+  490:             <b>Signed in:</b> {email || "—"}
+  491:           </div>
+  492:           <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={logout}>
+  493:             Logout
+  494:           </button>
+  495:         </div>
+  496:       </div>
+  497: 
+  498:       <div className={styles.shell}>
+  499:         <aside className={styles.sidebar}>
+  500:           <div className={styles.sideTitle}>
+  501:             Your TMUA
+  502:             <br />
+  503:             Workspace
+  504:           </div>
+  505:           <div className={styles.sideSub}>Practice tests + question bank + live classes. Clean, focused, tracked.</div>
+  506: 
+  507:           <ul className={styles.nav}>
+  508:             <li>
+  509:               <button
+  510:                 className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`}
+  511:                 onClick={() => hasPractice && setActive("practice")}
+  512:                 type="button"
+  513:                 aria-disabled={!hasPractice}
+  514:                 disabled={!hasPractice}
+  515:                 style={!hasPractice ? lockStyle : undefined}
+  516:                 title={!hasPractice ? "Locked: practice-tests not enabled" : "Practice Tests"}
+  517:               >
+  518:                 <span className={styles.step}>1</span>
+  519:                 <span className={styles.navLabel}>Practice Tests</span>
+  520:               </button>
+  521:             </li>
+  522: 
+  523:             <li>
+  524:               <button
+  525:                 className={`${styles.navBtn} ${active === "bank" ? styles.navBtnOn : ""}`}
+  526:                 onClick={() => hasBank && setActive("bank")}
+  527:                 type="button"
+  528:                 aria-disabled={!hasBank}
+  529:                 disabled={!hasBank}
+  530:                 style={!hasBank ? lockStyle : undefined}
+  531:                 title={!hasBank ? "Locked: tmua-question-bank not enabled" : "Question Bank"}
+  532:               >
+  533:                 <span className={styles.step}>2</span>
+  534:                 <span className={styles.navLabel}>Question Bank</span>
+  535:               </button>
+  536:             </li>
+  537: 
+  538:             <li>
+  539:               <button
+  540:                 className={`${styles.navBtn} ${active === "classes" ? styles.navBtnOn : ""}`}
+  541:                 onClick={() => hasClasses && setActive("classes")}
+  542:                 type="button"
+  543:                 aria-disabled={!hasClasses}
+  544:                 disabled={!hasClasses}
+  545:                 style={!hasClasses ? lockStyle : undefined}
+  546:                 title={!hasClasses ? "Locked: tmua-classes not enabled" : "Classes"}
+  547:               >
+  548:                 <span className={styles.step}>3</span>
+  549:                 <span className={styles.navLabel}>Classes</span>
+  550:               </button>
+  551:             </li>
+  552:           </ul>
+  553: 
+  554:           <div className={styles.card} style={{ margin: "16px 18px 0" }}>
+  555:             <div className={styles.muted}>
+  556:               Support: <b>outreach@thrivingscholars.com</b>
+  557:               <br />
+  558:               WhatsApp: <b>+44 7459 070019</b>
+  559:             </div>
+  560:           </div>
+  561: 
+  562:           {!accessLoading && accessErr && (
+  563:             <div className={styles.card} style={{ margin: "12px 18px 0" }}>
+  564:               <div className={styles.cardTitle}>Access status</div>
+  565:               <div className={styles.muted}>
+  566:                 Could not load product access.
+  567:                 <br />
+  568:                 <span style={{ opacity: 0.9 }}>{accessErr}</span>
+  569:               </div>
+  570:             </div>
+  571:           )}
+  572:         </aside>
+  573: 
+  574:         <main className={styles.main}>
+  575:           {accessLoading ? (
+  576:             <div className={styles.card}>
+  577:               <div className={styles.cardTitle}>Loading access...</div>
+  578:               <div className={styles.muted}>Checking your purchased products.</div>
+  579:             </div>
+  580:           ) : showNoAccess ? (
+  581:             <div className={styles.card}>
+  582:               <div className={styles.cardTitle}>No products enabled</div>
+  583:               <div className={styles.muted}>
+  584:                 Your account is signed in, but no TMUA products are enabled yet.
+  585:                 <br />
+  586:                 Please contact <b>outreach@thrivingscholars.com</b> (WhatsApp <b>+44 7459 070019</b>).
+  587:               </div>
+  588:             </div>
+  589:           ) : active === "practice" ? (
+  590:             <>
+  591:               <div className={styles.h1}>Practice Tests</div>
+  592: 
+  593:               <div className={styles.metaRow}>
+  594:                 <div className={styles.meta}>
+  595:                   <span className={styles.dot} /> Done {doneCount}/{TESTS.length}
+  596:                 </div>
+  597:                 <div className={styles.meta}>Left {leftCount}</div>
+  598:                 <div className={styles.meta}>TMUA 2026</div>
+  599:               </div>
+  600: 
+  601:               <div className={styles.card}>
+  602:                 <div className={styles.cardTitle}>Roadmap</div>
+  603:                 <div className={styles.muted}>
+  604:                   Topic Tests {ARROW} Full-Length Tests {ARROW} Official (2022/2023) last
+  605:                   <div style={{ marginTop: 8 }}>
+  606:                     <b>{nextRecommended}</b>
+  607:                   </div>
+  608: 
+  609:                   {attemptsLoading && <div style={{ marginTop: 10, opacity: 0.85 }}>Loading your attempt history…</div>}
+  610:                   {!attemptsLoading && attemptsErr && (
+  611:                     <div style={{ marginTop: 10, opacity: 0.9 }}>
+  612:                       Could not load attempts: <b>{attemptsErr}</b>
+  613:                     </div>
+  614:                   )}
+  615: 
+  616:                   {solutionsLoading && <div style={{ marginTop: 10, opacity: 0.85 }}>Loading solution links…</div>}
+  617:                 </div>
+  618:               </div>
+  619: 
+  620:               {err && (
+  621:                 <div className={styles.card}>
+  622:                   <div className={styles.cardTitle}>Supabase status</div>
+  623:                   <div className={styles.muted}>{err}</div>
+  624:                 </div>
+  625:               )}
+  626: 
+  627:               <div className={styles.card}>
+  628:                 <div className={styles.cardTitle}>Topic tests</div>
+  629:                 <div className={styles.grid}>
+  630:                   {topicTests.map((t) => {
+  631:                     const latest = latestByTestId[t.test_id];
+  632:                     const attempted = !!latest;
+  633:                     const wrong = uniqNums((latest as any)?.incorrect);
+  634: 
+  635:                     const status = attempted
+  636:                       ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
+  637:                           latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+  638:                         } · ${fmtDate(latest.submitted_at)}`
+  639:                       : "No attempts yet";
+  640: 
+  641:                     const sol = solutionByTestId[t.test_id];
+  642: 
+  643:                     return (
+  644:                       <div key={t.id} className={styles.test}>
+  645:                         <div className={styles.testTitle}>{t.title}</div>
+  646: 
+  647:                         <div className={styles.testMeta}>
+  648:                           <span>{t.badge}</span>
+  649:                           <span> · </span>
+  650:                           <span>{t.duration_minutes} min</span>
+  651:                         </div>
+  652: 
+  653:                         <div className={styles.tags}>
+  654:                           {(t.topics || []).slice(0, 6).map((x) => (
+  655:                             <span className={styles.tag} key={x}>
+  656:                               {x}
+  657:                             </span>
+  658:                           ))}
+  659:                         </div>
+  660: 
+  661:                         <div className={styles.muted}>{status}</div>
+  662: 
+  663:                         {attempted && wrong.length > 0 && (
+  664:                           <div className={styles.muted} style={{ marginTop: 6 }}>
+  665:                             <b>Questions wrong:</b> {wrong.join(", ")}
+  666:                           </div>
+  667:                         )}
+  668: 
+  669:                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+  670:                           <button className={styles.go} onClick={() => openTest(t)}>
+  671:                             {attempted ? "Retake" : "Start"} {ARROW}
+  672:                           </button>
+  673: 
+  674:                           {attempted && (
+  675:                             <button className={styles.btn} type="button" onClick={() => openAttemptsModal(t)}>
+  676:                               View attempts
+  677:                             </button>
+  678:                           )}
+  679: 
+  680:                           {attempted && sol && (
+  681:                             <button className={styles.btn} type="button" onClick={() => openSolutionEmbed(t)}>
+  682:                               Solutions
+  683:                             </button>
+  684:                           )}
+  685: 
+  686:                           {attempted && !sol && (
+  687:                             <button className={styles.btn} type="button" disabled style={{ opacity: 0.5 }}>
+  688:                               Solutions (missing)
+  689:                             </button>
+  690:                           )}
+  691:                         </div>
+  692:                       </div>
+  693:                     );
+  694:                   })}
+  695:                 </div>
+  696:               </div>
+  697: 
+  698:               <div className={styles.card}>
+  699:                 <div className={styles.cardTitle}>Full-length tests</div>
+  700:                 <div className={styles.grid}>
+  701:                   {fullTests.map((t) => {
+  702:                     const latest = latestByTestId[t.test_id];
+  703:                     const attempted = !!latest;
+  704:                     const wrong = uniqNums((latest as any)?.incorrect);
+  705: 
+  706:                     const status = attempted
+  707:                       ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
+  708:                           latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+  709:                         } · ${fmtDate(latest.submitted_at)}`
+  710:                       : "No attempts yet";
+  711: 
+  712:                     const sol = solutionByTestId[t.test_id];
+  713: 
+  714:                     return (
+  715:                       <div key={t.id} className={styles.test}>
+  716:                         <div className={styles.testTitle}>{t.title}</div>
+  717: 
+  718:                         <div className={styles.testMeta}>
+  719:                           <span>{t.badge}</span>
+  720:                           <span> · </span>
+  721:                           <span>{t.duration_minutes} min</span>
+  722:                         </div>
+  723: 
+  724:                         <div className={styles.tags}>
+  725:                           {(t.topics || []).slice(0, 6).map((x) => (
+  726:                             <span className={styles.tag} key={x}>
+  727:                               {x}
+  728:                             </span>
+  729:                           ))}
+  730:                         </div>
+  731: 
+  732:                         <div className={styles.muted}>{status}</div>
+  733: 
+  734:                         {attempted && wrong.length > 0 && (
+  735:                           <div className={styles.muted} style={{ marginTop: 6 }}>
+  736:                             <b>Questions wrong:</b> {wrong.join(", ")}
+  737:                           </div>
+  738:                         )}
+  739: 
+  740:                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+  741:                           <button className={styles.go} onClick={() => openTest(t)}>
+  742:                             {attempted ? "Retake" : "Start"} {ARROW}
+  743:                           </button>
+  744: 
+  745:                           {attempted && (
+  746:                             <button className={styles.btn} type="button" onClick={() => openAttemptsModal(t)}>
+  747:                               View attempts
+  748:                             </button>
+  749:                           )}
+  750: 
+  751:                           {attempted && sol && (
+  752:                             <button className={styles.btn} type="button" onClick={() => openSolutionEmbed(t)}>
+  753:                               Solutions
+  754:                             </button>
+  755:                           )}
+  756: 
+  757:                           {attempted && !sol && (
+  758:                             <button className={styles.btn} type="button" disabled style={{ opacity: 0.5 }}>
+  759:                               Solutions (missing)
+  760:                             </button>
+  761:                           )}
+  762:                         </div>
+  763:                       </div>
+  764:                     );
+  765:                   })}
+  766:                 </div>
+  767:               </div>
+  768:             </>
+  769:           ) : active === "bank" ? (
+  770:             <>
+  771:               <div className={styles.h1}>Question Bank</div>
+  772: 
+  773:               <div className={styles.metaRow}>
+  774:                 <div className={styles.meta}>
+  775:                   <span className={styles.dot} /> TMUA Question Bank
+  776:                 </div>
+  777:                 <div className={styles.meta}>Filter · Bookmark · Solutions</div>
+  778:               </div>
+  779: 
+  780:               <div className={styles.card}>
+  781:                 <div className={styles.cardTitle}>Open the Question Bank</div>
+  782:                 <div className={styles.muted}>Your access is enabled. Click below to open the TMUA Question Bank.</div>
+  783: 
+  784:                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12 }}>
+  785:                   <button
+  786:                     className={`${styles.btn} ${styles.btnPrimary}`}
+  787:                     onClick={() => (window.location.href = "/tmua-question-bank")}
+  788:                   >
+  789:                     Open TMUA Question Bank
+  790:                   </button>
+  791:                 </div>
+  792:               </div>
+  793:             </>
+  794:                   ) : (
+  795:             <>
+  796:               <div className={styles.h1}>Classes</div>
+  797: 
+  798:               <div className={styles.metaRow}>
+  799:                 <div className={styles.meta}>
+  800:                   <span className={styles.dot} /> TMUA Live Classes
+  801:                 </div>
+  802:                 <div className={styles.meta}>Batches · Schedule · Join Zoom</div>
+  803:               </div>
+  804: 
+  805:               <div className={styles.card}>
+  806:                 <div className={styles.cardTitle}>TMUA Group Sessions</div>
+  807:                 <div className={styles.muted} style={{ marginBottom: 14 }}>
+  808:                   View the upcoming schedule below. The nearest class can be highlighted inside the classes page, with join links shown against each session.
+  809:                 </div>
+  810: 
+  811:                 <div
+  812:                   style={{
+  813:                     width: "100%",
+  814:                     height: "78vh",
+  815:                     minHeight: 720,
+  816:                     border: "1px solid rgba(15,23,42,0.10)",
+  817:                     borderRadius: 16,
+  818:                     overflow: "hidden",
+  819:                     background: "#fff",
+  820:                   }}
+  821:                 >
+  822:                   <iframe
+  823: src="/tmua-classes/index.html"
+  824:                     title="TMUA Classes Schedule"
+  825:                     style={{
+  826:                       width: "100%",
+  827:                       height: "100%",
+  828:                       border: "none",
+  829:                       display: "block",
+  830:                       background: "#fff",
+  831:                     }}
+  832:                   />
+  833:                 </div>
+  834:               </div>
+  835:             </>
+  836:           )}
+  837:         </main>
+  838:       </div>
+  839: 
+  840:       {modalOpen && modalTest && (
+  841:         <div
+  842:           role="dialog"
+  843:           aria-modal="true"
+  844:           style={{
+  845:             position: "fixed",
+  846:             inset: 0,
+  847:             background: "rgba(0,0,0,0.45)",
+  848:             display: "flex",
+  849:             alignItems: "center",
+  850:             justifyContent: "center",
+  851:             padding: 16,
+  852:             zIndex: 9999,
+  853:           }}
+  854:           onClick={() => {
+  855:             setModalOpen(false);
+  856:             setModalTest(null);
+  857:             setModalAttempts([]);
+  858:             setModalErr(null);
+  859:           }}
+  860:         >
+  861:           <div className={styles.card}
+  862:             style={{ width: "min(900px, 96vw)", maxHeight: "85vh", overflow: "auto" }}
+  863:             onClick={(e) => e.stopPropagation()}
+  864:           >
+  865:             <div className={styles.cardTitle}>Attempts — {modalTest.title}</div>
+  866:             <div className={styles.muted} style={{ marginBottom: 12 }}>
+  867:               Test ID: <b>{modalTest.test_id}</b>
+  868:             </div>
+  869: 
+  870:             {modalLoading ? (
+  871:               <div className={styles.muted}>Loading attempts…</div>
+  872:             ) : modalErr ? (
+  873:               <div className={styles.muted}>
+  874:                 Could not load attempts: <b>{modalErr}</b>
+  875:               </div>
+  876:             ) : modalAttempts.length === 0 ? (
+  877:               <div className={styles.muted}>No attempts found.</div>
+  878:             ) : (
+  879:               <div style={{ display: "grid", gap: 10 }}>
+  880:                 {modalAttempts
+  881:                   .slice()
+  882:                   .sort((a, b) => a.attempt_no - b.attempt_no)
+  883:                   .map((a) => {
+  884:                     const wrong = uniqNums(a.incorrect);
+  885: 
+  886:                     return (
+  887:                       <div
+  888:                         key={a.id}
+  889:                         style={{
+  890:                           border: "1px solid rgba(15,23,42,0.12)",
+  891:                           borderRadius: 12,
+  892:                           padding: 12,
+  893:                         }}
+  894:                       >
+  895:                         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+  896:                           <div>
+  897:                             <b>Attempt {a.attempt_no}</b>
+  898:                             <div className={styles.muted} style={{ marginTop: 4 }}>
+  899:                               Score: <b>{a.score}</b> / {a.total_questions}
+  900:                               {a.tmua_score9 != null ? (
+  901:                                 <>
+  902:                                   {" "}
+  903:                                   · <b>TMUA {Number(a.tmua_score9).toFixed(1)}/9.0</b>
+  904:                                 </>
+  905:                               ) : null}{" "}
+  906:                               · {fmtDate(a.submitted_at)}
+  907:                             </div>
+  908: 
+  909:                             {wrong.length > 0 && (
+  910:                               <div className={styles.muted} style={{ marginTop: 6 }}>
+  911:                                 <b>Questions wrong:</b> {wrong.join(", ")}
+  912:                               </div>
+  913:                             )}
+  914:                           </div>
+  915:                         </div>
+  916:                       </div>
+  917:                     );
+  918:                   })}
+  919:               </div>
+  920:             )}
+  921: 
+  922:             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
+  923:               <button
+  924:                 className={`${styles.btn} ${styles.btnPrimary}`}
+  925:                 type="button"
+  926:                 onClick={() => {
+  927:                   setModalOpen(false);
+  928:                   setModalTest(null);
+  929:                   setModalAttempts([]);
+  930:                   setModalErr(null);
+  931:                 }}
+  932:               >
+  933:                 Close
+  934:               </button>
+  935:             </div>
+  936:           </div>
+  937:         </div>
+  938:       )}
+  939: 
+  940:       {solOpen && solUrl && (
+  941:         <div
+  942:           role="dialog"
+  943:           aria-modal="true"
+  944:           style={{
+  945:             position: "fixed",
+  946:             inset: 0,
+  947:             background: "rgba(0,0,0,0.55)",
+  948:             display: "flex",
+  949:             alignItems: "center",
+  950:             justifyContent: "center",
+  951:             padding: 16,
+  952:             zIndex: 10000,
+  953:           }}
+  954:           onClick={() => {
+  955:             setSolOpen(false);
+  956:             setSolTitle("");
+  957:             setSolUrl("");
+  958:           }}
+  959:         >
+  960:           <div className={styles.card}
+  961:             style={{ width: "min(1100px, 98vw)", height: "min(86vh, 900px)", overflow: "hidden", padding: 0 }}
+  962:             onClick={(e) => e.stopPropagation()}
+  963:           >
+  964:             <div
+  965:               style={{
+  966:                 height: 56,
+  967:                 display: "flex",
+  968:                 alignItems: "center",
+  969:                 justifyContent: "space-between",
+  970:                 padding: "0 14px",
+  971:                 borderBottom: "1px solid rgba(15,23,42,0.12)",
+  972:               }}
+  973:             >
+  974:               <div style={{ fontWeight: 900 }}>{solTitle || "Solutions"}</div>
+  975:               <button
+  976:                 className={`${styles.btn} ${styles.btnPrimary}`}
+  977:                 type="button"
+  978:                 onClick={() => {
+  979:                   setSolOpen(false);
+  980:                   setSolTitle("");
+  981:                   setSolUrl("");
+  982:                 }}
+  983:               >
+  984:                 Close
+  985:               </button>
+  986:             </div>
+  987: 
+  988:             <iframe
+  989:               src={solUrl}
+  990:               title={solTitle || "Solutions"}
+  991:               style={{ width: "100%", height: "calc(100% - 56px)", border: "none" }}
+  992:             />
+  993:           </div>
+  994:         </div>
+  995:       )}
+  996:     </div>
+  997:   );
+  998: }
+  999: 
+
+
+==============================
+TMUA ATTEMPTS API ROUTE
+PATH: app\api\practice-tests\attempts\route.ts
+==============================
+
+    1: import { NextResponse } from "next/server";
+    2: import { createSupabaseServerClient } from "@/lib/supabase/server";
+    3: 
+    4: export const runtime = "nodejs";
+    5: 
+    6: const FINGERPRINT = "ATTEMPTS_ROUTE_PATCH_v3_TMUA_SCORE9_20260306";
+    7: 
+    8: export async function GET(req: Request) {
+    9:   const supabase = await createSupabaseServerClient();
+   10: 
+   11:   const { data: { user }, error: userErr } = await supabase.auth.getUser();
+   12:   if (userErr || !user) {
+   13:     return NextResponse.json({ error: "Unauthorized", fingerprint: FINGERPRINT }, { status: 401 });
+   14:   }
+   15: 
+   16:   const url = new URL(req.url);
+   17:   const testId = url.searchParams.get("test_id");
+   18: 
+   19:   if (testId) {
+   20:     const { data, error } = await supabase
+   21:       .from("practice_test_attempts")
+   22:       .select("id, test_id, test_title, paper, total_questions, score, tmua_score9, submitted_at, incorrect, time_spent, answers, correct_answers, flags")
+   23:       .eq("user_id", user.id)
+   24:       .eq("test_id", testId)
+   25:       .order("submitted_at", { ascending: true })
+   26:       .limit(50);
+   27: 
+   28:     if (error) {
+   29:       return NextResponse.json({ error: error.message, fingerprint: FINGERPRINT }, { status: 500 });
+   30:     }
+   31: 
+   32:     const attempts = (data ?? []).map((row, idx) => ({
+   33:       ...row,
+   34:       attempt_no: idx + 1,
+   35:     }));
+   36: 
+   37:     return NextResponse.json({
+   38:       ok: true,
+   39:       fingerprint: FINGERPRINT,
+   40:       test_id: testId,
+   41:       total_attempts: attempts.length,
+   42:       attempts,
+   43:     });
+   44:   }
+   45: 
+   46:   const { data, error } = await supabase
+   47:     .from("practice_test_attempts")
+   48:     .select("id, test_id, test_title, paper, total_questions, score, tmua_score9, submitted_at")
+   49:     .eq("user_id", user.id)
+   50:     .order("submitted_at", { ascending: false })
+   51:     .limit(500);
+   52: 
+   53:   if (error) {
+   54:     return NextResponse.json({ error: error.message, fingerprint: FINGERPRINT }, { status: 500 });
+   55:   }
+   56: 
+   57:   const counts: Record<string, number> = {};
+   58:   const latestByTest: Record<string, any> = {};
+   59: 
+   60:   for (const row of (data ?? [])) {
+   61:     counts[row.test_id] = (counts[row.test_id] ?? 0) + 1;
+   62:     if (!latestByTest[row.test_id]) latestByTest[row.test_id] = row;
+   63:   }
+   64: 
+   65:   const latest = Object.values(latestByTest).map((row: any) => ({
+   66:     ...row,
+   67:     attempt_no: counts[row.test_id] ?? null,
+   68:     total_attempts: counts[row.test_id] ?? 0,
+   69:   }));
+   70: 
+   71:   return NextResponse.json({ ok: true, fingerprint: FINGERPRINT, latest, counts });
+   72: }
+
+
+==============================
+ESAT DASHBOARD CLIENT - EXISTING
+PATH: app\esat\ESATDashboardClient.tsx
+==============================
+
+    1: "use client";
+    2: 
+    3: import React, { useEffect, useMemo, useState } from "react";
+    4: import { supabaseBrowser } from "@/utils/supabase/browser";
+    5: import styles from "../dashboard/dashboard.module.css";
+    6: 
+    7: type EsatProduct = "esat-practice-tests" | "esat-question-bank" | "esat-classes";
+    8: type Section = "practice" | "bank" | "classes";
+    9: type TrackKey = "engineering" | "physical" | "life";
+   10: 
+   11: type MockTile = {
+   12:   test_id: string;
+   13:   title: string;
+   14:   badge: string;
+   15:   duration_minutes: number;
+   16:   subjects: string;
+   17:   href: string;
+   18:   solutionUrl?: string | null;
+   19: };
+   20: 
+   21: type Track = {
+   22:   key: TrackKey;
+   23:   label: string;
+   24:   subjects: string;
+   25:   mocks: MockTile[];
+   26: };
+   27: 
+   28: type AttemptSummary = {
+   29:   id: string;
+   30:   test_id: string;
+   31:   test_title?: string | null;
+   32:   total_questions?: number | null;
+   33:   score?: number | null;
+   34:   submitted_at?: string | null;
+   35: };
+   36: 
+   37: const TRACKS: Track[] = [
+   38:   {
+   39:     key: "engineering",
+   40:     label: "Engineering",
+   41:     subjects: "Math 1 + Physics + Math 2",
+   42:     mocks: [
+   43:       { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html" },
+   44:       { test_id: "esat-mock-02", title: "ESAT Mock Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html" },
+   45:       { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html" },
+   46:       { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html" },
+   47:     ],
+   48:   },
+   49:   {
+   50:     key: "physical",
+   51:     label: "Physical Sciences",
+   52:     subjects: "Math 1 + Physics + Chemistry",
+   53:     mocks: [
+   54:       { test_id: "esat-mock-05", title: "ESAT Mock Test 5", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-05/index.html" },
+   55:       { test_id: "esat-mock-06", title: "ESAT Mock Test 6", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-06/index.html" },
+   56:       { test_id: "esat-mock-07", title: "ESAT Mock Test 7", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-07/index.html" },
+   57:       { test_id: "esat-mock-08", title: "ESAT Mock Test 8", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-08/index.html" },
+   58:     ],
+   59:   },
+   60:   {
+   61:     key: "life",
+   62:     label: "Life Sciences",
+   63:     subjects: "Math 1 + Chemistry + Biology",
+   64:     mocks: [
+   65:       { test_id: "esat-mock-09", title: "ESAT Mock Test 9", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-09/index.html" },
+   66:       { test_id: "esat-mock-10", title: "ESAT Mock Test 10", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-10/index.html" },
+   67:       { test_id: "esat-mock-11", title: "ESAT Mock Test 11", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-11/index.html" },
+   68:       { test_id: "esat-mock-12", title: "ESAT Mock Test 12", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-12/index.html" },
+   69:     ],
+   70:   },
+   71: ];
+   72: 
+   73: function fmtDate(value?: string | null) {
+   74:   if (!value) return "";
+   75:   try {
+   76:     return new Intl.DateTimeFormat("en-GB", {
+   77:       day: "2-digit",
+   78:       month: "short",
+   79:       year: "numeric",
+   80:     }).format(new Date(value));
+   81:   } catch {
+   82:     return "";
+   83:   }
+   84: }
+   85: 
+   86: export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
+   87:   const supabase = useMemo(() => supabaseBrowser(), []);
+   88: 
+   89:   const [email, setEmail] = useState("");
+   90:   const [loading, setLoading] = useState(true);
+   91:   const [active, setActive] = useState<Section>("practice");
+   92:   const [activeTrack, setActiveTrack] = useState<TrackKey>("engineering");
+   93:   const [products, setProducts] = useState<EsatProduct[]>([]);
+   94:   const [err, setErr] = useState<string | null>(null);
+   95: 
+   96:   const [latestByTestId, setLatestByTestId] = useState<Record<string, AttemptSummary>>({});
+   97:   const [attemptsLoading, setAttemptsLoading] = useState(false);
+   98:   const [attemptsErr, setAttemptsErr] = useState<string | null>(null);
+   99: 
+  100:   const [modalOpen, setModalOpen] = useState(false);
+  101:   const [modalTitle, setModalTitle] = useState("");
+  102:   const [modalAttempts, setModalAttempts] = useState<AttemptSummary[]>([]);
+  103:   const [modalLoading, setModalLoading] = useState(false);
+  104:   const [modalErr, setModalErr] = useState<string | null>(null);
+  105: 
+  106:   const [solOpen, setSolOpen] = useState(false);
+  107:   const [solTitle, setSolTitle] = useState("");
+  108:   const [solUrl, setSolUrl] = useState<string | null>(null);
+  109: 
+  110:   useEffect(() => {
+  111:     let cancelled = false;
+  112: 
+  113:     async function run() {
+  114:       try {
+  115:         const {
+  116:           data: { user },
+  117:           error: userErr,
+  118:         } = await supabase.auth.getUser();
+  119: 
+  120:         if (userErr || !user?.email) {
+  121:           window.location.href = "/login?next=/esat";
+  122:           return;
+  123:         }
+  124: 
+  125:         setEmail(user.email);
+  126: 
+  127:         const { data, error } = await supabase
+  128:           .from("student_access")
+  129:           .select("product, approved, expires_at")
+  130:           .ilike("email", user.email)
+  131:           .eq("approved", true);
+  132: 
+  133:         if (cancelled) return;
+  134: 
+  135:         if (error) {
+  136:           setErr(error.message || "Could not load ESAT access.");
+  137:           setProducts([]);
+  138:           setLoading(false);
+  139:           return;
+  140:         }
+  141: 
+  142:         const now = Date.now();
+  143: 
+  144:         const ps = (data || [])
+  145:           .filter((r: any) => {
+  146:             if (!r?.approved) return false;
+  147:             if (!r?.expires_at) return true;
+  148:             return new Date(r.expires_at).getTime() > now;
+  149:           })
+  150:           .map((r: any) => String(r.product || ""))
+  151:           .filter(
+  152:             (p): p is EsatProduct =>
+  153:               p === "esat-practice-tests" ||
+  154:               p === "esat-question-bank" ||
+  155:               p === "esat-classes"
+  156:           );
+  157: 
+  158:         const unique = Array.from(new Set(ps));
+  159:         setProducts(unique);
+  160: 
+  161:         if (unique.includes("esat-practice-tests")) setActive("practice");
+  162:         else if (unique.includes("esat-question-bank")) setActive("bank");
+  163:         else if (unique.includes("esat-classes")) setActive("classes");
+  164:         else setActive("practice");
+  165: 
+  166:         setLoading(false);
+  167:       } catch (e: any) {
+  168:         setErr(String(e?.message || e));
+  169:         setLoading(false);
+  170:       }
+  171:     }
+  172: 
+  173:     run();
+  174: 
+  175:     return () => {
+  176:       cancelled = true;
+  177:     };
+  178:   }, [supabase]);
+  179: 
+  180:   const hasPractice = products.includes("esat-practice-tests");
+  181:   const hasBank = products.includes("esat-question-bank");
+  182:   const hasClasses = products.includes("esat-classes");
+  183: 
+  184:   useEffect(() => {
+  185:     if (loading) return;
+  186:     if (!hasPractice) return;
+  187: 
+  188:     let cancelled = false;
+  189: 
+  190:     async function loadAttempts() {
+  191:       setAttemptsLoading(true);
+  192:       setAttemptsErr(null);
+  193: 
+  194:       try {
+  195:         const res = await fetch("/api/esat/practice-tests/attempts", {
+  196:           method: "GET",
+  197:           credentials: "include",
+  198:         });
+  199: 
+  200:         const json = await res.json();
+  201: 
+  202:         if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
+  203: 
+  204:         const map: Record<string, AttemptSummary> = {};
+  205: 
+  206:         for (const row of json?.latest || []) {
+  207:           if (row?.test_id) map[row.test_id] = row;
+  208:         }
+  209: 
+  210:         if (!cancelled) setLatestByTestId(map);
+  211:       } catch (e: any) {
+  212:         if (!cancelled) {
+  213:           setLatestByTestId({});
+  214:           setAttemptsErr(e?.message || "Failed to load attempts.");
+  215:         }
+  216:       } finally {
+  217:         if (!cancelled) setAttemptsLoading(false);
+  218:       }
+  219:     }
+  220: 
+  221:     loadAttempts();
+  222: 
+  223:     return () => {
+  224:       cancelled = true;
+  225:     };
+  226:   }, [loading, hasPractice]);
+  227: 
+  228:   const showNoAccess = !loading && !hasPractice && !hasBank && !hasClasses;
+  229:   const lockStyle: React.CSSProperties = { opacity: 0.45, cursor: "not-allowed" };
+  230:   const currentTrack = TRACKS.find((t) => t.key === activeTrack) || TRACKS[0];
+  231: 
+  232:   function openTest(t: MockTile) {
+  233:     window.location.href = t.href;
+  234:   }
+  235: 
+  236:   async function openAttempts(t: MockTile) {
+  237:     setModalOpen(true);
+  238:     setModalTitle(`${t.title} Attempts`);
+  239:     setModalAttempts([]);
+  240:     setModalLoading(true);
+  241:     setModalErr(null);
+  242: 
+  243:     try {
+  244:       const res = await fetch(`/api/esat/practice-tests/attempts?test_id=${encodeURIComponent(t.test_id)}`, {
+  245:         credentials: "include",
+  246:       });
+  247: 
+  248:       const json = await res.json();
+  249: 
+  250:       if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
+  251: 
+  252:       setModalAttempts((json?.attempts || []) as AttemptSummary[]);
+  253:     } catch (e: any) {
+  254:       setModalErr(e?.message || "Failed to load attempts.");
+  255:       setModalAttempts([]);
+  256:     } finally {
+  257:       setModalLoading(false);
+  258:     }
+  259:   }
+  260: 
+  261:   function openSolutions(t: MockTile) {
+  262:     setSolTitle(`${t.title} Solutions`);
+  263:     setSolUrl(t.solutionUrl || null);
+  264:     setSolOpen(true);
+  265:   }
+  266: 
+  267:   if (loading) {
+  268:     return (
+  269:       <div className={styles.page} data-ui={uiMark}>
+  270:         <div className={styles.topbar}>
+  271:           <div className={styles.brand}>
+  272:             <div className={styles.brandName}>Thriving Scholars</div>
+  273:             <div className={styles.brandTag}>ESAT Student Portal</div>
+  274:           </div>
+  275:           <div className={styles.right}>
+  276:             <div className={styles.pill}>Loading...</div>
+  277:           </div>
+  278:         </div>
+  279: 
+  280:         <div className={styles.main}>
+  281:           <div className={styles.card}>
+  282:             <div className={styles.cardTitle}>Loading your ESAT portal...</div>
+  283:             <div className={styles.muted}>Checking your ESAT product access.</div>
+  284:           </div>
+  285:         </div>
+  286:       </div>
+  287:     );
+  288:   }
+  289: 
+  290:   return (
+  291:     <div className={styles.page} data-ui={uiMark}>
+  292:       <div className={styles.topbar}>
+  293:         <div className={styles.brand}>
+  294:           <div className={styles.brandName}>Thriving Scholars</div>
+  295:           <div className={styles.brandTag}>ESAT Student Portal</div>
+  296:         </div>
+  297: 
+  298:         <div className={styles.right}>
+  299:           <div className={styles.pill}>Signed in as {email || "student"}</div>
+  300:           <a className={styles.btn} href="/api/logout">
+  301:             Logout
+  302:           </a>
+  303:         </div>
+  304:       </div>
+  305: 
+  306:       <div className={styles.shell}>
+  307:         <aside className={styles.sidebar}>
+  308:           <div className={styles.sideTitle}>
+  309:             Your ESAT
+  310:             <br />
+  311:             Workspace
+  312:           </div>
+  313: 
+  314:           <div className={styles.sideSub}>
+  315:             Practice tests + question bank + live classes.
+  316:           </div>
+  317: 
+  318:           <ul className={styles.nav}>
+  319:             <li>
+  320:               <button
+  321:                 className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`}
+  322:                 onClick={() => hasPractice && setActive("practice")}
+  323:                 type="button"
+  324:                 aria-disabled={!hasPractice}
+  325:                 disabled={!hasPractice}
+  326:                 style={!hasPractice ? lockStyle : undefined}
+  327:                 title={!hasPractice ? "Locked: esat-practice-tests not enabled" : "Practice Tests"}
+  328:               >
+  329:                 <span className={styles.step}>1</span>
+  330:                 <span className={styles.navLabel}>Practice Tests</span>
+  331:               </button>
+  332:             </li>
+  333: 
+  334:             <li>
+  335:               <button
+  336:                 className={`${styles.navBtn} ${active === "bank" ? styles.navBtnOn : ""}`}
+  337:                 onClick={() => hasBank && setActive("bank")}
+  338:                 type="button"
+  339:                 aria-disabled={!hasBank}
+  340:                 disabled={!hasBank}
+  341:                 style={!hasBank ? lockStyle : undefined}
+  342:                 title={!hasBank ? "Locked: esat-question-bank not enabled" : "Question Bank"}
+  343:               >
+  344:                 <span className={styles.step}>2</span>
+  345:                 <span className={styles.navLabel}>Question Bank</span>
+  346:               </button>
+  347:             </li>
+  348: 
+  349:             <li>
+  350:               <button
+  351:                 className={`${styles.navBtn} ${active === "classes" ? styles.navBtnOn : ""}`}
+  352:                 onClick={() => hasClasses && setActive("classes")}
+  353:                 type="button"
+  354:                 aria-disabled={!hasClasses}
+  355:                 disabled={!hasClasses}
+  356:                 style={!hasClasses ? lockStyle : undefined}
+  357:                 title={!hasClasses ? "Locked: esat-classes not enabled" : "Classes"}
+  358:               >
+  359:                 <span className={styles.step}>3</span>
+  360:                 <span className={styles.navLabel}>Classes</span>
+  361:               </button>
+  362:             </li>
+  363:           </ul>
+  364:         </aside>
+  365: 
+  366:         <main className={styles.main}>
+  367:           {showNoAccess ? (
+  368:             <div className={styles.card}>
+  369:               <div className={styles.cardTitle}>No ESAT products enabled</div>
+  370:               <div className={styles.muted}>
+  371:                 Signed in as <b>{email}</b>, but no active ESAT product access was found.
+  372:                 {err ? (
+  373:                   <>
+  374:                     <br />
+  375:                     Error: <b>{err}</b>
+  376:                   </>
+  377:                 ) : null}
+  378:               </div>
+  379:             </div>
+  380:           ) : active === "practice" ? (
+  381:             <>
+  382:               <div className={styles.h1}>Practice Tests</div>
+  383: 
+  384:               <div className={styles.metaRow}>
+  385:                 <div className={styles.meta}>
+  386:                   <span className={styles.dot} /> {currentTrack.subjects}
+  387:                 </div>
+  388:                 <div className={styles.meta}>4 full mock tests</div>
+  389:                 {attemptsLoading ? <div className={styles.meta}>Loading attempts...</div> : null}
+  390:                 {attemptsErr ? <div className={styles.meta}>Attempts not connected yet</div> : null}
+  391:               </div>
+  392: 
+  393:               <div
+  394:                 style={{
+  395:                   display: "flex",
+  396:                   flexWrap: "wrap",
+  397:                   gap: 10,
+  398:                   margin: "0 0 18px",
+  399:                 }}
+  400:               >
+  401:                 {TRACKS.map((track) => (
+  402:                   <button
+  403:                     key={track.key}
+  404:                     type="button"
+  405:                     onClick={() => setActiveTrack(track.key)}
+  406:                     style={{
+  407:                       border: activeTrack === track.key ? "2px solid #7A1F24" : "2px solid rgba(0,0,0,.14)",
+  408:                       background: activeTrack === track.key ? "#FFF3D1" : "#ffffff",
+  409:                       color: "#141414",
+  410:                       borderRadius: 999,
+  411:                       padding: "10px 14px",
+  412:                       fontWeight: 950,
+  413:                       cursor: "pointer",
+  414:                       fontSize: 13,
+  415:                       letterSpacing: ".02em",
+  416:                     }}
+  417:                   >
+  418:                     {track.label}
+  419:                   </button>
+  420:                 ))}
+  421:               </div>
+  422: 
+  423:               <section
+  424:                 style={{
+  425:                   display: "grid",
+  426:                   gridTemplateColumns: "repeat(auto-fit, minmax(330px, 1fr))",
+  427:                   gap: 12,
+  428:                   maxWidth: 1120,
+  429:                 }}
+  430:               >
+  431:                 {currentTrack.mocks.map((mock) => {
+  432:                   const latest = latestByTestId[mock.test_id];
+  433:                   const attempted = !!latest;
+  434:                   const total = latest?.total_questions || 0;
+  435:                   const score = latest?.score ?? 0;
+  436:                   const date = fmtDate(latest?.submitted_at);
+  437: 
+  438:                   return (
+  439:                     <article
+  440:                       key={mock.test_id}
+  441:                       style={{
+  442:                         background: "#ffffff",
+  443:                         border: "1px solid #E5E7EB",
+  444:                         borderRadius: 16,
+  445:                         padding: 14,
+  446:                         minHeight: 185,
+  447:                         boxShadow: "0 1px 0 rgba(0,0,0,.04)",
+  448:                       }}
+  449:                     >
+  450:                       <h3
+  451:                         style={{
+  452:                           margin: "0 0 10px",
+  453:                           fontSize: 17,
+  454:                           lineHeight: 1.25,
+  455:                           fontWeight: 950,
+  456:                           letterSpacing: "-.01em",
+  457:                         }}
+  458:                       >
+  459:                         {mock.title}
+  460:                       </h3>
+  461: 
+  462:                       <div
+  463:                         style={{
+  464:                           fontSize: 12,
+  465:                           fontWeight: 950,
+  466:                           color: "#4B5563",
+  467:                           textTransform: "uppercase",
+  468:                           letterSpacing: ".03em",
+  469:                           marginBottom: 10,
+  470:                         }}
+  471:                       >
+  472:                         {mock.badge} · {mock.duration_minutes} min
+  473:                       </div>
+  474: 
+  475:                       <div
+  476:                         style={{
+  477:                           display: "inline-flex",
+  478:                           alignItems: "center",
+  479:                           border: "1px solid #E5E7EB",
+  480:                           borderRadius: 999,
+  481:                           padding: "7px 10px",
+  482:                           fontSize: 12,
+  483:                           fontWeight: 950,
+  484:                           marginBottom: 12,
+  485:                           background: "#fff",
+  486:                         }}
+  487:                       >
+  488:                         {mock.subjects}
+  489:                       </div>
+  490: 
+  491:                       <div
+  492:                         style={{
+  493:                           fontSize: 12,
+  494:                           fontWeight: 900,
+  495:                           color: "#5E5E5E",
+  496:                           marginBottom: 16,
+  497:                           minHeight: 18,
+  498:                         }}
+  499:                       >
+  500:                         {attempted
+  501:                           ? `Attempt 1 · Score ${score}/${total || 81}${date ? ` · ${date}` : ""}`
+  502:                           : "Not attempted yet"}
+  503:                       </div>
+  504: 
+  505:                       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+  506:                         <button
+  507:                           type="button"
+  508:                           onClick={() => openTest(mock)}
+  509:                           style={{
+  510:                             border: 0,
+  511:                             background: "#FEC94F",
+  512:                             color: "#141414",
+  513:                             borderRadius: 12,
+  514:                             padding: "11px 13px",
+  515:                             fontSize: 13,
+  516:                             fontWeight: 950,
+  517:                             cursor: "pointer",
+  518:                           }}
+  519:                         >
+  520:                           {attempted ? "Retake ?" : "Start ?"}
+  521:                         </button>
+  522: 
+  523:                         <button
+  524:                           type="button"
+  525:                           onClick={() => openAttempts(mock)}
+  526:                           style={{
+  527:                             border: "1px solid #E5E7EB",
+  528:                             background: "#ffffff",
+  529:                             color: "#141414",
+  530:                             borderRadius: 12,
+  531:                             padding: "11px 13px",
+  532:                             fontSize: 13,
+  533:                             fontWeight: 950,
+  534:                             cursor: "pointer",
+  535:                           }}
+  536:                         >
+  537:                           View attempts
+  538:                         </button>
+  539: 
+  540:                         <button
+  541:                           type="button"
+  542:                           onClick={() => openSolutions(mock)}
+  543:                           style={{
+  544:                             border: "1px solid #E5E7EB",
+  545:                             background: "#ffffff",
+  546:                             color: "#141414",
+  547:                             borderRadius: 12,
+  548:                             padding: "11px 13px",
+  549:                             fontSize: 13,
+  550:                             fontWeight: 950,
+  551:                             cursor: "pointer",
+  552:                           }}
+  553:                         >
+  554:                           Solutions
+  555:                         </button>
+  556:                       </div>
+  557:                     </article>
+  558:                   );
+  559:                 })}
+  560:               </section>
+  561:             </>
+  562:           ) : active === "bank" ? (
+  563:             <>
+  564:               <div className={styles.h1}>Question Bank</div>
+  565: 
+  566:               <div className={styles.metaRow}>
+  567:                 <div className={styles.meta}>
+  568:                   <span className={styles.dot} /> ESAT Question Bank
+  569:                 </div>
+  570:                 <div className={styles.meta}>Topic practice · Difficulty filters · Solutions</div>
+  571:               </div>
+  572: 
+  573:               <div className={styles.card}>
+  574:                 <div className={styles.cardTitle}>ESAT Digital Question Bank</div>
+  575:                 <div className={styles.muted} style={{ marginBottom: 14 }}>
+  576:                   Practise ESAT-style Maths questions with filters, navigator, checking, and worked solutions.
+  577:                 </div>
+  578: 
+  579:                 <button
+  580:                   className={`${styles.btn} ${styles.btnPrimary}`}
+  581:                   onClick={() => (window.location.href = "/esat-question-bank")}
+  582:                 >
+  583:                   Open ESAT Question Bank
+  584:                 </button>
+  585:               </div>
+  586:             </>
+  587:           ) : (
+  588:             <>
+  589:               <div className={styles.h1}>Classes</div>
+  590: 
+  591:               <div className={styles.metaRow}>
+  592:                 <div className={styles.meta}>
+  593:                   <span className={styles.dot} /> ESAT Live Classes
+  594:                 </div>
+  595:                 <div className={styles.meta}>Batches · Schedule · Join Zoom</div>
+  596:               </div>
+  597: 
+  598:               <div className={styles.card}>
+  599:                 <div className={styles.cardTitle}>ESAT Group Sessions</div>
+  600:                 <div className={styles.muted} style={{ marginBottom: 14 }}>
+  601:                   View the upcoming ESAT schedule below.
+  602:                 </div>
+  603: 
+  604:                 <div
+  605:                   style={{
+  606:                     width: "100%",
+  607:                     height: "78vh",
+  608:                     border: "1px solid #e5e7eb",
+  609:                     borderRadius: 14,
+  610:                     overflow: "hidden",
+  611:                     background: "#fff",
+  612:                   }}
+  613:                 >
+  614:                   <iframe
+  615:                     src="/esat-classes/index.html"
+  616:                     title="ESAT Classes Schedule"
+  617:                     style={{
+  618:                       width: "100%",
+  619:                       height: "100%",
+  620:                       border: "none",
+  621:                       display: "block",
+  622:                       background: "white",
+  623:                     }}
+  624:                     allow="clipboard-read; clipboard-write; fullscreen"
+  625:                   />
+  626:                 </div>
+  627:               </div>
+  628:             </>
+  629:           )}
+  630:         </main>
+  631:       </div>
+  632: 
+  633:       {modalOpen ? (
+  634:         <div
+  635:           style={{
+  636:             position: "fixed",
+  637:             inset: 0,
+  638:             background: "rgba(17,24,39,.45)",
+  639:             display: "grid",
+  640:             placeItems: "center",
+  641:             zIndex: 1000,
+  642:             padding: 20,
+  643:           }}
+  644:           onClick={() => setModalOpen(false)}
+  645:         >
+  646:           <div
+  647:             style={{
+  648:               width: "min(720px, 100%)",
+  649:               maxHeight: "78vh",
+  650:               overflow: "auto",
+  651:               background: "#fff",
+  652:               borderRadius: 18,
+  653:               border: "1px solid #E5E7EB",
+  654:               padding: 20,
+  655:               boxShadow: "0 18px 50px rgba(0,0,0,.18)",
+  656:             }}
+  657:             onClick={(e) => e.stopPropagation()}
+  658:           >
+  659:             <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "center" }}>
+  660:               <h2 style={{ margin: 0, fontSize: 22 }}>{modalTitle}</h2>
+  661:               <button className={styles.btn} type="button" onClick={() => setModalOpen(false)}>
+  662:                 Close
+  663:               </button>
+  664:             </div>
+  665: 
+  666:             <div style={{ marginTop: 16 }}>
+  667:               {modalLoading ? (
+  668:                 <div className={styles.muted}>Loading attempts...</div>
+  669:               ) : modalErr ? (
+  670:                 <div className={styles.muted}>{modalErr}</div>
+  671:               ) : modalAttempts.length === 0 ? (
+  672:                 <div className={styles.muted}>No attempts found yet.</div>
+  673:               ) : (
+  674:                 modalAttempts.map((a, index) => (
+  675:                   <div
+  676:                     key={a.id || `${a.test_id}-${index}`}
+  677:                     style={{
+  678:                       border: "1px solid #E5E7EB",
+  679:                       borderRadius: 12,
+  680:                       padding: 12,
+  681:                       marginTop: 10,
+  682:                     }}
+  683:                   >
+  684:                     <b>Attempt {modalAttempts.length - index}</b>
+  685:                     <div className={styles.muted}>
+  686:                       Score {a.score ?? 0}/{a.total_questions || 81}
+  687:                       {a.submitted_at ? ` · ${fmtDate(a.submitted_at)}` : ""}
+  688:                     </div>
+  689:                   </div>
+  690:                 ))
+  691:               )}
+  692:             </div>
+  693:           </div>
+  694:         </div>
+  695:       ) : null}
+  696: 
+  697:       {solOpen ? (
+  698:         <div
+  699:           style={{
+  700:             position: "fixed",
+  701:             inset: 0,
+  702:             background: "rgba(17,24,39,.45)",
+  703:             display: "grid",
+  704:             placeItems: "center",
+  705:             zIndex: 1000,
+  706:             padding: 20,
+  707:           }}
+  708:           onClick={() => setSolOpen(false)}
+  709:         >
+  710:           <div
+  711:             style={{
+  712:               width: "min(920px, 100%)",
+  713:               height: solUrl ? "78vh" : "auto",
+  714:               background: "#fff",
+  715:               borderRadius: 18,
+  716:               border: "1px solid #E5E7EB",
+  717:               padding: 20,
+  718:               boxShadow: "0 18px 50px rgba(0,0,0,.18)",
+  719:             }}
+  720:             onClick={(e) => e.stopPropagation()}
+  721:           >
+  722:             <div style={{ display: "flex", justifyContent: "space-between", gap: 14, alignItems: "center" }}>
+  723:               <h2 style={{ margin: 0, fontSize: 22 }}>{solTitle}</h2>
+  724:               <button className={styles.btn} type="button" onClick={() => setSolOpen(false)}>
+  725:                 Close
+  726:               </button>
+  727:             </div>
+  728: 
+  729:             {solUrl ? (
+  730:               <iframe
+  731:                 src={solUrl}
+  732:                 title={solTitle}
+  733:                 style={{
+  734:                   width: "100%",
+  735:                   height: "calc(100% - 52px)",
+  736:                   border: "1px solid #E5E7EB",
+  737:                   borderRadius: 12,
+  738:                   marginTop: 14,
+  739:                 }}
+  740:               />
+  741:             ) : (
+  742:               <div className={styles.muted} style={{ marginTop: 16 }}>
+  743:                 Solutions will be attached here once the ESAT mock solutions are uploaded.
+  744:               </div>
+  745:             )}
+  746:           </div>
+  747:         </div>
+  748:       ) : null}
+  749:     </div>
+  750:   );
+  751: }
+
+
+==============================
+ESAT ATTEMPTS API ROUTE - EXISTING
+PATH: app\api\esat\practice-tests\attempts\route.ts
+==============================
+
+    1: import { NextResponse } from "next/server";
+    2: import { createSupabaseServerClient } from "@/lib/supabase/server";
+    3: 
+    4: export const dynamic = "force-dynamic";
+    5: 
+    6: export async function GET(req: Request) {
+    7:   const supabase = await createSupabaseServerClient();
+    8: 
+    9:   const {
+   10:     data: { user },
+   11:     error: userErr,
+   12:   } = await supabase.auth.getUser();
+   13: 
+   14:   if (userErr || !user) {
+   15:     return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+   16:   }
+   17: 
+   18:   const url = new URL(req.url);
+   19:   const testId = url.searchParams.get("test_id");
+   20: 
+   21:   let query = supabase
+   22:     .from("esat_practice_test_attempts")
+   23:     .select("id,test_id,test_title,total_questions,score,submitted_at")
+   24:     .eq("user_id", user.id)
+   25:     .order("submitted_at", { ascending: false });
+   26: 
+   27:   if (testId) {
+   28:     query = query.eq("test_id", testId);
+   29:   }
+   30: 
+   31:   const { data, error } = await query;
+   32: 
+   33:   if (error) {
+   34:     return NextResponse.json({ error: error.message }, { status: 500 });
+   35:   }
+   36: 
+   37:   const attempts = data || [];
+   38: 
+   39:   const latestByTest: Record<string, any> = {};
+   40: 
+   41:   for (const row of attempts) {
+   42:     if (!row?.test_id) continue;
+   43:     if (!latestByTest[row.test_id]) latestByTest[row.test_id] = row;
+   44:   }
+   45: 
+   46:   return NextResponse.json({
+   47:     ok: true,
+   48:     attempts,
+   49:     latest: Object.values(latestByTest),
+   50:   });
+   51: }

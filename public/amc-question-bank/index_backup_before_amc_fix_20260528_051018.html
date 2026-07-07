@@ -1,0 +1,63 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<!-- TS_AMC_PAPER_FILTER_BRIDGE_V1 -->
+<script>
+(function () {
+  if (window.__TS_AMC_PAPER_FILTER_BRIDGE_V1__) return;
+  window.__TS_AMC_PAPER_FILTER_BRIDGE_V1__ = true;
+
+  var params = new URLSearchParams(window.location.search || "");
+  var paper = params.get("paper") || "";
+  var allowed = { "AMC 8": true, "AMC 10": true, "AMC 12": true };
+
+  window.TS_AMC_PAPER_FILTER = allowed[paper] ? paper : "";
+
+  if (!window.TS_AMC_PAPER_FILTER) return;
+
+  var originalFetch = window.fetch ? window.fetch.bind(window) : null;
+  if (!originalFetch) return;
+
+  window.fetch = function (input, init) {
+    try {
+      var rawUrl = "";
+
+      if (typeof input === "string") {
+        rawUrl = input;
+      } else if (input && input.url) {
+        rawUrl = input.url;
+      }
+
+      if (rawUrl && rawUrl.indexOf("/api/amc/qb/list") !== -1) {
+        var u = new URL(rawUrl, window.location.origin);
+        if (!u.searchParams.get("paper")) {
+          u.searchParams.set("paper", window.TS_AMC_PAPER_FILTER);
+        }
+
+        if (typeof input === "string") {
+          input = u.pathname + u.search + u.hash;
+        } else if (typeof Request !== "undefined" && input instanceof Request) {
+          input = new Request(u.toString(), input);
+        } else {
+          input = u.toString();
+        }
+      }
+    } catch (e) {}
+
+    return originalFetch(input, init);
+  };
+})();
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url=/amc-question-bank">
+  <meta name="robots" content="noindex">
+  <title>Redirecting...</title>
+</head>
+<body>
+  <p>Redirecting to AMC Question Bank...</p>
+  <script>location.replace("/amc-question-bank");</script>
+</body>
+</html>
+
+
+

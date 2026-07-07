@@ -1,0 +1,30 @@
+import { NextResponse } from "next/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+export const runtime = "nodejs";
+
+export async function GET(req: Request) {
+  const supabase = createSupabaseServerClient();
+
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (userErr || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const url = new URL(req.url);
+  const product = url.searchParams.get("product") ?? "tmua-question-bank";
+
+  const { data, error } = await supabase
+    .from("qb_progress")
+    .select("question_id, status, selected_answer, flagged, time_spent, last_seen_at, updated_at")
+    .eq("user_id", user.id)
+    .eq("product", product);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // Return as map for easy client use: { [question_id]: row }
+  const map: Record<string, any> = {};
+  for (const row of (data ?? [])) map[row.question_id] = row;
+
+  return NextResponse.json({ ok: true, product, progress: map });
+}
