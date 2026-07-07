@@ -78,9 +78,9 @@ const TRACKS: Track[] = [
     label: "Engineering",
     subjects: "Math 1 + Physics + Math 2",
     mocks: [
-      { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html" },
-      { test_id: "esat-mock-02", title: "ESAT Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html" },
-{ test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html" },
+      { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html" },
+      { test_id: "esat-mock-02", title: "ESAT Mock Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html" },
+      { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html" },
       { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html" },
     ],
   },
