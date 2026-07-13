@@ -1,4 +1,4 @@
-﻿<html lang="en"><head>
+<html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TMUA Question Bank</title>
@@ -3674,8 +3674,28 @@ function applyFilters() {
       const label = String(opt.label || "").trim();
       const checked = a.selected === label ? "checked" : "";
       const selectedClass = a.selected === label ? " selected" : "";
-      const locked = a.checked ? "disabled" : "";
+      const selectedLabel =
+        String(a.selected || "")
+          .trim()
+          .toUpperCase();
 
+      const correctLabel =
+        String(a.answer || "")
+          .trim()
+          .toUpperCase();
+
+      const completedCorrect =
+        a.checked === true &&
+        (
+          a.isCorrect === true ||
+          (
+            selectedLabel &&
+            correctLabel &&
+            selectedLabel === correctLabel
+          )
+        );
+
+      const locked = completedCorrect ? "disabled" : "";
       let cls = "option" + selectedClass;
       if (a.checked && label === a.answer) cls += " correct";
       if (a.checked && a.selected === label && label !== a.answer) cls += " wrong";
@@ -4007,16 +4027,59 @@ function applyFilters() {
   };
 
   const ACTIONS = {
+    // TS_TMUA_WRONG_REATTEMPT_V2
     setSelected: function(label) {
       const meta = currentMeta();
       if (!meta) return;
 
       const key = questionKey(meta);
-      if (!state.answers[key]) state.answers[key] = {};
+      if (!state.answers[key]) {
+        state.answers[key] = {};
+      }
 
-      if (state.answers[key].checked) return;
+      const current = state.answers[key];
 
-      state.answers[key].selected = label;
+      const selectedLabel =
+        String(current.selected || "")
+          .trim()
+          .toUpperCase();
+
+      const correctLabel =
+        String(current.answer || "")
+          .trim()
+          .toUpperCase();
+
+      const isDefinitelyCorrect =
+        current.checked === true &&
+        (
+          current.isCorrect === true ||
+          (
+            selectedLabel &&
+            correctLabel &&
+            selectedLabel === correctLabel
+          )
+        );
+
+      // Correct completed questions remain protected.
+      if (isDefinitelyCorrect) {
+        return;
+      }
+
+      // Any checked question that is not definitely correct is a
+      // previous wrong attempt. Start a fresh attempt immediately.
+      if (current.checked === true) {
+        state.answers[key] = {
+          ...current,
+          selected: label,
+          checked: false,
+          locked: false,
+          isCorrect: null
+        };
+      } else {
+        current.selected = label;
+        current.locked = false;
+      }
+
       saveState();
       render();
     },
