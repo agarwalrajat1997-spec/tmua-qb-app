@@ -3691,41 +3691,42 @@ window.MathJax = {
   }
 
   async function loadAllMeta() {
-    const pageSize = 1000;
-    let offset = 0;
-    let all = [];
-
-    while (true) {
-      const rows = await rpc("esat_qb_public_list_page", {
-        p_offset: offset,
-        p_limit: pageSize
-      });
-
-      const page = Array.isArray(rows) ? rows : [];
-      all = all.concat(page);
-
-      if (page.length < pageSize) break;
-
-      offset += pageSize;
-
-      if (offset > 10000) throw new Error("Pagination safety stop.");
+  const res = await fetch("/api/esat/qb/list?fresh=" + Date.now(), {
+    method: "GET",
+    cache: "no-store",
+    credentials: "include",
+    headers: {
+      "Accept": "application/json"
     }
+  });
 
-    return all.map(function(q, idx) {
-      return {
-        qid: "SB-" + String(q.display_order),
-        display_order: q.display_order,
-        paper_question_number: q.paper_question_number || q.display_order,
-        number: String(q.paper_question_number || q.display_order || (idx + 1)),
-        kind: q.kind || "mcq",
-        paper: q.paper || "Paper 1",
-        topic: q.topic || "General",
-        subtopic: q.subtopic || "",
-        difficulty: q.difficulty || 3,
-        tags: Array.isArray(q.tags) ? q.tags : []
-      };
-    });
+  const text = await res.text();
+
+  if (!res.ok) {
+    throw new Error("ESAT list API failed: " + res.status + " " + text.slice(0, 500));
   }
+
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    throw new Error("ESAT list API returned non-JSON: " + text.slice(0, 500));
+  }
+
+  if (!data || data.ok === false) {
+    throw new Error("ESAT list API error: " + ((data && (data.error || data.details)) || "unknown error"));
+  }
+
+  const rows = data.questions || data.items || [];
+
+  if (!Array.isArray(rows) || rows.length === 0) {
+    throw new Error("ESAT list API returned no questions.");
+  }
+
+  console.log("ESAT QB meta loaded:", rows.length, "Has Physics:", rows.some(q => q.paper === "ESAT Physics"));
+
+  return rows;
+}
 
   async function loadQuestion(displayOrder) {
     if (questionCache.has(displayOrder)) return questionCache.get(displayOrder);
@@ -4889,6 +4890,7 @@ function applyFilters() {
 })();
 </script>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+
 
 
 
