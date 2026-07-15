@@ -22,6 +22,9 @@ const ESAT_META_COLUMNS = [
   "is_active",
 ].join(",");
 
+const PAGE_SIZE = 1000;
+const MAX_ROWS = 5000;
+
 function noStoreJson(payload: any, status = 200) {
   return new Response(JSON.stringify(payload), {
     status,
@@ -34,25 +37,31 @@ function noStoreJson(payload: any, status = 200) {
   });
 }
 
-function mergeAndSortRows(primaryRows: any[], physicsRows: any[]) {
-  const byQid = new Map<string, any>();
+async function loadAllActiveRows(supabase: any, table: string) {
+  const allRows: any[] = [];
 
-  for (const row of primaryRows || []) {
-    if (row?.qid) byQid.set(row.qid, row);
+  for (let from = 0; from < MAX_ROWS; from += PAGE_SIZE) {
+    const to = from + PAGE_SIZE - 1;
+
+    const { data, error } = await supabase
+      .from(table)
+      .select(ESAT_META_COLUMNS)
+      .eq("is_active", true)
+      .order("display_order", { ascending: true })
+      .order("qid", { ascending: true })
+      .range(from, to);
+
+    if (error) {
+      return { rows: null, error };
+    }
+
+    const batch = data || [];
+    allRows.push(...batch);
+
+    if (batch.length < PAGE_SIZE) break;
   }
 
-  for (const row of physicsRows || []) {
-    if (row?.qid) byQid.set(row.qid, row);
-  }
-
-  return Array.from(byQid.values()).sort((a, b) => {
-    const ao = Number(a.display_order ?? 999999);
-    const bo = Number(b.display_order ?? 999999);
-
-    if (ao !== bo) return ao - bo;
-
-    return String(a.qid || "").localeCompare(String(b.qid || ""));
-  });
+  return { rows: allRows, error: null };
 }
 
 export async function GET() {
@@ -63,36 +72,14 @@ export async function GET() {
   let lastError: any = null;
 
   for (const table of ESAT_TABLE_CANDIDATES) {
-    const primary = await supabase
-      .from(table)
-      .select(ESAT_META_COLUMNS)
-      .eq("is_active", true)
-      .order("display_order", { ascending: true })
-      .order("qid", { ascending: true })
-      .range(0, 999);
+    const { rows, error } = await loadAllActiveRows(supabase, table);
 
-    if (primary.error) {
-      lastError = primary.error;
+    if (error) {
+      lastError = error;
       continue;
     }
 
-    const physics = await supabase
-      .from(table)
-      .select(ESAT_META_COLUMNS)
-      .eq("is_active", true)
-      .eq("paper", "ESAT Physics")
-      .order("display_order", { ascending: true })
-      .order("qid", { ascending: true })
-      .range(0, 999);
-
-    if (physics.error) {
-      lastError = physics.error;
-      continue;
-    }
-
-    const rows = mergeAndSortRows(primary.data || [], physics.data || []);
-
-    const questions = rows.map((row: any, index: number) => {
+    const questions = (rows || []).map((row: any, index: number) => {
       const q = normaliseQuestion(row, index);
 
       return {
@@ -119,12 +106,6 @@ export async function GET() {
       items: questions,
     });
   }
-
-  console.error(
-    "ESAT list load failed. Tried tables:",
-    ESAT_TABLE_CANDIDATES,
-    lastError
-  );
 
   return noStoreJson(
     {
