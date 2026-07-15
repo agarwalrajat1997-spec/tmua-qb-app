@@ -23,6 +23,38 @@ const ESAT_META_COLUMNS = [
   "is_active",
 ].join(",");
 
+const PAGE_SIZE = 1000;
+const MAX_ROWS = 5000;
+
+async function loadAllActiveRows(supabase: any, table: string) {
+  const allRows: any[] = [];
+
+  for (let from = 0; from < MAX_ROWS; from += PAGE_SIZE) {
+    const to = from + PAGE_SIZE - 1;
+
+    const { data, error } = await supabase
+      .from(table)
+      .select(ESAT_META_COLUMNS)
+      .eq("is_active", true)
+      .order("display_order", { ascending: true })
+      .order("qid", { ascending: true })
+      .range(from, to);
+
+    if (error) {
+      return { rows: null, error };
+    }
+
+    const batch = data || [];
+    allRows.push(...batch);
+
+    if (batch.length < PAGE_SIZE) {
+      break;
+    }
+  }
+
+  return { rows: allRows, error: null };
+}
+
 export async function GET() {
   const access = await requireESATAccess();
   if (!access.ok) return access.response;
@@ -31,22 +63,14 @@ export async function GET() {
   let lastError: any = null;
 
   for (const table of ESAT_TABLE_CANDIDATES) {
-    const { data, error } = await supabase
-      .from(table)
-      .select(ESAT_META_COLUMNS)
-      .eq("is_active", true)
-      .order("display_order", { ascending: true })
-      .order("qid", { ascending: true })
-      .limit(3000);
+    const { rows, error } = await loadAllActiveRows(supabase, table);
 
     if (error) {
       lastError = error;
       continue;
     }
 
-    const rows = data || [];
-
-    const questions = rows.map((row: any, index: number) => {
+    const questions = (rows || []).map((row: any, index: number) => {
       const q = normaliseQuestion(row, index);
 
       return {
