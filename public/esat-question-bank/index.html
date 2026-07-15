@@ -3007,8 +3007,45 @@ window.MathJax = {
     return jsonResponse(rows.slice(offset, offset + limit), 200);
   }
 
-  async function getQuestionByDisplayOrder(displayOrder) {
-    var url = "/api/esat/qb/question?display_order=" + encodeURIComponent(displayOrder);
+  // TS_ESAT_FAST_QB_V1
+  // Small in-memory cache for the current browser tab.
+  var esatQuestionCache = new Map();
+
+  function rememberQuestion(question, requestedKey) {
+    if (!question) return question;
+
+    if (requestedKey) {
+      esatQuestionCache.set(requestedKey, question);
+    }
+
+    if (question.qid) {
+      esatQuestionCache.set(
+        "qid:" + String(question.qid).trim(),
+        question
+      );
+    }
+
+    if (question.id) {
+      esatQuestionCache.set(
+        "id:" + String(question.id).trim(),
+        question
+      );
+    }
+
+    if (question.display_order != null) {
+      esatQuestionCache.set(
+        "db-order:" + String(question.display_order),
+        question
+      );
+    }
+
+    return question;
+  }
+
+  async function fetchQuestion(url, cacheKey) {
+    if (esatQuestionCache.has(cacheKey)) {
+      return esatQuestionCache.get(cacheKey);
+    }
 
     var res = await nativeFetch(url, {
       method: "GET",
@@ -3019,13 +3056,83 @@ window.MathJax = {
     var data = await res.json();
 
     if (!res.ok || data.ok === false) {
-      throw new Error(data.error || "Could not load ESAT question");
+      throw new Error(
+        data.error || "Could not load ESAT question"
+      );
     }
 
-    return data.question;
+    return rememberQuestion(data.question, cacheKey);
   }
 
-  async function getQuestion(body) {
+  async function getQuestionByQid(qid) {
+    var value = String(qid || "").trim();
+
+    if (!value) {
+      throw new Error("Missing ESAT question QID");
+    }
+
+    return fetchQuestion(
+      "/api/esat/qb/question?qid=" +
+        encodeURIComponent(value),
+      "qid:" + value
+    );
+  }
+
+  async function getQuestionByDatabaseOrder(displayOrder) {
+    var value = Number(displayOrder);
+
+    if (!Number.isInteger(value) || value < 1) {
+      throw new Error("Invalid ESAT database display order");
+    }
+
+    return fetchQuestion(
+      "/api/esat/qb/question?db_display_order=" +
+        encodeURIComponent(value),
+      "db-order:" + value
+    );
+  }
+
+  async function getQuestionByDisplayOrder(displayOrder) {
+    var value = Number(displayOrder);
+
+    if (!Number.isInteger(value) || value < 1) {
+      throw new Error("Invalid ESAT question position");
+    }
+
+    return fetchQuestion(
+      "/api/esat/qb/question?display_order=" +
+        encodeURIComponent(value),
+      "ordinal:" + value
+    );
+  }
+
+  async function resolveQuestion(body) {
+    body = body || {};
+
+    var qid = body.qid || body.id;
+
+    if (qid) {
+      try {
+        return await getQuestionByQid(qid);
+      } catch (qidError) {
+        // Fall through to the ordered identifiers for compatibility.
+      }
+    }
+
+    var dbDisplayOrder =
+      body.p_db_display_order ??
+      body.db_display_order;
+
+    if (dbDisplayOrder != null && dbDisplayOrder !== "") {
+      try {
+        return await getQuestionByDatabaseOrder(
+          dbDisplayOrder
+        );
+      } catch (dbOrderError) {
+        // Fall through to the legacy 1-based ordinal.
+      }
+    }
+
     var displayOrder =
       body.p_display_order ??
       body.display_order ??
@@ -3033,29 +3140,21 @@ window.MathJax = {
       body.original_index ??
       body.order;
 
-    if (!displayOrder && (body.qid || body.id)) {
-      var qid = body.qid || body.id;
+    return getQuestionByDisplayOrder(displayOrder);
+  }
 
-      var resById = await nativeFetch("/api/esat/qb/question?qid=" + encodeURIComponent(qid), {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store"
-      });
-
-      var dataById = await resById.json();
-
-      if (!resById.ok || dataById.ok === false) {
-        return jsonResponse({
-          message: dataById.error || "Could not load ESAT question",
-          details: dataById
-        }, resById.status || 500);
-      }
-
-      return jsonResponse(dataById.question, 200);
+  async function getQuestion(body) {
+    try {
+      var q = await resolveQuestion(body);
+      return jsonResponse(q, 200);
+    } catch (error) {
+      return jsonResponse({
+        message:
+          error && error.message
+            ? error.message
+            : "Could not load ESAT question"
+      }, 500);
     }
-
-    var q = await getQuestionByDisplayOrder(displayOrder);
-    return jsonResponse(q, 200);
   }
 
   async function checkAnswer(body) {
@@ -3074,7 +3173,7 @@ window.MathJax = {
       body.selected ??
       "";
 
-    var q = await getQuestionByDisplayOrder(displayOrder);
+    var q = await resolveQuestion(body);
     var correctAnswer = String(q.answer || q.correct_answer || "").trim();
     var given = String(selected || "").trim();
 
@@ -3225,15 +3324,13 @@ window.MathJax = {
 
 <!-- TS_BUG_REPORT_MODAL_V1 -->
 <button
-  class="bug-report-fab ts-bug-report-ascii"
   type="button"
-  title="Report error"
+  id="bugFloatingBtn"
+  class="bug-floating-btn"
+  title="Report a problem in this question"
   aria-label="Report a problem in this question"
   onclick="BUG_REPORT.open()"
->
-  <span class="ts-bug-report-mark" aria-hidden="true">!</span>
-  <span class="ts-bug-report-label">Report error</span>
-</button>
+>ðŸž</button>
 
 <div class="overlay" id="bugOverlay" onclick="BUG_REPORT.overlayClick(event)">
   <div class="modal" onclick="event.stopPropagation()">
@@ -3700,7 +3797,16 @@ function uniqueSorted(arr) {
     "9_Statistics & Probability",
     "10_Miscellaneous",
     "11_Proofs"
-  ];
+  
+  // ESAT Physics topics
+  "Mechanics",
+  "Energy and Power",
+  "Electricity",
+  "Waves and Optics",
+  "Materials and Fluids",
+  "Thermal Physics",
+  "Nuclear Physics",
+];
 
   function tsChapterNumber(topic) {
     const raw = String(topic || "").trim();
@@ -4203,7 +4309,7 @@ function applyFilters() {
               const n = q.global_number || q.display_order;
               const chapterLabel = tsCanonicalTopic(q.topic);
 
-              btn.title = "Question " + n + " · " + chapterLabel + (q.subtopic ? " · " + q.subtopic : "");
+              btn.title = "Question " + n + " Â· " + chapterLabel + (q.subtopic ? " Â· " + q.subtopic : "");
 
               btn.innerHTML =
                 '<div class="nav-unit">' + escapeHtml(chapterLabel) + '</div>' +
@@ -4548,7 +4654,7 @@ function applyFilters() {
 
       const label = el("bugQuestionLabel");
       if (label) {
-        label.textContent = payload.question_label + " · " + payload.paper + " · " + payload.topic;
+        label.textContent = payload.question_label + " Â· " + payload.paper + " Â· " + payload.topic;
       }
 
       const ta = el("bugComment");
@@ -4783,6 +4889,7 @@ function applyFilters() {
 })();
 </script>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+
 
 
 

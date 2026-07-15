@@ -1,7 +1,15 @@
-﻿import QuestionImageGuard from "./QuestionImageGuard";
-import type { Metadata } from "next";
-import type { ReactNode } from "react"; export const metadata: Metadata = { title: "Thriving Scholars Apps", description: "Thriving Scholars student dashboard and learning apps.", themeColor: "#fffaf2", icons: { icon: [ { url: "/favicon.ico" }, { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" }, { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" } ], apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }] }
-}; export default function RootLayout({ children }: { children: ReactNode }) { return ( <html lang="en"> <body>{children}        <QuestionImageGuard />
-      </body> </html> );
-}
+﻿import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
+export const metadata: Metadata = {
+  title: "Thriving Scholars Apps",
+  description: "Thriving Scholars Apps",
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
