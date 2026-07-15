@@ -47,9 +47,7 @@ async function loadAllActiveRows(supabase: any, table: string) {
     const batch = data || [];
     allRows.push(...batch);
 
-    if (batch.length < PAGE_SIZE) {
-      break;
-    }
+    if (batch.length < PAGE_SIZE) break;
   }
 
   return { rows: allRows, error: null };
