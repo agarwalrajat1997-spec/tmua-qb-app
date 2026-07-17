@@ -1,4 +1,4 @@
-﻿<html lang="en"><head>
+<html lang="en"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ESAT Question Bank</title>
@@ -3993,6 +3993,29 @@ function applyFilters() {
     });
   }
 
+  // TS_ESAT_RICH_HTML_NORMALIZER_V1
+  function tsPrepareRichHtml(html) {
+    return String(html || "")
+      .replace(/ (\\\()/g, "&nbsp;$1")
+      .replace(/(\\\)) /g, "$1&nbsp;");
+  }
+
+  function tsPrepareOptionHtml(html) {
+    let value = String(html || "").trim();
+
+    const singleParagraph = value.match(
+      /^<p(?:\s[^>]*)?>([\s\S]*?)<\/p>$/i
+    );
+
+    const containsMultipleParagraphs =
+      /<\/p>\s*<p(?:\s[^>]*)?>/i.test(value);
+
+    if (singleParagraph && !containsMultipleParagraphs) {
+      value = singleParagraph[1];
+    }
+
+    return tsPrepareRichHtml(value);
+  }
   function renderOptions(meta, q) {
     const box = el("qOptions");
     if (!box) return;
@@ -4014,7 +4037,7 @@ function applyFilters() {
       return '<label class="' + cls + '">' +
         '<div class="option-row">' +
         '<input type="radio" name="qb_' + escapeHtml(key) + '" value="' + escapeHtml(label) + '" ' + checked + ' ' + locked + ' onchange="ACTIONS.setSelected(this.value)">' +
-        '<div><strong style="margin-right:8px;">' + escapeHtml(label) + '.</strong> ' + (opt.html || "") + '</div>' +
+        '<div><strong style="margin-right:8px;">' + escapeHtml(label) + '.</strong> ' + tsPrepareOptionHtml(opt.html || "") + '</div>' +
         '</div>' +
         '</label>';
     }).join("");
@@ -4055,7 +4078,9 @@ function applyFilters() {
 
     sol.style.display = "block";
     const solutionHtml = a.solution_html || meta.solution_html || (currentQuestion && currentQuestion.solution_html) || "";
-    body.innerHTML = solutionHtml || "<p>Solution not available for this question yet.</p>";
+    body.innerHTML = solutionHtml
+      ? tsPrepareRichHtml(solutionHtml)
+      : "<p>Solution not available for this question yet.</p>";
 
     if (window.MathJax && window.MathJax.typesetPromise) {
       setTimeout(function () {
@@ -4095,7 +4120,10 @@ function applyFilters() {
     setText("metaDiff", "Difficulty " + (meta.difficulty || "") + "/5");
 
     renderStatus(meta);
-    setHtml("qPrompt", currentQuestion.prompt_html || "");
+    setHtml(
+      "qPrompt",
+      tsPrepareRichHtml(currentQuestion.prompt_html || "")
+    );
     renderMedia(currentQuestion);
     renderOptions(meta, currentQuestion);
     renderFeedback(meta);
@@ -4423,7 +4451,9 @@ function applyFilters() {
       hintBox.style.display = "block";
 
       if (currentQuestion.shortcut_available && currentQuestion.nice_tip_html) {
-        hintBox.innerHTML = "<h4>Hint</h4>" + currentQuestion.nice_tip_html;
+        hintBox.innerHTML =
+          "<h4>Hint</h4>" +
+          tsPrepareRichHtml(currentQuestion.nice_tip_html);
       } else {
         hintBox.innerHTML = "<h4>Hint</h4>No hint is available for this question.";
       }
