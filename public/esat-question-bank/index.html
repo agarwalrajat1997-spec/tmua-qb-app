@@ -4246,11 +4246,97 @@ function applyFilters() {
   }
 
   function buildFilters() {
+        // TS_DYNAMIC_SUBJECT_TOPICS_V3
+    //
+    // Known Mathematics and Physics chapters retain their fixed order.
+    // Biology, Chemistry and future subject topics are discovered from
+    // the live Supabase question rows.
+    const tsSelectedPapersForTopics =
+      state &&
+      state.filters &&
+      Array.isArray(state.filters.papers)
+        ? state.filters.papers
+        : [];
+
+    const tsRowsForTopicFilter =
+      tsSelectedPapersForTopics.length > 0
+        ? allMeta.filter(function(question) {
+            return tsSelectedPapersForTopics.includes(
+              String(question.paper || "")
+            );
+          })
+        : allMeta;
+
+    const tsDiscoveredTopics = Array.from(
+      new Set(
+        tsRowsForTopicFilter
+          .map(function(question) {
+            const rawTopic = String(
+              question.topic || ""
+            ).trim();
+
+            if (!rawTopic) {
+              return "";
+            }
+
+            /*
+              Preserve existing canonical handling for Mathematics
+              and Physics. Biology and Chemistry currently use their
+              original unnumbered topic names.
+            */
+            if (
+              question.paper === "ESAT Mathematics" ||
+              question.paper === "ESAT Physics"
+            ) {
+              return tsCanonicalTopic(rawTopic);
+            }
+
+            return rawTopic;
+          })
+          .filter(function(topic) {
+            return Boolean(topic);
+          })
+      )
+    );
+
+    const tsOrderedKnownTopics =
+      TS_CHAPTER_ORDER.filter(function(topic) {
+        return tsDiscoveredTopics.includes(topic);
+      });
+
+    const tsAdditionalSubjectTopics =
+      tsDiscoveredTopics
+        .filter(function(topic) {
+          return !TS_CHAPTER_ORDER.includes(topic);
+        })
+        .sort(function(firstTopic, secondTopic) {
+          return String(firstTopic).localeCompare(
+            String(secondTopic),
+            undefined,
+            {
+              numeric: true,
+              sensitivity: "base"
+            }
+          );
+        });
+
+    const tsAvailableTopics = [
+      ...tsOrderedKnownTopics,
+      ...tsAdditionalSubjectTopics
+    ];
+
+    // Remove obsolete selections when the selected paper changes.
+    state.filters.topics = Array.isArray(
+      state.filters.topics
+    )
+      ? state.filters.topics.filter(function(topic) {
+          return tsAvailableTopics.includes(topic);
+        })
+      : [];
+
     buildFilterCheckbox(
       "fTopics",
-      TS_CHAPTER_ORDER.filter(function(topic) {
-        return allMeta.some(function(q) { return tsCanonicalTopic(q.topic) === topic; });
-      }),
+      tsAvailableTopics,
       state.filters.topics,
       "topic"
     );
