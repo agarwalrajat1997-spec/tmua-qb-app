@@ -1835,6 +1835,158 @@ window.MathJax = {
   }
 }
 </style>
+<style id="ts-final-topic-math-fix-v5">
+/* Final Topics-panel layout */
+#fTopics {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  grid-template-columns: none !important;
+  grid-template-rows: none !important;
+  grid-auto-flow: row !important;
+  column-count: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  max-height: 430px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  gap: 7px !important;
+  padding-right: 6px !important;
+  box-sizing: border-box !important;
+  scrollbar-gutter: stable;
+}
+
+#fTopics > label,
+#fTopics > .chk,
+#fTopics label.chk,
+#fTopics .chk {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#fTopics label span,
+#fTopics .chk span {
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Final spacing around inline MathJax */
+.qcard mjx-container[jax="CHTML"]:not([display="true"]),
+#qPrompt mjx-container[jax="CHTML"]:not([display="true"]),
+#qOptions mjx-container[jax="CHTML"]:not([display="true"]),
+#qSolutionBody mjx-container[jax="CHTML"]:not([display="true"]),
+#hintBox mjx-container[jax="CHTML"]:not([display="true"]) {
+  display: inline-block !important;
+  margin-left: 0.14em !important;
+  margin-right: 0.14em !important;
+  vertical-align: baseline !important;
+}
+
+/* Fallback for other MathJax output configurations */
+.qcard .MathJax:not(.MathJax_Display),
+#qPrompt .MathJax:not(.MathJax_Display),
+#qOptions .MathJax:not(.MathJax_Display),
+#qSolutionBody .MathJax:not(.MathJax_Display),
+#hintBox .MathJax:not(.MathJax_Display) {
+  display: inline-block !important;
+  margin-left: 0.14em !important;
+  margin-right: 0.14em !important;
+  vertical-align: baseline !important;
+}
+</style>
+<style id="ts-final-topic-spacing-v6">
+
+/* One vertical list for all 41 topic chapters */
+#fTopics {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  grid-template-columns: none !important;
+  grid-template-rows: none !important;
+  grid-auto-flow: row !important;
+  column-count: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  max-height: 430px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  gap: 7px !important;
+  padding-right: 6px !important;
+  box-sizing: border-box !important;
+}
+
+#fTopics > label,
+#fTopics > .chk,
+#fTopics label.chk,
+#fTopics .chk {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#fTopics label span,
+#fTopics .chk span {
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Additional visual fallback for inline MathJax */
+#qPrompt mjx-container:not([display="true"]),
+#qOptions mjx-container:not([display="true"]),
+#qSolutionBody mjx-container:not([display="true"]),
+#hintBox mjx-container:not([display="true"]),
+.qcard mjx-container:not([display="true"]) {
+  display: inline-block !important;
+  margin-left: 0.12em !important;
+  margin-right: 0.12em !important;
+  vertical-align: baseline !important;
+}
+
+</style>
+<style id="ts-all-41-topics-layout-v1">
+#fTopics {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-auto-flow: row !important;
+  column-count: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  max-height: 430px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  gap: 7px !important;
+  padding-right: 6px !important;
+  box-sizing: border-box !important;
+}
+
+#fTopics .chk,
+#fTopics > label {
+  display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#fTopics .chk span,
+#fTopics label span {
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+</style>
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
@@ -3885,7 +4037,6 @@ function uniqueSorted(arr) {
     "9_Statistics & Probability",
     "10_Miscellaneous",
     "11_Proofs",
-
     "12_Mechanics",
     "13_Energy and Power",
     "14_Electricity and Magnetism",
@@ -3895,7 +4046,6 @@ function uniqueSorted(arr) {
     "18_Atomic and Nuclear Physics",
     "19_Astrophysics",
     "20_Physics Skills & Miscellaneous",
-
     "21_Cell Biology and Organisation",
     "22_Biological Molecules and Enzymes",
     "23_Membranes, Exchange and Transport",
@@ -3907,7 +4057,6 @@ function uniqueSorted(arr) {
     "29_Animal and Human Physiology",
     "30_Biotechnology and Genetic Engineering",
     "31_Practical Skills",
-
     "32_Atomic Structure and Periodicity",
     "33_Bonding, Structure and States of Matter",
     "34_Stoichiometry and Formulae",
@@ -3918,7 +4067,7 @@ function uniqueSorted(arr) {
     "39_Inorganic Chemistry and Metals",
     "40_Organic Chemistry",
     "41_Analytical Chemistry and Separation"
-];
+  ];
 
   function tsChapterNumber(topic) {
     const raw = String(topic || "").trim();
@@ -4269,100 +4418,22 @@ function applyFilters() {
   }
 
   function buildFilters() {
-        // TS_DYNAMIC_SUBJECT_TOPICS_V3
-    //
-    // Known Mathematics and Physics chapters retain their fixed order.
-    // Biology, Chemistry and future subject topics are discovered from
-    // the live Supabase question rows.
-    const tsSelectedPapersForTopics =
-      state &&
-      state.filters &&
-      Array.isArray(state.filters.papers)
-        ? state.filters.papers
-        : [];
-
-    const tsRowsForTopicFilter =
-      tsSelectedPapersForTopics.length > 0
-        ? allMeta.filter(function(question) {
-            return tsSelectedPapersForTopics.includes(
-              String(question.paper || "")
-            );
-          })
-        : allMeta;
-
-    const tsDiscoveredTopics = Array.from(
-      new Set(
-        tsRowsForTopicFilter
-          .map(function(question) {
-            const rawTopic = String(
-              question.topic || ""
-            ).trim();
-
-            if (!rawTopic) {
-              return "";
-            }
-
-            /*
-              Preserve existing canonical handling for Mathematics
-              and Physics. Biology and Chemistry currently use their
-              original unnumbered topic names.
-            */
-            if (
-              question.paper === "ESAT Mathematics" ||
-              question.paper === "ESAT Physics"
-            ) {
-              return tsCanonicalTopic(rawTopic);
-            }
-
-            return rawTopic;
-          })
-          .filter(function(topic) {
-            return Boolean(topic);
-          })
-      )
-    );
-
-    const tsOrderedKnownTopics =
-      TS_CHAPTER_ORDER.filter(function(topic) {
-        return tsDiscoveredTopics.includes(topic);
-      });
-
-    const tsAdditionalSubjectTopics =
-      tsDiscoveredTopics
-        .filter(function(topic) {
-          return !TS_CHAPTER_ORDER.includes(topic);
-        })
-        .sort(function(firstTopic, secondTopic) {
-          return String(firstTopic).localeCompare(
-            String(secondTopic),
-            undefined,
-            {
-              numeric: true,
-              sensitivity: "base"
-            }
-          );
-        });
-
-    const tsAvailableTopics = [
-      ...tsOrderedKnownTopics,
-      ...tsAdditionalSubjectTopics
-    ];
-
-    // Remove obsolete selections when the selected paper changes.
+    // TS_ALL_41_TOPICS_FILTER_V1
     state.filters.topics = Array.isArray(
       state.filters.topics
     )
       ? state.filters.topics.filter(function(topic) {
-          return tsAvailableTopics.includes(topic);
+          return TS_CHAPTER_ORDER.includes(topic);
         })
       : [];
 
     buildFilterCheckbox(
       "fTopics",
-      tsAvailableTopics,
+      TS_CHAPTER_ORDER,
       state.filters.topics,
       "topic"
     );
+
     buildFilterCheckbox("fDiffs", ["1","2","3","4","5"], state.filters.difficulties, "difficulty");
 
     const papers = uniqueSorted(allMeta.map(q => q.paper));
