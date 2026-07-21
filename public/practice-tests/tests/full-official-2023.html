@@ -446,7 +446,7 @@
   </div>
 
   <div style="margin-top: 28px;">
-    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
+    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">🎯 Start Exam</button>
   </div>
 </div>
 
@@ -476,7 +476,7 @@
 
 <p style="font-size: 16px; margin-top: 20px;">
  
-  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
+  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> — marks are awarded only for correct responses.
   You should attempt <strong>all 20 questions</strong> on each Paper.
 </p>
 
@@ -523,7 +523,7 @@ This is the officially released 2023 paper, now converted into an online interfa
 
 
 <script>
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_81dcfaab3d9646228d9a3d73b60647de.pdf";
+const solutionPDF = "/practice-tests/solutions/full-official-2023-solutions.html";
 // Placeholder — replace with real data if needed
 const averageScores = {
   paper1: 13.2,  // average out of 20
@@ -696,11 +696,7 @@ function confirmSubmit() {
 
 
   const correctAnswers = [
-  "F", "A", "C", "C", "F", "E", "F", "B", "E", "B",
-  "B", "F", "F", "A", "F", "E", "E", "E", "D", "F",
-  // Paper 2 answers
-  "H", "F", "C", "G", "A", "F", "E", "D", "D", "A",
-  "G", "C", "C", "F", "B", "B", "F", "D", "H", "D"
+  "F", "A", "C", "C", "F", "E", "F", "B", "E", "B", "B", "F", "F", "A", "F", "E", "E", "E", "D", "F", "H", "F", "C", "G", "A", "F", "E", "D", "D", "A", "G", "C", "C", "F", "B", "B", "F", "D", "H", "D"
 ];
 
 
@@ -715,14 +711,16 @@ function confirmSubmit() {
   const counter = document.getElementById("counter");
 
   const questions = [
+  `<div class="question-number">Question 1</div>
+Given that
 
-    `<div class="question-number">Question 1</div>
-<p>Given that</p>
-<p>\\[ \\int\\limits_{0}^{1} \\left( ax + b \\right) \\, dx = 1 \\]</p>
-<p>and</p>
-<p>\\[ \\int\\limits_{0}^{1} x \\left( ax + b \\right) \\, dx = 1 \\]</p>
-<p>find the value of \\( a + b \\).</p>
+\\[\\int_0^1 (ax + b)\\,dx = 1\\]
 
+and
+
+\\[\\int_0^1 x(ax + b)\\,dx = 1\\]
+
+find the value of \\(a + b\\).
 <div class="options">
   <label class="option"><input type="radio" name="q1" value="A"> \\(-1\\)</label>
   <label class="option"><input type="radio" name="q1" value="B"> \\(0\\)</label>
@@ -732,25 +730,11 @@ function confirmSubmit() {
   <label class="option"><input type="radio" name="q1" value="F"> \\(4\\)</label>
   <label class="option"><input type="radio" name="q1" value="G"> \\(5\\)</label>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 2</div>
+The graphs of \\(y = x^2 + 5x + 6\\) and \\(y = mx - 3\\), where \\(m\\) is a constant, are plotted on the same set of axes.
 
-    `<div class="question-number">Question 2</div>
-<p>The graphs of \\( y = x^{2} + 5x + 6 \\) and \\( y = mx - 3 \\), where \\( m \\) is a constant, are plotted on the same set of axes.</p>
-
-<p>Given that the graphs do not meet, what is the complete range of possible values of \\( m \\)?</p>
-
+Given that the graphs do not meet, what is the complete range of possible values of \\(m\\)?
 <div class="options">
   <label class="option"><input type="radio" name="q2" value="A"> \\(-1 < m < 11\\)</label>
   <label class="option"><input type="radio" name="q2" value="B"> \\(m < -1,\\ m > 11\\)</label>
@@ -759,33 +743,15 @@ function confirmSubmit() {
   <label class="option"><input type="radio" name="q2" value="E"> \\(-11 < m < 1\\)</label>
   <label class="option"><input type="radio" name="q2" value="F"> \\(m < -11,\\ m > 1\\)</label>
 </div>
-
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 3</div>
+For any integer \\(n \\geq 0\\),
 
-    `<div class="question-number">Question 3</div>
-<p>For any integer \\( n \\geq 0 \\),</p>
+\\[\\int_n^{n+1} f(x)\\,dx = n + 1\\]
 
-<p>\\[ \\int\\limits_{n}^{n+1} f(x) \\, dx = n + 1 \\]</p>
+Evaluate
 
-<p>Evaluate</p>
-
-<p>
-\\[
-\\int\\limits_{0}^{3} f(x) \\, dx
-+ \\int\\limits_{1}^{3} f(x) \\, dx
-+ \\int\\limits_{2}^{3} f(x) \\, dx
-+ \\int\\limits_{4}^{3} f(x) \\, dx
-+ \\int\\limits_{5}^{3} f(x) \\, dx
-\\]
-</p>
-
+\\[\\int_0^3 f(x)\\,dx + \\int_1^3 f(x)\\,dx + \\int_2^3 f(x)\\,dx + \\int_4^3 f(x)\\,dx + \\int_5^3 f(x)\\,dx\\]
 <div class="options">
   <label class="option"><input type="radio" name="q3" value="A"> \\(-2\\)</label>
   <label class="option"><input type="radio" name="q3" value="B"> \\(0\\)</label>
@@ -794,50 +760,31 @@ function confirmSubmit() {
   <label class="option"><input type="radio" name="q3" value="E"> \\(18\\)</label>
   <label class="option"><input type="radio" name="q3" value="F"> \\(27\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 4</div>
+Evaluate
 
-    `<div class="question-number">Question 4</div>
-<p>Evaluate</p>
-
-<p>
-\\[
-\\sum\\limits_{n = 0}^{\\infty}
-\\frac{\\sin\\left( n\\pi + \\frac{\\pi}{3} \\right)}{2^{n}}
-\\]
-</p>
-
+\\[\\sum_{n=0}^{\\infty} \\dfrac{\\sin\\!\\left(n\\pi + \\dfrac{\\pi}{3}\\right)}{2^n}\\]
 <div class="options">
   <label class="option"><input type="radio" name="q4" value="A"> \\(0\\)</label>
-  <label class="option"><input type="radio" name="q4" value="B"> \\(\\frac{1}{3}\\)</label>
-  <label class="option"><input type="radio" name="q4" value="C"> \\(\\frac{\\sqrt{3}}{3}\\)</label>
+  <label class="option"><input type="radio" name="q4" value="B"> \\(\\dfrac{1}{3}\\)</label>
+  <label class="option"><input type="radio" name="q4" value="C"> \\(\\dfrac{\\sqrt{3}}{3}\\)</label>
   <label class="option"><input type="radio" name="q4" value="D"> \\(\\sqrt{3}\\)</label>
   <label class="option"><input type="radio" name="q4" value="E"> \\(3\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 5</div>
+<span class="question-media"><img src="https://assets.thrivingscholars.com/images/tmua/tmua_2023_p1/tmua_2023_p1_q5.png" alt="Question diagram" loading="lazy"></span>
 
-    `<div class="question-number">Question 5</div>
+The following shape has two lines of reflectional symmetry.
 
-<p>The following shape has two lines of reflectional symmetry.</p>
+\\(MNOP\\) is a square of perimeter \\(40\\) cm.
 
-<p><img src="https://static.wixstatic.com/media/98f2c5_e48f1a349f26497dab57651613c3db64~mv2.png" alt="Square with rectangle RSTU on edges" style="max-width: 40%; height: auto;"></p>
+The vertices of rectangle \\(RSTU\\) lie on the edge of square \\(MNOP\\).
 
-<p>\\(MNOP\\) is a square of perimeter \\(40 \\, \\text{cm}\\).</p>
+\\(MR\\) has length \\(x\\) cm.
 
-<p>The vertices of rectangle \\(RSTU\\) lie on the edge of square \\(MNOP\\).</p>
-
-<p>\\(MR\\) has length \\(x\\) cm.</p>
-
-<p>What is the largest possible value of \\(x\\) such that \\(RSTU\\) has area \\(20 \\, \\text{cm}^{2}\\)?</p>
-
+What is the largest possible value of \\(x\\) such that \\(RSTU\\) has area \\(20\\,\\text{cm}^2\\)?
 <div class="options">
   <label class="option"><input type="radio" name="q5" value="A"> \\(\\sqrt{2}\\)</label>
   <label class="option"><input type="radio" name="q5" value="B"> \\(\\sqrt{10}\\)</label>
@@ -846,20 +793,9 @@ function confirmSubmit() {
   <label class="option"><input type="radio" name="q5" value="E"> \\(5 + \\sqrt{5}\\)</label>
   <label class="option"><input type="radio" name="q5" value="F"> \\(5 + \\sqrt{15}\\)</label>
 </div>
-
-
-
-
-
-
-
-
-
 `,
-
-    `<div class="question-number">Question 6</div>
-<p>In the simplified expansion of \\(\\left( 2 + 3x \\right)^{12}\\), how many of the terms have a coefficient that is divisible by \\(12\\)?</p>
-
+  `<div class="question-number">Question 6</div>
+In the simplified expansion of \\((2 + 3x)^{12}\\), how many of the terms have a coefficient that is divisible by \\(12\\)?
 <div class="options">
   <label class="option"><input type="radio" name="q6" value="A"> \\(0\\)</label>
   <label class="option"><input type="radio" name="q6" value="B"> \\(2\\)</label>
@@ -869,92 +805,55 @@ function confirmSubmit() {
   <label class="option"><input type="radio" name="q6" value="F"> \\(12\\)</label>
   <label class="option"><input type="radio" name="q6" value="G"> \\(13\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 7</div>
+\\(P(x)\\) and \\(Q(x)\\) are defined as follows:
 
-    `<div class="question-number">Question 7</div>
-<p>\\(P(x)\\) and \\(Q(x)\\) are defined as follows:</p>
+\\[P(x) = 2^x + 4\\]
 
-<p>\\[ P(x) = 2^{x} + 4 \\]</p>
+\\[Q(x) = 2^{(2x - 2)} - 2^{(x + 2)} + 16\\]
 
-<p>\\[ Q(x) = 2^{(2x - 2)} - 2^{(x + 2)} + 16 \\]</p>
-
-<p>Find the largest value of \\(x\\) such that \\(P(x)\\) and \\(Q(x)\\) are in the ratio \\(4 : 1\\), respectively.</p>
-
+Find the largest value of \\(x\\) such that \\(P(x)\\) and \\(Q(x)\\) are in the ratio \\(4 : 1\\), respectively.
 <div class="options">
   <label class="option"><input type="radio" name="q7" value="A"> \\(5\\)</label>
   <label class="option"><input type="radio" name="q7" value="B"> \\(12\\)</label>
   <label class="option"><input type="radio" name="q7" value="C"> \\(32\\)</label>
-  <label class="option"><input type="radio" name="q7" value="D"> \\(\\log_{2} 3\\)</label>
-  <label class="option"><input type="radio" name="q7" value="E"> \\(\\log_{2} 5\\)</label>
-  <label class="option"><input type="radio" name="q7" value="F"> \\(\\log_{2} 12\\)</label>
-  <label class="option"><input type="radio" name="q7" value="G"> \\(\\log_{2} 20\\)</label>
+  <label class="option"><input type="radio" name="q7" value="D"> \\(\\log_2 3\\)</label>
+  <label class="option"><input type="radio" name="q7" value="E"> \\(\\log_2 5\\)</label>
+  <label class="option"><input type="radio" name="q7" value="F"> \\(\\log_2 12\\)</label>
+  <label class="option"><input type="radio" name="q7" value="G"> \\(\\log_2 20\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 8</div>
+A triangle \\(XYZ\\) is called <em>fun</em> if it has the following properties:
 
-    `<div class="question-number">Question 8</div>
+angle \\(YXZ = 30Ãƒâ€šÃ‚Â°\\)
 
-<p>
-A triangle \\( XYZ \\) is called <em>fun</em> if it has the following properties:
-</p>
+\\(XY = \\sqrt{3}\\,a\\)
 
-<p style="text-align: center;">
-\\( \\angle YXZ = 30^\\circ \\)<br>
-\\( XY = \\sqrt{3}a \\)<br>
-\\( YZ = a \\)
-</p>
+\\(YZ = a\\)
 
-<p>
-where \\( a \\) is a constant.
-</p>
+where \\(a\\) is a constant.
 
-<p>
-For a given value of \\( a \\), there are two distinct <em>fun</em> triangles \\( S \\) and \\( T \\), where the area of \\( S \\) is greater than the area of \\( T \\).
-</p>
+For a given value of \\(a\\), there are two distinct <em>fun</em> triangles \\(S\\) and \\(T\\), where the area of \\(S\\) is greater than the area of \\(T\\).
 
-<p>
-Find the ratio:
-</p>
+Find the ratio
 
-<p style="text-align: center;">
-\\[
-\\text{area of } S : \\text{area of } T
-\\]
-</p>
-
+area of \\(S\\) : area of \\(T\\)
 <div class="options">
-  <label class="option"><input type="radio" name="q8" value="A"> \\( 1 : 1 \\)</label>
-  <label class="option"><input type="radio" name="q8" value="B"> \\( 2 : 1 \\)</label>
-  <label class="option"><input type="radio" name="q8" value="C"> \\( 2 : \\sqrt{3} \\)</label>
-  <label class="option"><input type="radio" name="q8" value="D"> \\( \\sqrt{3} : 1 \\)</label>
-  <label class="option"><input type="radio" name="q8" value="E"> \\( 3 : 1 \\)</label>
+  <label class="option"><input type="radio" name="q8" value="A"> \\(1 : 1\\)</label>
+  <label class="option"><input type="radio" name="q8" value="B"> \\(2 : 1\\)</label>
+  <label class="option"><input type="radio" name="q8" value="C"> \\(2 : \\sqrt{3}\\)</label>
+  <label class="option"><input type="radio" name="q8" value="D"> \\(\\sqrt{3} : 1\\)</label>
+  <label class="option"><input type="radio" name="q8" value="E"> \\(3 : 1\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 9</div>
+How many solutions are there to
 
-    `<div class="question-number">Question 9</div>
+\\[(1 + 3\\cos 3\\theta)^2 = 4\\]
 
-<p>How many solutions are there to</p>
-
-<p>
-\\[
-\\left( 1 + 3 \\cos 3\\theta \\right)^2 = 4
-\\]
-</p>
-
-<p>in the interval \\( 0^\\circ \\leq \\theta \\leq 180^\\circ \\)?</p>
-
+in the interval \\(0Ãƒâ€šÃ‚Â° \\leq \\theta \\leq 180Ãƒâ€šÃ‚Â°\\)?
 <div class="options">
   <label class="option"><input type="radio" name="q9" value="A"> \\(1\\)</label>
   <label class="option"><input type="radio" name="q9" value="B"> \\(2\\)</label>
@@ -963,74 +862,43 @@ Find the ratio:
   <label class="option"><input type="radio" name="q9" value="E"> \\(5\\)</label>
   <label class="option"><input type="radio" name="q9" value="F"> \\(6\\)</label>
 </div>
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 10</div>
+The trapezium rule with \\(4\\) strips is used to estimate the integral:
 
-    `<div class="question-number">Question 10</div>
+\\[\\int_{-2}^{2} \\sqrt{4 - x^2}\\,dx\\]
 
-<p>The trapezium rule with 4 strips is used to estimate the integral:</p>
-
-<p style="text-align: center;">
-\\[
-\\int\\limits_{-2}^{2} \\sqrt{4 - x^2} \\, dx
-\\]
-</p>
-
-<p>What is the positive difference between the estimate and the exact value of the integral?</p>
-
-
+What is the positive difference between the estimate and the exact value of the integral?
 <div class="options">
-  <label class="option"><input type="radio" name="q10" value="A"> \\(2\\left( \\pi - 2 - 2\\sqrt{3} \\right)\\)</label>
-  <label class="option"><input type="radio" name="q10" value="B"> \\(2\\left( \\pi - 1 - \\sqrt{3} \\right)\\)</label>
-  <label class="option"><input type="radio" name="q10" value="C"> \\(2\\left( 2\\pi - 1 - \\sqrt{3} \\right)\\)</label>
-  <label class="option"><input type="radio" name="q10" value="D"> \\(4\\left( \\pi - 1 - \\sqrt{3} \\right)\\)</label>
+  <label class="option"><input type="radio" name="q10" value="A"> \\(2(\\pi - 2 - 2\\sqrt{3})\\)</label>
+  <label class="option"><input type="radio" name="q10" value="B"> \\(2(\\pi - 1 - \\sqrt{3})\\)</label>
+  <label class="option"><input type="radio" name="q10" value="C"> \\(2(2\\pi - 1 - \\sqrt{3})\\)</label>
+  <label class="option"><input type="radio" name="q10" value="D"> \\(4(\\pi - 1 - \\sqrt{3})\\)</label>
   <label class="option"><input type="radio" name="q10" value="E"> \\(2\\pi - 3\\sqrt{3}\\)</label>
   <label class="option"><input type="radio" name="q10" value="F"> \\(4\\pi - 6\\sqrt{3}\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 11</div>
+It is given that \\(f(x) = x^2 - 6x\\)
 
-    `<div class="question-number">Question 11</div>
+The curves \\(y = f(kx)\\) and \\(y = f(x - c)\\) have the same minimum point, where \\(k > 0\\) and \\(c > 0\\)
 
-<p>It is given that \\( f(x) = x^2 - 6x \\)</p>
-
-<p>The curves \\( y = f(kx) \\) and \\( y = f(x - c) \\) have the same minimum point, where \\( k &gt; 0 \\) and \\( c &gt; 0 \\).</p>
-
-<p>Which of the following is a correct expression for \\(k\\) in terms of \\(c\\)?</p>
-
+Which of the following is a correct expression for \\(k\\) in terms of \\(c\\)?
 <div class="options">
-  <label class="option"><input type="radio" name="q11" value="A"> \\(k = \\frac{3 - c}{3}\\)</label>
-  <label class="option"><input type="radio" name="q11" value="B"> \\(k = \\frac{3}{c + 3}\\)</label>
-  <label class="option"><input type="radio" name="q11" value="C"> \\(k = \\frac{c - 6}{6}\\)</label>
-  <label class="option"><input type="radio" name="q11" value="D"> \\(k = \\frac{6}{6 - c}\\)</label>
-  <label class="option"><input type="radio" name="q11" value="E"> \\(k = \\frac{c + 9}{9}\\)</label>
-  <label class="option"><input type="radio" name="q11" value="F"> \\(k = \\frac{9}{c - 9}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="A"> \\(k = \\dfrac{3 - c}{3}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="B"> \\(k = \\dfrac{3}{c + 3}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="C"> \\(k = \\dfrac{c - 6}{6}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="D"> \\(k = \\dfrac{6}{6 - c}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="E"> \\(k = \\dfrac{c + 9}{9}\\)</label>
+  <label class="option"><input type="radio" name="q11" value="F"> \\(k = \\dfrac{9}{c - 9}\\)</label>
 </div>
-
-
 `,
+  `<div class="question-number">Question 12</div>
+How many solutions are there to the equation
 
-    `<div class="question-number">Question 12</div>
+\\[\\dfrac{2^{\\tan^2 x}}{4^{\\sin^2 x}} = 1\\]
 
-<p>How many solutions are there to the equation</p>
-
-<p>
-\\[
-\\frac{2^{\\tan^2 x}}{4^{\\sin^2 x}} = 1
-\\]
-</p>
-
-<p>in the range \\( 0 \\leq x \\leq 2\\pi \\)?</p>
-
+in the range \\(0 \\leq x \\leq 2\\pi\\)?
 <div class="options">
   <label class="option"><input type="radio" name="q12" value="A"> \\(2\\)</label>
   <label class="option"><input type="radio" name="q12" value="B"> \\(3\\)</label>
@@ -1040,20 +908,13 @@ Find the ratio:
   <label class="option"><input type="radio" name="q12" value="F"> \\(7\\)</label>
   <label class="option"><input type="radio" name="q12" value="G"> \\(8\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 13</div>
+Point \\(P\\) lies on the circle with equation \\((x - 2)^2 + (y - 1)^2 = 16\\)
 
-    `<div class="question-number">Question 13</div>
+Point \\(Q\\) lies on the circle with equation \\((x - 4)^2 + (y + 5)^2 = 16\\)
 
-<p>Point \\(P\\) lies on the circle with equation \\( (x - 2)^2 + (y - 1)^2 = 16 \\)</p>
-
-<p>Point \\(Q\\) lies on the circle with equation \\( (x - 4)^2 + (y + 5)^2 = 16 \\)</p>
-
-<p>What is the maximum possible length of \\(PQ\\)?</p>
-
+What is the maximum possible length of \\(PQ\\)?
 <div class="options">
   <label class="option"><input type="radio" name="q13" value="A"> \\(10\\)</label>
   <label class="option"><input type="radio" name="q13" value="B"> \\(14\\)</label>
@@ -1063,67 +924,43 @@ Find the ratio:
   <label class="option"><input type="radio" name="q13" value="F"> \\(8 + 2\\sqrt{10}\\)</label>
   <label class="option"><input type="radio" name="q13" value="G"> \\(16 + 2\\sqrt{6}\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 14</div>
+The function
 
-    `<div class="question-number">Question 14</div>
+\\[f(x) = \\dfrac{2}{3}x^3 + 2m x^2 + n,\\quad m > 0\\]
 
-<p>The function</p>
+has three distinct real roots.
 
-<p>
-\\[
-f(x) = \\frac{2}{3}x^3 + 2mx^2 + n, \\quad m &gt; 0
-\\]
-</p>
-
-<p>has three distinct real roots.</p>
-
-<p>What is the complete range of possible values of \\(n\\), in terms of \\(m\\)?</p>
-
+What is the complete range of possible values of \\(n\\), in terms of \\(m\\)?
 <div class="options">
-  <label class="option"><input type="radio" name="q14" value="A"> \\(-\\frac{8}{3}m^3 &lt; n &lt; 0\\)</label>
-  <label class="option"><input type="radio" name="q14" value="B"> \\(-\\frac{4}{3}m^3 &lt; n &lt; 0\\)</label>
-  <label class="option"><input type="radio" name="q14" value="C"> \\(0 &lt; n &lt; \\frac{3}{2}m^2\\)</label>
-  <label class="option"><input type="radio" name="q14" value="D"> \\(0 &lt; n &lt; \\frac{40}{3}m^3\\)</label>
-  <label class="option"><input type="radio" name="q14" value="E"> \\(n &lt; -\\frac{8}{3}m^3\\)</label>
-  <label class="option"><input type="radio" name="q14" value="F"> \\(n &lt; \\frac{3}{2}m^2\\)</label>
-  <label class="option"><input type="radio" name="q14" value="G"> \\(n &gt; -\\frac{4}{3}m^3\\)</label>
-  <label class="option"><input type="radio" name="q14" value="H"> \\(n &gt; \\frac{40}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="A"> \\(-\\dfrac{8}{3}m^3 < n < 0\\)</label>
+  <label class="option"><input type="radio" name="q14" value="B"> \\(-\\dfrac{4}{3}m^3 < n < 0\\)</label>
+  <label class="option"><input type="radio" name="q14" value="C"> \\(0 < n < \\dfrac{3}{2}m^2\\)</label>
+  <label class="option"><input type="radio" name="q14" value="D"> \\(0 < n < \\dfrac{40}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="E"> \\(n < -\\dfrac{8}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="F"> \\(n < \\dfrac{3}{2}m^2\\)</label>
+  <label class="option"><input type="radio" name="q14" value="G"> \\(n > -\\dfrac{4}{3}m^3\\)</label>
+  <label class="option"><input type="radio" name="q14" value="H"> \\(n > \\dfrac{40}{3}m^3\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 15</div>
+The difference between the maximum and minimum values of the function \\(f(x) = a^{\\cos x}\\), where \\(a > 0\\) and \\(x\\) is real, is \\(3\\).
 
-    `<div class="question-number">Question 15</div>
-
-<p>The difference between the maximum and minimum values of the function \\( f(x) = a^{\\cos x} \\), where \\( a &gt; 0 \\) and \\( x \\) is real, is \\(3\\).</p>
-
-<p>Find the sum of the possible values of \\(a\\).</p>
-
+Find the sum of the possible values of \\(a\\).
 <div class="options">
   <label class="option"><input type="radio" name="q15" value="A"> \\(0\\)</label>
-  <label class="option"><input type="radio" name="q15" value="B"> \\(\\frac{3}{2}\\)</label>
-  <label class="option"><input type="radio" name="q15" value="C"> \\(\\frac{5}{2}\\)</label>
+  <label class="option"><input type="radio" name="q15" value="B"> \\(\\dfrac{3}{2}\\)</label>
+  <label class="option"><input type="radio" name="q15" value="C"> \\(\\dfrac{5}{2}\\)</label>
   <label class="option"><input type="radio" name="q15" value="D"> \\(3\\)</label>
   <label class="option"><input type="radio" name="q15" value="E"> \\(\\sqrt{10}\\)</label>
   <label class="option"><input type="radio" name="q15" value="F"> \\(\\sqrt{13}\\)</label>
 </div>
-
-
 `,
+  `<div class="question-number">Question 16</div>
+A right-angled triangle has vertices at \\((2, 3)\\), \\((9, -1)\\) and \\((5, k)\\).
 
-    `<div class="question-number">Question 16</div>
-
-<p>A right-angled triangle has vertices at \\((2,\\ 3)\\), \\((9,\\ -1)\\), and \\((5,\\ k)\\).</p>
-
-<p>Find the sum of all the possible values of \\(k\\).</p>
-
+Find the sum of all the possible values of \\(k\\).
 <div class="options">
   <label class="option"><input type="radio" name="q16" value="A"> \\(-8\\)</label>
   <label class="option"><input type="radio" name="q16" value="B"> \\(-6\\)</label>
@@ -1133,33 +970,25 @@ f(x) = \\frac{2}{3}x^3 + 2mx^2 + n, \\quad m &gt; 0
   <label class="option"><input type="radio" name="q16" value="F"> \\(8.25\\)</label>
   <label class="option"><input type="radio" name="q16" value="G"> \\(10.25\\)</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 17</div>
+<span class="question-media"><img src="https://assets.thrivingscholars.com/images/tmua/tmua_2023_p1/tmua_2023_p1_q17.png" alt="Question diagram" loading="lazy"></span>
 
+A circle \\(C_n\\) is defined by
 
-    `<div class="question-number">Question 17</div>
+\\[x^2 + y^2 = 2n(x + y)\\]
 
-<p>A circle \\(C_n\\) is defined by</p>
+where \\(n\\) is a positive integer.
 
-<p>\\[ x^2 + y^2 = 2n(x + y) \\]</p>
+\\(C_1\\) and \\(C_2\\) are drawn and the area between them is shaded.
 
-<p>where \\(n\\) is a positive integer.</p>
+Next, \\(C_3\\) and \\(C_4\\) are drawn and the area between them is shaded.
 
-<p>\\(C_1\\) and \\(C_2\\) are drawn and the area between them is shaded.</p>
+This is shown in the diagram.
 
-<p>Next, \\(C_3\\) and \\(C_4\\) are drawn and the area between them is shaded.</p>
+This process continues until \\(100\\) circles have been drawn.
 
-<p>This is shown in the diagram.</p>
-
-<p><img src="https://static.wixstatic.com/media/98f2c5_0beb14cfb34b4c208253d770abefb340~mv2.png" alt="Concentric shaded circles diagram" style="max-width: 40%; height: auto;"></p>
-
-<p>This process continues until 100 circles have been drawn.</p>
-
-<p>What is the total shaded area?</p>
-
+What is the total shaded area?
 <div class="options">
   <label class="option"><input type="radio" name="q17" value="A"> \\(100\\pi\\)</label>
   <label class="option"><input type="radio" name="q17" value="B"> \\(500\\pi\\)</label>
@@ -1168,186 +997,112 @@ f(x) = \\frac{2}{3}x^3 + 2mx^2 + n, \\quad m &gt; 0
   <label class="option"><input type="radio" name="q17" value="E"> \\(10100\\pi\\)</label>
   <label class="option"><input type="radio" name="q17" value="F"> \\(40400\\pi\\)</label>
 </div>
-
-
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 18</div>
+You are given that
 
-    `<div class="question-number">Question 18</div>
+\\[S = 4 + \\dfrac{8k}{7} + \\dfrac{16k^2}{49} + \\dfrac{32k^3}{343} + \\cdots + 4\\left(\\dfrac{2k}{7}\\right)^n + \\cdots\\]
 
-<p>You are given that</p>
+The value for \\(k\\) is chosen as an integer in the range \\(-5 \\leq k \\leq 5\\)
 
-<p>
-\\[
-S = 4 + \\frac{8k}{7} + \\frac{16k^2}{49} + \\frac{32k^3}{343} + \\cdots + 4 \\left( \\frac{2k}{7} \\right)^n + \\cdots
-\\]
-</p>
+All possible values for \\(k\\) are equally likely to be chosen.
 
-<p>The value for \\(k\\) is chosen as an integer in the range \\(-5 \\leq k \\leq 5\\).</p>
-
-<p>All possible values for \\(k\\) are equally likely to be chosen.</p>
-
-<p>What is the probability that the value of \\(S\\) is a finite number greater than 3?</p>
-
+What is the probability that the value of \\(S\\) is a finite number greater than \\(3\\)?
 <div class="options">
-  <label class="option"><input type="radio" name="q18" value="A"> \\(\\frac{1}{11}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="B"> \\(\\frac{1}{10}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="C"> \\(\\frac{3}{11}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="D"> \\(\\frac{3}{10}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="E"> \\(\\frac{5}{11}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="F"> \\(\\frac{1}{2}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="G"> \\(\\frac{7}{11}\\)</label>
-  <label class="option"><input type="radio" name="q18" value="H"> \\(\\frac{7}{10}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="A"> \\(\\dfrac{1}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="B"> \\(\\dfrac{1}{10}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="C"> \\(\\dfrac{3}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="D"> \\(\\dfrac{3}{10}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="E"> \\(\\dfrac{5}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="F"> \\(\\dfrac{1}{2}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="G"> \\(\\dfrac{7}{11}\\)</label>
+  <label class="option"><input type="radio" name="q18" value="H"> \\(\\dfrac{7}{10}\\)</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 19</div>
+The solution to the differential equation
 
+\\[\\dfrac{dy}{dx} = |{-}6x|\\quad \\text{for all } x\\]
 
-    `<div class="question-number">Question 19</div>
+is \\(y = f(x) + c\\), where \\(c\\) is a constant.
 
-<p>The solution to the differential equation</p>
-
-<p>
-\\[
-\\frac{dy}{dx} = |{-6x}| \\quad \\text{for all } x
-\\]
-</p>
-
-<p>is \\( y = f(x) + c \\), where \\( c \\) is a constant.</p>
-
-<p>Which one of the following is a correct expression for \\( f(x) \\)?</p>
-
+Which one of the following is a correct expression for \\(f(x)\\)?
 <div class="options">
-  <label class="option"><input type="radio" name="q19" value="A"> \\(-\\frac{6x}{\\lvert x \\rvert}\\)</label>
-  <label class="option"><input type="radio" name="q19" value="B"> \\(\\frac{6x}{\\lvert x \\rvert}\\)</label>
-  <label class="option"><input type="radio" name="q19" value="C"> \\(-3x\\lvert x \\rvert\\)</label>
-  <label class="option"><input type="radio" name="q19" value="D"> \\(3x\\lvert x \\rvert\\)</label>
+  <label class="option"><input type="radio" name="q19" value="A"> \\(-\\dfrac{6x}{|x|}\\)</label>
+  <label class="option"><input type="radio" name="q19" value="B"> \\(\\dfrac{6x}{|x|}\\)</label>
+  <label class="option"><input type="radio" name="q19" value="C"> \\(-3x|x|\\)</label>
+  <label class="option"><input type="radio" name="q19" value="D"> \\(3x|x|\\)</label>
   <label class="option"><input type="radio" name="q19" value="E"> \\(-3x^2\\)</label>
   <label class="option"><input type="radio" name="q19" value="F"> \\(3x^2\\)</label>
   <label class="option"><input type="radio" name="q19" value="G"> \\(-x^3\\)</label>
   <label class="option"><input type="radio" name="q19" value="H"> \\(x^3\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 20</div>
+<span class="question-media"><img src="https://assets.thrivingscholars.com/images/tmua/tmua_2023_p1/tmua_2023_p1_q20.png" alt="Question diagram" loading="lazy"></span>
 
-    `<div class="question-number">Question 20</div>
+The diagram shows the graph of \\(y = f(x)\\)
 
-<p>The diagram shows the graph of \\( y = f(x) \\).</p>
+The function \\(f\\) attains its maximum value of \\(2\\) at \\(x = 1\\), and its minimum value of \\(-2\\) at \\(x = -1\\)
 
-<p><img src="https://static.wixstatic.com/media/98f2c5_757b594cb7aa413eaff0742abc6dd210~mv2.png" alt="Graph of function" style="max-width: 60%; height: auto;"></p>
-
-<p>The function \\( f \\) attains its maximum value of 2 at \\( x = 1 \\), and its minimum value of \\(-2\\) at \\( x = -1 \\).</p>
-
-<p>Find the difference between the maximum and minimum values of \\( f(x)^2 - f(x) \\).</p>
-
+Find the difference between the maximum and minimum values of \\((f(x))^2 - f(x)\\)
 <div class="options">
   <label class="option"><input type="radio" name="q20" value="A"> \\(2\\)</label>
-  <label class="option"><input type="radio" name="q20" value="B"> \\(\\frac{9}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="B"> \\(\\dfrac{9}{4}\\)</label>
   <label class="option"><input type="radio" name="q20" value="C"> \\(4\\)</label>
-  <label class="option"><input type="radio" name="q20" value="D"> \\(\\frac{17}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="D"> \\(\\dfrac{17}{4}\\)</label>
   <label class="option"><input type="radio" name="q20" value="E"> \\(6\\)</label>
-  <label class="option"><input type="radio" name="q20" value="F"> \\(\\frac{25}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="F"> \\(\\dfrac{25}{4}\\)</label>
   <label class="option"><input type="radio" name="q20" value="G"> \\(8\\)</label>
-  <label class="option"><input type="radio" name="q20" value="H"> \\(\\frac{33}{4}\\)</label>
+  <label class="option"><input type="radio" name="q20" value="H"> \\(\\dfrac{33}{4}\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 1</div>
+Given that
 
-`<div class="question-number">Question 1</div>
+\\[\\dfrac{1}{\\sqrt{x} - 6} - \\dfrac{1}{\\sqrt{x} + 6} = \\dfrac{3}{11}\\]
 
-<p>Given that</p>
-
-<p>
-\\[
-\\frac{1}{\\sqrt{x} - 6} - \\frac{1}{\\sqrt{x} + 6} = \\frac{3}{11}
-\\]
-</p>
-
-<p>What is the value of \\( x \\)?</p>
-
+what is the value of \\(x\\)?
 <div class="options">
-  <label class="option"><input type="radio" name="q21" value="A"> \\( 2\\sqrt{15} \\)</label>
-  <label class="option"><input type="radio" name="q21" value="B"> \\( 4\\sqrt{5} \\)</label>
-  <label class="option"><input type="radio" name="q21" value="C"> \\( 5\\sqrt{2} \\)</label>
-  <label class="option"><input type="radio" name="q21" value="D"> \\( \\sqrt{58} \\)</label>
-  <label class="option"><input type="radio" name="q21" value="E"> \\( 50 \\)</label>
-  <label class="option"><input type="radio" name="q21" value="F"> \\( 58 \\)</label>
-  <label class="option"><input type="radio" name="q21" value="G"> \\( 60 \\)</label>
-  <label class="option"><input type="radio" name="q21" value="H"> \\( 80 \\)</label>
+  <label class="option"><input type="radio" name="q21" value="A"> \\(2\\sqrt{15}\\)</label>
+  <label class="option"><input type="radio" name="q21" value="B"> \\(4\\sqrt{5}\\)</label>
+  <label class="option"><input type="radio" name="q21" value="C"> \\(5\\sqrt{2}\\)</label>
+  <label class="option"><input type="radio" name="q21" value="D"> \\(\\sqrt{58}\\)</label>
+  <label class="option"><input type="radio" name="q21" value="E"> \\(50\\)</label>
+  <label class="option"><input type="radio" name="q21" value="F"> \\(58\\)</label>
+  <label class="option"><input type="radio" name="q21" value="G"> \\(60\\)</label>
+  <label class="option"><input type="radio" name="q21" value="H"> \\(80\\)</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 2</div>
+Evaluate
 
-    `<div class="question-number">Question 2</div>
-
-<p>Evaluate</p>
-
-<p>
-\\[
-\\int_{9}^{16} \\left( \\frac{1}{\\sqrt{x}} + \\sqrt{x} \\right)^2 \\, dx
-\\; - \\;
-\\int_{9}^{16} \\left( \\frac{1}{\\sqrt{x}} - \\sqrt{x} \\right)^2 \\, dx
-\\]
-</p>
-
+\\[\\int_9^{16} \\left(\\dfrac{1}{\\sqrt{x}} + \\sqrt{x}\\right)^2 dx - \\int_9^{16} \\left(\\dfrac{1}{\\sqrt{x}} - \\sqrt{x}\\right)^2 dx\\]
 <div class="options">
-  <label class="option"><input type="radio" name="q22" value="A"> \\( 0 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="B"> \\( 2 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="C"> \\( 4 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="D"> \\( 7 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="E"> \\( 14 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="F"> \\( 28 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="G"> \\( 75 \\)</label>
-  <label class="option"><input type="radio" name="q22" value="H"> \\( 175 \\)</label>
+  <label class="option"><input type="radio" name="q22" value="A"> \\(0\\)</label>
+  <label class="option"><input type="radio" name="q22" value="B"> \\(2\\)</label>
+  <label class="option"><input type="radio" name="q22" value="C"> \\(4\\)</label>
+  <label class="option"><input type="radio" name="q22" value="D"> \\(7\\)</label>
+  <label class="option"><input type="radio" name="q22" value="E"> \\(14\\)</label>
+  <label class="option"><input type="radio" name="q22" value="F"> \\(28\\)</label>
+  <label class="option"><input type="radio" name="q22" value="G"> \\(75\\)</label>
+  <label class="option"><input type="radio" name="q22" value="H"> \\(175\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 3</div>
+Consider the claim:
 
-    `<div class="question-number">Question 3</div>
+For all positive real numbers \\(x\\) and \\(y\\),
 
-<p>Consider the claim:</p>
+\\[\\sqrt{x^y} = x^{\\sqrt{y}}\\]
 
-<p style="margin-left: 2em;">
-For all positive real numbers \\( x \\) and \\( y \\), <br>
-\\[ \\sqrt{x^y} = x^{\\sqrt{y}} \\]
-</p>
+Which of the following is/are a <strong>counterexample</strong> to the claim?
 
-<p>Which of the following is/are a <strong>counterexample</strong> to the claim?</p>
+I. \\(x = 1\\), \\(y = 16\\)
 
-<ul>
-  <li>I &nbsp;&nbsp;&nbsp; \\( x = 1, \\; y = 16 \\)</li>
-  <li>II &nbsp;&nbsp; \\( x = 2, \\; y = 8 \\)</li>
-  <li>III &nbsp; \\( x = 3, \\; y = 4 \\)</li>
-</ul>
+II. \\(x = 2\\), \\(y = 8\\)
 
+III. \\(x = 3\\), \\(y = 4\\)
 <div class="options">
   <label class="option"><input type="radio" name="q23" value="A"> none of them</label>
   <label class="option"><input type="radio" name="q23" value="B"> I only</label>
@@ -1358,36 +1113,29 @@ For all positive real numbers \\( x \\) and \\( y \\), <br>
   <label class="option"><input type="radio" name="q23" value="G"> II and III only</label>
   <label class="option"><input type="radio" name="q23" value="H"> I, II and III</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 4</div>
+A student attempts to answer the following question.
 
-    `<div class="question-number">Question 4</div>
+What is the largest number of consecutive odd integers that are all prime?
 
-<p>A student attempts to answer the following question:</p>
+The student's attempt is as follows:
 
-<p style="margin-left: 1em;">
-  What is the largest number of consecutive odd integers that are all prime?
-</p>
+I. There are two consecutive odd integers that are prime (for example: \\(17, 19\\)).
 
-<p>The student’s attempt is as follows:</p>
+II. Any three consecutive odd integers can be written in the form \\(n - 2, n, n + 2\\) for some \\(n\\).
 
-<ol style="list-style-type: upper-roman; margin-left: 2em;">
-  <li>There are two consecutive odd integers that are prime (for example: 17, 19).</li>
-  <li>Any three consecutive odd integers can be written in the form <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;\\( n - 2, \\; n, \\; n + 2 \\) for some \\( n \\).</li>
-  <li>If \\( n \\) is one more than a multiple of 3, then \\( n + 2 \\) is a multiple of 3.</li>
-  <li>If \\( n \\) is two more than a multiple of 3, then \\( n - 2 \\) is a multiple of 3.</li>
-  <li>The only other possibility is that \\( n \\) is a multiple of 3.</li>
-  <li>In each case, one of the integers is a multiple of 3, so not prime.</li>
-  <li>Therefore the largest number of consecutive odd integers that are all prime is two.</li>
-</ol>
+III. If \\(n\\) is one more than a multiple of \\(3\\), then \\(n + 2\\) is a multiple of \\(3\\).
 
-<p>Which of the following best describes this attempt?</p>
+IV. If \\(n\\) is two more than a multiple of \\(3\\), then \\(n - 2\\) is a multiple of \\(3\\).
 
+V. The only other possibility is that \\(n\\) is a multiple of \\(3\\).
+
+VI. In each case, one of the integers is a multiple of \\(3\\), so not prime.
+
+VII. Therefore the largest number of consecutive odd integers that are all prime is two.
+
+Which of the following best describes this attempt?
 <div class="options">
   <label class="option"><input type="radio" name="q24" value="A"> It is completely correct.</label>
   <label class="option"><input type="radio" name="q24" value="B"> It is incorrect, and the first error is on line I.</label>
@@ -1398,659 +1146,249 @@ For all positive real numbers \\( x \\) and \\( y \\), <br>
   <label class="option"><input type="radio" name="q24" value="G"> It is incorrect, and the first error is on line VI.</label>
   <label class="option"><input type="radio" name="q24" value="H"> It is incorrect, and the first error is on line VII.</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 5</div>
+Consider the two statements
 
-    `<div class="question-number">Question 5</div>
+R: \\(\\ k\\) is an integer multiple of \\(\\pi\\)
 
-<p>Consider the two statements:</p>
+S: \\(\\ \\int_0^k \\sin 2x\\,dx = 0\\)
 
-<p>
-  R:&nbsp;&nbsp;\\( k \\) is an integer multiple of \\( \\pi \\)<br>
-  S:&nbsp;&nbsp;\\[ \\int_{0}^{k} \\sin 2x \\, dx = 0 \\]
-</p>
-
-<p>Which of the following statements is true?</p>
-
+Which of the following statements is true?
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q25" value="A">
-    R is&nbsp;<strong>necessary and sufficient</strong>&nbsp;for S.
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q25" value="B">
-    R is&nbsp;<strong>necessary</strong>&nbsp;but&nbsp;<strong>not sufficient</strong>&nbsp;for S.
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q25" value="C">
-    R is&nbsp;<strong>sufficient</strong>&nbsp;but&nbsp;<strong>not necessary</strong>&nbsp;for S.
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q25" value="D">
-    R is&nbsp;<strong>not necessary</strong>&nbsp;and&nbsp;<strong>not sufficient</strong>&nbsp;for S.
-  </label>
+  <label class="option"><input type="radio" name="q25" value="A"> R is <strong>necessary and sufficient</strong> for S.</label>
+  <label class="option"><input type="radio" name="q25" value="B"> R is <strong>necessary</strong> but <strong>not sufficient</strong> for S.</label>
+  <label class="option"><input type="radio" name="q25" value="C"> R is <strong>sufficient</strong> but <strong>not necessary</strong> for S.</label>
+  <label class="option"><input type="radio" name="q25" value="D"> R is <strong>not necessary</strong> and <strong>not sufficient</strong> for S.</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 6</div>
+Consider the following equation where \\(a\\) is a real number and \\(a > 1\\):
 
-    `<div class="question-number">Question 6</div>
+\\((*)\\ \\ a^x = x\\)
 
-<p>
-  Consider the following equation where \\( a \\) is a real number and \\( a &gt; 1 \\):
-</p>
+Which of the following equations must have the same number of real solutions as \\((*)\\)?
 
-<p>
-  \\[ (*) \\qquad a^x = x \\]
-</p>
+I. \\(\\log_a x = x\\)
 
-<p>
-  Which of the following equations must have the same number of real solutions as \\((*)\\)?
-</p>
+II. \\(a^{2x} = x^2\\)
 
-<p>
-  I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\( \\log_a x = x \\)<br>
-  II&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\( a^{2x} = x^2 \\)<br>
-  III&nbsp;&nbsp;&nbsp;\\( a^{2x} = 2x \\)
-</p>
-
+III. \\(a^{2x} = 2x\\)
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q26" value="A">
-    none of them
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="B">
-    I only
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="C">
-    II only
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="D">
-    III only
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="E">
-    I and II only
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="F">
-    I and III only
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="G">
-    II and III only
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q26" value="H">
-    I, II and III
-  </label>
+  <label class="option"><input type="radio" name="q26" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q26" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q26" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q26" value="D"> III only</label>
+  <label class="option"><input type="radio" name="q26" value="E"> I and II only</label>
+  <label class="option"><input type="radio" name="q26" value="F"> I and III only</label>
+  <label class="option"><input type="radio" name="q26" value="G"> II and III only</label>
+  <label class="option"><input type="radio" name="q26" value="H"> I, II and III</label>
 </div>
-
-
-
 `,
+  `<div class="question-number">Question 7</div>
+The graph of the line \\(ax + by = c\\) is drawn, where \\(a\\), \\(b\\) and \\(c\\) are real non-zero constants.
 
-    `<div class="question-number">Question 7</div>
-
-<p>
-  The graph of the line \\( ax + by = c \\) is drawn, where \\( a, b \\) and \\( c \\) are real non-zero constants.
-</p>
-
-<p>
-  Which one of the following is a <strong>necessary</strong> but <u>not sufficient</u> condition for the line to have a positive gradient <strong>and</strong> a positive \\( y \\)-intercept?
-</p>
-
+Which one of the following is a <strong>necessary</strong> but <strong>not sufficient</strong> condition for the line to have a positive gradient <strong>and</strong> a positive \\(y\\)-intercept?
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q27" value="A">
-    \\( \\dfrac{c}{b} &gt; 0 \\quad \\text{and} \\quad \\dfrac{a}{b} &lt; 0 \\)
-  </label>
-  <label class="option">
-    <input type="radio" name="q27" value="B">
-    \\( \\dfrac{c}{b} &lt; 0 \\quad \\text{and} \\quad \\dfrac{a}{b} &gt; 0 \\)
-  </label>
-  <label class="option">
-    <input type="radio" name="q27" value="C">
-    \\( a &gt; b &gt; c \\)
-  </label>
-  <label class="option">
-    <input type="radio" name="q27" value="D">
-    \\( a &lt; b &lt; c \\)
-  </label>
-  <label class="option">
-    <input type="radio" name="q27" value="E">
-    \\( a \\text{ and } c \\text{ have opposite signs} \\)
-  </label>
-  <label class="option">
-    <input type="radio" name="q27" value="F">
-    \\( a \\text{ and } c \\text{ have the same sign} \\)
-  </label>
+  <label class="option"><input type="radio" name="q27" value="A"> \\(\\dfrac{c}{b} > 0\\) and \\(\\dfrac{a}{b} < 0\\)</label>
+  <label class="option"><input type="radio" name="q27" value="B"> \\(\\dfrac{c}{b} < 0\\) and \\(\\dfrac{a}{b} > 0\\)</label>
+  <label class="option"><input type="radio" name="q27" value="C"> \\(a > b > c\\)</label>
+  <label class="option"><input type="radio" name="q27" value="D"> \\(a < b < c\\)</label>
+  <label class="option"><input type="radio" name="q27" value="E"> \\(a\\) and \\(c\\) have opposite signs</label>
+  <label class="option"><input type="radio" name="q27" value="F"> \\(a\\) and \\(c\\) have the same sign</label>
 </div>
-
-
 `,
+  `<div class="question-number">Question 8</div>
+A student draws a triangle that is acute-angled or obtuse-angled but <strong>not</strong> right-angled.
 
-    `<div class="question-number">Question 8</div>
+The student counts the number of straight lines that divide the triangle into two triangles, <strong>at least one</strong> of which is right-angled.
 
-<p>
-  A student draws a triangle that is acute-angled or obtuse-angled but <strong>not</strong> right-angled.
-</p>
+Which of the following statements is/are true?
 
-<p>
-  The student counts the number of straight lines that divide the triangle into two triangles, <strong>at least one</strong> of which is right-angled.
-</p>
+I. The student can draw a triangle for which there is exactly \\(1\\) such straight line.
 
-<p>
-  Which of the following statements is/are true?
-</p>
+II. The student can draw a triangle for which there are exactly \\(2\\) such straight lines.
 
-<ul>
-  <li>I. The student can draw a triangle for which there is exactly 1 such straight line.</li>
-  <li>II. The student can draw a triangle for which there are exactly 2 such straight lines.</li>
-  <li>III. The student can draw a triangle for which there are exactly 3 such straight lines.</li>
-</ul>
-
+III. The student can draw a triangle for which there are exactly \\(3\\) such straight lines.
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q28" value="A">
-    none of them
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="B">
-    I only
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="C">
-    II only
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="D">
-    III only
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="E">
-    I and II only
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="F">
-    I and III only
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="G">
-    II and III only
-  </label>
-  <label class="option">
-    <input type="radio" name="q28" value="H">
-    I, II and III
-  </label>
+  <label class="option"><input type="radio" name="q28" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q28" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q28" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q28" value="D"> III only</label>
+  <label class="option"><input type="radio" name="q28" value="E"> I and II only</label>
+  <label class="option"><input type="radio" name="q28" value="F"> I and III only</label>
+  <label class="option"><input type="radio" name="q28" value="G"> II and III only</label>
+  <label class="option"><input type="radio" name="q28" value="H"> I, II and III</label>
 </div>
-
-
-
 `,
+  `<div class="question-number">Question 9</div>
+Consider the following statement about a pentagon P:
 
-    `<div class="question-number">Question 9</div>
+\\((*)\\ \\) <strong>If</strong> at least one of the interior angles in P is \\(108Ãƒâ€šÃ‚Â°\\), <strong>then</strong> all the interior angles in P form an arithmetic sequence.
 
-<p>
-  Consider the following statement about a pentagon P:
-</p>
+Which of the following is/are true?
 
-<p>
-  <strong>(∗)</strong>&nbsp; <em>If</em> at least one of the interior angles in P is 108°, <em>then</em> all the interior angles in P form an arithmetic sequence.
-</p>
+I. The statement \\((*)\\)
 
-<p>
-  Which of the following is/are true?
-</p>
+II. The contrapositive of \\((*)\\)
 
-<ul>
-  <li>I. The statement (∗)</li>
-  <li>II. The contrapositive of (∗)</li>
-  <li>III. The converse of (∗)</li>
-</ul>
-
+III. The converse of \\((*)\\)
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q29" value="A">
-    none of them
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="B">
-    I only
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="C">
-    II only
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="D">
-    III only
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="E">
-    I and II only
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="F">
-    I and III only
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="G">
-     II and III only
-  </label>
-  <label class="option">
-    <input type="radio" name="q29" value="H">
-    I, II and III
-  </label>
+  <label class="option"><input type="radio" name="q29" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q29" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q29" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q29" value="D"> III only</label>
+  <label class="option"><input type="radio" name="q29" value="E"> I and II only</label>
+  <label class="option"><input type="radio" name="q29" value="F"> I and III only</label>
+  <label class="option"><input type="radio" name="q29" value="G"> II and III only</label>
+  <label class="option"><input type="radio" name="q29" value="H"> I, II and III</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 10</div>
+Here is an attempt to solve the inequality \\(x^4 - 2x^2 - 3 < 0\\) by completing the square:
 
-    `<div class="question-number">Question 10</div>
+\\(x^4 - 2x^2 - 3 < 0\\)
 
-<p>
-Here is an attempt to solve the inequality
-</p>
+I. if and only if \\(x^4 - 2x^2 + 1 < 4\\)
 
-<p>\\[
-x^4 - 2x^2 - 3 < 0
-\\]</p>
+II. if and only if \\((x^2 - 1)^2 < 4\\)
 
-<p>by completing the square:</p>
+III. if and only if \\(-2 < x^2 - 1 < 2\\)
 
-<p>\\[
-x^4 - 2x^2 - 3 < 0
-\\]</p>
+IV. if and only if \\(x^2 - 1 < 2\\)
 
-<ul>
-  <li>I &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( x^4 - 2x^2 + 1 < 4 \\)</li>
-  <li>II &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( (x^2 - 1)^2 < 4 \\)</li>
-  <li>III &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( -2 < x^2 - 1 < 2 \\)</li>
-  <li>IV &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( x^2 - 1 < 2 \\)</li>
-  <li>V &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( x^2 < 3 \\)</li>
-  <li>VI &nbsp;&nbsp;&nbsp; if and only if &nbsp; \\( -\\sqrt{3} < x < \\sqrt{3} \\)</li>
-</ul>
+V. if and only if \\(x^2 < 3\\)
 
-<p>Which of the following statements is true?</p>
+VI. if and only if \\(-\\sqrt{3} < x < \\sqrt{3}\\)
 
+Which of the following statements is true?
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q30" value="A">
-     The argument is completely correct.
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q30" value="B">
-    The first error occurs in line I.
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q30" value="C">
-    The first error occurs in line II.
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q30" value="D">
-    The first error occurs in line III.
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q30" value="E">
-    The first error occurs in line IV.
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q30" value="F">
-    The first error occurs in line V.
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q30" value="G">
-    The first error occurs in line VI.
-  </label>
+  <label class="option"><input type="radio" name="q30" value="A"> The argument is completely correct.</label>
+  <label class="option"><input type="radio" name="q30" value="B"> The first error occurs in line I.</label>
+  <label class="option"><input type="radio" name="q30" value="C"> The first error occurs in line II.</label>
+  <label class="option"><input type="radio" name="q30" value="D"> The first error occurs in line III.</label>
+  <label class="option"><input type="radio" name="q30" value="E"> The first error occurs in line IV.</label>
+  <label class="option"><input type="radio" name="q30" value="F"> The first error occurs in line V.</label>
+  <label class="option"><input type="radio" name="q30" value="G"> The first error occurs in line VI.</label>
 </div>
-
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 11</div>
+In this question, \\(k\\) is a positive integer.
 
-    `<div class="question-number">Question 11</div>
+Consider the following theorem:
 
-<p>In this question, \\( k \\) is a positive integer.</p>
+\\((*)\\ \\) <strong>If</strong> \\(2^k + 1\\) is a prime, <strong>then</strong> \\(k\\) is a power of \\(2\\).
 
-<p>Consider the following theorem:</p>
+Which of the following statements, taken individually, is/are equivalent to \\((*)\\)?
 
-<p>
-  <strong>If</strong> \\( 2^k + 1 \\) is a prime, <strong>then</strong> \\( k \\) is a power of 2.
-  &nbsp;&nbsp;&nbsp;\\((\\ast)\\)
-</p>
+I. <strong>If</strong> \\(k\\) is a power of \\(2\\), <strong>then</strong> \\(2^k + 1\\) is prime.
 
-<p>Which of the following statements, taken individually, is/are equivalent to \\((\\ast)\\)?</p>
+II. \\(2^k + 1\\) is <strong>not</strong> prime <strong>only if</strong> \\(k\\) is <strong>not</strong> a power of \\(2\\).
 
-<ul>
-  <li>I &nbsp;&nbsp;&nbsp; <strong>If</strong> \\( k \\) is a power of 2, <strong>then</strong> \\( 2^k + 1 \\) is prime.</li>
-  <li>II &nbsp;&nbsp;&nbsp; \\( 2^k + 1 \\) is <strong>not prime only if</strong> \\( k \\) is <strong>not</strong> a power of 2.</li>
-  <li>III &nbsp;&nbsp;&nbsp; A <strong>sufficient</strong> condition for \\( k \\) to be a power of 2 is that \\( 2^k + 1 \\) is prime.</li>
-</ul>
+III. A <strong>sufficient</strong> condition for \\(k\\) to be a power of \\(2\\) is that \\(2^k + 1\\) is prime.
 
-<p>Select the row that correctly identifies which of these statements are logically equivalent to \\((\\ast)\\).</p>
-
-<table border="1" cellspacing="0" cellpadding="6">
-  <thead>
-    <tr>
-      <th>Option</th>
-      <th>Statement I<br>is equivalent to \\((\\ast)\\)</th>
-      <th>Statement II<br>is equivalent to \\((\\ast)\\)</th>
-      <th>Statement III<br>is equivalent to \\((\\ast)\\)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="A"> </label></td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="B"> </label></td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="C"> </label></td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="D"> </label></td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="E"> </label></td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="F"> </label></td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="G"> </label></td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><label class="option"><input type="radio" name="q31" value="H"> </label></td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-    </tr>
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-`,
-
-    `<div class="question-number">Question 12</div>
-
-<p>In this question, \\( p \\) is a real constant.</p>
-
-<p>
-The equation
-\\[
-\\sin x \\cos^2 x = p^2 \\sin x
-\\]
-has \\( n \\) distinct solutions in the range \\( 0 \\leq x \\leq 2\\pi \\).
-</p>
-
-<p>Which of the following statements is/are true?</p>
-
-<ul>
-  <li>I &nbsp;&nbsp;&nbsp; \\( n = 3 \\) is <strong>sufficient</strong> for \\( p &gt; 1 \\)</li>
-  <li>II &nbsp;&nbsp;&nbsp; \\( n = 7 \\) <strong>only if</strong> \\( -1 &lt; p &lt; 1 \\)</li>
-</ul>
-
+Each option gives the assignments as (I equiv to \\((*)\\), II equiv to \\((*)\\), III equiv to \\((*)\\)).
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q32" value="A">
-    none of them
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q32" value="B">
-    I only
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q32" value="C">
-    II only
-  </label><br>
-  <label class="option">
-    <input type="radio" name="q32" value="D">
-    I and II
-  </label>
+  <label class="option"><input type="radio" name="q31" value="A"> Yes, Yes, Yes</label>
+  <label class="option"><input type="radio" name="q31" value="B"> Yes, Yes, No</label>
+  <label class="option"><input type="radio" name="q31" value="C"> Yes, No, Yes</label>
+  <label class="option"><input type="radio" name="q31" value="D"> Yes, No, No</label>
+  <label class="option"><input type="radio" name="q31" value="E"> No, Yes, Yes</label>
+  <label class="option"><input type="radio" name="q31" value="F"> No, Yes, No</label>
+  <label class="option"><input type="radio" name="q31" value="G"> No, No, Yes</label>
+  <label class="option"><input type="radio" name="q31" value="H"> No, No, No</label>
 </div>
-
-
-
-
 `,
+  `<div class="question-number">Question 12</div>
+In this question, \\(p\\) is a real constant.
 
-    `<div class="question-number">Question 13</div>
+The equation \\(\\sin x \\cos^2 x = p^2 \\sin x\\) has \\(n\\) distinct solutions in the range \\(0 \\leq x \\leq 2\\pi\\)
 
-<p>Let \\( x \\) be a real number.</p>
+Which of the following statements is/are true?
 
-<p>
-Which <strong>one</strong> of the following statements is a <strong>sufficient</strong> condition for
-<strong>exactly three</strong> of the other four statements?
-</p>
+I. \\(n = 3\\) is <strong>sufficient</strong> for \\(p > 1\\)
 
+II. \\(n = 7\\) <strong>only if</strong> \\(-1 < p < 1\\)
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q33" value="A">
-    \\( x \\geq 0 \\)
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q33" value="B">
-    \\( x = 1 \\)
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q33" value="C">
-    \\( x = 0 \\text{ or } x = 1 \\)
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q33" value="D">
-    \\( x \\geq 0 \\text{ or } x \\leq 1 \\)
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q33" value="E">
-    \\( x \\geq 0 \\text{ and } x \\leq 1 \\)
-  </label>
+  <label class="option"><input type="radio" name="q32" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q32" value="B"> I only</label>
+  <label class="option"><input type="radio" name="q32" value="C"> II only</label>
+  <label class="option"><input type="radio" name="q32" value="D"> I and II</label>
 </div>
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 13</div>
+Let \\(x\\) be a real number.
 
-    `<div class="question-number">Question 14</div>
-
-<p>
+Which <strong>one</strong> of the following statements is a <strong>sufficient</strong> condition for <strong>exactly three</strong> of the other four statements?
+<div class="options">
+  <label class="option"><input type="radio" name="q33" value="A"> \\(x \\geq 0\\)</label>
+  <label class="option"><input type="radio" name="q33" value="B"> \\(x = 1\\)</label>
+  <label class="option"><input type="radio" name="q33" value="C"> \\(x = 0\\) or \\(x = 1\\)</label>
+  <label class="option"><input type="radio" name="q33" value="D"> \\(x \\geq 0\\) or \\(x \\leq 1\\)</label>
+  <label class="option"><input type="radio" name="q33" value="E"> \\(x \\geq 0\\) and \\(x \\leq 1\\)</label>
+</div>
+`,
+  `<div class="question-number">Question 14</div>
 Three lines are given by the equations:
-</p>
 
-<p>
-\\[
-\\begin{aligned}
-ax + by + c &= 0 \\\\
-bx + cy + a &= 0 \\\\
-cx + ay + b &= 0
-\\end{aligned}
-\\]
-</p>
+\\[ax + by + c = 0\\]
 
-<p>
-where \\( a, b, c \\) are non-zero real numbers.
-</p>
+\\[bx + cy + a = 0\\]
 
-<p>
+\\[cx + ay + b = 0\\]
+
+where \\(a\\), \\(b\\) and \\(c\\) are non-zero real numbers.
+
 Which one of the following is correct?
-</p>
-
 <div class="options">
-  <label class="option">
-    <input type="radio" name="q34" value="A">
-    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; all three are parallel.
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q34" value="B">
-    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; the third is perpendicular to the other two.
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q34" value="C">
-    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; the third is parallel to &nbsp;\\( y = x \\).
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q34" value="D">
-    <strong>If</strong>&nbsp; two of the lines are parallel,&nbsp; <strong>then</strong>&nbsp; the third is perpendicular to &nbsp;\\( y = x \\).
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q34" value="E">
-    <strong>If</strong>&nbsp; two of the lines are perpendicular,&nbsp; <strong>then</strong>&nbsp; all three meet at a point.
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q34" value="F">
-    <strong>If</strong>&nbsp; two of the lines are perpendicular,&nbsp; <strong>then</strong>&nbsp; the third is parallel to &nbsp;\\( y = x \\).
-  </label><br>
-
-  <label class="option">
-    <input type="radio" name="q34" value="G">
-    <strong>If</strong>&nbsp; two of the lines are perpendicular,&nbsp; <strong>then</strong>&nbsp; the third is perpendicular to &nbsp;\\( y = x \\).
-  </label>
+  <label class="option"><input type="radio" name="q34" value="A"> <strong>If</strong> two of the lines are parallel, <strong>then</strong> all three are parallel.</label>
+  <label class="option"><input type="radio" name="q34" value="B"> <strong>If</strong> two of the lines are parallel, <strong>then</strong> the third is perpendicular to the other two.</label>
+  <label class="option"><input type="radio" name="q34" value="C"> <strong>If</strong> two of the lines are parallel, <strong>then</strong> the third is parallel to \\(y = x\\).</label>
+  <label class="option"><input type="radio" name="q34" value="D"> <strong>If</strong> two of the lines are parallel, <strong>then</strong> the third is perpendicular to \\(y = x\\).</label>
+  <label class="option"><input type="radio" name="q34" value="E"> <strong>If</strong> two of the lines are perpendicular, <strong>then</strong> all three meet at a point.</label>
+  <label class="option"><input type="radio" name="q34" value="F"> <strong>If</strong> two of the lines are perpendicular, <strong>then</strong> the third is parallel to \\(y = x\\).</label>
+  <label class="option"><input type="radio" name="q34" value="G"> <strong>If</strong> two of the lines are perpendicular, <strong>then</strong> the third is perpendicular to \\(y = x\\).</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 15</div>
+The base \\(10\\) number \\(0.03841\\) has the value
 
-    `<div class="question-number">Question 15</div>
+\\[0 \\times 10^{-1} + 3 \\times 10^{-2} + 8 \\times 10^{-3} + 4 \\times 10^{-4} + 1 \\times 10^{-5} = 0.03841\\]
 
-<p>
-The base 10 number 0.03841 has the value
-</p>
+Similarly, the base \\(2\\) number \\(0.01101\\) has the value
 
-<p>
-\\[
-0 \\times 10^{-1} + 3 \\times 10^{-2} + 8 \\times 10^{-3} + 4 \\times 10^{-4} + 1 \\times 10^{-5} = 0.03841
-\\]
-</p>
+\\[0 \\times 2^{-1} + 1 \\times 2^{-2} + 1 \\times 2^{-3} + 0 \\times 2^{-4} + 1 \\times 2^{-5} = \\dfrac{13}{32}\\]
 
-<p>
-Similarly, the base 2 number 0.01101 has the value
-</p>
-
-<p>
-\\[
-0 \\times 2^{-1} + 1 \\times 2^{-2} + 1 \\times 2^{-3} + 0 \\times 2^{-4} + 1 \\times 2^{-5} = \\frac{13}{32}
-\\]
-</p>
-
-<p>
-What is the value of the recurring base 2 number \\( 0.\\dot{0}\\dot{011} = 0.001100110011\\ldots \\)?
-</p>
-
+What is the value of the recurring base \\(2\\) number \\(0.0\\dot{0}1\\dot{1} = 0.001100110011\\ldots\\)?
 <div class="options">
-  <label class="option"><input type="radio" name="q35" value="A"> \\( \\frac{1}{3} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="B"> \\( \\frac{1}{5} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="C"> \\( \\frac{1}{15} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="D"> \\( \\frac{2}{15} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="E"> \\( \\frac{4}{15} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="F"> \\( \\frac{3}{16} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="G"> \\( \\frac{5}{16} \\)</label>
-  <label class="option"><input type="radio" name="q35" value="H"> \\( \\frac{6}{31} \\)</label><br>
+  <label class="option"><input type="radio" name="q35" value="A"> \\(\\dfrac{1}{3}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="B"> \\(\\dfrac{1}{5}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="C"> \\(\\dfrac{1}{15}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="D"> \\(\\dfrac{2}{15}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="E"> \\(\\dfrac{4}{15}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="F"> \\(\\dfrac{3}{16}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="G"> \\(\\dfrac{5}{16}\\)</label>
+  <label class="option"><input type="radio" name="q35" value="H"> \\(\\dfrac{6}{31}\\)</label>
 </div>
-
-
-
-
-
 `,
+  `<div class="question-number">Question 16</div>
+A sequence is defined by:
 
-    `<div class="question-number">Question 16</div>
+\\[u_1 = a\\]
 
-<p>A sequence is defined by:</p>
+\\[u_2 = b\\]
 
-<p>
-\\[
-\\begin{aligned}
-u_1 &= a \\\\
-u_2 &= b \\\\
-u_{n+2} &= u_n + u_{n+1} \\quad \\text{for } n \\geq 1
-\\end{aligned}
-\\]
-</p>
+\\[u_{n+2} = u_n + u_{n+1}\\ \\text{for } n \\geq 1\\]
 
-<p>
-where \\( a \\) and \\( b \\) are positive integers. The highest common factor of \\( a \\) and \\( b \\) is 7.
-</p>
+where \\(a\\) and \\(b\\) are positive integers. The highest common factor of \\(a\\) and \\(b\\) is \\(7\\).
 
-<p>Which of the following statements <strong>must</strong> be true?</p>
+Which of the following statements <strong>must</strong> be true?
 
-<p>I.&nbsp;&nbsp;&nbsp;&nbsp;\\( u_{2023} \\) is a multiple of 7</p>
-<p>II.&nbsp;&nbsp;&nbsp;If \\( u_1 \\) is not a factor of \\( u_2 \\), then \\( u_1 \\) is not a factor of \\( u_n \\) for any \\( n > 1 \\)</p>
-<p>III.&nbsp;&nbsp;The highest common factor of \\( u_1 \\) and \\( u_5 \\) is 7</p>
+I. \\(u_{2023}\\) is a multiple of \\(7\\)
 
+II. If \\(u_1\\) is not a factor of \\(u_2\\), then \\(u_1\\) is not a factor of \\(u_n\\) for any \\(n > 1\\)
+
+III. The highest common factor of \\(u_1\\) and \\(u_5\\) is \\(7\\)
 <div class="options">
   <label class="option"><input type="radio" name="q36" value="A"> none of them</label>
   <label class="option"><input type="radio" name="q36" value="B"> I only</label>
@@ -2059,109 +1397,51 @@ where \\( a \\) and \\( b \\) are positive integers. The highest common factor o
   <label class="option"><input type="radio" name="q36" value="E"> I and II only</label>
   <label class="option"><input type="radio" name="q36" value="F"> I and III only</label>
   <label class="option"><input type="radio" name="q36" value="G"> II and III only</label>
-  <label class="option"><input type="radio" name="q36" value="H"> I, II and III</label><br>
+  <label class="option"><input type="radio" name="q36" value="H"> I, II and III</label>
 </div>
-
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 17</div>
+The ceiling of \\(x\\), written \\(\\lceil x \\rceil\\), is defined to be the value of \\(x\\) rounded up to the nearest integer.
 
+For example: \\(\\lceil \\pi \\rceil = 4\\), \\(\\lceil 2.1 \\rceil = 3\\), \\(\\lceil 8 \\rceil = 8\\)
 
-    `<div class="question-number">Question 17</div>
-
-<p>
-The ceiling of \\( x \\), written \\( \\lceil x \\rceil \\), is defined to be the value of \\( x \\) rounded up to the nearest integer.
-</p>
-
-<p>
-For example:
-\\[
-\\lceil \\pi \\rceil = 4, \\quad \\lceil 2.1 \\rceil = 3, \\quad \\lceil 8 \\rceil = 8
-\\]
-</p>
-
-<p>
 What is the value of the following integral?
-</p>
 
-<p>
-\\[
-\\int_0^{99} 2^{\\lceil x \\rceil} \\, dx
-\\]
-</p>
-
+\\[\\int_0^{99} 2^{\\lceil x \\rceil}\\,dx\\]
 <div class="options">
-  <label class="option"><input type="radio" name="q37" value="A"> \\( 2^{99} \\)</label>
-  <label class="option"><input type="radio" name="q37" value="B"> \\( 2^{99} - 1 \\)</label>
-  <label class="option"><input type="radio" name="q37" value="C"> \\( 2^{99} - 2 \\)</label>
-  <label class="option"><input type="radio" name="q37" value="D"> \\( 2^{100} \\)</label>
-  <label class="option"><input type="radio" name="q37" value="E"> \\( 2^{100} - 1 \\)</label>
-  <label class="option"><input type="radio" name="q37" value="F"> \\( 2^{100} - 2 \\)</label><br>
+  <label class="option"><input type="radio" name="q37" value="A"> \\(2^{99}\\)</label>
+  <label class="option"><input type="radio" name="q37" value="B"> \\(2^{99} - 1\\)</label>
+  <label class="option"><input type="radio" name="q37" value="C"> \\(2^{99} - 2\\)</label>
+  <label class="option"><input type="radio" name="q37" value="D"> \\(2^{100}\\)</label>
+  <label class="option"><input type="radio" name="q37" value="E"> \\(2^{100} - 1\\)</label>
+  <label class="option"><input type="radio" name="q37" value="F"> \\(2^{100} - 2\\)</label>
 </div>
-
-
-
-
-
-
 `,
-
-    `<div class="question-number">Question 18</div>
-
-<p>
-The equation 
-\\[
-x^4 + bx^2 + c = 0
-\\]
-has four distinct real roots <strong>if and only if</strong> which of the following conditions is satisfied?
-</p>
-
+  `<div class="question-number">Question 18</div>
+The equation \\(x^4 + bx^2 + c = 0\\) has four distinct real roots <strong>if and only if</strong> which of the following conditions is satisfied?
 <div class="options">
-  <label class="option"><input type="radio" name="q38" value="A"> \\( b^2 > 4c \\)</label>
-  <label class="option"><input type="radio" name="q38" value="B"> \\( b^2 < 4c \\)</label>
-  <label class="option"><input type="radio" name="q38" value="C"> \\( c > 0 \\quad \\text{and} \\quad b > 2\\sqrt{c} \\)</label>
-  <label class="option"><input type="radio" name="q38" value="D"> \\( c > 0 \\quad \\text{and} \\quad b < -2\\sqrt{c} \\)</label>
-  <label class="option"><input type="radio" name="q38" value="E"> \\( c < 0 \\quad \\text{and} \\quad b < 0 \\)</label>
-  <label class="option"><input type="radio" name="q38" value="F"> \\( c < 0 \\quad \\text{and} \\quad b > 0 \\)</label>
+  <label class="option"><input type="radio" name="q38" value="A"> \\(b^2 > 4c\\)</label>
+  <label class="option"><input type="radio" name="q38" value="B"> \\(b^2 < 4c\\)</label>
+  <label class="option"><input type="radio" name="q38" value="C"> \\(c > 0\\) and \\(b > 2\\sqrt{c}\\)</label>
+  <label class="option"><input type="radio" name="q38" value="D"> \\(c > 0\\) and \\(b < -2\\sqrt{c}\\)</label>
+  <label class="option"><input type="radio" name="q38" value="E"> \\(c < 0\\) and \\(b < 0\\)</label>
+  <label class="option"><input type="radio" name="q38" value="F"> \\(c < 0\\) and \\(b > 0\\)</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 19</div>
+In this question, \\(f(x)\\) is a non-constant polynomial, and \\(g(x) = x f'(x)\\)
 
+\\(f(x) = 0\\) for exactly \\(M\\) real values of \\(x\\).
 
-    `<div class="question-number">Question 19</div>
+\\(g(x) = 0\\) for exactly \\(N\\) real values of \\(x\\).
 
-<p>
-In this question, \\( f(x) \\) is a non-constant polynomial, and \\( g(x) = x f'(x) \\).
-</p>
-
-<p>
-\\[
-f(x) = 0 \\quad \\text{for exactly } M \\text{ real values of } x.
-\\]
-\\[
-g(x) = 0 \\quad \\text{for exactly } N \\text{ real values of } x.
-\\]
-</p>
-
-<p>
 Which of the following statements is/are true?
-</p>
 
-<p>
-I.&nbsp;&nbsp;&nbsp;It is possible that \\( M &lt; N \\)<br>
-II.&nbsp;&nbsp;It is possible that \\( M = N \\)<br>
-III.&nbsp;&nbsp;It is possible that \\( M &gt; N \\)
-</p>
+I. It is possible that \\(M < N\\)
 
+II. It is possible that \\(M = N\\)
+
+III. It is possible that \\(M > N\\)
 <div class="options">
   <label class="option"><input type="radio" name="q39" value="A"> none of them</label>
   <label class="option"><input type="radio" name="q39" value="B"> I only</label>
@@ -2170,60 +1450,35 @@ III.&nbsp;&nbsp;It is possible that \\( M &gt; N \\)
   <label class="option"><input type="radio" name="q39" value="E"> I and II only</label>
   <label class="option"><input type="radio" name="q39" value="F"> I and III only</label>
   <label class="option"><input type="radio" name="q39" value="G"> II and III only</label>
-  <label class="option"><input type="radio" name="q39" value="H">I, II and III</label>
+  <label class="option"><input type="radio" name="q39" value="H"> I, II and III</label>
 </div>
-
-
-
-
-
-
 `,
+  `<div class="question-number">Question 20</div>
+Let \\(f\\) be a polynomial with real coefficients.
 
-    `<div class="question-number">Question 20</div>
+The integral \\(I_{p,q}\\) where \\(p < q\\) is defined by
 
-<p>
-Let \\( f \\) be a polynomial with real coefficients.
-</p>
+\\[I_{p,q} = \\int_p^q \\big(f(x)\\big)^2 - \\big(f(|x|)\\big)^2\\,dx\\]
 
-<p>
-The integral \\( I_{p,q} \\), where \\( p &lt; q \\), is defined by:
-</p>
-
-<p>
-\\[
-I_{p,q} = \\int_{p}^{q} \\left( (f(x))^2 - \\left( f(|x|) \\right)^2 \\right) \\, \\mathrm{d}x
-\\]
-</p>
-
-<p>
 Which of the following statements must be true?
-</p>
 
-<p>
-1.&emsp; \\( I_{p,q} = 0 \\) <strong>only if</strong> \\( 0 &lt; p \\)<br>
-2.&emsp; \\( f'(x) &lt; 0 \\) for all \\( x \\) <strong>only if</strong> \\( I_{p,q} &lt; 0 \\) for all \\( p &lt; q &lt; 0 \\)<br>
-3.&emsp; \\( I_{p,q} &gt; 0 \\) <strong>only if</strong> \\( p &lt; 0 \\)
-</p>
+1. \\(I_{p,q} = 0\\) <strong>only if</strong> \\(0 < p\\)
 
+2. \\(f'(x) < 0\\) for all \\(x\\) <strong>only if</strong> \\(I_{p,q} < 0\\) for all \\(p < q < 0\\)
+
+3. \\(I_{p,q} > 0\\) <strong>only if</strong> \\(p < 0\\)
 <div class="options">
-  <label class="option"><input type="radio" name="q40" value="A"> none of them</label><br>
-  <label class="option"><input type="radio" name="q40" value="B"> 1 only</label><br>
-  <label class="option"><input type="radio" name="q40" value="C"> 2 only</label><br>
-  <label class="option"><input type="radio" name="q40" value="D"> 3 only</label><br>
-  <label class="option"><input type="radio" name="q40" value="E"> 1 and 2 only</label><br>
-  <label class="option"><input type="radio" name="q40" value="F"> 1 and 3 only</label><br>
+  <label class="option"><input type="radio" name="q40" value="A"> none of them</label>
+  <label class="option"><input type="radio" name="q40" value="B"> 1 only</label>
+  <label class="option"><input type="radio" name="q40" value="C"> 2 only</label>
+  <label class="option"><input type="radio" name="q40" value="D"> 3 only</label>
+  <label class="option"><input type="radio" name="q40" value="E"> 1 and 2 only</label>
+  <label class="option"><input type="radio" name="q40" value="F"> 1 and 3 only</label>
+  <label class="option"><input type="radio" name="q40" value="G"> 2 and 3 only</label>
   <label class="option"><input type="radio" name="q40" value="H"> 1, 2 and 3</label>
 </div>
-
-
-
-
-
-
-`,
-
-  ];
+`
+];
 
   function startExam() {
   const nameInput = document.getElementById("student-name").value.trim();
@@ -2922,36 +2177,6 @@ body.ts-exam-done .ts-workspace-btn{
       window.__TS_ATTEMPT_SAVE_RUNNING = false;
     }
   };
-})();
-</script>
-<script id="ts-hotkeys-v1">
-(function () {
-  if (window.__TS_HOTKEYS_V1__) return;
-  window.__TS_HOTKEYS_V1__ = true;
-
-  function isTyping() {
-    var el = document.activeElement;
-    if (!el) return false;
-    var tag = (el.tagName || "").toLowerCase();
-    return tag === "input" || tag === "textarea" || tag === "select" || el.isContentEditable;
-  }
-
-  document.addEventListener("keydown", function (event) {
-    if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    if (isTyping()) return;
-
-    var key = String(event.key || "").toLowerCase();
-    var action = null;
-
-    if (key === "n" && typeof window.nextQuestion === "function") action = window.nextQuestion;
-    if (key === "p" && typeof window.prevQuestion === "function") action = window.prevQuestion;
-    if (key === "f" && typeof window.toggleFlag === "function") action = window.toggleFlag;
-    if (key === "v" && typeof window.openNavigator === "function") action = window.openNavigator;
-
-    if (!action) return;
-    event.preventDefault();
-    action();
-  });
 })();
 </script>
 </body>
