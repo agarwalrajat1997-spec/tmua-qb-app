@@ -1,0 +1,2571 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SAT Math Diagnostic Test 4 — Full Exam Flow</title>
+
+  <!-- Desmos (for calculator-allowed sections only) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+/* =======================================
+   GLOBAL
+======================================= */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #000;
+}
+.hidden { display: none !important; }
+a { color: #2e53da; }
+
+/* =======================================
+   HEADER
+======================================= */
+.header {
+  background-color: #fafbff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+#timer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  display: none; /* hidden on initial screen */
+}
+.header-buttons { display: flex; align-items: center; gap: 20px; }
+
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius: 999px;
+  background:#e8edff;
+  color:#1e2a6f;
+  font-size:12px;
+  margin-left:6px;
+}
+
+/* Calculator icon */
+#calculator-icon {
+  display: none; /* hidden until exam start / allowed */
+  align-items: center;
+  gap: 6px;
+  color: #000;
+  font-size: 15px;
+  cursor: pointer;
+}
+#calculator-icon i {
+  font-size: 18px;
+}
+#calculator-icon:hover {
+  color: #444;
+}
+
+/* =======================================
+   START SCREEN  ✅ Staffs Prep Branding
+======================================= */
+#start-screen {
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+
+  /* Thriving Scholars (orange/yellow) */
+  border: 2px solid #FEC94F;
+  box-shadow: 0 8px 24px rgba(254, 201, 79, 0.28);
+
+  text-align: left;
+  overflow-y: auto;                /* ✅ allows scrolling inside */
+  scrollbar-width: thin;           /* ✅ nice thin scrollbar (Firefox) */
+  scrollbar-color: #FEC94F #FFF1DF;
+}
+
+/* ✅ Optional: style scrollbar for Chrome/Safari */
+#start-screen::-webkit-scrollbar {
+  width: 8px;
+}
+#start-screen::-webkit-scrollbar-thumb {
+  background-color: #FEC94F;
+  border-radius: 4px;
+}
+#start-screen::-webkit-scrollbar-track {
+  background-color: #FFF1DF;
+}
+
+#start-screen h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  color: #670D04;                  /* deep TS accent */
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#start-screen p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+#start-screen label {
+  font-weight: 600;
+  color: #111;
+}
+
+#start-screen input,
+#start-screen select {
+  padding: 8px 10px;
+  width: 250px;
+  margin-top: 4px;
+  border: 1px solid #f0d6a0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#start-screen button {
+  background: #FEC94F;             /* TS yellow */
+  color: #670D04;                  /* readable on yellow */
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(254, 201, 79, 0.35);
+}
+
+#start-screen button:hover {
+  background: #F5B935;             /* slightly deeper yellow/orange */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(254, 201, 79, 0.45);
+}
+
+
+/* =======================================
+   MAIN CONTAINER (EXAM)
+======================================= */
+.container {
+  display: none;
+  flex-direction: row;
+  height: calc(100vh - 56px - 70px);
+  overflow: hidden;
+}
+.container.active {
+  display: flex;
+}
+
+/* =======================================
+   LEFT PANEL (Passage Area)
+======================================= */
+.left-panel {
+  flex: 1;
+  background-color: white;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   RIGHT PANEL (Question Area)
+======================================= */
+.right-panel {
+  flex: 1;
+  background-color: white;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   Optional: Nicer Scrollbars
+======================================= */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* =======================================
+   QUESTION HEADER
+======================================= */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbff; /* 🔹 updated color */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.mark-review {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  margin-left: 12px;
+  flex-grow: 1;
+}
+.mark-review input[type="checkbox"] { display: none; }
+.bookmark-icon {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mark-review input[type="checkbox"]:checked + .bookmark-icon {
+  color: #cf0000;
+}
+
+/* =======================================
+   OPTIONS
+======================================= */
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.option-label:hover { border-color: #2e53da; }
+.option-label.active { background: #f0f4ff; border-color: #2e53da; }
+.option-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e8f0;
+  color: #2e53da;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.option-label.active .option-circle {
+  background: #2e53da;
+  color: #fff;
+}
+.option-label input[type="radio"] { display: none; }
+
+/* =======================================
+   FOOTER
+======================================= */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+  background-color: #fafbff;
+  height: 70px;
+  position: relative;
+}
+.footer-left { width: 200px; display: flex; align-items: center; justify-content: flex-start; }
+.footer-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.footer-right { display: flex; align-items: center; gap: 10px; }
+.footer-center button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.footer-buttons button {
+  background-color: #2e53da;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.footer-buttons button:disabled {
+  background-color: #bbb;
+  cursor: default;
+}
+.student-response-cell { background-color: #fafafa; font-style: italic; white-space: pre-wrap; }
+
+/* =======================================
+   NAVIGATOR POPUP
+======================================= */
+#navigator-popup {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  z-index: 9999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+#navigator-popup .nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#navigator-popup .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+#navigator-popup .legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 16px 0;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border: 1px solid #999; display: inline-block; }
+.legend-current { background: #2e53da; color: #fff; }
+.legend-review { background: red; }
+.legend-unanswered { background: transparent; }
+#navigator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+#navigator-grid button {
+  border: 1px dashed #2e53da;
+  background: #fff;
+  color: #2e53da;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#navigator-grid button.current { background: #2e53da; color: #fff; }
+#navigator-grid button.answered { border: 1px solid #2e53da; }
+#navigator-grid button.review { border: 1px solid red; color: red; }
+
+/* =======================================
+   CALCULATOR POPUP
+======================================= */
+#calculator-popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+  z-index: 10000;
+  width: 640px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+#calculator-drag-handle {
+  cursor: move;
+  background: #fafbff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+#calculator {
+  width: 100%;
+  height: 420px;
+}
+#grading-overlay {
+  backdrop-filter: blur(3px);
+  color: #222;
+}
+.spinner {
+  border-color: #ddd;
+  border-top-color: #0078ff;
+}
+
+/* =======================================
+   FRQ
+======================================= */
+.grading-output {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+textarea.frq-input {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+/* =======================================
+   BREAK SCREEN (between I-B → II-A)
+======================================= */
+#break-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  flex-direction: column;
+}
+.break-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 24px;
+}
+#break-timer {
+  background: #222;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+#skip-break {
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+}
+#skip-break:hover {
+  background: #ccc;
+}
+
+/* =======================================
+   SECTION TRANSITION MODAL
+======================================= */
+#section-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+#section-modal .content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 420px;
+  text-align: center;
+}
+#section-modal button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* =======================================
+   REPORT
+======================================= */
+#report-container {
+  padding: 30px;
+  max-width: 950px;
+  margin: 20px auto 90px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow-y: auto;
+  height: calc(100vh - 56px - 40px);
+}
+#report-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+#report-container th, #report-container td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+#report-container thead { background: #f0f0f0; }
+/* =============================
+   SCORE WIDGET (AP SCORE GAUGE)
+============================= */
+.score-container {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  margin: 30px auto;
+}
+
+.score-container svg {
+  width: 230px;
+  height: 230px;
+}
+
+.score-container .arc {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.score-container .label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  fill: #555;
+}
+
+.score-container .score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  color: #000;
+}
+/* ===============================
+   ABC BUTTON
+================================= */
+.eliminate-mode-btn {
+  background-color: #ffffff;
+  color: #2836d1;
+  border: 2px solid #2836d1;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.eliminate-mode-btn:hover {
+  background-color: #f3f4ff;
+}
+.eliminate-mode-btn.active {
+  background-color: #2836d1;
+  color: #ffffff;
+  border-color: #2836d1;
+}
+#footer-bar {
+  position: relative;
+}
+/* replace the whole block with this */
+#color-bar-bottom {
+  /* position: static by default */
+  width: 100%;
+  height: 1px;      /* your dash bar height */
+  margin: 0;        /* optional: ensure it's flush */
+}
+
+
+/* ===============================
+   STRIKEOUT BUTTONS (Right-side A–D)
+================================= */
+.strike-toggle {
+  display: none; /* Hidden until ABC mode is active */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2e53da;
+  background: transparent;
+  border: 2px solid #2e53da;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elimination-active .strike-toggle {
+  display: flex;
+}
+
+/* Hover animation (subtle blue tint like SAT) */
+.strike-toggle:hover {
+  background-color: #f0f4ff;
+}
+
+/* Don’t change on press — visual effect only occurs on option */
+.strike-toggle.active {
+  background-color: transparent;
+  color: #2e53da;
+}
+
+/* ===============================
+   STRUCK OPTION STYLE
+================================= */
+.option-label.struck {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+  color: #666;
+  text-decoration: line-through;
+  position: relative;
+  opacity: 0.75;
+}
+
+.option-label.struck::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.option-label.struck .option-circle {
+  background: #e0e0e0;
+  color: #888;
+} 
+
+/* =======================================
+   COLOR DASH BAR (appears after exam start)
+======================================= */
+.color-bar {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #444 0 24px,        /* dark gray dash */
+    transparent 24px 26px,
+    #00AEEF 26px 50px,  /* blue dash */
+    transparent 50px 52px,
+    #FFD500 52px 76px,  /* yellow dash */
+    transparent 76px 78px
+  );
+  background-size: 78px 5px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hidden by default (like header on start screen) */
+.color-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#footer-student-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 520px 1fr; /* wider left panel so image can actually grow */
+  gap: 18px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+/* Center the image within the LEFT panel */
+.q-media-left{
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: flex-start;   /* keep at top; change to center if you want vertical centering */
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 240px 1fr; /* bigger left panel */
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+.q-media-left{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Bigger images + faint boundary */
+.q-img-sm{
+  width: 320px;              /* bigger */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+
+/* Mobile tweak */
+@media (max-width: 640px){
+  .q-media{
+    grid-template-columns: 1fr;  /* stack image above text */
+  }
+  .q-media-left{
+    justify-content: flex-start;
+  }
+  .q-img-sm{
+    width: min(360px, 100%);
+  }
+}
+/* ================================
+   OPTION IMAGES (MCQ choices)
+   Make images smaller + organized
+================================ */
+
+/* If your option HTML uses <div class="opt-img-wrap"><img class="opt-img" ...></div> */
+.opt-img-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center inside option */
+  align-items: center;
+  padding: 6px 0;
+}
+
+.opt-img{
+  width: 220px;                /* ✅ CHANGE THIS to control option image size */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);   /* faint boundary */
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+}
+
+ </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title" id="header-title">SAT Math Test 4</span>
+      <span id="calc-badge" class="badge hidden">Calculator Allowed</span>
+    </div>
+    <div class="header-buttons">
+      <div id="timer">00:00</div>
+      <div id="integrity-status" title="The test records tab visibility, focus, fullscreen exits, clipboard actions, and connection changes.">Integrity monitoring active</div>
+      <div id="calculator-icon" onclick="openCalculator()">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Calculator</span>
+      </div>
+    </div>
+  </div>
+
+<div id="start-screen">
+  <h1>Digital SAT Math Test 4</h1>
+  <p>This test will run in 2 math modules continuously:</p>
+  <ul>
+    <li><strong>Module 1:</strong> Math, 22 questions, 35 minutes</li>
+    <li><strong>Module 2:</strong> Math, 22 questions, 35 minutes</li>
+  </ul>
+  <p><em>Once you advance to the next module, you cannot return.</em></p>
+  <p><em>This is a math-only SAT-style diagnostic. The final score shown is a predicted Math score out of 800 based on raw performance.</em></p>
+    <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div>
+        <label>Full Name</label><br>
+        <input type="text" id="student-name">
+      </div>
+      <div>
+        <label>Email (to receive results)</label><br>
+        <input type="email" id="student-email">
+      </div>
+      <div>
+        <label>Exam Session</label><br>
+<select id="test-session">
+  <option value="" selected disabled>Select SAT Session</option>
+  <option value="SAT May 2, 2026">May, 2026</option>
+  <option value="SAT June 6, 2026">June, 2026</option>
+  <option value="SAT August 22, 2026">August, 2026</option>
+  <option value="SAT September 12, 2026">September, 2026</option>
+  <option value="SAT October 3, 2026">October, 2026</option>
+  <option value="SAT November 7, 2026">November, 2026</option>
+  <option value="SAT December 5, 2026">December, 2026</option>
+  <option value="SAT March 6, 2027">March, 2027</option>
+  <option value="SAT May 1, 2027">May, 2027</option>
+  <option value="SAT June 5, 2027">June, 2027</option>
+</select>
+      </div>
+    </div>
+  
+    <button onclick="startExam()">Start Exam</button>
+  </div>
+
+  <div id="color-bar" class="color-bar hidden"></div>
+
+  <!-- Main Exam Container -->
+  <div id="main-container" class="container">
+    <div class="left-panel" id="passage"></div>
+
+    <div class="right-panel">
+      <div>
+        <div class="question-header">
+          <div class="q-number" id="q-number">1</div>
+
+          <label class="mark-review">
+            <input type="checkbox" id="mark-review" onchange="toggleBookmark(this)">
+            <i class="fa-regular fa-bookmark bookmark-icon"></i>
+            Mark for Review
+          </label>
+
+          <!-- ABC toggle -->
+          <button id="eliminateBtn" class="eliminate-mode-btn">𝖠̶𝖡̶𝖢̶</button>
+        </div>
+
+        <div class="question-box" id="question-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="color-bar-bottom" class="color-bar hidden"></div>
+
+  <!-- Footer -->
+  <div class="footer-buttons hidden" id="footer-bar">
+    <div class="footer-left">
+      <span id="footer-student-name" style="font-size: 16px; font-weight: 500; color: #000;"></span>
+    </div>
+
+    <div class="footer-center">
+      <button id="navigator-button" onclick="openNavigator()">Question 1 of 1</button>
+    </div>
+
+    <div class="footer-right">
+      <button id="back-btn" onclick="prevQuestion()">Back</button>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+      <button id="finish-section-btn" onclick="finishCurrentSection()">Finish Section</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div id="navigator-popup">
+    <div class="nav-header">
+      <span id="navigator-section-title">Section</span>
+      <button class="close-btn" onclick="closeNavigator()">×</button>
+    </div>
+    <div class="legend">
+      <span><div class="legend-box legend-current"></div> Current</span>
+      <span><div class="legend-box legend-unanswered"></div> Unanswered</span>
+      <span><div class="legend-box legend-review"></div> For Review</span>
+    </div>
+    <div id="navigator-grid"></div>
+  </div>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup">
+    <div id="calculator-drag-handle">
+      <span>Calculator</span>
+      <button onclick="closeCalculator()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="calculator"></div>
+  </div>
+
+  <!-- Section Transition Modal -->
+  <div id="section-modal">
+    <div class="content">
+      <h2 id="section-modal-title">Section complete</h2>
+      <p id="section-modal-text">The next section will begin now. You cannot return to the previous section.</p>
+      <div style="display:flex; justify-content:center; gap:14px; margin-top:18px;">
+        <button onclick="goToNextSection()" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Start Next Section
+        </button>
+        <button onclick="closeSectionModal()" style="background:#ccc; color:#000; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-container" class="hidden"></div>
+
+  <script>
+/***********************
+ * DATA: Sections
+ ***********************/
+const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
+
+const sections = [
+  {
+    "id": "MATH1",
+    "title": "SAT Math Test 4 — Module 1",
+    "durationSec": 2100,
+    "calculatorAllowed": true,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>Consider the expression</p><p>\\[-19(6x-4)^2 + 6(6x-3)^2\\]</p><p>This can be rewritten as \\(\\frac{a}{9}x^2 + \\frac{b}{9}x + \\frac{c}{9}\\), where \\(a\\), \\(b\\), and \\(c\\) are constants.</p>",
+        "prompt": "<p>What is the value of \\(a+b+c\\)?</p>",
+        "options": [
+          "\\(-198\\)",
+          "\\(-66\\)",
+          "\\(198\\)",
+          "\\(66\\)"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>A school has received a donation of \\($20{,}000\\) to purchase laptops. Each laptop costs \\($149\\), and the manufacturer gives a \\(7.5\\%\\) discount on orders of at least 100 laptops. After the discount is applied, a single shipping fee of \\($180\\) is added. No tax is charged.</p>",
+        "prompt": "<p>What is the maximum number of laptops the school can purchase?</p>",
+        "options": [
+          "142",
+          "143",
+          "144",
+          "145"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>In the \\(xy\\)-plane, the equation \\((x-7)^2+(y+7)^2=64\\) defines circle \\(O\\), and the equation \\((x-7)^2+(y+7)^2=c\\) defines circle \\(P\\). The circles have the same center, and the radius of circle \\(P\\) is 3 less than the radius of circle \\(O\\).</p>",
+        "prompt": "<p>What is the area of the region inside circle \\(O\\) but outside circle \\(P\\)?</p>",
+        "options": [
+          "\\(25\\pi\\)",
+          "\\(39\\pi\\)",
+          "\\(49\\pi\\)",
+          "\\(64\\pi\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>A parabola represents the graph of a function \\(f\\) in the \\(xy\\)-plane. The vertex of the parabola is \\((5,-4)\\), and one of the \\(x\\)-intercepts is \\((-1.5,0)\\).</p>",
+        "prompt": "<p>What is the product of the \\(x\\)-coordinates of the two \\(x\\)-intercepts?</p>",
+        "options": [
+          "\\(-\\frac{69}{4}\\)",
+          "\\(-13\\)",
+          "\\(10\\)",
+          "\\(\\frac{69}{4}\\)"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>The table below shows four values of \\(x\\) and their corresponding values of \\(g(x)\\) for a linear function \\(g\\).</p>\n<table style=\"border-collapse:collapse; margin:14px 0; text-align:center;\">\n<tr><th style=\"border:1px solid #999; padding:8px 14px;\">\\(x\\)</th><td style=\"border:1px solid #999; padding:8px 14px;\">2</td><td style=\"border:1px solid #999; padding:8px 14px;\">4</td><td style=\"border:1px solid #999; padding:8px 14px;\">6</td><td style=\"border:1px solid #999; padding:8px 14px;\">8</td></tr>\n<tr><th style=\"border:1px solid #999; padding:8px 14px;\">\\(g(x)\\)</th><td style=\"border:1px solid #999; padding:8px 14px;\">46</td><td style=\"border:1px solid #999; padding:8px 14px;\">0</td><td style=\"border:1px solid #999; padding:8px 14px;\">\\(-46\\)</td><td style=\"border:1px solid #999; padding:8px 14px;\">\\(-92\\)</td></tr>\n</table>\n<p>The equation \\(g(x)=cx+d\\) defines the function, where \\(c\\) and \\(d\\) are constants.</p>",
+        "prompt": "<p>What is the value of \\(\\frac{d}{c}\\)?</p>",
+        "options": [
+          "\\(-4\\)",
+          "\\(-3\\)",
+          "3",
+          "4"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>The system of equations below has infinitely many solutions.</p><p>\\[5f-2=c(3g+1)\\]</p><p>\\[15f-6=42g+14\\]</p><p>Here, \\(c\\) is a constant.</p>",
+        "prompt": "<p>What is the value of \\(c\\)?</p>",
+        "options": [
+          "\\(\\frac{7}{3}\\)",
+          "\\(\\frac{10}{3}\\)",
+          "\\(\\frac{14}{3}\\)",
+          "\\(\\frac{16}{3}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>A teacher awards 5 points per assignment for the first 50 completed assignments and 3 points for each additional completed assignment beyond 50. A class completes at least 50 assignments.</p>",
+        "prompt": "<p>If the class earns 400 points, how many assignments did the class complete?</p>",
+        "options": [
+          "90",
+          "100",
+          "110",
+          "120"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>The line \\(3x-4y=17\\) has \\(x\\)-intercept \\((c,0)\\) and \\(y\\)-intercept \\((0,k)\\), where \\(c\\) and \\(k\\) are constants.</p>",
+        "prompt": "<p>What is the distance between the two intercepts?</p>",
+        "options": [
+          "\\(\\frac{17}{12}\\)",
+          "\\(\\frac{17}{7}\\)",
+          "\\(\\frac{85}{12}\\)",
+          "\\(\\frac{119}{12}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>If \\(c\\) is a constant and the equation</p><p>\\[10x^2+(c-5)x+c=0\\]</p><p>has no real solutions,</p>",
+        "prompt": "<p>which of the following could be the value of \\(c\\)?</p>",
+        "options": [
+          "\\(-1\\)",
+          "0",
+          "1",
+          "50"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>In the \\(xy\\)-plane, two points are the intersections of the system</p><p>\\[3x^2-y-26=0\\]</p><p>\\[y=-3x+10.\\]</p>",
+        "prompt": "<p>What is the product of the \\(y\\)-coordinates of the two intersection points?</p>",
+        "options": [
+          "18",
+          "20",
+          "22",
+          "24"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>A data set consists of five positive integers greater than 90. Four of the integers are \\(114\\), \\(109\\), \\(106\\), and \\(111\\). The mean of the five integers is an integer less than the mean of those four given integers.</p>",
+        "prompt": "<p>What is the sum of all possible values of the fifth integer?</p>",
+        "options": [
+          "285",
+          "300",
+          "315",
+          "330"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>In triangles \\(ABC\\) and \\(XYZ\\), \\(AB=22\\), \\(XY=11\\), and angles \\(A\\) and \\(X\\) both measure \\(77^\\circ\\).</p><p>Consider the following additional information:</p><p>I. \\(AC=30\\) and \\(XZ=15\\)</p><p>II. Angle \\(B\\) measures \\(40^\\circ\\)</p><p>III. Angle \\(Z\\) measures \\(63^\\circ\\)</p>",
+        "prompt": "<p>Which additional information would be sufficient to prove that the triangles are similar?</p>",
+        "options": [
+          "I only",
+          "II and III together only",
+          "I, or II and III together",
+          "I and II together only"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>If</p><p>\\[4(3x-5)-7=5(x+4)+2x,\\]</p>",
+        "prompt": "<p>what is the value of \\(10x\\)?</p>",
+        "options": [
+          "84",
+          "90",
+          "94",
+          "100"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>If</p><p>\\[7(2a-5)-3(a+4)=5(a-3)+8,\\]</p>",
+        "prompt": "<p>what is the value of \\(3a-2\\)?</p>",
+        "options": [
+          "14",
+          "16",
+          "18",
+          "20"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>The graph of \\(y=f(x)\\) has vertex \\((2,-3)\\).</p>",
+        "prompt": "<p>What is the vertex of the graph of \\(y=-2f(3-x)+7\\)?</p>",
+        "options": [
+          "\\((1,13)\\)",
+          "\\((1,1)\\)",
+          "\\((5,13)\\)",
+          "\\((-1,13)\\)"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>A quadratic function \\(f\\) has zeros at \\(x=2\\) and \\(x=7\\), and \\(f(0)=28\\). The function can be written in the form \\(f(x)=ax^2+bx+c\\).</p>",
+        "prompt": "<p>What is the value of \\(a+b+c\\)?</p>",
+        "options": [
+          "8",
+          "10",
+          "12",
+          "14"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>For positive \\(y\\), the expression</p><p>\\[\\frac{(y^{7/3})^3\\sqrt{y^5}}{y^4\\sqrt[3]{y^2}}\\]</p><p>is equivalent to \\(y^c\\), where \\(c\\) is a constant.</p>",
+        "prompt": "<p>What is the value of \\(c\\)?</p>",
+        "options": [
+          "\\(\\frac{25}{6}\\)",
+          "\\(\\frac{9}{2}\\)",
+          "\\(\\frac{29}{6}\\)",
+          "\\(\\frac{31}{6}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "18",
+        "passage": "<p>The system below has infinitely many solutions.</p><p>\\[(k-1)x+6y=18\\]</p><p>\\[4x+(11-k)y=12\\]</p><p>Here, \\(k\\) is a constant.</p>",
+        "prompt": "<p>What is the value of \\(k\\)?</p>",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "19",
+        "passage": "<p>The line \\(3x-4y=17\\) intersects the coordinate axes at \\((c,0)\\) and \\((0,k)\\).</p>",
+        "prompt": "<p>What is the area of the triangle formed by the line and the coordinate axes?</p>",
+        "options": [
+          "\\(\\frac{17}{8}\\)",
+          "\\(\\frac{85}{12}\\)",
+          "\\(\\frac{289}{24}\\)",
+          "\\(\\frac{289}{12}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "20",
+        "passage": "<p>A right triangle has angle measures \\(30^\\circ\\), \\(60^\\circ\\), and \\(90^\\circ\\). The shortest side has length 15.</p>",
+        "prompt": "<p>What is the radius of the circle inscribed in the triangle?</p>",
+        "options": [
+          "\\(\\frac{15(\\sqrt{3}-1)}{2}\\)",
+          "\\(15(\\sqrt{3}-1)\\)",
+          "\\(\\frac{15\\sqrt{3}}{2}\\)",
+          "\\(15\\sqrt{3}-5\\)"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "21",
+        "passage": "<p>If \\(x+\\frac{1}{x}=5\\) and \\(x\\ne0\\),</p>",
+        "prompt": "<p>what is the value of \\(x^3+\\frac{1}{x^3}\\)?</p>",
+        "options": [
+          "95",
+          "100",
+          "105",
+          "110"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "22",
+        "passage": "<p>A linear function \\(f\\) satisfies \\(f(2)=7\\) and \\(f(5)=16\\).</p>",
+        "prompt": "<p>If \\(f(f(x))=31\\), what is the value of \\(x\\)?</p>",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "correctIndex": "B"
+      }
+    ]
+  },
+  {
+    "id": "MATH2",
+    "title": "SAT Math Test 4 — Module 2",
+    "durationSec": 2100,
+    "calculatorAllowed": true,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>The equation</p><p>\\[2x^2-(k+3)x+2k=0\\]</p><p>has exactly one real solution, where \\(k\\) is a constant.</p>",
+        "prompt": "<p>What is the sum of all possible values of \\(k\\)?</p>",
+        "options": [
+          "8",
+          "9",
+          "10",
+          "12"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>If \\(2^x=5\\) and \\(2^y=3\\),</p>",
+        "prompt": "<p>what is the value of \\(2^{2x-y}+2^x\\)?</p>",
+        "options": [
+          "\\(\\frac{25}{3}\\)",
+          "\\(\\frac{35}{3}\\)",
+          "\\(\\frac{40}{3}\\)",
+          "\\(\\frac{50}{3}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>The equation</p><p>\\[|2x-5|=x+4\\]</p><p>has two nonzero solutions.</p>",
+        "prompt": "<p>What is the sum of the reciprocals of the two solutions?</p>",
+        "options": [
+          "\\(\\frac{19}{9}\\)",
+          "\\(\\frac{25}{9}\\)",
+          "\\(\\frac{28}{9}\\)",
+          "\\(\\frac{31}{9}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>Let \\(p(x)=x^3-4x^2+kx-12\\), where \\(k\\) is a constant. If \\((x-2)\\) is a factor of \\(p(x)\\), the quotient \\(\\frac{p(x)}{x-2}\\) is a quadratic expression.</p>",
+        "prompt": "<p>What is the discriminant of this quadratic expression?</p>",
+        "options": [
+          "\\(-24\\)",
+          "\\(-20\\)",
+          "\\(-16\\)",
+          "\\(-12\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>A circle has center \\((4,-1)\\) and is tangent to the \\(y\\)-axis.</p><div class=\"q-media-left\" style=\"width:100%; margin-top:18px;\"><img class=\"q-img-sm\" src=\"https://assets.thrivingscholars.com/images/tmua/c6b84cd6-1f96-4f39-b904-806e8140c59e.png\" alt=\"Circle centered at (4, -1) and tangent to the y-axis at (0, -1).\" loading=\"eager\"></div>",
+        "prompt": "<p>The line \\(y=1\\) intersects the circle at two points. What is the distance between these points?</p>",
+        "options": [
+          "\\(2\\sqrt{3}\\)",
+          "\\(4\\sqrt{3}\\)",
+          "\\(6\\sqrt{3}\\)",
+          "\\(8\\sqrt{3}\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>For \\(x\\ne3\\), let</p><p>\\[f(x)=\\frac{x^2-9}{x-3}.\\]</p><p>Suppose \\(x\\ne3\\) and \\(f(x)\\ne3\\).</p>",
+        "prompt": "<p>If \\(f(f(x))=17\\), what is the value of \\(x\\)?</p>",
+        "options": [
+          "8",
+          "9",
+          "10",
+          "11"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>A rhombus has diagonals of lengths 10 and 24.</p><div class=\"q-media-left\" style=\"width:100%; margin-top:18px;\"><img class=\"q-img-sm\" src=\"https://assets.thrivingscholars.com/images/tmua/6b573c4e-163c-4128-90ca-77e143daab86.png\" alt=\"Rhombus with perpendicular diagonals of total lengths 10 and 24.\" loading=\"eager\"></div>",
+        "prompt": "<p>What is the perpendicular distance from the intersection of the diagonals to any side of the rhombus?</p>",
+        "options": [
+          "\\(\\frac{30}{13}\\)",
+          "5",
+          "\\(\\frac{60}{13}\\)",
+          "\\(\\frac{120}{13}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>Two cones are similar. The slant height of the larger cone is 15, and the slant height of the smaller cone is 5. The volume of the smaller cone is \\(12\\pi\\).</p><div class=\"q-media-left\" style=\"width:100%; margin-top:18px;\"><img class=\"q-img-sm\" src=\"https://assets.thrivingscholars.com/images/tmua/c03f1024-8094-40d4-bba6-7e5171c27f19.png\" alt=\"Two similar cones with slant heights 5 and 15.\" loading=\"eager\"></div>",
+        "prompt": "<p>How much greater is the volume of the larger cone than the volume of the smaller cone?</p>",
+        "options": [
+          "\\(288\\pi\\)",
+          "\\(300\\pi\\)",
+          "\\(312\\pi\\)",
+          "\\(324\\pi\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>If \\(x+y=7\\) and \\(x^2+y^2=29\\),</p>",
+        "prompt": "<p>what is the value of \\(x^3+y^3\\)?</p>",
+        "options": [
+          "119",
+          "126",
+          "133",
+          "140"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>The graph of \\(y=a|x-3|+5\\) passes through the point \\((7,17)\\), where \\(a\\) is a constant.</p>",
+        "prompt": "<p>The graph contains two points whose \\(y\\)-coordinate is 20. What is the distance between these two points?</p>",
+        "options": [
+          "8",
+          "10",
+          "12",
+          "14"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>If \\(r\\) and \\(s\\) are the roots of the equation \\(2x^2-5x-3=0\\),</p>",
+        "prompt": "<p>what is the value of \\(\\frac{1}{r^2}+\\frac{1}{s^2}\\)?</p>",
+        "options": [
+          "\\(\\frac{25}{9}\\)",
+          "\\(\\frac{37}{9}\\)",
+          "\\(\\frac{49}{9}\\)",
+          "\\(\\frac{61}{9}\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>A right triangle has one acute angle that is twice the other acute angle. The hypotenuse has length 10.</p><div class=\"q-media-left\" style=\"width:100%; margin-top:18px;\"><img class=\"q-img-sm\" src=\"https://assets.thrivingscholars.com/images/tmua/91effbc3-0c8d-4f66-84d5-27a151d0fa72.png\" alt=\"A 30-60-90 right triangle with hypotenuse 10.\" loading=\"eager\"></div>",
+        "prompt": "<p>What is the length of the altitude drawn from the right-angle vertex to the hypotenuse?</p>",
+        "options": [
+          "\\(\\frac{5}{2}\\)",
+          "\\(\\frac{5\\sqrt{3}}{2}\\)",
+          "\\(5\\sqrt{3}\\)",
+          "\\(\\frac{15}{2}\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>The equation</p><p>\\[\\frac{x+1}{x-2}+\\frac{x-2}{x+1}=\\frac{13}{6}\\]</p><p>has two nonzero solutions.</p>",
+        "prompt": "<p>What is the sum of the reciprocals of the two solutions?</p>",
+        "options": [
+          "\\(-\\frac{1}{56}\\)",
+          "\\(\\frac{1}{56}\\)",
+          "\\(-\\frac{15}{56}\\)",
+          "\\(\\frac{15}{56}\\)"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>If \\(x+y=6\\) and \\(x^3+y^3=72\\),</p>",
+        "prompt": "<p>what is the value of \\(x^4+y^4\\)?</p>",
+        "options": [
+          "240",
+          "256",
+          "272",
+          "288"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>If \\(3^a=5\\) and \\(3^b=7\\),</p>",
+        "prompt": "<p>what is the value of \\(3^{2a-b}+3^{a-b}\\)?</p>",
+        "options": [
+          "\\(\\frac{25}{7}\\)",
+          "\\(\\frac{30}{7}\\)",
+          "\\(\\frac{35}{7}\\)",
+          "\\(\\frac{40}{7}\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>The line \\(y=mx-4\\) is tangent to the parabola \\(y=x^2\\). The tangent point has positive \\(x\\)-coordinate.</p><div class=\"q-media-left\" style=\"width:100%; margin-top:18px;\"><img class=\"q-img-sm\" src=\"https://assets.thrivingscholars.com/images/tmua/530f8849-d912-4ec0-a920-039c5de4678e.png\" alt=\"The parabola y equals x squared and a tangent line y equals mx minus 4 touching at (2, 4).\" loading=\"eager\"></div>",
+        "prompt": "<p>What is the sum of \\(m\\) and the \\(x\\)-coordinate of the tangent point?</p>",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "8"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>The quadratic function \\(q\\) is defined by</p><p>\\[q(x)=(x-3)(x-t),\\]</p><p>where \\(t\\) is a constant. If \\(q(1)=-8\\),</p>",
+        "prompt": "<p>what is the minimum value of \\(q(x)\\)?</p>",
+        "options": [
+          "\\(-12\\)",
+          "\\(-9\\)",
+          "\\(-6\\)",
+          "\\(-3\\)"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "18",
+        "passage": "<p>Let \\(f(u)=2u^2-3u+1\\) and \\(g(x)=x-4\\).</p>",
+        "prompt": "<p>If \\(f(g(x))=0\\), what is the product of the solutions for \\(x\\)?</p>",
+        "options": [
+          "18",
+          "20",
+          "\\(\\frac{45}{2}\\)",
+          "25"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "19",
+        "passage": "<p>If</p><p>\\[\\frac{x-2}{x+1}=\\frac{3}{5}\\]</p><p>and \\(x\\ne-1\\),</p>",
+        "prompt": "<p>what is the value of \\(\\frac{2x-1}{x+2}\\)?</p>",
+        "options": [
+          "\\(\\frac{12}{17}\\)",
+          "\\(\\frac{17}{12}\\)",
+          "\\(\\frac{24}{17}\\)",
+          "\\(\\frac{17}{24}\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "20",
+        "passage": "<p>A jacket is discounted by \\(20\\%\\), and then an \\(8\\%\\) sales tax is applied to the discounted price. The final price is \\($95.04\\).</p>",
+        "prompt": "<p>How much less is the final price than the price would have been if the \\(8\\%\\) tax had been applied without the discount?</p>",
+        "options": [
+          "\\($19.80\\)",
+          "\\($22.00\\)",
+          "\\($23.76\\)",
+          "\\($24.96\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "21",
+        "passage": "<p>A quadratic function \\(h\\) has positive integer zeros that differ by 4, and \\(h(x)=x^2+bx+12\\), where \\(b\\) is a constant.</p>",
+        "prompt": "<p>What is the minimum value of \\(h(x)\\)?</p>",
+        "options": [
+          "\\(-8\\)",
+          "\\(-6\\)",
+          "\\(-4\\)",
+          "\\(-2\\)"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "22",
+        "passage": "<p>The equation</p><p>\\[(x-1)^2+(x+2)^2=25\\]</p><p>has two real solutions.</p>",
+        "prompt": "<p>What is the positive difference between the two solutions?</p>",
+        "options": [
+          "\\(\\sqrt{21}\\)",
+          "\\(\\sqrt{31}\\)",
+          "\\(\\sqrt{41}\\)",
+          "\\(\\sqrt{51}\\)"
+        ],
+        "correctIndex": "C"
+      }
+    ]
+  }
+];/***********************
+ * STATE
+ ***********************/
+let currentSectionIndex = 0;
+let currentIndex = 0;
+let reviewFlags = [];
+let studentAnswers = {};
+let timer = null;
+let seconds = 0;
+let desmosCalculator = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let examStarted = false;
+let eliminateMode = false;
+let eliminateState = {};
+let emailSent = false;
+
+/***********************
+ * INTEGRITY MONITORING STATE
+ ***********************/
+const TEST_ID = "sat-math-diagnostic-test-4";
+const TEST_TITLE = "SAT Diagnostic Math Test 4";
+const REPORT_ENDPOINT = "/api/sat-test-report";
+const MONITOR_BATCH_INTERVAL_MS = 30000;
+const MAX_INTEGRITY_EVENTS = 1200;
+
+let attemptId = "";
+let attemptStartedAt = null;
+let attemptSubmittedAt = null;
+let integrityEvents = [];
+let lastSentEventIndex = 0;
+let hiddenStartedAt = null;
+let blurStartedAt = null;
+let monitorBatchTimer = null;
+let finalReportSubmitted = false;
+let testCompleted = false;
+let integritySummary = {
+  tabSwitches: 0,
+  totalHiddenMs: 0,
+  longestHiddenMs: 0,
+  windowBlurCount: 0,
+  totalBlurMs: 0,
+  fullscreenExits: 0,
+  copyCount: 0,
+  cutCount: 0,
+  pasteCount: 0,
+  contextMenuCount: 0,
+  offlineCount: 0,
+  onlineCount: 0,
+  pageHideCount: 0,
+  reloadOrExitWarnings: 0
+};
+
+/***********************
+ * START EXAM
+ ***********************/
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("student-email").value.trim();
+  const sessionInput = document.getElementById("test-session").value;
+  const consentInput = document.getElementById("monitoring-consent");
+
+  if (!nameInput || !emailInput) {
+    alert("Please enter your name and email to begin.");
+    return;
+  }
+
+  if (!sessionInput) {
+    alert("Please select your SAT exam session.");
+    return;
+  }
+
+
+
+  if (!sections.length || sections.some(sec => !Array.isArray(sec.items) || sec.items.length === 0)) {
+    alert("The test questions are not available. Please contact Thriving Scholars.");
+    return;
+  }
+
+  studentName = nameInput;
+  studentEmail = emailInput;
+  testSession = sessionInput;
+  examStarted = true;
+  testCompleted = false;
+
+  initialiseIntegrityMonitoring();
+  trackIntegrityEvent("TEST_STARTED", {
+    consentAcknowledged: true,
+    session: testSession
+  });
+  sendAttemptStart();
+
+  const header = document.querySelector(".header");
+  const footerBar = document.getElementById("footer-bar");
+  const mainContainer = document.getElementById("main-container");
+  const startScreen = document.getElementById("start-screen");
+  const timerEl = document.getElementById("timer");
+  const colorBarTop = document.getElementById("color-bar");
+  const colorBarBottom = document.getElementById("color-bar-bottom");
+  const integrityStatus = document.getElementById("integrity-status");
+
+  document.getElementById("footer-student-name").textContent = studentName;
+
+  if (startScreen) startScreen.classList.add("hidden");
+  if (header) header.classList.remove("hidden");
+  if (footerBar) footerBar.classList.remove("hidden");
+  if (colorBarTop) colorBarTop.classList.remove("hidden");
+  if (colorBarBottom) colorBarBottom.classList.remove("hidden");
+  if (mainContainer) mainContainer.classList.add("active");
+  if (timerEl) timerEl.style.display = "block";
+  if (integrityStatus) integrityStatus.classList.add("active");
+
+  // Fullscreen is requested from the user's Start Exam click. A refusal is logged,
+  // but the student can still continue because some browsers or accessibility tools block it.
+  requestExamFullscreen();
+  startSection(0);
+}
+
+/***********************
+ * INTEGRITY MONITORING
+ ***********************/
+function makeEventId() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
+}
+
+function currentQuestionContext() {
+  const section = sections[currentSectionIndex];
+  return {
+    sectionId: section ? section.id : null,
+    sectionTitle: section ? section.title : null,
+    questionNumber: section && section.items[currentIndex]
+      ? Number(section.items[currentIndex].number || currentIndex + 1)
+      : null,
+    secondsRemaining: Number.isFinite(seconds) ? Math.max(0, seconds) : null
+  };
+}
+
+function initialiseIntegrityMonitoring() {
+  attemptId = makeEventId();
+  attemptStartedAt = new Date();
+  attemptSubmittedAt = null;
+  integrityEvents = [];
+  lastSentEventIndex = 0;
+  hiddenStartedAt = null;
+  blurStartedAt = null;
+  finalReportSubmitted = false;
+  integritySummary = {
+    tabSwitches: 0,
+    totalHiddenMs: 0,
+    longestHiddenMs: 0,
+    windowBlurCount: 0,
+    totalBlurMs: 0,
+    fullscreenExits: 0,
+    copyCount: 0,
+    cutCount: 0,
+    pasteCount: 0,
+    contextMenuCount: 0,
+    offlineCount: 0,
+    onlineCount: 0,
+    pageHideCount: 0,
+    reloadOrExitWarnings: 0
+  };
+
+  if (monitorBatchTimer) clearInterval(monitorBatchTimer);
+  monitorBatchTimer = setInterval(() => {
+    if (examStarted && !testCompleted) sendPendingIntegrityEvents("scheduled");
+  }, MONITOR_BATCH_INTERVAL_MS);
+}
+
+function trackIntegrityEvent(type, metadata = {}) {
+  if (!examStarted && type !== "TEST_STARTED") return;
+  if (integrityEvents.length >= MAX_INTEGRITY_EVENTS) return;
+
+  const context = currentQuestionContext();
+  integrityEvents.push({
+    eventId: makeEventId(),
+    type,
+    occurredAt: new Date().toISOString(),
+    sectionId: context.sectionId,
+    sectionTitle: context.sectionTitle,
+    questionNumber: context.questionNumber,
+    secondsRemaining: context.secondsRemaining,
+    metadata
+  });
+}
+
+function formatDuration(ms) {
+  const totalSeconds = Math.max(0, Math.round((ms || 0) / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return minutes > 0 ? `${minutes}m ${secs}s` : `${secs}s`;
+}
+
+function clientInfo() {
+  return {
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    platform: navigator.userAgentData?.platform || navigator.platform || "unknown",
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown",
+    screenWidth: window.screen?.width || null,
+    screenHeight: window.screen?.height || null,
+    viewportWidth: window.innerWidth,
+    viewportHeight: window.innerHeight,
+    devicePixelRatio: window.devicePixelRatio || 1,
+    onlineAtStart: navigator.onLine
+  };
+}
+
+function baseAttemptPayload() {
+  return {
+    version: 1,
+    attemptId,
+    testId: TEST_ID,
+    testTitle: TEST_TITLE,
+    student: {
+      name: studentName,
+      email: studentEmail,
+      session: testSession
+    },
+    startedAt: attemptStartedAt ? attemptStartedAt.toISOString() : null,
+    client: clientInfo()
+  };
+}
+
+async function postMonitoringPayload(payload, useBeacon = false) {
+  try {
+    const body = JSON.stringify(payload);
+    if (useBeacon && navigator.sendBeacon) {
+      const blob = new Blob([body], { type: "application/json" });
+      return navigator.sendBeacon(REPORT_ENDPOINT, blob);
+    }
+
+    const response = await fetch(REPORT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+      credentials: "same-origin"
+    });
+
+    if (!response.ok) throw new Error(`Report endpoint returned ${response.status}`);
+    return true;
+  } catch (error) {
+    console.warn("Integrity report delivery deferred:", error);
+    return false;
+  }
+}
+
+function sendAttemptStart() {
+  postMonitoringPayload({
+    kind: "start",
+    ...baseAttemptPayload()
+  });
+}
+
+async function sendPendingIntegrityEvents(reason = "manual", useBeacon = false) {
+  if (!attemptId) return false;
+  const pending = integrityEvents.slice(lastSentEventIndex);
+  if (!pending.length) return true;
+
+  const delivered = await postMonitoringPayload({
+    kind: "events",
+    reason,
+    ...baseAttemptPayload(),
+    events: pending
+  }, useBeacon);
+
+  // sendBeacon does not confirm server processing, so those events remain eligible
+  // for the next normal batch; event IDs make duplicate delivery harmless.
+  if (delivered && !useBeacon) lastSentEventIndex = integrityEvents.length;
+  return delivered;
+}
+
+async function requestExamFullscreen() {
+  try {
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen({ navigationUI: "hide" });
+      trackIntegrityEvent("FULLSCREEN_ENTERED");
+    } else if (!document.documentElement.requestFullscreen) {
+      trackIntegrityEvent("FULLSCREEN_UNAVAILABLE");
+    }
+  } catch (error) {
+    trackIntegrityEvent("FULLSCREEN_REQUEST_DECLINED", { message: String(error?.message || error) });
+  }
+}
+
+function closeOpenAbsenceIntervals() {
+  const now = Date.now();
+  if (hiddenStartedAt !== null) {
+    const durationMs = now - hiddenStartedAt;
+    integritySummary.totalHiddenMs += durationMs;
+    integritySummary.longestHiddenMs = Math.max(integritySummary.longestHiddenMs, durationMs);
+    trackIntegrityEvent("TAB_VISIBLE", { durationMs, closedAtSubmission: true });
+    hiddenStartedAt = null;
+  }
+  if (blurStartedAt !== null) {
+    const durationMs = now - blurStartedAt;
+    integritySummary.totalBlurMs += durationMs;
+    trackIntegrityEvent("WINDOW_FOCUS", { durationMs, closedAtSubmission: true });
+    blurStartedAt = null;
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (!examStarted || testCompleted) return;
+  if (document.hidden) {
+    hiddenStartedAt = Date.now();
+    integritySummary.tabSwitches += 1;
+    trackIntegrityEvent("TAB_HIDDEN");
+    sendPendingIntegrityEvents("tab-hidden", true);
+  } else {
+    const durationMs = hiddenStartedAt === null ? 0 : Date.now() - hiddenStartedAt;
+    if (hiddenStartedAt !== null) {
+      integritySummary.totalHiddenMs += durationMs;
+      integritySummary.longestHiddenMs = Math.max(integritySummary.longestHiddenMs, durationMs);
+    }
+    trackIntegrityEvent("TAB_VISIBLE", { durationMs });
+    hiddenStartedAt = null;
+  }
+});
+
+window.addEventListener("blur", () => {
+  if (!examStarted || testCompleted || document.hidden) return;
+  blurStartedAt = Date.now();
+  integritySummary.windowBlurCount += 1;
+  trackIntegrityEvent("WINDOW_BLUR");
+});
+
+window.addEventListener("focus", () => {
+  if (!examStarted || testCompleted || blurStartedAt === null) return;
+  const durationMs = Date.now() - blurStartedAt;
+  integritySummary.totalBlurMs += durationMs;
+  trackIntegrityEvent("WINDOW_FOCUS", { durationMs });
+  blurStartedAt = null;
+});
+
+document.addEventListener("fullscreenchange", () => {
+  if (!examStarted || testCompleted) return;
+  if (!document.fullscreenElement) {
+    integritySummary.fullscreenExits += 1;
+    trackIntegrityEvent("FULLSCREEN_EXIT");
+  }
+});
+
+["copy", "cut", "paste"].forEach(action => {
+  document.addEventListener(action, event => {
+    if (!examStarted || testCompleted) return;
+    if (action === "copy") integritySummary.copyCount += 1;
+    if (action === "cut") integritySummary.cutCount += 1;
+    if (action === "paste") integritySummary.pasteCount += 1;
+    trackIntegrityEvent(action.toUpperCase(), {
+      targetTag: event.target?.tagName || null,
+      targetType: event.target?.type || null
+    });
+  });
+});
+
+document.addEventListener("contextmenu", event => {
+  if (!examStarted || testCompleted) return;
+  integritySummary.contextMenuCount += 1;
+  trackIntegrityEvent("CONTEXT_MENU", { targetTag: event.target?.tagName || null });
+});
+
+window.addEventListener("offline", () => {
+  if (!examStarted || testCompleted) return;
+  integritySummary.offlineCount += 1;
+  trackIntegrityEvent("CONNECTION_OFFLINE");
+  sendPendingIntegrityEvents("offline", true);
+});
+
+window.addEventListener("online", () => {
+  if (!examStarted || testCompleted) return;
+  integritySummary.onlineCount += 1;
+  trackIntegrityEvent("CONNECTION_ONLINE");
+  sendPendingIntegrityEvents("online");
+});
+
+window.addEventListener("pagehide", () => {
+  if (!examStarted || testCompleted) return;
+  integritySummary.pageHideCount += 1;
+  trackIntegrityEvent("PAGE_HIDE");
+  sendPendingIntegrityEvents("page-hide", true);
+});
+
+window.addEventListener("beforeunload", event => {
+  if (!examStarted || testCompleted) return;
+  integritySummary.reloadOrExitWarnings += 1;
+  trackIntegrityEvent("RELOAD_OR_EXIT_ATTEMPT");
+  sendPendingIntegrityEvents("before-unload", true);
+  event.preventDefault();
+  event.returnValue = "";
+});
+
+/***********************
+ * SECTION LOGIC
+ ***********************/
+function startSection(secIdx) {
+  currentSectionIndex = secIdx;
+  currentIndex = 0;
+  trackIntegrityEvent("SECTION_STARTED", { sectionIndex: secIdx });
+
+  const sec = sections[secIdx];
+  reviewFlags = new Array(sec.items.length).fill(false);
+
+  document.getElementById("header-title").textContent = sec.title;
+  document.getElementById("calc-badge").classList.toggle("hidden", !sec.calculatorAllowed);
+
+  if (sec.calculatorAllowed) {
+    document.getElementById("calculator-icon").style.display = "flex";
+  } else {
+    document.getElementById("calculator-icon").style.display = "none";
+    closeCalculator();
+  }
+
+  const finishBtn = document.getElementById("finish-section-btn");
+  finishBtn.textContent = (secIdx === sections.length - 1) ? "Finish Exam" : "Finish Section";
+
+  buildNavigator();
+  loadQuestion(0);
+
+  if (timer) clearInterval(timer);
+  seconds = sec.durationSec;
+  updateTimerDisplay();
+
+  timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay();
+    if (seconds < 0) {
+      clearInterval(timer);
+      finishCurrentSection();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(Math.max(0, seconds) / 60);
+  const sec = Math.max(0, seconds) % 60;
+  document.getElementById("timer").textContent =
+    `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/***********************
+ * QUESTION RENDERING
+ ***********************/
+document.getElementById("eliminateBtn").addEventListener("click", function () {
+  eliminateMode = !eliminateMode;
+  this.classList.toggle("active", eliminateMode);
+  const rightPanel = document.querySelector(".right-panel");
+  rightPanel.classList.toggle("elimination-active", eliminateMode);
+});
+
+function loadQuestion(i) {
+  const section = sections[currentSectionIndex];
+  const item = section.items[i];
+  currentIndex = i;
+  trackIntegrityEvent("QUESTION_VIEWED", { questionIndex: i });
+
+  document.getElementById("passage").innerHTML = item.passage || "";
+  const box = document.getElementById("question-box");
+  box.innerHTML = "";
+  document.getElementById("q-number").textContent = i + 1;
+  document.getElementById("mark-review").checked = reviewFlags[i];
+
+  const bookmarkIcon = document.querySelector(".bookmark-icon");
+  const markBox = document.getElementById("mark-review");
+  if (markBox.checked) {
+    bookmarkIcon.classList.remove("fa-regular");
+    bookmarkIcon.classList.add("fa-solid");
+    bookmarkIcon.style.color = "#CF0000";
+  } else {
+    bookmarkIcon.classList.remove("fa-solid");
+    bookmarkIcon.classList.add("fa-regular");
+    bookmarkIcon.style.color = "#000";
+  }
+
+  renderMC(item, box, section, i);
+
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+
+  updateNavigator();
+  updateNavButtons();
+  updateNavigatorButton();
+}
+
+function renderMC(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name];
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const optionsContainer = document.createElement("div");
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  item.options.forEach((opt, k) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letters[k]);
+    if (saved === k) label.classList.add("active");
+
+    const circle = document.createElement("div");
+    circle.className = "option-circle";
+    circle.textContent = letters[k];
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = k;
+    if (saved === k) input.checked = true;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "option-text";
+    textSpan.innerHTML = opt;
+
+    const strikeBtn = document.createElement("button");
+    strikeBtn.className = "strike-toggle";
+    strikeBtn.textContent = "⊘";
+    strikeBtn.title = "Eliminate Option";
+
+    label.addEventListener("click", (event) => {
+      if (event.target.classList.contains("strike-toggle")) return;
+      optionsContainer.querySelectorAll(".option-label").forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      input.checked = true;
+      const previousAnswer = studentAnswers[name];
+      studentAnswers[name] = k;
+      trackIntegrityEvent("ANSWER_SELECTED", {
+        choice: letters[k],
+        previousChoice: previousAnswer !== undefined ? letters[previousAnswer] : null,
+        changed: previousAnswer !== undefined && previousAnswer !== k
+      });
+      updateNavigator();
+    });
+
+    strikeBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const sec = sections[currentSectionIndex];
+      const qKey = `s${sec.id}-q${idx}`;
+      if (!eliminateState[qKey]) eliminateState[qKey] = {};
+
+      const now = !label.classList.contains("struck");
+      label.classList.toggle("struck", now);
+      strikeBtn.classList.toggle("active", now);
+      eliminateState[qKey][letters[k]] = now;
+    });
+
+    label.appendChild(circle);
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    label.appendChild(strikeBtn);
+    optionsContainer.appendChild(label);
+  });
+
+  promptHTML.appendChild(optionsContainer);
+  container.appendChild(promptHTML);
+
+  const sec = sections[currentSectionIndex];
+  const qKey = `s${sec.id}-q${idx}`;
+  const state = eliminateState[qKey] || {};
+  Object.keys(state).forEach(letter => {
+    const opt = optionsContainer.querySelector(`.option-label[data-choice="${letter}"]`);
+    if (opt && state[letter]) {
+      opt.classList.add("struck");
+      const btn = opt.querySelector(".strike-toggle");
+      btn.classList.add("active");
+    }
+  });
+}
+
+/***********************
+ * NAVIGATION WITHIN SECTION
+ ***********************/
+function prevQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex > 0) loadQuestion(currentIndex - 1);
+}
+
+function nextQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex < section.items.length - 1) loadQuestion(currentIndex + 1);
+}
+
+function updateNavButtons() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("back-btn").disabled = currentIndex === 0;
+  document.getElementById("next-btn").disabled = currentIndex === section.items.length - 1;
+}
+
+function updateNavigatorButton() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-button").textContent = `Question ${currentIndex + 1} of ${section.items.length}`;
+}
+
+function openNavigator() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-section-title").textContent = section.title;
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function buildNavigator() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  const section = sections[currentSectionIndex];
+
+  section.items.forEach((_, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = idx + 1;
+    btn.onclick = () => {
+      loadQuestion(idx);
+      closeNavigator();
+    };
+    grid.appendChild(btn);
+  });
+
+  updateNavigator();
+}
+
+function updateNavigator() {
+  const section = sections[currentSectionIndex];
+  const buttons = document.querySelectorAll("#navigator-grid button");
+
+  buttons.forEach((btn, idx) => {
+    const baseKey = `s${section.id}-q${idx}`;
+    const answered = studentAnswers[baseKey] !== undefined;
+    btn.classList.toggle("current", idx === currentIndex);
+    btn.classList.toggle("answered", answered && idx !== currentIndex);
+    btn.classList.toggle("review", reviewFlags[idx]);
+  });
+}
+
+function toggleBookmark(checkbox) {
+  const icon = checkbox.nextElementSibling;
+  icon.classList.toggle("fa-regular", !checkbox.checked);
+  icon.classList.toggle("fa-solid", checkbox.checked);
+  icon.style.color = checkbox.checked ? "#CF0000" : "#000";
+  reviewFlags[currentIndex] = checkbox.checked;
+  updateNavigator();
+}
+
+/***********************
+ * FINISH SECTION & NEXT
+ ***********************/
+function finishCurrentSection() {
+  if (timer) clearInterval(timer);
+  trackIntegrityEvent("SECTION_FINISHED", { sectionIndex: currentSectionIndex });
+  sendPendingIntegrityEvents("section-finished");
+
+  if (currentSectionIndex < sections.length - 1) {
+    document.getElementById("section-modal-title").textContent = "Section complete";
+    document.getElementById("section-modal-text").textContent =
+      "The next section will begin now. You cannot return to this section.";
+    document.getElementById("section-modal").style.display = "flex";
+  } else {
+    showFinalReport();
+  }
+}
+
+function closeSectionModal() {
+  document.getElementById("section-modal").style.display = "none";
+
+  if (!timer) {
+    timer = setInterval(() => {
+      seconds--;
+      updateTimerDisplay();
+      if (seconds < 0) {
+        clearInterval(timer);
+        finishCurrentSection();
+      }
+    }, 1000);
+  }
+}
+
+function goToNextSection() {
+  document.getElementById("section-modal").style.display = "none";
+  const nextIdx = currentSectionIndex + 1;
+  if (nextIdx < sections.length) {
+    startSection(nextIdx);
+  }
+}
+
+/***********************
+ * CALCULATOR POPUP
+ ***********************/
+function openCalculator() {
+  const section = sections[currentSectionIndex];
+  if (!section || !section.calculatorAllowed) return;
+
+  document.getElementById("calculator-popup").style.display = "block";
+
+  if (!desmosCalculator) {
+    const elt = document.getElementById("calculator");
+    desmosCalculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      keypad: true,
+      settingsMenu: false,
+      zoomButtons: true,
+      expressionsTopbar: false,
+      border: false
+    });
+  }
+}
+
+function closeCalculator() {
+  document.getElementById("calculator-popup").style.display = "none";
+}
+
+(function makeDraggable() {
+  const popup = document.getElementById("calculator-popup");
+  const handle = document.getElementById("calculator-drag-handle");
+  let offsetX = 0, offsetY = 0, isDown = false;
+
+  handle.addEventListener("mousedown", (e) => {
+    isDown = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDown = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    popup.style.left = `${e.clientX - offsetX}px`;
+    popup.style.top = `${e.clientY - offsetY}px`;
+  });
+})();
+
+/***********************
+ * SCORE HELPERS
+ ***********************/
+function roundToNearest10(n) {
+  return Math.round(n / 10) * 10;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function predictSectionScore(correct, total) {
+  if (!total) return 200;
+  const rawScore = 200 + (correct / total) * 600;
+  return clamp(roundToNearest10(rawScore), 200, 800);
+}
+
+/***********************
+ * FINAL REPORT
+ ***********************/
+function showFinalReport() {
+  if (timer) clearInterval(timer);
+
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("report-container").classList.remove("hidden");
+  document.getElementById("header-title").textContent = "SAT Diagnostic Test — Score Report";
+  document.getElementById("calc-badge").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  const letters = ["A","B","C","D","E","F","G","H"];
+
+  let readingCorrect = 0;
+  let readingTotal = 0;
+  let mathCorrect = 0;
+  let mathTotal = 0;
+  const rows = [];
+
+  sections.forEach(sec => {
+    sec.items.forEach((item, idx) => {
+      if (item.type !== "MC") return;
+
+      const key = `s${sec.id}-q${idx}`;
+      const userAns = studentAnswers[key];
+
+      let correctIdx = item.correctIndex;
+      if (typeof correctIdx === "string") {
+        correctIdx = letters.indexOf(correctIdx);
+      }
+
+      const your = (userAns !== undefined) ? letters[userAns] : "–";
+      const corr = letters[correctIdx];
+      const isCorrect = userAns === correctIdx;
+
+      if (sec.id.startsWith("READING")) {
+        readingTotal++;
+        if (isCorrect) readingCorrect++;
+      } else if (sec.id.startsWith("MATH")) {
+        mathTotal++;
+        if (isCorrect) mathCorrect++;
+      }
+
+      rows.push({
+        section: sec.id,
+        q: item.number || idx + 1,
+        your,
+        correct: corr,
+        status: isCorrect ? "✅" : "❌"
+      });
+    });
+  });
+
+  const readingScore = predictSectionScore(readingCorrect, readingTotal);
+  const mathScore = predictSectionScore(mathCorrect, mathTotal);
+  const satScore = mathScore;
+
+  const report = document.getElementById("report-container");
+  report.innerHTML = `
+    <h1>SAT Diagnostic Test — Completed</h1>
+    <p><strong>Name:</strong> ${escapeHtml(studentName)} &nbsp; | &nbsp; <strong>Email:</strong> ${escapeHtml(studentEmail)} &nbsp; | &nbsp; <strong>Session:</strong> ${escapeHtml(testSession)}</p>
+    <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Predicted Math score: ${mathScore} / 800</p>
+    <p><strong>Predicted Math Score:</strong> ${mathScore} / 800</p>
+    <p style="font-size:13px; color:#666;">This is a simple diagnostic estimate based on raw performance in this test, not an official College Board conversion.</p>
+
+    <div class="score-container">
+      <svg viewBox="0 0 230 230">
+        <path class="arc" d="M 65 50 A 85 85 0 0 0 65 180" />
+        <path class="arc" d="M 165 50 A 85 85 0 0 1 165 180" />
+        <defs>
+          <path id="curveTop" d="M 70 50 A 80 80 0 0 1 160 50" />
+        </defs>
+        <text class="label">
+          <textPath href="#curveTop" startOffset="50%" text-anchor="middle">SCORE</textPath>
+        </text>
+      </svg>
+      <div class="score" style="font-size:68px;">${satScore}</div>
+    </div>
+
+
+
+    <h2>Question Detail</h2>
+    <table>
+      <thead>
+        <tr><th>Section</th><th>Q#</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.section}</td>
+            <td>${r.q}</td>
+            <td>${r.your}</td>
+            <td>${r.correct}</td>
+            <td>${r.status}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+
+    ${solutionPDF ? `
+      <h3>📄 View Full Solutions</h3>
+      <iframe src="${solutionPDF}" width="100%" height="480px" style="border:1px solid #ccc;"></iframe>
+    ` : ""}
+  `;
+
+
+  closeOpenAbsenceIntervals();
+  attemptSubmittedAt = new Date();
+  trackIntegrityEvent("TEST_SUBMITTED", {
+    mathScore,
+    correct: mathCorrect,
+    total: mathTotal
+  });
+  testCompleted = true;
+  examStarted = false;
+  if (monitorBatchTimer) {
+    clearInterval(monitorBatchTimer);
+    monitorBatchTimer = null;
+  }
+  const integrityStatus = document.getElementById("integrity-status");
+  if (integrityStatus) integrityStatus.classList.remove("active");
+
+  const answerReport = rows.map(row => ({
+    section: row.section,
+    question: row.q,
+    studentAnswer: row.your,
+    correctAnswer: row.correct,
+    isCorrect: row.status === "✅"
+  }));
+
+  if (!finalReportSubmitted) {
+    finalReportSubmitted = true;
+    postMonitoringPayload({
+      kind: "final",
+      ...baseAttemptPayload(),
+      submittedAt: attemptSubmittedAt.toISOString(),
+      durationSec: attemptStartedAt
+        ? Math.max(0, Math.round((attemptSubmittedAt.getTime() - attemptStartedAt.getTime()) / 1000))
+        : null,
+      score: {
+        mathScore,
+        correct: mathCorrect,
+        total: mathTotal
+      },
+      integritySummary,
+      events: integrityEvents,
+      answers: answerReport
+    }).then(delivered => {
+      if (!delivered) {
+        console.warn("The final integrity report could not be delivered. It remains visible in this browser report.");
+      }
+    });
+  }
+
+  if (!emailSent && typeof emailjs !== "undefined" && studentEmail) {
+    emailSent = true;
+
+    const timestamp = new Date().toLocaleString();
+    const readingAnalysisText = rows
+      .filter(r => r.section.startsWith("READING"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const mathAnalysisText = rows
+      .filter(r => r.section.startsWith("MATH"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const integrityTimelineText = integrityEvents
+      .filter(event => [
+        "TAB_HIDDEN", "TAB_VISIBLE", "WINDOW_BLUR", "WINDOW_FOCUS",
+        "FULLSCREEN_EXIT", "COPY", "CUT", "PASTE", "CONTEXT_MENU",
+        "CONNECTION_OFFLINE", "CONNECTION_ONLINE", "PAGE_HIDE",
+        "RELOAD_OR_EXIT_ATTEMPT"
+      ].includes(event.type))
+      .map(event => {
+        const eventTime = new Date(event.occurredAt).toLocaleTimeString();
+        const section = event.sectionId || "No section";
+        const question = event.questionNumber ? `Q${event.questionNumber}` : "No question";
+        const duration = Number(event.metadata?.durationMs || 0) > 0
+          ? ` | Away: ${formatDuration(event.metadata.durationMs)}`
+          : "";
+        return `${eventTime} | ${event.type} | ${section} | ${question}${duration}`;
+      })
+      .join("\n");
+
+    const integrityEmailText = [
+      "TEST INTEGRITY REPORT",
+      "",
+      `Tab/window switches: ${integritySummary.tabSwitches}`,
+      `Total tab-hidden time: ${formatDuration(integritySummary.totalHiddenMs)}`,
+      `Longest tab-hidden period: ${formatDuration(integritySummary.longestHiddenMs)}`,
+      `Window focus losses: ${integritySummary.windowBlurCount}`,
+      `Total window-unfocused time: ${formatDuration(integritySummary.totalBlurMs)}`,
+      `Fullscreen exits: ${integritySummary.fullscreenExits}`,
+      `Copy actions: ${integritySummary.copyCount}`,
+      `Paste actions: ${integritySummary.pasteCount}`,
+      `Cut actions: ${integritySummary.cutCount}`,
+      `Right-click actions: ${integritySummary.contextMenuCount}`,
+      `Connection losses: ${integritySummary.offlineCount}`,
+      `Reload/exit attempts: ${integritySummary.reloadOrExitWarnings}`,
+      "",
+      "ACTIVITY TIMELINE",
+      integrityTimelineText || "No reportable integrity events recorded.",
+      "",
+      ""
+    ].join("\n");
+
+    const paper2WithIntegrity = `${mathAnalysisText}\n\n---\n\n${integrityEmailText}`;
+
+    emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+      name: studentName,
+      test_title: "SAT Diagnostic Math Test 4",
+      to_email: studentEmail,
+      solution_link: solutionPDF,
+      session: testSession,
+      score: `Math ${mathScore}/800 | ${mathCorrect}/${mathTotal} correct`,
+      timestamp: timestamp,
+      paper1: readingAnalysisText,
+      paper2: paper2WithIntegrity
+    }).then(() => {
+      console.log("✅ Email report sent successfully.");
+    }).catch(err => {
+      console.error("❌ Email send failed:", err);
+    });
+  }
+}
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("9jjn3yBHl6S88hITy");
+    })();
+  </script>
+
+</body>
+</html>

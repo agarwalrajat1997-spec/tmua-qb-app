@@ -1,4 +1,4 @@
-﻿import { createServerClient } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -58,6 +58,14 @@ function pendingRedirect(req: NextRequest, product: string) {
 }
 
 export async function proxy(req: NextRequest) {
+  // TS_PUBLIC_SAT_TEST_4
+  // This standalone test must remain accessible without authentication.
+  if (
+    req.nextUrl.pathname === "/sat-test-4" ||
+    req.nextUrl.pathname.startsWith("/sat-test-4/")
+  ) {
+    return NextResponse.next();
+  }
   let res = NextResponse.next({ request: req });
 
   const supabase = createServerClient(
