@@ -1,107 +1,1264 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>ESAT Mock Test 4</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESAT Test 4 - Math 1, Physics and Math 2</title>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
+    .top-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .options label {
+      display: block;
+    }
+
+    #flag-btn {
+      background-color: white;
+      color: black;
+      border: 1px solid black;
+      font-size: 14px;
+      font-weight: normal;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #flag-btn.flagged {
+      background-color: yellow;
+      font-weight: bold;
+      border: 2px solid #999;
+    }
+
     body {
-      margin:0;
-      min-height:100vh;
-      background:#FFFDF7;
-      color:#141414;
-      font-family:Arial, Helvetica, sans-serif;
-      display:grid;
-      place-items:center;
-      padding:24px;
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: white;
     }
-    .card {
-      max-width:760px;
-      width:100%;
-      background:#fff;
-      border:2px solid #E7E7E7;
-      border-radius:18px;
-      padding:28px;
-      box-shadow:0 10px 30px rgba(0,0,0,.06);
+    .header {
+      background: #0074c1;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .kicker {
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:#7A1F24;
-      margin-bottom:10px;
+    .timer {
+      font-size: 14px;
+      text-align: right;
     }
-    h1 {
-      margin:0 0 10px;
-      font-size:38px;
-      line-height:1.08;
-      letter-spacing:-.03em;
+    .container {
+      padding: 20px 40px;
+      font-size: 19px;
+      line-height: 1.6;
     }
-    .meta {
-      display:inline-flex;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(0,0,0,.12);
-      background:#FFF3D1;
-      font-size:13px;
-      font-weight:900;
-      margin:6px 8px 6px 0;
+    .question-number {
+      font-weight: 800;
+      font-size: 22px;
+      margin-bottom: 10px;
     }
-    .sections {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-      gap:12px;
-      margin-top:22px;
+    .container p {
+      font-size: 19px;
+      line-height: 1.65;
+      margin: 12px 0;
     }
-    .section {
-      border:1px solid #E7E7E7;
-      border-radius:14px;
-      padding:16px;
-      background:#fff;
-      font-weight:900;
+    .options {
+      margin-top: 18px;
+      margin-bottom: 40px;
     }
-    .small {
-      color:#5E5E5E;
-      font-size:14px;
-      line-height:1.6;
-      margin-top:18px;
+    .option {
+      margin: 10px 0;
+      font-size: 19px;
+      line-height: 1.8;
     }
-    .btn {
-      display:inline-flex;
-      margin-top:20px;
-      background:#7A1F24;
-      color:#fff;
-      text-decoration:none;
-      padding:12px 16px;
-      border-radius:12px;
-      font-weight:900;
+    input[type="radio"] {
+      transform: scale(1.35);
+      margin-right: 12px;
     }
+    .footer {
+      background: #0074c1;
+      padding: 10px 20px;
+      text-align: right;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
+    }
+    .footer button {
+      font-size: 16px;
+      padding: 6px 16px;
+      margin-left: 10px;
+      background: #005fa3;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .footer button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    #instructions {
+      padding: 40px;
+      font-size: 18px;
+    }
+    #exam-interface {
+      display: none;
+    }
+    #exam-interface .container {
+      padding-bottom: 110px;
+    }
+
+    #instructions {
+      max-width: 1250px;
+      min-height: 560px;
+      margin: 60px auto;
+      background: #ffffff;
+      border: 2px solid #f2b233;
+      border-radius: 22px;
+      box-shadow:
+        0 18px 48px rgba(15, 23, 42, 0.12),
+        0 10px 26px rgba(242, 178, 51, 0.18);
+      padding: 64px 64px 70px;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 0;
+    }
+
+    #instructions::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: #f3f5f7;
+      z-index: -1;
+    }
+
+    #instructions #test-title {
+      margin: 0 0 18px 0;
+      font-size: 30px;
+      font-weight: 800;
+      color: #0b1220;
+    }
+
+    #instructions p {
+      margin: 10px 0;
+      color: #0f172a;
+    }
+
+    #instructions > div:first-of-type {
+      margin: 34px 0 26px !important;
+    }
+
+    #instructions input[type="text"],
+    #instructions input[type="email"],
+    #instructions select {
+      border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
+      border-radius: 10px !important;
+      background: #fff !important;
+      outline: none !important;
+    }
+
+    #instructions input[type="text"]:focus,
+    #instructions input[type="email"]:focus,
+    #instructions select:focus {
+      border-color: #f2b233 !important;
+      box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
+    }
+
+    #instructions button {
+      background: #f6c44a !important;
+      color: #2b1a00 !important;
+      border: none !important;
+      border-radius: 12px !important;
+      box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
+      cursor: pointer !important;
+    }
+
+    #instructions button:hover {
+      filter: brightness(0.98);
+      transform: translateY(-1px);
+    }
+
+    #instructions button:active {
+      transform: translateY(0px);
+      box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
+    }
+
+    #instructions table {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .question-media,
+    .question-image {
+      margin: 14px 0 18px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .question-media img,
+    .question-image img {
+      display: block;
+      max-width: 420px;
+      width: 100%;
+      height: auto;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px;
+      background: #ffffff;
+    }
+
+    .question-image svg,
+    .question-media svg {
+      display: block;
+      max-width: 520px;
+      width: 100%;
+      height: auto;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px;
+      background: #ffffff;
+    }
+
+
+    .arithmetic-diagram {
+      justify-content: center;
+      margin: 18px 0 22px;
+    }
+    .addition-table {
+      border-collapse: collapse;
+      font-size: 24px;
+      line-height: 1.2;
+      margin: 0 auto;
+      font-family: Georgia, serif;
+    }
+    .addition-table td {
+      border: none;
+      min-width: 30px;
+      padding: 2px 6px;
+      text-align: right;
+    }
+    .addition-table .sumline td {
+      border-top: 2px solid #111;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-family: Georgia, serif;
+      font-size: 17px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #f2f2f2;
+    }
+
+    .section-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-left: 8px;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+
+    #break-screen {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      min-height: 100vh;
+      background: #f3f5f7;
+      box-sizing: border-box;
+    }
+
+    #break-card {
+      max-width: 760px;
+      margin: 80px auto;
+      background: #ffffff;
+      border: 2px solid #f2b233;
+      border-radius: 22px;
+      padding: 46px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.12);
+    }
+
+    #break-screen button {
+      background: #f6c44a;
+      color: #2b1a00;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #navigator-popup button {
+      cursor: pointer;
+    }
+
+    .result-wrap {
+      padding: 40px;
+      max-width: 980px;
+      margin: auto;
+    }
+
+    .result-card {
+      text-align: center;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 12px 24px rgba(15,23,42,0.06);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0 30px;
+    }
+
+    .result-mini {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      background: #f9fafb;
+    }
+
+    .result-mini h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+    }
+
+    .result-mini div {
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 950px) {
+      #instructions {
+        margin: 24px 16px;
+        padding: 40px 22px 44px;
+        min-height: auto;
+      }
+      .container {
+        padding: 20px;
+      }
+      .header {
+        align-items: flex-start;
+        gap: 18px;
+      }
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mock 4 question-content compatibility: preserves the Mock 3 shell/logic. */
+    .compact-list { margin: 10px 0 10px 24px; padding: 0; }
+    .compact-list li { margin: 4px 0; }
+    .table-wrap { overflow-x: auto; margin: 14px 0; }
+    .data-table { width: min(620px, 100%); margin: 0 auto 24px; border-collapse: collapse; }
+    .data-table th, .data-table td { border: 1px solid #cbd5e1; padding: 9px 12px; text-align: center; }
+    .data-table th { background: #f1f5f9; color: #334155; }
+    .formula-note { padding: 10px 12px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; }
+    .diagram-svg { display: block; width: 100%; height: auto; margin: 0 auto; }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="kicker">Thriving Scholars · ESAT</div>
-    <h1>ESAT Mock Test 4</h1>
 
+<div id="instructions">
+  <h2 id="test-title">ESAT Test 4</h2>
+
+  <p><strong>Time allowed:</strong> 2 hours - three sections of 40 minutes each</p>
+  <p><strong>Calculators are not permitted.</strong></p>
+
+  <div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
     <div>
-      <span class="meta">Engineering</span>
-      <span class="meta">2 hours total</span>
-      <span class="meta">3 timed sections</span>
+      <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
+      <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
     </div>
-
-    <div class="sections">
-      <div class="section">Math<br><span class="small">40 minutes</span></div>
-      <div class="section">1<br><span class="small">40 minutes</span></div>
-      <div class="section"><br><span class="small">40 minutes</span></div>
+    <div>
+      <label for="student-email" style="font-size: 16px;">Email (to receive results):</label><br>
+      <input type="email" id="student-email" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
     </div>
+    <div>
+      <label for="test-date" style="font-size: 16px;">Select your ESAT test session:</label><br>
+      <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+        <option value="October 2026">October 2026</option>
+        <option value="January 2027">January 2027</option>
+        <option value="October 2027">October 2027</option>
+      </select>
+    </div>
+    <div style="margin-top: 28px;">
+      <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
+    </div>
+  </div>
 
-    <p class="small">
-      Placeholder page. Replace this file with the real ESAT mock test engine/content when ready.
-    </p>
+  <table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
+    <thead>
+      <tr style="background: #f2f2f2;">
+        <th style="border: 1px solid #ccc; padding: 10px;">Section</th>
+        <th style="border: 1px solid #ccc; padding: 10px;">Subject</th>
+        <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
+        <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Section 1</td>
+        <td style="border: 1px solid #ccc; padding: 10px;">Mathematics 1</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Section 2</td>
+        <td style="border: 1px solid #ccc; padding: 10px;">Physics</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Section 3</td>
+        <td style="border: 1px solid #ccc; padding: 10px;">Mathematics 2</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
+      </tr>
+    </tbody>
+  </table>
 
-    <a class="btn" href="/esat-practice-tests">Back to ESAT Practice Tests</a>
-  </main>
+  <p style="font-size: 16px; margin-top: 20px;">
+    Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
+    You should attempt <strong>all 27 questions</strong> in each section.
+  </p>
+
+  <p style="font-size: 16px;">
+    A countdown timer will begin once the test starts. You may navigate between questions within the current section at any time. The current section will automatically submit when the time expires. After Mathematics 1 and Physics, you will get an optional 5-minute break before the next section begins.
+  </p>
+
+  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
+</div>
+
+<div id="exam-interface">
+  <div class="header">
+    <div><strong>(ESAT) Engineering and Science Admissions Test</strong><span class="section-chip" id="section-chip">Mathematics 1</span></div>
+    <div class="timer">
+      â²ï¸ Time Remaining <span id="time">40:00</span><br>
+      ðŸ“„ <span id="counter">Q1 of 27</span><br>
+      <button id="flag-btn" onclick="toggleFlag()" style="margin-top: 8px; padding: 4px 10px; font-size: 14px;">âš‘ Flag for Review</button>
+    </div>
+  </div>
+
+  <div class="container" id="question-container"></div>
+
+  <div class="footer">
+    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
+    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
+    <button onclick="openNavigator()">Navigator</button>
+    <button onclick="confirmSubmit()">Submit</button>
+  </div>
+</div>
+
+<div id="break-screen">
+  <div id="break-card">
+    <h2 id="break-title">End of Section</h2>
+    <p id="break-copy">You can take a 5-minute break before starting the next section.</p>
+    <p>Time Remaining: <span id="break-timer">05:00</span></p>
+    <button onclick="skipBreak()">Skip Break</button>
+  </div>
+</div>
+
+<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:340px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+  <h3 id="navigator-heading" style="margin-top: 0; color:#0074c1;"></h3>
+  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;"></div>
+  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px; border: none; border-radius: 4px;">Close</button>
+</div>
+
+<script>
+const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_9f0bcc47fe6240b2831c637b2a641974.pdf"; // Add the hosted Mock Test 4 solution-book URL here when available.
+const SECTION_SIZE = 27;
+const SECTION_SECONDS = 40 * 60;
+const BREAK_SECONDS = 5 * 60;
+const sectionNames = ["Mathematics 1", "Physics", "Mathematics 2"];
+const testId = "esat-mock-04";
+</script>
+<script>
+const questions = [
+  "<div class=\"question-number\">Question 1</div>\n<p>A bag contains \\(5\\) red, \\(4\\) blue and \\(3\\) green counters. Three counters are drawn one at a time without replacement.</p>\n<p>Given that exactly two of the counters are the same colour and the third is a different colour, what is the probability that the first and third counters are the same colour?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q1\" type=\"radio\" value=\"A\"/> \\(\\frac16\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q1\" type=\"radio\" value=\"B\"/> \\(\\frac14\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q1\" type=\"radio\" value=\"C\"/> \\(\\frac13\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q1\" type=\"radio\" value=\"D\"/> \\(\\frac25\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q1\" type=\"radio\" value=\"E\"/> \\(\\frac12\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 2</div>\n<p>For real \\(x\\), define</p>\n<p>\\[\nE=\\frac{\\dfrac1{x-2}-\\dfrac1{x+2}}\n        {\\dfrac1{x-2}+\\dfrac1{x+2}}.\n\\]</p>\n<p>Given that \\(x&gt;2\\) and</p>\n<p>\\[E+\\frac1E=\\frac{17}{4},\\]</p>\n<p>what is the value of \\(x\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q2\" type=\"radio\" value=\"A\"/> \\(\\frac12\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q2\" type=\"radio\" value=\"B\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q2\" type=\"radio\" value=\"C\"/> \\(4\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q2\" type=\"radio\" value=\"D\"/> \\(16\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q2\" type=\"radio\" value=\"E\"/> \\(8\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 3</div>\n<p>The roots of</p>\n<p>\\[3x^2+bx-8=0\\]</p>\n<p>are \\(\\alpha\\) and \\(\\beta\\), where \\(b&gt;0\\). The reciprocals of the roots satisfy</p>\n<p>\\[\\left|\\frac1\\alpha-\\frac1\\beta\\right|=\\frac74.\\]</p>\n<p>What is the value of \\(b\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q3\" type=\"radio\" value=\"A\"/> \\(8\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q3\" type=\"radio\" value=\"B\"/> \\(10\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q3\" type=\"radio\" value=\"C\"/> \\(12\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q3\" type=\"radio\" value=\"D\"/> \\(14\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q3\" type=\"radio\" value=\"E\"/> \\(16\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 4</div>\n<p>For real \\(x\\), define</p>\n<p>\\[\nF=\\frac{\\dfrac1{x-1}+\\dfrac1{x+1}}\n        {\\dfrac1{x-1}-\\dfrac1{x+1}}.\n\\]</p>\n<p>How many integer values of \\(x\\) satisfy all three conditions?</p>\n<ul class=\"compact-list\">\n<li>\\(-5\\le x\\le5\\);</li>\n<li>\\(F\\) is defined;</li>\n<li>\\(F^2-3F-4\\le0\\).</li>\n</ul>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q4\" type=\"radio\" value=\"A\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q4\" type=\"radio\" value=\"B\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q4\" type=\"radio\" value=\"C\"/> \\(5\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q4\" type=\"radio\" value=\"D\"/> \\(4\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q4\" type=\"radio\" value=\"E\"/> \\(6\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 5</div>\n<p>For a family of mathematically similar open containers, the time \\(T\\) taken to cool through a fixed temperature range is directly proportional to the container volume and inversely proportional to the exposed surface area.</p>\n<p>Every linear dimension of container \\(B\\) is \\(\\frac32\\) times the corresponding dimension of container \\(A\\). All of \\(A\\)'s surface area is exposed, but only \\(\\frac45\\) of the corresponding surface area of \\(B\\) is exposed.</p>\n<p>What is \\(T_B/T_A\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q5\" type=\"radio\" value=\"A\"/> \\(\\frac{15}{8}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q5\" type=\"radio\" value=\"B\"/> \\(\\frac{27}{16}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q5\" type=\"radio\" value=\"C\"/> \\(\\frac94\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q5\" type=\"radio\" value=\"D\"/> \\(\\frac{27}{8}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q5\" type=\"radio\" value=\"E\"/> \\(\\frac52\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 6</div>\n<p>Let \\(n\\) be the smallest positive integer such that</p>\n<ul class=\"compact-list\">\n<li>\\(n\\) is a perfect square, and</li>\n<li>\\(180n\\) is a perfect cube.</li>\n</ul>\n<p>How many positive divisors does \\(n\\) have?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q6\" type=\"radio\" value=\"A\"/> \\(45\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q6\" type=\"radio\" value=\"B\"/> \\(60\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q6\" type=\"radio\" value=\"C\"/> \\(75\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q6\" type=\"radio\" value=\"D\"/> \\(90\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q6\" type=\"radio\" value=\"E\"/> \\(125\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 7</div>\n<p>Calculate</p>\n<p>\\[\n\\frac{(5.01\\times10^4)^2-(4.99\\times10^4)^2}\n     {(2.5\\times10^2)^2}.\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q7\" type=\"radio\" value=\"A\"/> \\(32\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q7\" type=\"radio\" value=\"B\"/> \\(80\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q7\" type=\"radio\" value=\"C\"/> \\(160\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q7\" type=\"radio\" value=\"D\"/> \\(800\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q7\" type=\"radio\" value=\"E\"/> \\(320\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 8</div>\n<p>For constants \\(a,h,c\\), where \\(c&gt;0\\),</p>\n<p>\\[x^2+ax+20=(x-h)^2-c.\\]</p>\n<p>The two roots of \\(x^2+ax+20=0\\) are positive, and the larger root is five times the smaller root.</p>\n<p>What is \\(a+h+c\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q8\" type=\"radio\" value=\"A\"/> \\(-2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q8\" type=\"radio\" value=\"B\"/> \\(10\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q8\" type=\"radio\" value=\"C\"/> \\(16\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q8\" type=\"radio\" value=\"D\"/> \\(22\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q8\" type=\"radio\" value=\"E\"/> \\(4\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 9</div>\n<p>The positive numbers \\(m\\) and \\(n\\) satisfy \\(m\\ne3n\\) and</p>\n<p>\\[\n\\frac{m-3n}{m+n}+\\frac{m+n}{m-3n}=\\frac{10}{3}.\n\\]</p>\n<p>What is \\(m:n\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q9\" type=\"radio\" value=\"A\"/> \\(1:5\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q9\" type=\"radio\" value=\"B\"/> \\(3:1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q9\" type=\"radio\" value=\"C\"/> \\(4:1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q9\" type=\"radio\" value=\"D\"/> \\(5:1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q9\" type=\"radio\" value=\"E\"/> \\(6:1\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 10</div>\n<p>The positive quantity \\(P\\) is directly proportional to \\(\\sqrt Q\\) and inversely proportional to \\(R^2\\).</p>\n<p>The value of \\(Q\\) is increased by \\(44\\%\\), while the value of \\(R\\) is decreased by \\(20\\%\\).</p>\n<p>By what percentage does \\(P\\) increase?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q10\" type=\"radio\" value=\"A\"/> \\(87.5\\%\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q10\" type=\"radio\" value=\"B\"/> \\(44\\%\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q10\" type=\"radio\" value=\"C\"/> \\(56.25\\%\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q10\" type=\"radio\" value=\"D\"/> \\(80\\%\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q10\" type=\"radio\" value=\"E\"/> \\(120\\%\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 11</div>\n<p>Points \\(A,B,C\\) lie on a circle. The tangents to the circle at \\(A\\) and \\(C\\) meet at \\(T\\). The diagram is not to scale.</p>\n<div class=\"question-image\">\n<svg aria-label=\"Circle with A, B and C on the circumference; tangents at A and C meet at T; angle ABC is 74 degrees\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 650 380\">\n<circle cx=\"420\" cy=\"180\" fill=\"#f8fbfd\" r=\"95\" stroke=\"#1f2937\" stroke-width=\"3\"></circle>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"75\" x2=\"393.8\" y1=\"180\" y2=\"88.7\"></line>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"75\" x2=\"393.8\" y1=\"180\" y2=\"271.3\"></line>\n<line stroke=\"#334155\" stroke-width=\"3\" x1=\"393.8\" x2=\"515\" y1=\"88.7\" y2=\"180\"></line>\n<line stroke=\"#334155\" stroke-width=\"3\" x1=\"515\" x2=\"393.8\" y1=\"180\" y2=\"271.3\"></line>\n<line stroke=\"#94a3b8\" stroke-width=\"2.5\" x1=\"420\" x2=\"393.8\" y1=\"180\" y2=\"88.7\"></line>\n<line stroke=\"#94a3b8\" stroke-width=\"2.5\" x1=\"420\" x2=\"393.8\" y1=\"180\" y2=\"271.3\"></line>\n<circle cx=\"393.8\" cy=\"88.7\" fill=\"#7a211b\" r=\"6\"></circle>\n<circle cx=\"515\" cy=\"180\" fill=\"#7a211b\" r=\"6\"></circle>\n<circle cx=\"393.8\" cy=\"271.3\" fill=\"#7a211b\" r=\"6\"></circle>\n<circle cx=\"75\" cy=\"180\" fill=\"#7a211b\" r=\"6\"></circle>\n<circle cx=\"420\" cy=\"180\" fill=\"#1f2937\" r=\"5\"></circle>\n<text font-size=\"20\" font-weight=\"800\" x=\"370\" y=\"72\">A</text>\n<text font-size=\"20\" font-weight=\"800\" x=\"529\" y=\"185\">B</text>\n<text font-size=\"20\" font-weight=\"800\" x=\"370\" y=\"296\">C</text>\n<text font-size=\"20\" font-weight=\"800\" x=\"47\" y=\"186\">T</text>\n<text font-size=\"18\" font-weight=\"700\" x=\"430\" y=\"174\">O</text>\n<text fill=\"#0f6f9f\" font-size=\"18\" font-weight=\"800\" x=\"477\" y=\"153\">74Â°</text>\n<text fill=\"#6b7280\" font-size=\"15\" x=\"500\" y=\"350\">not to scale</text>\n</svg></div>\n<p>Given that \\(\\angle ABC=74^\\circ\\), what is \\(\\angle ATC\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q11\" type=\"radio\" value=\"A\"/> \\(28^\\circ\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q11\" type=\"radio\" value=\"B\"/> \\(32^\\circ\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q11\" type=\"radio\" value=\"C\"/> \\(36^\\circ\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q11\" type=\"radio\" value=\"D\"/> \\(42^\\circ\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q11\" type=\"radio\" value=\"E\"/> \\(74^\\circ\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 12</div>\n<p>Two open cylinders \\(A\\) and \\(B\\) are mathematically similar. Each has one circular base and no top.</p>\n<p>Cylinder \\(B\\) has radius \\(5\\text{ cm}\\) and height \\(10\\text{ cm}\\). The total surface area of cylinder \\(A\\) is \\(45\\pi\\text{ cm}^2\\).</p>\n<p>Cylinder \\(A\\) is filled to \\(\\frac23\\) of its capacity and the liquid is poured into empty cylinder \\(B\\). What fraction of \\(B\\)'s capacity is filled?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q12\" type=\"radio\" value=\"A\"/> \\(\\frac9{125}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q12\" type=\"radio\" value=\"B\"/> \\(\\frac{27}{125}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q12\" type=\"radio\" value=\"C\"/> \\(\\frac{18}{125}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q12\" type=\"radio\" value=\"D\"/> \\(\\frac25\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q12\" type=\"radio\" value=\"E\"/> \\(\\frac35\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 13</div>\n<p>The line \\(y=3x-1\\) intersects the curve \\(y=x^2-3x+5\\) at points \\(P\\) and \\(Q\\).</p>\n<p>What is the distance \\(PQ\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q13\" type=\"radio\" value=\"A\"/> \\(2\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q13\" type=\"radio\" value=\"B\"/> \\(4\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q13\" type=\"radio\" value=\"C\"/> \\(2\\sqrt{10}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q13\" type=\"radio\" value=\"D\"/> \\(6\\sqrt{10}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q13\" type=\"radio\" value=\"E\"/> \\(2\\sqrt{30}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 14</div>\n<p>A grouped distribution is shown. Its estimated mean is \\(25\\).</p>\n<div class=\"table-wrap\"><table class=\"data-table\"><thead><tr><th>Interval</th><th>Frequency density</th></tr></thead><tbody>\n<tr><td>\\(0\\le x&lt;10\\)</td><td>\\(1\\)</td></tr>\n<tr><td>\\(10\\le x&lt;20\\)</td><td>\\(k\\)</td></tr>\n<tr><td>\\(20\\le x&lt;40\\)</td><td>\\(3\\)</td></tr>\n<tr><td>\\(40\\le x&lt;50\\)</td><td>\\(1\\)</td></tr>\n</tbody></table></div>\n<p>Which option gives both the frequency in \\(10\\le x&lt;20\\) and the interval containing the median?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q14\" type=\"radio\" value=\"A\"/> \\(20;\\ 10\\le x&lt;20\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q14\" type=\"radio\" value=\"B\"/> \\(30;\\ 10\\le x&lt;20\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q14\" type=\"radio\" value=\"C\"/> \\(40;\\ 20\\le x&lt;40\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q14\" type=\"radio\" value=\"D\"/> \\(30;\\ 20\\le x&lt;40\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q14\" type=\"radio\" value=\"E\"/> \\(60;\\ 20\\le x&lt;40\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 15</div>\n<p>Two cards are drawn at random without replacement from a standard deck of \\(52\\) cards.</p>\n<p>Given that at least one card is an ace and the two cards are of different suits, what is the probability that both cards are aces?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q15\" type=\"radio\" value=\"A\"/> \\(\\frac1{25}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q15\" type=\"radio\" value=\"B\"/> \\(\\frac1{33}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q15\" type=\"radio\" value=\"C\"/> \\(\\frac1{30}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q15\" type=\"radio\" value=\"D\"/> \\(\\frac1{24}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q15\" type=\"radio\" value=\"E\"/> \\(\\frac2{25}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 16</div>\n<p>Two independent identical unfair dice are rolled. On each die, the probability of rolling a \\(6\\) is twice the probability of rolling any one of the other five numbers, which are equally likely.</p>\n<p>Given that the total shown is at least \\(10\\), what is the probability that at least one die shows \\(6\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q16\" type=\"radio\" value=\"A\"/> \\(\\frac{11}{12}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q16\" type=\"radio\" value=\"B\"/> \\(\\frac{12}{13}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q16\" type=\"radio\" value=\"C\"/> \\(\\frac89\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q16\" type=\"radio\" value=\"D\"/> \\(\\frac{10}{11}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q16\" type=\"radio\" value=\"E\"/> \\(\\frac{13}{14}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 17</div>\n<p>Among \\(120\\) students:</p>\n<ul class=\"compact-list\">\n<li>\\(72\\) study Physics, \\(65\\) study Mathematics and \\(50\\) study Chemistry;</li>\n<li>\\(38\\) study both Physics and Mathematics, \\(30\\) study both Mathematics and Chemistry, and \\(28\\) study both Chemistry and Physics;</li>\n<li>\\(9\\) study none of the three subjects.</li>\n</ul>\n<p>The pairwise figures include students who study all three subjects.</p>\n<p>A student is selected at random from those who study at least two subjects. What is the probability that the student studies exactly two?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q17\" type=\"radio\" value=\"A\"/> \\(\\frac5{14}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q17\" type=\"radio\" value=\"B\"/> \\(\\frac9{20}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q17\" type=\"radio\" value=\"C\"/> \\(\\frac9{14}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q17\" type=\"radio\" value=\"D\"/> \\(\\frac59\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q17\" type=\"radio\" value=\"E\"/> \\(\\frac{11}{14}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 18</div>\n<p>A fair coin is tossed \\(7\\) times.</p>\n<p>Given that exactly \\(3\\) heads are obtained, what is the probability that no two heads are consecutive and at least one of the first and last tosses is a head?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q18\" type=\"radio\" value=\"A\"/> \\(\\frac15\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q18\" type=\"radio\" value=\"B\"/> \\(\\frac8{35}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q18\" type=\"radio\" value=\"C\"/> \\(\\frac27\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q18\" type=\"radio\" value=\"D\"/> \\(\\frac3{10}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q18\" type=\"radio\" value=\"E\"/> \\(\\frac9{35}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 19</div>\n<p>Two fair six-sided dice are rolled.</p>\n<p>Given that the product of the two numbers is divisible by \\(6\\), what is the probability that their total is prime?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q19\" type=\"radio\" value=\"A\"/> \\(\\frac25\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q19\" type=\"radio\" value=\"B\"/> \\(\\frac7{15}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q19\" type=\"radio\" value=\"C\"/> \\(\\frac35\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q19\" type=\"radio\" value=\"D\"/> \\(\\frac8{15}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q19\" type=\"radio\" value=\"E\"/> \\(\\frac23\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 20</div>\n<p>A bag contains \\(x\\) red balls, \\(x+1\\) blue balls and \\(x+3\\) green balls, where \\(x\\) is a positive integer.</p>\n<p>Two balls are drawn without replacement. The probability that they are the same colour is \\(\\frac4{13}\\).</p>\n<p>How many balls are in the bag?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q20\" type=\"radio\" value=\"A\"/> \\(13\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q20\" type=\"radio\" value=\"B\"/> \\(10\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q20\" type=\"radio\" value=\"C\"/> \\(12\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q20\" type=\"radio\" value=\"D\"/> \\(14\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q20\" type=\"radio\" value=\"E\"/> \\(16\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 21</div>\n<p>A container holds a well-mixed acid solution in which the ratio of acid to water is \\(2:5\\).</p>\n<p>Five litres of the mixture are removed and replaced by five litres of pure water. The new ratio of acid to water is \\(1:3\\).</p>\n<p>What was the original volume of solution?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q21\" type=\"radio\" value=\"A\"/> \\(25\\text{ L}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q21\" type=\"radio\" value=\"B\"/> \\(30\\text{ L}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q21\" type=\"radio\" value=\"C\"/> \\(40\\text{ L}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q21\" type=\"radio\" value=\"D\"/> \\(35\\text{ L}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q21\" type=\"radio\" value=\"E\"/> \\(45\\text{ L}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 22</div>\n<p>In a tennis game, a player wins each point independently with probability \\(p\\), and the opponent wins with probability \\(q=1-p\\). The first player to win at least four points wins the game, provided that player leads by at least two points.</p>\n<p>What is the probability that the game ends after exactly \\(10\\) points?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q22\" type=\"radio\" value=\"A\"/> \\(20p^3q^3(p^2+q^2)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q22\" type=\"radio\" value=\"B\"/> \\(40p^3q^3(p^2+q^2)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q22\" type=\"radio\" value=\"C\"/> \\(20p^4q^4(p^2+q^2)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q22\" type=\"radio\" value=\"D\"/> \\(80p^4q^4(p^2+q^2)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q22\" type=\"radio\" value=\"E\"/> \\(40p^4q^4(p^2+q^2)\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 23</div>\n<p>The speedâ€“time graph of a vehicle consists of three straight-line sections:</p>\n<ul class=\"compact-list\">\n<li>its speed rises uniformly from \\(0\\) to \\(v\\) during the first \\(10\\) seconds;</li>\n<li>it then travels at speed \\(v\\) for \\(20\\) seconds;</li>\n<li>its speed then falls uniformly to \\(0\\) during the next \\(5\\) seconds.</li>\n</ul>\n<div class=\"question-image\">\n<svg aria-label=\"Speed time graph rising to v at 10 seconds, constant to 30 seconds, then falling to zero at 35 seconds\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 560 300\">\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"70\" x2=\"520\" y1=\"240\" y2=\"240\"></line>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"70\" x2=\"70\" y1=\"240\" y2=\"35\"></line>\n<polyline fill=\"rgba(15,111,159,.09)\" points=\"70,240 200,85 440,85 500,240\" stroke=\"#0f6f9f\" stroke-width=\"4\"></polyline>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"7 7\" stroke-width=\"2\" x1=\"200\" x2=\"200\" y1=\"240\" y2=\"85\"></line>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"7 7\" stroke-width=\"2\" x1=\"440\" x2=\"440\" y1=\"240\" y2=\"85\"></line>\n<text font-size=\"18\" font-weight=\"700\" x=\"54\" y=\"28\">speed</text>\n<text font-size=\"18\" font-weight=\"700\" x=\"505\" y=\"270\">time</text>\n<text font-size=\"17\" x=\"184\" y=\"264\">10</text>\n<text font-size=\"17\" x=\"426\" y=\"264\">30</text>\n<text font-size=\"17\" x=\"487\" y=\"264\">35</text>\n<text font-size=\"19\" font-weight=\"700\" x=\"43\" y=\"91\">v</text>\n</svg>\n</div>\n<p>The total distance travelled is \\(660\\text{ m}\\). What is the average speed during the first \\(25\\) seconds?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q23\" type=\"radio\" value=\"A\"/> \\(18\\text{ m s}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q23\" type=\"radio\" value=\"B\"/> \\(\\frac{96}{5}\\text{ m s}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q23\" type=\"radio\" value=\"C\"/> \\(20\\text{ m s}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q23\" type=\"radio\" value=\"D\"/> \\(\\frac{108}{5}\\text{ m s}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q23\" type=\"radio\" value=\"E\"/> \\(24\\text{ m s}^{-1}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 24</div>\n<p>A solid sphere is melted and recast into \\(n\\) identical smaller spheres, with no material lost.</p>\n<p>The total surface area of the smaller spheres is three times the surface area of the original sphere.</p>\n<p>Which option gives both \\(n\\) and the ratio</p>\n<p>\\[\\frac{\\text{radius of one smaller sphere}}{\\text{radius of the original sphere}}\\,?\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q24\" type=\"radio\" value=\"A\"/> \\(n=9;\\ \\frac13\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q24\" type=\"radio\" value=\"B\"/> \\(n=27;\\ \\frac19\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q24\" type=\"radio\" value=\"C\"/> \\(n=81;\\ \\frac13\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q24\" type=\"radio\" value=\"D\"/> \\(n=27;\\ \\frac13\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q24\" type=\"radio\" value=\"E\"/> \\(n=81;\\ \\frac19\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 25</div>\n<p>A right circular cylinder has radius \\(r\\) and height \\(3r\\). A hemispherical cavity of radius \\(r\\) is hollowed out from one circular end, so the cavity opening occupies the whole end face.</p>\n<p>The numerical value of the remaining solid's volume in \\(\\text{cm}^3\\) is equal to the numerical value of its total exposed surface area in \\(\\text{cm}^2\\).</p>\n<div class=\"formula-note\"><strong>You may use:</strong> \\(V_{\\text{sphere}}=\\frac{4}{3}\\pi r^3\\) and \\(A_{\\text{sphere}}=4\\pi r^2\\).</div>\n<p>What is \\(r\\), in centimetres?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q25\" type=\"radio\" value=\"A\"/> \\(\\frac{27}{7}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q25\" type=\"radio\" value=\"B\"/> \\(\\frac{18}{7}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q25\" type=\"radio\" value=\"C\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q25\" type=\"radio\" value=\"D\"/> \\(\\frac{24}{7}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q25\" type=\"radio\" value=\"E\"/> \\(\\frac{30}{7}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 26</div>\n<p>The real numbers \\(x\\) and \\(y\\) satisfy</p>\n<p>\\[x+y=7,\\qquad x^2+y^2=29.\\]</p>\n<p>What is \\(x^4+y^4\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q26\" type=\"radio\" value=\"A\"/> \\(561\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q26\" type=\"radio\" value=\"B\"/> \\(601\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q26\" type=\"radio\" value=\"C\"/> \\(641\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q26\" type=\"radio\" value=\"D\"/> \\(681\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q26\" type=\"radio\" value=\"E\"/> \\(721\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 27</div>\n<p>The equation</p>\n<p>\\[2^x+2^{-x}=\\frac52\\]</p>\n<p>has two real solutions \\(x_1\\) and \\(x_2\\).</p>\n<p>What is \\(4^{x_1}+4^{x_2}\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q27\" type=\"radio\" value=\"A\"/> \\(\\frac94\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q27\" type=\"radio\" value=\"B\"/> \\(\\frac{13}{4}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q27\" type=\"radio\" value=\"C\"/> \\(5\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q27\" type=\"radio\" value=\"D\"/> \\(\\frac{21}{4}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q27\" type=\"radio\" value=\"E\"/> \\(\\frac{17}{4}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 1</div>\n<p>Two identical neutral metal spheres \\(A\\) and \\(B\\) touch each other on insulating stands. A negatively charged rod is brought close to sphere \\(A\\), without touching it.</p>\n<p>While the rod remains in place, the spheres are separated. The rod is then removed. Sphere \\(B\\) is moved far from \\(A\\), briefly connected to Earth, and then disconnected.</p>\n<p>Which statement describes the final state?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q28\" type=\"radio\" value=\"A\"/> Electrons flow from \\(B\\) to Earth; \\(A\\) is positive and \\(B\\) is neutral.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q28\" type=\"radio\" value=\"B\"/> Electrons flow from Earth to \\(B\\); \\(A\\) is positive and \\(B\\) is negative.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q28\" type=\"radio\" value=\"C\"/> Electrons flow from \\(B\\) to Earth; \\(A\\) is neutral and \\(B\\) is positive.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q28\" type=\"radio\" value=\"D\"/> No charge flows to Earth; \\(A\\) is positive and \\(B\\) is negative.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q28\" type=\"radio\" value=\"E\"/> Electrons flow from \\(A\\) to Earth; both spheres finish neutral.\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 2</div>\n<p>The circuit contains an ideal \\(12\\text{ V}\\) battery. A \\(6\\,\\Omega\\) resistor is in series with a parallel network. Initially the switch is open, so the parallel network contains only the \\(3\\,\\Omega\\) and \\(6\\,\\Omega\\) branches. Closing the switch adds a second \\(6\\,\\Omega\\) branch in parallel.</p>\n<div class=\"question-image\">\n<img alt=\"Circuit diagram for Physics Question 2\" decoding=\"async\" loading=\"eager\" src=\"https://assets.thrivingscholars.com/images/tmua/004ce15b-2e60-41eb-89a6-5a2a1dc650f0.png\" style=\"display:block; width:100%; max-width:700px; height:auto; margin:0 auto;\"/>\n</div>\n<p>What is the ratio</p>\n<p>\\[\n\\frac{\\text{power in the series }6\\,\\Omega\\text{ resistor after closing the switch}}\n{\\text{power in that resistor before closing the switch}}\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q29\" type=\"radio\" value=\"A\"/> \\(\\frac{225}{256}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q29\" type=\"radio\" value=\"B\"/> \\(\\frac{15}{14}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q29\" type=\"radio\" value=\"C\"/> \\(\\frac{16}{15}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q29\" type=\"radio\" value=\"D\"/> \\(\\frac{256}{225}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q29\" type=\"radio\" value=\"E\"/> \\(\\frac65\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 3</div>\n<p>The graph shows the currentâ€“voltage characteristic of a filament lamp. The marked points are exact.</p>\n<div class=\"question-image\">\n<svg aria-label=\"Nonlinear filament lamp current against voltage graph passing through 6 volts 0.8 amps and 12 volts 1.2 amps\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 620 390\">\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"80\" x2=\"565\" y1=\"320\" y2=\"320\"></line>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"80\" x2=\"80\" y1=\"320\" y2=\"40\"></line>\n<text font-size=\"20\" font-weight=\"700\" x=\"555\" y=\"378\">V / V</text>\n<text font-size=\"20\" font-weight=\"700\" x=\"22\" y=\"55\">I / A</text>\n<path d=\"M80 320 C145 235, 235 175, 320 140 C410 102, 500 82, 545 74\" fill=\"none\" stroke=\"#0f6f9f\" stroke-width=\"5\"></path>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"7 7\" stroke-width=\"2\" x1=\"310\" x2=\"310\" y1=\"320\" y2=\"142\"></line>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"7 7\" stroke-width=\"2\" x1=\"80\" x2=\"310\" y1=\"142\" y2=\"142\"></line>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"7 7\" stroke-width=\"2\" x1=\"545\" x2=\"545\" y1=\"320\" y2=\"74\"></line>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"7 7\" stroke-width=\"2\" x1=\"80\" x2=\"545\" y1=\"74\" y2=\"74\"></line>\n<circle cx=\"310\" cy=\"142\" fill=\"#7a211b\" r=\"7\"></circle>\n<circle cx=\"545\" cy=\"74\" fill=\"#7a211b\" r=\"7\"></circle>\n<text font-size=\"19\" x=\"292\" y=\"348\">6</text>\n<text font-size=\"19\" x=\"530\" y=\"348\">12</text>\n<text font-size=\"19\" x=\"42\" y=\"149\">0.8</text>\n<text font-size=\"19\" x=\"42\" y=\"81\">1.2</text>\n</svg>\n</div>\n<p>Two identical lamps are connected first in series across a \\(12\\text{ V}\\) supply, and then in parallel across the same supply.</p>\n<p>What is the ratio</p>\n<p>\\[\n\\frac{\\text{total current with the lamps in parallel}}\n{\\text{total current with the lamps in series}}\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q30\" type=\"radio\" value=\"A\"/> \\(\\frac32\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q30\" type=\"radio\" value=\"B\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q30\" type=\"radio\" value=\"C\"/> \\(\\frac52\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q30\" type=\"radio\" value=\"D\"/> \\(\\frac83\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q30\" type=\"radio\" value=\"E\"/> \\(3\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 4</div>\n<p>An NTC thermistor is connected in series with a fixed \\(3.0\\text{ k}\\Omega\\) resistor across an ideal \\(6.0\\text{ V}\\) supply.</p>\n<p>The thermistor resistance is \\(6.0\\text{ k}\\Omega\\) at \\(20^\\circ\\text{C}\\) and \\(1.0\\text{ k}\\Omega\\) at \\(60^\\circ\\text{C}\\).</p>\n<p>Which option gives both</p>\n<p>\\[\n\\frac{P_{\\rm thermistor,60}}{P_{\\rm thermistor,20}}\n\\quad\\text{and}\\quad\n\\frac{P_{\\rm fixed,60}}{P_{\\rm fixed,20}}\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q31\" type=\"radio\" value=\"A\"/> \\(\\frac{32}{27};\\ \\frac{81}{16}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q31\" type=\"radio\" value=\"B\"/> \\(\\frac{27}{32};\\ \\frac{16}{81}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q31\" type=\"radio\" value=\"C\"/> \\(\\frac{27}{32};\\ \\frac{81}{16}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q31\" type=\"radio\" value=\"D\"/> \\(\\frac38;\\ \\frac{81}{16}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q31\" type=\"radio\" value=\"E\"/> \\(\\frac{27}{32};\\ \\frac94\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 5</div>\n<p>A transformer receives electrical power at \\(100\\text{ kW}\\) and is \\(80\\%\\) efficient. Its output is transmitted through two cables whose combined resistance is \\(5.0\\,\\Omega\\).</p>\n<p>The power loss in the cables must not exceed \\(2.0\\%\\) of the transformer's output power.</p>\n<p>What is the minimum transmission voltage?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q32\" type=\"radio\" value=\"A\"/> \\(2.0\\text{ kV}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q32\" type=\"radio\" value=\"B\"/> \\(2\\sqrt5\\text{ kV}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q32\" type=\"radio\" value=\"C\"/> \\(4.0\\text{ kV}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q32\" type=\"radio\" value=\"D\"/> \\(5.0\\text{ kV}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q32\" type=\"radio\" value=\"E\"/> \\(5\\sqrt2\\text{ kV}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 6</div>\n<p>A rectangular coil has \\(50\\) turns. On each turn, each active side has length \\(0.20\\text{ m}\\), and the two active sides are \\(0.10\\text{ m}\\) apart. The sides are at right angles to a uniform magnetic field of flux density \\(0.40\\text{ T}\\). A current of \\(3.0\\text{ A}\\) flows.</p><p class=\"formula-note\">You may use: <strong>moment of a couple = one force Ã— perpendicular separation of the two forces.</strong></p>\n<p>Which statement is correct when the plane of the coil is parallel to the magnetic field?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q33\" type=\"radio\" value=\"A\"/> The torque is \\(1.2\\text{ N m}\\), and reversing both current and field leaves its direction unchanged.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q33\" type=\"radio\" value=\"B\"/> The torque is \\(1.2\\text{ N m}\\), and reversing both current and field reverses its direction.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q33\" type=\"radio\" value=\"C\"/> The torque is \\(2.4\\text{ N m}\\), and reversing only the current leaves its direction unchanged.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q33\" type=\"radio\" value=\"D\"/> The torque is \\(12\\text{ N m}\\), and reversing both current and field leaves its direction unchanged.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q33\" type=\"radio\" value=\"E\"/> The forces cancel, so the torque is zero.\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 7</div>\n<p>A simple generator produces the voltage shown when a coil of \\(N\\) turns rotates with period \\(T\\). Its peak voltage is \\(E_0\\).</p>\n<div class=\"question-image\">\n<img alt=\"Generator voltage graph for Physics Question 7\" decoding=\"async\" loading=\"eager\" src=\"https://assets.thrivingscholars.com/images/tmua/d7424f6b-e979-498b-bc67-6b124946b1b6.png\" style=\"display:block; width:100%; max-width:700px; height:auto; margin:0 auto;\"/>\n</div>\n<p>The coil is replaced by one with \\(3N\\) turns and is rotated at twice the original rotational speed in the same magnetic field.</p>\n<p>What are the new peak voltage and period?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q34\" type=\"radio\" value=\"A\"/> Peak \\(=\\frac12E_0\\), period \\(=\\frac16T\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q34\" type=\"radio\" value=\"B\"/> Peak \\(=2E_0\\), period \\(=\\frac13T\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q34\" type=\"radio\" value=\"C\"/> Peak \\(=3E_0\\), period \\(=\\frac12T\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q34\" type=\"radio\" value=\"D\"/> Peak \\(=6E_0\\), period \\(=T\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q34\" type=\"radio\" value=\"E\"/> Peak \\(=6E_0\\), period \\(=\\frac12T\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 8</div>\n<p>A transformer has \\(1200\\) turns on its primary coil and \\(100\\) turns on its secondary coil. The primary is connected to a \\(240\\text{ V}\\) alternating supply, and the secondary is connected to a \\(4.0\\,\\Omega\\) resistor.</p>\n<p>The transformer is \\(80\\%\\) efficient. How much electrical energy is drawn from the supply in \\(2.0\\) minutes?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q35\" type=\"radio\" value=\"A\"/> \\(10\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q35\" type=\"radio\" value=\"B\"/> \\(12\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q35\" type=\"radio\" value=\"C\"/> \\(12.5\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q35\" type=\"radio\" value=\"D\"/> \\(15\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q35\" type=\"radio\" value=\"E\"/> \\(18.75\\text{ kJ}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 9</div>\n<p>The velocityâ€“time graph of an object is shown. The object comes to a momentary rest at the 13s mark.</p>\n<p>What is the ratio</p>\n<p>\\[\n\\frac{\\text{total distance travelled in }18\\text{ s}}\n{\\text{magnitude of the displacement in }18\\text{ s}}\\,?\n\\]</p>\n<div class=\"question-image\">\n<svg aria-label=\"Velocity-time graph: velocity rises from 0 to 12 metres per second by 4 seconds, stays at 12 until 10 seconds, falls linearly to minus 4 by 14 seconds crossing zero at 13 seconds, then stays at minus 4 until 18 seconds\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 650 390\">\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"75\" x2=\"605\" y1=\"240\" y2=\"240\"></line>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"75\" x2=\"75\" y1=\"325\" y2=\"45\"></line>\n<polyline fill=\"none\" points=\"75,240 188,84 350,84 458,292 566,292\" stroke=\"#0f6f9f\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"5\"></polyline>\n<line stroke=\"#cbd5e1\" stroke-dasharray=\"6 6\" stroke-width=\"2\" x1=\"188\" x2=\"188\" y1=\"240\" y2=\"84\"></line>\n<line stroke=\"#cbd5e1\" stroke-dasharray=\"6 6\" stroke-width=\"2\" x1=\"350\" x2=\"350\" y1=\"240\" y2=\"84\"></line>\n<line stroke=\"#94a3b8\" stroke-dasharray=\"6 6\" stroke-width=\"2\" x1=\"431\" x2=\"431\" y1=\"240\" y2=\"188\"></line>\n<line stroke=\"#cbd5e1\" stroke-dasharray=\"6 6\" stroke-width=\"2\" x1=\"458\" x2=\"458\" y1=\"240\" y2=\"292\"></line>\n<line stroke=\"#cbd5e1\" stroke-dasharray=\"6 6\" stroke-width=\"2\" x1=\"566\" x2=\"566\" y1=\"240\" y2=\"292\"></line>\n<text font-size=\"19\" font-weight=\"800\" x=\"16\" y=\"45\">velocity / m sâ»Â¹</text>\n<text font-size=\"19\" font-weight=\"800\" x=\"548\" y=\"365\">time / s</text>\n<text font-size=\"18\" x=\"47\" y=\"91\">12</text>\n<text font-size=\"18\" x=\"48\" y=\"298\">âˆ’4</text>\n<text font-size=\"17\" x=\"181\" y=\"267\">4</text>\n<text font-size=\"17\" x=\"340\" y=\"267\">10</text>\n<text font-size=\"17\" x=\"420\" y=\"267\">13</text>\n<text font-size=\"17\" x=\"447\" y=\"267\">14</text>\n<text font-size=\"17\" x=\"555\" y=\"267\">18</text>\n<circle cx=\"431\" cy=\"240\" fill=\"#7a211b\" r=\"5\"></circle>\n</svg></div><div class=\"options\">\n<label class=\"option\">\n<input name=\"q36\" type=\"radio\" value=\"A\"/> \\(\\frac54\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q36\" type=\"radio\" value=\"B\"/> \\(\\frac{11}{8}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q36\" type=\"radio\" value=\"C\"/> \\(\\frac32\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q36\" type=\"radio\" value=\"D\"/> \\(\\frac{13}{8}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q36\" type=\"radio\" value=\"E\"/> \\(\\frac74\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 10</div>\n<p>An elevator of total mass \\(800\\text{ kg}\\) starts from rest and accelerates vertically upwards at \\(1.5\\text{ m s}^{-2}\\) for \\(4.0\\text{ s}\\). It then continues upwards at constant speed for a further \\(6.0\\text{ s}\\).</p>\n<p>Take \\(g=10\\text{ N kg}^{-1}\\). The motor is \\(80\\%\\) efficient throughout. Neglect friction and air resistance.</p>\n<p>How much electrical energy is supplied to the motor during the full \\(10\\text{ s}\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q37\" type=\"radio\" value=\"A\"/> \\(438\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q37\" type=\"radio\" value=\"B\"/> \\(468\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q37\" type=\"radio\" value=\"C\"/> \\(498\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q37\" type=\"radio\" value=\"D\"/> \\(512\\text{ kJ}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q37\" type=\"radio\" value=\"E\"/> \\(552\\text{ kJ}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 11</div>\n<p>A material is loaded and then unloaded. Its forceâ€“extension graph is shown. The loading path is \\(O\\to B\\), and the unloading path is \\(B\\to C\\).</p>\n<div class=\"question-image\">\n<svg aria-label=\"Force extension graph loading from origin to 5 centimetres 10 newtons and unloading to 1 centimetre zero newtons\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 620 390\">\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"80\" x2=\"560\" y1=\"320\" y2=\"320\"></line>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"80\" x2=\"80\" y1=\"320\" y2=\"45\"></line>\n<line stroke=\"#0f6f9f\" stroke-width=\"5\" x1=\"80\" x2=\"490\" y1=\"320\" y2=\"70\"></line>\n<line stroke=\"#7a211b\" stroke-width=\"5\" x1=\"490\" x2=\"162\" y1=\"70\" y2=\"320\"></line>\n<circle cx=\"80\" cy=\"320\" fill=\"#1f2937\" r=\"6\"></circle>\n<circle cx=\"490\" cy=\"70\" fill=\"#1f2937\" r=\"6\"></circle>\n<circle cx=\"162\" cy=\"320\" fill=\"#1f2937\" r=\"6\"></circle>\n<text font-size=\"19\" x=\"55\" y=\"346\">O</text>\n<text font-size=\"19\" x=\"502\" y=\"69\">B</text>\n<text font-size=\"19\" x=\"154\" y=\"348\">C</text>\n<text font-size=\"16\" x=\"145\" y=\"344\">1</text>\n<text font-size=\"16\" x=\"476\" y=\"344\">5</text>\n<text font-size=\"18\" x=\"43\" y=\"78\">10</text>\n<text font-size=\"19\" font-weight=\"700\" x=\"473\" y=\"370\">extension / cm</text>\n<text font-size=\"19\" font-weight=\"700\" x=\"20\" y=\"35\">force / N</text>\n</svg>\n</div>\n<p>How much energy is dissipated in one loadingâ€“unloading cycle?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q38\" type=\"radio\" value=\"A\"/> \\(0.025\\text{ J}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q38\" type=\"radio\" value=\"B\"/> \\(5\\text{ J}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q38\" type=\"radio\" value=\"C\"/> \\(0.050\\text{ J}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q38\" type=\"radio\" value=\"D\"/> \\(0.20\\text{ J}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q38\" type=\"radio\" value=\"E\"/> \\(0.25\\text{ J}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 12</div>\n<p>A \\(1.0\\text{ kg}\\) trolley moving at \\(6.0\\text{ m s}^{-1}\\) collides with a stationary \\(2.0\\text{ kg}\\) trolley. The trolleys stick together.</p>\n<p>They then move on a frictionless track, rise through a vertical height of \\(0.10\\text{ m}\\), and compress an initially uncompressed spring of force constant \\(150\\text{ N m}^{-1}\\).</p>\n<p>Take \\(g=10\\text{ N kg}^{-1}\\). What is the maximum spring compression?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q39\" type=\"radio\" value=\"A\"/> \\(0.20\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q39\" type=\"radio\" value=\"B\"/> \\(0.10\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q39\" type=\"radio\" value=\"C\"/> \\(0.15\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q39\" type=\"radio\" value=\"D\"/> \\(0.25\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q39\" type=\"radio\" value=\"E\"/> \\(0.30\\text{ m}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 13</div>\n<p>A \\(20\\text{ g}\\) pellet travels at \\(300\\text{ m s}^{-1}\\) into a stationary \\(0.80\\text{ kg}\\) block on a horizontal track. The pellet leaves the block in the same direction at \\(100\\text{ m s}^{-1}\\).</p>\n<p>Immediately after the pellet has left, the block enters a rough section where a constant frictional force of \\(10\\text{ N}\\) brings it to rest.</p>\n<p>How far does the block slide?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q40\" type=\"radio\" value=\"A\"/> \\(0.40\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q40\" type=\"radio\" value=\"B\"/> \\(0.50\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q40\" type=\"radio\" value=\"C\"/> \\(0.80\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q40\" type=\"radio\" value=\"D\"/> \\(1.0\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q40\" type=\"radio\" value=\"E\"/> \\(2.0\\text{ m}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 14</div>\n<p>A fully submerged sphere of weight \\(12\\text{ N}\\) falls at terminal speed \\(v\\) through a liquid. At this speed, the upthrust is \\(4\\text{ N}\\).</p>\n<p>The sphere is transferred to a second liquid of half the density. For the fixed submerged volume, upthrust is proportional to liquid density. In both liquids, assume the drag force is proportional to the square of speed with the same constant of proportionality.</p>\n<p>What is the terminal speed in the second liquid?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q41\" type=\"radio\" value=\"A\"/> \\(v\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q41\" type=\"radio\" value=\"B\"/> \\(\\frac{\\sqrt5}{2}v\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q41\" type=\"radio\" value=\"C\"/> \\(\\frac54v\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q41\" type=\"radio\" value=\"D\"/> \\(\\sqrt{\\frac32}v\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q41\" type=\"radio\" value=\"E\"/> \\(\\frac32v\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 15</div>\n<p>Two sections of the same material are joined in series between ends maintained at \\(100^\\circ\\text{C}\\) and \\(20^\\circ\\text{C}\\).</p>\n<p>Section 1, next to the \\(100^\\circ\\text{C}\\) end, has length \\(L\\) and area \\(A\\). Section 2 has length \\(2L\\) and area \\(3A\\). For a section, the steady rate of energy transfer is proportional to \\(A\\Delta T/L\\).</p>\n<p>Which option gives both the rate through the composite rod as a fraction of the rate through section 1 alone between the same end temperatures, and the junction temperature?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q42\" type=\"radio\" value=\"A\"/> \\(\\frac25;\\ 52^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q42\" type=\"radio\" value=\"B\"/> \\(\\frac35;\\ 68^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q42\" type=\"radio\" value=\"C\"/> \\(\\frac23;\\ 52^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q42\" type=\"radio\" value=\"D\"/> \\(\\frac35;\\ 48^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q42\" type=\"radio\" value=\"E\"/> \\(\\frac35;\\ 52^\\circ\\text{C}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 16</div>\n<p>Two otherwise identical objects are in the same room. One is matt black and the other is shiny. Each contains a \\(12\\text{ W}\\) heater.</p>\n<p>At equilibrium, the matt black object is \\(15^\\circ\\text{C}\\) above room temperature and the shiny object is \\(30^\\circ\\text{C}\\) above room temperature.</p>\n<p>For either object, conduction and convection together remove \\(0.20\\Delta T\\text{ W}\\), where \\(\\Delta T\\) is the temperature rise. Radiative loss is also proportional to \\(\\Delta T\\) and to the area of each surface finish.</p>\n<p>A third identical object has half its surface matt black and half shiny, and contains the same heater. What is its equilibrium temperature rise?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q43\" type=\"radio\" value=\"A\"/> \\(20^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q43\" type=\"radio\" value=\"B\"/> \\(15^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q43\" type=\"radio\" value=\"C\"/> \\(18^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q43\" type=\"radio\" value=\"D\"/> \\(24^\\circ\\text{C}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q43\" type=\"radio\" value=\"E\"/> \\(30^\\circ\\text{C}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 17</div>\n<p>A \\(0.20\\text{ kg}\\) block of ice initially at \\(-10^\\circ\\text{C}\\) is heated until it has completely melted and the resulting water reaches \\(20^\\circ\\text{C}\\).</p>\n<p>A \\(500\\text{ W}\\) heater transfers \\(80\\%\\) of its energy to the ice and water. Use</p>\n<p>\\[\nc_{\\rm ice}=2.0\\times10^3\\text{ J kg}^{-1}\\,{}^\\circ\\text{C}^{-1},\\quad\nL_f=3.0\\times10^5\\text{ J kg}^{-1},\\quad\nc_{\\rm water}=4.0\\times10^3\\text{ J kg}^{-1}\\,{}^\\circ\\text{C}^{-1}.\n\\]</p>\n<p>How long does the heating take?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q44\" type=\"radio\" value=\"A\"/> \\(160\\text{ s}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q44\" type=\"radio\" value=\"B\"/> \\(180\\text{ s}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q44\" type=\"radio\" value=\"C\"/> \\(190\\text{ s}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q44\" type=\"radio\" value=\"D\"/> \\(200\\text{ s}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q44\" type=\"radio\" value=\"E\"/> \\(240\\text{ s}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 18</div>\n<p>An air bubble has volume \\(2.0\\text{ cm}^3\\) at the bottom of a lake and \\(5.0\\text{ cm}^3\\) at the surface. The water has uniform density, the temperature is constant, and the surface pressure is atmospheric pressure.</p>\n<p>What is the bubble's volume when it is halfway from the bottom to the surface?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q45\" type=\"radio\" value=\"A\"/> \\(\\frac52\\text{ cm}^3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q45\" type=\"radio\" value=\"B\"/> \\(\\frac83\\text{ cm}^3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q45\" type=\"radio\" value=\"C\"/> \\(\\frac{20}{7}\\text{ cm}^3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q45\" type=\"radio\" value=\"D\"/> \\(\\frac{10}{3}\\text{ cm}^3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q45\" type=\"radio\" value=\"E\"/> \\(\\frac72\\text{ cm}^3\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 19</div>\n<p>A small vertical hatch of area \\(0.020\\text{ m}^2\\) separates a tank from the atmosphere. Its centre is below \\(0.40\\text{ m}\\) of oil and a further \\(0.20\\text{ m}\\) of water.</p>\n<p>The oil density is \\(800\\text{ kg m}^{-3}\\), the water density is \\(1000\\text{ kg m}^{-3}\\), and \\(g=10\\text{ N kg}^{-1}\\). Pressure is effectively uniform over the hatch.</p>\n<p>Which option gives both the resultant force due to the liquids and the depth below a pure-water surface that would produce the same force?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q46\" type=\"radio\" value=\"A\"/> \\(104\\text{ N};\\ 0.40\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q46\" type=\"radio\" value=\"B\"/> \\(80\\text{ N};\\ 0.52\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q46\" type=\"radio\" value=\"C\"/> \\(100\\text{ N};\\ 0.50\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q46\" type=\"radio\" value=\"D\"/> \\(104\\text{ N};\\ 0.60\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q46\" type=\"radio\" value=\"E\"/> \\(104\\text{ N};\\ 0.52\\text{ m}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 20</div>\n<p>Plane waves travel from region \\(X\\) into region \\(Y\\). Their wavelength is \\(0.60\\text{ m}\\) in \\(X\\) and \\(0.40\\text{ m}\\) in \\(Y\\). The waves cross the boundary at a non-zero angle to the normal.</p>\n<p>Which option gives \\(v_Y/v_X\\), \\(f_Y/f_X\\), and the direction in which the waves bend on entering region \\(Y\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q47\" type=\"radio\" value=\"A\"/> \\(\\frac32;\\ 1;\\) towards the normal\n  </label><br/>\n<label class=\"option\">\n<input name=\"q47\" type=\"radio\" value=\"B\"/> \\(\\frac23;\\ 1;\\) towards the normal\n  </label><br/>\n<label class=\"option\">\n<input name=\"q47\" type=\"radio\" value=\"C\"/> \\(\\frac23;\\ \\frac23;\\) towards the normal\n  </label><br/>\n<label class=\"option\">\n<input name=\"q47\" type=\"radio\" value=\"D\"/> \\(\\frac23;\\ 1;\\) away from the normal\n  </label><br/>\n<label class=\"option\">\n<input name=\"q47\" type=\"radio\" value=\"E\"/> \\(\\frac32;\\ 1;\\) away from the normal\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 21</div>\n<p>A sound source emits one pulse every \\(0.10\\text{ s}\\) while moving at \\(20\\text{ m s}^{-1}\\) through still air. The speed of sound is \\(100\\text{ m s}^{-1}\\).</p>\n<p>A stationary observer is first directly in front of the approaching source and later directly behind the receding source.</p>\n<p>Which option gives the two observed frequencies, approaching first and receding second?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q48\" type=\"radio\" value=\"A\"/> \\(\\frac{25}{2}\\text{ Hz};\\ \\frac{25}{3}\\text{ Hz}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q48\" type=\"radio\" value=\"B\"/> \\(12\\text{ Hz};\\ 8\\text{ Hz}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q48\" type=\"radio\" value=\"C\"/> \\(15\\text{ Hz};\\ 10\\text{ Hz}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q48\" type=\"radio\" value=\"D\"/> \\(\\frac{25}{3}\\text{ Hz};\\ \\frac{25}{2}\\text{ Hz}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q48\" type=\"radio\" value=\"E\"/> \\(20\\text{ Hz};\\ 5\\text{ Hz}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 22</div>\n<p>An ultrasound scanner emits waves of frequency \\(4.0\\text{ MHz}\\) into tissue in which the wave speed is \\(1600\\text{ m s}^{-1}\\).</p>\n<p>An echo from a boundary returns to the probe \\(150\\,\\mu\\text{s}\\) after the pulse is emitted.</p>\n<p>Which option gives both the boundary depth and the number of wavelengths travelled on the complete outward-and-return journey?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q49\" type=\"radio\" value=\"A\"/> \\(0.24\\text{ m};\\ 600\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q49\" type=\"radio\" value=\"B\"/> \\(0.12\\text{ m};\\ 300\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q49\" type=\"radio\" value=\"C\"/> \\(0.24\\text{ m};\\ 1200\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q49\" type=\"radio\" value=\"D\"/> \\(0.12\\text{ m};\\ 600\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q49\" type=\"radio\" value=\"E\"/> \\(0.060\\text{ m};\\ 300\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 23</div>\n<p>Electromagnetic radiation \\(X\\) has frequency \\(3.0\\times10^{10}\\text{ Hz}\\). Radiation \\(Y\\), produced by a nuclear transition, has wavelength \\(1.0\\times10^{-12}\\text{ m}\\).</p>\n<p>Take the speed of electromagnetic waves in vacuum as \\(3.0\\times10^8\\text{ m s}^{-1}\\).</p>\n<p>Which statement is correct?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q50\" type=\"radio\" value=\"A\"/> \\(X\\) is infrared, \\(Y\\) is X-radiation, and \\(f_Y=10^8f_X\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q50\" type=\"radio\" value=\"B\"/> \\(X\\) is radio radiation, \\(Y\\) is gamma radiation, and \\(f_Y=10^{10}f_X\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q50\" type=\"radio\" value=\"C\"/> \\(X\\) is microwave radiation, \\(Y\\) is gamma radiation, and \\(f_Y=10^{10}f_X\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q50\" type=\"radio\" value=\"D\"/> \\(X\\) is microwave radiation, \\(Y\\) is X-radiation, and \\(f_Y=10^8f_X\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q50\" type=\"radio\" value=\"E\"/> \\(X\\) is visible light, \\(Y\\) is gamma radiation, and \\(f_Y=10^{12}f_X\\).\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 24</div>\n<p>An unknown nuclide undergoes, in some order, two alpha decays, two beta-minus decays and one gamma emission. The final nuclide is</p>\n<p>\\[{}^{211}_{84}Y.\\]</p>\n<p>Which option gives both the original nuclide and the change in the number of neutrons from original to final?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q51\" type=\"radio\" value=\"A\"/> \\({}^{219}_{84}X;\\ \\text{decrease of }8\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q51\" type=\"radio\" value=\"B\"/> \\({}^{219}_{86}X;\\ \\text{decrease of }8\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q51\" type=\"radio\" value=\"C\"/> \\({}^{215}_{86}X;\\ \\text{decrease of }4\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q51\" type=\"radio\" value=\"D\"/> \\({}^{219}_{85}X;\\ \\text{decrease of }7\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q51\" type=\"radio\" value=\"E\"/> \\({}^{219}_{86}X;\\ \\text{decrease of }6\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 25</div>\n<p>A detector records a radioactive source together with a constant background count rate.</p>\n<p>The total count rates are:</p>\n<div class=\"table-wrap\"><table class=\"data-table\"><thead><tr><th>Time</th><th>Total count rate</th></tr></thead><tbody>\n<tr><td>\\(0\\text{ h}\\)</td><td>\\(680\\text{ min}^{-1}\\)</td></tr>\n<tr><td>\\(12\\text{ h}\\)</td><td>\\(200\\text{ min}^{-1}\\)</td></tr>\n<tr><td>\\(24\\text{ h}\\)</td><td>\\(80\\text{ min}^{-1}\\)</td></tr>\n</tbody></table></div>\n<p>What total count rate is expected after \\(30\\text{ h}\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q52\" type=\"radio\" value=\"A\"/> \\(45\\text{ min}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q52\" type=\"radio\" value=\"B\"/> \\(60\\text{ min}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q52\" type=\"radio\" value=\"C\"/> \\(55\\text{ min}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q52\" type=\"radio\" value=\"D\"/> \\(80\\text{ min}^{-1}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q52\" type=\"radio\" value=\"E\"/> \\(120\\text{ min}^{-1}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 26</div>\n<p>A narrow beam containing alpha particles, beta-minus particles and gamma radiation passes between charged parallel plates. The upper plate is positive and the lower plate is negative.</p>\n<div class=\"question-image\">\n<svg aria-label=\"Alpha beta and gamma radiation paths between a positive upper plate and negative lower plate\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 680 350\">\n<rect fill=\"#e5e7eb\" height=\"24\" rx=\"5\" stroke=\"#1f2937\" stroke-width=\"2\" width=\"340\" x=\"170\" y=\"60\"></rect>\n<rect fill=\"#e5e7eb\" height=\"24\" rx=\"5\" stroke=\"#1f2937\" stroke-width=\"2\" width=\"340\" x=\"170\" y=\"266\"></rect>\n<text font-size=\"27\" font-weight=\"900\" x=\"325\" y=\"52\">+</text>\n<text font-size=\"30\" font-weight=\"900\" x=\"328\" y=\"324\">âˆ’</text>\n<line stroke=\"#1f2937\" stroke-width=\"5\" x1=\"70\" x2=\"170\" y1=\"175\" y2=\"175\"></line>\n<path d=\"M170 175 C270 174, 390 130, 540 92\" fill=\"none\" stroke=\"#7a211b\" stroke-width=\"5\"></path>\n<path d=\"M170 175 L540 175\" fill=\"none\" stroke=\"#0f6f9f\" stroke-width=\"5\"></path>\n<path d=\"M170 175 C290 178, 410 204, 540 225\" fill=\"none\" stroke=\"#155e3b\" stroke-width=\"5\"></path>\n<text font-size=\"24\" font-weight=\"800\" x=\"555\" y=\"98\">P</text>\n<text font-size=\"24\" font-weight=\"800\" x=\"555\" y=\"182\">Q</text>\n<text font-size=\"24\" font-weight=\"800\" x=\"555\" y=\"232\">R</text>\n<text font-size=\"18\" x=\"28\" y=\"165\">mixed</text>\n<text font-size=\"18\" x=\"28\" y=\"188\">beam</text>\n</svg>\n</div>\n<p>A \\(5\\text{ mm}\\) aluminium sheet is then placed after the plates.</p>\n<p>Which identification and prediction are correct?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q53\" type=\"radio\" value=\"A\"/> \\(P=\\alpha,\\ Q=\\gamma,\\ R=\\beta\\); only \\(Q\\) reaches the detector.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q53\" type=\"radio\" value=\"B\"/> \\(P=\\beta,\\ Q=\\gamma,\\ R=\\alpha\\); only \\(Q\\) reaches the detector.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q53\" type=\"radio\" value=\"C\"/> \\(P=\\beta,\\ Q=\\alpha,\\ R=\\gamma\\); \\(P\\) and \\(R\\) reach the detector.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q53\" type=\"radio\" value=\"D\"/> \\(P=\\gamma,\\ Q=\\beta,\\ R=\\alpha\\); only \\(P\\) reaches the detector.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q53\" type=\"radio\" value=\"E\"/> \\(P=\\alpha,\\ Q=\\beta,\\ R=\\gamma\\); \\(Q\\) and \\(R\\) reach the detector.\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 27</div>\n<p>A spacecraft of mass \\(1.5\\text{ kg}\\) carries a solar sail of area \\(1000\\text{ m}^2\\). The radiation pressure on the sail is constant at \\(3.0\\times10^{-6}\\text{ N m}^{-2}\\).</p>\n<p>The spacecraft is already moving in the direction of the force at \\(2.0\\text{ km s}^{-1}\\). Ignore all other forces and assume the mass remains constant.</p>\n<p>How far does the spacecraft travel while its kinetic energy doubles?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q54\" type=\"radio\" value=\"A\"/> \\(2.5\\times10^8\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q54\" type=\"radio\" value=\"B\"/> \\(5.0\\times10^8\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q54\" type=\"radio\" value=\"C\"/> \\(2.0\\times10^9\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q54\" type=\"radio\" value=\"D\"/> \\(1.0\\times10^9\\text{ m}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q54\" type=\"radio\" value=\"E\"/> \\(4.0\\times10^9\\text{ m}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 1</div>\n<p>A circle has centre \\(O\\) and radius \\(2\\). The chord \\(AB\\) subtends an angle \\(\\frac{2\\pi}{3}\\) at \\(O\\).</p>\n<p>An equilateral triangle \\(ABP\\) is constructed on the side of \\(AB\\) opposite \\(O\\). Let \\(R\\) be the region bounded by the minor arc \\(AB\\) and the line segments \\(AP\\) and \\(BP\\).</p>\n<div class=\"question-image\">\n<img alt=\"Diagram for Mathematics 2 Question 1\" decoding=\"async\" loading=\"eager\" src=\"https://assets.thrivingscholars.com/images/tmua/bdf869c5-1477-4cad-b955-b4ab7e33cc6b.png\" style=\"display:block; width:100%; max-width:700px; height:auto; margin:0 auto;\"/>\n</div>\n<p>What is the exact area of \\(R\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q55\" type=\"radio\" value=\"A\"/> \\(\\frac{4\\pi}{3}-2\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q55\" type=\"radio\" value=\"B\"/> \\(\\frac{2\\pi}{3}+2\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q55\" type=\"radio\" value=\"C\"/> \\(\\frac{4\\pi}{3}+\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q55\" type=\"radio\" value=\"D\"/> \\(4\\sqrt3-\\frac{4\\pi}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q55\" type=\"radio\" value=\"E\"/> \\(2\\pi+\\sqrt3\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 2</div>\n<p>A circle is tangent to the line \\(y=x\\) at \\(P=(1,1)\\) and passes through \\(Q=(3,-1)\\).</p>\n<div class=\"question-image\">\n<svg aria-label=\"Coordinate diagram of a circle tangent to y equals x at P and passing through Q\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 650 410\">\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"70\" x2=\"610\" y1=\"210\" y2=\"210\"></line>\n<line stroke=\"#1f2937\" stroke-width=\"3\" x1=\"170\" x2=\"170\" y1=\"365\" y2=\"35\"></line>\n<line stroke=\"#7a211b\" stroke-width=\"4\" x1=\"125\" x2=\"445\" y1=\"255\" y2=\"-65\"></line>\n<circle cx=\"310\" cy=\"210\" fill=\"none\" r=\"99\" stroke=\"#0f6f9f\" stroke-width=\"4\"></circle>\n<line stroke=\"#94a3b8\" stroke-width=\"3\" x1=\"310\" x2=\"240\" y1=\"210\" y2=\"140\"></line>\n<circle cx=\"240\" cy=\"140\" fill=\"#7a211b\" r=\"6\"></circle>\n<circle cx=\"380\" cy=\"280\" fill=\"#7a211b\" r=\"6\"></circle>\n<circle cx=\"310\" cy=\"210\" fill=\"#1f2937\" r=\"5\"></circle>\n<text font-size=\"20\" font-weight=\"800\" x=\"219\" y=\"126\">P(1,1)</text>\n<text font-size=\"20\" font-weight=\"800\" x=\"390\" y=\"296\">Q(3,âˆ’1)</text>\n<text font-size=\"19\" font-weight=\"800\" x=\"322\" y=\"203\">C</text>\n<text fill=\"#7a211b\" font-size=\"19\" x=\"490\" y=\"75\">y = x</text>\n<text font-size=\"18\" x=\"593\" y=\"238\">x</text>\n<text font-size=\"18\" x=\"145\" y=\"52\">y</text>\n<text fill=\"#6b7280\" font-size=\"15\" x=\"500\" y=\"385\">diagram not to scale</text>\n</svg>\n</div>\n<p>What is the smaller \\(x\\)-coordinate at which the circle meets the \\(x\\)-axis?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q56\" type=\"radio\" value=\"A\"/> \\(1-\\sqrt2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q56\" type=\"radio\" value=\"B\"/> \\(\\sqrt2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q56\" type=\"radio\" value=\"C\"/> \\(2-\\sqrt2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q56\" type=\"radio\" value=\"D\"/> \\(2+\\sqrt2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q56\" type=\"radio\" value=\"E\"/> \\(3-\\sqrt2\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 3</div>\n<p>A right prism \\(S\\) has a square base of side \\(a\\) and height \\(h_S\\). A right prism \\(H\\) has a regular hexagonal base of side \\(b\\) and height \\(h_H\\).</p>\n<p>The prisms have equal volumes and equal lateral surface areas.</p>\n<p>What is \\(\\dfrac{h_H}{h_S}\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q57\" type=\"radio\" value=\"A\"/> \\(\\frac{\\sqrt3}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q57\" type=\"radio\" value=\"B\"/> \\(\\frac{2\\sqrt3}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q57\" type=\"radio\" value=\"C\"/> \\(\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q57\" type=\"radio\" value=\"D\"/> \\(\\frac{3\\sqrt3}{2}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q57\" type=\"radio\" value=\"E\"/> \\(2\\sqrt3\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 4</div>\n<p>A cube is cut by two planes parallel to each pair of opposite faces. The six planes divide the cube into \\(27\\) cuboids. The planes need not be equally spaced.</p>\n<p>What is the ratio</p>\n<p>\\[\n\\frac{\\text{sum of the surface areas of all }27\\text{ cuboids}}\n{\\text{surface area of the original cube}}\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q58\" type=\"radio\" value=\"A\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q58\" type=\"radio\" value=\"B\"/> \\(\\frac32\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q58\" type=\"radio\" value=\"C\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q58\" type=\"radio\" value=\"D\"/> \\(\\frac52\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q58\" type=\"radio\" value=\"E\"/> \\(4\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 5</div>\n<p>A right circular cone has height \\(2r\\) and base radius \\(r\\). Let \\(\\theta\\) be the angle at the apex in an axial cross-section of the cone.</p>\n<p>What is \\(\\cos\\theta\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q59\" type=\"radio\" value=\"A\"/> \\(\\frac15\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q59\" type=\"radio\" value=\"B\"/> \\(\\frac12\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q59\" type=\"radio\" value=\"C\"/> \\(\\frac45\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q59\" type=\"radio\" value=\"D\"/> \\(\\frac{\\sqrt5}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q59\" type=\"radio\" value=\"E\"/> \\(\\frac35\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 6</div>\n<p>On a semicircular speedometer, the angle \\(\\theta\\) moved by the pointer from the zero mark is proportional to \\(\\sqrt v\\), where \\(v\\) is the speed.</p>\n<p>The pointer moves through \\(\\pi\\) radians when \\(v=200\\).</p>\n<p>Through what angle does the pointer move as the speed increases from \\(50\\) to \\(128\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q60\" type=\"radio\" value=\"A\"/> \\(\\frac{3\\pi}{10}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q60\" type=\"radio\" value=\"B\"/> \\(\\frac{\\pi}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q60\" type=\"radio\" value=\"C\"/> \\(\\frac{2\\pi}{5}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q60\" type=\"radio\" value=\"D\"/> \\(\\frac{\\pi}{2}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q60\" type=\"radio\" value=\"E\"/> \\(\\frac{3\\pi}{5}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 7</div>\n<p>Rhombi \\(A\\) and \\(B\\) are similar. Their areas are in the ratio</p>\n<p>\\[\nA:B=16:25.\n\\]</p>\n<p>The sum of the two diagonals of \\(A\\) is equal to the longer diagonal of \\(B\\).</p>\n<p>If \\(\\theta\\) is the acute angle of either rhombus, what is \\(\\cos\\theta\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q61\" type=\"radio\" value=\"A\"/> \\(\\frac7{17}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q61\" type=\"radio\" value=\"B\"/> \\(\\frac8{17}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q61\" type=\"radio\" value=\"C\"/> \\(\\frac{12}{17}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q61\" type=\"radio\" value=\"D\"/> \\(\\frac{13}{17}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q61\" type=\"radio\" value=\"E\"/> \\(\\frac{15}{17}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 8</div>\n<p>Consider</p>\n<p>\\[f(x)=\\log_2(2x^2).\\]</p>\n<p>Which restriction of the domain makes \\(f\\) one-to-one and strictly increasing, with range</p>\n<p>\\([3,\\infty)\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q62\" type=\"radio\" value=\"A\"/> \\(x\\le-2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q62\" type=\"radio\" value=\"B\"/> \\(|x|\\ge2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q62\" type=\"radio\" value=\"C\"/> \\(x\\ge1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q62\" type=\"radio\" value=\"D\"/> \\(x\\ge2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q62\" type=\"radio\" value=\"E\"/> \\(0<x\\le2\\) <=\"\" label=\"\"><br/>\n</x\\le2\\)></label></div>",
+  "<div class=\"question-number\">Question 9</div>\n<p>Let</p>\n<p>\\[\np=\\log_{1/2}3,\\qquad q=-1,\\qquad r=\\log_3\\left(\\frac12\\right).\n\\]</p>\n<p>Which ordering is correct?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q63\" type=\"radio\" value=\"A\"/> \\(p<r<q\\) <=\"\" label=\"\"><br/>\n<label class=\"option\">\n<input name=\"q63\" type=\"radio\" value=\"B\"/> \\(p<q<r\\) <=\"\" label=\"\"><br/>\n<label class=\"option\">\n<input name=\"q63\" type=\"radio\" value=\"C\"/> \\(q<p<r\\) <=\"\" label=\"\"><br/>\n<label class=\"option\">\n<input name=\"q63\" type=\"radio\" value=\"D\"/> \\(q<r<p\\) <=\"\" label=\"\"><br/>\n<label class=\"option\">\n<input name=\"q63\" type=\"radio\" value=\"E\"/> \\(r<q<p\\) <=\"\" label=\"\"><br/>\n</q<p\\)></label></r<p\\)></label></p<r\\)></label></q<r\\)></label></r<q\\)></label></div>",
+  "<div class=\"question-number\">Question 10</div>\n<p>All quantities are positive. Suppose</p>\n<p>\\[\nx\\propto y^{2/3},\\qquad\ny\\propto z^{-3/2},\\qquad\nw\\propto x^2\\sqrt z.\n\\]</p>\n<p>By what factor is \\(w\\) multiplied when \\(z\\) is multiplied by \\(8\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q64\" type=\"radio\" value=\"A\"/> \\(\\frac1{32}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q64\" type=\"radio\" value=\"B\"/> \\(\\frac1{16}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q64\" type=\"radio\" value=\"C\"/> \\(\\frac1{16\\sqrt2}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q64\" type=\"radio\" value=\"D\"/> \\(\\frac1{8\\sqrt2}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q64\" type=\"radio\" value=\"E\"/> \\(\\frac18\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 11</div>\n<p>An annulus has inner radius \\(r\\) and outer radius \\(R\\). Its area is three times the area of the inner circle.</p>\n<p>A chord \\(AB\\) of the outer circle is tangent to the inner circle.</p>\n<div class=\"question-image\">\n<svg aria-label=\"Annulus with a chord of the outer circle tangent to the inner circle\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 560 390\">\n<circle cx=\"275\" cy=\"190\" fill=\"#eef6fb\" r=\"125\" stroke=\"#1f2937\" stroke-width=\"3\"></circle>\n<circle cx=\"275\" cy=\"190\" fill=\"#fff\" r=\"62.5\" stroke=\"#1f2937\" stroke-width=\"3\"></circle>\n<line stroke=\"#7a211b\" stroke-width=\"5\" x1=\"337.5\" x2=\"337.5\" y1=\"82\" y2=\"298\"></line>\n<line stroke=\"#94a3b8\" stroke-width=\"3\" x1=\"275\" x2=\"337.5\" y1=\"190\" y2=\"190\"></line>\n<circle cx=\"337.5\" cy=\"82\" fill=\"#7a211b\" r=\"5\"></circle>\n<circle cx=\"337.5\" cy=\"298\" fill=\"#7a211b\" r=\"5\"></circle>\n<circle cx=\"337.5\" cy=\"190\" fill=\"#1f2937\" r=\"5\"></circle>\n<text font-size=\"21\" font-weight=\"800\" x=\"348\" y=\"82\">A</text>\n<text font-size=\"21\" font-weight=\"800\" x=\"348\" y=\"305\">B</text>\n<text font-size=\"17\" x=\"350\" y=\"183\">tangent point</text>\n<text fill=\"#6b7280\" font-size=\"15\" x=\"431\" y=\"359\">not to scale</text>\n</svg>\n</div>\n<p>What is the ratio</p>\n<p>\\[\n\\frac{AB}{R-r}\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q65\" type=\"radio\" value=\"A\"/> \\(\\sqrt2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q65\" type=\"radio\" value=\"B\"/> \\(\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q65\" type=\"radio\" value=\"C\"/> \\(2\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q65\" type=\"radio\" value=\"D\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q65\" type=\"radio\" value=\"E\"/> \\(4\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 12</div>\n<p>For a constant \\(k\\), the solution set of</p>\n<p>\\[\n(x-1)(x-4)\\le k\n\\]</p>\n<p>is a single closed interval of length \\(6\\).</p>\n<p>What is \\(k\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q66\" type=\"radio\" value=\"A\"/> \\(\\frac94\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q66\" type=\"radio\" value=\"B\"/> \\(\\frac{27}{4}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q66\" type=\"radio\" value=\"C\"/> \\(9\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q66\" type=\"radio\" value=\"D\"/> \\(\\frac{27}{2}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q66\" type=\"radio\" value=\"E\"/> \\(18\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 13</div>\n<p>Solve</p>\n<p>\\[\n2^{x^2-3x}&lt;4.\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q67\" type=\"radio\" value=\"A\"/> \\(x&lt;\\frac{3-\\sqrt{17}}2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q67\" type=\"radio\" value=\"B\"/> \\(x&gt;\\frac{3+\\sqrt{17}}2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q67\" type=\"radio\" value=\"C\"/> \\(x&lt;\\frac{3-\\sqrt{17}}2\\text{ or }x&gt;\\frac{3+\\sqrt{17}}2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q67\" type=\"radio\" value=\"D\"/> \\(-2<x<1\\) <=\"\" label=\"\"><br/>\n<label class=\"option\">\n<input name=\"q67\" type=\"radio\" value=\"E\"/> \\(\\frac{3-\\sqrt{17}}2<x<\\frac{3+\\sqrt{17}}2\\) <=\"\" label=\"\"><br/>\n</x<\\frac{3+\\sqrt{17}}2\\)></label></x<1\\)></label></div>",
+  "<div class=\"question-number\">Question 14</div>\n<p>Let \\(a=\\sqrt2\\). Evaluate</p>\n<p>\\[\n(a-1)(a+1)(a^2+1)(a^4+1)(a^8+1).\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q68\" type=\"radio\" value=\"A\"/> \\(255\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q68\" type=\"radio\" value=\"B\"/> \\(127\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q68\" type=\"radio\" value=\"C\"/> \\(256\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q68\" type=\"radio\" value=\"D\"/> \\(511\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q68\" type=\"radio\" value=\"E\"/> \\(1023\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 15</div>\n<p>Solve</p>\n<p>\\[\n\\log_2(x-1)+\\log_2(x+3)=3+\\log_2x.\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q69\" type=\"radio\" value=\"A\"/> \\(3-2\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q69\" type=\"radio\" value=\"B\"/> \\(2+\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q69\" type=\"radio\" value=\"C\"/> \\(3+\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q69\" type=\"radio\" value=\"D\"/> \\(4+\\sqrt3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q69\" type=\"radio\" value=\"E\"/> \\(3+2\\sqrt3\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 16</div>\n<p>For real \\(x\\), define</p>\n<p>\\[\ng(x)=|2x-1|+|x+2|.\n\\]</p>\n<p>At which point \\((x,g(x))\\) does \\(g\\) attain its minimum value?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q70\" type=\"radio\" value=\"A\"/> \\(\\left(-2,5\\right)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q70\" type=\"radio\" value=\"B\"/> \\(\\left(\\frac12,\\frac52\\right)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q70\" type=\"radio\" value=\"C\"/> \\(\\left(0,3\\right)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q70\" type=\"radio\" value=\"D\"/> \\(\\left(1,4\\right)\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q70\" type=\"radio\" value=\"E\"/> \\(\\left(-\\frac12,\\frac72\\right)\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 17</div>\n<p>The curves</p>\n<p>\\[\ny=2^x-3\n\\qquad\\text{and}\\qquad\ny=5-2^{\\,2-x}\n\\]</p>\n<p>intersect at two points whose \\(x\\)-coordinates are \\(x_1\\) and \\(x_2\\).</p>\n<p>What is \\(x_1+x_2\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q71\" type=\"radio\" value=\"A\"/> \\(-2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q71\" type=\"radio\" value=\"B\"/> \\(1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q71\" type=\"radio\" value=\"C\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q71\" type=\"radio\" value=\"D\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q71\" type=\"radio\" value=\"E\"/> \\(4\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 18</div>\n<p>How many solutions does</p>\n<p>\\[\n4\\cos^2x+2\\sin x=3\n\\]</p>\n<p>have in the interval \\(0\\le x&lt;2\\pi\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q72\" type=\"radio\" value=\"A\"/> \\(1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q72\" type=\"radio\" value=\"B\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q72\" type=\"radio\" value=\"C\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q72\" type=\"radio\" value=\"D\"/> \\(4\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q72\" type=\"radio\" value=\"E\"/> \\(6\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 19</div>\n<p>For real \\(x\\), consider</p>\n<p>\\[\nE(x)=\\frac{\\cos^4x-\\sin^4x}{1-2\\sin^2x}.\n\\]</p>\n<p>Which statement is correct?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q73\" type=\"radio\" value=\"A\"/> \\(E(x)=1\\), except when \\(x=\\frac{\\pi}{4}+\\frac{k\\pi}{2}\\), \\(k\\in\\mathbb Z\\), where \\(E\\) is undefined.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q73\" type=\"radio\" value=\"B\"/> \\(E(x)=1\\) for every real \\(x\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q73\" type=\"radio\" value=\"C\"/> \\(E(x)=\\cos 2x\\) for every real \\(x\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q73\" type=\"radio\" value=\"D\"/> \\(E(x)=1\\), except when \\(x=k\\pi\\), \\(k\\in\\mathbb Z\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q73\" type=\"radio\" value=\"E\"/> \\(E(x)=\\cos^2x-\\sin^2x\\), except when \\(x=\\frac{\\pi}{2}+k\\pi\\).\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 20</div>\n<p>Consider</p>\n<p>\\[\nP(x)=x^5-3x^4-2x^3+6x^2+x-3.\n\\]</p>\n<p>At how many distinct points does the graph \\(y=P(x)\\) cross the \\(x\\)-axis?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q74\" type=\"radio\" value=\"A\"/> \\(0\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q74\" type=\"radio\" value=\"B\"/> \\(1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q74\" type=\"radio\" value=\"C\"/> \\(2\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q74\" type=\"radio\" value=\"D\"/> \\(3\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q74\" type=\"radio\" value=\"E\"/> \\(5\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 21</div>\n<p>A sequence is defined by</p>\n<p>\\[\nu_1=1,\n\\qquad\nu_{n+1}=2u_n+3.\n\\]</p>\n<p>What is</p>\n<p>\\[\n\\sum_{n=1}^{6}u_n\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q75\" type=\"radio\" value=\"A\"/> \\(126\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q75\" type=\"radio\" value=\"B\"/> \\(189\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q75\" type=\"radio\" value=\"C\"/> \\(216\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q75\" type=\"radio\" value=\"D\"/> \\(234\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q75\" type=\"radio\" value=\"E\"/> \\(252\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 22</div>\n<p>An arithmetic progression has first term \\(a\\), common difference \\(d\\), and fifth term \\(14\\).</p>\n<p>The sum of its first \\(10\\) terms is equal to the sum of its \\(11\\)th to \\(15\\)th terms inclusive.</p>\n<p>What is the sum of its first \\(20\\) terms?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q76\" type=\"radio\" value=\"A\"/> \\(450\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q76\" type=\"radio\" value=\"B\"/> \\(520\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q76\" type=\"radio\" value=\"C\"/> \\(500\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q76\" type=\"radio\" value=\"D\"/> \\(540\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q76\" type=\"radio\" value=\"E\"/> \\(600\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 23</div>\n<p>What is the coefficient of \\(x^7\\) in</p>\n<p>\\[\n(1+x)^8(1-x)^5\\,?\n\\]</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q77\" type=\"radio\" value=\"A\"/> \\(-40\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q77\" type=\"radio\" value=\"B\"/> \\(-20\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q77\" type=\"radio\" value=\"C\"/> \\(0\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q77\" type=\"radio\" value=\"D\"/> \\(20\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q77\" type=\"radio\" value=\"E\"/> \\(40\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 24</div>\n<p>What is the total area between the curve</p>\n<p>\\[\ny=x(x-2)\n\\]</p>\n<p>and the \\(x\\)-axis for \\(0\\le x\\le4\\)?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q78\" type=\"radio\" value=\"A\"/> \\(\\frac{16}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q78\" type=\"radio\" value=\"B\"/> \\(\\frac{20}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q78\" type=\"radio\" value=\"C\"/> \\(8\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q78\" type=\"radio\" value=\"D\"/> \\(\\frac{28}{3}\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q78\" type=\"radio\" value=\"E\"/> \\(\\frac{32}{3}\\)\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 25</div>\n<p>Consider the curve</p>\n<p>\\[y=5x^3+27x^2+27x.\\]</p>\n<p>Which statement about its stationary points is correct?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q79\" type=\"radio\" value=\"A\"/> It has only one stationary point, at \\(x=-3\\), which is a local maximum.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q79\" type=\"radio\" value=\"B\"/> It has only one stationary point, at \\(x=-\\frac35\\), which is a local minimum.\n  </label><br/>\n<label class=\"option\">\n<input name=\"q79\" type=\"radio\" value=\"C\"/> It has a local minimum at \\(x=-3\\) and a local maximum at \\(x=-\\frac35\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q79\" type=\"radio\" value=\"D\"/> It has a local maximum at \\(x=-3\\) and a local minimum at \\(x=-\\frac35\\).\n  </label><br/>\n<label class=\"option\">\n<input name=\"q79\" type=\"radio\" value=\"E\"/> It has local minima at both \\(x=-3\\) and \\(x=-\\frac35\\).\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 26</div>\n<p>The trapezium rule with two equal strips is used to estimate</p>\n<p>\\[\n\\int_0^2 x^4\\,dx.\n\\]</p>\n<p>Which option gives the ratio</p>\n<p>\\[\n\\frac{\\text{trapezium-rule estimate}}{\\text{exact integral}}\n\\]</p>\n<p>and correctly states whether the estimate is an overestimate or an underestimate?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q80\" type=\"radio\" value=\"A\"/> \\(\\frac{32}{45}\\), underestimate\n  </label><br/>\n<label class=\"option\">\n<input name=\"q80\" type=\"radio\" value=\"B\"/> \\(\\frac{45}{32}\\), underestimate\n  </label><br/>\n<label class=\"option\">\n<input name=\"q80\" type=\"radio\" value=\"C\"/> \\(\\frac{32}{45}\\), overestimate\n  </label><br/>\n<label class=\"option\">\n<input name=\"q80\" type=\"radio\" value=\"D\"/> \\(\\frac54\\), overestimate\n  </label><br/>\n<label class=\"option\">\n<input name=\"q80\" type=\"radio\" value=\"E\"/> \\(\\frac{45}{32}\\), overestimate\n  </label><br/>\n</div>",
+  "<div class=\"question-number\">Question 27</div>\n<p>A curve satisfies</p>\n<p>\\[\n\\frac{dy}{dx}=(x-1)(x-3)\n\\]</p>\n<p>and passes through the origin.</p>\n<p>What is the vertical distance between its two stationary points?</p>\n<div class=\"options\">\n<label class=\"option\">\n<input name=\"q81\" type=\"radio\" value=\"A\"/> \\(\\frac43\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q81\" type=\"radio\" value=\"B\"/> \\(\\frac13\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q81\" type=\"radio\" value=\"C\"/> \\(\\frac23\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q81\" type=\"radio\" value=\"D\"/> \\(1\\)\n  </label><br/>\n<label class=\"option\">\n<input name=\"q81\" type=\"radio\" value=\"E\"/> \\(\\frac83\\)\n  </label><br/>\n</div>"
+];
+
+const totalQuestions = questions.length;
+
+const correctAnswers = [
+  "C",
+  "E",
+  "B",
+  "D",
+  "A",
+  "C",
+  "E",
+  "B",
+  "D",
+  "A",
+  "B",
+  "C",
+  "E",
+  "D",
+  "A",
+  "B",
+  "C",
+  "E",
+  "D",
+  "A",
+  "C",
+  "E",
+  "B",
+  "D",
+  "A",
+  "C",
+  "E",
+  "A",
+  "D",
+  "E",
+  "C",
+  "B",
+  "A",
+  "E",
+  "D",
+  "B",
+  "C",
+  "C",
+  "A",
+  "D",
+  "B",
+  "E",
+  "A",
+  "D",
+  "C",
+  "E",
+  "B",
+  "A",
+  "D",
+  "C",
+  "E",
+  "B",
+  "B",
+  "D",
+  "D",
+  "C",
+  "B",
+  "A",
+  "E",
+  "A",
+  "E",
+  "D",
+  "B",
+  "C",
+  "C",
+  "B",
+  "E",
+  "A",
+  "E",
+  "B",
+  "C",
+  "D",
+  "A",
+  "B",
+  "D",
+  "C",
+  "B",
+  "C",
+  "D",
+  "E",
+  "A"
+];
+
+const answerKeyBySection = {
+  math1: ["C", "E", "B", "D", "A", "C", "E", "B", "D", "A", "B", "C", "E", "D", "A", "B", "C", "E", "D", "A", "C", "E", "B", "D", "A", "C", "E"],
+  physics: ["A", "D", "E", "C", "B", "A", "E", "D", "B", "C", "C", "A", "D", "B", "E", "A", "D", "C", "E", "B", "A", "D", "C", "E", "B", "B", "D"],
+  math2: ["D", "C", "B", "A", "E", "A", "E", "D", "B", "C", "C", "B", "E", "A", "E", "B", "C", "D", "A", "B", "D", "C", "B", "C", "D", "E", "A"]
+};
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+  if (window.emailjs) {
+    emailjs.init("9jjn3yBHl6S88hITy");
+  }
+})();
+</script>
+<script>
+/* TS_ESAT_ATTEMPT_SAVE_HELPER_V1 */
+(function(){
+  window.TS_BUILD_INCORRECT_LIST = function(userAnswers, correctAnswers){
+    var out = [];
+    var ua = Array.isArray(userAnswers) ? userAnswers : [];
+    var ca = Array.isArray(correctAnswers) ? correctAnswers : [];
+    for (var i = 0; i < ca.length; i++) {
+      if (ua[i] !== ca[i]) out.push(i + 1);
+    }
+    return out;
+  };
+
+  window.TS_SAVE_ATTEMPT = async function(opts){
+    opts = opts || {};
+
+    if (window.__TS_ATTEMPT_SAVE_RUNNING) {
+      return { ok:false, skipped:true, reason:"running" };
+    }
+    if (window.__TS_ATTEMPT_SAVE_DONE) {
+      return { ok:true, skipped:true, reason:"already-saved" };
+    }
+
+    window.__TS_ATTEMPT_SAVE_RUNNING = true;
+
+    try {
+      var answers = Array.isArray(opts.answers) ? opts.answers : [];
+      var correctAnswers = Array.isArray(opts.correct_answers) ? opts.correct_answers : [];
+      var timeSpent = Array.isArray(opts.time_spent) ? opts.time_spent : [];
+      var flags = Array.isArray(opts.flags) ? opts.flags : [];
+      var incorrect = Array.isArray(opts.incorrect) ? opts.incorrect : window.TS_BUILD_INCORRECT_LIST(answers, correctAnswers);
+      var totalQuestions = Number(opts.total_questions || correctAnswers.length || answers.length || 81);
+      var score = Number(opts.score || 0);
+
+      var payload = {
+        test_id: String(opts.test_id || "").trim(),
+        test_title: String(opts.test_title || "").trim(),
+        paper: String(opts.paper || "").trim(),
+        total_questions: totalQuestions,
+        score: score,
+        answers: answers,
+        correct_answers: correctAnswers,
+        time_spent: timeSpent,
+        flags: flags,
+        incorrect: incorrect
+      };
+
+      var res = await fetch("/api/practice-tests/submit", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      var json = {};
+      try { json = await res.json(); } catch(_) {}
+
+      console.log("TS_SAVE_ATTEMPT:", res.status, json);
+
+      if (res.ok && (json.ok === true || typeof json.ok === "undefined")) {
+        window.__TS_ATTEMPT_SAVE_DONE = true;
+      }
+
+      return { ok: res.ok, status: res.status, body: json };
+    } catch (err) {
+      console.error("TS_SAVE_ATTEMPT error:", err);
+      return { ok:false, error:String(err) };
+    } finally {
+      window.__TS_ATTEMPT_SAVE_RUNNING = false;
+    }
+  };
+})();
+</script>
+<script>
+let timeSpent = new Array(81).fill(0);
+let lastTimestamp = Date.now();
+let sectionIndex = 0;
+let breakRemaining = BREAK_SECONDS;
+let breakInterval = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let flags = new Array(81).fill(false);
+let userAnswers = new Array(81).fill(null);
+let current = 0;
+let secondsRemaining = SECTION_SECONDS;
+let timerInterval = null;
+let attemptNumber = 1;
+
+const timerDisplay = document.getElementById("time");
+const container = document.getElementById("question-container");
+const counter = document.getElementById("counter");
+const nextBtn = document.getElementById("next-btn");
+const prevBtn = document.getElementById("prev-btn");
+const sectionChip = document.getElementById("section-chip");
+
+function currentSectionStart() {
+  return sectionIndex * SECTION_SIZE;
+}
+
+function currentSectionEnd() {
+  return currentSectionStart() + SECTION_SIZE - 1;
+}
+
+function currentQuestionInSection() {
+  return current - currentSectionStart() + 1;
+}
+
+function formatTime(totalSeconds) {
+  const mm = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const ss = String(totalSeconds % 60).padStart(2, "0");
+  return `${mm}:${ss}`;
+}
+
+function safeTypeset() {
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise();
+  }
+}
+
+function toggleFlag() {
+  flags[current] = !flags[current];
+  updateFlagButton();
+  updateNavigatorButton(current);
+}
+
+function updateFlagButton() {
+  const flagBtn = document.getElementById("flag-btn");
+  if (!flagBtn) return;
+  if (flags[current]) {
+    flagBtn.classList.add("flagged");
+  } else {
+    flagBtn.classList.remove("flagged");
+  }
+}
+
+function startExam() {
+  studentName = document.getElementById("student-name").value.trim() || "Student";
+  studentEmail = document.getElementById("student-email").value.trim();
+  testSession = document.getElementById("test-date").value;
+
+  const previousAttempts = getLocalAttemptHistory().length;
+  attemptNumber = previousAttempts + 1;
+
+  document.getElementById("instructions").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+
+  sectionIndex = 0;
+  current = 0;
+  secondsRemaining = SECTION_SECONDS;
+  lastTimestamp = Date.now();
+  renderQuestion();
+  generateNavigatorButtons();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+  timerDisplay.textContent = formatTime(secondsRemaining);
+  if (secondsRemaining <= 0) {
+    clearInterval(timerInterval);
+    timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+    if (sectionIndex < sectionNames.length - 1) {
+      showBreakScreen();
+    } else {
+      submitExam();
+    }
+    return;
+  }
+  secondsRemaining--;
+}
+
+function renderQuestion() {
+  container.innerHTML = questions[current];
+  const sectionName = sectionNames[sectionIndex];
+  sectionChip.textContent = sectionName;
+  counter.textContent = `Q${currentQuestionInSection()} of ${SECTION_SIZE} (${sectionName})`;
+
+  safeTypeset();
+  updateFlagButton();
+
+  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
+  inputs.forEach(input => {
+    if (userAnswers[current] === input.value) {
+      input.checked = true;
+    }
+    input.addEventListener("change", () => {
+      userAnswers[current] = input.value;
+      updateNavigatorButton(current);
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.disabled = current === currentSectionStart();
+  }
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.textContent = current === currentSectionEnd()
+      ? (sectionIndex === sectionNames.length - 1 ? "Finish â†’" : "Finish Section â†’")
+      : "Next â†’";
+  }
+}
+
+function nextQuestion() {
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+
+  if (current === currentSectionEnd()) {
+    if (sectionIndex < sectionNames.length - 1) {
+      showBreakScreen();
+    } else {
+      submitExam();
+    }
+    return;
+  }
+
+  current++;
+  lastTimestamp = Date.now();
+  renderQuestion();
+}
+
+function prevQuestion() {
+  if (current === currentSectionStart()) return;
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  current--;
+  lastTimestamp = Date.now();
+  renderQuestion();
+}
+
+function confirmSubmit() {
+  if (sectionIndex < sectionNames.length - 1) {
+    const confirmBox = confirm(`You're about to submit ${sectionNames[sectionIndex]} and move to the next section. Do you want to continue?`);
+    if (confirmBox) {
+      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+      showBreakScreen();
+    }
+  } else {
+    const confirmBox = confirm("Are you sure you want to submit the entire test?");
+    if (confirmBox) {
+      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+      submitExam();
+    }
+  }
+}
+
+function showBreakScreen() {
+  clearInterval(timerInterval);
+  document.getElementById("exam-interface").style.display = "none";
+  document.getElementById("break-screen").style.display = "block";
+  document.getElementById("break-title").textContent = `End of ${sectionNames[sectionIndex]}`;
+  document.getElementById("break-copy").textContent = `You can take a 5-minute break before starting ${sectionNames[sectionIndex + 1]}.`;
+  breakRemaining = BREAK_SECONDS;
+  document.getElementById("break-timer").textContent = formatTime(breakRemaining);
+  clearInterval(breakInterval);
+  breakInterval = setInterval(updateBreakTimer, 1000);
+}
+
+function updateBreakTimer() {
+  document.getElementById("break-timer").textContent = formatTime(breakRemaining);
+  if (breakRemaining <= 0) {
+    skipBreak();
+    return;
+  }
+  breakRemaining--;
+}
+
+function skipBreak() {
+  clearInterval(breakInterval);
+  clearInterval(timerInterval);
+
+  sectionIndex++;
+  current = sectionIndex * SECTION_SIZE;
+  secondsRemaining = SECTION_SECONDS;
+  lastTimestamp = Date.now();
+
+  document.getElementById("break-screen").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+
+  renderQuestion();
+  generateNavigatorButtons();
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function openNavigator() {
+  document.getElementById("navigator-popup").style.display = "block";
+  generateNavigatorButtons();
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function jumpTo(index) {
+  if (index < currentSectionStart() || index > currentSectionEnd()) return;
+  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  current = index;
+  lastTimestamp = Date.now();
+  renderQuestion();
+  closeNavigator();
+}
+
+function generateNavigatorButtons() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  document.getElementById("navigator-heading").textContent = sectionNames[sectionIndex];
+
+  const offset = currentSectionStart();
+  for (let i = 0; i < SECTION_SIZE; i++) {
+    const actualIndex = offset + i;
+    const btn = document.createElement("button");
+    btn.textContent = i + 1;
+    btn.dataset.index = actualIndex;
+    btn.id = `nav-btn-${actualIndex}`;
+    btn.style.padding = "10px";
+    btn.style.border = "1px solid #cbd5e1";
+    btn.style.borderRadius = "6px";
+    btn.style.background = "white";
+    btn.onclick = function () { jumpTo(actualIndex); };
+    grid.appendChild(btn);
+    updateNavigatorButton(actualIndex);
+  }
+}
+
+function updateNavigatorButton(index) {
+  const btn = document.getElementById(`nav-btn-${index}`);
+  if (!btn) return;
+  const sectionStart = Math.floor(index / SECTION_SIZE) * SECTION_SIZE;
+  const label = index - sectionStart + 1;
+  if (flags[index]) {
+    btn.style.backgroundColor = "gold";
+    btn.style.fontWeight = "bold";
+    btn.textContent = `âš‘ ${label}`;
+  } else {
+    btn.style.backgroundColor = userAnswers[index] ? "#e0f2fe" : "white";
+    btn.style.fontWeight = "normal";
+    btn.textContent = label;
+  }
+}
+
+function buildRows(start, end) {
+  const rows = [];
+  let score = 0;
+  for (let i = start; i <= end; i++) {
+    const yourAns = userAnswers[i] ?? "â€“";
+    const correctAns = correctAnswers[i];
+    const isCorrect = yourAns === correctAns;
+    if (isCorrect) score++;
+    const rawTime = Math.floor(timeSpent[i] ?? 0);
+    const mins = Math.floor(rawTime / 60);
+    const secs = rawTime % 60;
+    rows.push(`
+      <tr>
+        <td>${i - start + 1}</td>
+        <td>${yourAns}</td>
+        <td>${correctAns}</td>
+        <td>${mins}m ${secs}s</td>
+        <td>${flags[i] ? "âš‘" : ""}</td>
+        <td>${isCorrect ? "âœ…" : "âŒ"}</td>
+      </tr>`);
+  }
+  return { rows, score };
+}
+
+function makeSectionTable(title, score, rows) {
+  return `
+    <div style="margin-bottom: 50px;">
+      <h2>${title} Analysis</h2>
+      <table style="border-collapse: collapse; margin-bottom: 20px; font-size: 16px;">
+        <tr><td><strong>Your Score</strong></td><td>${score} / ${SECTION_SIZE}</td></tr>
+      </table>
+      <table style="border-collapse: collapse; width: 100%; font-size: 15px;">
+        <thead>
+          <tr>
+            <th>Q#</th>
+            <th>Your Ans</th>
+            <th>Correct</th>
+            <th>Time</th>
+            <th>Flag</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>${rows.join("")}</tbody>
+      </table>
+    </div>`;
+}
+
+function getLocalAttemptHistory() {
+  const historyKey = `${testId}::attempt-history`;
+  try {
+    const parsed = JSON.parse(localStorage.getItem(historyKey) || "[]");
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function saveAttemptSummary(totalScore, sectionScores) {
+  const resultKey = `${testId}::latest-result`;
+  const historyKey = `${testId}::attempt-history`;
+  const timestampIso = new Date().toISOString();
+  const payload = {
+    testId,
+    attemptNumber,
+    studentName,
+    studentEmail,
+    testSession,
+    totalScore,
+    sectionScores,
+    userAnswers,
+    correctAnswers,
+    timeSpent,
+    flags,
+    timestamp: timestampIso
+  };
+  const history = getLocalAttemptHistory();
+  history.push(payload);
+  localStorage.setItem(resultKey, JSON.stringify(payload));
+  localStorage.setItem(historyKey, JSON.stringify(history));
+  localStorage.setItem(`${testId}::attempts`, String(history.length));
+}
+
+function buildSectionEmailAnalysis(title, start, end) {
+  let out = `${title} Analysis\n`;
+  for (let i = start; i <= end; i++) {
+    const secs = Math.round(timeSpent[i] || 0);
+    const mm = String(Math.floor(secs / 60)).padStart(2, "0");
+    const ss = String(secs % 60).padStart(2, "0");
+    const yourAns = userAnswers[i] ?? "-";
+    const correctAns = correctAnswers[i];
+    out += `Q.${i - start + 1} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}${flags[i] ? " Flagged" : ""}\n`;
+  }
+  return out.trim();
+}
+
+async function saveRemoteAttempt(totalScore) {
+  if (!window.TS_SAVE_ATTEMPT || !window.TS_BUILD_INCORRECT_LIST) {
+    return { ok:false, skipped:true, reason:"attempt helper unavailable" };
+  }
+  const testTitle = (document.getElementById("test-title")?.textContent || "ESAT Test 4").trim();
+  return window.TS_SAVE_ATTEMPT({
+    test_id: testId,
+    test_title: testTitle,
+    paper: "full",
+    total_questions: correctAnswers.length,
+    score: totalScore,
+    answers: userAnswers,
+    correct_answers: correctAnswers,
+    time_spent: timeSpent,
+    flags: flags,
+    incorrect: window.TS_BUILD_INCORRECT_LIST(userAnswers, correctAnswers)
+  });
+}
+
+function sendResultsEmail(totalScore, math1Score, physicsScore, math2Score, timestamp) {
+  if (!studentEmail) {
+    return Promise.resolve({ ok:false, skipped:true, reason:"no email entered" });
+  }
+  if (!window.emailjs || !emailjs.send) {
+    return Promise.resolve({ ok:false, skipped:true, reason:"EmailJS unavailable" });
+  }
+
+  const testTitle = (document.getElementById("test-title")?.textContent || "ESAT Test 4").trim();
+  const math1Analysis = buildSectionEmailAnalysis("Mathematics 1", 0, 26);
+  const physicsAnalysis = buildSectionEmailAnalysis("Physics", 27, 53);
+  const math2Analysis = buildSectionEmailAnalysis("Mathematics 2", 54, 80);
+
+  return emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+    name: studentName,
+    test_title: testTitle,
+    to_email: studentEmail,
+    solution_link: solutionPDF,
+    session: testSession,
+    score: `${totalScore} / 81`,
+    timestamp: timestamp,
+    paper1: math1Analysis,
+    paper2: `${physicsAnalysis}\n\n${math2Analysis}`,
+    paper3: math2Analysis,
+    math1_score: `${math1Score} / 27`,
+    physics_score: `${physicsScore} / 27`,
+    math2_score: `${math2Score} / 27`
+  }).then(function(res){
+    console.log("EmailJS sent:", res);
+    return { ok:true, status: res && res.status };
+  }).catch(function(err){
+    console.error("EmailJS failed:", err);
+    return { ok:false, error:String(err) };
+  });
+}
+
+function statusText(result, successText, failText) {
+  if (!result) return "Not checked";
+  if (result.ok) return successText;
+  if (result.skipped) return `Skipped: ${result.reason || "not available"}`;
+  return failText;
+}
+
+async function submitExam() {
+  if (window.__ESAT_SUBMIT_DONE) return;
+  window.__ESAT_SUBMIT_DONE = true;
+
+  clearInterval(timerInterval);
+  clearInterval(breakInterval);
+
+  const math1 = buildRows(0, 26);
+  const physics = buildRows(27, 53);
+  const math2 = buildRows(54, 80);
+  const totalScore = math1.score + physics.score + math2.score;
+  const timestamp = new Date().toLocaleString();
+
+  saveAttemptSummary(totalScore, { math1: math1.score, physics: physics.score, math2: math2.score });
+
+  const [attemptSaveSettled, emailSettled] = await Promise.allSettled([
+    saveRemoteAttempt(totalScore),
+    sendResultsEmail(totalScore, math1.score, physics.score, math2.score, timestamp)
+  ]);
+
+  const attemptSaveResult = attemptSaveSettled.status === "fulfilled"
+    ? attemptSaveSettled.value
+    : { ok:false, error:String(attemptSaveSettled.reason) };
+  const emailResult = emailSettled.status === "fulfilled"
+    ? emailSettled.value
+    : { ok:false, error:String(emailSettled.reason) };
+
+  const attemptSaveStatus = statusText(attemptSaveResult, "Saved to attempt history", "Could not save to attempt history");
+  const emailStatus = statusText(emailResult, "Email sent", "Email could not be sent");
+
+  const solutionBlock = solutionPDF
+    ? `<h3 style="margin-top: 40px;">ðŸ“„ View Full Solutions</h3><iframe id="solution-frame" src="${solutionPDF}" width="100%" height="600px" style="border: 1px solid #ccc; margin-top: 10px;"></iframe>`
+    : "";
+
+  const html = `
+    <div class="result-wrap">
+      <div class="result-card">
+        <div style="font-size: 120px;">${totalScore >= 55 ? "ðŸ˜Š" : "ðŸ˜"}</div>
+        <h1>Exam Completed</h1>
+        <table style="border-collapse: collapse; margin: 20px auto; font-size: 18px;">
+          <tr style="background: #f9f9f9;"><td><strong>Name</strong></td><td>${studentName}</td></tr>
+          <tr style="background: #f9f9f9;"><td><strong>Session</strong></td><td>${testSession}</td></tr>
+          <tr style="background: #f9f9f9;"><td><strong>Attempt</strong></td><td>${attemptNumber}</td></tr>
+          <tr style="background: #f9f9f9;"><td><strong>Submitted</strong></td><td>${timestamp}</td></tr>
+          <tr style="background: #f9f9f9;"><td><strong>Attempt Save</strong></td><td>${attemptSaveStatus}</td></tr>
+          <tr style="background: #f9f9f9;"><td><strong>Result Email</strong></td><td>${emailStatus}</td></tr>
+          <tr style="background: #f9f9f9;"><td><strong>Total Score</strong></td><td>${totalScore} / 81</td></tr>
+        </table>
+        <div class="result-grid">
+          <div class="result-mini"><h3>Mathematics 1</h3><div>${math1.score} / 27</div></div>
+          <div class="result-mini"><h3>Physics</h3><div>${physics.score} / 27</div></div>
+          <div class="result-mini"><h3>Mathematics 2</h3><div>${math2.score} / 27</div></div>
+        </div>
+        <button onclick="window.location.reload()" style="font-size: 16px; padding: 10px 20px; background:#005fa3; color:white; border:none; border-radius:6px; cursor:pointer;">Reattempt Test</button>
+      </div>
+
+      ${makeSectionTable("Mathematics 1", math1.score, math1.rows)}
+      ${makeSectionTable("Physics", physics.score, physics.rows)}
+      ${makeSectionTable("Mathematics 2", math2.score, math2.rows)}
+      ${solutionBlock}
+    </div>`;
+
+  container.innerHTML = html;
+  document.querySelector(".footer").style.display = "none";
+  document.querySelector(".header").style.display = "none";
+  document.getElementById("exam-interface").style.display = "block";
+  document.getElementById("break-screen").style.display = "none";
+  safeTypeset();
+}
+
+window.addEventListener("keydown", function(e) {
+  if (!e.altKey || e.ctrlKey || e.metaKey) return;
+  const tag = (e.target && e.target.tagName || "").toUpperCase();
+  if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+  const k = (e.key || "").toLowerCase();
+  if (k === "n") { e.preventDefault(); nextQuestion(); }
+  if (k === "p") { e.preventDefault(); prevQuestion(); }
+}, true);
+
+window.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+}, true);
+</script>
 <script id="ts-hotkeys-v1">
 (function () {
   if (window.__TS_HOTKEYS_V1__) return;
@@ -134,3 +1291,4 @@
 </script>
 </body>
 </html>
+

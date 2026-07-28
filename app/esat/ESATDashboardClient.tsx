@@ -82,6 +82,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-mock-02", title: "ESAT Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html" },
 { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html" },
       { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html" },
+      { test_id: "esat-mock-13", title: "ESAT Mock Test 5", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-13/index.html" },
     ],
   },
   {
@@ -266,6 +267,14 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
   const showNoAccess = !loading && !hasPractice && !hasBank && !hasClasses;
   const lockStyle: React.CSSProperties = { opacity: 0.45, cursor: "not-allowed" };
   const currentTrack = TRACKS.find((t) => t.key === activeTrack) || TRACKS[0];
+
+  // ESAT practice-test display policy
+  // Engineering: tests 1-3 Level 1, tests 4-5 Level 2.
+  // Physical/Life: one Level 1 test + one Level 2 test.
+  const visibleMocks = currentTrack.mocks.slice(
+    0,
+    activeTrack === "engineering" ? 5 : 2
+  );
 
   function openTest(t: MockTile) {
     window.location.href = t.href;
@@ -470,7 +479,9 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                 <div className={styles.meta}>
                   <span className={styles.dot} /> {currentTrack.subjects}
                 </div>
-                <div className={styles.meta}>4 full mock tests</div>
+                <div className={styles.meta}>
+                  {visibleMocks.length} full mock test{visibleMocks.length === 1 ? "" : "s"}
+                </div>
                 {attemptsLoading ? <div className={styles.meta}>Loading attempts...</div> : null}
                 {attemptsErr ? <div className={styles.meta}>Attempts not connected yet</div> : null}
               </div>
@@ -513,19 +524,49 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                   maxWidth: 1120,
                 }}
               >
-                {currentTrack.mocks.map((mock) => {
+                {visibleMocks.map((mock, mockIndex) => {
                   const latest = latestByTestId[mock.test_id];
                   const attempted = !!latest;
                   const total = latest?.total_questions || 0;
                   const score = latest?.score ?? 0;
                   const date = fmtDate(latest?.submitted_at);
 
+                  const isLevel2 =
+                    activeTrack === "engineering"
+                      ? mockIndex >= 3
+                      : mockIndex >= 1;
+
+                  const levelTag = isLevel2
+                    ? "LEVEL 2"
+                    : "LEVEL 1";
+
+                  const levelDescription = isLevel2
+                    ? "Harder than actual ESAT"
+                    : "ESAT standard";
+
+                  const levelColor = isLevel2
+                    ? "#9F2D33"
+                    : "#2F7D4A";
+
+                  const levelBackground = isLevel2
+                    ? "#FFF8F8"
+                    : "#F7FCF8";
+
+                  const levelBorder = isLevel2
+                    ? "#E7BABC"
+                    : "#B9DDC3";
+
+                  const levelPillBackground = isLevel2
+                    ? "#FBE7E8"
+                    : "#E4F4E8";
+
                   return (
                     <article
                       key={mock.test_id}
                       style={{
-                        background: "#ffffff",
-                        border: "1px solid #E5E7EB",
+                        background: levelBackground,
+                        border: `1px solid ${levelBorder}`,
+                        borderTop: `4px solid ${levelColor}`,
                         borderRadius: 16,
                         padding: 14,
                         minHeight: 185,
@@ -543,6 +584,44 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                       >
                         {mock.title}
                       </h3>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexWrap: "wrap",
+                          gap: 7,
+                          marginBottom: 10,
+                        }}
+                      >
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            padding: "5px 9px",
+                            borderRadius: 999,
+                            background: levelPillBackground,
+                            color: levelColor,
+                            border: `1px solid ${levelBorder}`,
+                            fontSize: 11,
+                            lineHeight: 1,
+                            fontWeight: 950,
+                            letterSpacing: ".035em",
+                          }}
+                        >
+                          {levelTag}
+                        </span>
+
+                        <span
+                          style={{
+                            color: levelColor,
+                            fontSize: 11,
+                            fontWeight: 850,
+                          }}
+                        >
+                          {levelDescription}
+                        </span>
+                      </div>
 
                       <div
                         style={{
