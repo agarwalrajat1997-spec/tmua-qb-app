@@ -1,1903 +1,245 @@
-
-<!-- 
-1. <h2 id="test-title">TMUA MOCK TEST 2</h2>
-2. const correctAnswers
-3. const questions = [
-4. const solutionPDF =
-5. let plainTextSummary =
-6. <ul style="margin: 0; padding-left: 18px;">
-7. <td style="border:
--->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TMUA Mock Test 4 - Paper 2 (Logic and Proofs)</title>
-  <script type="text/javascript" async 
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMUA Topic Test 4 — Logic and Proofs</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      chtml: { scale: 1 },
+      startup: { typeset: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
   <style>
-.top-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-
-}
-.options label {
-  display: block;
-}
-
-#flag-btn {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  font-size: 14px;
-  font-weight: normal;
-  padding: 6px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#flag-btn.flagged {
-  background-color: yellow;
-  font-weight: bold;
-  border: 2px solid #999;
-}
-
-
-    body {
-      margin: 0;
-      font-family: "Georgia", serif;
-      background: white;
+    :root {
+      --brand-blue:#0074c1; --brand-blue-dark:#005fa3; --brand-gold:#f6c44a;
+      --brand-gold-dark:#f2b233; --ink:#111827; --muted:#64748b; --line:#dbe3ea;
+      --soft:#f3f5f7; --success:#166534; --success-bg:#ecfdf5;
+      --warning:#92400e; --warning-bg:#fffbeb; --danger:#991b1b; --danger-bg:#fef2f2;
     }
-    .header {
-      background: #0074c1;
-      color: white;
-      padding: 10px 20px;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .timer {
-      font-size: 14px;
-    }
-    .container {
-      padding: 20px 40px;
-    }
-    .question-number {
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .options {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-    .option {
-      margin: 10px 0;
-    }
-    input[type="radio"] {
-      transform: scale(1.2);
-      margin-right: 10px;
-    }
-    .footer {
-      background: #0074c1;
-      padding: 10px 20px;
-      text-align: right;
-    }
-    .footer button {
-      font-size: 16px;
-      padding: 6px 16px;
-      margin-left: 10px;
-      background: #005fa3;
-      color: white;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    #instructions {
-      padding: 40px;
-      font-size: 18px;
-    }
-    #exam-interface {
-      display: none;
-    }
+    *{box-sizing:border-box} html{min-height:100%} body{margin:0;min-height:100vh;color:var(--ink);background:#fff;font-family:Georgia,"Times New Roman",serif}
+    button,input,select{font:inherit}
+    #instructions{max-width:1250px;min-height:560px;margin:60px auto;padding:58px 64px 66px;position:relative;z-index:0;background:#fff;border:2px solid var(--brand-gold-dark);border-radius:22px;box-shadow:0 18px 48px rgba(15,23,42,.12),0 10px 26px rgba(242,178,51,.18);font-size:18px}
+    #instructions::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--soft)}
+    #instructions h1{margin:0 0 10px;font-size:32px;line-height:1.2}
+    #instructions .subtitle{margin:0 0 24px;color:var(--muted);font-family:Arial,sans-serif;font-size:15px}
+    .candidate-row{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:30px 0 26px}
+    .field{min-width:230px} .field label{display:block;margin-bottom:6px;font-family:Arial,sans-serif;font-size:15px;font-weight:700}
+    .field input,.field select{width:250px;max-width:100%;padding:10px 12px;border:1.6px solid rgba(242,178,51,.7);border-radius:10px;background:#fff;outline:none;font-family:Arial,sans-serif;font-size:16px}
+    .field input:focus,.field select:focus{border-color:var(--brand-gold-dark);box-shadow:0 0 0 4px rgba(242,178,51,.18)}
+    .start-button{padding:11px 22px;border:0;border-radius:12px;background:var(--brand-gold);color:#2b1a00;box-shadow:0 12px 24px rgba(246,196,74,.35);cursor:pointer;font-family:Arial,sans-serif;font-size:16px;font-weight:800}
+    .start-button:hover{filter:brightness(.98);transform:translateY(-1px)} .start-button:active{transform:translateY(0)}
+    .test-summary{width:100%;margin:20px 0;border-collapse:collapse;overflow:hidden;border-radius:14px;box-shadow:0 12px 24px rgba(15,23,42,.06);font-family:Arial,sans-serif;font-size:15px}
+    .test-summary th,.test-summary td{padding:11px 12px;border:1px solid #cbd5e1;vertical-align:top} .test-summary th{background:#f1f5f9;text-align:left} .test-summary ul{margin:0;padding-left:19px}
+    .difficulty-note{margin:18px 0;padding:12px 14px;border:1px solid #bfdbfe;border-radius:12px;background:#eff6ff;color:#1e3a8a;font-family:Arial,sans-serif;font-size:14px}
 
-/* ✅ START SCREEN ONLY — paste this at the VERY END of your <style> block.
-   It only targets #instructions and won’t affect the exam UI. */
+    #exam-interface{display:none;min-height:100vh;background:#fff}
+    .exam-header{position:sticky;top:0;z-index:900;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:12px 20px;background:var(--brand-blue);color:#fff;box-shadow:0 2px 8px rgba(15,23,42,.14)}
+    .exam-title{font-size:20px;line-height:1.35} .section-chip{display:inline-block;margin-left:9px;padding:4px 10px;border:1px solid rgba(255,255,255,.38);border-radius:999px;background:rgba(255,255,255,.16);font-family:Arial,sans-serif;font-size:12px}
+    .top-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px;font-family:Arial,sans-serif;font-size:14px;text-align:right}
+    #flag-btn{padding:6px 13px;border:1px solid rgba(255,255,255,.75);border-radius:6px;background:#fff;color:#111;cursor:pointer;font-size:14px}
+    #flag-btn.flagged{border:2px solid #7c6f00;background:#fde047;font-weight:800}
+    #question-container{max-width:1120px;margin:0 auto;padding:30px 44px 125px;font-size:19px;line-height:1.65}
+    .question-number{margin-bottom:10px;font-size:23px;font-weight:800} .question-topic{margin-bottom:18px;color:var(--muted);font-family:Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.02em}
+    #question-container p{margin:12px 0} mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:3px 0}
+    .options{display:grid;gap:10px;margin:22px 0 42px}
+    .option{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:1px solid #dbe3ea;border-radius:10px;background:#fff;cursor:pointer;line-height:1.55}
+    .option:hover{background:#f8fafc;border-color:#94a3b8} .option input{flex:0 0 auto;margin:5px 2px 0 0;transform:scale(1.28)}
+    .option-letter{flex:0 0 auto;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#eef2f7;font-family:Arial,sans-serif;font-size:12px;font-weight:800}
+    .option-content{min-width:0;width:100%} .option-content img,.option-content svg{display:block;max-width:100%;height:auto;margin:6px auto}
+    .option.image-option{align-items:flex-start} .option.image-option .option-content{padding:2px}
+    .question-image,.question-media{width:min(720px,100%);margin:18px auto 22px;padding:12px;border:1.5px solid #e2e8f0;border-radius:14px;background:#fff;text-align:center}
+    .question-image img,.question-image svg,.question-media img,.question-media svg{display:block;max-width:100%;height:auto;margin:0 auto}
 
-#instructions{
-  max-width: 1250px;
-  min-height: 560px;
-  margin: 60px auto;
-  background: #ffffff;
-  border: 2px solid #f2b233;
-  border-radius: 22px;
-  box-shadow:
-    0 18px 48px rgba(15, 23, 42, 0.12),
-    0 10px 26px rgba(242, 178, 51, 0.18);
-  padding: 64px 64px 70px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 0;
-}
+    .exam-footer{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;justify-content:flex-end;gap:10px;padding:10px 20px;background:var(--brand-blue);box-shadow:0 -2px 8px rgba(15,23,42,.14)}
+    .exam-footer button{padding:7px 16px;border:0;border-radius:5px;background:var(--brand-blue-dark);color:#fff;cursor:pointer;font-family:Arial,sans-serif;font-size:15px}
+    .exam-footer button:hover{filter:brightness(1.08)} .exam-footer button:disabled{background:#94a3b8;cursor:not-allowed;filter:none}
 
-/* grey page backdrop ONLY while #instructions is visible */
-#instructions::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: #f3f5f7;
-  z-index: -1;
-}
+    #navigator-popup{display:none;position:fixed;top:16%;left:50%;z-index:9999;width:min(420px,calc(100vw - 28px));transform:translateX(-50%);padding:20px;border:2px solid var(--brand-blue);border-radius:12px;background:#fff;box-shadow:0 16px 40px rgba(0,0,0,.24);font-family:Arial,sans-serif}
+    #navigator-popup h2{margin:0 0 14px;color:var(--brand-blue);font-size:20px} #navigator-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:16px}
+    .nav-question{min-height:42px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;cursor:pointer;font-weight:700} .nav-question.answered{background:#dbeafe;border-color:#60a5fa} .nav-question.flagged{background:#fde047;border-color:#ca8a04} .nav-question.current{box-shadow:inset 0 0 0 3px var(--brand-blue)}
+    .navigator-legend{display:flex;flex-wrap:wrap;gap:9px 14px;margin:2px 0 16px;color:#475569;font-size:12px} .legend-swatch{display:inline-block;width:13px;height:13px;margin-right:4px;border:1px solid #94a3b8;border-radius:3px;vertical-align:-2px} .legend-answered{background:#dbeafe} .legend-flagged{background:#fde047}
+    .close-nav{padding:7px 13px;border:0;border-radius:6px;background:#e2e8f0;cursor:pointer;font-weight:700}
 
-/* title */
-#instructions #test-title{
-  margin: 0 0 18px 0;
-  font-size: 30px;
-  font-weight: 800;
-  color: #0b1220;
-}
-
-/* paragraphs */
-#instructions p{
-  margin: 10px 0;
-  color: #0f172a;
-}
-
-/* keep your existing flex row, just make spacing nicer */
-#instructions > div:first-of-type{
-  margin: 34px 0 26px !important;
-}
-
-/* inputs/selects — only visual polish (keeps your widths/padding from inline styles) */
-#instructions input[type="text"],
-#instructions input[type="email"],
-#instructions select{
-  border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
-  border-radius: 10px !important;
-  background: #fff !important;
-  outline: none !important;
-}
-
-#instructions input[type="text"]:focus,
-#instructions input[type="email"]:focus,
-#instructions select:focus{
-  border-color: #f2b233 !important;
-  box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
-}
-
-/* start button — only visuals (doesn’t change your inline font-size/padding if you keep them) */
-#instructions button{
-  background: #f6c44a !important;
-  color: #2b1a00 !important;
-  border: none !important;
-  border-radius: 12px !important;
-  box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
-  cursor: pointer !important;
-}
-
-#instructions button:hover{
-  filter: brightness(0.98);
-  transform: translateY(-1px);
-}
-
-#instructions button:active{
-  transform: translateY(0px);
-  box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
-}
-
-/* optional: make the table feel “card-like” but ONLY inside #instructions */
-#instructions table{
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
-}
-
-/* responsive */
-@media (max-width: 950px){
-  #instructions{
-    margin: 24px 16px;
-    padding: 40px 22px 44px;
-    min-height: auto;
-  }
-}
-/* ✅ Only affects images inside questions (won’t touch your start screen) */
-.question-media{
-  margin: 14px 0 18px;
-}
-
-.question-media img{
-  display: block;
-  max-width: 320px;         /* ✅ smaller image */
-  width: 100%;              /* responsive inside the max */
-  height: auto;
-  border: 1.5px solid #e5e7eb;   /* ✅ boxed */
-  border-radius: 12px;
-  padding: 10px;            /* ✅ space inside the box */
-  background: #ffffff;
-
-}
-
-/* Optional: center the boxed image */
-.question-media{
-  display: flex;
-  justify-content: center;
-}
-/* ✅ Bigger text for the QUESTION AREA only (safe: doesn’t touch header/footer/start screen) */
-.container{
-  font-size: 19px;           /* base size for question text */
-  line-height: 1.6;
-}
-
-/* Question number bigger */
-.container .question-number{
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-/* Paragraphs spacing + size */
-.container p{
-  font-size: 19px;
-  line-height: 1.65;
-  margin: 12px 0;
-}
-
-/* Options bigger */
-.container .options{
-  margin-top: 18px;
-  margin-bottom: 40px;
-}
-
-.container .options .option{
-  font-size: 19px;
-  line-height: 1.8;
-}
-
-/* Radio slightly larger */
-.container input[type="radio"]{
-  transform: scale(1.35);
-  margin-right: 12px;
-}
-
+    .result-wrap{max-width:980px;margin:0 auto;padding:34px 28px 80px;font-family:Arial,sans-serif} .result-card{padding:24px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 14px 34px rgba(15,23,42,.08);text-align:center}
+    .result-emoji{font-size:88px;line-height:1} .result-score{margin:8px 0 0;font-size:42px;font-weight:900}
+    .score9-wrap{width:min(760px,100%);margin:20px auto 0;padding:17px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:#fafafa;text-align:left}
+    .score9-row{display:flex;justify-content:space-between;align-items:center;gap:16px} .score9-title{font-size:16px;font-weight:900} .score9-sub{margin-top:3px;color:var(--muted);font-size:12px}
+    .score9-chip{flex:0 0 auto;padding:7px 13px;border:1px solid #d1d5db;border-radius:999px;background:#fff;font-size:20px;font-weight:900} .score9-band{margin-top:11px;font-size:14px;font-weight:800;color:#1e3a8a}
+    .score9-note{margin-top:7px;color:#64748b;font-size:11px;line-height:1.4} .score9-note a{color:#475569}
+    .result-meta{width:min(650px,100%);margin:22px auto 0;border-collapse:collapse;font-size:15px;text-align:left} .result-meta th,.result-meta td{padding:10px 12px;border:1px solid #d1d5db} .result-meta th{width:42%;background:#f8fafc}
+    .status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(760px,100%);margin:18px auto 0;text-align:left} .status-box{padding:11px 13px;border:1px solid #dbe3ea;border-radius:10px;background:#f8fafc;font-size:13px}
+    .status-box.success{color:var(--success);background:var(--success-bg);border-color:#bbf7d0} .status-box.warning{color:var(--warning);background:var(--warning-bg);border-color:#fde68a} .status-box.error{color:var(--danger);background:var(--danger-bg);border-color:#fecaca}
+    .analysis-title{margin:34px 0 10px;text-align:left} .analysis-scroll{overflow-x:auto} .analysis-table{width:100%;border-collapse:collapse;background:#fff;font-size:14px} .analysis-table th,.analysis-table td{padding:8px 9px;border:1px solid #cbd5e1;text-align:center} .analysis-table th{background:#eef2f7}
+    .solution-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:28px 0 12px} .solution-actions a{padding:9px 14px;border-radius:8px;background:var(--brand-blue-dark);color:#fff;text-decoration:none;font-weight:800}
+    #solution-frame{width:100%;height:680px;border:1px solid #cbd5e1;border-radius:12px;background:#fff}
+    .workspace-button{position:fixed;left:14px;bottom:8px;z-index:2000;padding:9px 12px;border:1px solid rgba(17,24,39,.18);border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 10px 24px rgba(0,0,0,.10);color:rgba(17,24,39,.88);cursor:pointer;font-family:Arial,sans-serif;font-size:13px;font-weight:800}
+    body.ts-exam-done .workspace-button{border-color:rgba(146,98,0,.3);background:rgba(246,196,74,.96);color:#2b1a00}
+    @media(max-width:760px){#instructions{margin:20px 12px;padding:34px 20px 40px} .candidate-row{align-items:stretch} .field,.field input,.field select{width:100%} .exam-header{align-items:flex-start} .exam-title{font-size:16px} .section-chip{display:block;margin:6px 0 0} #question-container{padding:24px 18px 125px;font-size:18px} .exam-footer{justify-content:center;flex-wrap:wrap} .exam-footer button{padding:7px 11px} .status-grid{grid-template-columns:1fr} .result-wrap{padding:20px 12px 70px} #solution-frame{height:560px} .score9-row{align-items:flex-start;flex-direction:column}}
   </style>
 
-<!-- TS_PATCH_FOOTER_FIXED_V1 -->
-<style>
-/* TS_PATCH_FOOTER_FIXED_V1: keep footer pinned and prevent overlap */
-.footer{
-  position: fixed !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  z-index: 999 !important;
-}
-#exam-interface .container{
-  padding-bottom: 110px !important;
-}
-</style>
-<!-- /TS_PATCH_FOOTER_FIXED_V1 -->
-<!-- TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
-<style>
-.ts-score9-wrap{
-  margin:18px auto 30px;
-  padding:16px;
-  border:1px solid rgba(0,0,0,0.12);
-  border-radius:14px;
-  background:rgba(250,250,250,0.92);
-  max-width:760px;
-}
-.ts-score9-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-  gap:12px;
-}
-.ts-score9-title{
-  font-family:Arial,sans-serif;
-  font-weight:900;
-  font-size:16px;
-  margin:0;
-}
-.ts-score9-sub{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:rgba(100,116,139,0.95);
-  margin-top:3px;
-}
-.ts-score9-chip{
-  font-family:Arial,sans-serif;
-  font-weight:900;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,0.14);
-  background:#fff;
-  white-space:nowrap;
-}
-.ts-score9-grid{
-  display:flex;
-  gap:12px;
-  margin-top:12px;
-  flex-wrap:wrap;
-}
-.ts-score9-card{
-  flex:1 1 260px;
-  border:1px solid rgba(0,0,0,0.10);
-  border-radius:12px;
-  padding:12px;
-  background:#fff;
-}
-.ts-score9-card h4{
-  margin:0 0 6px 0;
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  letter-spacing:0.02em;
-  color:rgba(71,85,105,0.95);
-}
-.ts-score9-big{
-  font-family:Arial,sans-serif;
-  font-size:34px;
-  font-weight:900;
-  margin:0;
-}
-.ts-score9-small{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:rgba(100,116,139,0.95);
-  margin-top:2px;
-}
-
-/* force the note to stay genuinely tiny */
-.ts-score9-note{
-  margin-top:6px !important;
-  padding-top:6px !important;
-  border-top:1px dashed rgba(148,163,184,0.24) !important;
-  display:flex !important;
-  gap:4px !important;
-  align-items:flex-start !important;
-  font-family:Arial,sans-serif !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  color:rgba(148,163,184,0.74) !important;
-}
-.ts-score9-note *{
-  font-family:Arial,sans-serif !important;
-}
-.ts-score9-note__asterisk{
-  font-weight:800 !important;
-  font-size:6px !important;
-  line-height:1 !important;
-  margin-top:0 !important;
-  flex:0 0 auto !important;
-  color:rgba(148,163,184,0.78) !important;
-}
-.ts-score9-note__text{
-  min-width:0 !important;
-  flex:1 1 auto !important;
-}
-.ts-score9-note__title{
-  margin:0 !important;
-  font-weight:700 !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  letter-spacing:0 !important;
-  color:rgba(148,163,184,0.78) !important;
-}
-.ts-score9-note__sub{
-  margin:0 !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  color:rgba(148,163,184,0.72) !important;
-}
-.ts-score9-note__btn{
-  flex:0 0 auto !important;
-  width:10px !important;
-  height:10px !important;
-  min-width:10px !important;
-  min-height:10px !important;
-  border-radius:2px !important;
-  border:1px solid rgba(148,163,184,0.20) !important;
-  background:rgba(255,255,255,0.55) !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-decoration:none !important;
-  color:rgba(100,116,139,0.76) !important;
-  margin-top:0 !important;
-  padding:0 !important;
-  line-height:1 !important;
-}
-.ts-score9-note__btn:hover{
-  background:rgba(255,255,255,0.82) !important;
-  color:rgba(71,85,105,0.92) !important;
-}
-.ts-score9-note__icon{
-  width:6px !important;
-  height:6px !important;
-  min-width:6px !important;
-  min-height:6px !important;
-  display:block !important;
-}
-</style>
-<!-- /TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
+<script>
+  var solutionPDF = "https://apps.thrivingscholars.com/practice-tests/solutions/topic-test-4/";
+</script>
 </head>
 <body>
+  <main id="instructions">
+    <h1 id="test-title">TMUA Topic Test 4</h1>
+    <p class="subtitle">Paper 2 styled topic test · Logic and Proofs</p>
+    <p><strong>Time allowed:</strong> 1 hour 15 minutes</p>
+    <p><strong>Calculators are not permitted.</strong></p>
 
-<div id="instructions">
-    <h2 id="test-title">TMUA MOCK TEST 4</h2>
-
-
-  <p><strong>Time allowed:</strong> 1 hour and 15 minutes</p>
-  <p><strong>Calculators are not permitted.</strong></p>
-
-
-<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
-  <div>
-    <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
-    <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-  </div>
-
-  <div>
-    <label for="studentEmail" style="font-size: 16px;">Email (to receive results):</label><br>
-    <input type="email" id="studentEmail" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-  </div>
-
-  <div>
-    <label for="test-date" style="font-size: 16px;">Select your TMUA test session:</label><br>
-    <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-      <option value="October 2025">October 2026</option>
-      <option value="January 2026">January 2027</option>
-      <option value="October 2026">October 2027</option>
-    </select>
-  </div>
-
-  <div style="margin-top: 28px;">
-    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
-  </div>
-</div>
-
-
-<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
-  <thead>
-    <tr style="background: #f2f2f2;">
-      <th style="border: 1px solid #ccc; padding: 10px;">Section</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">Topics Covered</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Paper 2</td>
-      <td style="border: 1px solid #ccc; padding: 10px;">
-        <ul style="margin: 0; padding-left: 18px;">
-          <li>Logic</li>
-          <li>Proofs</li>
-        </ul>
-      </td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20</td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes</td>
-    </tr>
-  </tbody>
-</table>
-
-<p style="font-size: 16px; margin-top: 20px;">
- 
-  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
-  You should attempt <strong>all 20 questions</strong>.
-</p>
-
-<p style="font-size: 16px;">
-  A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires.
-</p>
-
-
-  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
-
-</div>
-
-
-<div id="exam-interface">
-  <div class="header">
-    <div><strong>(TMUA) Test of Mathematics for University Admission</strong></div>
-    
-    <div class="top-right">
-      <div class="timer">
-        ⏲️ Time Remaining <span id="time">75:00</span><br>
-        📄 <span id="counter">1 of 20 (Paper 1)</span>
-      </div>
-      <button id="flag-btn" onclick="toggleFlag()">   ⚑ Flag for Review   </button>
+    <div class="candidate-row">
+      <div class="field"><label for="student-name">Enter your full name</label><input type="text" id="student-name" autocomplete="name" placeholder="Full name" required></div>
+      <div class="field"><label for="student-email">Email address for the score report</label><input type="email" id="student-email" autocomplete="email" placeholder="example@email.com" required></div>
+      <div class="field"><label for="test-session">Select your TMUA test session</label><select id="test-session"><option value="October 2026">October 2026</option><option value="January 2027">January 2027</option><option value="October 2027">October 2027</option></select></div>
+      <button type="button" class="start-button" id="start-button">Start Exam</button>
     </div>
-  </div>
 
-  <div class="container" id="question-container">
-    <!-- Questions will appear here -->
-  </div>
+    <table class="test-summary">
+      <thead><tr><th>Paper</th><th>Topics covered</th><th>Questions</th><th>Time</th></tr></thead>
+      <tbody><tr><td>Paper 2 topic test</td><td><ul><li>Necessary and sufficient conditions</li><li>Implication, equivalence and contraposition</li><li>Counterexamples and quantified statements</li><li>Proof strategy and proof auditing</li><li>Induction, contradiction and logical errors</li></ul></td><td>20</td><td>75 minutes</td></tr></tbody>
+    </table>
+    <div class="difficulty-note"><strong>Difficulty:</strong> Hard Paper 2 reasoning set. The final TMUA-style estimate uses a complete difficulty-adjusted conversion; every raw score from 0 to 20 has a defined result.</div>
+    <p>Choose one correct answer for each question. There is no penalty for an incorrect answer, so you should attempt all 20 questions.</p>
+    <p>A countdown begins when the test starts. You may move between questions, flag questions for review and use the navigator. The test submits automatically when time expires.</p>
+    <p><strong>Keyboard shortcuts:</strong> Alt+N next, Alt+P previous, Alt+F flag, Alt+V navigator.</p>
+  </main>
 
-  <div class="footer">
-    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
-    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
-    <button onclick="openNavigator()">Navigator</button>
-    <button onclick="confirmSubmit()">Submit</button>
-  </div>
-</div>
+  <main id="exam-interface">
+    <header class="exam-header" id="exam-header"><div class="exam-title"><strong>(TMUA) Test of Mathematics for University Admission</strong><span class="section-chip" id="section-chip">Conditions and Implications</span></div><div class="top-right"><div>Time Remaining <strong id="time">75:00</strong></div><div id="counter">Question 1 of 20</div><button type="button" id="flag-btn">⚑ Flag for Review</button></div></header>
+    <section id="question-container" aria-live="polite"></section>
+    <footer class="exam-footer" id="exam-footer"><button type="button" id="prev-btn">← Previous</button><button type="button" id="next-btn">Next →</button><button type="button" id="navigator-btn">Navigator</button><button type="button" id="submit-btn">Submit</button></footer>
+  </main>
 
+  <div id="navigator-popup" role="dialog" aria-modal="true" aria-labelledby="navigator-heading"><h2 id="navigator-heading">Jump to Question</h2><div id="navigator-grid"></div><div class="navigator-legend"><span><i class="legend-swatch legend-answered"></i>Answered</span><span><i class="legend-swatch legend-flagged"></i>Flagged</span></div><button type="button" class="close-nav" id="close-nav-btn">Close</button></div>
+  <button type="button" class="workspace-button" id="workspace-button">← TMUA Workspace</button>
 
-<script>
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_d0af47aa08c34781b4d7b24059761d88.pdf";
-
-let flags = new Array(20).fill(false); // Assuming 20 questions per section
-let timeSpent = new Array(20).fill(0); // 20 questions
-let lastTimestamp = Date.now(); // timestamp when current question was shown
-
-let studentName = "";
-let testSession = "";
-
-function nextQuestion() {
-  if (current < questions.length - 1) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
-    current++;
-    lastTimestamp = Date.now(); // reset timestamp for new question
-    renderQuestion();
-  }
-}
-
-
-function openNavigator() {
-  document.getElementById("navigator-popup").style.display = "block";
-}
-
-function closeNavigator() {
-  document.getElementById("navigator-popup").style.display = "none";
-}
-
-function jumpTo(index) {
-timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-current = index;
-lastTimestamp = Date.now();
-renderQuestion();
-closeNavigator();
-updateFlagButton();
-
-
-}
-
-
-function renderQuestion() {
-  container.innerHTML = questions[current];
-  counter.textContent = `${current + 1} of ${questions.length}`;
-  MathJax.typesetPromise();
-updateFlagButton();
-
-  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
-  inputs.forEach(input => {
-    if (userAnswers[current] === input.value) {
-      input.checked = true;
-    }
-    input.addEventListener('change', () => {
-      userAnswers[current] = input.value;
+  <script>
+    "use strict";
+    const TEST = Object.freeze({
+      id:"p2-mock-04-logic-proofs",
+      title:"TMUA Topic Test 4 — Logic and Proofs",
+      paper:"2",
+      durationSeconds:75*60,
+      difficulty:"Hard Paper 2",
+      solutionUrl:solutionPDF,
+      officialScoringUrl:"https://esat-tmua.ac.uk/test-results/",
+      workspaceUrl:"https://apps.thrivingscholars.com/dashboard",
+      scoreMap:Object.freeze([1.0,1.3,1.6,1.9,2.3,2.7,3.1,3.6,4.1,4.6,5.0,5.4,5.8,6.2,6.7,7.1,7.5,7.9,8.3,8.7,9.0]),
+      email:Object.freeze({publicKey:"9jjn3yBHl6S88hITy",serviceId:"service_5l4w8x2",templateId:"template_j1jrs4o"})
     });
-  });
-
-  // Disable Next button on last question
-  const nextBtn = document.getElementById("next-btn");
-  if (nextBtn) nextBtn.disabled = (current === questions.length - 1);
-
-  // Disable Previous button on first question
-  const prevBtn = document.getElementById("prev-btn");
-  if (prevBtn) prevBtn.disabled = (current === 0);
-}
-
-function toggleFlag() {
-  flags[current] = !flags[current];
-  updateFlagButton();
-  updateNavigatorButton(current);
-}
-
-function updateFlagButton() {
-  const flagBtn = document.getElementById("flag-btn");
-  if (!flagBtn) return;
-  if (flags[current]) {
-    flagBtn.classList.add("flagged");
-  } else {
-    flagBtn.classList.remove("flagged");
-  }
-}
-
-  function confirmSubmit() {
-  const confirmBox = confirm("Are you sure you want to submit the test?");
-  if (confirmBox) {
-    submitExam();
-  }
-}
-  function confirmSubmit() {
-  const confirmBox = confirm("Are you sure you want to submit the test?");
-  if (confirmBox) {
-    submitExam();
-  }
-}
-  const correctAnswers = [
-    "A", "C", "C", "B", "B",
-    "E", "D", "A", "C", "D",
-    "A", "D", "C", "H", "C",
-    "D", "F", "B", "D", "B"
-  ];
-
-  let userAnswers = new Array(20).fill(null);
-  let current = 0;
-  let minutes = 75;
-  let seconds = 0;
-  let timerInterval;
-
-  const timerDisplay = document.getElementById("time");
-  const container = document.getElementById("question-container");
-  const counter = document.getElementById("counter");
-
-  const questions = [
-
-    `<div class="question-number">Question 1</div>
-<p>The polynomial \\( x^3 + (a - 3)x^2 + (b - 3a)x - 3b \\) has exactly two roots.</p>
-<p>Which of the following is true?</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q1" value="A"> \\( a^2 - 4b = 0 \\) is necessary</label><br>
-  <label class="option"><input type="radio" name="q1" value="B"> \\( a^2 - 4b = 0 \\) is sufficient</label><br>
-  <label class="option"><input type="radio" name="q1" value="C"> \\( a^2 - 4b = 0 \\) is necessary and sufficient</label><br>
-  <label class="option"><input type="radio" name="q1" value="D"> \\( b^2 - 4a = 0 \\) is necessary</label><br>
-  <label class="option"><input type="radio" name="q1" value="E"> None of the above</label>
-</div>
-
-`,
-
-    `<div class="question-number">Question 2</div>
-<p>Which of the following statements are true?</p>
-
-<p>
-I. being a square is a sufficient condition for being a rectangle.<br>
-II. being less than 12 is a sufficient condition for being less than 20.<br>
-III. being a rectangle is a necessary condition for being a square.<br>
-IV. having 4 equal length sides is necessary and sufficient for being a square.<br>
-V. an integer being less than 19.5 is sufficient, but not necessary for being less than 20.
-</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q2" value="A"> II and IV</label><br>
-  <label class="option"><input type="radio" name="q2" value="B"> I, II and V</label><br>
-  <label class="option"><input type="radio" name="q2" value="C"> I, II and III</label><br>
-  <label class="option"><input type="radio" name="q2" value="D"> I only</label><br>
-  <label class="option"><input type="radio" name="q2" value="E"> II only</label>
-</div>
-
-`,
-
-    `  <div class="question-number">Question 3</div>
-
-  <p>Let <i>I, II, III, IV</i> be some statements. Suppose that:</p>
-
-  <p>
-    \\[
-    I \\rightarrow II \\rightarrow III, \\quad IV \\rightarrow \\text{not } III, \\quad \\text{not } I \\rightarrow II
-    \\]
-  </p>
-
-  <p>
-    where \\( a \\rightarrow b \\) means “if \\( a \\) is true, then \\( b \\) is true,” and <i>not</i> \\( a \\) is just the opposite of \\( a \\) — so if \\( a \\) is true, then <i>not</i> \\( a \\) is false and vice versa.
-  </p>
-
-  <p>Suppose \\( II \\) is a true statement. What can we say about the rest of the statements?</p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q3" value="A"> <b>I:</b> true,&nbsp; <b>III:</b> true,&nbsp; <b>IV:</b> true</label><br>
-    <label class="option"><input type="radio" name="q3" value="B"> <b>I:</b> could be either,&nbsp; <b>III:</b> true,&nbsp; <b>IV:</b> could be either</label><br>
-    <label class="option"><input type="radio" name="q3" value="C"> <b>I:</b> could be either,&nbsp; <b>III:</b> true,&nbsp; <b>IV:</b> false</label><br>
-    <label class="option"><input type="radio" name="q3" value="D"> <b>I:</b> false,&nbsp; <b>III:</b> true,&nbsp; <b>IV:</b> false</label><br>
-    <label class="option"><input type="radio" name="q3" value="E"> <b>I:</b> true,&nbsp; <b>III:</b> false,&nbsp; <b>IV:</b> false</label>
-  </div>
-
-
-`,
-
-    `<div class="question-number">Question 4</div>
-
-<p>
-Let <i>I</i> and <i>II</i> be two statements. You are asked to show that <i>I</i> if and only if <i>II</i>.
-Which of the following does <b>not</b> prove the statement?
-</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q4" value="A"> <i>II</i> if <i>I</i>, and <i>I</i> if <i>II</i></label><br>
-  <label class="option"><input type="radio" name="q4" value="B"> <i>not I</i> if <i>II</i>, and <i>not II</i> if <i>I</i></label><br>
-  <label class="option"><input type="radio" name="q4" value="C"> <i>not II</i> if <i>not I</i>, and <i>not I</i> if <i>not II</i></label><br>
-  <label class="option"><input type="radio" name="q4" value="D"> <i>not I</i> if <i>not II</i>, and <i>I</i> if <i>II</i></label>
-</div>
-
-
-`,
-
-    `<div class="question-number">Question 5</div>
-
-  <p>
-    Which of the following are necessary and sufficient conditions for the equations 
-    \\[
-    y = x - 4 \\quad \\text{and} \\quad x^2 - 2y^2 = a
-    \\]
-    to have solutions?
-  </p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q5" value="A"> \\( a &lt; 32 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="B"> \\( a \\leq 32 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="C"> \\( a &gt; 32 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="D"> \\( a \\geq 32 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="E"> \\( a &lt; 16 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="F"> \\( a \\leq 16 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="G"> \\( a &gt; 16 \\)</label><br>
-    <label class="option"><input type="radio" name="q5" value="H"> \\( a \\geq 16 \\)</label>
-  </div>
-
-
-`,
-
-    `<div class="question-number">Question 6</div>
-
-  <p>
-    Consider the statement: “If \\( n \\) is an integer and \\( n^2 \\) is divisible by 4, then \\( n \\) is divisible by 4.”<br>
-    How many counterexamples are there to this in the range \\( 50 \\leq n \\leq 100 \\)?
-  </p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q6" value="A"> 24</label><br>
-    <label class="option"><input type="radio" name="q6" value="B"> 25</label><br>
-    <label class="option"><input type="radio" name="q6" value="C"> 11</label><br>
-    <label class="option"><input type="radio" name="q6" value="D"> 12</label><br>
-    <label class="option"><input type="radio" name="q6" value="E"> 13</label>
-  </div>
-
-`,
-
-    `<div class="question-number">Question 7</div>
-
-  <p>
-    Find a necessary and sufficient condition on \\( a \\), such that
-  </p>
-
-  <p style="text-align: center;">
-    \\[
-      \\sqrt{a - \\sqrt{a - \\sqrt{a - \\cdots}}}
-      =
-      \\cfrac{1}{a - \\cfrac{1}{a - \\cfrac{1}{a - \\cdots}}}
-    \\]
-  </p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q7" value="A"> True for all real \\( a \\)</label><br>
-    <label class="option"><input type="radio" name="q7" value="B"> \\( a = 0 \\)</label><br>
-    <label class="option"><input type="radio" name="q7" value="C"> \\( a = 1 \\)</label><br>
-    <label class="option"><input type="radio" name="q7" value="D"> \\( a = 2 \\)</label><br>
-    <label class="option"><input type="radio" name="q7" value="E"> \\( a = \\sqrt{2} \\)</label>
-  </div>`,
-
-    `<div class="question-number">Question 8</div>
-
-  <p>
-    Cisco is trying to prove the circle theorem that angles from the same arc in the same segment are equal.
-  </p>
-  <p>
-    Which of the following circle theorem rules should he use?
-  </p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q8" value="A"> "The angle at the centre of a circle is twice the angle at the circumference of the circle from the same arc"</label><br>
-    <label class="option"><input type="radio" name="q8" value="B"> "The angle formed in a semicircle is always a right angle"</label><br>
-    <label class="option"><input type="radio" name="q8" value="C"> "Opposite angles of a cyclic quadrilateral add up to 180 degrees"</label><br>
-    <label class="option"><input type="radio" name="q8" value="D"> "Two tangents drawn from a point to a circle are equal"</label><br>
-    <label class="option"><input type="radio" name="q8" value="E"> "The angle between a tangent and a chord is equal to the angle at the circumference in the alternate segment"</label><br>
-    <label class="option"><input type="radio" name="q8" value="F"> "The perpendicular line from the centre of a circle to a chord bisects the chord"</label>
-  </div>`,
-
-    `<div class="question-number">Question 9</div>
-
-<p>
-  A maths teacher claims that the following proof contains a few errors.
-  The proof is trying to solve the equation \\( 2 \\log_{5} x = 3 \\) for \\( x \\).
-</p>
-
-
-<p>
-  \\( a \\rightarrow b \\) means &quot;if \\( a \\) is true, then \\( b \\) must also be true&quot; (a one-way implication).<br>
-  \\( a \\leftrightarrow b \\) means &quot;\\( a \\) is true if and only if \\( b \\) is true&quot; (a two-way equivalence: each line can be derived from the other).
-</p>
-
-<p>
-  So, for example:
-</p>
-
-<p>
- 
-  &bull; Writing &quot;Line 2 \\( \\rightarrow \\) Line 3&quot; means &quot;if Line 2 is correct, then Line 3 must also be correct&quot; (but Line 3 being true does <i>not</i> necessarily guarantee Line 2 is true).<br>
-  &bull; Writing &quot;Line 3 \\( \\leftrightarrow \\) Line 4&quot; would claim that Line 3 and Line 4 are again true exactly in the same cases.
-</p>
-
-<p>
-  Here is the student&apos;s proof, line by line:
-</p>
-
-<p>
-  \\( 2 \\log_{5} x = 3 \\)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <br>
-\\( \\leftrightarrow \\log_{5}(x^2) = 3 \\) &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp (Line 2)<br>
-\\( \\leftrightarrow x^2 = 5^3 = 125 \\) &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp (Line 3)<br>
-\\( \\rightarrow x = \\sqrt{125} = 5\\sqrt{5} \\)&nbsp&nbsp&nbsp&nbsp (Line 4)
-</p>
-
-<p>
-  On which lines does the student&apos;s working contain an error (algebraic or logical)?
-</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q9" value="A"> lines 2, 3</label><br>
-  <label class="option"><input type="radio" name="q9" value="B"> lines 3, 4</label><br>
-  <label class="option"><input type="radio" name="q9" value="C"> lines 2, 4</label><br>
-  <label class="option"><input type="radio" name="q9" value="D"> lines 2, 3, 4</label><br>
-</div>
-`,
-
-    `<div class="question-number">Question 10</div>
-
-  <p>
-    Let \\( f \\) be a function such that \\( f(x) \\leq 0 \\) for all \\( x \\geq 0 \\). 
-    Which one of the following is necessary for 
-    \\( \\int_{-1}^{1} f(x)\\,dx > 0 \\)?
-  </p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q10" value="A"> \\( f(x) = -f(-x) \\) for all \\( x \\)</label><br>
-    <label class="option"><input type="radio" name="q10" value="B"> \\( f(0) = 0 \\)</label><br>
-    <label class="option"><input type="radio" name="q10" value="C"> \\( f(x) \\geq 0 \\) for all \\( x < 0 \\)</label><br>
-    <label class="option"><input type="radio" name="q10" value="D"> \\( \\int_{-a}^{0} f(x)\\,dx > 0 \\) for some \\( a \\)</label><br>
-    <label class="option"><input type="radio" name="q10" value="E"> \\( f(x) = f(-x) \\) for all \\( x \\)</label><br>
-    <label class="option"><input type="radio" name="q10" value="F"> \\( f(-1) > 0 \\)</label>
-  </div>`,
-
-
- `<div class="question-number">Question 11</div>
-
-  <p>
-    Consider the statement:<br><br>
-    A number \\( p \\) is prime <u>only if</u> it can be expressed as 3 more than a multiple of 4,<br>
-    i.e. \\( p = 4k + 3 \\) for some \\( k \\).<br><br>
-    Which of the following are counterexamples to this?
-  </p>
-
-  <ul>
-    <li>I. \\( p = 19 \\)</li>
-    <li>II. \\( p = 27 \\)</li>
-    <li>III. \\( p = 11 \\)</li>
-  </ul>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q11" value="A"> None</label><br>
-    <label class="option"><input type="radio" name="q11" value="B"> I only</label><br>
-    <label class="option"><input type="radio" name="q11" value="C"> II only</label><br>
-    <label class="option"><input type="radio" name="q11" value="D"> III only</label><br>
-    <label class="option"><input type="radio" name="q11" value="E"> I & II only</label><br>
-    <label class="option"><input type="radio" name="q11" value="F"> I & III only</label><br>
-    <label class="option"><input type="radio" name="q11" value="G"> II & III only</label><br>
-    <label class="option"><input type="radio" name="q11" value="H"> All three</label>
-  </div>
-
-`,
-
-
-    `<div class="question-number">Question 12</div>
-
-  <p>
-    Consider the statement:<br><br>
-    For all prime numbers \\( p \\), if \\( p = 4k + 1 \\) for some positive integer \\( k \\), it is true that there are positive integers \\( a \\) and \\( b \\) such that \\( p = a^2 + b^2 \\).<br><br>
-    Which of the following, if they were true, would prove this statement false?
-  </p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q12" value="A"> For any \\( p \\) prime, if \\( p = a^2 + b^2 \\) for some \\( a, b \\), then \\( p = 4k + 1 \\).</label><br>
-    <label class="option"><input type="radio" name="q12" value="B"> For any \\( p \\) prime, if \\( p \\ne a^2 + b^2 \\) for all \\( a, b \\), then \\( p = 4k + 1 \\).</label><br>
-    <label class="option"><input type="radio" name="q12" value="C"> For any \\( p \\) prime, \\( p = 4k + 1 \\) if and only if \\( p = a^2 + b^2 \\) for some \\( a, b \\).</label><br>
-    <label class="option"><input type="radio" name="q12" value="D"> There exists a \\( p \\) prime such that \\( p = 4k + 1 \\) and \\( p \\ne a^2 + b^2 \\) for all \\( a, b \\).</label><br>
-    <label class="option"><input type="radio" name="q12" value="E"> There exists a \\( p \\) prime such that \\( p = a^2 + b^2 \\) for some \\( a, b \\) or \\( p = 4k + 1 \\).</label>
-  </div>`,
-
-    `<div class="question-number">Question 13</div>
-
-  <p>
-    Consider the following proof of the alternate segment theorem:
-  </p>
-
-  <ol type="I">
-    <li>Let a tangent touch a circle at <i>A</i> and let <i>B, C</i> be two points on the circumference of the circle. Let the angle between the line <i>CA</i> and the tangent be \\( \\alpha^\\circ \\).</li>
-    <li>By drawing radii from <i>C</i> and <i>A</i> to the centre of the circle, which we will call <i>O</i>, we know that the angle between <i>OA</i> and the tangent is \\( 90^\\circ \\).</li>
-    <li>This means the angle \\( \\angle BAO \\) is \\( (90 - \\alpha)^\\circ \\).</li>
-    <li>As the triangle \\( OBA \\) is isosceles, the angle \\( \\angle OBA \\) is also \\( (90 - \\alpha)^\\circ \\).</li>
-    <li>Then the angle \\( \\angle AOB \\) is \\( 180^\\circ - (180 - 2\\alpha)^\\circ = 2\\alpha^\\circ \\).</li>
-    <li>This means the angle \\( \\angle ACB \\) is \\( \\left(\\frac{2\\alpha}{2}\\right)^\\circ = \\alpha^\\circ \\).</li>
-  </ol>
-
-  <p>Where is the first error?</p>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q13" value="A"> The proof is correct.</label><br>
-    <label class="option"><input type="radio" name="q13" value="B"> Line (II)</label><br>
-    <label class="option"><input type="radio" name="q13" value="C"> Line (III)</label><br>
-    <label class="option"><input type="radio" name="q13" value="D"> Line (IV)</label><br>
-    <label class="option"><input type="radio" name="q13" value="E"> Line (V)</label><br>
-    <label class="option"><input type="radio" name="q13" value="F"> Line (VI)</label>
-  </div>`,
-
-    `<div class="question-number">Question 14</div>
-
-  <p>Consider the following diagram:</p>
-
-  <div style="flex: 0 0 40%;">
-      <img src="https://static.wixstatic.com/media/98f2c5_b5270dc1ecb74bd2b96f7f34bfa6bc6f~mv2.png" 
-           alt="Rhombus Diagram" 
-           style="width: 100%; max-width: 250px; height: auto;">
-  </div>
-
-  <p>Which of the following are necessary for \\(ABCD\\) to be a rhombus?</p>
-
-  <ol type="I">
-    <li>Angle \\( \\angle PAD = 45^\\circ \\)</li>
-    <li>Length \\( CA = 2r \\) (\\( r \\) is the radius of the circle)</li>
-    <li>Lengths \\( CD = CB \\)</li>
-  </ol>
-
-  <div class="options">
-    <label class="option"><input type="radio" name="q14" value="A"> None</label><br>
-    <label class="option"><input type="radio" name="q14" value="B"> I only</label><br>
-    <label class="option"><input type="radio" name="q14" value="C"> II only</label><br>
-    <label class="option"><input type="radio" name="q14" value="D"> III only</label><br>
-    <label class="option"><input type="radio" name="q14" value="E"> I &amp; II only</label><br>
-    <label class="option"><input type="radio" name="q14" value="F"> I &amp; III only</label><br>
-    <label class="option"><input type="radio" name="q14" value="G"> II &amp; III only</label><br>
-    <label class="option"><input type="radio" name="q14" value="H"> All three</label>
-  </div>`,
-
-    `<div class="question-number">Question 15</div>
-
-<p>A student tried to solve the following problem:</p>
-
-<p style="text-align: center;">
-  \\[
-    \\frac{2^{18x}}{2^{3x^2} \\cdot 4^6} > 1
-  \\]
-</p>
-
-<p>Here is his solution:</p>
-
-<ol type="I">
-  <li>
-    <p style="text-align: left;">
-      \\[
-        \\frac{2^{18x}}{2^{3x^2} \\cdot 4^6}
-        = 2^{18x - 3x^2} \\cdot 4^{-6}
-        > 1
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      \\[
-        8^{6x - 3x^2} \\cdot 4^{-6} > 1
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      \\[
-        8^{6x - x^2 - 3} > 1
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      \\[
-        6x - x^2 - 3 > 0
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      Critical values are:
-      \\[
-        x = \\frac{6 \\pm \\sqrt{36 - 12}}{2} = 3 \\pm \\sqrt{6}
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      So the solution is:
-      \\[
-        3 - \\sqrt{6} < x < 3 + \\sqrt{6}
-      \\]
-    </p>
-  </li>
-</ol>
-
-<p><b>Where is the first error if any?</b></p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q15" value="A"> The proof is correct</label><br>
-  <label class="option"><input type="radio" name="q15" value="B"> Line (I)</label><br>
-  <label class="option"><input type="radio" name="q15" value="C"> Line (II)</label><br>
-  <label class="option"><input type="radio" name="q15" value="D"> Line (III)</label><br>
-  <label class="option"><input type="radio" name="q15" value="E"> Line (IV)</label><br>
-  <label class="option"><input type="radio" name="q15" value="F"> Line (V)</label><br>
-  <label class="option"><input type="radio" name="q15" value="G"> Line (VI)</label>
-</div>
-`,
-
-    `<div class="question-number">Question 16</div>
-
-<p>Consider the following proof by contradiction that \\( \\sqrt{12} \\) is irrational.</p>
-
-<ol type="I">
-  <li>
-    <p style="text-align: left;">
-      Suppose \\( \\sqrt{12} \\) is rational. Then we can express it in the form 
-      \\( \\sqrt{12} = \\frac{a}{b} \\) for some \\( a \\) and \\( b \\) with no common divisors.
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      \\[
-        12 = \\frac{a^2}{b^2}
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      \\[
-        12b^2 = a^2
-      \\]
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      12 divides \\( a^2 \\), which means that 12 must also divide \\( a \\), i.e. \\( a = 12c \\) for some integer \\( c \\).
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      This means \\( 144c^2 = 12b^2 \\), i.e. \\( b^2 = 12c^2 \\)
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      Using the logic of line (IV), \\( b = 12d \\) for some integer \\( d \\).
-    </p>
-  </li>
-  <li>
-    <p style="text-align: left;">
-      But then \\( a \\) and \\( d \\) both have 12 as a divisor, which is a contradiction.
-    </p>
-  </li>
-</ol>
-
-<p><b>Where is the first error if any?</b></p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q16" value="A"> The proof is correct</label><br>
-  <label class="option"><input type="radio" name="q16" value="B"> Line (I)</label><br>
-  <label class="option"><input type="radio" name="q16" value="C"> Line (II)</label><br>
-  <label class="option"><input type="radio" name="q16" value="D"> Line (IV)</label><br>
-  <label class="option"><input type="radio" name="q16" value="E"> Line (V)</label><br>
-  <label class="option"><input type="radio" name="q16" value="F"> Line (VI)</label><br>
-  <label class="option"><input type="radio" name="q16" value="G"> Line (VII)</label>
-</div>
-`,
-
-
-    `<div class="question-number">Question 17</div>
-
-<p>
-  Consider the graphs of the two functions 
-  \\( y = mx - 10 \\) and \\( y = \\log_2 x \\).<br>
-Consider the following two conditions:
-</p>
-
-<p style="margin-left: 1em;">
- I. \\( m &lt; 0 \\)<br>
-II. \\( m &gt; 10 \\)
-</p>
-
-<p>
-  Which of the following correctly identifies the sufficiency and necessity of the two conditions above in relation to the statement: 'There are intersection points of the two graphs'?
-</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q17" value="A"> Both necessary and sufficient.</label><br>
-  <label class="option"><input type="radio" name="q17" value="B"> Both necessary.</label><br>
-  <label class="option"><input type="radio" name="q17" value="C"> Both sufficient.</label><br>
-  <label class="option"><input type="radio" name="q17" value="D"> 1 is sufficient, the other is necessary.</label><br>
-  <label class="option"><input type="radio" name="q17" value="E"> Only 1 is necessary.</label><br>
-  <label class="option"><input type="radio" name="q17" value="F"> Only 1 is sufficient.</label><br>
-  <label class="option"><input type="radio" name="q17" value="G"> Neither is necessary or sufficient.</label>
-</div>
-`,
-
-    `<div class="question-number">Question 18</div>
-
-<p>
-  Consider the following proof by induction that \\( 3 \\times 7^n + 6 \\) is divisible by 9 for all non-negative \\( n \\):
-</p>
-
-<ol type="I">
-  <li>
-    Check the base case, \\( n = 1 \\); \\( 3 \\times 7 + 6 = 27 \\), which is indeed divisible by 9.
-  </li>
-  <li>
-    First, we suppose \\( 3 \\times 7^n + 6 \\) is divisible by 9 for \\( n \\leq k \\), i.e.<br>
-    \\( 3 \\times 7^k + 6 = 9M \\) for some integer \\( M \\).
-  </li>
-  <li>
-    Then \\( 3 \\times 7^{k+1} + 6 = 7 \\times (3 \\times 7^k) + 6 \\)
-  </li>
-  <li>
-    This means \\( 7 \\times (3 \\times 7^k) + 6 = 7(9M - 6) + 6 \\)
-  </li>
-  <li>
-    Which means \\( 3 \\times 7^{k+1} + 6 = 9(7M - 4) \\)
-  </li>
-  <li>
-    So \\( 3 \\times 7^{k+1} + 6 \\) is also divisible by 9, which means \\( 3 \\times 7^n + 6 \\) is divisible by 9 for all non-negative \\( n \\).
-  </li>
-</ol>
-
-<p><b>Where is the first error if any?</b></p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q18" value="A"> The proof is correct.</label><br>
-  <label class="option"><input type="radio" name="q18" value="B"> Line (I)</label><br>
-  <label class="option"><input type="radio" name="q18" value="C"> Line (II)</label><br>
-  <label class="option"><input type="radio" name="q18" value="D"> Line (III)</label><br>
-  <label class="option"><input type="radio" name="q18" value="E"> Line (IV)</label><br>
-  <label class="option"><input type="radio" name="q18" value="F"> Line (V)</label><br>
-  <label class="option"><input type="radio" name="q18" value="G"> Line (VI)</label>
-</div>
-`,
-
-
-    `<div class="question-number">Question 19</div>
-
-<p>
-  Which of the following functions is a counterexample to the statement below?
-</p>
-
-<p>"If a function has 3 distinct real roots, it is cubic."</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q19" value="A">
-  sin&nbsp; <span>\\( x \\)</span> in the range&nbsp;<span>\\( 0 &lt; x &lt; 2\\pi \\)</span>
-  </label><br>
-
-  <label class="option"><input type="radio" name="q19" value="B">
-   <span>\\( (x - 1)(x - 2)(x - 3)(x - 4) \\)</span>
-  </label><br>
-
-  <label class="option"><input type="radio" name="q19" value="C">
-    cos&nbsp;<span>\\( x \\)</span> in the range&nbsp;<span>\\( 0 &lt; x &lt; 2\\pi \\)</span>
-  </label><br>
-
-  <label class="option"><input type="radio" name="q19" value="D">
-    <span>\\( (x - 1)^2(x - 2)(x - 3) \\)</span>
-  </label><br>
-
-  <label class="option"><input type="radio" name="q19" value="E">
-    <span>\\( (x + 1)(x^2 - x + 5) \\)</span>
-  </label><br>
-
-  <label class="option"><input type="radio" name="q19" value="F">
-  <span>\\( (x - 3)(x + 1)(x - 4) \\)</span>
-  </label>
-</div>
-
-
-
-`,
-
-    `<div class="question-number">Question 20</div>
-
-<p>
-  Consider this student’s attempt at finding the solutions to:
-</p>
-
-<p style="text-align: center;">
-  \\[
-    \\sqrt{x + 3} = 3x - 1
-  \\]
-</p>
-
-
-
-
-<ol type="I">
-  <li>\\( x + 3 = (3x - 1)^2 \\)</li>
-  <li>\\( x + 3 = 9x^2 - 6x + 1 \\)</li>
-  <li>\\( 0 = 9x^2 - 7x - 2 \\)</li>
-  <li>\\( 0 = (x - 1)(9x + 2) \\)</li>
-<li>So \\( x = 1 \\) <i>and</i> \\( -\\frac{2}{9} \\)</li>
-</ol>
-
-<p><b>Is this correct?</b></p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q20" value="A"> Both answers are correct.</label><br>
-  <label class="option"><input type="radio" name="q20" value="B"> Only one is right and it’s due to an error in line (I).</label><br>
-  <label class="option"><input type="radio" name="q20" value="C"> Only one is right and it’s due to an error in lines (II) and (III).</label><br>
-  <label class="option"><input type="radio" name="q20" value="D"> Only one is right and it’s due to an error in line (IV).</label><br>
-  <label class="option"><input type="radio" name="q20" value="E"> Neither is right and it’s due to an error in line (I).</label><br>
-  <label class="option"><input type="radio" name="q20" value="F"> Neither is right and it’s due to an error in lines (II) and (III).</label><br>
-  <label class="option"><input type="radio" name="q20" value="G"> Neither is right and it’s due to an error in line (IV).</label>
-</div>
-
-`,
-
-  ];
-
-
-
-
-function startExam() {
-  const nameInput = document.getElementById("student-name").value.trim();
-  const emailInput = document.getElementById("studentEmail").value.trim();
-  const testSelect = document.getElementById("test-date").value;
-
-  if (!nameInput) {
-    alert("Please enter your full name before starting the exam.");
-    return;
-  }
-
-  if (!emailInput || !emailInput.includes("@")) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-
-  studentName = nameInput;
-  testSession = testSelect;
-
-  document.getElementById("instructions").style.display = "none";
-  document.getElementById("exam-interface").style.display = "block";
-  timerInterval = setInterval(updateTimer, 1000);
-  renderQuestion();
-}
-
-
-
-  function updateTimer() {
-    if (minutes === 0 && seconds === 0) {
-      clearInterval(timerInterval);
-      submitExam();
-      return;
+    const QUESTIONS = Object.freeze([{"number":1,"section":"Conditions and Implications","topic":"Necessary and Sufficient Conditions","promptHtml":"<p>The polynomial</p>\n\\[\nP(x)=x^3+(a-3)x^2+(b-3a)x-3b\n\\]\n<p>has exactly two distinct real roots. Which condition is necessary and sufficient?</p>","answer":"C","options":[{"letter":"A","html":"\\(a^2-4b=0\\)"},{"letter":"B","html":"\\(9+3a+b=0\\)"},{"letter":"C","html":"\\(\\bigl(a^2-4b=0\\text{ and }9+3a+b\\ne0\\bigr)\\) or \\(\\bigl(9+3a+b=0\\text{ and }a^2-4b&gt; 0\\bigr)\\)"},{"letter":"D","html":"\\(a^2-4b\\ge0\\text{ and }9+3a+b=0\\)"},{"letter":"E","html":"None of the above"}]},{"number":2,"section":"Conditions and Implications","topic":"Logical Conditions and Domains","promptHtml":"<p>Which of the following statements are true?</p>\n<ol type=\"I\">\n<li>For real \\(x\\), \\(x^2&gt; 4\\) is sufficient for \\(x&gt; 2\\).</li>\n<li>For an integer \\(n\\), being even is necessary and sufficient for \\(n^2\\) to be even.</li>\n<li>Being a rectangle is necessary, but not sufficient, for being a square.</li>\n<li>For real \\(x\\), \\(x&gt; 3\\) is necessary for \\(x^2&gt; 9\\).</li>\n<li>For an integer \\(n\\), \\(n&lt; 19.5\\) is necessary and sufficient for \\(n\\le19\\).</li>\n</ol>","answer":"F","options":[{"letter":"A","html":"I, II and III"},{"letter":"B","html":"II and III only"},{"letter":"C","html":"II and V only"},{"letter":"D","html":"III and V only"},{"letter":"E","html":"I and IV only"},{"letter":"F","html":"II, III and V only"}]},{"number":3,"section":"Conditions and Implications","topic":"Implication and Contrapositive","promptHtml":"<p>Let \\(I,II,III,IV\\) be statements. Suppose</p>\n\\[\nI\\Rightarrow II,\\qquad II\\Rightarrow III,\\qquad IV\\Rightarrow\\neg III,\\qquad \\neg I\\Rightarrow II.\n\\]\n<p>Suppose \\(II\\) is true. What can be concluded about the other statements?</p>","answer":"C","options":[{"letter":"A","html":"I true; III true; IV true"},{"letter":"B","html":"I could be either; III true; IV could be either"},{"letter":"C","html":"I could be either; III true; IV false"},{"letter":"D","html":"I false; III true; IV false"},{"letter":"E","html":"I true; III false; IV false"}]},{"number":4,"section":"Conditions and Implications","topic":"Biconditional Proof","promptHtml":"<p>Let \\(I\\) and \\(II\\) be statements. You are asked to prove \\(I\\) if and only if \\(II\\). Which pair of implications does <strong>not</strong> prove the biconditional?</p>","answer":"B","options":[{"letter":"A","html":"\\(I\\Rightarrow II\\) and \\(II\\Rightarrow I\\)"},{"letter":"B","html":"\\(II\\Rightarrow\\neg I\\) and \\(I\\Rightarrow\\neg II\\)"},{"letter":"C","html":"\\(\\neg I\\Rightarrow\\neg II\\) and \\(\\neg II\\Rightarrow\\neg I\\)"},{"letter":"D","html":"\\(\\neg II\\Rightarrow\\neg I\\) and \\(II\\Rightarrow I\\)"}]},{"number":5,"section":"Conditions and Implications","topic":"Conditions for Real Solutions","promptHtml":"<p>Which condition on \\(a\\) is necessary and sufficient for the equations</p>\n\\[\ny=x-4,\\qquad x^2-2y^2=a\n\\]\n<p>to have at least one real solution?</p>","answer":"B","options":[{"letter":"A","html":"\\(a&lt; 32\\)"},{"letter":"B","html":"\\(a\\le32\\)"},{"letter":"C","html":"\\(a&gt; 32\\)"},{"letter":"D","html":"\\(a\\ge32\\)"},{"letter":"E","html":"\\(a&lt; 16\\)"},{"letter":"F","html":"\\(a\\le16\\)"},{"letter":"G","html":"\\(a&gt; 16\\)"},{"letter":"H","html":"\\(a\\ge16\\)"}]},{"number":6,"section":"Conditions and Implications","topic":"Counterexamples and Divisibility","promptHtml":"<p>Consider the statement:</p>\n<p><em>If \\(n\\) is an integer and \\(n^2\\) is divisible by \\(432\\), then \\(n\\) is divisible by \\(72\\).</em></p>\n<p>How many counterexamples are there in the range \\(100\\le n\\le1000\\)?</p>","answer":"C","options":[{"letter":"A","html":"11"},{"letter":"B","html":"12"},{"letter":"C","html":"13"},{"letter":"D","html":"14"},{"letter":"E","html":"25"}]},{"number":7,"section":"Conditions and Implications","topic":"Necessary and Sufficient Conditions","promptHtml":"<p>Assume that both infinite expressions below converge to real values. Find the necessary and sufficient condition on \\(a\\) for them to be equal:</p>\n\\[\n\\sqrt{a-\\sqrt{a-\\sqrt{a-\\cdots}}}\n=\n\\cfrac{1}{a-\\cfrac{1}{a-\\cfrac{1}{a-\\cdots}}}.\n\\]","answer":"D","options":[{"letter":"A","html":"True for every real \\(a\\)"},{"letter":"B","html":"\\(a=0\\)"},{"letter":"C","html":"\\(a=1\\)"},{"letter":"D","html":"\\(a=2\\)"},{"letter":"E","html":"\\(a=\\sqrt2\\)"}]},{"number":8,"section":"Counterexamples and Proof Strategy","topic":"Proof Strategy in Circle Geometry","promptHtml":"<p>Points \\(A,B,X,Y\\) lie on one circle, with \\(X\\) and \\(Y\\) in the same segment of chord \\(AB\\). The goal is to prove</p>\n\\[\n\\angle AXB=\\angle AYB.\n\\]\n<p>Assume each theorem below has already been established independently. Which listed theorems, used separately, are each sufficient to prove the result?</p>\n<ol type=\"I\">\n<li>The angle at the centre is twice the angle at the circumference standing on the same arc.</li>\n<li>The angle between a tangent and chord \\(AB\\) equals the angle in the alternate segment.</li>\n<li>Opposite angles of a cyclic quadrilateral sum to \\(180^\\circ\\).</li>\n</ol>","answer":"E","options":[{"letter":"A","html":"None"},{"letter":"B","html":"I only"},{"letter":"C","html":"II only"},{"letter":"D","html":"III only"},{"letter":"E","html":"I and II only"},{"letter":"F","html":"I and III only"},{"letter":"G","html":"II and III only"},{"letter":"H","html":"All three"}]},{"number":9,"section":"Counterexamples and Proof Strategy","topic":"Errors in Equivalence","promptHtml":"<p>A student attempts to solve \\(2\\log_5x=3\\). The symbols \\(\\Rightarrow\\) and \\(\\Longleftrightarrow\\) are intended literally.</p>\n\\[\n\\begin{array}{rcll}\n2\\log_5x=3\n&amp;\\Longleftrightarrow&amp;\\log_5(x^2)=3 &amp;(\\text{Line 2})\\\\\n&amp;\\Longleftrightarrow&amp;x^2=125 &amp;(\\text{Line 3})\\\\\n&amp;\\Rightarrow&amp;x=\\sqrt{125}=5\\sqrt5 &amp;(\\text{Line 4})\n\\end{array}\n\\]\n<p>On which lines does the working contain an algebraic or logical error?</p>","answer":"C","options":[{"letter":"A","html":"Lines 2 and 3"},{"letter":"B","html":"Lines 3 and 4"},{"letter":"C","html":"Lines 2 and 4"},{"letter":"D","html":"Lines 2, 3 and 4"}]},{"number":10,"section":"Counterexamples and Proof Strategy","topic":"Necessary Conditions for Integrals","promptHtml":"<p>Let \\(f\\) be integrable on \\([-1,1]\\) and satisfy \\(f(x)\\le0\\) for every \\(x\\ge0\\). Which condition is necessary for</p>\n\\[\n\\int_{-1}^{1}f(x)\\,dx&gt; 0?\n\\]","answer":"D","options":[{"letter":"A","html":"\\(f(x)=-f(-x)\\) for all \\(x\\)"},{"letter":"B","html":"\\(f(0)=0\\)"},{"letter":"C","html":"\\(f(x)\\ge0\\) for all \\(x&lt; 0\\)"},{"letter":"D","html":"\\(\\displaystyle\\int_{-a}^{0}f(x)\\,dx&gt; 0\\) for some \\(a\\in(0,1]\\)"},{"letter":"E","html":"\\(f(x)=f(-x)\\) for all \\(x\\)"},{"letter":"F","html":"\\(f(-1)&gt; 0\\)"}]},{"number":11,"section":"Counterexamples and Proof Strategy","topic":"Counterexamples to a Biconditional","promptHtml":"<p>For a positive integer \\(p\\), consider the claim:</p>\n\\[\np\\text{ is prime}\\quad\\Longleftrightarrow\\quad p=4k+3\\text{ for some non-negative integer }k.\n\\]\n<p>Which of the following values are counterexamples to the biconditional?</p>\n<ol type=\"I\">\n<li>\\(p=13\\)</li>\n<li>\\(p=27\\)</li>\n<li>\\(p=19\\)</li>\n<li>\\(p=21\\)</li>\n</ol>","answer":"E","options":[{"letter":"A","html":"None"},{"letter":"B","html":"I only"},{"letter":"C","html":"II only"},{"letter":"D","html":"III only"},{"letter":"E","html":"I and II only"},{"letter":"F","html":"I and III only"},{"letter":"G","html":"II and III only"},{"letter":"H","html":"I, II and IV only"}]},{"number":12,"section":"Counterexamples and Proof Strategy","topic":"Negating a Universal Implication","promptHtml":"<p>Consider the statement:</p>\n<p>For every prime \\(p\\), if \\(p=4k+1\\) for some positive integer \\(k\\), then there are positive integers \\(a,b\\) such that \\(p=a^2+b^2\\).</p>\n<p>Which statement, if true, would prove the claim false?</p>","answer":"D","options":[{"letter":"A","html":"For every prime \\(p\\), if \\(p=a^2+b^2\\), then \\(p=4k+1\\)."},{"letter":"B","html":"For every prime \\(p\\), if \\(p\\ne a^2+b^2\\) for all positive \\(a,b\\), then \\(p=4k+1\\)."},{"letter":"C","html":"For every prime \\(p\\), \\(p=4k+1\\) if and only if \\(p=a^2+b^2\\) for some positive \\(a,b\\)."},{"letter":"D","html":"There exists a prime \\(p\\) such that \\(p=4k+1\\) and \\(p\\ne a^2+b^2\\) for all positive \\(a,b\\)."},{"letter":"E","html":"There exists a prime \\(p\\) such that \\(p=a^2+b^2\\) for some positive \\(a,b\\), or \\(p=4k+1\\)."}]},{"number":13,"section":"Proof Auditing and Advanced Reasoning","topic":"First Error in a Geometric Proof","promptHtml":"<p>Consider the following attempted proof of the alternate segment theorem.</p>\n<ol type=\"I\">\n<li>A tangent touches a circle at \\(A\\), and \\(B,C\\) lie on the circle. The angle between \\(CA\\) and the tangent is \\(\\alpha^\\circ\\).</li>\n<li>Radii \\(OA\\) and \\(OC\\) are drawn. The angle between \\(OA\\) and the tangent is \\(90^\\circ\\).</li>\n<li>Therefore \\(\\angle BAO=(90-\\alpha)^\\circ\\).</li>\n<li>Since triangle \\(OBA\\) is isosceles, \\(\\angle OBA=(90-\\alpha)^\\circ\\).</li>\n<li>Hence \\(\\angle AOB=2\\alpha^\\circ\\).</li>\n<li>Therefore \\(\\angle ACB=\\alpha^\\circ\\).</li>\n</ol>\n<p>Where is the first error?</p>","answer":"C","options":[{"letter":"A","html":"The proof is correct"},{"letter":"B","html":"Line II"},{"letter":"C","html":"Line III"},{"letter":"D","html":"Line IV"},{"letter":"E","html":"Line V"},{"letter":"F","html":"Line VI"}]},{"number":14,"section":"Proof Auditing and Advanced Reasoning","topic":"Necessary Conditions in Geometry","promptHtml":"<p>The diagram shows a cyclic quadrilateral \\(ABCD\\) and the tangent \\(PQ\\) at \\(A\\).</p><div class=\"question-media\">\n<svg aria-label=\"Cyclic quadrilateral ABCD with tangent PQ at A\" role=\"img\" viewBox=\"0 0 720 400\">\n<rect fill=\"#ffffff\" height=\"400\" width=\"720\"></rect>\n<circle cx=\"360\" cy=\"188\" fill=\"none\" r=\"142\" stroke=\"#eab308\" stroke-width=\"4\"></circle>\n<line stroke=\"#111827\" stroke-width=\"3\" x1=\"62\" x2=\"658\" y1=\"330\" y2=\"330\"></line>\n<polygon fill=\"none\" points=\"360,330 502,188 360,46 218,188\" stroke=\"#047857\" stroke-width=\"4\"></polygon>\n<circle cx=\"360\" cy=\"330\" fill=\"#111827\" r=\"5\"></circle>\n<circle cx=\"502\" cy=\"188\" fill=\"#111827\" r=\"5\"></circle>\n<circle cx=\"360\" cy=\"46\" fill=\"#111827\" r=\"5\"></circle>\n<circle cx=\"218\" cy=\"188\" fill=\"#111827\" r=\"5\"></circle>\n<text font-family=\"Georgia, serif\" font-size=\"28\" font-style=\"italic\" x=\"346\" y=\"365\">A</text>\n<text font-family=\"Georgia, serif\" font-size=\"28\" font-style=\"italic\" x=\"516\" y=\"192\">B</text>\n<text font-family=\"Georgia, serif\" font-size=\"28\" font-style=\"italic\" x=\"349\" y=\"35\">C</text>\n<text font-family=\"Georgia, serif\" font-size=\"28\" font-style=\"italic\" x=\"188\" y=\"192\">D</text>\n<text font-family=\"Georgia, serif\" font-size=\"28\" font-style=\"italic\" x=\"43\" y=\"360\">P</text>\n<text font-family=\"Georgia, serif\" font-size=\"28\" font-style=\"italic\" x=\"666\" y=\"360\">Q</text>\n</svg>\n</div>\n\n<p>Which conditions are necessary if \\(ABCD\\) is a rhombus?</p>\n<ol type=\"I\">\n<li>\\(\\angle PAD=45^\\circ\\)</li>\n<li>\\(CA=2r\\), where \\(r\\) is the radius of the circle</li>\n<li>\\(CD=CB\\)</li>\n</ol>","answer":"H","options":[{"letter":"A","html":"None"},{"letter":"B","html":"I only"},{"letter":"C","html":"II only"},{"letter":"D","html":"III only"},{"letter":"E","html":"I and II only"},{"letter":"F","html":"I and III only"},{"letter":"G","html":"II and III only"},{"letter":"H","html":"All three"}]},{"number":15,"section":"Proof Auditing and Advanced Reasoning","topic":"First Error in Index Laws","promptHtml":"<p>A student tries to solve</p>\n\\[\n\\frac{2^{18x}}{2^{3x^2}\\cdot4^6}&gt; 1.\n\\]\n<p>Their working is:</p>\n<ol type=\"I\">\n<li>\\(2^{18x-3x^2}\\cdot4^{-6}&gt; 1\\)</li>\n<li>\\(8^{6x-3x^2}\\cdot4^{-6}&gt; 1\\)</li>\n<li>\\(8^{6x-x^2-3}&gt; 1\\)</li>\n<li>\\(6x-x^2-3&gt; 0\\)</li>\n<li>The critical values are \\(3\\pm\\sqrt6\\).</li>\n<li>Therefore \\(3-\\sqrt6&lt; x&lt; 3+\\sqrt6\\).</li>\n</ol>\n<p>Where is the first error?</p>","answer":"C","options":[{"letter":"A","html":"The working is correct"},{"letter":"B","html":"Line I"},{"letter":"C","html":"Line II"},{"letter":"D","html":"Line III"},{"letter":"E","html":"Line IV"},{"letter":"F","html":"Line V"},{"letter":"G","html":"Line VI"}]},{"number":16,"section":"Proof Auditing and Advanced Reasoning","topic":"First Error in Proof by Contradiction","promptHtml":"<p>Consider the following attempted proof by contradiction that \\(\\sqrt{12}\\) is irrational.</p>\n<ol type=\"I\">\n<li>Suppose \\(\\sqrt{12}=a/b\\), where integers \\(a,b\\) have no common divisor.</li>\n<li>\\(12=a^2/b^2\\).</li>\n<li>\\(12b^2=a^2\\).</li>\n<li>Since \\(12\\mid a^2\\), it follows that \\(12\\mid a\\), so \\(a=12c\\).</li>\n<li>Then \\(144c^2=12b^2\\), so \\(b^2=12c^2\\).</li>\n<li>Using the same logic, \\(b=12d\\).</li>\n<li>Then \\(a\\) and \\(b\\) have a common divisor, a contradiction.</li>\n</ol>\n<p>Where is the first error?</p>","answer":"D","options":[{"letter":"A","html":"The proof is correct"},{"letter":"B","html":"Line I"},{"letter":"C","html":"Line II"},{"letter":"D","html":"Line IV"},{"letter":"E","html":"Line V"},{"letter":"F","html":"Line VI"},{"letter":"G","html":"Line VII"}]},{"number":17,"section":"Proof Auditing and Advanced Reasoning","topic":"Sufficiency, Necessity and Graphs","promptHtml":"<p>Consider the graphs</p>\n\\[\ny=mx-10\\qquad\\text{and}\\qquad y=\\log_2x.\n\\]\n<p>Relative to the statement “the two graphs have at least one intersection”, consider:</p>\n<ol type=\"I\">\n<li>\\(m&lt; 0\\)</li>\n<li>\\(m&gt; 10\\)</li>\n</ol>\n<p>Which classification is correct?</p>","answer":"F","options":[{"letter":"A","html":"Both are necessary and sufficient"},{"letter":"B","html":"Both are necessary"},{"letter":"C","html":"Both are sufficient"},{"letter":"D","html":"One is sufficient and the other is necessary"},{"letter":"E","html":"Only I is necessary"},{"letter":"F","html":"Only I is sufficient"},{"letter":"G","html":"Neither is necessary nor sufficient"}]},{"number":18,"section":"Proof Auditing and Advanced Reasoning","topic":"Checking an Induction Proof","promptHtml":"<p>Consider the following induction proof that \\(3\\cdot7^n+6\\) is divisible by \\(9\\) for every non-negative integer \\(n\\).</p>\n<ol type=\"I\">\n<li>For \\(n=0\\), \\(3\\cdot7^0+6=9\\), which is divisible by \\(9\\).</li>\n<li>Assume \\(3\\cdot7^k+6=9M\\) for some non-negative integer \\(k\\) and integer \\(M\\).</li>\n<li>\\(3\\cdot7^{k+1}+6=7(3\\cdot7^k+6)-36\\).</li>\n<li>Therefore \\(3\\cdot7^{k+1}+6=7(9M)-36=9(7M-4)\\).</li>\n<li>Thus the result holds for \\(k+1\\), and hence for every non-negative integer \\(n\\).</li>\n</ol>\n<p>Where is the first error, if any?</p>","answer":"A","options":[{"letter":"A","html":"The proof is correct"},{"letter":"B","html":"Line I"},{"letter":"C","html":"Line II"},{"letter":"D","html":"Line III"},{"letter":"E","html":"Line IV"},{"letter":"F","html":"Line V"}]},{"number":19,"section":"Proof Auditing and Advanced Reasoning","topic":"Counterexamples and Exact Quantifiers","promptHtml":"<p>Which function is a counterexample to the statement:</p>\n<p><em>If a function has exactly three distinct real roots, then it is a cubic polynomial.</em></p>","answer":"D","options":[{"letter":"A","html":"\\(\\sin x\\) on \\(0&lt; x&lt; 2\\pi\\)"},{"letter":"B","html":"\\((x-1)(x-2)(x-3)(x-4)\\)"},{"letter":"C","html":"\\(\\cos x\\) on \\(0&lt; x&lt; 2\\pi\\)"},{"letter":"D","html":"\\((x-1)^2(x-2)(x-3)\\)"},{"letter":"E","html":"\\((x+1)(x^2-x+5)\\)"},{"letter":"F","html":"\\((x-3)(x+1)(x-4)\\)"}]},{"number":20,"section":"Proof Auditing and Advanced Reasoning","topic":"Errors Caused by Squaring","promptHtml":"<p>A student attempts to solve</p>\n\\[\n\\sqrt{x+3}=3x-1.\n\\]\n<p>Their working uses equivalence signs:</p>\n<ol type=\"I\">\n<li>\\(\\sqrt{x+3}=3x-1\\Longleftrightarrow x+3=(3x-1)^2\\)</li>\n<li>\\(x+3=9x^2-6x+1\\)</li>\n<li>\\(0=9x^2-7x-2\\)</li>\n<li>\\(0=(x-1)(9x+2)\\)</li>\n<li>So \\(x=1\\) and \\(x=-\\frac29\\).</li>\n</ol>\n<p>Which assessment is correct?</p>","answer":"B","options":[{"letter":"A","html":"Both answers are correct"},{"letter":"B","html":"Only \\(x=1\\) is correct, and the first error is line I"},{"letter":"C","html":"Only \\(x=1\\) is correct, and the first error is line II"},{"letter":"D","html":"Only \\(x=1\\) is correct, and the first error is line IV"},{"letter":"E","html":"Neither answer is correct, and the first error is line I"},{"letter":"F","html":"Neither answer is correct, and the first error is line IV"}]}]);
+    const correctAnswers = Object.freeze(QUESTIONS.map(q=>q.answer));
+    const state={current:0,userAnswers:new Array(QUESTIONS.length).fill(null),flags:new Array(QUESTIONS.length).fill(false),timeSpent:new Array(QUESTIONS.length).fill(0),started:false,submitted:false,autoSubmitted:false,studentName:"",studentEmail:"",session:"",timerEndAt:0,timerId:null,lastQuestionTimestamp:0};
+    const els={instructions:document.getElementById("instructions"),exam:document.getElementById("exam-interface"),header:document.getElementById("exam-header"),footer:document.getElementById("exam-footer"),question:document.getElementById("question-container"),time:document.getElementById("time"),counter:document.getElementById("counter"),sectionChip:document.getElementById("section-chip"),flag:document.getElementById("flag-btn"),prev:document.getElementById("prev-btn"),next:document.getElementById("next-btn"),navigator:document.getElementById("navigator-popup"),navigatorGrid:document.getElementById("navigator-grid")};
+
+    function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch])}
+    function formatClock(totalSeconds){const safe=Math.max(0,Math.floor(totalSeconds));return `${String(Math.floor(safe/60)).padStart(2,"0")}:${String(safe%60).padStart(2,"0")}`}
+    function formatQuestionTime(totalSeconds){return formatClock(Math.round(Math.max(0,totalSeconds)))}
+    function resolveSolutionUrl(){try{return new URL(TEST.solutionUrl,window.location.href).href}catch(_){return TEST.solutionUrl}}
+    function recordCurrentTime(){if(!state.started||state.submitted||!state.lastQuestionTimestamp)return;const now=performance.now();state.timeSpent[state.current]+=Math.max(0,(now-state.lastQuestionTimestamp)/1000);state.lastQuestionTimestamp=now}
+    async function safeTypeset(target){try{if(!window.MathJax||!window.MathJax.typesetPromise)return;if(window.MathJax.typesetClear)window.MathJax.typesetClear([target]);await window.MathJax.typesetPromise([target])}catch(error){console.error("MathJax rendering failed:",error)}}
+
+    function renderQuestion(){
+      const q=QUESTIONS[state.current];
+      const optionsHtml=q.options.map(option=>{const checked=state.userAnswers[state.current]===option.letter?" checked":"";const imageClass=/<(?:img|svg)\b/i.test(option.html)?" image-option":"";return `<label class="option${imageClass}"><input type="radio" name="q${q.number}" value="${option.letter}"${checked}><span class="option-letter">${option.letter}</span><span class="option-content">${option.html}</span></label>`}).join("");
+      els.question.innerHTML=`<div class="question-number">Question ${q.number}</div><div class="question-topic">${escapeHtml(q.topic)}</div>${q.promptHtml}<div class="options">${optionsHtml}</div>`;
+      els.counter.textContent=`Question ${q.number} of ${QUESTIONS.length}`;els.sectionChip.textContent=q.section;els.flag.classList.toggle("flagged",state.flags[state.current]);els.flag.textContent=state.flags[state.current]?"⚑ Flagged for Review":"⚑ Flag for Review";els.prev.disabled=state.current===0;els.next.disabled=state.current===QUESTIONS.length-1;
+      els.question.querySelectorAll('input[type="radio"]').forEach(input=>input.addEventListener("change",event=>{state.userAnswers[state.current]=event.target.value;updateNavigator()}));
+      updateNavigator();safeTypeset(els.question);window.scrollTo({top:0,behavior:"instant"});
     }
-    if (seconds === 0) {
-      minutes--;
-      seconds = 59;
-    } else {
-      seconds--;
+    function goToQuestion(index){if(!Number.isInteger(index)||index<0||index>=QUESTIONS.length||index===state.current)return;recordCurrentTime();state.current=index;state.lastQuestionTimestamp=performance.now();renderQuestion()}
+    function nextQuestion(){if(state.current<QUESTIONS.length-1)goToQuestion(state.current+1)} function prevQuestion(){if(state.current>0)goToQuestion(state.current-1)}
+    function toggleFlag(){if(!state.started||state.submitted)return;state.flags[state.current]=!state.flags[state.current];els.flag.classList.toggle("flagged",state.flags[state.current]);els.flag.textContent=state.flags[state.current]?"⚑ Flagged for Review":"⚑ Flag for Review";updateNavigator()}
+    function buildNavigator(){els.navigatorGrid.innerHTML="";QUESTIONS.forEach((q,index)=>{const button=document.createElement("button");button.type="button";button.id=`nav-btn-${index}`;button.className="nav-question";button.textContent=q.number;button.addEventListener("click",()=>{closeNavigator();goToQuestion(index)});els.navigatorGrid.appendChild(button)});updateNavigator()}
+    function updateNavigator(){QUESTIONS.forEach((q,index)=>{const button=document.getElementById(`nav-btn-${index}`);if(!button)return;button.classList.toggle("answered",state.userAnswers[index]!==null);button.classList.toggle("flagged",state.flags[index]);button.classList.toggle("current",index===state.current);button.textContent=state.flags[index]?`⚑ ${q.number}`:String(q.number);button.setAttribute("aria-label",`Question ${q.number}${state.userAnswers[index]?", answered":", unanswered"}${state.flags[index]?", flagged":""}`)})}
+    function openNavigator(){if(!state.started||state.submitted)return;els.navigator.style.display="block";const currentButton=document.getElementById(`nav-btn-${state.current}`);if(currentButton)currentButton.focus()} function closeNavigator(){els.navigator.style.display="none"}
+    function updateTimer(){if(!state.started||state.submitted)return;const remaining=Math.max(0,Math.ceil((state.timerEndAt-Date.now())/1000));els.time.textContent=formatClock(remaining);if(remaining<=0){clearInterval(state.timerId);state.autoSubmitted=true;submitExam(true)}}
+    function startExam(){if(state.started)return;const nameInput=document.getElementById("student-name"),emailInput=document.getElementById("student-email"),sessionInput=document.getElementById("test-session");const name=nameInput.value.trim(),email=emailInput.value.trim();if(!name){alert("Please enter your full name.");nameInput.focus();return}if(!email||!emailInput.checkValidity()){alert("Please enter a valid email address.");emailInput.focus();return}state.studentName=name;state.studentEmail=email;state.session=sessionInput.value;state.started=true;state.timerEndAt=Date.now()+TEST.durationSeconds*1000;state.lastQuestionTimestamp=performance.now();els.instructions.style.display="none";els.exam.style.display="block";state.timerId=window.setInterval(updateTimer,250);updateTimer();renderQuestion()}
+    function confirmSubmit(){if(state.submitted)return;const unanswered=state.userAnswers.filter(answer=>answer===null).length;const message=unanswered?`You have ${unanswered} unanswered question${unanswered===1?"":"s"}. Submit the test now?`:"Submit the test now?";if(window.confirm(message))submitExam(false)}
+
+    function estimateTmuaScore(rawCorrect){const raw=Math.max(0,Math.min(QUESTIONS.length,Math.round(Number(rawCorrect)||0)));return Number(TEST.scoreMap[raw]??1.0)}
+    function performanceBand(score){if(score>=8)return"Exceptional practice performance";if(score>=7)return"Excellent practice performance";if(score>=6)return"Strong practice performance";if(score>=4.5)return"Secure practice performance";if(score>=3)return"Developing practice performance";return"Foundation practice performance"}
+    function buildAnalysisRows(){return QUESTIONS.map((q,index)=>{const yours=state.userAnswers[index]??"—",correct=q.answer,isCorrect=yours===correct,status=yours==="—"?"—":(isCorrect?"✓":"✗");return `<tr><td>${q.number}</td><td>${yours}</td><td>${correct}</td><td>${formatQuestionTime(state.timeSpent[index])}</td><td>${status}</td></tr>`}).join("")}
+    function buildPlainTextAnalysis(){return QUESTIONS.map((q,index)=>`Q.${q.number} Correct: ${q.answer} Yours: ${state.userAnswers[index]??"-"} Time: ${formatQuestionTime(state.timeSpent[index])}`).join("\n")}
+
+    function renderResults(score){
+      const incorrect=QUESTIONS.filter((q,index)=>state.userAnswers[index]!==q.answer).map(q=>q.number),estimated=estimateTmuaScore(score),band=performanceBand(estimated),emoji=estimated>=7?"🌟":(estimated>=4.5?"😊":"📘"),solutionHref=escapeHtml(resolveSolutionUrl());
+      els.header.style.display="none";els.footer.style.display="none";closeNavigator();
+      els.question.innerHTML=`<div class="result-wrap"><div class="result-card"><div class="result-emoji" aria-hidden="true">${emoji}</div><h1>Exam Completed</h1><div class="result-score">${score} / ${QUESTIONS.length}</div>
+        <div class="score9-wrap"><div class="score9-row"><div><div class="score9-title">Estimated TMUA-style score</div><div class="score9-sub">Difficulty-adjusted conversion for this hard Paper 2 topic test.</div></div><div class="score9-chip">${estimated.toFixed(1)} / 9.0</div></div><div class="score9-band">${band}</div><div class="score9-note">Every raw score from 0–20 has its own defined estimate. This is an internal practice estimate. Official TMUA scoring combines both papers and is equated after the live sitting. <a href="${escapeHtml(TEST.officialScoringUrl)}" target="_blank" rel="noopener">Official scoring information</a>.</div></div>
+        <table class="result-meta"><tr><th>Name</th><td>${escapeHtml(state.studentName)}</td></tr><tr><th>Test session</th><td>${escapeHtml(state.session)}</td></tr><tr><th>Paper difficulty</th><td>${escapeHtml(TEST.difficulty)}</td></tr><tr><th>Your raw score</th><td><strong>${score} / ${QUESTIONS.length}</strong></td></tr><tr><th>Estimated TMUA-style score</th><td><strong>${estimated.toFixed(1)} / 9.0</strong></td></tr><tr><th>Incorrect or unanswered</th><td>${incorrect.length?incorrect.join(", "):"None"}</td></tr><tr><th>Submission</th><td>${state.autoSubmitted?"Automatically submitted when time expired":"Submitted by the student"}</td></tr></table>
+        <div class="status-grid"><div class="status-box" id="save-status"><strong>Portal save:</strong> Saving attempt…</div><div class="status-box" id="email-status"><strong>Email report:</strong> Sending…</div></div>
+        <h2 class="analysis-title">Paper 2 analysis</h2><div class="analysis-scroll"><table class="analysis-table"><thead><tr><th>Q#</th><th>Your answer</th><th>Correct</th><th>Time</th><th>Status</th></tr></thead><tbody>${buildAnalysisRows()}</tbody></table></div>
+        <div class="solution-actions"><a href="${solutionHref}" target="_blank" rel="noopener">Open full solution book</a></div><iframe id="solution-frame" title="TMUA Topic Test 4 solution book" src="${solutionHref}" loading="lazy"></iframe></div></div>`;
+      document.body.classList.add("ts-exam-done");window.__TS_EXAM_DONE=true;safeTypeset(els.question)
     }
-    const mm = minutes.toString().padStart(2, '0');
-    const ss = seconds.toString().padStart(2, '0');
-    timerDisplay.textContent = `${mm}:${ss}`;
-  }
-
-  
-function prevQuestion() {
-  if (current > 0) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
-    current--;
-    lastTimestamp = Date.now(); // reset timestamp for new question
-    renderQuestion();
-  }
-}
-
-function updateNavigatorButton(index) {
-  const btn = document.getElementById(`nav-btn-${index}`);
-  if (!btn) return;
-  if (flags[index]) {
-    btn.style.backgroundColor = "gold";
-    btn.style.fontWeight = "bold";
-    btn.textContent = `⚑ ${index + 1}`;
-  } else {
-    btn.style.backgroundColor = "";
-    btn.style.fontWeight = "normal";
-    btn.textContent = `${index + 1}`;
-  }
-}
-
-async function submitExam() {
-  clearInterval(timerInterval);
-
-  // ⏱️ Record final question time
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-
-  // ✅ Calculate score
-  let score = 0;
-  for (let i = 0; i < correctAnswers.length; i++) {
-    if (userAnswers[i] === correctAnswers[i]) {
-      score++;
-    }
-  }
-/* TS_TMUA_SCORE9_IN_SUBMITEXAM_V10 */
-const score9Block = window.TS_TMUA_SCORE9_BLOCK
-  ? window.TS_TMUA_SCORE9_BLOCK({
-      overallRaw: score,
-      totalQ: (correctAnswers.length || 20),
-      thr: 6,
-      scoringPdfUrl: window.TS_TMUA_SCORING_PDF || ""
-    })
-  : "";
-
-
-  // ✅ Prepare timestamp
-  const timestamp = new Date().toLocaleString();
-
-  // ✅ Find incorrect question numbers
-  let incorrectList = [];
-  for (let i = 0; i < correctAnswers.length; i++) {
-    if (userAnswers[i] !== correctAnswers[i]) {
-      incorrectList.push(i + 1);
-    }
-  }
-
-/* TS_ATTEMPT_SAVE_20Q_V2 */
-const __tsTestTitle = ((document.getElementById("test-title") || {}).textContent || "p2-mock-04-logic-proofs").trim();
-try {
-  const __tsSaveRes = await window.TS_SAVE_ATTEMPT({
-    test_id: "p2-mock-04-logic-proofs",
-    test_title: __tsTestTitle,
-    paper: "2",
-    total_questions: 20,
-    score: score,
-    answers: userAnswers,
-    correct_answers: correctAnswers,
-    time_spent: timeSpent,
-    flags: flags,
-    incorrect: incorrectList
-  });
-  console.log("TS_ATTEMPT_SAVE_20Q:", __tsSaveRes);
-} catch (e) {
-  console.error("TS_ATTEMPT_SAVE_20Q failed:", e);
-}
-
-
-let timeTableHTML = "";
-for (let i = 0; i < 20; i++) {
-  const seconds = Math.round(timeSpent[i]);
-  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const ss = String(seconds % 60).padStart(2, '0');
-  const yourAns = userAnswers[i] ?? "-";
-  const correctAns = correctAnswers[i];
-  const status = yourAns === correctAns ? "✅" : (yourAns === "-" ? "—" : "❌");
-
-  timeTableHTML += `
-    <tr>
-      <td style="border: 1px solid #ccc; padding: 6px;">${i + 1}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${mm}:${ss}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${status}</td>
-    </tr>\n`; // ✅ Keep line break
-}
-
-let plainTextSummary = "Paper 2 Analysis\n";
-
-for (let i = 0; i < 20; i++) {
-  const seconds = Math.round(timeSpent[i]);
-  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const ss = String(seconds % 60).padStart(2, '0');
-  const yourAns = userAnswers[i] ?? "-";
-  const correctAns = correctAnswers[i];
-  plainTextSummary += `Q.${i + 1}  Correct: ${correctAns}   Yours: ${yourAns}   Time: ${mm}:${ss}\n`;
-}
-
-
-const studentEmail = document.getElementById("studentEmail").value;
-const testTitle = document.getElementById("test-title").textContent.trim();
-
-emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
-  name: studentName,
-  session: testSession,
-  score: `${score} / ${correctAnswers.length}`,
-  timestamp: new Date().toLocaleString(),
-  incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
-  paper1: plainTextSummary.trim(),
-  to_email: studentEmail,
-  solution_link: solutionPDF,
-  test_title: testTitle
-})
-.then(res => console.log("✅ Email sent", res))
-.catch(err => console.error("❌ Email error", err));
-
-
-
-  // ✅ Select emoji
-  let emoji = score >= 14 ? "😊"  : "😐";
-
-  // ✅ Generate time table
-  let timeRows = "";
-  for (let i = 0; i < timeSpent.length; i++) {
-    const seconds = Math.round(timeSpent[i]);
-    const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const ss = String(seconds % 60).padStart(2, '0');
-    const status = userAnswers[i] ? (userAnswers[i] === correctAnswers[i] ? "✅" : "❌") : "—";
-    timeRows += `
-      <tr>
-        <td style="border: 1px solid #ccc; padding: 8px;">${i + 1}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${userAnswers[i] || "-"}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${correctAnswers[i]}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${mm}:${ss}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${status}</td>
-      </tr>`;
-  }
-
-  // ✅ Display final screen
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: center; padding: 40px;">
-      <div style="font-size: 160px;">${emoji}</div>
-      <h1>Exam Completed</h1>
-
-      ${score9Block}
-<h1>The detailed Score Report has been emailed to you ✅ </h1>
-
-      <table style="border-collapse: collapse; margin-top: 30px; font-size: 18px;">
-        <tr style="background: #f9f9f9;">
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">${studentName}</td>
-        </tr>
-        <tr style="background: #f9f9f9;">
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Your Score</strong></td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>${score} / 20</strong></td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">Threshold Score</td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">16+ / 20</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">Average Test Taker Score</td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">9 / 20</td>
-        </tr>
-      </table>
-
-      <h3 style="margin-top: 40px;">Paper 2 Analysis</h3>
-      <table style="border-collapse: collapse; margin-top: 10px; font-size: 16px; width: 100%; max-width: 600px;">
-        <thead style="background: #eee;">
-          <tr>
-            <th style="border: 1px solid #ccc; padding: 8px;">Q#</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Your Ans</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Correct</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Time</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
-          </tr>
-        </thead>
-        <tbody>${timeRows}</tbody>
-      </table>
-
-      <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
-  <iframe 
-  id="solution-frame"
-  width="100%" 
-  height="600px" 
-  style="border: 1px solid #ccc; margin-top: 10px;">
-</iframe>
-    </div>
-  `;
-document.getElementById("solution-frame").src = solutionPDF;
-
-  document.querySelector(".footer").style.display = "none";
-
-  document.body.classList.add("ts-exam-done");
-  try { window.__TS_EXAM_DONE = true; } catch(e){}
-  try { window.__TS_SET_WARN_ON_LEAVE && window.__TS_SET_WARN_ON_LEAVE(false); } catch(e){}
-}
-
-function generateNavigatorButtons() {
-  const grid = document.getElementById("navigator-grid");
-  for (let i = 0; i < 20; i++) {
-    const btn = document.createElement("button");
-    btn.id = `nav-btn-${i}`;
-    btn.textContent = i + 1;
-    btn.style.padding = "10px";
-    btn.onclick = function () {
-      jumpTo(i);
-    };
-    grid.appendChild(btn);
-  }
-}
-
-window.onload = function () {
-  generateNavigatorButtons();
-  for (let i = 0; i < flags.length; i++) {
-    updateNavigatorButton(i);
-  }
-};
-
-
-</script>
-<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
- background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
-  <h3 style="margin-top: 0; color:#0074c1;">Jump to Question</h3>
-  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;">
-    <!-- Buttons will be generated here -->
-  </div>
-  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px;">Close</button>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function () {
-    emailjs.init("9jjn3yBHl6S88hITy"); // Replace with your actual public key
-  })();
-</script>
-
-<!-- TS_PATCH_KEYS_RC_V1 -->
-<script>
-(function(){
-  function disableRightClick(){
-    document.addEventListener("contextmenu", function(e){
-      e.preventDefault();
-    }, true);
-  }
-
-  function isTypingTarget(t){
-    if (!t) return false;
-    var tag = (t.tagName || "").toUpperCase();
-    return t.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
-  }
-
-  function bindHotkeys(){
-    window.addEventListener("keydown", function(e){
-      if (!e.altKey) return;
-      if (e.ctrlKey || e.metaKey) return;
-      if (isTypingTarget(e.target)) return;
-
-      var k = (e.key || "").toLowerCase();
-      if (k === "n") {
-        e.preventDefault(); e.stopPropagation();
-        if (typeof nextQuestion === "function") nextQuestion();
-        else if (window.NAV && typeof window.NAV.next === "function") window.NAV.next();
-      } else if (k === "p") {
-        e.preventDefault(); e.stopPropagation();
-        if (typeof prevQuestion === "function") prevQuestion();
-        else if (window.NAV && typeof window.NAV.prev === "function") window.NAV.prev();
+    function setResultStatus(id,kind,message){const node=document.getElementById(id);if(!node)return;node.className=`status-box ${kind}`;node.innerHTML=message}
+    async function saveAttempt(score){
+      if(location.protocol==="file:"||location.origin==="null"){
+        return{ok:false,skipped:true,localPreview:true,error:"local preview mode"};
       }
-    }, true);
-  }
-
-  function bootPatch(){
-    try { bindHotkeys(); } catch(_) {}
-    try { disableRightClick(); } catch(_) {}
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootPatch);
-  } else {
-    bootPatch();
-  }
-})();
-</script>
-<!-- /TS_PATCH_KEYS_RC_V1 -->
-<script>
-/* TS_TMUA_SCORE9_HELPER_V10 */
-(function(){
-  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
-  window.TS_TMUA_SCORING_PDF = "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2025/11/14082812/TMUA_Explanation_of_Results-October2025.pdf";
-
-  window.TS_TMUA_SCORE9 = function(rawCorrect, totalQuestions, thresholdRaw){
-    var raw = Number(rawCorrect || 0);
-    var total = Number(totalQuestions || 20);
-    var thr = Number(thresholdRaw || 6);
-    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
-    if (raw <= thr) return 1.0;
-    var frac = (raw - thr) / (total - thr);
-    var score9 = 1.0 + frac * 8.0;
-    score9 = clamp(score9, 1.0, 9.0);
-    return Math.round(score9 * 10) / 10;
-  };
-
-  window.TS_TMUA_SCORE9_BLOCK = function(opts){
-    opts = opts || {};
-    var totalQ = Number(opts.totalQ || 20);
-    var thr = Number(("thr" in opts) ? opts.thr : 6);
-    var scoringPdfUrl = String(opts.scoringPdfUrl || window.TS_TMUA_SCORING_PDF || "").trim();
-
-    function fmt(x){
-      var n = Number(x);
-      if (!isFinite(n)) n = 1.0;
-      return n.toFixed(1);
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),10000);
+      try{
+        const response=await fetch("/api/practice-tests/submit",{
+          method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},signal:controller.signal,
+          body:JSON.stringify({
+            test_id:TEST.id,test_title:TEST.title,paper:TEST.paper,total_questions:QUESTIONS.length,score,
+            answers:state.userAnswers,correct_answers:correctAnswers,
+            time_spent:state.timeSpent.map(value=>Math.round(value*100)/100),flags:state.flags,
+            incorrect:QUESTIONS.filter((q,index)=>state.userAnswers[index]!==q.answer).map(q=>q.number),
+            estimated_tmua_score:estimateTmuaScore(score),difficulty:TEST.difficulty,
+            scoring_model:"topic-test-4-logic-proofs-hard-complete-map-v1"
+          })
+        });
+        let body={};try{body=await response.json()}catch(_){}
+        if(!response.ok||body.ok===false)throw new Error(`HTTP ${response.status}`);
+        return{ok:true};
+      }catch(error){
+        return{ok:false,error:error.name==="AbortError"?"request timed out":String(error.message||error)};
+      }finally{clearTimeout(timeout)}
     }
-
-    var overallRaw = Number(opts.overallRaw || 0);
-    var overall9 = window.TS_TMUA_SCORE9(overallRaw, totalQ, thr);
-
-    var p1Raw = ("p1Raw" in opts) ? Number(opts.p1Raw || 0) : null;
-    var p2Raw = ("p2Raw" in opts) ? Number(opts.p2Raw || 0) : null;
-    var hasPapers = (p1Raw !== null && p2Raw !== null);
-
-    var inner = ''
-      + '<div class="ts-score9-wrap">'
-      + '  <div class="ts-score9-row">'
-      + '    <div>'
-      + '      <div class="ts-score9-title">Estimated TMUA Score</div>'
-      + '      <div class="ts-score9-sub">Scale 1.0–9.0 (approx). Threshold anchored at raw ' + thr + '.</div>'
-      + '    </div>'
-      + '    <div class="ts-score9-chip">' + fmt(overall9) + ' / 9.0</div>'
-      + '  </div>';
-
-    if (hasPapers){
-      var p1_9 = window.TS_TMUA_SCORE9(p1Raw, 20, thr);
-      var p2_9 = window.TS_TMUA_SCORE9(p2Raw, 20, thr);
-      inner += ''
-        + '  <div class="ts-score9-grid">'
-        + '    <div class="ts-score9-card"><h4>Paper 1</h4><div class="ts-score9-big">' + fmt(p1_9) + '</div><div class="ts-score9-small">from ' + p1Raw + '/20</div></div>'
-        + '    <div class="ts-score9-card"><h4>Paper 2</h4><div class="ts-score9-big">' + fmt(p2_9) + '</div><div class="ts-score9-small">from ' + p2Raw + '/20</div></div>'
-        + '  </div>';
-    } else {
-      inner += '<div style="margin-top:12px;font-family:Arial,sans-serif;color:#555;font-size:12px;">Based on ' + overallRaw + ' / ' + totalQ + ' correct.</div>';
-    }
-
-    inner += ''
-      + '  <div class="ts-score9-note">'
-      + '    <div class="ts-score9-note__asterisk">*</div>'
-      + '    <div class="ts-score9-note__text">'
-      + '      <p class="ts-score9-note__title">Note</p>'
-      + '      <p class="ts-score9-note__sub">This TMUA score is an approximate mapping based on your raw correct count. It is not an official UAT-UK conversion.</p>'
-      + '    </div>'
-      + (scoringPdfUrl
-          ? '    <a class="ts-score9-note__btn" href="' + scoringPdfUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open scoring PDF" title="Open scoring PDF">'
-            + '      <svg class="ts-score9-note__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-            + '        <path d="M8 8h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '        <path d="M8 16L16 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '        <path d="M16 13v5H3V5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '      </svg>'
-            + '    </a>'
-          : '')
-      + '  </div>'
-      + '</div>';
-
-    return inner;
-  };
-})();
-</script>
-<!-- TS_PATCH_WORKSPACE_BTN_V8 -->
-<style>
-.ts-workspace-btn{
-  position: fixed;
-  left: 14px;
-  bottom: 7px;
-  z-index: 2000;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(17,24,39,0.18);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
-  color: rgba(17,24,39,0.86);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  user-select: none;
-}
-body.ts-exam-done .ts-workspace-btn{
-  background: rgba(246, 196, 74, 0.95);
-  border: 1px solid rgba(146, 98, 0, 0.30);
-  color: rgba(43, 26, 0, 0.92);
-  font-weight: 800;
-}
-</style>
-
-<button type="button" class="ts-workspace-btn" id="tsWorkspaceBtn" aria-label="Back to TMUA Workspace">
-  &larr; TMUA Workspace
-</button>
-
-<script>
-(function(){
-  var DASH_URL = "https://apps.thrivingscholars.com/dashboard";
-  if (typeof window.__TS_EXAM_DONE === "undefined") window.__TS_EXAM_DONE = false;
-
-  function examDone(){
-    return !!window.__TS_EXAM_DONE || !!window.__TS_SUBMIT_ONCE;
-  }
-
-  function applyDoneUI(){
-    try {
-      if (examDone()) document.body.classList.add("ts-exam-done");
-      else document.body.classList.remove("ts-exam-done");
-    } catch(_) {}
-  }
-
-  function goWorkspace(){
-    window.location.href = DASH_URL;
-  }
-
-  function wrapSubmitExam(){
-    var orig = window.submitExam;
-    if (typeof orig !== "function") return;
-    if (orig.__TS_WRAPPED_DONE) return;
-
-    function wrappedSubmitExam(){
-      try { window.__TS_EXAM_DONE = true; } catch(_) {}
-      applyDoneUI();
-      return orig.apply(this, arguments);
-    }
-    wrappedSubmitExam.__TS_WRAPPED_DONE = true;
-    try { window.submitExam = wrappedSubmitExam; } catch(_) {}
-  }
-
-  function bindBtn(){
-    var b = document.getElementById("tsWorkspaceBtn");
-    if (!b) return;
-    if (b.getAttribute("data-bound")) return;
-    b.setAttribute("data-bound","1");
-
-    b.addEventListener("click", function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      if (examDone()) {
-        goWorkspace();
-        return;
+    function waitForEmailJs(timeoutMs=3500){return new Promise(resolve=>{const started=Date.now();const check=()=>{if(window.emailjs&&typeof window.emailjs.send==="function")return resolve(true);if(Date.now()-started>=timeoutMs)return resolve(false);setTimeout(check,100)};check()})}
+    async function sendEmail(score){const available=await waitForEmailJs();if(!available)return{ok:false,skipped:true,error:"EmailJS did not load"};try{if(!window.__TS_EMAILJS_INITIALISED){window.emailjs.init(TEST.email.publicKey);window.__TS_EMAILJS_INITIALISED=true}const incorrect=QUESTIONS.filter((q,index)=>state.userAnswers[index]!==q.answer).map(q=>q.number);await window.emailjs.send(TEST.email.serviceId,TEST.email.templateId,{name:state.studentName,session:state.session,score:`${score} / ${QUESTIONS.length}`,estimated_tmua_score:estimateTmuaScore(score).toFixed(1),timestamp:new Date().toLocaleString(),incorrect:incorrect.length?incorrect.join(", "):"None",paper1:buildPlainTextAnalysis(),to_email:state.studentEmail,solution_link:resolveSolutionUrl(),test_title:TEST.title});return{ok:true}}catch(error){return{ok:false,error:String(error?.text||error?.message||error)}}}
+    async function submitExam(autoSubmit=false){
+      if(state.submitted)return;
+      recordCurrentTime();
+      state.submitted=true;
+      state.autoSubmitted=Boolean(autoSubmit);
+      clearInterval(state.timerId);
+      const score=QUESTIONS.reduce((total,q,index)=>total+(state.userAnswers[index]===q.answer?1:0),0);
+      renderResults(score);
+      const[saveResult,emailResult]=await Promise.all([saveAttempt(score),sendEmail(score)]);
+      if(saveResult.ok){
+        setResultStatus("save-status","success","<strong>Portal save:</strong> Attempt saved successfully.");
+      }else if(saveResult.localPreview){
+        setResultStatus("save-status","warning","<strong>Portal save:</strong> Skipped in local preview mode. It will save when opened through the authenticated portal.");
+      }else{
+        setResultStatus("save-status","warning",`<strong>Portal save:</strong> Not saved (${escapeHtml(saveResult.error||"unavailable")}). Your on-screen report is unaffected.`);
       }
-      if (window.confirm("Are you sure you want to go back? Your progress on the current test will be lost.")) {
-        goWorkspace();
+      if(emailResult.ok){
+        setResultStatus("email-status","success",`<strong>Email report:</strong> Sent to ${escapeHtml(state.studentEmail)}.`);
+      }else{
+        setResultStatus("email-status","warning",`<strong>Email report:</strong> Not sent (${escapeHtml(emailResult.error||"unavailable")}). The complete report remains visible above.`);
       }
-    }, true);
-  }
-
-  window.addEventListener("beforeunload", function(e){
-    if (examDone()) return;
-    e.preventDefault();
-    e.returnValue = "";
-    return "";
-  });
-
-  function boot(){
-    applyDoneUI();
-    wrapSubmitExam();
-    bindBtn();
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
-})();
-</script>
-<!-- /TS_PATCH_WORKSPACE_BTN_V8 -->
-<script>
-/* TS_PRACTICE_ATTEMPT_SAVE_HELPER_V2 */
-(function(){
-  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
-
-  function score9(rawCorrect, totalQuestions, thresholdRaw){
-    var raw = Number(rawCorrect || 0);
-    var total = Number(totalQuestions || 20);
-    var thr = Number(thresholdRaw || 6);
-    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
-    if (raw <= thr) return 1.0;
-    var frac = (raw - thr) / (total - thr);
-    var score = 1.0 + frac * 8.0;
-    score = clamp(score, 1.0, 9.0);
-    return Math.round(score * 10) / 10;
-  }
-
-  window.TS_BUILD_INCORRECT_LIST = function(userAnswers, correctAnswers){
-    var out = [];
-    var ua = Array.isArray(userAnswers) ? userAnswers : [];
-    var ca = Array.isArray(correctAnswers) ? correctAnswers : [];
-    for (var i = 0; i < ca.length; i++) {
-      if (ua[i] !== ca[i]) out.push(i + 1);
     }
-    return out;
-  };
+    function handleWorkspaceClick(){if(state.submitted||!state.started){window.location.href=TEST.workspaceUrl;return}if(window.confirm("Return to the TMUA Workspace? Your current progress will be lost."))window.location.href=TEST.workspaceUrl}
+    function isTypingTarget(target){const tag=String(target?.tagName||"").toLowerCase();return tag==="input"||tag==="textarea"||tag==="select"||Boolean(target?.isContentEditable)}
 
-  window.TS_SAVE_ATTEMPT = async function(opts){
-    opts = opts || {};
-
-    if (window.__TS_ATTEMPT_SAVE_RUNNING) {
-      return { ok:false, skipped:true, reason:'running' };
-    }
-    if (window.__TS_ATTEMPT_SAVE_DONE) {
-      return { ok:true, skipped:true, reason:'already-saved' };
-    }
-
-    window.__TS_ATTEMPT_SAVE_RUNNING = true;
-
-    try {
-      var answers = Array.isArray(opts.answers) ? opts.answers : [];
-      var correctAnswers = Array.isArray(opts.correct_answers) ? opts.correct_answers : [];
-      var timeSpent = Array.isArray(opts.time_spent) ? opts.time_spent : [];
-      var flags = Array.isArray(opts.flags) ? opts.flags : [];
-      var incorrect = Array.isArray(opts.incorrect) ? opts.incorrect : window.TS_BUILD_INCORRECT_LIST(answers, correctAnswers);
-
-      var totalQuestions = Number(opts.total_questions || correctAnswers.length || answers.length || 20);
-      var score = Number(opts.score || 0);
-
-      var payload = {
-        test_id: String(opts.test_id || '').trim(),
-        test_title: String(opts.test_title || '').trim(),
-        paper: String(opts.paper || '').trim(),
-        total_questions: totalQuestions,
-        score: score,
-        answers: answers,
-        correct_answers: correctAnswers,
-        time_spent: timeSpent,
-        flags: flags,
-        incorrect: incorrect,
-        estimated_tmua_score: score9(score, totalQuestions, 6)
-      };
-
-      var res = await fetch('/api/practice-tests/submit', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      var json = {};
-      try { json = await res.json(); } catch(_) {}
-
-      console.log('TS_SAVE_ATTEMPT:', res.status, json);
-
-      if (res.ok && (json.ok === true || typeof json.ok === 'undefined')) {
-        window.__TS_ATTEMPT_SAVE_DONE = true;
-      }
-
-      return {
-        ok: res.ok,
-        status: res.status,
-        body: json
-      };
-    } catch (err) {
-      console.error('TS_SAVE_ATTEMPT error:', err);
-      return { ok:false, error:String(err) };
-    } finally {
-      window.__TS_ATTEMPT_SAVE_RUNNING = false;
-    }
-  };
-})();
-</script>
-<script id="ts-hotkeys-v1">
-(function () {
-  if (window.__TS_HOTKEYS_V1__) return;
-  window.__TS_HOTKEYS_V1__ = true;
-
-  function isTyping() {
-    var el = document.activeElement;
-    if (!el) return false;
-    var tag = (el.tagName || "").toLowerCase();
-    return tag === "input" || tag === "textarea" || tag === "select" || el.isContentEditable;
-  }
-
-  document.addEventListener("keydown", function (event) {
-    if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    if (isTyping()) return;
-
-    var key = String(event.key || "").toLowerCase();
-    var action = null;
-
-    if (key === "n" && typeof window.nextQuestion === "function") action = window.nextQuestion;
-    if (key === "p" && typeof window.prevQuestion === "function") action = window.prevQuestion;
-    if (key === "f" && typeof window.toggleFlag === "function") action = window.toggleFlag;
-    if (key === "v" && typeof window.openNavigator === "function") action = window.openNavigator;
-
-    if (!action) return;
-    event.preventDefault();
-    action();
-  });
-})();
-</script>
+    document.getElementById("start-button").addEventListener("click",startExam);document.getElementById("prev-btn").addEventListener("click",prevQuestion);document.getElementById("next-btn").addEventListener("click",nextQuestion);document.getElementById("navigator-btn").addEventListener("click",openNavigator);document.getElementById("close-nav-btn").addEventListener("click",closeNavigator);document.getElementById("submit-btn").addEventListener("click",confirmSubmit);document.getElementById("flag-btn").addEventListener("click",toggleFlag);document.getElementById("workspace-button").addEventListener("click",handleWorkspaceClick);
+    document.addEventListener("contextmenu",event=>event.preventDefault(),true);document.addEventListener("keydown",event=>{if(event.key==="Escape")closeNavigator();if(!event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||isTypingTarget(event.target))return;const key=String(event.key||"").toLowerCase(),actions={n:nextQuestion,p:prevQuestion,f:toggleFlag,v:openNavigator};if(!actions[key])return;event.preventDefault();actions[key]()},true);
+    window.addEventListener("beforeunload",event=>{if(!state.started||state.submitted)return;event.preventDefault();event.returnValue=""});
+    buildNavigator();window.nextQuestion=nextQuestion;window.prevQuestion=prevQuestion;window.toggleFlag=toggleFlag;window.openNavigator=openNavigator;window.submitExam=submitExam;window.__TMUA_TOPIC4_AUDIT__=Object.freeze({build:"V1-publish-ready-audited",questionCount:QUESTIONS.length,answerKey:correctAnswers.join(""),scoreMap:TEST.scoreMap.slice()});
+  </script>
 </body>
 </html>
-
-

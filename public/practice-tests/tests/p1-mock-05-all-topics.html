@@ -1,1565 +1,251 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TMUA Mock Test 5 - Paper 1 (All Topics)</title>
-  <script type="text/javascript" async 
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <style>
-.top-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>TMUA Topic Test 5 — Mixed-Topic Paper 1</title>
 
-}
-.options label {
-  display: block;
-}
+ <script>
+ window.MathJax = {
+ tex: {
+ inlineMath: [['\\(', '\\)']],
+ displayMath: [['\\[', '\\]']],
+ processEscapes: true
+ },
+ chtml: { scale: 1 },
+ startup: { typeset: false }
+ };
+ </script>
+ <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-#flag-btn {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  font-size: 14px;
-  font-weight: normal;
-  padding: 6px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-}
+ <style>
+ :root {
+ --brand-blue:#0074c1; --brand-blue-dark:#005fa3; --brand-gold:#f6c44a;
+ --brand-gold-dark:#f2b233; --ink:#111827; --muted:#64748b; --line:#dbe3ea;
+ --soft:#f3f5f7; --success:#166534; --success-bg:#ecfdf5;
+ --warning:#92400e; --warning-bg:#fffbeb; --danger:#991b1b; --danger-bg:#fef2f2;
+ }
+ *{box-sizing:border-box} html{min-height:100%} body{margin:0;min-height:100vh;color:var(--ink);background:#fff;font-family:Georgia,"Times New Roman",serif}
+ button,input,select{font:inherit}
+ #instructions{max-width:1250px;min-height:560px;margin:60px auto;padding:58px 64px 66px;position:relative;z-index:0;background:#fff;border:2px solid var(--brand-gold-dark);border-radius:22px;box-shadow:0 18px 48px rgba(15,23,42,.12),0 10px 26px rgba(242,178,51,.18);font-size:18px}
+ #instructions::before{content:"";position:fixed;inset:0;z-index:-1;background:var(--soft)}
+ #instructions h1{margin:0 0 10px;font-size:32px;line-height:1.2}
+ #instructions .subtitle{margin:0 0 24px;color:var(--muted);font-family:Arial,sans-serif;font-size:15px}
+ .candidate-row{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:30px 0 26px}
+ .field{min-width:230px} .field label{display:block;margin-bottom:6px;font-family:Arial,sans-serif;font-size:15px;font-weight:700}
+ .field input,.field select{width:250px;max-width:100%;padding:10px 12px;border:1.6px solid rgba(242,178,51,.7);border-radius:10px;background:#fff;outline:none;font-family:Arial,sans-serif;font-size:16px}
+ .field input:focus,.field select:focus{border-color:var(--brand-gold-dark);box-shadow:0 0 0 4px rgba(242,178,51,.18)}
+ .start-button{padding:11px 22px;border:0;border-radius:12px;background:var(--brand-gold);color:#2b1a00;box-shadow:0 12px 24px rgba(246,196,74,.35);cursor:pointer;font-family:Arial,sans-serif;font-size:16px;font-weight:800}
+ .start-button:hover{filter:brightness(.98);transform:translateY(-1px)} .start-button:active{transform:translateY(0)}
+ .test-summary{width:100%;margin:20px 0;border-collapse:collapse;overflow:hidden;border-radius:14px;box-shadow:0 12px 24px rgba(15,23,42,.06);font-family:Arial,sans-serif;font-size:15px}
+ .test-summary th,.test-summary td{padding:11px 12px;border:1px solid #cbd5e1;vertical-align:top} .test-summary th{background:#f1f5f9;text-align:left} .test-summary ul{margin:0;padding-left:19px}
+ .difficulty-note{margin:18px 0;padding:12px 14px;border:1px solid #bfdbfe;border-radius:12px;background:#eff6ff;color:#1e3a8a;font-family:Arial,sans-serif;font-size:14px}
 
-#flag-btn.flagged {
-  background-color: yellow;
-  font-weight: bold;
-  border: 2px solid #999;
-}
+ #exam-interface{display:none;min-height:100vh;background:#fff}
+ .exam-header{position:sticky;top:0;z-index:900;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:12px 20px;background:var(--brand-blue);color:#fff;box-shadow:0 2px 8px rgba(15,23,42,.14)}
+ .exam-title{font-size:20px;line-height:1.35} .section-chip{display:inline-block;margin-left:9px;padding:4px 10px;border:1px solid rgba(255,255,255,.38);border-radius:999px;background:rgba(255,255,255,.16);font-family:Arial,sans-serif;font-size:12px}
+ .top-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px;font-family:Arial,sans-serif;font-size:14px;text-align:right}
+ #flag-btn{padding:6px 13px;border:1px solid rgba(255,255,255,.75);border-radius:6px;background:#fff;color:#111;cursor:pointer;font-size:14px}
+ #flag-btn.flagged{border:2px solid #7c6f00;background:#fde047;font-weight:800}
+ #question-container{max-width:1120px;margin:0 auto;padding:30px 44px 125px;font-size:19px;line-height:1.65}
+ .question-number{margin-bottom:10px;font-size:23px;font-weight:800} .question-topic{margin-bottom:18px;color:var(--muted);font-family:Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:.02em}
+ #question-container p{margin:12px 0} mjx-container[display="true"]{overflow-x:auto;overflow-y:hidden;padding:3px 0}
+ .options{display:grid;gap:10px;margin:22px 0 42px}
+ .option{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:1px solid #dbe3ea;border-radius:10px;background:#fff;cursor:pointer;line-height:1.55}
+ .option:hover{background:#f8fafc;border-color:#94a3b8} .option input{flex:0 0 auto;margin:5px 2px 0 0;transform:scale(1.28)}
+ .option-letter{flex:0 0 auto;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#eef2f7;font-family:Arial,sans-serif;font-size:12px;font-weight:800}
+ .option-content{min-width:0;width:100%} .option-content img,.option-content svg{display:block;max-width:100%;height:auto;margin:6px auto}
+ .option.image-option{align-items:flex-start} .option.image-option .option-content{padding:2px}
+ .question-image,.question-media{width:min(720px,100%);margin:18px auto 22px;padding:12px;border:1.5px solid #e2e8f0;border-radius:14px;background:#fff;text-align:center}
+ .question-image img,.question-image svg,.question-media img,.question-media svg{display:block;max-width:100%;height:auto;margin:0 auto}
 
+ .exam-footer{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;justify-content:flex-end;gap:10px;padding:10px 20px;background:var(--brand-blue);box-shadow:0 -2px 8px rgba(15,23,42,.14)}
+ .exam-footer button{padding:7px 16px;border:0;border-radius:5px;background:var(--brand-blue-dark);color:#fff;cursor:pointer;font-family:Arial,sans-serif;font-size:15px}
+ .exam-footer button:hover{filter:brightness(1.08)} .exam-footer button:disabled{background:#94a3b8;cursor:not-allowed;filter:none}
 
-    body {
-      margin: 0;
-      font-family: "Georgia", serif;
-      background: white;
-    }
-    .header {
-      background: #0074c1;
-      color: white;
-      padding: 10px 20px;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .timer {
-      font-size: 14px;
-    }
-    .container {
-      padding: 20px 40px;
-    }
-    .question-number {
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .options {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-    .option {
-      margin: 10px 0;
-    }
-    input[type="radio"] {
-      transform: scale(1.2);
-      margin-right: 10px;
-    }
-    .footer {
-      background: #0074c1;
-      padding: 10px 20px;
-      text-align: right;
-    }
-    .footer button {
-      font-size: 16px;
-      padding: 6px 16px;
-      margin-left: 10px;
-      background: #005fa3;
-      color: white;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    #instructions {
-      padding: 40px;
-      font-size: 18px;
-    }
-    #exam-interface {
-      display: none;
-    }
+ #navigator-popup{display:none;position:fixed;top:16%;left:50%;z-index:9999;width:min(420px,calc(100vw - 28px));transform:translateX(-50%);padding:20px;border:2px solid var(--brand-blue);border-radius:12px;background:#fff;box-shadow:0 16px 40px rgba(0,0,0,.24);font-family:Arial,sans-serif}
+ #navigator-popup h2{margin:0 0 14px;color:var(--brand-blue);font-size:20px} #navigator-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:16px}
+ .nav-question{min-height:42px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;cursor:pointer;font-weight:700} .nav-question.answered{background:#dbeafe;border-color:#60a5fa} .nav-question.flagged{background:#fde047;border-color:#ca8a04} .nav-question.current{box-shadow:inset 0 0 0 3px var(--brand-blue)}
+ .navigator-legend{display:flex;flex-wrap:wrap;gap:9px 14px;margin:2px 0 16px;color:#475569;font-size:12px} .legend-swatch{display:inline-block;width:13px;height:13px;margin-right:4px;border:1px solid #94a3b8;border-radius:3px;vertical-align:-2px} .legend-answered{background:#dbeafe} .legend-flagged{background:#fde047}
+ .close-nav{padding:7px 13px;border:0;border-radius:6px;background:#e2e8f0;cursor:pointer;font-weight:700}
 
-/* ✅ START SCREEN ONLY — paste this at the VERY END of your <style> block.
-   It only targets #instructions and won’t affect the exam UI. */
+ .result-wrap{max-width:980px;margin:0 auto;padding:34px 28px 80px;font-family:Arial,sans-serif} .result-card{padding:24px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 14px 34px rgba(15,23,42,.08);text-align:center}
+ .result-emoji{font-size:88px;line-height:1} .result-score{margin:8px 0 0;font-size:42px;font-weight:900}
+ .score9-wrap{width:min(760px,100%);margin:20px auto 0;padding:17px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:#fafafa;text-align:left}
+ .score9-row{display:flex;justify-content:space-between;align-items:center;gap:16px} .score9-title{font-size:16px;font-weight:900} .score9-sub{margin-top:3px;color:var(--muted);font-size:12px}
+ .score9-chip{flex:0 0 auto;padding:7px 13px;border:1px solid #d1d5db;border-radius:999px;background:#fff;font-size:20px;font-weight:900} .score9-band{margin-top:11px;font-size:14px;font-weight:800;color:#1e3a8a}
+ .score9-note{margin-top:7px;color:#64748b;font-size:11px;line-height:1.4} .score9-note a{color:#475569}
+ .result-meta{width:min(650px,100%);margin:22px auto 0;border-collapse:collapse;font-size:15px;text-align:left} .result-meta th,.result-meta td{padding:10px 12px;border:1px solid #d1d5db} .result-meta th{width:42%;background:#f8fafc}
+ .status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(760px,100%);margin:18px auto 0;text-align:left} .status-box{padding:11px 13px;border:1px solid #dbe3ea;border-radius:10px;background:#f8fafc;font-size:13px}
+ .status-box.success{color:var(--success);background:var(--success-bg);border-color:#bbf7d0} .status-box.warning{color:var(--warning);background:var(--warning-bg);border-color:#fde68a} .status-box.error{color:var(--danger);background:var(--danger-bg);border-color:#fecaca}
+ .analysis-title{margin:34px 0 10px;text-align:left} .analysis-scroll{overflow-x:auto} .analysis-table{width:100%;border-collapse:collapse;background:#fff;font-size:14px} .analysis-table th,.analysis-table td{padding:8px 9px;border:1px solid #cbd5e1;text-align:center} .analysis-table th{background:#eef2f7}
+ .solution-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:28px 0 12px} .solution-actions a{padding:9px 14px;border-radius:8px;background:var(--brand-blue-dark);color:#fff;text-decoration:none;font-weight:800}
+ #solution-frame{width:100%;height:680px;border:1px solid #cbd5e1;border-radius:12px;background:#fff}
+ .workspace-button{position:fixed;left:14px;bottom:8px;z-index:2000;padding:9px 12px;border:1px solid rgba(17,24,39,.18);border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 10px 24px rgba(0,0,0,.10);color:rgba(17,24,39,.88);cursor:pointer;font-family:Arial,sans-serif;font-size:13px;font-weight:800}
+ body.ts-exam-done .workspace-button{border-color:rgba(146,98,0,.3);background:rgba(246,196,74,.96);color:#2b1a00}
+ @media(max-width:760px){#instructions{margin:20px 12px;padding:34px 20px 40px} .candidate-row{align-items:stretch} .field,.field input,.field select{width:100%} .exam-header{align-items:flex-start} .exam-title{font-size:16px} .section-chip{display:block;margin:6px 0 0} #question-container{padding:24px 18px 125px;font-size:18px} .exam-footer{justify-content:center;flex-wrap:wrap} .exam-footer button{padding:7px 11px} .status-grid{grid-template-columns:1fr} .result-wrap{padding:20px 12px 70px} #solution-frame{height:560px} .score9-row{align-items:flex-start;flex-direction:column}}
+ </style>
 
-#instructions{
-  max-width: 1250px;
-  min-height: 560px;
-  margin: 60px auto;
-  background: #ffffff;
-  border: 2px solid #f2b233;
-  border-radius: 22px;
-  box-shadow:
-    0 18px 48px rgba(15, 23, 42, 0.12),
-    0 10px 26px rgba(242, 178, 51, 0.18);
-  padding: 64px 64px 70px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 0;
-}
-
-/* grey page backdrop ONLY while #instructions is visible */
-#instructions::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: #f3f5f7;
-  z-index: -1;
-}
-
-/* title */
-#instructions #test-title{
-  margin: 0 0 18px 0;
-  font-size: 30px;
-  font-weight: 800;
-  color: #0b1220;
-}
-
-/* paragraphs */
-#instructions p{
-  margin: 10px 0;
-  color: #0f172a;
-}
-
-/* keep your existing flex row, just make spacing nicer */
-#instructions > div:first-of-type{
-  margin: 34px 0 26px !important;
-}
-
-/* inputs/selects — only visual polish (keeps your widths/padding from inline styles) */
-#instructions input[type="text"],
-#instructions input[type="email"],
-#instructions select{
-  border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
-  border-radius: 10px !important;
-  background: #fff !important;
-  outline: none !important;
-}
-
-#instructions input[type="text"]:focus,
-#instructions input[type="email"]:focus,
-#instructions select:focus{
-  border-color: #f2b233 !important;
-  box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
-}
-
-/* start button — only visuals (doesn’t change your inline font-size/padding if you keep them) */
-#instructions button{
-  background: #f6c44a !important;
-  color: #2b1a00 !important;
-  border: none !important;
-  border-radius: 12px !important;
-  box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
-  cursor: pointer !important;
-}
-
-#instructions button:hover{
-  filter: brightness(0.98);
-  transform: translateY(-1px);
-}
-
-#instructions button:active{
-  transform: translateY(0px);
-  box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
-}
-
-/* optional: make the table feel “card-like” but ONLY inside #instructions */
-#instructions table{
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
-}
-
-/* responsive */
-@media (max-width: 950px){
-  #instructions{
-    margin: 24px 16px;
-    padding: 40px 22px 44px;
-    min-height: auto;
-  }
-}
-/* ✅ Only affects images inside questions (won’t touch your start screen) */
-.question-media{
-  margin: 14px 0 18px;
-}
-
-.question-media img{
-  display: block;
-  max-width: 320px;         /* ✅ smaller image */
-  width: 100%;              /* responsive inside the max */
-  height: auto;
-  border: 1.5px solid #e5e7eb;   /* ✅ boxed */
-  border-radius: 12px;
-  padding: 10px;            /* ✅ space inside the box */
-  background: #ffffff;
-
-}
-
-/* Optional: center the boxed image */
-.question-media{
-  display: flex;
-  justify-content: center;
-}
-/* ✅ Bigger text for the QUESTION AREA only (safe: doesn’t touch header/footer/start screen) */
-.container{
-  font-size: 19px;           /* base size for question text */
-  line-height: 1.6;
-}
-
-/* Question number bigger */
-.container .question-number{
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-/* Paragraphs spacing + size */
-.container p{
-  font-size: 19px;
-  line-height: 1.65;
-  margin: 12px 0;
-}
-
-/* Options bigger */
-.container .options{
-  margin-top: 18px;
-  margin-bottom: 40px;
-}
-
-.container .options .option{
-  font-size: 19px;
-  line-height: 1.8;
-}
-
-/* Radio slightly larger */
-.container input[type="radio"]{
-  transform: scale(1.35);
-  margin-right: 12px;
-}
-
-  </style>
-
-<style>
-  .options .option {
-    display: block;       /* forces each option onto a new line */
-    margin: 6px 0;        /* optional: adds spacing between options */
-  }
-</style>
-
-<!-- TS_PATCH_FOOTER_FIXED_V1 -->
-<style>
-/* TS_PATCH_FOOTER_FIXED_V1: keep footer pinned and prevent overlap */
-.footer{
-  position: fixed !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  z-index: 999 !important;
-}
-#exam-interface .container{
-  padding-bottom: 110px !important;
-}
-</style>
-<!-- /TS_PATCH_FOOTER_FIXED_V1 -->
-<!-- TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
-<style>
-.ts-score9-wrap{
-  margin:18px auto 30px;
-  padding:16px;
-  border:1px solid rgba(0,0,0,0.12);
-  border-radius:14px;
-  background:rgba(250,250,250,0.92);
-  max-width:760px;
-}
-.ts-score9-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-  gap:12px;
-}
-.ts-score9-title{
-  font-family:Arial,sans-serif;
-  font-weight:900;
-  font-size:16px;
-  margin:0;
-}
-.ts-score9-sub{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:rgba(100,116,139,0.95);
-  margin-top:3px;
-}
-.ts-score9-chip{
-  font-family:Arial,sans-serif;
-  font-weight:900;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,0.14);
-  background:#fff;
-  white-space:nowrap;
-}
-.ts-score9-grid{
-  display:flex;
-  gap:12px;
-  margin-top:12px;
-  flex-wrap:wrap;
-}
-.ts-score9-card{
-  flex:1 1 260px;
-  border:1px solid rgba(0,0,0,0.10);
-  border-radius:12px;
-  padding:12px;
-  background:#fff;
-}
-.ts-score9-card h4{
-  margin:0 0 6px 0;
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  letter-spacing:0.02em;
-  color:rgba(71,85,105,0.95);
-}
-.ts-score9-big{
-  font-family:Arial,sans-serif;
-  font-size:34px;
-  font-weight:900;
-  margin:0;
-}
-.ts-score9-small{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:rgba(100,116,139,0.95);
-  margin-top:2px;
-}
-
-/* force the note to stay genuinely tiny */
-.ts-score9-note{
-  margin-top:6px !important;
-  padding-top:6px !important;
-  border-top:1px dashed rgba(148,163,184,0.24) !important;
-  display:flex !important;
-  gap:4px !important;
-  align-items:flex-start !important;
-  font-family:Arial,sans-serif !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  color:rgba(148,163,184,0.74) !important;
-}
-.ts-score9-note *{
-  font-family:Arial,sans-serif !important;
-}
-.ts-score9-note__asterisk{
-  font-weight:800 !important;
-  font-size:6px !important;
-  line-height:1 !important;
-  margin-top:0 !important;
-  flex:0 0 auto !important;
-  color:rgba(148,163,184,0.78) !important;
-}
-.ts-score9-note__text{
-  min-width:0 !important;
-  flex:1 1 auto !important;
-}
-.ts-score9-note__title{
-  margin:0 !important;
-  font-weight:700 !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  letter-spacing:0 !important;
-  color:rgba(148,163,184,0.78) !important;
-}
-.ts-score9-note__sub{
-  margin:0 !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  color:rgba(148,163,184,0.72) !important;
-}
-.ts-score9-note__btn{
-  flex:0 0 auto !important;
-  width:10px !important;
-  height:10px !important;
-  min-width:10px !important;
-  min-height:10px !important;
-  border-radius:2px !important;
-  border:1px solid rgba(148,163,184,0.20) !important;
-  background:rgba(255,255,255,0.55) !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-decoration:none !important;
-  color:rgba(100,116,139,0.76) !important;
-  margin-top:0 !important;
-  padding:0 !important;
-  line-height:1 !important;
-}
-.ts-score9-note__btn:hover{
-  background:rgba(255,255,255,0.82) !important;
-  color:rgba(71,85,105,0.92) !important;
-}
-.ts-score9-note__icon{
-  width:6px !important;
-  height:6px !important;
-  min-width:6px !important;
-  min-height:6px !important;
-  display:block !important;
-}
-</style>
-<!-- /TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
+<script>
+  var solutionPDF = "https://apps.thrivingscholars.com/practice-tests/solutions/topic-test-5/";
+</script>
 </head>
 <body>
-
-<div id="instructions">
-    <h2 id="test-title">TMUA MOCK TEST 5</h2>
-
-
-  <p><strong>Time allowed:</strong> 1 hour and 15 minutes</p>
-  <p><strong>Calculators are not permitted.</strong></p>
-
-
-<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
-  <div>
-    <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
-    <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-  </div>
-
-  <div>
-    <label for="studentEmail" style="font-size: 16px;">Email (to receive results):</label><br>
-    <input type="email" id="studentEmail" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-  </div>
-
-  <div>
-    <label for="test-date" style="font-size: 16px;">Select your TMUA test session:</label><br>
-    <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-      <option value="October 2025">October 2026</option>
-      <option value="January 2026">January 2027</option>
-      <option value="October 2026">October 2027</option>
-    </select>
-  </div>
-
-  <div style="margin-top: 28px;">
-    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
-  </div>
-</div>
-
-
-<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
-  <thead>
-    <tr style="background: #f2f2f2;">
-      <th style="border: 1px solid #ccc; padding: 10px;">Section</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">Topics Covered</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Paper 1</td>
-      <td style="border: 1px solid #ccc; padding: 10px;">
-        <ul style="margin: 0; padding-left: 18px;">
-          <li>All Topics</li>
-
-        </ul>
-      </td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20</td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes</td>
-    </tr>
-  </tbody>
-</table>
-
-<p style="font-size: 16px; margin-top: 20px;">
- 
-  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
-  You should attempt <strong>all 20 questions</strong>.
-</p>
-
-<p style="font-size: 16px;">
-  A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires.
-</p>
-
-
-  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
-
-</div>
-
-
-<div id="exam-interface">
-  <div class="header">
-    <div><strong>(TMUA) Test of Mathematics for University Admission</strong></div>
-    
-    <div class="top-right">
-      <div class="timer">
-        ⏲️ Time Remaining <span id="time">75:00</span><br>
-        📄 <span id="counter">1 of 20 (Paper 1)</span>
-      </div>
-      <button id="flag-btn" onclick="toggleFlag()">   ⚑ Flag for Review   </button>
-    </div>
-  </div>
-
-  <div class="container" id="question-container">
-    <!-- Questions will appear here -->
-  </div>
-
-  <div class="footer">
-    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
-    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
-    <button onclick="openNavigator()">Navigator</button>
-    <button onclick="confirmSubmit()">Submit</button>
-  </div>
-</div>
-
-
-<script>
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_e60817317c184eccb4e11f4ec1cd1a6f.pdf";
-
-let flags = new Array(20).fill(false); // Assuming 20 questions per section
-let timeSpent = new Array(20).fill(0); // 20 questions
-let lastTimestamp = Date.now(); // timestamp when current question was shown
-
-let studentName = "";
-let testSession = "";
-
-function nextQuestion() {
-  if (current < questions.length - 1) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
-    current++;
-    lastTimestamp = Date.now(); // reset timestamp for new question
-    renderQuestion();
-  }
-}
-
-
-function openNavigator() {
-  document.getElementById("navigator-popup").style.display = "block";
-}
-
-function closeNavigator() {
-  document.getElementById("navigator-popup").style.display = "none";
-}
-
-function jumpTo(index) {
-timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-current = index;
-lastTimestamp = Date.now();
-renderQuestion();
-closeNavigator();
-updateFlagButton();
-
-
-}
-
-
-function renderQuestion() {
-  container.innerHTML = questions[current];
-  counter.textContent = `${current + 1} of ${questions.length}`;
-  MathJax.typesetPromise();
-updateFlagButton();
-
-  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
-  inputs.forEach(input => {
-    if (userAnswers[current] === input.value) {
-      input.checked = true;
-    }
-    input.addEventListener('change', () => {
-      userAnswers[current] = input.value;
-    });
-  });
-
-  // Disable Next button on last question
-  const nextBtn = document.getElementById("next-btn");
-  if (nextBtn) nextBtn.disabled = (current === questions.length - 1);
-
-  // Disable Previous button on first question
-  const prevBtn = document.getElementById("prev-btn");
-  if (prevBtn) prevBtn.disabled = (current === 0);
-}
-
-function toggleFlag() {
-  flags[current] = !flags[current];
-  updateFlagButton();
-  updateNavigatorButton(current);
-}
-
-function updateFlagButton() {
-  const flagBtn = document.getElementById("flag-btn");
-  if (!flagBtn) return;
-  if (flags[current]) {
-    flagBtn.classList.add("flagged");
-  } else {
-    flagBtn.classList.remove("flagged");
-  }
-}
-
-  function confirmSubmit() {
-  const confirmBox = confirm("Are you sure you want to submit the test?");
-  if (confirmBox) {
-    submitExam();
-  }
-}
-  function confirmSubmit() {
-  const confirmBox = confirm("Are you sure you want to submit the test?");
-  if (confirmBox) {
-    submitExam();
-  }
-}
-  const correctAnswers = [
-    "B", "A", "D", "C", "A",
-    "E", "D", "A", "C", "D",
-    "H", "E", "C", "C", "C",
-    "D", "D", "D", "B", "B"
-  ];
-
-  let userAnswers = new Array(20).fill(null);
-  let current = 0;
-  let minutes = 75;
-  let seconds = 0;
-  let timerInterval;
-
-  const timerDisplay = document.getElementById("time");
-  const container = document.getElementById("question-container");
-  const counter = document.getElementById("counter");
-
-  const questions = [
-
-    `<div class="question-number">Question 1</div>
-<p>How many positive roots does the function \\( f(x) = x^{4} - 8x^{3} + 22x^{2} - 24x \\) have?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q1" value="A"> 0</label>
-  <label class="option"><input type="radio" name="q1" value="B"> 1</label>
-  <label class="option"><input type="radio" name="q1" value="C"> 2</label>
-  <label class="option"><input type="radio" name="q1" value="D"> 3</label>
-  <label class="option"><input type="radio" name="q1" value="E"> None of the above</label>
-</div>
-
-
-`,
-
-    `<div class="question-number">Question 2</div>
-<p>Given that, in the expansion of \\( \\left( 3x + b \\right)^{7} \\), the coefficient of \\( x^{4} \\) is the same as the coefficient of \\( x^{2} \\) in \\( \\left( 3b + x \\right)^{4} \\), find the positive constant \\( b \\).</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q2" value="A"> \\( \\dfrac{2}{105} \\)</label>
-  <label class="option"><input type="radio" name="q2" value="B"> \\( \\dfrac{105}{2} \\)</label>
-  <label class="option"><input type="radio" name="q2" value="C"> \\( \\dfrac{107}{3} \\)</label>
-  <label class="option"><input type="radio" name="q2" value="D"> \\( \\dfrac{3}{107} \\)</label>
-  <label class="option"><input type="radio" name="q2" value="E"> \\( \\dfrac{109}{4} \\)</label>
-</div>
-
-`,
-
-    `<div class="question-number">Question 3</div>
-<p>Consider the tangent to the curve \\( y = x^{2} + bx \\) at \\( x = 2 \\). For what values of \\( b \\) is the x-intercept greater than \\( 4 \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q3" value="A"> \\( -3 < b < 3 \\)</label>
-  <label class="option"><input type="radio" name="q3" value="B"> \\( 3 < b < 4 \\)</label>
-  <label class="option"><input type="radio" name="q3" value="C"> \\( b > 3 \\)</label>
-  <label class="option"><input type="radio" name="q3" value="D"> \\( -4 < b < -3 \\)</label>
-  <label class="option"><input type="radio" name="q3" value="E"> \\( b > -3 \\)</label>
-</div>
-`,
-
-    `<div class="question-number">Question 4</div>
-<p>In which of the following ranges is \\( \\left( x^{2} - 1 \\right) \\left( x + 2 \\right) \\left( x + 4 \\right) > 0 \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q4" value="A"> \\( -2 < x < 1 \\)</label>
-  <label class="option"><input type="radio" name="q4" value="B"> \\( -1 < x < 2 \\)</label>
-  <label class="option"><input type="radio" name="q4" value="C"> \\( -2 < x < -1 \\)</label>
-  <label class="option"><input type="radio" name="q4" value="D"> \\( x \\geq 1 \\)</label>
-  <label class="option"><input type="radio" name="q4" value="E"> \\( x < -3 \\)</label>
-</div>
-
-
-`,
-
-    `<div class="question-number">Question 5</div>
-<p>Suppose \\( 5^{4 + 6 + \\ldots + 2x} = 0.04^{-14} \\). Given \\( x \\) is a positive integer, what is \\( x \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q5" value="A"> 5</label>
-  <label class="option"><input type="radio" name="q5" value="B"> 6</label>
-  <label class="option"><input type="radio" name="q5" value="C"> 7</label>
-  <label class="option"><input type="radio" name="q5" value="D"> 8</label>
-  <label class="option"><input type="radio" name="q5" value="E"> 5.5</label>
-</div>
-
-
-`,
-
-    `<div class="question-number">Question 6</div>
-<p>An arithmetic geometric series is defined by</p>
-<p>\\( x_{1} = 2 \\)</p>
-<p>\\( x_{n+1} = x_{n} + q \\)</p>
-<p>Given \\( x_{100} \\) is \\( 13 \\), find the sum to infinity of a series with common ratio \\( q \\), and first term \\( 5 \\).</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q6" value="A"> \\( \\dfrac{78}{5} \\)</label>
-  <label class="option"><input type="radio" name="q6" value="B"> \\( \\dfrac{102}{3} \\)</label>
-  <label class="option"><input type="radio" name="q6" value="C"> \\( \\dfrac{36}{7} \\)</label>
-  <label class="option"><input type="radio" name="q6" value="D"> \\( \\dfrac{52}{9} \\)</label>
-  <label class="option"><input type="radio" name="q6" value="E"> \\( \\dfrac{45}{8} \\)</label>
-</div>
-
-`,
-
-    `<div class="question-number">Question 7</div> <p>Which of the following is a line of symmetry of the graph \\( y \= \\dfrac{1}{\\sin\\!\\left(4x \+ \\dfrac{\\pi}{3}\\right)} \\)?</p> <div class="options"> <label class="option"><input type="radio" name="q7" value="A"> \\(x \= \\dfrac{13\\pi}{2}\\)</label> <label class="option"><input type="radio" name="q7" value="B"> \\(x \= \\dfrac{\\pi}{2}\\)</label> <label class="option"><input type="radio" name="q7" value="C"> \\(x \= \\pi\\)</label> <label class="option"><input type="radio" name="q7" value="D"> \\(x \= \\dfrac{13\\pi}{24}\\)</label> <label class="option"><input type="radio" name="q7" value="E"> \\(y \= \\dfrac{5\\pi}{24}\\)</label> </div>
-`,
-
-    `<div class="question-number">Question 8</div>
-<p>Define a recurrent sequence by</p>
-<p>\\[ x_{n+1} = 
-\\begin{cases} 
-\\dfrac{x_{n}}{2}, & \\text{for } x_{n} = \\text{even} \\\\ 
-3x_{n} + 1, & \\text{for } x_{n} = \\text{odd}
-\\end{cases} \\]</p>
-<p>Given \\( x_{1} = 12 \\), what is \\( x_{100} \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q8" value="A"> 1</label>
-  <label class="option"><input type="radio" name="q8" value="B"> 4</label>
-  <label class="option"><input type="radio" name="q8" value="C"> 2</label>
-  <label class="option"><input type="radio" name="q8" value="D"> 12</label>
-  <label class="option"><input type="radio" name="q8" value="E"> 0</label>
-</div>
-`,
-
-    `<div class="question-number">Question 9</div>
-<p>How many solutions does the equation \\( \\cos 2x \\times \\log x = \\sin 2x \\) have in the range \\( 0 < x < 3\\pi \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q9" value="A"> 0</label>
-  <label class="option"><input type="radio" name="q9" value="B"> 3</label>
-  <label class="option"><input type="radio" name="q9" value="C"> 5</label>
-  <label class="option"><input type="radio" name="q9" value="D"> 6</label>
-  <label class="option"><input type="radio" name="q9" value="E"> 7</label>
-</div>
-
-`,
-
-    `<div class="question-number">Question 10</div> <p>Let \\( f \\) be an integrable function on \\( \\mathbb{R} \\) with</p> <p>\\[ \\int_{0}^{4} f(x)\\,dx \= 3, \\]</p> <p>and suppose \\( f \\) is even, i.e. \\( f(-x) \= f(x) \\).</p> <p>Evaluate</p> <p>\\[ I \= \\int_{-2}^{6} \\left[ f\\!\\left(x \- 2\\right) \- f\\!\\left(2 \- x\\right) \+ 1 \\right] \\, dx. \\]</p> <div class="options"> <label class="option"><input type="radio" name="q10" value="A"> \\(0\\)</label> <label class="option"><input type="radio" name="q10" value="B"> \\(3\\)</label> <label class="option"><input type="radio" name="q10" value="C"> \\(6\\)</label> <label class="option"><input type="radio" name="q10" value="D"> \\(8\\)</label> <label class="option"><input type="radio" name="q10" value="E"> \\(12\\)</label> </div>
-
-`,
-
-
- `<div class="question-number">Question 11</div>
-<p>Find the sum of the \\( x \\)-coordinates of the six points of intersection of</p>
-<p>\\[ y = \\pi x \\left( x - 1 \\right) \\left( x - 2 \\right) \\left( x - 3 \\right) \\left( x - 4 \\right) \\left( x - 5 \\right) \\]</p>
-<p>and</p>
-<p>\\[ y = \\dfrac{5}{17}x + \\dfrac{\\pi}{3} \\]</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q11" value="A"> \\( -15 \\)</label>
-  <label class="option"><input type="radio" name="q11" value="B"> \\( -\\dfrac{44\\pi}{51} + 1 \\)</label>
-  <label class="option"><input type="radio" name="q11" value="C"> \\( -\\dfrac{7}{15} \\)</label>
-  <label class="option"><input type="radio" name="q11" value="D"> 0</label>
-  <label class="option"><input type="radio" name="q11" value="E"> \\( \\dfrac{7}{15} \\)</label>
-  <label class="option"><input type="radio" name="q11" value="F"> \\( \\dfrac{44\\pi}{51} - 1 \\)</label>
-  <label class="option"><input type="radio" name="q11" value="G"> 12</label>
-  <label class="option"><input type="radio" name="q11" value="H"> 15</label>
-</div>
-`,
-
-
-    `<div class="question-number">Question 12</div>
-<p>A cubic function \\( f(x) \\) is such that</p>
-<p>\\( f(1) = 1, \\quad f(2) = 1, \\quad f(-1) = -5, \\)</p>
-<p>and the coefficient of \\( x^{3} \\) is \\( 1 \\).</p>
-<p>Find \\( f(3) \\).</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q12" value="A"> \\( -7 \\)</label>
-  <label class="option"><input type="radio" name="q12" value="B"> 0</label>
-  <label class="option"><input type="radio" name="q12" value="C"> 4</label>
-  <label class="option"><input type="radio" name="q12" value="D"> 6</label>
-  <label class="option"><input type="radio" name="q12" value="E"> 7</label>
-  <label class="option"><input type="radio" name="q12" value="F"> 36</label>
-</div>
-`,
-
-    `<div class="question-number">Question 13</div>
-<p>Non-zero integers \\( a, b, c \\), each greater than \\( 1 \\), satisfy</p>
-<p>\\[ abc + ab + bc + ac + a + b + c = 104 \\]</p>
-<p>What is the value of \\( a + b + c \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q13" value="A"> 10</label>
-  <label class="option"><input type="radio" name="q13" value="B"> 11</label>
-  <label class="option"><input type="radio" name="q13" value="C"> 12</label>
-  <label class="option"><input type="radio" name="q13" value="D"> 13</label>
-  <label class="option"><input type="radio" name="q13" value="E"> 14</label>
-  <label class="option"><input type="radio" name="q13" value="F"> 15</label>
-</div>
-`,
-
-    `<div class="question-number">Question 14</div>
-<p>Let \\( u_{n} = 3u_{n-1} + 2u_{n-2} \\), where \\( u_{1} = 1 \\) and \\( u_{2} = 5 \\).</p>
-<p>What does the value of \\( \\dfrac{u_{k}}{u_{k-1}} \\) tend toward as \\( k \\to \\infty \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q14" value="A"> \\( 2 \\)</label>
-  <label class="option"><input type="radio" name="q14" value="B"> \\( \\sqrt{5} \\)</label>
-  <label class="option"><input type="radio" name="q14" value="C"> \\( \\dfrac{3 + \\sqrt{17}}{2} \\)</label>
-  <label class="option"><input type="radio" name="q14" value="D"> \\( \\dfrac{3 \\pm \\sqrt{17}}{2} \\)</label>
-  <label class="option"><input type="radio" name="q14" value="E"> \\( \\dfrac{3 + \\sqrt{5}}{2} \\)</label>
-  <label class="option"><input type="radio" name="q14" value="F"> \\( 1 \\pm \\sqrt{2} \\)</label>
-  <label class="option"><input type="radio" name="q14" value="G"> \\( 3 + \\sqrt{2} \\)</label>
-</div>
-`,
-
-    `<div class="question-number">Question 15</div>
-<p>For any integer \\( n \\geq 0 \\),</p>
-<p>\\[ \\int_{n}^{n+1} f(x)\\,dx = 2n + 1 \\]</p>
-<p>Evaluate:</p>
-<p>\\[ \\int_{0}^{2} f(x)\\,dx + \\int_{1}^{3} f(x)\\,dx + \\int_{4}^{3} f(x)\\,dx \\]</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q15" value="A"> 1</label>
-  <label class="option"><input type="radio" name="q15" value="B"> 3</label>
-  <label class="option"><input type="radio" name="q15" value="C"> 5</label>
-  <label class="option"><input type="radio" name="q15" value="D"> 7</label>
-  <label class="option"><input type="radio" name="q15" value="E"> 9</label>
-  <label class="option"><input type="radio" name="q15" value="F"> 11</label>
-</div>
-`,
-
-    `<div class="question-number">Question 16</div>
-<p>In the simplified expansion of \\( \\left( 2 + 3x \\right)^{12} \\), how many of the terms have a coefficient that is divisible by \\( 48 \\)?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q16" value="A"> 0</label>
-  <label class="option"><input type="radio" name="q16" value="B"> 2</label>
-  <label class="option"><input type="radio" name="q16" value="C"> 5</label>
-  <label class="option"><input type="radio" name="q16" value="D"> 9</label>
-  <label class="option"><input type="radio" name="q16" value="E"> 10</label>
-  <label class="option"><input type="radio" name="q16" value="F"> 12</label>
-  <label class="option"><input type="radio" name="q16" value="G"> 13</label>
-</div>
-`,
-
-
-    `<div class="question-number">Question 17</div>
-<p>The graph of \\( y = \\sqrt{5x - 2} \\) undergoes the below transformations in the given order.</p>
-<ol>
-  <li>Translated horizontally left by 4</li>
-  <li>Translated vertically down by 6</li>
-  <li>Vertical reflection in the axis \\( y = 0 \\)</li>
-  <li>Stretch factor \\( \\dfrac{1}{3} \\) in the y-axis</li>
-  <li>Stretch factor \\( 2 \\) in the x-axis</li>
-</ol>
-<p>Which of the following equations describes the transformed graph?</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q17" value="A"> \\( y = \\sqrt{2 - \\dfrac{5x}{18}} - 2 \\)</label>
-  <label class="option"><input type="radio" name="q17" value="B"> \\( y = \\dfrac{\\sqrt{-10x - 6} - 4}{3} \\)</label>
-  <label class="option"><input type="radio" name="q17" value="C"> \\( y = -\\dfrac{\\sqrt{\\dfrac{5}{2}x - 22} - 6}{3} \\)</label>
-  <label class="option"><input type="radio" name="q17" value="D"> \\( y = -\\dfrac{\\sqrt{\\dfrac{5}{2}x + 18} - 6}{3} \\)</label>
-  <label class="option"><input type="radio" name="q17" value="E"> \\( y = \\dfrac{\\sqrt{\\dfrac{5}{2}x - 22} - 6}{3} \\)</label>
-  <label class="option"><input type="radio" name="q17" value="F"> \\( y = -\\dfrac{\\sqrt{\\dfrac{5}{2}x + 22} - 6}{3} \\)</label>
-  <label class="option"><input type="radio" name="q17" value="G"> \\( y = \\dfrac{\\sqrt{\\dfrac{5}{2}x + 14}}{3} \\)</label>
-</div>
-`,
-
-    `<div class="question-number">Question 18</div>
-<p>How many values satisfy the following equation for \\( -2\\pi \\leq x \\leq 2\\pi \\)?</p>
-<p>\\[ 2 \\sin x \\cos x = \\cos x \\]</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q18" value="A"> 4</label>
-  <label class="option"><input type="radio" name="q18" value="B"> 2</label>
-  <label class="option"><input type="radio" name="q18" value="C"> 1</label>
-  <label class="option"><input type="radio" name="q18" value="D"> 8</label>
-  <label class="option"><input type="radio" name="q18" value="E"> 16</label>
-  <label class="option"><input type="radio" name="q18" value="F"> 3</label>
-  <label class="option"><input type="radio" name="q18" value="G"> 6</label>
-</div>
-`,
-
-
-    `<div class="question-number">Question 19</div>
-<p>State the minimum and maximum points of the graph of:</p>
-<p>\\[ y = -2 \\sin \\left( -3x + \\dfrac{3\\pi}{2} \\right) + 7 \\]</p>
-<p>for \\( 0 \\leq x < \\pi \\).</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q19" value="A"> \\( \\left( -\\dfrac{\\pi}{3}, 8 \\right), \\left( 0, 6 \\right), \\left( \\dfrac{\\pi}{3}, 8 \\right) \\)</label>
-  <label class="option"><input type="radio" name="q19" value="B"> \\( \\left( 0, 9 \\right), \\left( \\dfrac{\\pi}{3}, 5 \\right), \\left( \\dfrac{2\\pi}{3}, 9 \\right) \\)</label>
-  <label class="option"><input type="radio" name="q19" value="C"> \\( \\left( -\\dfrac{\\pi}{3}, 9 \\right), \\left( 0, 5 \\right), \\left( \\dfrac{\\pi}{3}, 9 \\right) \\)</label>
-  <label class="option"><input type="radio" name="q19" value="D"> \\( \\left( 0, 8 \\right), \\left( \\dfrac{\\pi}{3}, 6 \\right), \\left( \\dfrac{2\\pi}{3}, 8 \\right) \\)</label>
-  <label class="option"><input type="radio" name="q19" value="E"> \\( \\left( 0, 8 \\right), \\left( \\dfrac{\\pi}{6}, 6 \\right), \\left( \\dfrac{2\\pi}{6}, 8 \\right) \\)</label>
-  <label class="option"><input type="radio" name="q19" value="F"> \\( \\left( 0, 9 \\right), \\left( \\dfrac{\\pi}{6}, 6 \\right), \\left( \\dfrac{2\\pi}{6}, 9 \\right) \\)</label>
-</div>
-`,
-
-    `<div class="question-number">Question 20</div>
-<p>Let \\( f_{0}(x) = x \\), and \\( f_{n+1}(x) = \\left| f_{n}(x) - k \\right| \\) for non-negative integers \\( n \\), and real number \\( k \\).</p>
-<p>Let \\( \\alpha \\) and \\( \\beta \\) respectively equal the least and greatest values of \\( x \\) for which \\( f_{n}(x) = 0 \\).</p>
-<p>Find the value of:</p>
-<p>\\[ \\int_{\\alpha}^{\\beta} f_{n}(x)\\,dx \\]</p>
-<p>for \\( n > 0 \\), in terms of \\( n \\) and \\( k \\).</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q20" value="A"> \\( nk^{2} \\)</label>
-  <label class="option"><input type="radio" name="q20" value="B"> \\( nk^{2} - k^{2} \\)</label>
-  <label class="option"><input type="radio" name="q20" value="C"> \\( kn^{2} \\)</label>
-  <label class="option"><input type="radio" name="q20" value="D"> \\( nk \\)</label>
-  <label class="option"><input type="radio" name="q20" value="E"> \\( k \\left( n - 1 \\right)^{2} \\)</label>
-  <label class="option"><input type="radio" name="q20" value="F"> \\( nk^{2} - 1 \\)</label>
-</div>
-`,
-
-  ];
-
-
-
-
-function startExam() {
-  const nameInput = document.getElementById("student-name").value.trim();
-  const emailInput = document.getElementById("studentEmail").value.trim();
-  const testSelect = document.getElementById("test-date").value;
-
-  if (!nameInput) {
-    alert("Please enter your full name before starting the exam.");
-    return;
-  }
-
-  if (!emailInput || !emailInput.includes("@")) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-
-  studentName = nameInput;
-  testSession = testSelect;
-
-  document.getElementById("instructions").style.display = "none";
-  document.getElementById("exam-interface").style.display = "block";
-  timerInterval = setInterval(updateTimer, 1000);
-  renderQuestion();
-}
-
-
-
-  function updateTimer() {
-    if (minutes === 0 && seconds === 0) {
-      clearInterval(timerInterval);
-      submitExam();
-      return;
-    }
-    if (seconds === 0) {
-      minutes--;
-      seconds = 59;
-    } else {
-      seconds--;
-    }
-    const mm = minutes.toString().padStart(2, '0');
-    const ss = seconds.toString().padStart(2, '0');
-    timerDisplay.textContent = `${mm}:${ss}`;
-  }
-
-  
-function prevQuestion() {
-  if (current > 0) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
-    current--;
-    lastTimestamp = Date.now(); // reset timestamp for new question
-    renderQuestion();
-  }
-}
-
-function updateNavigatorButton(index) {
-  const btn = document.getElementById(`nav-btn-${index}`);
-  if (!btn) return;
-  if (flags[index]) {
-    btn.style.backgroundColor = "gold";
-    btn.style.fontWeight = "bold";
-    btn.textContent = `⚑ ${index + 1}`;
-  } else {
-    btn.style.backgroundColor = "";
-    btn.style.fontWeight = "normal";
-    btn.textContent = `${index + 1}`;
-  }
-}
-
-async function submitExam() {
-  clearInterval(timerInterval);
-
-  // ⏱️ Record final question time
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-
-  // ✅ Calculate score
-  let score = 0;
-  for (let i = 0; i < correctAnswers.length; i++) {
-    if (userAnswers[i] === correctAnswers[i]) {
-      score++;
-    }
-  }
-/* TS_TMUA_SCORE9_IN_SUBMITEXAM_V10 */
-const score9Block = window.TS_TMUA_SCORE9_BLOCK
-  ? window.TS_TMUA_SCORE9_BLOCK({
-      overallRaw: score,
-      totalQ: (correctAnswers.length || 20),
-      thr: 6,
-      scoringPdfUrl: window.TS_TMUA_SCORING_PDF || ""
-    })
-  : "";
-
-
-  // ✅ Prepare timestamp
-  const timestamp = new Date().toLocaleString();
-
-  // ✅ Find incorrect question numbers
-  let incorrectList = [];
-  for (let i = 0; i < correctAnswers.length; i++) {
-    if (userAnswers[i] !== correctAnswers[i]) {
-      incorrectList.push(i + 1);
-    }
-  }
-
-/* TS_ATTEMPT_SAVE_20Q_V2 */
-const __tsTestTitle = ((document.getElementById("test-title") || {}).textContent || "p1-mock-05-all-topics").trim();
-try {
-  const __tsSaveRes = await window.TS_SAVE_ATTEMPT({
-    test_id: "p1-mock-05-all-topics",
-    test_title: __tsTestTitle,
-    paper: "1",
-    total_questions: 20,
-    score: score,
-    answers: userAnswers,
-    correct_answers: correctAnswers,
-    time_spent: timeSpent,
-    flags: flags,
-    incorrect: incorrectList
-  });
-  console.log("TS_ATTEMPT_SAVE_20Q:", __tsSaveRes);
-} catch (e) {
-  console.error("TS_ATTEMPT_SAVE_20Q failed:", e);
-}
-
-
-let timeTableHTML = "";
-for (let i = 0; i < 20; i++) {
-  const seconds = Math.round(timeSpent[i]);
-  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const ss = String(seconds % 60).padStart(2, '0');
-  const yourAns = userAnswers[i] ?? "-";
-  const correctAns = correctAnswers[i];
-  const status = yourAns === correctAns ? "✅" : (yourAns === "-" ? "—" : "❌");
-
-  timeTableHTML += `
-    <tr>
-      <td style="border: 1px solid #ccc; padding: 6px;">${i + 1}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${mm}:${ss}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${status}</td>
-    </tr>\n`; // ✅ Keep line break
-}
-
-let plainTextSummary = "Paper 1 Analysis\n";
-
-for (let i = 0; i < 20; i++) {
-  const seconds = Math.round(timeSpent[i]);
-  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const ss = String(seconds % 60).padStart(2, '0');
-  const yourAns = userAnswers[i] ?? "-";
-  const correctAns = correctAnswers[i];
-  plainTextSummary += `Q.${i + 1}  Correct: ${correctAns}   Yours: ${yourAns}   Time: ${mm}:${ss}\n`;
-}
-
-
-const studentEmail = document.getElementById("studentEmail").value;
-const testTitle = document.getElementById("test-title").textContent.trim();
-
-emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
-  name: studentName,
-  session: testSession,
-  score: `${score} / ${correctAnswers.length}`,
-  timestamp: new Date().toLocaleString(),
-  incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
-  paper1: plainTextSummary.trim(),
-  to_email: studentEmail,
-  solution_link: solutionPDF,
-  test_title: testTitle
-})
-.then(res => console.log("✅ Email sent", res))
-.catch(err => console.error("❌ Email error", err));
-
-
-
-  // ✅ Select emoji
-  let emoji = score >= 14 ? "😊"  : "😐";
-
-  // ✅ Generate time table
-  let timeRows = "";
-  for (let i = 0; i < timeSpent.length; i++) {
-    const seconds = Math.round(timeSpent[i]);
-    const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const ss = String(seconds % 60).padStart(2, '0');
-    const status = userAnswers[i] ? (userAnswers[i] === correctAnswers[i] ? "✅" : "❌") : "—";
-    timeRows += `
-      <tr>
-        <td style="border: 1px solid #ccc; padding: 8px;">${i + 1}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${userAnswers[i] || "-"}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${correctAnswers[i]}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${mm}:${ss}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${status}</td>
-      </tr>`;
-  }
-
-  // ✅ Display final screen
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: center; padding: 40px;">
-      <div style="font-size: 160px;">${emoji}</div>
-      <h1>Exam Completed</h1>
-
-      ${score9Block}
-<h1>The detailed Score Report has been emailed to you ✅ </h1>
-
-      <table style="border-collapse: collapse; margin-top: 30px; font-size: 18px;">
-        <tr style="background: #f9f9f9;">
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">${studentName}</td>
-        </tr>
-        <tr style="background: #f9f9f9;">
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Your Score</strong></td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>${score} / 20</strong></td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">Threshold Score</td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">15+ / 20</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">Average Test Taker Score</td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">8 / 20</td>
-        </tr>
-      </table>
-
-      <h3 style="margin-top: 40px;">Paper 1 Analysis</h3>
-      <table style="border-collapse: collapse; margin-top: 10px; font-size: 16px; width: 100%; max-width: 600px;">
-        <thead style="background: #eee;">
-          <tr>
-            <th style="border: 1px solid #ccc; padding: 8px;">Q#</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Your Ans</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Correct</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Time</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
-          </tr>
-        </thead>
-        <tbody>${timeRows}</tbody>
-      </table>
-
-      <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
-  <iframe 
-  id="solution-frame"
-  width="100%" 
-  height="600px" 
-  style="border: 1px solid #ccc; margin-top: 10px;">
-</iframe>
-    </div>
-  `;
-document.getElementById("solution-frame").src = solutionPDF;
-
-  document.querySelector(".footer").style.display = "none";
-
-  document.body.classList.add("ts-exam-done");
-  try { window.__TS_EXAM_DONE = true; } catch(e){}
-  try { window.__TS_SET_WARN_ON_LEAVE && window.__TS_SET_WARN_ON_LEAVE(false); } catch(e){}
-}
-
-function generateNavigatorButtons() {
-  const grid = document.getElementById("navigator-grid");
-  for (let i = 0; i < 20; i++) {
-    const btn = document.createElement("button");
-    btn.id = `nav-btn-${i}`;
-    btn.textContent = i + 1;
-    btn.style.padding = "10px";
-    btn.onclick = function () {
-      jumpTo(i);
-    };
-    grid.appendChild(btn);
-  }
-}
-
-window.onload = function () {
-  generateNavigatorButtons();
-  for (let i = 0; i < flags.length; i++) {
-    updateNavigatorButton(i);
-  }
-};
-
-
-</script>
-<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
- background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
-  <h3 style="margin-top: 0; color:#0074c1;">Jump to Question</h3>
-  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;">
-    <!-- Buttons will be generated here -->
-  </div>
-  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px;">Close</button>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function () {
-    emailjs.init("9jjn3yBHl6S88hITy"); // Replace with your actual public key
-  })();
-</script>
-
-<!-- TS_PATCH_KEYS_RC_V1 -->
-<script>
-(function(){
-  function disableRightClick(){
-    document.addEventListener("contextmenu", function(e){
-      e.preventDefault();
-    }, true);
-  }
-
-  function isTypingTarget(t){
-    if (!t) return false;
-    var tag = (t.tagName || "").toUpperCase();
-    return t.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
-  }
-
-  function bindHotkeys(){
-    window.addEventListener("keydown", function(e){
-      if (!e.altKey) return;
-      if (e.ctrlKey || e.metaKey) return;
-      if (isTypingTarget(e.target)) return;
-
-      var k = (e.key || "").toLowerCase();
-      if (k === "n") {
-        e.preventDefault(); e.stopPropagation();
-        if (typeof nextQuestion === "function") nextQuestion();
-        else if (window.NAV && typeof window.NAV.next === "function") window.NAV.next();
-      } else if (k === "p") {
-        e.preventDefault(); e.stopPropagation();
-        if (typeof prevQuestion === "function") prevQuestion();
-        else if (window.NAV && typeof window.NAV.prev === "function") window.NAV.prev();
-      }
-    }, true);
-  }
-
-  function bootPatch(){
-    try { bindHotkeys(); } catch(_) {}
-    try { disableRightClick(); } catch(_) {}
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootPatch);
-  } else {
-    bootPatch();
-  }
-})();
-</script>
-<!-- /TS_PATCH_KEYS_RC_V1 -->
-<script>
-/* TS_TMUA_SCORE9_HELPER_V10 */
-(function(){
-  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
-  window.TS_TMUA_SCORING_PDF = "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2025/11/14082812/TMUA_Explanation_of_Results-October2025.pdf";
-
-  window.TS_TMUA_SCORE9 = function(rawCorrect, totalQuestions, thresholdRaw){
-    var raw = Number(rawCorrect || 0);
-    var total = Number(totalQuestions || 20);
-    var thr = Number(thresholdRaw || 6);
-    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
-    if (raw <= thr) return 1.0;
-    var frac = (raw - thr) / (total - thr);
-    var score9 = 1.0 + frac * 8.0;
-    score9 = clamp(score9, 1.0, 9.0);
-    return Math.round(score9 * 10) / 10;
-  };
-
-  window.TS_TMUA_SCORE9_BLOCK = function(opts){
-    opts = opts || {};
-    var totalQ = Number(opts.totalQ || 20);
-    var thr = Number(("thr" in opts) ? opts.thr : 6);
-    var scoringPdfUrl = String(opts.scoringPdfUrl || window.TS_TMUA_SCORING_PDF || "").trim();
-
-    function fmt(x){
-      var n = Number(x);
-      if (!isFinite(n)) n = 1.0;
-      return n.toFixed(1);
-    }
-
-    var overallRaw = Number(opts.overallRaw || 0);
-    var overall9 = window.TS_TMUA_SCORE9(overallRaw, totalQ, thr);
-
-    var p1Raw = ("p1Raw" in opts) ? Number(opts.p1Raw || 0) : null;
-    var p2Raw = ("p2Raw" in opts) ? Number(opts.p2Raw || 0) : null;
-    var hasPapers = (p1Raw !== null && p2Raw !== null);
-
-    var inner = ''
-      + '<div class="ts-score9-wrap">'
-      + '  <div class="ts-score9-row">'
-      + '    <div>'
-      + '      <div class="ts-score9-title">Estimated TMUA Score</div>'
-      + '      <div class="ts-score9-sub">Scale 1.0–9.0 (approx). Threshold anchored at raw ' + thr + '.</div>'
-      + '    </div>'
-      + '    <div class="ts-score9-chip">' + fmt(overall9) + ' / 9.0</div>'
-      + '  </div>';
-
-    if (hasPapers){
-      var p1_9 = window.TS_TMUA_SCORE9(p1Raw, 20, thr);
-      var p2_9 = window.TS_TMUA_SCORE9(p2Raw, 20, thr);
-      inner += ''
-        + '  <div class="ts-score9-grid">'
-        + '    <div class="ts-score9-card"><h4>Paper 1</h4><div class="ts-score9-big">' + fmt(p1_9) + '</div><div class="ts-score9-small">from ' + p1Raw + '/20</div></div>'
-        + '    <div class="ts-score9-card"><h4>Paper 2</h4><div class="ts-score9-big">' + fmt(p2_9) + '</div><div class="ts-score9-small">from ' + p2Raw + '/20</div></div>'
-        + '  </div>';
-    } else {
-      inner += '<div style="margin-top:12px;font-family:Arial,sans-serif;color:#555;font-size:12px;">Based on ' + overallRaw + ' / ' + totalQ + ' correct.</div>';
-    }
-
-    inner += ''
-      + '  <div class="ts-score9-note">'
-      + '    <div class="ts-score9-note__asterisk">*</div>'
-      + '    <div class="ts-score9-note__text">'
-      + '      <p class="ts-score9-note__title">Note</p>'
-      + '      <p class="ts-score9-note__sub">This TMUA score is an approximate mapping based on your raw correct count. It is not an official UAT-UK conversion.</p>'
-      + '    </div>'
-      + (scoringPdfUrl
-          ? '    <a class="ts-score9-note__btn" href="' + scoringPdfUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open scoring PDF" title="Open scoring PDF">'
-            + '      <svg class="ts-score9-note__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-            + '        <path d="M8 8h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '        <path d="M8 16L16 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '        <path d="M16 13v5H3V5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '      </svg>'
-            + '    </a>'
-          : '')
-      + '  </div>'
-      + '</div>';
-
-    return inner;
-  };
-})();
-</script>
-<!-- TS_PATCH_WORKSPACE_BTN_V8 -->
-<style>
-.ts-workspace-btn{
-  position: fixed;
-  left: 14px;
-  bottom: 7px;
-  z-index: 2000;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(17,24,39,0.18);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
-  color: rgba(17,24,39,0.86);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  user-select: none;
-}
-body.ts-exam-done .ts-workspace-btn{
-  background: rgba(246, 196, 74, 0.95);
-  border: 1px solid rgba(146, 98, 0, 0.30);
-  color: rgba(43, 26, 0, 0.92);
-  font-weight: 800;
-}
-</style>
-
-<button type="button" class="ts-workspace-btn" id="tsWorkspaceBtn" aria-label="Back to TMUA Workspace">
-  &larr; TMUA Workspace
-</button>
-
-<script>
-(function(){
-  var DASH_URL = "https://apps.thrivingscholars.com/dashboard";
-  if (typeof window.__TS_EXAM_DONE === "undefined") window.__TS_EXAM_DONE = false;
-
-  function examDone(){
-    return !!window.__TS_EXAM_DONE || !!window.__TS_SUBMIT_ONCE;
-  }
-
-  function applyDoneUI(){
-    try {
-      if (examDone()) document.body.classList.add("ts-exam-done");
-      else document.body.classList.remove("ts-exam-done");
-    } catch(_) {}
-  }
-
-  function goWorkspace(){
-    window.location.href = DASH_URL;
-  }
-
-  function wrapSubmitExam(){
-    var orig = window.submitExam;
-    if (typeof orig !== "function") return;
-    if (orig.__TS_WRAPPED_DONE) return;
-
-    function wrappedSubmitExam(){
-      try { window.__TS_EXAM_DONE = true; } catch(_) {}
-      applyDoneUI();
-      return orig.apply(this, arguments);
-    }
-    wrappedSubmitExam.__TS_WRAPPED_DONE = true;
-    try { window.submitExam = wrappedSubmitExam; } catch(_) {}
-  }
-
-  function bindBtn(){
-    var b = document.getElementById("tsWorkspaceBtn");
-    if (!b) return;
-    if (b.getAttribute("data-bound")) return;
-    b.setAttribute("data-bound","1");
-
-    b.addEventListener("click", function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      if (examDone()) {
-        goWorkspace();
-        return;
-      }
-      if (window.confirm("Are you sure you want to go back? Your progress on the current test will be lost.")) {
-        goWorkspace();
-      }
-    }, true);
-  }
-
-  window.addEventListener("beforeunload", function(e){
-    if (examDone()) return;
-    e.preventDefault();
-    e.returnValue = "";
-    return "";
-  });
-
-  function boot(){
-    applyDoneUI();
-    wrapSubmitExam();
-    bindBtn();
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
-})();
-</script>
-<!-- /TS_PATCH_WORKSPACE_BTN_V8 -->
-<script>
-/* TS_PRACTICE_ATTEMPT_SAVE_HELPER_V2 */
-(function(){
-  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
-
-  function score9(rawCorrect, totalQuestions, thresholdRaw){
-    var raw = Number(rawCorrect || 0);
-    var total = Number(totalQuestions || 20);
-    var thr = Number(thresholdRaw || 6);
-    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
-    if (raw <= thr) return 1.0;
-    var frac = (raw - thr) / (total - thr);
-    var score = 1.0 + frac * 8.0;
-    score = clamp(score, 1.0, 9.0);
-    return Math.round(score * 10) / 10;
-  }
-
-  window.TS_BUILD_INCORRECT_LIST = function(userAnswers, correctAnswers){
-    var out = [];
-    var ua = Array.isArray(userAnswers) ? userAnswers : [];
-    var ca = Array.isArray(correctAnswers) ? correctAnswers : [];
-    for (var i = 0; i < ca.length; i++) {
-      if (ua[i] !== ca[i]) out.push(i + 1);
-    }
-    return out;
-  };
-
-  window.TS_SAVE_ATTEMPT = async function(opts){
-    opts = opts || {};
-
-    if (window.__TS_ATTEMPT_SAVE_RUNNING) {
-      return { ok:false, skipped:true, reason:'running' };
-    }
-    if (window.__TS_ATTEMPT_SAVE_DONE) {
-      return { ok:true, skipped:true, reason:'already-saved' };
-    }
-
-    window.__TS_ATTEMPT_SAVE_RUNNING = true;
-
-    try {
-      var answers = Array.isArray(opts.answers) ? opts.answers : [];
-      var correctAnswers = Array.isArray(opts.correct_answers) ? opts.correct_answers : [];
-      var timeSpent = Array.isArray(opts.time_spent) ? opts.time_spent : [];
-      var flags = Array.isArray(opts.flags) ? opts.flags : [];
-      var incorrect = Array.isArray(opts.incorrect) ? opts.incorrect : window.TS_BUILD_INCORRECT_LIST(answers, correctAnswers);
-
-      var totalQuestions = Number(opts.total_questions || correctAnswers.length || answers.length || 20);
-      var score = Number(opts.score || 0);
-
-      var payload = {
-        test_id: String(opts.test_id || '').trim(),
-        test_title: String(opts.test_title || '').trim(),
-        paper: String(opts.paper || '').trim(),
-        total_questions: totalQuestions,
-        score: score,
-        answers: answers,
-        correct_answers: correctAnswers,
-        time_spent: timeSpent,
-        flags: flags,
-        incorrect: incorrect,
-        estimated_tmua_score: score9(score, totalQuestions, 6)
-      };
-
-      var res = await fetch('/api/practice-tests/submit', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      var json = {};
-      try { json = await res.json(); } catch(_) {}
-
-      console.log('TS_SAVE_ATTEMPT:', res.status, json);
-
-      if (res.ok && (json.ok === true || typeof json.ok === 'undefined')) {
-        window.__TS_ATTEMPT_SAVE_DONE = true;
-      }
-
-      return {
-        ok: res.ok,
-        status: res.status,
-        body: json
-      };
-    } catch (err) {
-      console.error('TS_SAVE_ATTEMPT error:', err);
-      return { ok:false, error:String(err) };
-    } finally {
-      window.__TS_ATTEMPT_SAVE_RUNNING = false;
-    }
-  };
-})();
-</script>
-<script id="ts-hotkeys-v1">
-(function () {
-  if (window.__TS_HOTKEYS_V1__) return;
-  window.__TS_HOTKEYS_V1__ = true;
-
-  function isTyping() {
-    var el = document.activeElement;
-    if (!el) return false;
-    var tag = (el.tagName || "").toLowerCase();
-    return tag === "input" || tag === "textarea" || tag === "select" || el.isContentEditable;
-  }
-
-  document.addEventListener("keydown", function (event) {
-    if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    if (isTyping()) return;
-
-    var key = String(event.key || "").toLowerCase();
-    var action = null;
-
-    if (key === "n" && typeof window.nextQuestion === "function") action = window.nextQuestion;
-    if (key === "p" && typeof window.prevQuestion === "function") action = window.prevQuestion;
-    if (key === "f" && typeof window.toggleFlag === "function") action = window.toggleFlag;
-    if (key === "v" && typeof window.openNavigator === "function") action = window.openNavigator;
-
-    if (!action) return;
-    event.preventDefault();
-    action();
-  });
-})();
-</script>
+ <main id="instructions">
+ <h1 id="test-title">TMUA Topic Test 5</h1>
+ <p class="subtitle">Paper 1 styled topic test · Mixed topics</p>
+ <p><strong>Time allowed:</strong> 1 hour 15 minutes</p>
+ <p><strong>Calculators are not permitted.</strong></p>
+
+ <div class="candidate-row">
+ <div class="field"><label for="student-name">Enter your full name</label><input type="text" id="student-name" autocomplete="name" placeholder="Full name" required></div>
+ <div class="field"><label for="student-email">Email address for the score report</label><input type="email" id="student-email" autocomplete="email" placeholder="example@email.com" required></div>
+ <div class="field"><label for="test-session">Select your TMUA test session</label><select id="test-session"><option value="October 2026">October 2026</option><option value="January 2027">January 2027</option><option value="October 2027">October 2027</option></select></div>
+ <button type="button" class="start-button" id="start-button">Start Exam</button>
+ </div>
+
+ <table class="test-summary">
+ <thead><tr><th>Paper</th><th>Topics covered</th><th>Questions</th><th>Time</th></tr></thead>
+ <tbody><tr><td>Paper 1 topic test</td><td><ul>
+ <li>Algebra, polynomials and binomial coefficients</li>
+ <li>Coordinate geometry and transformations</li>
+ <li>Probability, sequences and recurrences</li>
+ <li>Trigonometry, logarithms and graph reasoning</li>
+ <li>Integration and stationary points</li>
+ </ul></td><td>20</td><td>75 minutes</td></tr></tbody>
+ </table>
+ <div class="difficulty-note"><strong>Score estimate:</strong> The final TMUA-style estimate uses a complete mixed-topic conversion; every raw score from 0 to 20 has a defined result.</div>
+ <p>Choose one correct answer for each question. There is no penalty for an incorrect answer, so you should attempt all 20 questions.</p>
+ <p>A countdown begins when the test starts. You may move between questions, flag questions for review and use the navigator. The test submits automatically when time expires.</p>
+ <p><strong>Keyboard shortcuts:</strong> Alt+N next, Alt+P previous, Alt+F flag, Alt+V navigator.</p>
+ </main>
+
+ <main id="exam-interface">
+ <header class="exam-header" id="exam-header"><div class="exam-title"><strong>(TMUA) Test of Mathematics for University Admission</strong><span class="section-chip" id="section-chip">Algebra and Structure</span></div><div class="top-right"><div>Time Remaining <strong id="time">75:00</strong></div><div id="counter">Question 1 of 20</div><button type="button" id="flag-btn">⚑ Flag for Review</button></div></header>
+ <section id="question-container" aria-live="polite"></section>
+ <footer class="exam-footer" id="exam-footer"><button type="button" id="prev-btn">← Previous</button><button type="button" id="next-btn">Next →</button><button type="button" id="navigator-btn">Navigator</button><button type="button" id="submit-btn">Submit</button></footer>
+ </main>
+
+ <div id="navigator-popup" role="dialog" aria-modal="true" aria-labelledby="navigator-heading"><h2 id="navigator-heading">Jump to Question</h2><div id="navigator-grid"></div><div class="navigator-legend"><span><i class="legend-swatch legend-answered"></i>Answered</span><span><i class="legend-swatch legend-flagged"></i>Flagged</span></div><button type="button" class="close-nav" id="close-nav-btn">Close</button></div>
+ <button type="button" class="workspace-button" id="workspace-button">← TMUA Workspace</button>
+
+ <script>
+ "use strict";
+ const TEST = Object.freeze({
+ id:"p1-mock-05-all-topics",
+ title:"TMUA Topic Test 5 — Mixed-Topic Paper 1",
+ paper:"1",
+ durationSeconds:75*60,
+ difficulty:"Mixed-Topic Paper 1",
+ solutionUrl:solutionPDF,
+ officialScoringUrl:"https://esat-tmua.ac.uk/test-results/",
+ workspaceUrl:"https://apps.thrivingscholars.com/dashboard",
+ scoreMap:Object.freeze([1.0,1.3,1.6,1.9,2.3,2.7,3.1,3.6,4.1,4.6,5.0,5.4,5.8,6.2,6.7,7.1,7.5,7.9,8.3,8.7,9.0]),
+ email:Object.freeze({publicKey:"9jjn3yBHl6S88hITy",serviceId:"service_5l4w8x2",templateId:"template_j1jrs4o"})
+ });
+ const QUESTIONS = Object.freeze([{"number":1,"section":"Algebra and Structure","topic":"Polynomial roots","promptHtml":"<p>How many positive real roots does</p>\n\\[\nf(x)=x^{4}-8x^{3}+22x^{2}-24x\n\\]\n<p>have?</p>","answer":"B","options":[{"letter":"A","html":"0"},{"letter":"B","html":"1"},{"letter":"C","html":"2"},{"letter":"D","html":"3"},{"letter":"E","html":"4"}]},{"number":2,"section":"Algebra and Structure","topic":"Binomial coefficients","promptHtml":"<p>In the expansion of \\((2x+b)^9\\), the coefficient of \\(x^5\\) is equal to the coefficient of \\(x^3\\) in \\((3b+x)^6\\).</p>\n<p>Given that \\(b\\gt 0\\), find \\(b\\).</p>","answer":"A","options":[{"letter":"A","html":"\\(\\dfrac{15}{112}\\)"},{"letter":"B","html":"\\(\\dfrac{112}{15}\\)"},{"letter":"C","html":"\\(\\dfrac{15}{56}\\)"},{"letter":"D","html":"\\(\\dfrac{56}{15}\\)"},{"letter":"E","html":"\\(\\dfrac{5}{42}\\)"}]},{"number":3,"section":"Algebra and Structure","topic":"Tangents and inequalities","promptHtml":"<p>Consider the tangent to the curve \\(y=x^2+bx\\) at \\(x=2\\).</p>\n<p>For which values of \\(b\\) is the \\(x\\)-intercept of the tangent greater than \\(4\\)?</p>","answer":"D","options":[{"letter":"A","html":"\\(-3\\lt b\\lt 3\\)"},{"letter":"B","html":"\\(3\\lt b\\lt 4\\)"},{"letter":"C","html":"\\(b\\gt 3\\)"},{"letter":"D","html":"\\(-4\\lt b\\lt -3\\)"},{"letter":"E","html":"\\(b\\gt -3\\)"}]},{"number":4,"section":"Algebra and Structure","topic":"Coordinate geometry","promptHtml":"<p>The line \\(y=mx+1\\) is tangent to the circle</p>\n\\[\n(x-2)^2+(y+1)^2=5.\n\\]\n<p>There are two possible values of \\(m\\). What is their sum?</p>","answer":"D","options":[{"letter":"A","html":"\\(-8\\)"},{"letter":"B","html":"\\(-1\\)"},{"letter":"C","html":"\\(1\\)"},{"letter":"D","html":"\\(8\\)"},{"letter":"E","html":"\\(16\\)"}]},{"number":5,"section":"Algebra and Structure","topic":"Indices and series","promptHtml":"<p>Suppose</p>\n\\[\n5^{\\,2+5+8+\\cdots +(3x-1)}=0.04^{-50},\n\\]\n<p>where \\(x\\) is a positive integer. Find \\(x\\).</p>","answer":"D","options":[{"letter":"A","html":"5"},{"letter":"B","html":"6"},{"letter":"C","html":"7"},{"letter":"D","html":"8"},{"letter":"E","html":"9"}]},{"number":6,"section":"Probability, Sequences and Graphs","topic":"Conditional probability","promptHtml":"<p>Three distinct cards are chosen uniformly at random from cards numbered \\(1,2,\\ldots,7\\).</p>\n<p>Given that the product of the three chosen numbers is even, what is the probability that their sum is even?</p>","answer":"D","options":[{"letter":"A","html":"\\(\\dfrac{12}{31}\\)"},{"letter":"B","html":"\\(\\dfrac{15}{31}\\)"},{"letter":"C","html":"\\(\\dfrac{18}{31}\\)"},{"letter":"D","html":"\\(\\dfrac{19}{31}\\)"},{"letter":"E","html":"\\(\\dfrac{20}{31}\\)"}]},{"number":7,"section":"Probability, Sequences and Graphs","topic":"Trigonometric symmetry","promptHtml":"<p>Which of the following is a line of symmetry of the graph</p>\n\\[\ny=\\frac{1}{\\sin\\left(4x+\\frac\\pi3\\right)}?\n\\]","answer":"D","options":[{"letter":"A","html":"\\(x=\\dfrac{13\\pi}{2}\\)"},{"letter":"B","html":"\\(x=\\dfrac\\pi2\\)"},{"letter":"C","html":"\\(x=\\pi\\)"},{"letter":"D","html":"\\(x=\\dfrac{13\\pi}{24}\\)"},{"letter":"E","html":"\\(y=\\dfrac{5\\pi}{24}\\)"}]},{"number":8,"section":"Probability, Sequences and Graphs","topic":"Recurrence and cycles","promptHtml":"<p>A sequence is defined by</p>\n\\[\nx_{n+1}=\\begin{cases}\n\\dfrac{x_n}{2},&x_n\\text{ even},\\\\[4pt]\n\\dfrac{3x_n+1}{2},&x_n\\text{ odd}.\n\\end{cases}\n\\]\n<p>Given \\(x_1=37\\), find \\(x_{2026}\\).</p>","answer":"A","options":[{"letter":"A","html":"1"},{"letter":"B","html":"2"},{"letter":"C","html":"4"},{"letter":"D","html":"5"},{"letter":"E","html":"8"}]},{"number":9,"section":"Probability, Sequences and Graphs","topic":"Graphs and root counting","promptHtml":"<p>How many solutions does</p>\n\\[\n\\cos(2x)\\ln x=\\sin(2x)\n\\]\n<p>have in the interval \\(0\\lt x\\lt 3\\pi\\)?</p>","answer":"C","options":[{"letter":"A","html":"0"},{"letter":"B","html":"3"},{"letter":"C","html":"5"},{"letter":"D","html":"6"},{"letter":"E","html":"7"}]},{"number":10,"section":"Functions, Integrals and Recurrences","topic":"Integral transformations","promptHtml":"<p>Let \\(f\\) be integrable on \\([-4,4]\\) and satisfy</p>\n\\[\nf(x)+f(-x)=x^2\n\\]\n<p>for all \\(x\\in[-4,4]\\). Given that</p>\n\\[\n\\int_0^4 f(x)\\,dx=3,\n\\]\n<p>evaluate</p>\n\\[\n\\int_{-2}^{2}\\bigl[f(x-2)-f(2-x)+1\\bigr]dx.\n\\]","answer":"D","options":[{"letter":"A","html":"\\(\\dfrac{46}{3}\\)"},{"letter":"B","html":"\\(\\dfrac{49}{3}\\)"},{"letter":"C","html":"\\(\\dfrac{55}{3}\\)"},{"letter":"D","html":"\\(\\dfrac{58}{3}\\)"},{"letter":"E","html":"\\(\\dfrac{64}{3}\\)"}]},{"number":11,"section":"Functions, Integrals and Recurrences","topic":"Vieta and intersections","promptHtml":"<p>The curves</p>\n\\[\ny=\\pi x(x-1)(x-2)(x-3)(x-4)(x-5)\n\\]\n<p>and</p>\n\\[\ny=\\frac5{17}x+\\frac\\pi3\n\\]\n<p>intersect at six points. Find the sum of the six \\(x\\)-coordinates.</p>","answer":"H","options":[{"letter":"A","html":"\\(-15\\)"},{"letter":"B","html":"\\(-\\dfrac{44\\pi}{51}+1\\)"},{"letter":"C","html":"\\(-\\dfrac7{15}\\)"},{"letter":"D","html":"0"},{"letter":"E","html":"\\(\\dfrac7{15}\\)"},{"letter":"F","html":"\\(\\dfrac{44\\pi}{51}-1\\)"},{"letter":"G","html":"12"},{"letter":"H","html":"15"}]},{"number":12,"section":"Functions, Integrals and Recurrences","topic":"Cubic structure","promptHtml":"<p>A monic cubic function \\(f\\) satisfies</p>\n\\[\nf(1)=1,\\qquad f(2)=1,\\qquad f(-1)=-5.\n\\]\n<p>Find \\(f(3)\\).</p>","answer":"E","options":[{"letter":"A","html":"\\(-7\\)"},{"letter":"B","html":"0"},{"letter":"C","html":"4"},{"letter":"D","html":"6"},{"letter":"E","html":"7"},{"letter":"F","html":"36"}]},{"number":13,"section":"Functions, Integrals and Recurrences","topic":"Integer factorisation","promptHtml":"<p>Integers \\(a,b,c\\), each greater than \\(1\\), satisfy</p>\n\\[\nabc+ab+bc+ca+a+b+c=104.\n\\]\n<p>Find \\(a+b+c\\).</p>","answer":"C","options":[{"letter":"A","html":"10"},{"letter":"B","html":"11"},{"letter":"C","html":"12"},{"letter":"D","html":"13"},{"letter":"E","html":"14"},{"letter":"F","html":"15"}]},{"number":14,"section":"Functions, Integrals and Recurrences","topic":"Recurrence limits","promptHtml":"<p>Let</p>\n\\[\nu_n=3u_{n-1}+2u_{n-2},\\qquad u_1=1,\\quad u_2=5.\n\\]\n<p>Find</p>\n\\[\n\\lim_{k\\to\\infty}\\frac{u_k}{u_{k-1}}.\n\\]","answer":"C","options":[{"letter":"A","html":"2"},{"letter":"B","html":"\\(\\sqrt5\\)"},{"letter":"C","html":"\\(\\dfrac{3+\\sqrt{17}}2\\)"},{"letter":"D","html":"\\(\\dfrac{3\\pm\\sqrt{17}}2\\)"},{"letter":"E","html":"\\(\\dfrac{3+\\sqrt5}2\\)"},{"letter":"F","html":"\\(1\\pm\\sqrt2\\)"},{"letter":"G","html":"\\(3+\\sqrt2\\)"}]},{"number":15,"section":"Functions, Integrals and Recurrences","topic":"Definite integral algebra","promptHtml":"<p>For every integer \\(n\\ge0\\),</p>\n\\[\n\\int_n^{n+1}f(x)\\,dx=n^2+n+1.\n\\]\n<p>Evaluate</p>\n\\[\n\\int_0^3f(x)\\,dx+\\int_2^5f(x)\\,dx-2\\int_1^4f(x)\\,dx.\n\\]","answer":"D","options":[{"letter":"A","html":"2"},{"letter":"B","html":"4"},{"letter":"C","html":"5"},{"letter":"D","html":"6"},{"letter":"E","html":"8"},{"letter":"F","html":"10"}]},{"number":16,"section":"Mixed Problems","topic":"Divisibility in binomial expansions","promptHtml":"<p>In the simplified expansion of</p>\n\\[\n(2+3x)^{12},\n\\]\n<p>how many terms have a coefficient divisible by \\(48\\)?</p>","answer":"D","options":[{"letter":"A","html":"0"},{"letter":"B","html":"2"},{"letter":"C","html":"5"},{"letter":"D","html":"9"},{"letter":"E","html":"10"},{"letter":"F","html":"12"},{"letter":"G","html":"13"}]},{"number":17,"section":"Mixed Problems","topic":"Graph transformations","promptHtml":"<p>The graph of \\(y=\\sqrt{5x-2}\\) undergoes the following transformations in order:</p>\n<ol>\n<li>translation \\(4\\) units left;</li>\n<li>translation \\(6\\) units down;</li>\n<li>reflection in the \\(x\\)-axis;</li>\n<li>stretch parallel to the \\(y\\)-axis with scale factor \\(\\frac13\\);</li>\n<li>stretch parallel to the \\(x\\)-axis with scale factor \\(2\\).</li>\n</ol>\n<p>Which equation describes the final graph?</p>","answer":"D","options":[{"letter":"A","html":"\\(y=\\sqrt{2-\\dfrac{5x}{18}}-2\\)"},{"letter":"B","html":"\\(y=\\dfrac{\\sqrt{-10x-6}-4}{3}\\)"},{"letter":"C","html":"\\(y=-\\dfrac{\\sqrt{\\frac52x-22}-6}{3}\\)"},{"letter":"D","html":"\\(y=-\\dfrac{\\sqrt{\\frac52x+18}-6}{3}\\)"},{"letter":"E","html":"\\(y=\\dfrac{\\sqrt{\\frac52x-22}-6}{3}\\)"},{"letter":"F","html":"\\(y=-\\dfrac{\\sqrt{\\frac52x+22}-6}{3}\\)"},{"letter":"G","html":"\\(y=\\dfrac{\\sqrt{\\frac52x+14}}{3}\\)"}]},{"number":18,"section":"Mixed Problems","topic":"Trigonometric equations","promptHtml":"<p>How many values of \\(x\\) in</p>\n\\[\n-2\\pi\\le x\\le2\\pi\n\\]\n<p>satisfy</p>\n\\[\n\\sin3x=\\cos2x?\n\\]","answer":"D","options":[{"letter":"A","html":"6"},{"letter":"B","html":"8"},{"letter":"C","html":"9"},{"letter":"D","html":"10"},{"letter":"E","html":"12"},{"letter":"F","html":"14"}]},{"number":19,"section":"Mixed Problems","topic":"Stationary points of trigonometric graphs","promptHtml":"<p>For</p>\n\\[\ny=2\\cos3x+2\\sqrt3\\sin3x+7,\n\\qquad 0\\le x\\lt \\pi,\n\\]\n<p>find the sum of the \\(x\\)-coordinates of all stationary points.</p>","answer":"C","options":[{"letter":"A","html":"\\(\\pi\\)"},{"letter":"B","html":"\\(\\dfrac{7\\pi}{6}\\)"},{"letter":"C","html":"\\(\\dfrac{4\\pi}{3}\\)"},{"letter":"D","html":"\\(\\dfrac{3\\pi}{2}\\)"},{"letter":"E","html":"\\(\\dfrac{5\\pi}{3}\\)"},{"letter":"F","html":"\\(2\\pi\\)"}]},{"number":20,"section":"Mixed Problems","topic":"Iterated absolute values","promptHtml":"<p>Let \\(k\\gt 0\\), \\(f_0(x)=x\\), and</p>\n\\[\nf_{n+1}(x)=|f_n(x)-k|\n\\]\n<p>for non-negative integers \\(n\\). For \\(n\\gt 0\\), let \\(\\alpha\\) and \\(\\beta\\) be the least and greatest real numbers for which \\(f_n(x)=0\\).</p>\n<p>Find</p>\n\\[\n\\int_\\alpha^\\beta f_n(x)\\,dx\n\\]\n<p>in terms of \\(n\\) and \\(k\\).</p>","answer":"B","options":[{"letter":"A","html":"\\(nk^2\\)"},{"letter":"B","html":"\\(nk^2-k^2\\)"},{"letter":"C","html":"\\(kn^2\\)"},{"letter":"D","html":"\\(nk\\)"},{"letter":"E","html":"\\(k(n-1)^2\\)"},{"letter":"F","html":"\\(nk^2-1\\)"}]}]);
+ const correctAnswers = Object.freeze(QUESTIONS.map(q=>q.answer));
+ const state={current:0,userAnswers:new Array(QUESTIONS.length).fill(null),flags:new Array(QUESTIONS.length).fill(false),timeSpent:new Array(QUESTIONS.length).fill(0),started:false,submitted:false,autoSubmitted:false,studentName:"",studentEmail:"",session:"",timerEndAt:0,timerId:null,lastQuestionTimestamp:0};
+ const els={instructions:document.getElementById("instructions"),exam:document.getElementById("exam-interface"),header:document.getElementById("exam-header"),footer:document.getElementById("exam-footer"),question:document.getElementById("question-container"),time:document.getElementById("time"),counter:document.getElementById("counter"),sectionChip:document.getElementById("section-chip"),flag:document.getElementById("flag-btn"),prev:document.getElementById("prev-btn"),next:document.getElementById("next-btn"),navigator:document.getElementById("navigator-popup"),navigatorGrid:document.getElementById("navigator-grid")};
+
+ function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch])}
+ function formatClock(totalSeconds){const safe=Math.max(0,Math.floor(totalSeconds));return `${String(Math.floor(safe/60)).padStart(2,"0")}:${String(safe%60).padStart(2,"0")}`}
+ function formatQuestionTime(totalSeconds){return formatClock(Math.round(Math.max(0,totalSeconds)))}
+ function resolveSolutionUrl(){try{return new URL(TEST.solutionUrl,window.location.href).href}catch(_){return TEST.solutionUrl}}
+ function recordCurrentTime(){if(!state.started||state.submitted||!state.lastQuestionTimestamp)return;const now=performance.now();state.timeSpent[state.current]+=Math.max(0,(now-state.lastQuestionTimestamp)/1000);state.lastQuestionTimestamp=now}
+ async function safeTypeset(target){try{if(!window.MathJax||!window.MathJax.typesetPromise)return;if(window.MathJax.typesetClear)window.MathJax.typesetClear([target]);await window.MathJax.typesetPromise([target])}catch(error){console.error("MathJax rendering failed:",error)}}
+
+ function renderQuestion(){
+ const q=QUESTIONS[state.current];
+ const optionsHtml=q.options.map(option=>{const checked=state.userAnswers[state.current]===option.letter?" checked":"";const imageClass=/<(?:img|svg)\b/i.test(option.html)?" image-option":"";return `<label class="option${imageClass}"><input type="radio" name="q${q.number}" value="${option.letter}"${checked}><span class="option-letter">${option.letter}</span><span class="option-content">${option.html}</span></label>`}).join("");
+ els.question.innerHTML=`<div class="question-number">Question ${q.number}</div><div class="question-topic">${escapeHtml(q.topic)}</div>${q.promptHtml}<div class="options">${optionsHtml}</div>`;
+ els.counter.textContent=`Question ${q.number} of ${QUESTIONS.length}`;els.sectionChip.textContent=q.section;els.flag.classList.toggle("flagged",state.flags[state.current]);els.flag.textContent=state.flags[state.current]?"⚑ Flagged for Review":"⚑ Flag for Review";els.prev.disabled=state.current===0;els.next.disabled=state.current===QUESTIONS.length-1;
+ els.question.querySelectorAll('input[type="radio"]').forEach(input=>input.addEventListener("change",event=>{state.userAnswers[state.current]=event.target.value;updateNavigator()}));
+ updateNavigator();safeTypeset(els.question);window.scrollTo({top:0,behavior:"instant"});
+ }
+ function goToQuestion(index){if(!Number.isInteger(index)||index<0||index>=QUESTIONS.length||index===state.current)return;recordCurrentTime();state.current=index;state.lastQuestionTimestamp=performance.now();renderQuestion()}
+ function nextQuestion(){if(state.current<QUESTIONS.length-1)goToQuestion(state.current+1)} function prevQuestion(){if(state.current>0)goToQuestion(state.current-1)}
+ function toggleFlag(){if(!state.started||state.submitted)return;state.flags[state.current]=!state.flags[state.current];els.flag.classList.toggle("flagged",state.flags[state.current]);els.flag.textContent=state.flags[state.current]?"⚑ Flagged for Review":"⚑ Flag for Review";updateNavigator()}
+ function buildNavigator(){els.navigatorGrid.innerHTML="";QUESTIONS.forEach((q,index)=>{const button=document.createElement("button");button.type="button";button.id=`nav-btn-${index}`;button.className="nav-question";button.textContent=q.number;button.addEventListener("click",()=>{closeNavigator();goToQuestion(index)});els.navigatorGrid.appendChild(button)});updateNavigator()}
+ function updateNavigator(){QUESTIONS.forEach((q,index)=>{const button=document.getElementById(`nav-btn-${index}`);if(!button)return;button.classList.toggle("answered",state.userAnswers[index]!==null);button.classList.toggle("flagged",state.flags[index]);button.classList.toggle("current",index===state.current);button.textContent=state.flags[index]?`⚑ ${q.number}`:String(q.number);button.setAttribute("aria-label",`Question ${q.number}${state.userAnswers[index]?", answered":", unanswered"}${state.flags[index]?", flagged":""}`)})}
+ function openNavigator(){if(!state.started||state.submitted)return;els.navigator.style.display="block";const currentButton=document.getElementById(`nav-btn-${state.current}`);if(currentButton)currentButton.focus()} function closeNavigator(){els.navigator.style.display="none"}
+ function updateTimer(){if(!state.started||state.submitted)return;const remaining=Math.max(0,Math.ceil((state.timerEndAt-Date.now())/1000));els.time.textContent=formatClock(remaining);if(remaining<=0){clearInterval(state.timerId);state.autoSubmitted=true;submitExam(true)}}
+ function startExam(){if(state.started)return;const nameInput=document.getElementById("student-name"),emailInput=document.getElementById("student-email"),sessionInput=document.getElementById("test-session");const name=nameInput.value.trim(),email=emailInput.value.trim();if(!name){alert("Please enter your full name.");nameInput.focus();return}if(!email||!emailInput.checkValidity()){alert("Please enter a valid email address.");emailInput.focus();return}state.studentName=name;state.studentEmail=email;state.session=sessionInput.value;state.started=true;state.timerEndAt=Date.now()+TEST.durationSeconds*1000;state.lastQuestionTimestamp=performance.now();els.instructions.style.display="none";els.exam.style.display="block";state.timerId=window.setInterval(updateTimer,250);updateTimer();renderQuestion()}
+ function confirmSubmit(){if(state.submitted)return;const unanswered=state.userAnswers.filter(answer=>answer===null).length;const message=unanswered?`You have ${unanswered} unanswered question${unanswered===1?"":"s"}. Submit the test now?`:"Submit the test now?";if(window.confirm(message))submitExam(false)}
+
+ function estimateTmuaScore(rawCorrect){const raw=Math.max(0,Math.min(QUESTIONS.length,Math.round(Number(rawCorrect)||0)));return Number(TEST.scoreMap[raw]??1.0)}
+ function performanceBand(score){if(score>=8)return"Exceptional practice performance";if(score>=7)return"Excellent practice performance";if(score>=6)return"Strong practice performance";if(score>=4.5)return"Secure practice performance";if(score>=3)return"Developing practice performance";return"Foundation practice performance"}
+ function buildAnalysisRows(){return QUESTIONS.map((q,index)=>{const yours=state.userAnswers[index]??"—",correct=q.answer,isCorrect=yours===correct,status=yours==="—"?"—":(isCorrect?"✓":"✗");return `<tr><td>${q.number}</td><td>${yours}</td><td>${correct}</td><td>${formatQuestionTime(state.timeSpent[index])}</td><td>${status}</td></tr>`}).join("")}
+ function buildPlainTextAnalysis(){return QUESTIONS.map((q,index)=>`Q.${q.number} Correct: ${q.answer} Yours: ${state.userAnswers[index]??"-"} Time: ${formatQuestionTime(state.timeSpent[index])}`).join("\n")}
+
+ function renderResults(score){
+ const incorrect=QUESTIONS.filter((q,index)=>state.userAnswers[index]!==q.answer).map(q=>q.number),estimated=estimateTmuaScore(score),band=performanceBand(estimated),emoji=estimated>=7?"🌟":(estimated>=4.5?"😊":"📘"),solutionHref=escapeHtml(resolveSolutionUrl());
+ els.header.style.display="none";els.footer.style.display="none";closeNavigator();
+ els.question.innerHTML=`<div class="result-wrap"><div class="result-card"><div class="result-emoji" aria-hidden="true">${emoji}</div><h1>Exam Completed</h1><div class="result-score">${score} / ${QUESTIONS.length}</div>
+ <div class="score9-wrap"><div class="score9-row"><div><div class="score9-title">Estimated TMUA-style score</div><div class="score9-sub">Difficulty-adjusted conversion for this Paper 1 mixed-topic test.</div></div><div class="score9-chip">${estimated.toFixed(1)} / 9.0</div></div><div class="score9-band">${band}</div><div class="score9-note">Every raw score from 0–20 has its own defined estimate. This is an internal practice estimate. Official TMUA scoring combines both papers and is equated after the live sitting. <a href="${escapeHtml(TEST.officialScoringUrl)}" target="_blank" rel="noopener">Official scoring information</a>.</div></div>
+ <table class="result-meta"><tr><th>Name</th><td>${escapeHtml(state.studentName)}</td></tr><tr><th>Test session</th><td>${escapeHtml(state.session)}</td></tr><tr><th>Paper difficulty</th><td>${escapeHtml(TEST.difficulty)}</td></tr><tr><th>Your raw score</th><td><strong>${score} / ${QUESTIONS.length}</strong></td></tr><tr><th>Estimated TMUA-style score</th><td><strong>${estimated.toFixed(1)} / 9.0</strong></td></tr><tr><th>Incorrect or unanswered</th><td>${incorrect.length?incorrect.join(", "):"None"}</td></tr><tr><th>Submission</th><td>${state.autoSubmitted?"Automatically submitted when time expired":"Submitted by the student"}</td></tr></table>
+ <div class="status-grid"><div class="status-box" id="save-status"><strong>Portal save:</strong> Saving attempt…</div><div class="status-box" id="email-status"><strong>Email report:</strong> Sending…</div></div>
+ <h2 class="analysis-title">Paper 1 analysis</h2><div class="analysis-scroll"><table class="analysis-table"><thead><tr><th>Q#</th><th>Your answer</th><th>Correct</th><th>Time</th><th>Status</th></tr></thead><tbody>${buildAnalysisRows()}</tbody></table></div>
+ <div class="solution-actions"><a href="${solutionHref}" target="_blank" rel="noopener">Open full solution book</a></div><iframe id="solution-frame" title="TMUA Topic Test 5 solution book" src="${solutionHref}" loading="lazy"></iframe></div></div>`;
+ document.body.classList.add("ts-exam-done");window.__TS_EXAM_DONE=true;safeTypeset(els.question)
+ }
+ function setResultStatus(id,kind,message){const node=document.getElementById(id);if(!node)return;node.className=`status-box ${kind}`;node.innerHTML=message}
+ async function saveAttempt(score){
+ if(location.protocol==="file:"||location.origin==="null"){
+ return{ok:false,skipped:true,localPreview:true,error:"local preview mode"};
+ }
+ const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),10000);
+ try{
+ const response=await fetch("/api/practice-tests/submit",{
+ method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},signal:controller.signal,
+ body:JSON.stringify({
+ test_id:TEST.id,test_title:TEST.title,paper:TEST.paper,total_questions:QUESTIONS.length,score,
+ answers:state.userAnswers,correct_answers:correctAnswers,
+ time_spent:state.timeSpent.map(value=>Math.round(value*100)/100),flags:state.flags,
+ incorrect:QUESTIONS.filter((q,index)=>state.userAnswers[index]!==q.answer).map(q=>q.number),
+ estimated_tmua_score:estimateTmuaScore(score),difficulty:TEST.difficulty,
+ scoring_model:"topic-test-5-mixed-topics--complete-map-v1"
+ })
+ });
+ let body={};try{body=await response.json()}catch(_){}
+ if(!response.ok||body.ok===false)throw new Error(`HTTP ${response.status}`);
+ return{ok:true};
+ }catch(error){
+ return{ok:false,error:error.name==="AbortError"?"request timed out":String(error.message||error)};
+ }finally{clearTimeout(timeout)}
+ }
+ function waitForEmailJs(timeoutMs=3500){return new Promise(resolve=>{const started=Date.now();const check=()=>{if(window.emailjs&&typeof window.emailjs.send==="function")return resolve(true);if(Date.now()-started>=timeoutMs)return resolve(false);setTimeout(check,100)};check()})}
+ async function sendEmail(score){const available=await waitForEmailJs();if(!available)return{ok:false,skipped:true,error:"EmailJS did not load"};try{if(!window.__TS_EMAILJS_INITIALISED){window.emailjs.init(TEST.email.publicKey);window.__TS_EMAILJS_INITIALISED=true}const incorrect=QUESTIONS.filter((q,index)=>state.userAnswers[index]!==q.answer).map(q=>q.number);await window.emailjs.send(TEST.email.serviceId,TEST.email.templateId,{name:state.studentName,session:state.session,score:`${score} / ${QUESTIONS.length}`,estimated_tmua_score:estimateTmuaScore(score).toFixed(1),timestamp:new Date().toLocaleString(),incorrect:incorrect.length?incorrect.join(", "):"None",paper1:buildPlainTextAnalysis(),to_email:state.studentEmail,solution_link:resolveSolutionUrl(),test_title:TEST.title});return{ok:true}}catch(error){return{ok:false,error:String(error?.text||error?.message||error)}}}
+ async function submitExam(autoSubmit=false){
+ if(state.submitted)return;
+ recordCurrentTime();
+ state.submitted=true;
+ state.autoSubmitted=Boolean(autoSubmit);
+ clearInterval(state.timerId);
+ const score=QUESTIONS.reduce((total,q,index)=>total+(state.userAnswers[index]===q.answer?1:0),0);
+ renderResults(score);
+ const[saveResult,emailResult]=await Promise.all([saveAttempt(score),sendEmail(score)]);
+ if(saveResult.ok){
+ setResultStatus("save-status","success","<strong>Portal save:</strong> Attempt saved successfully.");
+ }else if(saveResult.localPreview){
+ setResultStatus("save-status","warning","<strong>Portal save:</strong> Skipped in local preview mode. It will save when opened through the authenticated portal.");
+ }else{
+ setResultStatus("save-status","warning",`<strong>Portal save:</strong> Not saved (${escapeHtml(saveResult.error||"unavailable")}). Your on-screen report is unaffected.`);
+ }
+ if(emailResult.ok){
+ setResultStatus("email-status","success",`<strong>Email report:</strong> Sent to ${escapeHtml(state.studentEmail)}.`);
+ }else{
+ setResultStatus("email-status","warning",`<strong>Email report:</strong> Not sent (${escapeHtml(emailResult.error||"unavailable")}). The complete report remains visible above.`);
+ }
+ }
+ function handleWorkspaceClick(){if(state.submitted||!state.started){window.location.href=TEST.workspaceUrl;return}if(window.confirm("Return to the TMUA Workspace? Your current progress will be lost."))window.location.href=TEST.workspaceUrl}
+ function isTypingTarget(target){const tag=String(target?.tagName||"").toLowerCase();return tag==="input"||tag==="textarea"||tag==="select"||Boolean(target?.isContentEditable)}
+
+ document.getElementById("start-button").addEventListener("click",startExam);document.getElementById("prev-btn").addEventListener("click",prevQuestion);document.getElementById("next-btn").addEventListener("click",nextQuestion);document.getElementById("navigator-btn").addEventListener("click",openNavigator);document.getElementById("close-nav-btn").addEventListener("click",closeNavigator);document.getElementById("submit-btn").addEventListener("click",confirmSubmit);document.getElementById("flag-btn").addEventListener("click",toggleFlag);document.getElementById("workspace-button").addEventListener("click",handleWorkspaceClick);
+ document.addEventListener("contextmenu",event=>event.preventDefault(),true);document.addEventListener("keydown",event=>{if(event.key==="Escape")closeNavigator();if(!event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||isTypingTarget(event.target))return;const key=String(event.key||"").toLowerCase(),actions={n:nextQuestion,p:prevQuestion,f:toggleFlag,v:openNavigator};if(!actions[key])return;event.preventDefault();actions[key]()},true);
+ window.addEventListener("beforeunload",event=>{if(!state.started||state.submitted)return;event.preventDefault();event.returnValue=""});
+ buildNavigator();window.nextQuestion=nextQuestion;window.prevQuestion=prevQuestion;window.toggleFlag=toggleFlag;window.openNavigator=openNavigator;window.submitExam=submitExam;window.__TMUA_TOPIC5_AUDIT__=Object.freeze({build:"V1-publish-ready-audited",questionCount:QUESTIONS.length,answerKey:correctAnswers.join(""),scoreMap:TEST.scoreMap.slice()});
+ </script>
 </body>
 </html>
-
-

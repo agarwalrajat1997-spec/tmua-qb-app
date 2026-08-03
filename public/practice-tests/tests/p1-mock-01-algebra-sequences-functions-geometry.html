@@ -1,1463 +1,1142 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TMUA Mock Test 1 - Algebra, Sequences, Functions, Geometry</title>
-  <script type="text/javascript" async 
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMUA Mock Test 1 — Algebra, Sequences, Functions &amp; Geometry</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      chtml: { scale: 1 },
+      startup: { typeset: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
   <style>
+    :root {
+      --brand-blue: #0074c1;
+      --brand-blue-dark: #005fa3;
+      --brand-gold: #f6c44a;
+      --brand-gold-dark: #f2b233;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #dbe3ea;
+      --soft: #f3f5f7;
+      --success: #166534;
+      --success-bg: #ecfdf5;
+      --warning: #92400e;
+      --warning-bg: #fffbeb;
+      --danger: #991b1b;
+      --danger-bg: #fef2f2;
+    }
 
-.top-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-
-}
-.options label {
-  display: block;
-}
-
-#flag-btn {
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  font-size: 14px;
-  font-weight: normal;
-  padding: 6px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#flag-btn.flagged {
-  background-color: yellow;
-  font-weight: bold;
-  border: 2px solid #999;
-}
-
-
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
     body {
       margin: 0;
-      font-family: "Georgia", serif;
-      background: white;
+      min-height: 100vh;
+      color: var(--ink);
+      background: #fff;
+      font-family: Georgia, "Times New Roman", serif;
     }
-    .header {
-      background: #0074c1;
-      color: white;
-      padding: 10px 20px;
-      font-size: 20px;
+    button, input, select { font: inherit; }
+
+    #instructions {
+      max-width: 1250px;
+      min-height: 560px;
+      margin: 60px auto;
+      padding: 58px 64px 66px;
+      position: relative;
+      z-index: 0;
+      background: #fff;
+      border: 2px solid var(--brand-gold-dark);
+      border-radius: 22px;
+      box-shadow:
+        0 18px 48px rgba(15, 23, 42, .12),
+        0 10px 26px rgba(242, 178, 51, .18);
+      font-size: 18px;
+    }
+    #instructions::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--soft);
+    }
+    #instructions h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+    #instructions .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+    }
+    .candidate-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 30px 0 26px;
+    }
+    .field { min-width: 230px; }
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .field input, .field select {
+      width: 250px;
+      max-width: 100%;
+      padding: 10px 12px;
+      border: 1.6px solid rgba(242, 178, 51, .7);
+      border-radius: 10px;
+      background: #fff;
+      outline: none;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+    .field input:focus, .field select:focus {
+      border-color: var(--brand-gold-dark);
+      box-shadow: 0 0 0 4px rgba(242, 178, 51, .18);
+    }
+    .start-button {
+      padding: 11px 22px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--brand-gold);
+      color: #2b1a00;
+      box-shadow: 0 12px 24px rgba(246, 196, 74, .35);
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .start-button:hover { filter: brightness(.98); transform: translateY(-1px); }
+    .start-button:active { transform: translateY(0); }
+
+    .test-summary {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, .06);
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+    }
+    .test-summary th, .test-summary td {
+      padding: 11px 12px;
+      border: 1px solid #cbd5e1;
+      vertical-align: top;
+    }
+    .test-summary th { background: #f1f5f9; text-align: left; }
+    .test-summary ul { margin: 0; padding-left: 19px; }
+
+    #exam-interface { display: none; min-height: 100vh; background: #fff; }
+    .exam-header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 12px 20px;
+      background: var(--brand-blue);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, .14);
     }
-    .timer {
+    .exam-title {
+      font-size: 20px;
+      line-height: 1.35;
+    }
+    .section-chip {
+      display: inline-block;
+      margin-left: 9px;
+      padding: 4px 10px;
+      border: 1px solid rgba(255,255,255,.38);
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .top-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 7px;
+      font-family: Arial, sans-serif;
       font-size: 14px;
-    }
-    .container {
-      padding: 20px 40px;
-    }
-    .question-number {
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .options {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-    .option {
-      margin: 10px 0;
-    }
-    input[type="radio"] {
-      transform: scale(1.2);
-      margin-right: 10px;
-    }
-    .footer {
-      background: #0074c1;
-      padding: 10px 20px;
       text-align: right;
     }
-    .footer button {
-      font-size: 16px;
-      padding: 6px 16px;
-      margin-left: 10px;
-      background: #005fa3;
-      color: white;
-      border: none;
-      border-radius: 3px;
+    #flag-btn {
+      padding: 6px 13px;
+      border: 1px solid rgba(255,255,255,.75);
+      border-radius: 6px;
+      background: #fff;
+      color: #111;
       cursor: pointer;
+      font-size: 14px;
     }
-    #instructions {
-      padding: 40px;
-      font-size: 18px;
+    #flag-btn.flagged {
+      border: 2px solid #7c6f00;
+      background: #fde047;
+      font-weight: 800;
     }
-    #exam-interface {
+
+    #question-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 30px 44px 125px;
+      font-size: 19px;
+      line-height: 1.65;
+    }
+    .question-number {
+      margin-bottom: 10px;
+      font-size: 23px;
+      font-weight: 800;
+    }
+    .question-topic {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    #question-container p { margin: 12px 0; }
+    .options {
+      display: grid;
+      gap: 10px;
+      margin: 22px 0 42px;
+    }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 13px;
+      border: 1px solid #dbe3ea;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      line-height: 1.55;
+    }
+    .option:hover { background: #f8fafc; border-color: #94a3b8; }
+    .option input {
+      flex: 0 0 auto;
+      margin: 5px 2px 0 0;
+      transform: scale(1.28);
+    }
+    .option-letter {
+      flex: 0 0 auto;
+      width: 25px;
+      height: 25px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #eef2f7;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .option-content { min-width: 0; }
+
+    .question-image {
+      width: min(680px, 100%);
+      margin: 18px auto 22px;
+      padding: 12px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      background: #fff;
+    }
+    .question-image svg, .question-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .exam-footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 10px 20px;
+      background: var(--brand-blue);
+      box-shadow: 0 -2px 8px rgba(15, 23, 42, .14);
+    }
+    .exam-footer button {
+      padding: 7px 16px;
+      border: 0;
+      border-radius: 5px;
+      background: var(--brand-blue-dark);
+      color: #fff;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+    }
+    .exam-footer button:hover { filter: brightness(1.08); }
+    .exam-footer button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      filter: none;
+    }
+
+    #navigator-popup {
       display: none;
+      position: fixed;
+      top: 16%;
+      left: 50%;
+      z-index: 9999;
+      width: min(420px, calc(100vw - 28px));
+      transform: translateX(-50%);
+      padding: 20px;
+      border: 2px solid var(--brand-blue);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(0,0,0,.24);
+      font-family: Arial, sans-serif;
+    }
+    #navigator-popup h2 { margin: 0 0 14px; color: var(--brand-blue); font-size: 20px; }
+    #navigator-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+    .nav-question {
+      min-height: 42px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .nav-question.answered { background: #dbeafe; border-color: #60a5fa; }
+    .nav-question.flagged { background: #fde047; border-color: #ca8a04; }
+    .nav-question.current { box-shadow: inset 0 0 0 3px var(--brand-blue); }
+    .navigator-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 14px;
+      margin: 2px 0 16px;
+      color: #475569;
+      font-size: 12px;
+    }
+    .legend-swatch {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      margin-right: 4px;
+      border: 1px solid #94a3b8;
+      border-radius: 3px;
+      vertical-align: -2px;
+    }
+    .legend-answered { background: #dbeafe; }
+    .legend-flagged { background: #fde047; }
+    .close-nav {
+      padding: 7px 13px;
+      border: 0;
+      border-radius: 6px;
+      background: #e2e8f0;
+      cursor: pointer;
+      font-weight: 700;
     }
 
-/* ✅ START SCREEN ONLY — paste this at the VERY END of your <style> block.
-   It only targets #instructions and won’t affect the exam UI. */
+    .result-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 34px 28px 80px;
+      font-family: Arial, sans-serif;
+    }
+    .result-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 14px 34px rgba(15,23,42,.08);
+      text-align: center;
+    }
+    .result-emoji { font-size: 96px; line-height: 1; }
+    .result-score {
+      margin: 8px 0 0;
+      font-size: 42px;
+      font-weight: 900;
+    }
+    .result-meta {
+      width: min(650px, 100%);
+      margin: 22px auto 0;
+      border-collapse: collapse;
+      font-size: 15px;
+      text-align: left;
+    }
+    .result-meta th, .result-meta td { padding: 10px 12px; border: 1px solid #d1d5db; }
+    .result-meta th { width: 42%; background: #f8fafc; }
+    .score9-wrap {
+      width: min(760px, 100%);
+      margin: 20px auto 0;
+      padding: 16px;
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 14px;
+      background: #fafafa;
+      text-align: left;
+    }
+    .score9-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .score9-title { font-size: 16px; font-weight: 900; }
+    .score9-sub { margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .score9-chip {
+      flex: 0 0 auto;
+      padding: 7px 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 20px;
+      font-weight: 900;
+    }
+    .score9-note { margin-top: 8px; color: #94a3b8; font-size: 10px; }
 
-#instructions{
-  max-width: 1250px;
-  min-height: 560px;
-  margin: 60px auto;
-  background: #ffffff;
-  border: 2px solid #f2b233;
-  border-radius: 22px;
-  box-shadow:
-    0 18px 48px rgba(15, 23, 42, 0.12),
-    0 10px 26px rgba(242, 178, 51, 0.18);
-  padding: 64px 64px 70px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 0;
-}
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      width: min(760px, 100%);
+      margin: 18px auto 0;
+      text-align: left;
+    }
+    .status-box {
+      padding: 11px 13px;
+      border: 1px solid #dbe3ea;
+      border-radius: 10px;
+      background: #f8fafc;
+      font-size: 13px;
+    }
+    .status-box.success { color: var(--success); background: var(--success-bg); border-color: #bbf7d0; }
+    .status-box.warning { color: var(--warning); background: var(--warning-bg); border-color: #fde68a; }
+    .status-box.error { color: var(--danger); background: var(--danger-bg); border-color: #fecaca; }
 
-/* grey page backdrop ONLY while #instructions is visible */
-#instructions::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: #f3f5f7;
-  z-index: -1;
-}
+    .analysis-title { margin: 34px 0 10px; text-align: left; }
+    .analysis-scroll { overflow-x: auto; }
+    .analysis-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 14px;
+    }
+    .analysis-table th, .analysis-table td {
+      padding: 8px 9px;
+      border: 1px solid #cbd5e1;
+      text-align: center;
+    }
+    .analysis-table th { background: #eef2f7; }
+    .solution-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 28px 0 12px;
+    }
+    .solution-actions a {
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: var(--brand-blue-dark);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+    }
+    #solution-frame {
+      width: 100%;
+      height: 680px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background: #fff;
+    }
 
-/* title */
-#instructions #test-title{
-  margin: 0 0 18px 0;
-  font-size: 30px;
-  font-weight: 800;
-  color: #0b1220;
-}
+    .workspace-button {
+      position: fixed;
+      left: 14px;
+      bottom: 8px;
+      z-index: 2000;
+      padding: 9px 12px;
+      border: 1px solid rgba(17,24,39,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+      color: rgba(17,24,39,.88);
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    body.ts-exam-done .workspace-button {
+      border-color: rgba(146,98,0,.3);
+      background: rgba(246,196,74,.96);
+      color: #2b1a00;
+    }
 
-/* paragraphs */
-#instructions p{
-  margin: 10px 0;
-  color: #0f172a;
-}
-
-/* keep your existing flex row, just make spacing nicer */
-#instructions > div:first-of-type{
-  margin: 34px 0 26px !important;
-}
-
-/* inputs/selects — only visual polish (keeps your widths/padding from inline styles) */
-#instructions input[type="text"],
-#instructions input[type="email"],
-#instructions select{
-  border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
-  border-radius: 10px !important;
-  background: #fff !important;
-  outline: none !important;
-}
-
-#instructions input[type="text"]:focus,
-#instructions input[type="email"]:focus,
-#instructions select:focus{
-  border-color: #f2b233 !important;
-  box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
-}
-
-/* start button — only visuals (doesn’t change your inline font-size/padding if you keep them) */
-#instructions button{
-  background: #f6c44a !important;
-  color: #2b1a00 !important;
-  border: none !important;
-  border-radius: 12px !important;
-  box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
-  cursor: pointer !important;
-}
-
-#instructions button:hover{
-  filter: brightness(0.98);
-  transform: translateY(-1px);
-}
-
-#instructions button:active{
-  transform: translateY(0px);
-  box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
-}
-
-/* optional: make the table feel “card-like” but ONLY inside #instructions */
-#instructions table{
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
-}
-
-/* responsive */
-@media (max-width: 950px){
-  #instructions{
-    margin: 24px 16px;
-    padding: 40px 22px 44px;
-    min-height: auto;
-  }
-}
-/* ✅ Only affects images inside questions (won’t touch your start screen) */
-.question-media{
-  margin: 14px 0 18px;
-}
-
-.question-media img{
-  display: block;
-  max-width: 320px;         /* ✅ smaller image */
-  width: 100%;              /* responsive inside the max */
-  height: auto;
-  border: 1.5px solid #e5e7eb;   /* ✅ boxed */
-  border-radius: 12px;
-  padding: 10px;            /* ✅ space inside the box */
-  background: #ffffff;
-
-}
-
-/* Optional: center the boxed image */
-.question-media{
-  display: flex;
-  justify-content: center;
-}
-/* ✅ Bigger text for the QUESTION AREA only (safe: doesn’t touch header/footer/start screen) */
-.container{
-  font-size: 19px;           /* base size for question text */
-  line-height: 1.6;
-}
-
-/* Question number bigger */
-.container .question-number{
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-/* Paragraphs spacing + size */
-.container p{
-  font-size: 19px;
-  line-height: 1.65;
-  margin: 12px 0;
-}
-
-/* Options bigger */
-.container .options{
-  margin-top: 18px;
-  margin-bottom: 40px;
-}
-
-.container .options .option{
-  font-size: 19px;
-  line-height: 1.8;
-}
-
-/* Radio slightly larger */
-.container input[type="radio"]{
-  transform: scale(1.35);
-  margin-right: 12px;
-}
-
+    @media (max-width: 760px) {
+      #instructions { margin: 20px 12px; padding: 34px 20px 40px; }
+      .candidate-row { align-items: stretch; }
+      .field, .field input, .field select { width: 100%; }
+      .exam-header { align-items: flex-start; }
+      .exam-title { font-size: 16px; }
+      #question-container { padding: 24px 18px 125px; font-size: 18px; }
+      .exam-footer { justify-content: center; flex-wrap: wrap; }
+      .exam-footer button { padding: 7px 11px; }
+      .status-grid { grid-template-columns: 1fr; }
+      .result-wrap { padding: 20px 12px 70px; }
+      #solution-frame { height: 560px; }
+    }
   </style>
 
-<!-- TS_PATCH_FOOTER_FIXED_V1 -->
-<style>
-/* TS_PATCH_FOOTER_FIXED_V1: keep footer pinned and prevent overlap */
-.footer{
-  position: fixed !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  z-index: 999 !important;
-}
-#exam-interface .container{
-  padding-bottom: 110px !important;
-}
-</style>
-<!-- /TS_PATCH_FOOTER_FIXED_V1 -->
-<!-- TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
-<style>
-.ts-score9-wrap{
-  margin:18px auto 30px;
-  padding:16px;
-  border:1px solid rgba(0,0,0,0.12);
-  border-radius:14px;
-  background:rgba(250,250,250,0.92);
-  max-width:760px;
-}
-.ts-score9-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-  gap:12px;
-}
-.ts-score9-title{
-  font-family:Arial,sans-serif;
-  font-weight:900;
-  font-size:16px;
-  margin:0;
-}
-.ts-score9-sub{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:rgba(100,116,139,0.95);
-  margin-top:3px;
-}
-.ts-score9-chip{
-  font-family:Arial,sans-serif;
-  font-weight:900;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,0.14);
-  background:#fff;
-  white-space:nowrap;
-}
-.ts-score9-grid{
-  display:flex;
-  gap:12px;
-  margin-top:12px;
-  flex-wrap:wrap;
-}
-.ts-score9-card{
-  flex:1 1 260px;
-  border:1px solid rgba(0,0,0,0.10);
-  border-radius:12px;
-  padding:12px;
-  background:#fff;
-}
-.ts-score9-card h4{
-  margin:0 0 6px 0;
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  letter-spacing:0.02em;
-  color:rgba(71,85,105,0.95);
-}
-.ts-score9-big{
-  font-family:Arial,sans-serif;
-  font-size:34px;
-  font-weight:900;
-  margin:0;
-}
-.ts-score9-small{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:rgba(100,116,139,0.95);
-  margin-top:2px;
-}
-
-/* force the note to stay genuinely tiny */
-.ts-score9-note{
-  margin-top:6px !important;
-  padding-top:6px !important;
-  border-top:1px dashed rgba(148,163,184,0.24) !important;
-  display:flex !important;
-  gap:4px !important;
-  align-items:flex-start !important;
-  font-family:Arial,sans-serif !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  color:rgba(148,163,184,0.74) !important;
-}
-.ts-score9-note *{
-  font-family:Arial,sans-serif !important;
-}
-.ts-score9-note__asterisk{
-  font-weight:800 !important;
-  font-size:6px !important;
-  line-height:1 !important;
-  margin-top:0 !important;
-  flex:0 0 auto !important;
-  color:rgba(148,163,184,0.78) !important;
-}
-.ts-score9-note__text{
-  min-width:0 !important;
-  flex:1 1 auto !important;
-}
-.ts-score9-note__title{
-  margin:0 !important;
-  font-weight:700 !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  letter-spacing:0 !important;
-  color:rgba(148,163,184,0.78) !important;
-}
-.ts-score9-note__sub{
-  margin:0 !important;
-  font-size:6px !important;
-  line-height:1.0 !important;
-  color:rgba(148,163,184,0.72) !important;
-}
-.ts-score9-note__btn{
-  flex:0 0 auto !important;
-  width:10px !important;
-  height:10px !important;
-  min-width:10px !important;
-  min-height:10px !important;
-  border-radius:2px !important;
-  border:1px solid rgba(148,163,184,0.20) !important;
-  background:rgba(255,255,255,0.55) !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-decoration:none !important;
-  color:rgba(100,116,139,0.76) !important;
-  margin-top:0 !important;
-  padding:0 !important;
-  line-height:1 !important;
-}
-.ts-score9-note__btn:hover{
-  background:rgba(255,255,255,0.82) !important;
-  color:rgba(71,85,105,0.92) !important;
-}
-.ts-score9-note__icon{
-  width:6px !important;
-  height:6px !important;
-  min-width:6px !important;
-  min-height:6px !important;
-  display:block !important;
-}
-</style>
-<!-- /TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
+<script>
+  var solutionPDF = "https://apps.thrivingscholars.com/practice-tests/solutions/topic-test-1/";
+</script>
 </head>
 <body>
 
-<div id="instructions">
-    <h2 id="test-title">TMUA MOCK TEST 1</h2>
+  <main id="instructions">
+    <h1 id="test-title">TMUA Mock Test 1</h1>
+    <p class="subtitle">Paper 1 topic test · Algebra, Sequences, Functions &amp; Geometry</p>
 
+    <p><strong>Time allowed:</strong> 1 hour 15 minutes</p>
+    <p><strong>Calculators are not permitted.</strong></p>
 
-  <p><strong>Time allowed:</strong> 1 hour and 15 minutes</p>
-  <p><strong>Calculators are not permitted.</strong></p>
-
-
-<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
-  <div>
-    <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br>
-    <input type="text" id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-  </div>
-
-  <div>
-    <label for="studentEmail" style="font-size: 16px;">Email (to receive results):</label><br>
-    <input type="email" id="studentEmail" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-  </div>
-
-  <div>
-    <label for="test-date" style="font-size: 16px;">Select your AMC test session:</label><br>
-    <select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
-      <option value="October 2025">October 2026</option>
-      <option value="January 2026">January 2027</option>
-      <option value="October 2026">October 2027</option>
-    </select>
-  </div>
-
-  <div style="margin-top: 28px;">
-    <button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
-  </div>
-</div>
-
-
-<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
-  <thead>
-    <tr style="background: #f2f2f2;">
-      <th style="border: 1px solid #ccc; padding: 10px;">Section</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">Topics Covered</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
-      <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Paper 1</td>
-      <td style="border: 1px solid #ccc; padding: 10px;">
-        <ul style="margin: 0; padding-left: 18px;">
-          <li>Algebra</li>
-          <li>Functions</li>
-          <li>Sequences</li>
-          <li>Binomial</li>
-        </ul>
-      </td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20</td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes</td>
-    </tr>
-  </tbody>
-</table>
-
-<p style="font-size: 16px; margin-top: 20px;">
- 
-  Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
-  You should attempt <strong>all 20 questions</strong>.
-</p>
-
-<p style="font-size: 16px;">
-  A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires.
-</p>
-
-
-  <p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
-
-</div>
-
-
-<div id="exam-interface">
-  <div class="header">
-    <div><strong>(TMUA) Test of Mathematics for University Admission</strong></div>
-    
-    <div class="top-right">
-      <div class="timer">
-        ⏲️ Time Remaining <span id="time">75:00</span><br>
-        📄 <span id="counter">1 of 20 (Paper 1)</span>
+    <div class="candidate-row">
+      <div class="field">
+        <label for="student-name">Enter your full name</label>
+        <input type="text" id="student-name" autocomplete="name" placeholder="Full name" required>
       </div>
-      <button id="flag-btn" onclick="toggleFlag()">   ⚑ Flag for Review   </button>
+      <div class="field">
+        <label for="student-email">Email address for the score report</label>
+        <input type="email" id="student-email" autocomplete="email" placeholder="example@email.com" required>
+      </div>
+      <div class="field">
+        <label for="test-session">Select your TMUA test session</label>
+        <select id="test-session">
+          <option value="October 2026">October 2026</option>
+          <option value="January 2027">January 2027</option>
+          <option value="October 2027">October 2027</option>
+        </select>
+      </div>
+      <button type="button" class="start-button" id="start-button">Start Exam</button>
     </div>
+
+    <table class="test-summary">
+      <thead>
+        <tr>
+          <th>Paper</th>
+          <th>Topics covered</th>
+          <th>Questions</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Paper 1 topic test</td>
+          <td>
+            <ul>
+              <li>Algebra and functions</li>
+              <li>Binomial expansions and coefficients</li>
+              <li>Coordinate and circle geometry</li>
+              <li>Sequences and recurrences</li>
+              <li>Polynomial, factor and remainder reasoning</li>
+              <li>Logarithms</li>
+            </ul>
+          </td>
+          <td>20</td>
+          <td>75 minutes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Choose one correct answer for each question. There is no penalty for an incorrect answer, so you should attempt all 20 questions.</p>
+    <p>A countdown begins when the test starts. You may move between questions, flag questions for review and use the navigator. The test submits automatically when time expires.</p>
+    <p><strong>Keyboard shortcuts:</strong> Alt+N next, Alt+P previous, Alt+F flag, Alt+V navigator.</p>
+  </main>
+
+  <main id="exam-interface">
+    <header class="exam-header" id="exam-header">
+      <div class="exam-title">
+        <strong>(TMUA) Test of Mathematics for University Admission</strong>
+        <span class="section-chip" id="section-chip">Algebra &amp; Functions</span>
+      </div>
+      <div class="top-right">
+        <div>Time Remaining <strong id="time">75:00</strong></div>
+        <div id="counter">Question 1 of 20</div>
+        <button type="button" id="flag-btn">⚑ Flag for Review</button>
+      </div>
+    </header>
+
+    <section id="question-container" aria-live="polite"></section>
+
+    <footer class="exam-footer" id="exam-footer">
+      <button type="button" id="prev-btn">← Previous</button>
+      <button type="button" id="next-btn">Next →</button>
+      <button type="button" id="navigator-btn">Navigator</button>
+      <button type="button" id="submit-btn">Submit</button>
+    </footer>
+  </main>
+
+  <div id="navigator-popup" role="dialog" aria-modal="true" aria-labelledby="navigator-heading">
+    <h2 id="navigator-heading">Jump to Question</h2>
+    <div id="navigator-grid"></div>
+    <div class="navigator-legend">
+      <span><i class="legend-swatch legend-answered"></i>Answered</span>
+      <span><i class="legend-swatch legend-flagged"></i>Flagged</span>
+    </div>
+    <button type="button" class="close-nav" id="close-nav-btn">Close</button>
   </div>
 
-  <div class="container" id="question-container">
-    <!-- Questions will appear here -->
-  </div>
+  <button type="button" class="workspace-button" id="workspace-button">← TMUA Workspace</button>
 
-  <div class="footer">
-    <button id="prev-btn" onclick="prevQuestion()">&larr; Previous</button>
-    <button id="next-btn" onclick="nextQuestion()">Next &rarr;</button>
-    <button onclick="openNavigator()">Navigator</button>
-    <button onclick="confirmSubmit()">Submit</button>
-  </div>
-</div>
+  <script>
+    "use strict";
 
-
-<script>
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_bf9ea7f03095418981f232b72659cbe3.pdf";
-
-let flags = new Array(20).fill(false); // Assuming 20 questions per section
-let timeSpent = new Array(20).fill(0); // 20 questions
-let lastTimestamp = Date.now(); // timestamp when current question was shown
-
-let studentName = "";
-let testSession = "";
-
-function nextQuestion() {
-  if (current < questions.length - 1) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
-    current++;
-    lastTimestamp = Date.now(); // reset timestamp for new question
-    renderQuestion();
-  }
-}
-
-
-function openNavigator() {
-  document.getElementById("navigator-popup").style.display = "block";
-}
-
-function closeNavigator() {
-  document.getElementById("navigator-popup").style.display = "none";
-}
-
-function jumpTo(index) {
-timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-current = index;
-lastTimestamp = Date.now();
-renderQuestion();
-closeNavigator();
-updateFlagButton();
-
-
-}
-
-
-function renderQuestion() {
-  container.innerHTML = questions[current];
-  counter.textContent = `${current + 1} of ${questions.length}`;
-  MathJax.typesetPromise();
-updateFlagButton();
-
-  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
-  inputs.forEach(input => {
-    if (userAnswers[current] === input.value) {
-      input.checked = true;
-    }
-    input.addEventListener('change', () => {
-      userAnswers[current] = input.value;
+    const TEST = Object.freeze({
+      id: "p1-mock-01-algebra-sequences-functions-geometry",
+      title: "TMUA Mock Test 1 — Algebra, Sequences, Functions & Geometry",
+      paper: "1",
+      durationSeconds: 75 * 60,
+      targetBenchmark: 15,
+      referenceAverage: 8,
+      solutionUrl: solutionPDF,
+      workspaceUrl: "https://apps.thrivingscholars.com/dashboard",
+      email: Object.freeze({
+        publicKey: "9jjn3yBHl6S88hITy",
+        serviceId: "service_5l4w8x2",
+        templateId: "template_j1jrs4o"
+      })
     });
-  });
 
-  // Disable Next button on last question
-  const nextBtn = document.getElementById("next-btn");
-  if (nextBtn) nextBtn.disabled = (current === questions.length - 1);
-
-  // Disable Previous button on first question
-  const prevBtn = document.getElementById("prev-btn");
-  if (prevBtn) prevBtn.disabled = (current === 0);
-}
-
-function toggleFlag() {
-  flags[current] = !flags[current];
-  updateFlagButton();
-  updateNavigatorButton(current);
-}
-
-function updateFlagButton() {
-  const flagBtn = document.getElementById("flag-btn");
-  if (!flagBtn) return;
-  if (flags[current]) {
-    flagBtn.classList.add("flagged");
-  } else {
-    flagBtn.classList.remove("flagged");
-  }
-}
-
-  function confirmSubmit() {
-  const confirmBox = confirm("Are you sure you want to submit the test?");
-  if (confirmBox) {
-    submitExam();
-  }
-}
-  function confirmSubmit() {
-  const confirmBox = confirm("Are you sure you want to submit the test?");
-  if (confirmBox) {
-    submitExam();
-  }
-}
-  const correctAnswers = [
-    "B", "D", "B", "C", "D",
-    "D", "D", "B", "D", "C",
-    "D", "B", "B", "D", "C",
-    "A", "E", "C", "C", "D"
-  ];
-
-  let userAnswers = new Array(20).fill(null);
-  let current = 0;
-  let minutes = 75;
-  let seconds = 0;
-  let timerInterval;
-
-  const timerDisplay = document.getElementById("time");
-  const container = document.getElementById("question-container");
-  const counter = document.getElementById("counter");
-
-  const questions = [
-
-    `<div class="question-number">Question 1</div><p>The expansion of \\( (a - bx)^c \\) is</p>
-    <p>\\[
-4 - px + 108x^2 - qx^3 + rx^4
-\\]</p>
-    <p>where \\( a, b, c, p, q, r \\) are positive real constants.</p>
-    <p>Find the value of \\( p + q + r \\).</p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q1" value="A"> \\( 81 - 84\\sqrt{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q1" value="B"> \\( 81 + 132\\sqrt{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q1" value="C">  \\( 132\\sqrt{2} - 81 \\)</label><br>
-        <label class="option"><input type="radio" name="q1" value="D"> \\( 81 + 84\\sqrt{2} \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 2</div><p>
-  The coefficient of \\( x^{11} \\) in the expansion of \\( (2 + x^2 + x^3)^8 \\) is equal to 28 times the coefficient of \\( x^2 \\) in \\( (2 + ax)^6 \\). 
-  Find all the possible values of the constant \\( a \\).
-</p>
-<div class="options">
-  <label class="option"><input type="radio" name="q2" value="A"> \\( \\pm 2\\sqrt{7} \\)</label><br>
-  <label class="option"><input type="radio" name="q2" value="B"> \\( \\pm \\frac{1}{2} \\)</label><br>
-  <label class="option"><input type="radio" name="q2" value="C"> \\( \\pm \\frac{1}{4} \\)</label><br>
-  <label class="option"><input type="radio" name="q2" value="D"> \\( \\pm 1 \\)</label>
-</div>`,
-
-    `<div class="question-number">Question 3</div><p>The coefficient of \\( x^2 \\) in the expansion of \\( (2 + bx)^4 \\) is 2 times the coefficient of \\( x^3 \\) in \\( (1 + bx)^6 \\). Given that \\( b \\ne 0 \\), what is the value of \\( b \\)?</p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q3" value="A"> \\( \\frac{8}{15} \\)</label><br>
-        <label class="option"><input type="radio" name="q3" value="B">\\( \\frac{3}{5} \\)</label><br>
-        <label class="option"><input type="radio" name="q3" value="C">\\( \\frac{3}{20} \\)</label><br>
-        <label class="option"><input type="radio" name="q3" value="D">\\( \\frac{6}{5} \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 4</div><p> Find the coefficient of x</p> <p> \\[ (1 - x)^0 - (1 - x)^1 + (1 - x)^2 - (1 - x)^3 + (1 - x)^4 - \\cdots + (1 - x)^{50} \\] </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q4" value="A"> 51</label><br>
-        <label class="option"><input type="radio" name="q4" value="B"> -51</label><br>
-        <label class="option"><input type="radio" name="q4" value="C"> -25</label><br>
-        <label class="option"><input type="radio" name="q4" value="D"> 25</label>
-      </div>`,
-
-    `<div class="question-number">Question 5</div><p>Find the value of the expression</p> <p> \\[ \\sqrt{16 + 8\\sqrt{3} + 3} - \\sqrt{12 - 4\\sqrt{3} + 1} \\] </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q5" value="A"> \\( \\sqrt{6 + 12\\sqrt{3}} \\)</label><br>
-        <label class="option"><input type="radio" name="q5" value="B"> \\( \\sqrt{3} - 5 \\)</label><br>
-        <label class="option"><input type="radio" name="q5" value="C"> 3</label><br>
-        <label class="option"><input type="radio" name="q5" value="D"> \\( 5 - \\sqrt{3} \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 6</div><p> The circles with equations \\( (x - r)^2 + (y - 2)^2 = r^2 \\) and \\( (x + r)^2 + (y + r)^2 = 4r^2 \\) touch precisely once when </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q6" value="A"> \\( r = \\sqrt{3} - 1 \\)</label><br>
-        <label class="option"><input type="radio" name="q6" value="B"> \\( r = \\frac{8}{5} \\)</label><br>
-        <label class="option"><input type="radio" name="q6" value="C"> \\( r = \\frac{2}{1 + \\sqrt{5}} \\)</label><br>
-        <label class="option"><input type="radio" name="q6" value="D"> \\( r = \\frac{1 + \\sqrt{5}}{2} \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 7</div><p> Find the value(s) of \\( a \\) such that the turning point of the parabola \\( y = x^2 + 2ax + 1 \\) is closest to the origin. </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q7" value="A"> \\( a = \\sqrt{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q7" value="B"> \\( a = \\pm \\sqrt{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q7" value="C"> \\( a = \\frac{\\sqrt{2}}{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q7" value="D"> \\( a = \\pm \\frac{1}{\\sqrt{2}} \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 8</div><p> The line \\( y = 2x + c \\) is such that it intersects the circle \\( x^2 + y^2 = 9 \\) at two points \\( A \\) and \\( B \\). \\( M \\) is the midpoint of the chord \\( AB \\) of the circle. The equation of the locus of \\( M \\) as \\( c \\) varies between \\( -3\\sqrt{5} \\) and \\( 3\\sqrt{5} \\) is </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q8" value="A"> \\( x^2 + y^2 = 2 \\)</label><br>
-        <label class="option"><input type="radio" name="q8" value="B"> \\( y = -\\frac{1}{2}x \\)</label><br>
-        <label class="option"><input type="radio" name="q8" value="C"> \\( y = \\frac{1}{2}x \\)</label><br>
-        <label class="option"><input type="radio" name="q8" value="D"> \\( y = x^2 \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 9</div><p> The tangent to the circle \\( x^2 + y^2 + 6x + 2y + 2 = 0 \\) at the point \\( (-5, 1) \\) passes through the point \\( (-3, 3) \\). The other tangent to the circle that passes through this point touches the circle at the point </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q9" value="A"> \\( (-3, 2\\sqrt{2}) \\)</label><br>
-        <label class="option"><input type="radio" name="q9" value="B"> \\( (-3, 1) \\)</label><br>
-        <label class="option"><input type="radio" name="q9" value="C"> \\( (-1, 2\\sqrt{2}) \\)</label><br>
-        <label class="option"><input type="radio" name="q9" value="D"> \\( (-1, 1) \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 10</div><p> The circle \\( x^2 + y^2 + 2ax + 2by = c \\) encloses the point \\( (1, 1) \\) precisely when </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q10" value="A"> \\( c > 2(1 - a - b) \\)</label><br>
-        <label class="option"><input type="radio" name="q10" value="B"> \\( a^2 + b^2 < 1 \\)</label><br>
-        <label class="option"><input type="radio" name="q10" value="C"> \\( c > 2(a + b + 1) \\)</label><br>
-        <label class="option"><input type="radio" name="q10" value="D"> \\( a^2 + 2ab + b^2 < c \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 11</div><p> Which of the following is a tangent to the circle \\( (x - 2)^2 + (y - 3)^2 = 4 \\)? </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q11" value="A"> \\( x = 3 + \\sqrt{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q11" value="B"> \\( y = 5 + \\frac{\\sqrt{2}}{2} - x \\)</label><br>
-        <label class="option"><input type="radio" name="q11" value="C"> \\( y = 2(2 - \\sqrt{2}) \\)</label><br>
-        <label class="option"><input type="radio" name="q11" value="D"> \\( y = x + 1 - 2\\sqrt{2} \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 12</div><p> The reflection of the point \\( (a, a) \\) in the line \\( y = \\frac{1}{a}x \\) where \\( a \\ne 0 \\) is </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q12" value="A"> \\( \\left( \\frac{a(a - 1)^2}{a^2 + 1}, \\frac{a^2(a^2 + 3)}{a^2 + 1} \\right) \\)</label><br>
-        <label class="option"><input type="radio" name="q12" value="B"> \\( \\left( \\frac{a(a^2 + 2a - 1)}{a^2 + 1}, \\frac{-a(a^2 - 2a - 1)}{a^2 + 1} \\right) \\)</label><br>
-        <label class="option"><input type="radio" name="q12" value="C"> \\( \\left( \\frac{a(a - 1)^2}{a^2 + 1}, \\frac{-a(a - 1)^2}{a^2 + 1} \\right) \\)</label><br>
-        <label class="option"><input type="radio" name="q12" value="D"> \\( \\left( \\frac{a(a + 1)^2}{a^2 + 1}, \\frac{a^2(a + 1)^2}{a^2 + 1} \\right) \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 13</div><p> The circle \\( C \\) has equation \\( x^2 + y^2 = 1 \\) and is intersected at \\( (0,1) \\) and \\( (0,-1) \\) by two circles of radius \\( r \\), one with a centre at \\( (a, 0) \\) and the other with a centre at \\( (-a, 0) \\). This is shown in the diagram. </p> <p> <img src="https://i.ibb.co/dswXQ4HJ/Picture6.png" alt="Picture6" style="width: 400px; height: 250px;">
- </p> <p> The value of \\( a \\) that results in \\( C \\) having three distinct regions of equal area satisfies the equation: </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q13" value="A"> \\( \\frac{\\pi(a^2 + 1) \\arctan\\left(\\frac{1}{a}\\right)}{90} - 6a = \\pi \\)</label><br>
-        <label class="option"><input type="radio" name="q13" value="B">   \\( \\frac{\\pi(a^2 + 1) \\arctan\\left(\\frac{1}{a}\\right)}{30} - 6a = \\pi \\)</label><br>
-        <label class="option"><input type="radio" name="q13" value="C"> \\( \\pi(a^2 + 1) \\arctan\\left(\\frac{1}{a}\\right) - 6a = \\pi \\)</label><br>
-        <label class="option"><input type="radio" name="q13" value="D">\\( \\frac{(a^2 + 1) \\arctan\\left(\\frac{1}{a}\\right)}{30} = 1 \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 14</div><p>The function \\( f \\) is defined on the positive integers as follows:</p> <p>\\( f(1) = 2 \\)</p> <p>For \\( n \\geq 1 \\):</p> <p>\\( f(n+1) = 5f(n) + 1 \\), if \\( f(n) \\) is odd</p> <p>\\( f(n+1) = \\frac{1}{2} f(n) \\), if \\( f(n) \\) is even</p> <p>What is the value of \\( \\sum\\limits_{r=1}^{100} f(r) \\)?</p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q14" value="A"> 535</label><br>
-        <label class="option"><input type="radio" name="q14" value="B">546</label><br>
-        <label class="option"><input type="radio" name="q14" value="C">  560</label><br>
-        <label class="option"><input type="radio" name="q14" value="D">563</label>
-      </div>`,
-
-    `<div class="question-number">Question 15</div><p> When \\( 2x^2 + 3x - 15 \\) is multiplied by \\( (ax - 4) \\) and the resulting product is divided by \\( x + 2 \\), the remainder is 182. </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q15" value="A"> \\( -9 \\)</label><br>
-        <label class="option"><input type="radio" name="q15" value="B">  \\( -5 \\)</label><br>
-        <label class="option"><input type="radio" name="q15" value="C"> \\( 5 \\)</label><br>
-        <label class="option"><input type="radio" name="q15" value="D"> \\( 9 \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 16</div><p> Find the non-zero solution to the equation: </p> <p> \\[ \\frac{3^{(16^x)}}{81^{(4^x)}} = \\frac{1}{27} \\] </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q16" value="A"> \\( \\log_4 3 \\)</label><br>
-        <label class="option"><input type="radio" name="q16" value="B"> \\( \\log_16 3 \\)</label><br>
-        <label class="option"><input type="radio" name="q16" value="C"> \\( 1 \\)</label><br>
-        <label class="option"><input type="radio" name="q16" value="D"> \\( 2 \\)</label>
-      </div>`,
-
-
-    `<div class="question-number">Question 17</div><p> Let \\( n \\) be a positive integer. </p> <p> \\( x^2 + 2 \\) is a factor of </p> <p> \\[ (x^4 - 5)^n - (x^2 + 1)^{n+1} + (x^2 + 4)^n (3 + x^2)^n \\] </p> <p> for: </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q17" value="A"> odd \\( n \\)</label><br>
-        <label class="option"><input type="radio" name="q17" value="B">even \\( n \\)</label><br>
-        <label class="option"><input type="radio" name="q17" value="C">  no \\( n \\)</label><br>
-        <label class="option"><input type="radio" name="q17" value="D"> all \\( n \\)</label><br>
-       <label class="option"><input type="radio" name="q17" value="E"> \\( n = 1 \\)</label>
-
-      </div>`,
-
-    `<div class="question-number">Question 18</div><p> \\( a \\) and \\( b \\) are non-zero integers. </p> <p> When the polynomial \\( x^2 - 2ax - a^2 \\) is divided by \\( x - b \\), the remainder is 1. </p> <p> The polynomial \\( 4bx^2 - 6x + 6 \\) has \\( 2x - a \\) as a factor. </p> <p> It follows that \\( a + b \\) equals: </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q18" value="A">\\( -5 \\)</label><br>
-        <label class="option"><input type="radio" name="q18" value="B">\\( -3 \\)</label><br>
-        <label class="option"><input type="radio" name="q18" value="C">  \\( -1 \\)</label><br>
-        <label class="option"><input type="radio" name="q18" value="D"> \\( 0 \\)</label>
-      </div>`,
-
-
-    `<div class="question-number">Question 19</div><p> The polynomial \\( p_n \\) is defined by: </p> <p> \\[ p_n(x) = (x - 2n + 1) + (2x - 2n + 3) + (3x - 2n + 5) + \\cdots + (nx - 1) \\] </p> <p> Given that \\( n \\geq 2 \\), what is the remainder when \\( p_n(x) \\) is divided by \\( p_{n-1}(x) \\)? </p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q19" value="A"> \\( \\frac{n^2 - 1}{2} \\)</label><br>
-        <label class="option"><input type="radio" name="q19" value="B">  \\( n \\)</label><br>
-        <label class="option"><input type="radio" name="q19" value="C">  \\( -1 \\)</label><br>
-        <label class="option"><input type="radio" name="q19" value="D">  \\( 1 \\)</label>
-      </div>`,
-
-    `<div class="question-number">Question 20</div><p> Given that \\( x, y \\) and \\( z \\) are positive real numbers, the equations </p> <p> \\[ 4\\log_z x = y, \\quad \\log_x z = y, \\quad x + \\log_y z = 0 \\] </p> <p>...</p>
-      <div class="options">
-        <label class="option"><input type="radio" name="q20" value="A"> have a unique solution for \\( x \\) but not for \\( y \\) and \\( z \\).</label><br>
-        <label class="option"><input type="radio" name="q20" value="B"> have unique solutions for \\( x \\) and \\( y \\) but infinitely many solutions for \\( z \\).</label><br>
-        <label class="option"><input type="radio" name="q20" value="C"> have unique solutions for \\( x \\) and \\( z \\) but infinitely many solutions for \\( y \\).</label><br>
-        <label class="option"><input type="radio" name="q20" value="D"> have a unique solution for \\( x, y \\) and \\( z \\).</label>
-      </div>`,
-
-  ];
-
-
-
-function startExam() {
-  const nameInput = document.getElementById("student-name").value.trim();
-  const emailInput = document.getElementById("studentEmail").value.trim();
-  const testSelect = document.getElementById("test-date").value;
-
-  if (!nameInput) {
-    alert("Please enter your full name before starting the exam.");
-    return;
-  }
-
-  if (!emailInput || !emailInput.includes("@")) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-
-  studentName = nameInput;
-  testSession = testSelect;
-
-  document.getElementById("instructions").style.display = "none";
-  document.getElementById("exam-interface").style.display = "block";
-  timerInterval = setInterval(updateTimer, 1000);
-  renderQuestion();
-}
-
-
-
-  function updateTimer() {
-    if (minutes === 0 && seconds === 0) {
-      clearInterval(timerInterval);
-      submitExam();
-      return;
+    const QUESTIONS = Object.freeze([{"number":1,"section":"Algebra & Functions","topic":"Algebra & Functions","promptHtml":"<p>The expansion of \\( (a-bx)^c \\) is</p>\n\\[\n4-px+108x^2-qx^3+rx^4\n\\]\n<p>where \\(a,b,c,p,q,r\\) are positive real constants.</p>\n<p>Find the value of \\(p+q+r\\).</p>","options":[{"letter":"A","html":"\\(81-84\\sqrt2\\)"},{"letter":"B","html":"\\(81+132\\sqrt2\\)"},{"letter":"C","html":"\\(132\\sqrt2-81\\)"},{"letter":"D","html":"\\(81+84\\sqrt2\\)"}],"answer":"B"},{"number":2,"section":"Algebra & Functions","topic":"Algebra & Functions","promptHtml":"<p>The coefficient of \\(x^{11}\\) in \\((2+x^2+x^3)^8\\) is equal to 28 times the coefficient of \\(x^2\\) in \\((2+ax)^6\\).</p>\n<p>Find all possible values of \\(a\\).</p>","options":[{"letter":"A","html":"\\(\\pm2\\sqrt7\\)"},{"letter":"B","html":"\\(\\pm\\frac12\\)"},{"letter":"C","html":"\\(\\pm\\frac14\\)"},{"letter":"D","html":"\\(\\pm1\\)"}],"answer":"D"},{"number":3,"section":"Algebra & Functions","topic":"Algebra & Functions","promptHtml":"<p>The coefficient of \\(x^2\\) in \\((2+bx)^4\\) is 2 times the coefficient of \\(x^3\\) in \\((1+bx)^6\\).</p>\n<p>Given \\(b\\ne0\\), find \\(b\\).</p>","options":[{"letter":"A","html":"\\(\\frac8{15}\\)"},{"letter":"B","html":"\\(\\frac35\\)"},{"letter":"C","html":"\\(\\frac3{20}\\)"},{"letter":"D","html":"\\(\\frac65\\)"}],"answer":"B"},{"number":4,"section":"Algebra & Functions","topic":"Algebra & Functions","promptHtml":"<p>Find the coefficient of \\(x\\) in</p>\n\\[\n(1-x)^0-(1-x)^1+(1-x)^2-(1-x)^3+\\cdots +(1-x)^{50}.\n\\]","options":[{"letter":"A","html":"\\(51\\)"},{"letter":"B","html":"\\(-51\\)"},{"letter":"C","html":"\\(-25\\)"},{"letter":"D","html":"\\(25\\)"}],"answer":"C"},{"number":5,"section":"Algebra & Functions","topic":"Algebra & Functions","promptHtml":"<p>Find the value of</p>\n\\[\n\\sqrt{16+8\\sqrt3+3}-\\sqrt{12-4\\sqrt3+1}.\n\\]","options":[{"letter":"A","html":"\\(\\sqrt{6+12\\sqrt3}\\)"},{"letter":"B","html":"\\(\\sqrt3-5\\)"},{"letter":"C","html":"\\(3\\)"},{"letter":"D","html":"\\(5-\\sqrt3\\)"}],"answer":"D"},{"number":6,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>The circles</p>\n\\[\n(x-r)^2+(y-2)^2=r^2\n\\]\n<p>and</p>\n\\[\n(x+r)^2+(y+r)^2=4r^2\n\\]\n<p>touch precisely once when:</p>","options":[{"letter":"A","html":"\\(r=\\sqrt3-1\\)"},{"letter":"B","html":"\\(r=\\frac85\\)"},{"letter":"C","html":"\\(r=\\frac{2}{1+\\sqrt5}\\)"},{"letter":"D","html":"\\(r=\\frac{1+\\sqrt5}{2}\\)"}],"answer":"D"},{"number":7,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>Find the value(s) of \\(a\\) such that the turning point of</p>\n\\[\ny=x^2+2ax+1\n\\]\n<p>is closest to the origin.</p>","options":[{"letter":"A","html":"\\(a=\\sqrt2\\)"},{"letter":"B","html":"\\(a=\\pm\\sqrt2\\)"},{"letter":"C","html":"\\(a=\\frac{\\sqrt2}{2}\\)"},{"letter":"D","html":"\\(a=\\pm\\frac1{\\sqrt2}\\)"}],"answer":"D"},{"number":8,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>The line \\(y=2x+c\\) intersects the circle \\(x^2+y^2=9\\) at two points \\(A\\) and \\(B\\). \\(M\\) is the midpoint of chord \\(AB\\).</p>\n<p>The equation of the locus of \\(M\\), as \\(c\\) varies between \\(-3\\sqrt5\\) and \\(3\\sqrt5\\), is:</p>","options":[{"letter":"A","html":"\\(x^2+y^2=2\\)"},{"letter":"B","html":"\\(y=-\\frac12x\\)"},{"letter":"C","html":"\\(y=\\frac12x\\)"},{"letter":"D","html":"\\(y=x^2\\)"}],"answer":"B"},{"number":9,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>The tangent to</p>\n\\[\nx^2+y^2+6x+2y+2=0\n\\]\n<p>at \\((-5,1)\\) passes through \\((-3,3)\\). The other tangent from \\((-3,3)\\) touches the circle at:</p>","options":[{"letter":"A","html":"\\((-3,2\\sqrt2)\\)"},{"letter":"B","html":"\\((-3,1)\\)"},{"letter":"C","html":"\\((-1,2\\sqrt2)\\)"},{"letter":"D","html":"\\((-1,1)\\)"}],"answer":"D"},{"number":10,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>The circle</p>\n\\[\nx^2+y^2+2ax+2by=c\n\\]\n<p>encloses \\((1,1)\\) precisely when:</p>","options":[{"letter":"A","html":"\\(c&gt;2(1-a-b)\\)"},{"letter":"B","html":"\\(a^2+b^2\\lt 1\\)"},{"letter":"C","html":"\\(c&gt;2(a+b+1)\\)"},{"letter":"D","html":"\\(a^2+2ab+b^2\\lt c\\)"}],"answer":"C"},{"number":11,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>Which of the following is a tangent to the circle</p>\n\\[\n(x-2)^2+(y-3)^2=4?\n\\]","options":[{"letter":"A","html":"\\(x=3+\\sqrt2\\)"},{"letter":"B","html":"\\(y=5+\\frac{\\sqrt2}{2}-x\\)"},{"letter":"C","html":"\\(y=2(2-\\sqrt2)\\)"},{"letter":"D","html":"\\(y=x+1-2\\sqrt2\\)"}],"answer":"D"},{"number":12,"section":"Coordinate Geometry","topic":"Coordinate Geometry","promptHtml":"<p>The reflection of \\((a,a)\\) in the line</p>\n\\[\ny=\\frac1a x,\\qquad a\\ne0\n\\]\n<p>is:</p>","options":[{"letter":"A","html":"\\(\\left(\\frac{a(a-1)^2}{a^2+1},\\frac{a^2(a^2+3)}{a^2+1}\\right)\\)"},{"letter":"B","html":"\\(\\left(\\frac{a(a^2+2a-1)}{a^2+1},\\frac{-a(a^2-2a-1)}{a^2+1}\\right)\\)"},{"letter":"C","html":"\\(\\left(\\frac{a(a-1)^2}{a^2+1},\\frac{-a(a-1)^2}{a^2+1}\\right)\\)"},{"letter":"D","html":"\\(\\left(\\frac{a(a+1)^2}{a^2+1},\\frac{a^2(a+1)^2}{a^2+1}\\right)\\)"}],"answer":"B"},{
+  "number": 13,
+  "section": "Coordinate Geometry",
+  "topic": "Coordinate Geometry",
+  "promptHtml": "<p>The circle \\(C\\) has equation \\(x^2+y^2=1\\). Two circles of equal radius \\(r\\), with centres \\((a,0)\\) and \\((-a,0)\\), where \\(a&gt;0\\), both pass through \\((0,1)\\) and \\((0,-1)\\). This is shown in the diagram.</p>\n<div class=\"question-image\">\n  <img src=\"https://assets.thrivingscholars.com/images/tmua/e3b15257-ffbb-47a3-8211-8eb11cc56443.png\" alt=\"Unit circle divided by two equal-radius circle arcs\" style=\"max-width:100%; height:auto; display:block; margin:0 auto;\" />\n</div>\n<p>The two arcs divide \\(C\\) into three distinct regions. If the three regions have equal area, which equation is satisfied by \\(a\\)?</p>",
+  "options": [
+    {
+      "letter": "A",
+      "html": "\\(3(a^2+1)\\arctan\\!\\left(\\frac1a\\right)-3a=\\pi\\)"
+    },
+    {
+      "letter": "B",
+      "html": "\\(6(a^2+1)\\arctan\\!\\left(\\frac1a\\right)-6a=\\pi\\)"
+    },
+    {
+      "letter": "C",
+      "html": "\\(6(a^2+1)\\arctan\\!\\left(\\frac1a\\right)-3a=\\pi\\)"
+    },
+    {
+      "letter": "D",
+      "html": "\\(12(a^2+1)\\arctan\\!\\left(\\frac1a\\right)-6a=\\pi\\)"
     }
-    if (seconds === 0) {
-      minutes--;
-      seconds = 59;
-    } else {
-      seconds--;
-    }
-    const mm = minutes.toString().padStart(2, '0');
-    const ss = seconds.toString().padStart(2, '0');
-    timerDisplay.textContent = `${mm}:${ss}`;
-  }
+  ],
+  "answer": "B"
+},{"number":14,"section":"Sequences, Series & Algebraic Reasoning","topic":"Sequences & Series","promptHtml":"<p>The function \\(f\\) is defined on the positive integers by \\(f(1)=2\\). For \\(n\\ge1\\),</p>\n\\[\nf(n+1)=5f(n)+1 \\quad\\text{if } f(n)\\text{ is odd},\n\\]\n\\[\nf(n+1)=\\frac12f(n) \\quad\\text{if } f(n)\\text{ is even}.\n\\]\n<p>Find \\(\\sum_{r=1}^{100}f(r)\\).</p>","options":[{"letter":"A","html":"535"},{"letter":"B","html":"546"},{"letter":"C","html":"560"},{"letter":"D","html":"563"}],"answer":"D"},{"number":15,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebra & Functions","promptHtml":"<p>When \\(2x^2+3x-15\\) is multiplied by \\((ax-4)\\), and the resulting product is divided by \\(x+2\\), the remainder is \\(182\\).</p>\n<p>Find \\(a\\).</p>","options":[{"letter":"A","html":"\\(-9\\)"},{"letter":"B","html":"\\(-5\\)"},{"letter":"C","html":"\\(5\\)"},{"letter":"D","html":"\\(9\\)"}],"answer":"C"},{"number":16,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebra & Functions","promptHtml":"<p>Find the non-zero solution of</p>\n\\[\n\\frac{3^{16^x}}{81^{4^x}}=\\frac1{27}.\n\\]","options":[{"letter":"A","html":"\\(\\log_4 3\\)"},{"letter":"B","html":"\\(\\log_{16}3\\)"},{"letter":"C","html":"\\(1\\)"},{"letter":"D","html":"\\(2\\)"}],"answer":"A"},{"number":17,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebraic Reasoning","promptHtml":"<p>Let \\(n\\) be a positive integer. \\(x^2+2\\) is a factor of</p>\n\\[\n(x^4-5)^n-(x^2+1)^{n+1}+(x^2+4)^n(x^2+3)^n\n\\]\n<p>for:</p>","options":[{"letter":"A","html":"odd \\(n\\)"},{"letter":"B","html":"even \\(n\\)"},{"letter":"C","html":"no \\(n\\)"},{"letter":"D","html":"all \\(n\\)"},{"letter":"E","html":"\\(n=1\\)"}],"answer":"E"},{"number":18,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebraic Reasoning","promptHtml":"<p>\\(a\\) and \\(b\\) are non-zero integers.</p>\n<p>When \\(x^2-2ax-a^2\\) is divided by \\(x-b\\), the remainder is \\(1\\).</p>\n<p>The polynomial \\(4bx^2-6x-10\\) has \\(2x-a\\) as a factor.</p>\n<p>It follows that \\(a+b\\) equals:</p>","options":[{"letter":"A","html":"\\(-5\\)"},{"letter":"B","html":"\\(-3\\)"},{"letter":"C","html":"\\(-1\\)"},{"letter":"D","html":"\\(0\\)"}],"answer":"C"},{"number":19,"section":"Sequences, Series & Algebraic Reasoning","topic":"Sequences & Series","promptHtml":"<p>The polynomial \\(p_n\\) is defined by</p>\n\\[\np_n(x)=(x-2n+1)+(2x-2n+3)+(3x-2n+5)+\\cdots+(nx-1).\n\\]\n<p>Given \\(n\\ge2\\), what is the remainder when \\(p_n(x)\\) is divided by \\(p_{n-1}(x)\\)?</p>","options":[{"letter":"A","html":"\\(\\frac{n^2-1}{2}\\)"},{"letter":"B","html":"\\(n\\)"},{"letter":"C","html":"\\(-1\\)"},{"letter":"D","html":"\\(1\\)"}],"answer":"C"},{"number":20,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebra & Functions","promptHtml":"<p>Given that \\(x,y,z\\) are positive real numbers,</p>\n\\[\n4\\log_zx=y,\\qquad \\log_xz=y,\\qquad x+\\log_yz=0.\n\\]\n<p><strong>Which of the following is true?</strong></p>","options":[{"letter":"A","html":"Unique solution for \\(x\\), but not for \\(y\\) and \\(z\\)."},{"letter":"B","html":"Unique solutions for \\(x\\) and \\(y\\), but infinitely many solutions for \\(z\\)."},{"letter":"C","html":"Unique solutions for \\(x\\) and \\(z\\), but infinitely many solutions for \\(y\\)."},{"letter":"D","html":"Unique solution for \\(x\\), \\(y\\) and \\(z\\)."}],"answer":"D"}]);
+    const correctAnswers = Object.freeze(QUESTIONS.map(q => q.answer));
 
-  
-function prevQuestion() {
-  if (current > 0) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // record time spent
-    current--;
-    lastTimestamp = Date.now(); // reset timestamp for new question
-    renderQuestion();
-  }
-}
-
-function updateNavigatorButton(index) {
-  const btn = document.getElementById(`nav-btn-${index}`);
-  if (!btn) return;
-  if (flags[index]) {
-    btn.style.backgroundColor = "gold";
-    btn.style.fontWeight = "bold";
-    btn.textContent = `⚑ ${index + 1}`;
-  } else {
-    btn.style.backgroundColor = "";
-    btn.style.fontWeight = "normal";
-    btn.textContent = `${index + 1}`;
-  }
-}
-
-async function submitExam() {
-  clearInterval(timerInterval);
-
-  // ⏱️ Record final question time
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-
-  // ✅ Calculate score
-  let score = 0;
-  for (let i = 0; i < correctAnswers.length; i++) {
-    if (userAnswers[i] === correctAnswers[i]) {
-      score++;
-    }
-  }
-/* TS_TMUA_SCORE9_IN_SUBMITEXAM_V10 */
-const score9Block = window.TS_TMUA_SCORE9_BLOCK
-  ? window.TS_TMUA_SCORE9_BLOCK({
-      overallRaw: score,
-      totalQ: (correctAnswers.length || 20),
-      thr: 6,
-      scoringPdfUrl: window.TS_TMUA_SCORING_PDF || ""
-    })
-  : "";
-
-
-  // ✅ Prepare timestamp
-  const timestamp = new Date().toLocaleString();
-
-  // ✅ Find incorrect question numbers
-  let incorrectList = [];
-  for (let i = 0; i < correctAnswers.length; i++) {
-    if (userAnswers[i] !== correctAnswers[i]) {
-      incorrectList.push(i + 1);
-    }
-  }
-
-/* TS_ATTEMPT_SAVE_20Q_V2 */
-const __tsTestTitle = ((document.getElementById("test-title") || {}).textContent || "p1-mock-01-algebra-sequences-functions-geometry").trim();
-try {
-  const __tsSaveRes = await window.TS_SAVE_ATTEMPT({
-    test_id: "p1-mock-01-algebra-sequences-functions-geometry",
-    test_title: __tsTestTitle,
-    paper: "1",
-    total_questions: 20,
-    score: score,
-    answers: userAnswers,
-    correct_answers: correctAnswers,
-    time_spent: timeSpent,
-    flags: flags,
-    incorrect: incorrectList
-  });
-  console.log("TS_ATTEMPT_SAVE_20Q:", __tsSaveRes);
-} catch (e) {
-  console.error("TS_ATTEMPT_SAVE_20Q failed:", e);
-}
-
-
-let timeTableHTML = "";
-for (let i = 0; i < 20; i++) {
-  const seconds = Math.round(timeSpent[i]);
-  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const ss = String(seconds % 60).padStart(2, '0');
-  const yourAns = userAnswers[i] ?? "-";
-  const correctAns = correctAnswers[i];
-  const status = yourAns === correctAns ? "✅" : (yourAns === "-" ? "—" : "❌");
-
-  timeTableHTML += `
-    <tr>
-      <td style="border: 1px solid #ccc; padding: 6px;">${i + 1}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${mm}:${ss}</td>
-      <td style="border: 1px solid #ccc; padding: 6px;">${status}</td>
-    </tr>\n`; // ✅ Keep line break
-}
-
-let plainTextSummary = "Paper 1 Analysis\n";
-
-for (let i = 0; i < 20; i++) {
-  const seconds = Math.round(timeSpent[i]);
-  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const ss = String(seconds % 60).padStart(2, '0');
-  const yourAns = userAnswers[i] ?? "-";
-  const correctAns = correctAnswers[i];
-  plainTextSummary += `Q.${i + 1}  Correct: ${correctAns}   Yours: ${yourAns}   Time: ${mm}:${ss}\n`;
-}
-
-
-const studentEmail = document.getElementById("studentEmail").value;
-const testTitle = document.getElementById("test-title").textContent.trim();
-
-emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
-  name: studentName,
-  session: testSession,
-  score: `${score} / ${correctAnswers.length}`,
-  timestamp: new Date().toLocaleString(),
-  incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
-  paper1: plainTextSummary.trim(),
-  to_email: studentEmail,
-  solution_link: solutionPDF,
-  test_title: testTitle
-})
-.then(res => console.log("✅ Email sent", res))
-.catch(err => console.error("❌ Email error", err));
-
-
-
-  // ✅ Select emoji
-  let emoji = score >= 14 ? "😊"  : "😐";
-
-  // ✅ Generate time table
-  let timeRows = "";
-  for (let i = 0; i < timeSpent.length; i++) {
-    const seconds = Math.round(timeSpent[i]);
-    const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const ss = String(seconds % 60).padStart(2, '0');
-    const status = userAnswers[i] ? (userAnswers[i] === correctAnswers[i] ? "✅" : "❌") : "—";
-    timeRows += `
-      <tr>
-        <td style="border: 1px solid #ccc; padding: 8px;">${i + 1}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${userAnswers[i] || "-"}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${correctAnswers[i]}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${mm}:${ss}</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">${status}</td>
-      </tr>`;
-  }
-
-  // ✅ Display final screen
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; align-items: center; padding: 40px;">
-      <div style="font-size: 160px;">${emoji}</div>
-      <h1>Exam Completed</h1>
-
-      ${score9Block}
-<h1>The detailed Score Report has been emailed to you ✅ </h1>
-
-      <table style="border-collapse: collapse; margin-top: 30px; font-size: 18px;">
-        <tr style="background: #f9f9f9;">
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">${studentName}</td>
-        </tr>
-        <tr style="background: #f9f9f9;">
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Your Score</strong></td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>${score} / 20</strong></td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">Threshold Score</td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">15+ / 20</td>
-        </tr>
-        <tr>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">Average Test Taker Score</td>
-          <td style="border: 1px solid #ccc; padding: 10px 20px;">8 / 20</td>
-        </tr>
-      </table>
-
-      <h3 style="margin-top: 40px;">Paper 1 Analysis</h3>
-      <table style="border-collapse: collapse; margin-top: 10px; font-size: 16px; width: 100%; max-width: 600px;">
-        <thead style="background: #eee;">
-          <tr>
-            <th style="border: 1px solid #ccc; padding: 8px;">Q#</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Your Ans</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Correct</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Time</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Status</th>
-          </tr>
-        </thead>
-        <tbody>${timeRows}</tbody>
-      </table>
-
-      <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
-  <iframe 
-  id="solution-frame"
-  width="100%" 
-  height="600px" 
-  style="border: 1px solid #ccc; margin-top: 10px;">
-</iframe>
-    </div>
-  `;
-document.getElementById("solution-frame").src = solutionPDF;
-
-  document.querySelector(".footer").style.display = "none";
-
-  document.body.classList.add("ts-exam-done");
-  try { window.__TS_EXAM_DONE = true; } catch(e){}
-  try { window.__TS_SET_WARN_ON_LEAVE && window.__TS_SET_WARN_ON_LEAVE(false); } catch(e){}
-}
-
-function generateNavigatorButtons() {
-  const grid = document.getElementById("navigator-grid");
-  for (let i = 0; i < 20; i++) {
-    const btn = document.createElement("button");
-    btn.id = `nav-btn-${i}`;
-    btn.textContent = i + 1;
-    btn.style.padding = "10px";
-    btn.onclick = function () {
-      jumpTo(i);
+    const state = {
+      current: 0,
+      userAnswers: new Array(QUESTIONS.length).fill(null),
+      flags: new Array(QUESTIONS.length).fill(false),
+      timeSpent: new Array(QUESTIONS.length).fill(0),
+      started: false,
+      submitted: false,
+      autoSubmitted: false,
+      studentName: "",
+      studentEmail: "",
+      session: "",
+      timerEndAt: 0,
+      timerId: null,
+      lastQuestionTimestamp: 0
     };
-    grid.appendChild(btn);
-  }
-}
 
-window.onload = function () {
-  generateNavigatorButtons();
-  for (let i = 0; i < flags.length; i++) {
-    updateNavigatorButton(i);
-  }
-};
+    const els = {
+      instructions: document.getElementById("instructions"),
+      exam: document.getElementById("exam-interface"),
+      header: document.getElementById("exam-header"),
+      footer: document.getElementById("exam-footer"),
+      question: document.getElementById("question-container"),
+      time: document.getElementById("time"),
+      counter: document.getElementById("counter"),
+      sectionChip: document.getElementById("section-chip"),
+      flag: document.getElementById("flag-btn"),
+      prev: document.getElementById("prev-btn"),
+      next: document.getElementById("next-btn"),
+      navigator: document.getElementById("navigator-popup"),
+      navigatorGrid: document.getElementById("navigator-grid")
+    };
 
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[ch]);
+    }
 
-</script>
-<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
- background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
-  <h3 style="margin-top: 0; color:#0074c1;">Jump to Question</h3>
-  <div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;">
-    <!-- Buttons will be generated here -->
-  </div>
-  <button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px;">Close</button>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function () {
-    emailjs.init("9jjn3yBHl6S88hITy"); // Replace with your actual public key
-  })();
-</script>
+    function formatClock(totalSeconds) {
+      const safe = Math.max(0, Math.floor(totalSeconds));
+      const minutes = String(Math.floor(safe / 60)).padStart(2, "0");
+      const seconds = String(safe % 60).padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
 
-<!-- TS_PATCH_KEYS_RC_V1 -->
-<script>
-(function(){
-  function disableRightClick(){
-    document.addEventListener("contextmenu", function(e){
-      e.preventDefault();
-    }, true);
-  }
+    function formatQuestionTime(totalSeconds) {
+      return formatClock(Math.round(Math.max(0, totalSeconds)));
+    }
 
-  function isTypingTarget(t){
-    if (!t) return false;
-    var tag = (t.tagName || "").toUpperCase();
-    return t.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
-  }
+    function resolveSolutionUrl() {
+      try { return new URL(TEST.solutionUrl, window.location.href).href; }
+      catch (_) { return TEST.solutionUrl; }
+    }
 
-  function bindHotkeys(){
-    window.addEventListener("keydown", function(e){
-      if (!e.altKey) return;
-      if (e.ctrlKey || e.metaKey) return;
-      if (isTypingTarget(e.target)) return;
+    function recordCurrentTime() {
+      if (!state.started || state.submitted || !state.lastQuestionTimestamp) return;
+      const now = performance.now();
+      const elapsed = Math.max(0, (now - state.lastQuestionTimestamp) / 1000);
+      state.timeSpent[state.current] += elapsed;
+      state.lastQuestionTimestamp = now;
+    }
 
-      var k = (e.key || "").toLowerCase();
-      if (k === "n") {
-        e.preventDefault(); e.stopPropagation();
-        if (typeof nextQuestion === "function") nextQuestion();
-        else if (window.NAV && typeof window.NAV.next === "function") window.NAV.next();
-      } else if (k === "p") {
-        e.preventDefault(); e.stopPropagation();
-        if (typeof prevQuestion === "function") prevQuestion();
-        else if (window.NAV && typeof window.NAV.prev === "function") window.NAV.prev();
+    async function safeTypeset(target) {
+      try {
+        if (!window.MathJax || !window.MathJax.typesetPromise) return;
+        if (window.MathJax.typesetClear) window.MathJax.typesetClear([target]);
+        await window.MathJax.typesetPromise([target]);
+      } catch (error) {
+        console.error("MathJax rendering failed:", error);
       }
-    }, true);
-  }
-
-  function bootPatch(){
-    try { bindHotkeys(); } catch(_) {}
-    try { disableRightClick(); } catch(_) {}
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootPatch);
-  } else {
-    bootPatch();
-  }
-})();
-</script>
-<!-- /TS_PATCH_KEYS_RC_V1 -->
-<script>
-/* TS_TMUA_SCORE9_HELPER_V10 */
-(function(){
-  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
-  window.TS_TMUA_SCORING_PDF = "https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2025/11/14082812/TMUA_Explanation_of_Results-October2025.pdf";
-
-  window.TS_TMUA_SCORE9 = function(rawCorrect, totalQuestions, thresholdRaw){
-    var raw = Number(rawCorrect || 0);
-    var total = Number(totalQuestions || 20);
-    var thr = Number(thresholdRaw || 6);
-    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
-    if (raw <= thr) return 1.0;
-    var frac = (raw - thr) / (total - thr);
-    var score9 = 1.0 + frac * 8.0;
-    score9 = clamp(score9, 1.0, 9.0);
-    return Math.round(score9 * 10) / 10;
-  };
-
-  window.TS_TMUA_SCORE9_BLOCK = function(opts){
-    opts = opts || {};
-    var totalQ = Number(opts.totalQ || 20);
-    var thr = Number(("thr" in opts) ? opts.thr : 6);
-    var scoringPdfUrl = String(opts.scoringPdfUrl || window.TS_TMUA_SCORING_PDF || "").trim();
-
-    function fmt(x){
-      var n = Number(x);
-      if (!isFinite(n)) n = 1.0;
-      return n.toFixed(1);
     }
 
-    var overallRaw = Number(opts.overallRaw || 0);
-    var overall9 = window.TS_TMUA_SCORE9(overallRaw, totalQ, thr);
+    function renderQuestion() {
+      const q = QUESTIONS[state.current];
+      const optionsHtml = q.options.map(option => {
+        const checked = state.userAnswers[state.current] === option.letter ? " checked" : "";
+        return `
+          <label class="option">
+            <input type="radio" name="q${q.number}" value="${option.letter}"${checked}>
+            <span class="option-letter">${option.letter}</span>
+            <span class="option-content">${option.html}</span>
+          </label>`;
+      }).join("");
 
-    var p1Raw = ("p1Raw" in opts) ? Number(opts.p1Raw || 0) : null;
-    var p2Raw = ("p2Raw" in opts) ? Number(opts.p2Raw || 0) : null;
-    var hasPapers = (p1Raw !== null && p2Raw !== null);
+      els.question.innerHTML = `
+        <div class="question-number">Question ${q.number}</div>
+        <div class="question-topic">${escapeHtml(q.topic)}</div>
+        ${q.promptHtml}
+        <div class="options">${optionsHtml}</div>`;
 
-    var inner = ''
-      + '<div class="ts-score9-wrap">'
-      + '  <div class="ts-score9-row">'
-      + '    <div>'
-      + '      <div class="ts-score9-title">Estimated TMUA Score</div>'
-      + '      <div class="ts-score9-sub">Scale 1.0–9.0 (approx). Threshold anchored at raw ' + thr + '.</div>'
-      + '    </div>'
-      + '    <div class="ts-score9-chip">' + fmt(overall9) + ' / 9.0</div>'
-      + '  </div>';
+      els.counter.textContent = `Question ${q.number} of ${QUESTIONS.length}`;
+      els.sectionChip.textContent = q.section;
+      els.flag.classList.toggle("flagged", state.flags[state.current]);
+      els.flag.textContent = state.flags[state.current] ? "⚑ Flagged for Review" : "⚑ Flag for Review";
+      els.prev.disabled = state.current === 0;
+      els.next.disabled = state.current === QUESTIONS.length - 1;
 
-    if (hasPapers){
-      var p1_9 = window.TS_TMUA_SCORE9(p1Raw, 20, thr);
-      var p2_9 = window.TS_TMUA_SCORE9(p2Raw, 20, thr);
-      inner += ''
-        + '  <div class="ts-score9-grid">'
-        + '    <div class="ts-score9-card"><h4>Paper 1</h4><div class="ts-score9-big">' + fmt(p1_9) + '</div><div class="ts-score9-small">from ' + p1Raw + '/20</div></div>'
-        + '    <div class="ts-score9-card"><h4>Paper 2</h4><div class="ts-score9-big">' + fmt(p2_9) + '</div><div class="ts-score9-small">from ' + p2Raw + '/20</div></div>'
-        + '  </div>';
-    } else {
-      inner += '<div style="margin-top:12px;font-family:Arial,sans-serif;color:#555;font-size:12px;">Based on ' + overallRaw + ' / ' + totalQ + ' correct.</div>';
-    }
-
-    inner += ''
-      + '  <div class="ts-score9-note">'
-      + '    <div class="ts-score9-note__asterisk">*</div>'
-      + '    <div class="ts-score9-note__text">'
-      + '      <p class="ts-score9-note__title">Note</p>'
-      + '      <p class="ts-score9-note__sub">This TMUA score is an approximate mapping based on your raw correct count. It is not an official UAT-UK conversion.</p>'
-      + '    </div>'
-      + (scoringPdfUrl
-          ? '    <a class="ts-score9-note__btn" href="' + scoringPdfUrl + '" target="_blank" rel="noopener noreferrer" aria-label="Open scoring PDF" title="Open scoring PDF">'
-            + '      <svg class="ts-score9-note__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">'
-            + '        <path d="M8 8h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '        <path d="M8 16L16 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '        <path d="M16 13v5H3V5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'
-            + '      </svg>'
-            + '    </a>'
-          : '')
-      + '  </div>'
-      + '</div>';
-
-    return inner;
-  };
-})();
-</script>
-<!-- TS_PATCH_WORKSPACE_BTN_V8 -->
-<style>
-.ts-workspace-btn{
-  position: fixed;
-  left: 14px;
-  bottom: 7px;
-  z-index: 2000;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(17,24,39,0.18);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
-  color: rgba(17,24,39,0.86);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  user-select: none;
-}
-body.ts-exam-done .ts-workspace-btn{
-  background: rgba(246, 196, 74, 0.95);
-  border: 1px solid rgba(146, 98, 0, 0.30);
-  color: rgba(43, 26, 0, 0.92);
-  font-weight: 800;
-}
-</style>
-
-<button type="button" class="ts-workspace-btn" id="tsWorkspaceBtn" aria-label="Back to TMUA Workspace">
-  &larr; TMUA Workspace
-</button>
-
-<script>
-(function(){
-  var DASH_URL = "https://apps.thrivingscholars.com/dashboard";
-  if (typeof window.__TS_EXAM_DONE === "undefined") window.__TS_EXAM_DONE = false;
-
-  function examDone(){
-    return !!window.__TS_EXAM_DONE || !!window.__TS_SUBMIT_ONCE;
-  }
-
-  function applyDoneUI(){
-    try {
-      if (examDone()) document.body.classList.add("ts-exam-done");
-      else document.body.classList.remove("ts-exam-done");
-    } catch(_) {}
-  }
-
-  function goWorkspace(){
-    window.location.href = DASH_URL;
-  }
-
-  function wrapSubmitExam(){
-    var orig = window.submitExam;
-    if (typeof orig !== "function") return;
-    if (orig.__TS_WRAPPED_DONE) return;
-
-    function wrappedSubmitExam(){
-      try { window.__TS_EXAM_DONE = true; } catch(_) {}
-      applyDoneUI();
-      return orig.apply(this, arguments);
-    }
-    wrappedSubmitExam.__TS_WRAPPED_DONE = true;
-    try { window.submitExam = wrappedSubmitExam; } catch(_) {}
-  }
-
-  function bindBtn(){
-    var b = document.getElementById("tsWorkspaceBtn");
-    if (!b) return;
-    if (b.getAttribute("data-bound")) return;
-    b.setAttribute("data-bound","1");
-
-    b.addEventListener("click", function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      if (examDone()) {
-        goWorkspace();
-        return;
-      }
-      if (window.confirm("Are you sure you want to go back? Your progress on the current test will be lost.")) {
-        goWorkspace();
-      }
-    }, true);
-  }
-
-  window.addEventListener("beforeunload", function(e){
-    if (examDone()) return;
-    e.preventDefault();
-    e.returnValue = "";
-    return "";
-  });
-
-  function boot(){
-    applyDoneUI();
-    wrapSubmitExam();
-    bindBtn();
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
-  else boot();
-})();
-</script>
-<!-- /TS_PATCH_WORKSPACE_BTN_V8 -->
-<script>
-/* TS_PRACTICE_ATTEMPT_SAVE_HELPER_V2 */
-(function(){
-  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
-
-  function score9(rawCorrect, totalQuestions, thresholdRaw){
-    var raw = Number(rawCorrect || 0);
-    var total = Number(totalQuestions || 20);
-    var thr = Number(thresholdRaw || 6);
-    if (!isFinite(raw) || !isFinite(total) || total <= 0) return 1.0;
-    if (raw <= thr) return 1.0;
-    var frac = (raw - thr) / (total - thr);
-    var score = 1.0 + frac * 8.0;
-    score = clamp(score, 1.0, 9.0);
-    return Math.round(score * 10) / 10;
-  }
-
-  window.TS_BUILD_INCORRECT_LIST = function(userAnswers, correctAnswers){
-    var out = [];
-    var ua = Array.isArray(userAnswers) ? userAnswers : [];
-    var ca = Array.isArray(correctAnswers) ? correctAnswers : [];
-    for (var i = 0; i < ca.length; i++) {
-      if (ua[i] !== ca[i]) out.push(i + 1);
-    }
-    return out;
-  };
-
-  window.TS_SAVE_ATTEMPT = async function(opts){
-    opts = opts || {};
-
-    if (window.__TS_ATTEMPT_SAVE_RUNNING) {
-      return { ok:false, skipped:true, reason:'running' };
-    }
-    if (window.__TS_ATTEMPT_SAVE_DONE) {
-      return { ok:true, skipped:true, reason:'already-saved' };
-    }
-
-    window.__TS_ATTEMPT_SAVE_RUNNING = true;
-
-    try {
-      var answers = Array.isArray(opts.answers) ? opts.answers : [];
-      var correctAnswers = Array.isArray(opts.correct_answers) ? opts.correct_answers : [];
-      var timeSpent = Array.isArray(opts.time_spent) ? opts.time_spent : [];
-      var flags = Array.isArray(opts.flags) ? opts.flags : [];
-      var incorrect = Array.isArray(opts.incorrect) ? opts.incorrect : window.TS_BUILD_INCORRECT_LIST(answers, correctAnswers);
-
-      var totalQuestions = Number(opts.total_questions || correctAnswers.length || answers.length || 20);
-      var score = Number(opts.score || 0);
-
-      var payload = {
-        test_id: String(opts.test_id || '').trim(),
-        test_title: String(opts.test_title || '').trim(),
-        paper: String(opts.paper || '').trim(),
-        total_questions: totalQuestions,
-        score: score,
-        answers: answers,
-        correct_answers: correctAnswers,
-        time_spent: timeSpent,
-        flags: flags,
-        incorrect: incorrect,
-        estimated_tmua_score: score9(score, totalQuestions, 6)
-      };
-
-      var res = await fetch('/api/practice-tests/submit', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+      els.question.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.addEventListener("change", event => {
+          state.userAnswers[state.current] = event.target.value;
+          updateNavigator();
+        });
       });
 
-      var json = {};
-      try { json = await res.json(); } catch(_) {}
+      updateNavigator();
+      safeTypeset(els.question);
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
 
-      console.log('TS_SAVE_ATTEMPT:', res.status, json);
+    function goToQuestion(index) {
+      if (!Number.isInteger(index) || index < 0 || index >= QUESTIONS.length || index === state.current) return;
+      recordCurrentTime();
+      state.current = index;
+      state.lastQuestionTimestamp = performance.now();
+      renderQuestion();
+    }
 
-      if (res.ok && (json.ok === true || typeof json.ok === 'undefined')) {
-        window.__TS_ATTEMPT_SAVE_DONE = true;
+    function nextQuestion() {
+      if (state.current < QUESTIONS.length - 1) goToQuestion(state.current + 1);
+    }
+
+    function prevQuestion() {
+      if (state.current > 0) goToQuestion(state.current - 1);
+    }
+
+    function toggleFlag() {
+      state.flags[state.current] = !state.flags[state.current];
+      els.flag.classList.toggle("flagged", state.flags[state.current]);
+      els.flag.textContent = state.flags[state.current] ? "⚑ Flagged for Review" : "⚑ Flag for Review";
+      updateNavigator();
+    }
+
+    function buildNavigator() {
+      els.navigatorGrid.innerHTML = "";
+      QUESTIONS.forEach((q, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.id = `nav-btn-${index}`;
+        button.className = "nav-question";
+        button.textContent = q.number;
+        button.addEventListener("click", () => {
+          closeNavigator();
+          goToQuestion(index);
+        });
+        els.navigatorGrid.appendChild(button);
+      });
+      updateNavigator();
+    }
+
+    function updateNavigator() {
+      QUESTIONS.forEach((q, index) => {
+        const button = document.getElementById(`nav-btn-${index}`);
+        if (!button) return;
+        button.classList.toggle("answered", state.userAnswers[index] !== null);
+        button.classList.toggle("flagged", state.flags[index]);
+        button.classList.toggle("current", index === state.current);
+        button.textContent = state.flags[index] ? `⚑ ${q.number}` : String(q.number);
+        button.setAttribute(
+          "aria-label",
+          `Question ${q.number}${state.userAnswers[index] ? ", answered" : ", unanswered"}${state.flags[index] ? ", flagged" : ""}`
+        );
+      });
+    }
+
+    function openNavigator() {
+      els.navigator.style.display = "block";
+      const currentButton = document.getElementById(`nav-btn-${state.current}`);
+      if (currentButton) currentButton.focus();
+    }
+
+    function closeNavigator() {
+      els.navigator.style.display = "none";
+    }
+
+    function updateTimer() {
+      if (!state.started || state.submitted) return;
+      const remaining = Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000));
+      els.time.textContent = formatClock(remaining);
+      if (remaining <= 0) {
+        clearInterval(state.timerId);
+        state.autoSubmitted = true;
+        submitExam(true);
+      }
+    }
+
+    function startExam() {
+      if (state.started) return;
+      const nameInput = document.getElementById("student-name");
+      const emailInput = document.getElementById("student-email");
+      const sessionInput = document.getElementById("test-session");
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      if (!name) {
+        alert("Please enter your full name.");
+        nameInput.focus();
+        return;
+      }
+      if (!email || !emailInput.checkValidity()) {
+        alert("Please enter a valid email address.");
+        emailInput.focus();
+        return;
       }
 
-      return {
-        ok: res.ok,
-        status: res.status,
-        body: json
-      };
-    } catch (err) {
-      console.error('TS_SAVE_ATTEMPT error:', err);
-      return { ok:false, error:String(err) };
-    } finally {
-      window.__TS_ATTEMPT_SAVE_RUNNING = false;
+      state.studentName = name;
+      state.studentEmail = email;
+      state.session = sessionInput.value;
+      state.started = true;
+      state.timerEndAt = Date.now() + TEST.durationSeconds * 1000;
+      state.lastQuestionTimestamp = performance.now();
+
+      els.instructions.style.display = "none";
+      els.exam.style.display = "block";
+      state.timerId = window.setInterval(updateTimer, 250);
+      updateTimer();
+      renderQuestion();
     }
-  };
-})();
-</script>
-<script id="ts-hotkeys-v1">
-(function () {
-  if (window.__TS_HOTKEYS_V1__) return;
-  window.__TS_HOTKEYS_V1__ = true;
 
-  function isTyping() {
-    var el = document.activeElement;
-    if (!el) return false;
-    var tag = (el.tagName || "").toLowerCase();
-    return tag === "input" || tag === "textarea" || tag === "select" || el.isContentEditable;
-  }
+    function confirmSubmit() {
+      if (state.submitted) return;
+      const unanswered = state.userAnswers.filter(answer => answer === null).length;
+      const message = unanswered
+        ? `You have ${unanswered} unanswered question${unanswered === 1 ? "" : "s"}. Submit the test now?`
+        : "Submit the test now?";
+      if (window.confirm(message)) submitExam(false);
+    }
 
-  document.addEventListener("keydown", function (event) {
-    if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    if (isTyping()) return;
+    function estimateTmuaScore(rawCorrect, totalQuestions = 20, thresholdRaw = 6) {
+      const raw = Number(rawCorrect) || 0;
+      const total = Number(totalQuestions) || 20;
+      const threshold = Number(thresholdRaw) || 6;
+      if (raw <= threshold) return 1.0;
+      const fraction = (raw - threshold) / Math.max(1, total - threshold);
+      return Math.max(1, Math.min(9, Math.round((1 + 8 * fraction) * 10) / 10));
+    }
 
-    var key = String(event.key || "").toLowerCase();
-    var action = null;
+    function buildAnalysisRows() {
+      return QUESTIONS.map((q, index) => {
+        const yours = state.userAnswers[index] ?? "—";
+        const correct = q.answer;
+        const isCorrect = yours === correct;
+        const status = yours === "—" ? "—" : (isCorrect ? "✓" : "✗");
+        return `
+          <tr>
+            <td>${q.number}</td>
+            <td>${yours}</td>
+            <td>${correct}</td>
+            <td>${formatQuestionTime(state.timeSpent[index])}</td>
+            <td>${status}</td>
+          </tr>`;
+      }).join("");
+    }
 
-    if (key === "n" && typeof window.nextQuestion === "function") action = window.nextQuestion;
-    if (key === "p" && typeof window.prevQuestion === "function") action = window.prevQuestion;
-    if (key === "f" && typeof window.toggleFlag === "function") action = window.toggleFlag;
-    if (key === "v" && typeof window.openNavigator === "function") action = window.openNavigator;
+    function buildPlainTextAnalysis() {
+      return QUESTIONS.map((q, index) => {
+        const yours = state.userAnswers[index] ?? "-";
+        return `Q.${q.number} Correct: ${q.answer} Yours: ${yours} Time: ${formatQuestionTime(state.timeSpent[index])}`;
+      }).join("\n");
+    }
 
-    if (!action) return;
-    event.preventDefault();
-    action();
-  });
-})();
-</script>
+    function renderResults(score) {
+      const incorrect = QUESTIONS
+        .filter((q, index) => state.userAnswers[index] !== q.answer)
+        .map(q => q.number);
+      const estimated = estimateTmuaScore(score, QUESTIONS.length, 6).toFixed(1);
+      const emoji = score >= 14 ? "😊" : "😐";
+      const solutionHref = escapeHtml(resolveSolutionUrl());
+
+      els.header.style.display = "none";
+      els.footer.style.display = "none";
+      closeNavigator();
+
+      els.question.innerHTML = `
+        <div class="result-wrap">
+          <div class="result-card">
+            <div class="result-emoji" aria-hidden="true">${emoji}</div>
+            <h1>Exam Completed</h1>
+            <div class="result-score">${score} / ${QUESTIONS.length}</div>
+
+            <div class="score9-wrap">
+              <div class="score9-row">
+                <div>
+                  <div class="score9-title">Estimated TMUA score</div>
+                  <div class="score9-sub">Approximate internal conversion from the raw score.</div>
+                </div>
+                <div class="score9-chip">${estimated} / 9.0</div>
+              </div>
+              <div class="score9-note">This estimate is not an official UAT-UK score conversion.</div>
+            </div>
+
+            <table class="result-meta">
+              <tr><th>Name</th><td>${escapeHtml(state.studentName)}</td></tr>
+              <tr><th>Test session</th><td>${escapeHtml(state.session)}</td></tr>
+              <tr><th>Your raw score</th><td><strong>${score} / ${QUESTIONS.length}</strong></td></tr>
+              <tr><th>Internal target benchmark</th><td>${TEST.targetBenchmark}+ / 20</td></tr>
+              <tr><th>Reference average</th><td>${TEST.referenceAverage} / 20</td></tr>
+              <tr><th>Incorrect or unanswered</th><td>${incorrect.length ? incorrect.join(", ") : "None"}</td></tr>
+              <tr><th>Submission</th><td>${state.autoSubmitted ? "Automatically submitted when time expired" : "Submitted by the student"}</td></tr>
+            </table>
+
+            <div class="status-grid">
+              <div class="status-box" id="save-status"><strong>Portal save:</strong> Saving attempt…</div>
+              <div class="status-box" id="email-status"><strong>Email report:</strong> Sending…</div>
+            </div>
+
+            <h2 class="analysis-title">Paper 1 analysis</h2>
+            <div class="analysis-scroll">
+              <table class="analysis-table">
+                <thead>
+                  <tr><th>Q#</th><th>Your answer</th><th>Correct</th><th>Time</th><th>Status</th></tr>
+                </thead>
+                <tbody>${buildAnalysisRows()}</tbody>
+              </table>
+            </div>
+
+            <div class="solution-actions">
+              <a href="${solutionHref}" target="_blank" rel="noopener">Open full solution book</a>
+            </div>
+            <iframe id="solution-frame" title="TMUA Mock Test 1 solution book" src="${solutionHref}" loading="lazy"></iframe>
+          </div>
+        </div>`;
+
+      document.body.classList.add("ts-exam-done");
+      window.__TS_EXAM_DONE = true;
+      safeTypeset(els.question);
+    }
+
+    function setResultStatus(id, kind, message) {
+      const node = document.getElementById(id);
+      if (!node) return;
+      node.className = `status-box ${kind}`;
+      node.innerHTML = message;
+    }
+
+    async function saveAttempt(score) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch("/api/practice-tests/submit", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
+          body: JSON.stringify({
+            test_id: TEST.id,
+            test_title: TEST.title,
+            paper: TEST.paper,
+            total_questions: QUESTIONS.length,
+            score,
+            answers: state.userAnswers,
+            correct_answers: correctAnswers,
+            time_spent: state.timeSpent.map(value => Math.round(value * 100) / 100),
+            flags: state.flags,
+            incorrect: QUESTIONS
+              .filter((q, index) => state.userAnswers[index] !== q.answer)
+              .map(q => q.number),
+            estimated_tmua_score: estimateTmuaScore(score, QUESTIONS.length, 6)
+          })
+        });
+        let body = {};
+        try { body = await response.json(); } catch (_) {}
+        if (!response.ok || body.ok === false) throw new Error(`HTTP ${response.status}`);
+        return { ok: true };
+      } catch (error) {
+        return { ok: false, error: error.name === "AbortError" ? "request timed out" : String(error.message || error) };
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+
+    function waitForEmailJs(timeoutMs = 3500) {
+      return new Promise(resolve => {
+        const started = Date.now();
+        const check = () => {
+          if (window.emailjs && typeof window.emailjs.send === "function") return resolve(true);
+          if (Date.now() - started >= timeoutMs) return resolve(false);
+          setTimeout(check, 100);
+        };
+        check();
+      });
+    }
+
+    async function sendEmail(score) {
+      const available = await waitForEmailJs();
+      if (!available) return { ok: false, skipped: true, error: "EmailJS did not load" };
+      try {
+        if (!window.__TS_EMAILJS_INITIALISED) {
+          window.emailjs.init(TEST.email.publicKey);
+          window.__TS_EMAILJS_INITIALISED = true;
+        }
+        const incorrect = QUESTIONS
+          .filter((q, index) => state.userAnswers[index] !== q.answer)
+          .map(q => q.number);
+        await window.emailjs.send(TEST.email.serviceId, TEST.email.templateId, {
+          name: state.studentName,
+          session: state.session,
+          score: `${score} / ${QUESTIONS.length}`,
+          timestamp: new Date().toLocaleString(),
+          incorrect: incorrect.length ? incorrect.join(", ") : "None",
+          paper1: buildPlainTextAnalysis(),
+          to_email: state.studentEmail,
+          solution_link: resolveSolutionUrl(),
+          test_title: TEST.title
+        });
+        return { ok: true };
+      } catch (error) {
+        return { ok: false, error: String(error?.text || error?.message || error) };
+      }
+    }
+
+    async function submitExam(autoSubmit = false) {
+      if (state.submitted) return;
+      recordCurrentTime();
+      state.submitted = true;
+      state.autoSubmitted = Boolean(autoSubmit);
+      clearInterval(state.timerId);
+
+      const score = QUESTIONS.reduce(
+        (total, q, index) => total + (state.userAnswers[index] === q.answer ? 1 : 0),
+        0
+      );
+      renderResults(score);
+
+      const [saveResult, emailResult] = await Promise.all([saveAttempt(score), sendEmail(score)]);
+
+      if (saveResult.ok) {
+        setResultStatus("save-status", "success", "<strong>Portal save:</strong> Attempt saved successfully.");
+      } else {
+        setResultStatus("save-status", "warning", `<strong>Portal save:</strong> Not saved (${escapeHtml(saveResult.error || "unavailable")}). Your on-screen report is unaffected.`);
+      }
+
+      if (emailResult.ok) {
+        setResultStatus("email-status", "success", `<strong>Email report:</strong> Sent to ${escapeHtml(state.studentEmail)}.`);
+      } else {
+        setResultStatus("email-status", "warning", `<strong>Email report:</strong> Not sent (${escapeHtml(emailResult.error || "unavailable")}). The complete report remains visible above.`);
+      }
+    }
+
+    function handleWorkspaceClick() {
+      if (state.submitted || !state.started) {
+        window.location.href = TEST.workspaceUrl;
+        return;
+      }
+      if (window.confirm("Return to the TMUA Workspace? Your current progress will be lost.")) {
+        window.location.href = TEST.workspaceUrl;
+      }
+    }
+
+    function isTypingTarget(target) {
+      const tag = String(target?.tagName || "").toLowerCase();
+      return tag === "input" || tag === "textarea" || tag === "select" || Boolean(target?.isContentEditable);
+    }
+
+    document.getElementById("start-button").addEventListener("click", startExam);
+    document.getElementById("prev-btn").addEventListener("click", prevQuestion);
+    document.getElementById("next-btn").addEventListener("click", nextQuestion);
+    document.getElementById("navigator-btn").addEventListener("click", openNavigator);
+    document.getElementById("close-nav-btn").addEventListener("click", closeNavigator);
+    document.getElementById("submit-btn").addEventListener("click", confirmSubmit);
+    document.getElementById("flag-btn").addEventListener("click", toggleFlag);
+    document.getElementById("workspace-button").addEventListener("click", handleWorkspaceClick);
+
+    document.addEventListener("contextmenu", event => event.preventDefault(), true);
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeNavigator();
+      if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || isTypingTarget(event.target)) return;
+      const key = String(event.key || "").toLowerCase();
+      const actions = { n: nextQuestion, p: prevQuestion, f: toggleFlag, v: openNavigator };
+      if (!actions[key]) return;
+      event.preventDefault();
+      actions[key]();
+    }, true);
+
+    window.addEventListener("beforeunload", event => {
+      if (!state.started || state.submitted) return;
+      event.preventDefault();
+      event.returnValue = "";
+    });
+
+    buildNavigator();
+    window.nextQuestion = nextQuestion;
+    window.prevQuestion = prevQuestion;
+    window.toggleFlag = toggleFlag;
+    window.openNavigator = openNavigator;
+    window.submitExam = submitExam;
+  </script>
 </body>
 </html>
-
-
