@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "verify:esat-identity": "node scripts/verify-esat-question-identity.mjs",
+    "prebuild": "npm run verify:esat-identity"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

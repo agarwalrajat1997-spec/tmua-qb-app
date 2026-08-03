@@ -3345,41 +3345,19 @@ window.MathJax = {
     );
   }
 
+  // TS_ESAT_NO_IDENTITY_FALLBACK_V1
   async function resolveQuestion(body) {
     body = body || {};
 
-    var qid = body.qid || body.id;
+    const identity = body.id || body.qid;
 
-    if (qid) {
-      try {
-        return await getQuestionByQid(qid);
-      } catch (qidError) {
-        // Fall through to the ordered identifiers for compatibility.
-      }
+    if (!identity) {
+      throw new Error(
+        "Stable ESAT id/qid missing. Positional fallback is disabled."
+      );
     }
 
-    var dbDisplayOrder =
-      body.p_db_display_order ??
-      body.db_display_order;
-
-    if (dbDisplayOrder != null && dbDisplayOrder !== "") {
-      try {
-        return await getQuestionByDatabaseOrder(
-          dbDisplayOrder
-        );
-      } catch (dbOrderError) {
-        // Fall through to the legacy 1-based ordinal.
-      }
-    }
-
-    var displayOrder =
-      body.p_display_order ??
-      body.display_order ??
-      body.p_original_index ??
-      body.original_index ??
-      body.order;
-
-    return getQuestionByDisplayOrder(displayOrder);
+    return getQuestionByQid(identity);
   }
 
   async function getQuestion(body) {
@@ -3967,18 +3945,63 @@ window.MathJax = {
   return rows;
 }
 
-  async function loadQuestion(displayOrder) {
-    if (questionCache.has(displayOrder)) return questionCache.get(displayOrder);
+  // TS_ESAT_IDENTITY_LOCK_V1
+  async function loadQuestion(meta) {
+    if (!meta) {
+      throw new Error("Missing ESAT question metadata.");
+    }
+
+    // Prefer the UUID database primary key. Fall back only to the
+    // real qid—not to display_order or a frontend list position.
+    const expectedIdentity = String(
+      meta.id || meta.qid || ""
+    ).trim();
+
+    if (!expectedIdentity) {
+      throw new Error(
+        "This ESAT metadata row has no stable question identity."
+      );
+    }
+
+    const cacheKey = "identity:" + expectedIdentity;
+
+    if (questionCache.has(cacheKey)) {
+      return questionCache.get(cacheKey);
+    }
 
     const result = await rpc("esat_qb_public_question", {
-      p_display_order: displayOrder
+      id: meta.id || null,
+      qid: meta.qid || null
     });
 
     const q = Array.isArray(result) ? result[0] : result;
 
-    if (!q) throw new Error("Question not found for display_order " + displayOrder);
+    if (!q) {
+      throw new Error(
+        "Question not found for ESAT identity " +
+          expectedIdentity
+      );
+    }
 
-    questionCache.set(displayOrder, q);
+    const returnedIdentities = [
+      q.id,
+      q.qid
+    ]
+      .filter(Boolean)
+      .map(function(value) {
+        return String(value).trim();
+      });
+
+    if (!returnedIdentities.includes(expectedIdentity)) {
+      throw new Error(
+        "ESAT question identity mismatch. Expected " +
+          expectedIdentity +
+          " but received " +
+          returnedIdentities.join(", ")
+      );
+    }
+
+    questionCache.set(cacheKey, q);
     return q;
   }
 
@@ -4371,7 +4394,7 @@ function applyFilters() {
     if (card) card.style.display = "block";
 
     const meta = currentMeta();
-    currentQuestion = await loadQuestion(meta.display_order);
+    currentQuestion = await loadQuestion(meta);
 
     setText("qTitle", "Question " + (meta.global_number || meta.paper_question_number || meta.display_order));
     setText("metaPaper", meta.paper || "");
@@ -4675,7 +4698,8 @@ function applyFilters() {
       }
 
       const result = await rpc("esat_qb_public_check", {
-        p_display_order: meta.display_order,
+        id: meta.id || null,
+        qid: meta.qid || null,
         p_selected: a.selected
       });
 
