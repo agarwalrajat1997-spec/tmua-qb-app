@@ -9,11 +9,12 @@ type PracticeTest = {
   id: string;
   test_id: string;
   title: string;
-  section: "topic" | "full";
+  section: "topic" | "thriving" | "official";
   badge: "PAPER 1" | "PAPER 2" | "FULL" | "OFFICIAL";
   duration_minutes: number;
   topics: string[];
   file: string;
+  solution_url?: string;
 };
 
 type Product = "practice-tests" | "tmua-question-bank" | "tmua-classes";
@@ -229,7 +230,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-mock-01",
         test_id: "full-mock-01-all-topics",
         title: "TMUA Mock Full Test 1 (P1 + P2)",
-        section: "full",
+        section: "thriving",
         badge: "FULL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -239,17 +240,28 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-mock-02",
         test_id: "full-mock-02-all-topics",
         title: "TMUA Mock Full Test 2 (P1 + P2)",
-        section: "full",
+        section: "thriving",
         badge: "FULL",
         duration_minutes: 150,
         topics: ["All Topics"],
         file: "full-mock-02-all-topics.html",
       },
       {
+        id: "tmua-2024-2025-challenging-mock",
+        test_id: "tmua-2024-2025-challenging-mock",
+        title: "TMUA 2024-2025 Challenging Full Mock (P1 + P2)",
+        section: "thriving",
+        badge: "FULL",
+        duration_minutes: 150,
+        topics: ["All Topics", "2024-2025 Informed", "Challenging"],
+        file: "tmua-2024-2025-challenging-mock/index.html",
+        solution_url: "/tmua-solutions/tmua-2024-2025-challenging-mock-solutions.pdf",
+      },
+      {
         id: "full-official-2016",
         test_id: "full-official-2016",
         title: "TMUA Official 2016 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -259,7 +271,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2017",
         test_id: "full-official-2017",
         title: "TMUA Official 2017 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -269,7 +281,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2018",
         test_id: "full-official-2018",
         title: "TMUA Official 2018 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -279,7 +291,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2019",
         test_id: "full-official-2019",
         title: "TMUA Official 2019 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -289,7 +301,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2020",
         test_id: "full-official-2020",
         title: "TMUA Official 2020 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -299,7 +311,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2021",
         test_id: "full-official-2021",
         title: "TMUA Official 2021 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -309,7 +321,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2022",
         test_id: "full-official-2022",
         title: "TMUA Official 2022 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -319,7 +331,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-official-2023",
         test_id: "full-official-2023",
         title: "TMUA Official 2023 (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -329,7 +341,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         id: "full-specimen",
         test_id: "full-specimen",
         title: "TMUA Specimen (P1 + P2)",
-        section: "full",
+        section: "official",
         badge: "OFFICIAL",
         duration_minutes: 150,
         topics: ["All Topics"],
@@ -496,7 +508,8 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   }, [loading, accessLoading, hasPractice]);
 
   const topicTests = useMemo(() => TESTS.filter((t) => t.section === "topic"), [TESTS]);
-  const fullTests = useMemo(() => TESTS.filter((t) => t.section === "full"), [TESTS]);
+  const thrivingFullTests = useMemo(() => TESTS.filter((t) => t.section === "thriving"), [TESTS]);
+  const officialPastPapers = useMemo(() => TESTS.filter((t) => t.section === "official"), [TESTS]);
 
   const doneCount = useMemo(() => TESTS.filter((t) => !!latestByTestId[t.test_id]).length, [TESTS, latestByTestId]);
   const leftCount = useMemo(() => Math.max(0, TESTS.length - doneCount), [TESTS.length, doneCount]);
@@ -742,7 +755,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
               <div className={styles.card}>
                 <div className={styles.cardTitle}>Roadmap</div>
                 <div className={styles.muted}>
-                  Topic Tests {ARROW} Full-Length Tests {ARROW} Official (2022/2023) last
+                  Topic Tests {ARROW} Full-Length Tests by Thriving Scholars {ARROW} Official Past Papers
                   <div style={{ marginTop: 8 }}>
                     <b>{nextRecommended}</b>
                   </div>
@@ -779,7 +792,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         } · ${fmtDate(latest.submitted_at)}`
                       : "No attempts yet";
 
-                    const sol = solutionByTestId[t.test_id];
+                    const sol = t.solution_url || solutionByTestId[t.test_id];
 
                     return (
                       <div key={t.id} className={styles.test}>
@@ -837,9 +850,9 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
               </div>
 
               <div className={styles.card}>
-                <div className={styles.cardTitle}>Full-length tests</div>
+                <div className={styles.cardTitle}>Full-length tests by Thriving Scholars</div>
                 <div className={styles.grid}>
-                  {fullTests.map((t) => {
+                  {thrivingFullTests.map((t) => {
                     const latest = latestByTestId[t.test_id];
                     const attempted = !!latest;
                     const wrong = uniqNums((latest as any)?.incorrect);
@@ -850,7 +863,78 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         } · ${fmtDate(latest.submitted_at)}`
                       : "No attempts yet";
 
-                    const sol = solutionByTestId[t.test_id];
+                    const sol = t.solution_url || solutionByTestId[t.test_id];
+
+                    return (
+                      <div key={t.id} className={styles.test}>
+                        <div className={styles.testTitle}>{t.title}</div>
+
+                        <div className={styles.testMeta}>
+                          <span>{t.badge}</span>
+                          <span> · </span>
+                          <span>{t.duration_minutes} min</span>
+                        </div>
+
+                        <div className={styles.tags}>
+                          {(t.topics || []).slice(0, 6).map((x) => (
+                            <span className={styles.tag} key={x}>
+                              {x}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className={styles.muted}>{status}</div>
+
+                        {attempted && wrong.length > 0 && (
+                          <div className={styles.muted} style={{ marginTop: 6 }}>
+                            <b>Questions wrong:</b> {wrong.join(", ")}
+                          </div>
+                        )}
+
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+                          <button className={styles.go} onClick={() => openTest(t)}>
+                            {attempted ? "Retake" : "Start"} {ARROW}
+                          </button>
+
+                          {attempted && (
+                            <button className={styles.btn} type="button" onClick={() => openAttemptsModal(t)}>
+                              View attempts
+                            </button>
+                          )}
+
+                          {attempted && sol && (
+                            <button className={styles.btn} type="button" onClick={() => openSolutionEmbed(t)}>
+                              Solutions
+                            </button>
+                          )}
+
+                          {attempted && !sol && (
+                            <button className={styles.btn} type="button" disabled style={{ opacity: 0.5 }}>
+                              Solutions (missing)
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Official TMUA past papers</div>
+                <div className={styles.grid}>
+                  {officialPastPapers.map((t) => {
+                    const latest = latestByTestId[t.test_id];
+                    const attempted = !!latest;
+                    const wrong = uniqNums((latest as any)?.incorrect);
+
+                    const status = attempted
+                      ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
+                          latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+                        } · ${fmtDate(latest.submitted_at)}`
+                      : "No attempts yet";
+
+                    const sol = t.solution_url || solutionByTestId[t.test_id];
 
                     return (
                       <div key={t.id} className={styles.test}>

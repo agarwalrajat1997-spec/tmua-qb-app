@@ -1,134 +1,42 @@
 (() => {
   "use strict";
+  if (window.__TS_TEST_FULLSCREEN_V2__) return;
+  window.__TS_TEST_FULLSCREEN_V2__ = true;
 
-  if (window.__TS_TEST_FULLSCREEN_V1__) return;
-  window.__TS_TEST_FULLSCREEN_V1__ = true;
+  const root = document.documentElement;
+  const nativeFetch = window.fetch.bind(window);
 
-  const documentRoot = document.documentElement;
+  const current = () =>
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement ||
+    null;
 
-  function currentFullscreenElement() {
-    return (
-      document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.msFullscreenElement ||
-      null
-    );
+  async function enter() {
+    if (current()) return true;
+    const fn =
+      root.requestFullscreen ||
+      root.webkitRequestFullscreen ||
+      root.msRequestFullscreen;
+    if (typeof fn !== "function") return false;
+    try { await fn.call(root); return true; }
+    catch (e) { console.info("[TS fullscreen] Request declined.", e); return false; }
   }
 
-  function enterFullscreen() {
-    if (currentFullscreenElement()) {
-      return Promise.resolve(true);
-    }
-
-    const request =
-      documentRoot.requestFullscreen ||
-      documentRoot.webkitRequestFullscreen ||
-      documentRoot.msRequestFullscreen;
-
-    if (typeof request !== "function") {
-      console.info("[TS fullscreen] Fullscreen is not supported by this browser.");
-      return Promise.resolve(false);
-    }
-
-    try {
-      const result = request.call(documentRoot);
-
-      if (result && typeof result.then === "function") {
-        return result
-          .then(() => true)
-          .catch((error) => {
-            console.info("[TS fullscreen] Fullscreen request was declined.", error);
-            return false;
-          });
-      }
-
-      return Promise.resolve(true);
-    } catch (error) {
-      console.info("[TS fullscreen] Fullscreen request failed.", error);
-      return Promise.resolve(false);
-    }
-  }
-
-  function exitFullscreen() {
-    if (!currentFullscreenElement()) {
-      return Promise.resolve(true);
-    }
-
-    const exit =
+  async function exit() {
+    if (!current()) return true;
+    const fn =
       document.exitFullscreen ||
       document.webkitExitFullscreen ||
       document.msExitFullscreen;
-
-    if (typeof exit !== "function") {
-      return Promise.resolve(false);
-    }
-
-    try {
-      const result = exit.call(document);
-
-      if (result && typeof result.then === "function") {
-        return result
-          .then(() => true)
-          .catch((error) => {
-            console.info("[TS fullscreen] Could not exit fullscreen.", error);
-            return false;
-          });
-      }
-
-      return Promise.resolve(true);
-    } catch (error) {
-      console.info("[TS fullscreen] Could not exit fullscreen.", error);
-      return Promise.resolve(false);
-    }
+    if (typeof fn !== "function") return false;
+    try { await fn.call(document); return true; }
+    catch (e) { console.info("[TS fullscreen] Exit failed.", e); return false; }
   }
 
-  window.TS_TEST_FULLSCREEN = {
-    enter: enterFullscreen,
-    exit: exitFullscreen
-  };
+  window.TS_TEST_FULLSCREEN = { enter, exit };
 
-  const START_IDS = new Set([
-    "start-button",
-    "start-btn",
-    "start-test",
-    "start-exam",
-    "start-paper",
-    "begin-button",
-    "begin-btn",
-    "begin-test",
-    "begin-exam",
-    "begin-paper",
-    "startButton",
-    "startBtn",
-    "startTest",
-    "startExam"
-  ]);
-
-  const SUBMIT_IDS = new Set([
-    "submit-btn",
-    "submit-button",
-    "submit-test",
-    "submit-exam",
-    "finish-btn",
-    "finish-button",
-    "finish-test",
-    "finish-exam",
-    "end-test",
-    "end-exam",
-    "complete-test",
-    "final-submit",
-    "submitBtn",
-    "submitButton",
-    "finishTest"
-  ]);
-
-  const START_LABEL =
-    /^(start|start exam|start test|start paper|begin|begin exam|begin test|begin paper)$/i;
-
-  const SUBMIT_LABEL =
-    /^(submit|submit test|submit exam|finish|finish test|finish exam|end test|end exam|complete test|final submit)$/i;
-
-  const CONTROL_SELECTOR = [
+  const selector = [
     "button",
     "input[type='button']",
     "input[type='submit']",
@@ -136,192 +44,125 @@
     "a"
   ].join(",");
 
-  function getControl(target) {
-    if (!(target instanceof Element)) return null;
-    return target.closest(CONTROL_SELECTOR);
-  }
+  const startIds = new Set([
+    "start-button","start-btn","start-test","start-exam","start-paper",
+    "begin-button","begin-btn","begin-test","begin-exam",
+    "startButton","startBtn","startTest","startExam"
+  ]);
 
-  function getControlLabel(control) {
-    return String(
-      control.getAttribute("aria-label") ||
-      control.getAttribute("title") ||
-      control.value ||
-      control.textContent ||
-      ""
-    )
-      .replace(/\s+/g, " ")
-      .trim();
-  }
+  const submitIds = new Set([
+    "submit-btn","submit-button","submit-test","submit-exam",
+    "finish-btn","finish-button","finish-test","finish-exam",
+    "complete-test","final-submit","submitBtn","submitButton","finishTest"
+  ]);
 
-  function isStartControl(control) {
-    if (!control) return false;
+  const startLabel =
+    /^(start|begin)(?:\s+(?:test|exam|paper|mock|paper\s*[12]))?\s*$/i;
+  const submitLabel =
+    /^(submit|finish|complete|end)(?:\s+(?:test|exam|paper|mock|answers|paper\s*[12]))?\s*$/i;
 
-    return (
-      START_IDS.has(control.id) ||
-      control.dataset.fullscreenStart === "true" ||
-      START_LABEL.test(getControlLabel(control))
+  const control = target =>
+    target instanceof Element ? target.closest(selector) : null;
+
+  const label = el => String(
+    el?.getAttribute("aria-label") ||
+    el?.getAttribute("title") ||
+    el?.value ||
+    el?.textContent ||
+    ""
+  ).replace(/\s+/g, " ").trim();
+
+  const visible = el => {
+    if (!el || !(el instanceof Element) || el.hidden) return false;
+    const s = getComputedStyle(el);
+    return s.display !== "none" &&
+      s.visibility !== "hidden" &&
+      Number(s.opacity) !== 0 &&
+      el.getClientRects().length > 0;
+  };
+
+  const resultsVisible = () => {
+    const selectors = [
+      "#results-screen","#result-screen","#results-page","#score-screen",
+      "#review-screen",".results-screen",".result-screen",".results-page",
+      ".score-screen",".submission-results","[data-screen='results']",
+      "[data-view='results']","[data-page='results']"
+    ];
+    if (selectors.some(x => visible(document.querySelector(x)))) return true;
+    return [...document.querySelectorAll("h1,h2,h3")].some(h =>
+      visible(h) &&
+      /^(test results|exam results|your results|test complete|exam complete|submission complete|score summary)$/i
+        .test(label(h))
     );
-  }
+  };
 
-  function isSubmitControl(control) {
-    if (!control) return false;
-
-    return (
-      SUBMIT_IDS.has(control.id) ||
-      control.dataset.fullscreenSubmit === "true" ||
-      SUBMIT_LABEL.test(getControlLabel(control))
-    );
-  }
-
-  function isVisible(element) {
-    if (!element || !(element instanceof Element)) return false;
-    if (element.hidden) return false;
-    if (element.getAttribute("aria-hidden") === "true") return false;
-
-    const style = window.getComputedStyle(element);
+  document.addEventListener("click", event => {
+    const el = control(event.target);
+    if (!el) return;
 
     if (
-      style.display === "none" ||
-      style.visibility === "hidden" ||
-      Number(style.opacity) === 0
+      startIds.has(el.id) ||
+      el.dataset.fullscreenStart === "true" ||
+      startLabel.test(label(el))
     ) {
-      return false;
+      void enter();
+      return;
     }
 
-    return element.getClientRects().length > 0;
-  }
+    const isSubmit =
+      submitIds.has(el.id) ||
+      el.dataset.fullscreenSubmit === "true" ||
+      submitLabel.test(label(el));
 
-  function resultScreenIsVisible() {
-    const selectors = [
-      "#results-screen",
-      "#result-screen",
-      "#results-page",
-      "#score-screen",
-      "#review-screen",
-      ".results-screen",
-      ".result-screen",
-      ".results-page",
-      ".score-screen",
-      ".submission-results",
-      "[data-screen='results']",
-      "[data-view='results']",
-      "[data-page='results']"
-    ];
+    if (!isSubmit) return;
 
-    for (const selector of selectors) {
-      const element = document.querySelector(selector);
-
-      if (isVisible(element)) {
-        return true;
-      }
-    }
-
-    const headings = document.querySelectorAll("h1, h2, h3");
-
-    for (const heading of headings) {
-      if (!isVisible(heading)) continue;
-
-      const text = String(heading.textContent || "")
-        .replace(/\s+/g, " ")
-        .trim();
-
+    let checks = 0;
+    const timer = setInterval(() => {
+      checks += 1;
       if (
-        /^(test results|exam results|your results|test complete|exam complete|submission complete|score summary)$/i.test(
-          text
-        )
+        resultsVisible() ||
+        !el.isConnected ||
+        el.disabled ||
+        !visible(el)
       ) {
-        return true;
+        clearInterval(timer);
+        void exit();
+      } else if (checks >= 20) {
+        clearInterval(timer);
       }
-    }
+    }, 250);
+  }, true);
 
-    return false;
-  }
-
-  /*
-   * Fullscreen must be requested directly inside the user's Start click.
-   * Capturing phase ensures this runs before each template's own handler.
-   */
-  document.addEventListener(
-    "click",
-    (event) => {
-      const control = getControl(event.target);
-
-      if (isStartControl(control)) {
-        void enterFullscreen();
-        return;
+  window.fetch = async (...args) => {
+    const response = await nativeFetch(...args);
+    try {
+      const input = args[0];
+      const url = typeof input === "string"
+        ? input
+        : String(input?.url || "");
+      if (response.ok && url.includes("/api/practice-tests/submit")) {
+        void exit();
       }
+    } catch (_) {}
+    return response;
+  };
 
-      if (!isSubmitControl(control)) return;
-
-      /*
-       * Do not exit immediately because some tests show a confirmation box.
-       * After confirmation, the submit control normally becomes disabled,
-       * disappears, or the results screen becomes visible.
-       */
-      window.setTimeout(() => {
-        if (
-          resultScreenIsVisible() ||
-          !control.isConnected ||
-          control.disabled ||
-          !isVisible(control)
-        ) {
-          void exitFullscreen();
-        }
-      }, 500);
-    },
-    true
-  );
-
-  /*
-   * Covers templates that use a real HTML form submission.
-   */
-  document.addEventListener(
-    "submit",
-    () => {
-      void exitFullscreen();
-    },
-    true
-  );
-
-  /*
-   * Covers asynchronous submissions and automatic timer submissions.
-   */
   const observer = new MutationObserver(() => {
-    if (currentFullscreenElement() && resultScreenIsVisible()) {
-      void exitFullscreen();
-    }
+    if (current() && resultsVisible()) void exit();
   });
 
-  function startObserver() {
+  const observe = () => {
     if (!document.body) return;
-
     observer.observe(document.body, {
       subtree: true,
       childList: true,
       attributes: true,
-      attributeFilter: [
-        "class",
-        "style",
-        "hidden",
-        "aria-hidden",
-        "disabled"
-      ]
+      attributeFilter: ["class","style","hidden","aria-hidden","disabled"]
     });
-  }
+  };
 
-  if (document.body) {
-    startObserver();
-  } else {
-    document.addEventListener("DOMContentLoaded", startObserver, {
-      once: true
-    });
-  }
+  if (document.body) observe();
+  else document.addEventListener("DOMContentLoaded", observe, { once: true });
 
-  /*
-   * Navigation naturally exits fullscreen, but this handles browsers
-   * where the page is placed in the back-forward cache.
-   */
-  window.addEventListener("pagehide", () => {
-    void exitFullscreen();
-  });
+  addEventListener("pagehide", () => void exit());
 })();

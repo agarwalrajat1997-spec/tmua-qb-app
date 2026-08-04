@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "verify:esat-identity": "node scripts/verify-esat-question-identity.mjs",
-    "prebuild": "npm run verify:esat-identity && npm run verify:tmua-past-papers",
-    "verify:tmua-past-papers": "node scripts/verify-tmua-past-papers.mjs"
+    "prebuild": "npm run verify:esat-identity && npm run verify:tmua-past-papers && npm run verify:tmua-practice-tests",
+    "verify:tmua-past-papers": "node scripts/verify-tmua-past-papers.mjs",
+    "verify:tmua-practice-tests": "node scripts/verify-tmua-practice-test-structure.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
