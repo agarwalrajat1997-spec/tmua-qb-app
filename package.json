@@ -8,10 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "verify:esat-identity": "node scripts/verify-esat-question-identity.mjs",
-    "prebuild": "npm run verify:esat-identity && npm run verify:tmua-past-papers && npm run verify:tmua-practice-tests && npm run verify:tmua-test6",
+    "prebuild": "npm run verify:esat-identity && npm run verify:tmua-past-papers && npm run verify:tmua-practice-tests && npm run verify:tmua-test6 && npm run verify:tmua-score-conversions",
     "verify:tmua-past-papers": "node scripts/verify-tmua-past-papers.mjs",
     "verify:tmua-practice-tests": "node scripts/verify-tmua-practice-test-structure.mjs",
-    "verify:tmua-test6": "node scripts/verify-tmua-test6.mjs"
+    "verify:tmua-test6": "node scripts/verify-tmua-test6.mjs",
+    "verify:tmua-score-conversions": "node scripts/verify-tmua-score-conversions.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
