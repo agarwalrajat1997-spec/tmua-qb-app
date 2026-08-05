@@ -219,12 +219,13 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
       {
         id: "p2-mock-06",
         test_id: "p2-mock-06-all-topics",
-        title: "TMUA Mock Test 6 (Paper 2 · All Topics)",
+        title: "TMUA Mock Test 6 (Paper 2 - All Topics)",
         section: "topic",
         badge: "PAPER 2",
         duration_minutes: 75,
         topics: ["All Topics"],
         file: "p2-mock-06-all-topics.html",
+        solution_url: "/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf",
       },
       {
         id: "full-mock-01",
