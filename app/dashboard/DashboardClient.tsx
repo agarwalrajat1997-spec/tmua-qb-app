@@ -225,7 +225,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         duration_minutes: 75,
         topics: ["All Topics"],
         file: "p2-mock-06-all-topics.html",
-        solution_url: "/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf",
+        solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf",
       },
       {
         id: "full-mock-01",

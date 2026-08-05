@@ -47,7 +47,7 @@ for (const required of [
   'section: "topic"',
   'badge: "PAPER 2"',
   'duration_minutes: 75',
-  'solution_url: "/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf"'
+  'solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf"'
 ]) {
   if (!block.includes(required)) {
     fail(`Dashboard Test 6 block is missing: ${required}`);
