@@ -250,13 +250,13 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
       {
         id: "tmua-2024-2025-challenging-mock",
         test_id: "tmua-2024-2025-challenging-mock",
-        title: "TMUA 2024-2025 Challenging Full Mock (P1 + P2)",
+        title: "TMUA 2024-2025 Challenging Full Test (P1 + P2)",
         section: "thriving",
         badge: "FULL",
         duration_minutes: 150,
         topics: ["All Topics", "2024-2025 Informed", "Challenging"],
         file: "tmua-2024-2025-challenging-mock/index.html",
-        solution_url: "/tmua-solutions/tmua-2024-2025-challenging-mock-solutions.pdf",
+        solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf",
       },
       {
         id: "full-official-2016",

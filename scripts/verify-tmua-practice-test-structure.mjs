@@ -36,7 +36,7 @@ for (const text of [
   "{officialPastPapers.map(",
   'test_id: "tmua-2024-2025-challenging-mock"',
   'file: "tmua-2024-2025-challenging-mock/index.html"',
-  'solution_url: "/tmua-solutions/tmua-2024-2025-challenging-mock-solutions.pdf"'
+  'solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf"'
 ]) {
   if (!dashboard.includes(text)) fail(`Dashboard missing: ${text}`);
 }
@@ -63,7 +63,7 @@ for (const id of officialIds) {
 for (const text of [
   "/api/practice-tests/submit",
   "tmua-2024-2025-challenging-mock",
-  "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-mock-solutions.pdf",
+  "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf",
   "/shared/test-fullscreen.js?v=20260805-2"
 ]) {
   if (!challenge.includes(text)) fail(`Challenge test missing: ${text}`);
@@ -71,7 +71,7 @@ for (const text of [
 
 const pdf = path.join(
   "public","tmua-solutions",
-  "tmua-2024-2025-challenging-mock-solutions.pdf"
+  "tmua-2024-2025-challenging-full-test-revised-solutions.pdf"
 );
 if (!fs.existsSync(pdf) || fs.statSync(pdf).size < 10000) {
   fail("Challenge solution PDF is missing or too small.");
