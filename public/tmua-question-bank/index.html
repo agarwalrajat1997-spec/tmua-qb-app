@@ -1837,9 +1837,27 @@ window.MathJax = {
   var currentVisitQuestionId = "";
   var checkedThisVisit = {};
   var lastSavedHash = "";
+  var questionVisitStartedAtMs = {};
 
   function nowIso() {
     return new Date().toISOString();
+  }
+
+  function newSubmissionId() {
+    try {
+      if (
+        window.crypto &&
+        typeof window.crypto.randomUUID === "function"
+      ) {
+        return window.crypto.randomUUID();
+      }
+    } catch (e) {}
+
+    return [
+      Date.now().toString(36),
+      Math.random().toString(36).slice(2),
+      Math.random().toString(36).slice(2)
+    ].join("-");
   }
 
   function safeString(x) {
@@ -1958,6 +1976,7 @@ window.MathJax = {
     if (qid && qid !== currentVisitQuestionId) {
       currentVisitQuestionId = qid;
 
+      questionVisitStartedAtMs[qid] = Date.now();
       // New visit to a question.
       // If this question was checked earlier in this browser session, clear that marker.
       // This lets old wrong feedback/correct answer hide when the student revisits it.
@@ -2113,7 +2132,7 @@ window.MathJax = {
     }
   }
 
-  function buildMergedUpdate(questionId, incomingStatus, incomingSelected, incomingFlagged) {
+  function buildMergedUpdate(questionId, incomingStatus, incomingSelected, incomingFlagged, eventName) {
     var existing = progressMap[questionId] || {};
     var oldStatus = normaliseStatus(existing.status);
     var newStatus = normaliseStatus(incomingStatus);
@@ -2136,13 +2155,33 @@ window.MathJax = {
       finalSelected = incomingSelected || finalSelected || null;
     }
 
+    var isAnswerSubmission = eventName === "check";
+    var visitStartedAtMs = Number(
+      questionVisitStartedAtMs[questionId] || 0
+    );
+
+    var hasValidVisitTimer =
+      Number.isFinite(visitStartedAtMs) &&
+      visitStartedAtMs > 0;
+
+    var answerElapsedSeconds =
+      isAnswerSubmission && hasValidVisitTimer
+        ? Math.max(
+            0,
+            Math.floor((Date.now() - visitStartedAtMs) / 1000)
+          )
+        : null;
+
     return {
       question_id: questionId,
       status: finalStatus || "seen",
       selected_answer: finalSelected,
       flagged: !!existing.flagged || !!incomingFlagged,
-      time_spent: existing.time_spent || null,
-      last_seen_at: nowIso()
+      time_spent: answerElapsedSeconds,
+      last_seen_at: nowIso(),
+      answer_elapsed_seconds: answerElapsedSeconds,
+      answer_submitted_at: isAnswerSubmission ? nowIso() : null,
+      submission_id: isAnswerSubmission ? newSubmissionId() : null
     };
   }
 
@@ -2165,7 +2204,13 @@ window.MathJax = {
       }
     }
 
-    var update = buildMergedUpdate(questionId, status, selected || null, flagged);
+    var update = buildMergedUpdate(
+      questionId,
+      status,
+      selected || null,
+      flagged,
+      eventName
+    );
     var hash = simpleHash(JSON.stringify(update) + ":" + PRODUCT);
 
     if (hash === lastSavedHash && eventName !== "check") return;
@@ -2195,6 +2240,10 @@ window.MathJax = {
           flagged: update.flagged,
           updated_at: nowIso()
         };
+
+        if (eventName === "check") {
+          questionVisitStartedAtMs[questionId] = Date.now();
+        }
       })
       .catch(function (e) {
         console.warn("Per-question progress save failed:", e);
@@ -4666,172 +4715,17 @@ function applyFilters() {
 <!-- /TS_KEYBOARD_SHORTCUTS_V1 -->
 
 
-<!-- TS_TMUA_QB_ATTEMPT_EVENTS_V1_START -->
+<!-- TS_TMUA_QB_ATTEMPT_EVENTS_V2_START -->
 <script>
 (function () {
   "use strict";
 
-  if (
-    window.__TS_TMUA_QB_EVENT_CAPTURE_V1__ ||
-    typeof window.fetch !== "function"
-  ) {
-    return;
-  }
-
-  window.__TS_TMUA_QB_EVENT_CAPTURE_V1__ = true;
-
-  var nativeFetch = window.fetch.bind(window);
-
-  function asText(value) {
-    if (value == null) return "";
-    return String(value).trim();
-  }
-
-  function isCorrectFrom(value) {
-    if (typeof value.is_correct === "boolean") {
-      return value.is_correct;
-    }
-
-    if (typeof value.isCorrect === "boolean") {
-      return value.isCorrect;
-    }
-
-    var status = asText(value.status).toLowerCase();
-
-    if (
-      status === "correct" ||
-      status === "right" ||
-      status === "mastered"
-    ) {
-      return true;
-    }
-
-    if (
-      status === "incorrect" ||
-      status === "wrong"
-    ) {
-      return false;
-    }
-
-    return null;
-  }
-
-  function eventFrom(update) {
-    var value =
-      update &&
-      typeof update.value === "object" &&
-      update.value
-        ? update.value
-        : update || {};
-
-    var questionId = asText(
-      update.question_id ||
-      value.question_id ||
-      value.qid ||
-      value.id
-    );
-
-    var selectedAnswer = asText(
-      value.selected_answer ||
-      value.selectedAnswer ||
-      update.selected_answer
-    );
-
-    var isCorrect = isCorrectFrom(value);
-
-    if (!questionId || typeof isCorrect !== "boolean") {
-      return null;
-    }
-
-    var attemptedAt =
-      asText(
-        value.last_seen_at ||
-        value.updated_at ||
-        value.attempted_at ||
-        update.updated_at
-      ) ||
-      new Date().toISOString();
-
-    var topicId = asText(
-      value.topic_id ||
-      value.topic ||
-      value.primary_topic ||
-      value.category ||
-      update.topic_id
-    );
-
-    return {
-      question_id: questionId,
-      topic_id: topicId || null,
-      selected_answer: selectedAnswer || null,
-      is_correct: isCorrect,
-      attempted_at: attemptedAt,
-      client_event_id: [
-        questionId,
-        selectedAnswer,
-        String(isCorrect),
-        attemptedAt
-      ].join("|"),
-      metadata: {
-        capture_version: "20260806-1"
-      }
-    };
-  }
-
-  function eventsFromBody(bodyText) {
-    try {
-      var payload = JSON.parse(bodyText || "{}");
-      var updates = Array.isArray(payload.updates)
-        ? payload.updates
-        : [payload];
-
-      return updates
-        .map(eventFrom)
-        .filter(Boolean);
-    } catch (_) {
-      return [];
-    }
-  }
-
-  window.fetch = async function (input, init) {
-    var url =
-      typeof input === "string"
-        ? input
-        : String(input && input.url ? input.url : "");
-
-    var response = await nativeFetch(input, init);
-
-    if (
-      response.ok &&
-      url.indexOf("/api/qb/progress/save") !== -1 &&
-      init &&
-      typeof init.body === "string"
-    ) {
-      var events = eventsFromBody(init.body);
-
-      if (events.length) {
-        nativeFetch("/api/tmua/qb/attempt-event", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ events: events }),
-          keepalive: true
-        }).catch(function (error) {
-          console.warn(
-            "[TMUA predictor] Could not record answer event.",
-            error
-          );
-        });
-      }
-    }
-
-    return response;
-  };
+  // Predictor evidence is now recorded server-side from qb_progress
+  // using a unique Check Answer submission ID.
+  window.__TS_TMUA_QB_EVENT_CAPTURE_V2__ = true;
 })();
 </script>
-<!-- TS_TMUA_QB_ATTEMPT_EVENTS_V1_END -->
+<!-- TS_TMUA_QB_ATTEMPT_EVENTS_V2_END -->
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
 
 
