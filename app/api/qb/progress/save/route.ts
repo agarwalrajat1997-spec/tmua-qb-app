@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
@@ -10,6 +10,9 @@ type QBUpdate =
       flagged?: boolean | null;
       time_spent?: number | null;
       last_seen_at?: string | null;
+      answer_elapsed_seconds?: number | null;
+      answer_submitted_at?: string | null;
+      submission_id?: string | null;
     }
   | { key: string; value: any }; // compatibility: value should be an object with fields above
 
@@ -92,6 +95,11 @@ export async function POST(req: Request) {
           flagged: typeof v.flagged === "boolean" ? v.flagged : null,
           time_spent: Number.isFinite(Number(v.time_spent)) ? Number(v.time_spent) : (Number.isFinite(Number(v.timeSpent)) ? Number(v.timeSpent) : null),
           last_seen_at: toIsoOrNull(v.last_seen_at ?? v.lastSeenAt) ?? null,
+          answer_elapsed_seconds: Number.isFinite(Number(v.answer_elapsed_seconds ?? v.answerElapsedSeconds))
+            ? Math.max(0, Math.round(Number(v.answer_elapsed_seconds ?? v.answerElapsedSeconds)))
+            : null,
+          answer_submitted_at: toIsoOrNull(v.answer_submitted_at ?? v.answerSubmittedAt),
+          submission_id: String(v.submission_id ?? v.submissionId ?? "").trim() || null,
           updated_at: nowIso,
         });
         continue;
@@ -111,6 +119,11 @@ export async function POST(req: Request) {
         flagged: typeof (u as any).flagged === "boolean" ? (u as any).flagged : null,
         time_spent: Number.isFinite(Number((u as any).time_spent)) ? Number((u as any).time_spent) : null,
         last_seen_at: toIsoOrNull((u as any).last_seen_at) ?? null,
+        answer_elapsed_seconds: Number.isFinite(Number((u as any).answer_elapsed_seconds))
+          ? Math.max(0, Math.round(Number((u as any).answer_elapsed_seconds)))
+          : null,
+        answer_submitted_at: toIsoOrNull((u as any).answer_submitted_at),
+        submission_id: String((u as any).submission_id ?? "").trim() || null,
         updated_at: nowIso,
       });
     }
