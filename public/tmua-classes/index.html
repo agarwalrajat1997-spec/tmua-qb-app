@@ -109,15 +109,29 @@
       const upcoming = Array.isArray(data.upcoming) ? data.upcoming : [];
       const recordings = Array.isArray(data.recordings) ? data.recordings : [];
 
+      // Display only the nearest upcoming session for each batch.
+      // Upcoming sessions are already sorted chronologically by the API.
+      const nextByBatch = upcoming.filter((session, index, list) => {
+        const batchKey = String(
+          session.batch_name || "TMUA Group"
+        ).trim().toLowerCase();
+
+        return index === list.findIndex(item =>
+          String(
+            item.batch_name || "TMUA Group"
+          ).trim().toLowerCase() === batchKey
+        );
+      });
+
       app.innerHTML = `
         <section class="section">
           <div class="sectionTitle">
-            <span>Next Live Session</span>
-            <span class="pill">${upcoming.length ? "Scheduled" : "Not scheduled"}</span>
+            <span>Upcoming Live Sessions</span>
+            <span class="pill">${nextByBatch.length ? `${nextByBatch.length} scheduled` : "Not scheduled"}</span>
           </div>
           ${
-            upcoming.length
-              ? sessionCard(upcoming[0], "upcoming")
+            nextByBatch.length
+              ? nextByBatch.map(s => sessionCard(s, "upcoming")).join("")
               : `<div class="empty">No upcoming TMUA class has been scheduled yet.</div>`
           }
         </section>
