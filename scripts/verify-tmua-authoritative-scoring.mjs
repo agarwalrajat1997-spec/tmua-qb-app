@@ -1,4 +1,13 @@
 import fs from "node:fs";
+
+// TS_EOL_SAFE_READ_V1
+const __tsReadFileSyncEolSafe = (...args) => {
+  const value = fs.readFileSync(...args);
+
+  return typeof value === "string"
+    ? value.replace(/\r\n/g, "\n")
+    : value;
+};
 import vm from "node:vm";
 
 const migrationPath =
@@ -11,13 +20,13 @@ const browserPath =
   "public/shared/tmua-score-conversions.js";
 
 const migration =
-  fs.readFileSync(migrationPath, "utf8");
+  __tsReadFileSyncEolSafe(migrationPath, "utf8");
 
 const route =
-  fs.readFileSync(routePath, "utf8");
+  __tsReadFileSyncEolSafe(routePath, "utf8");
 
 const browserSource =
-  fs.readFileSync(browserPath, "utf8");
+  __tsReadFileSyncEolSafe(browserPath, "utf8");
 
 const context = { console };
 
