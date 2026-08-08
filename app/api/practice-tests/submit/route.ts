@@ -1,131 +1,588 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
-const FINGERPRINT = "SUBMIT_ROUTE_PATCH_v3_TMUA_SCORE9_20260306";
+const FINGERPRINT =
+  "SUBMIT_ROUTE_V4_TMUA_AUTHORITATIVE_20260807";
 
-function badRequest(msg: string) {
-  return NextResponse.json({ error: msg, fingerprint: FINGERPRINT }, { status: 400 });
+type CatalogRow = {
+  test_id: string;
+  title: string;
+  paper: "full" | "1" | "2";
+  expected_questions: number;
+  score_conversion_profile: string | null;
+};
+
+type FinalAttemptRow = {
+  id: string;
+  submitted_at: string;
+  test_id: string;
+  score: number;
+  tmua_score9: number | null;
+  attempt_number: number | null;
+  paper_1_score: number | null;
+  paper_2_score: number | null;
+  is_full_timed_attempt: boolean | null;
+  score_conversion_profile: string | null;
+  predictor_metadata: Record<string, unknown> | null;
+};
+
+type PredictorEvaluationRow = {
+  attempt_id: string;
+  predictor_eligible: boolean;
+  combined_score_eligible: boolean;
+  effective_weight: number;
+  paper_1_raw_score: number;
+  paper_2_raw_score: number;
+  authoritative_tmua_score9: number | null;
+  score_conversion_profile: string | null;
+  score_conversion_version: string | null;
+  score_status: string | null;
+  exclusion_reason: string | null;
+};
+
+function badRequest(message: string) {
+  return NextResponse.json(
+    {
+      error: message,
+      fingerprint: FINGERPRINT,
+    },
+    {
+      status: 400,
+    },
+  );
 }
 
-function tmuaScore9(rawCorrect: number, totalQuestions: number, thresholdRaw = 6): number {
-  const raw = Number(rawCorrect || 0);
-  const total = Number(totalQuestions || 20);
-  const thr = Number(thresholdRaw || 6);
-
-  if (!Number.isFinite(raw) || !Number.isFinite(total) || total <= 0) return 1.0;
-  if (raw <= thr) return 1.0;
-
-  const frac = (raw - thr) / (total - thr);
-  const score9 = 1.0 + frac * 8.0;
-  return Math.round(Math.max(1.0, Math.min(9.0, score9)) * 10) / 10;
+function internalError(message: string) {
+  return NextResponse.json(
+    {
+      error: message,
+      fingerprint: FINGERPRINT,
+    },
+    {
+      status: 500,
+    },
+  );
 }
 
-function computeTmuaScore9(body: any): number | null {
-  const totalQuestions = Number(body?.total_questions ?? 0);
-  const rawScore = Number(body?.score ?? 0);
+function finiteInteger(
+  value: unknown,
+  fallback = 0,
+): number {
+  const number = Number(value);
 
-  const answers = Array.isArray(body?.answers) ? body.answers : [];
-  const correctAnswers = Array.isArray(body?.correct_answers) ? body.correct_answers : [];
-
-  // Full test: average Paper 1 and Paper 2 TMUA score9
-  if (totalQuestions >= 40 && answers.length >= 40 && correctAnswers.length >= 40) {
-    let p1 = 0;
-    let p2 = 0;
-
-    for (let i = 0; i < 20; i++) {
-      if (answers[i] === correctAnswers[i] && answers[i] != null) p1++;
-    }
-    for (let i = 20; i < 40; i++) {
-      if (answers[i] === correctAnswers[i] && answers[i] != null) p2++;
-    }
-
-    const p1s = tmuaScore9(p1, 20, 6);
-    const p2s = tmuaScore9(p2, 20, 6);
-    return Math.round(((p1s + p2s) / 2) * 10) / 10;
+  if (!Number.isFinite(number)) {
+    return fallback;
   }
 
-  // Topic / single-paper test
-  if (totalQuestions > 0) {
-    return tmuaScore9(rawScore, totalQuestions, 6);
+  return Math.max(0, Math.round(number));
+}
+
+function normaliseAnswer(
+  value: unknown,
+): string | null {
+  if (value == null) {
+    return null;
   }
 
-  return null;
+  const answer = String(value)
+    .trim()
+    .toUpperCase();
+
+  return answer || null;
+}
+
+function normaliseAnswerArray(
+  value: unknown,
+  expectedLength?: number,
+): Array<string | null> {
+  const source = Array.isArray(value)
+    ? value
+    : [];
+
+  const targetLength =
+    expectedLength == null
+      ? source.length
+      : expectedLength;
+
+  return Array.from(
+    { length: targetLength },
+    (_, index) =>
+      normaliseAnswer(source[index]),
+  );
+}
+
+function normaliseTimeArray(
+  value: unknown,
+  expectedLength?: number,
+): number[] {
+  const source = Array.isArray(value)
+    ? value
+    : [];
+
+  const targetLength =
+    expectedLength == null
+      ? source.length
+      : expectedLength;
+
+  return Array.from(
+    { length: targetLength },
+    (_, index) => {
+      const seconds = Number(source[index]);
+
+      return Number.isFinite(seconds)
+        ? Math.max(0, seconds)
+        : 0;
+    },
+  );
+}
+
+function normaliseFlagArray(
+  value: unknown,
+  expectedLength?: number,
+): boolean[] {
+  const source = Array.isArray(value)
+    ? value
+    : [];
+
+  const targetLength =
+    expectedLength == null
+      ? source.length
+      : expectedLength;
+
+  return Array.from(
+    { length: targetLength },
+    (_, index) =>
+      source[index] === true,
+  );
+}
+
+function correctCount(
+  answers: Array<string | null>,
+  correctAnswers: Array<string | null>,
+  offset: number,
+  limit: number,
+): number {
+  let correct = 0;
+
+  const end = Math.min(
+    answers.length,
+    correctAnswers.length,
+    offset + limit,
+  );
+
+  for (
+    let index = offset;
+    index < end;
+    index += 1
+  ) {
+    const answer = answers[index];
+    const expected = correctAnswers[index];
+
+    if (
+      answer != null &&
+      expected != null &&
+      answer === expected
+    ) {
+      correct += 1;
+    }
+  }
+
+  return correct;
+}
+
+function incorrectQuestionNumbers(
+  answers: Array<string | null>,
+  correctAnswers: Array<string | null>,
+  totalQuestions: number,
+): number[] {
+  const incorrect: number[] = [];
+
+  for (
+    let index = 0;
+    index < totalQuestions;
+    index += 1
+  ) {
+    if (
+      answers[index] == null ||
+      correctAnswers[index] == null ||
+      answers[index] !== correctAnswers[index]
+    ) {
+      incorrect.push(index + 1);
+    }
+  }
+
+  return incorrect;
+}
+
+function safeIsoDate(
+  value: unknown,
+): string | null {
+  if (value == null || value === "") {
+    return null;
+  }
+
+  const date = new Date(String(value));
+
+  if (Number.isNaN(date.valueOf())) {
+    return null;
+  }
+
+  return date.toISOString();
 }
 
 export async function POST(req: Request) {
-  const supabase = await createSupabaseServerClient();
+  const supabase =
+    await createSupabaseServerClient();
 
   const {
     data: { user },
-    error: userErr,
+    error: userError,
   } = await supabase.auth.getUser();
 
-  if (userErr || !user) {
-    return NextResponse.json({ error: "Unauthorized", fingerprint: FINGERPRINT }, { status: 401 });
+  if (userError || !user) {
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+        fingerprint: FINGERPRINT,
+      },
+      {
+        status: 401,
+      },
+    );
   }
 
   let body: any;
+
   try {
     body = await req.json();
   } catch {
     return badRequest("Invalid JSON");
   }
 
-  const test_id = String(body?.test_id || "").trim();
-  if (!test_id) return badRequest("test_id is required");
+  const testId =
+    String(body?.test_id || "").trim();
 
-  const tmua_score9 = computeTmuaScore9(body);
+  if (!testId) {
+    return badRequest("test_id is required");
+  }
+
+  const {
+    data: catalogData,
+    error: catalogError,
+  } = await supabase
+    .from("tmua_test_catalog")
+    .select(
+      "test_id,title,paper,expected_questions,score_conversion_profile",
+    )
+    .eq("test_id", testId)
+    .maybeSingle();
+
+  if (catalogError) {
+    return internalError(
+      `TMUA catalogue lookup failed: ${
+        catalogError.message
+      }`,
+    );
+  }
+
+  const catalog =
+    catalogData as CatalogRow | null;
+
+  const recognisedTmuaTest =
+    catalog != null;
+
+  const submittedAnswers =
+    normaliseAnswerArray(body?.answers);
+
+  const submittedCorrectAnswers =
+    normaliseAnswerArray(
+      body?.correct_answers,
+    );
+
+  let answers = submittedAnswers;
+  let correctAnswers =
+    submittedCorrectAnswers;
+
+  let timeSpent =
+    normaliseTimeArray(body?.time_spent);
+
+  let flags =
+    normaliseFlagArray(body?.flags);
+
+  let totalQuestions =
+    finiteInteger(
+      body?.total_questions,
+      Math.max(
+        answers.length,
+        correctAnswers.length,
+      ),
+    );
+
+  let paper =
+    body?.paper == null
+      ? null
+      : String(body.paper);
+
+  let testTitle =
+    body?.test_title == null
+      ? null
+      : String(body.test_title);
+
+  let rawScore =
+    finiteInteger(body?.score);
+
+  let paper1Score: number | null =
+    null;
+
+  let paper2Score: number | null =
+    null;
+
+  let incorrect =
+    Array.isArray(body?.incorrect)
+      ? body.incorrect
+      : [];
+
+  let scoreConversionProfile:
+    string | null = null;
+
+  if (catalog) {
+    totalQuestions =
+      finiteInteger(
+        catalog.expected_questions,
+      );
+
+    paper = catalog.paper;
+    testTitle = catalog.title;
+
+    scoreConversionProfile =
+      catalog.score_conversion_profile;
+
+    answers =
+      normaliseAnswerArray(
+        body?.answers,
+        totalQuestions,
+      );
+
+    correctAnswers =
+      normaliseAnswerArray(
+        body?.correct_answers,
+        totalQuestions,
+      );
+
+    timeSpent =
+      normaliseTimeArray(
+        body?.time_spent,
+        totalQuestions,
+      );
+
+    flags =
+      normaliseFlagArray(
+        body?.flags,
+        totalQuestions,
+      );
+
+    rawScore =
+      correctCount(
+        answers,
+        correctAnswers,
+        0,
+        totalQuestions,
+      );
+
+    if (paper === "full") {
+      paper1Score =
+        correctCount(
+          answers,
+          correctAnswers,
+          0,
+          20,
+        );
+
+      paper2Score =
+        correctCount(
+          answers,
+          correctAnswers,
+          20,
+          20,
+        );
+    } else if (paper === "1") {
+      paper1Score = rawScore;
+    } else if (paper === "2") {
+      paper2Score = rawScore;
+    }
+
+    incorrect =
+      incorrectQuestionNumbers(
+        answers,
+        correctAnswers,
+        totalQuestions,
+      );
+  }
+
+  const submittedAt =
+    new Date().toISOString();
 
   const payload = {
     user_id: user.id,
     email: user.email ?? null,
-    test_id,
-    test_title: body?.test_title ?? null,
-    paper: body?.paper ?? null,
-    total_questions: Number(body?.total_questions ?? 0),
-    score: Number(body?.score ?? 0),
-    tmua_score9,
-    answers: body?.answers ?? [],
-    correct_answers: body?.correct_answers ?? [],
-    time_spent: body?.time_spent ?? [],
-    flags: body?.flags ?? [],
-    incorrect: body?.incorrect ?? [],
-    session_label: body?.session_label ?? null,
-    student_name: body?.student_name ?? null,
-    submitted_at: new Date().toISOString(),
+
+    test_id: testId,
+    test_title: testTitle,
+    paper,
+    total_questions: totalQuestions,
+
+    // For recognised TMUA tests, this value is recomputed by
+    // the server from submitted responses rather than trusting
+    // body.score.
+    score: rawScore,
+
+    // The database validity/finalisation triggers decide
+    // whether an overall /9 score is allowed.
+    tmua_score9: null,
+
+    answers,
+    correct_answers: correctAnswers,
+    time_spent: timeSpent,
+    flags,
+    incorrect,
+
+    attempt_number: null,
+    started_at:
+      safeIsoDate(body?.started_at),
+
+    paper_1_score: paper1Score,
+    paper_2_score: paper2Score,
+
+    is_full_timed_attempt: false,
+
+    score_conversion_profile:
+      scoreConversionProfile,
+
+    predictor_metadata: {
+      recognised_tmua_test:
+        recognisedTmuaTest,
+
+      submission_route:
+        FINGERPRINT,
+
+      raw_score_recomputed_server_side:
+        recognisedTmuaTest,
+
+      raw_mark_authority:
+        recognisedTmuaTest
+          ? "submitted_answers_and_key_v1"
+          : "generic_submission",
+
+      submitted_total_questions:
+        finiteInteger(
+          body?.total_questions,
+        ),
+    },
+
+    session_label:
+      body?.session_label ?? null,
+
+    student_name:
+      body?.student_name ?? null,
+
+    submitted_at: submittedAt,
   };
 
-  const { data: inserted, error: insErr } = await supabase
+  const {
+    data: inserted,
+    error: insertError,
+  } = await supabase
     .from("practice_test_attempts")
     .insert(payload)
-    .select("id, submitted_at, test_id, tmua_score9")
+    .select("id")
     .single();
 
-  if (insErr) {
-    return NextResponse.json({ error: insErr.message, fingerprint: FINGERPRINT }, { status: 500 });
+  if (insertError || !inserted) {
+    return internalError(
+      insertError?.message ||
+      "Practice-test insertion failed.",
+    );
   }
 
-  const { count, error: countErr } = await supabase
+  // AFTER triggers run synchronously with the insert. Fetch the
+  // final row separately because INSERT ... RETURNING does not
+  // necessarily reflect changes made by a second UPDATE inside
+  // an AFTER trigger.
+  const {
+    data: finalAttemptData,
+    error: finalAttemptError,
+  } = await supabase
     .from("practice_test_attempts")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", user.id)
-    .eq("test_id", test_id);
+    .select(
+      "id,submitted_at,test_id,score,tmua_score9,attempt_number,paper_1_score,paper_2_score,is_full_timed_attempt,score_conversion_profile,predictor_metadata",
+    )
+    .eq("id", inserted.id)
+    .single();
 
-  if (countErr) {
-    return NextResponse.json({
-      ok: true,
-      fingerprint: FINGERPRINT,
-      attempt: inserted,
-      attempt_no: null,
-    });
+  if (finalAttemptError) {
+    return internalError(
+      finalAttemptError.message,
+    );
+  }
+
+  const finalAttempt =
+    finalAttemptData as FinalAttemptRow | null;
+
+  const {
+    data: evaluationData,
+    error: evaluationError,
+  } = await supabase
+    .from("tmua_test_attempt_evaluations")
+    .select(
+      "attempt_id,predictor_eligible,combined_score_eligible,effective_weight,paper_1_raw_score,paper_2_raw_score,authoritative_tmua_score9,score_conversion_profile,score_conversion_version,score_status,exclusion_reason",
+    )
+    .eq("attempt_id", inserted.id)
+    .maybeSingle();
+
+  if (evaluationError) {
+    return internalError(
+      evaluationError.message,
+    );
+  }
+
+  const evaluation =
+    evaluationData as PredictorEvaluationRow | null;
+
+  let attemptNumber =
+    finalAttempt?.attempt_number ?? null;
+
+  // Unknown tests such as ESAT intentionally have no TMUA
+  // evaluation row. Preserve the previous attempt-number
+  // behaviour for those submissions.
+  if (attemptNumber == null) {
+    const {
+      count,
+      error: countError,
+    } = await supabase
+      .from("practice_test_attempts")
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true,
+        },
+      )
+      .eq("user_id", user.id)
+      .eq("test_id", testId);
+
+    if (!countError) {
+      attemptNumber = count ?? null;
+    }
   }
 
   return NextResponse.json({
     ok: true,
     fingerprint: FINGERPRINT,
-    attempt: inserted,
-    attempt_no: count ?? null,
+    attempt: finalAttempt,
+    attempt_no: attemptNumber,
+    predictor_evaluation:
+      evaluation ?? null,
   });
 }
