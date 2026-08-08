@@ -1,9 +1,11 @@
 import fs from "node:fs";
 
-const migration = fs.readFileSync(
-  "supabase/migrations/20260807054500_tmua_test_catalog_and_validity.sql",
-  "utf8",
-);
+const migration = fs
+  .readFileSync(
+    "supabase/migrations/20260807054500_tmua_test_catalog_and_validity.sql",
+    "utf8",
+  )
+  .replace(/\r\n/g, "\n");
 
 const requiredTestIds = [
   "full-mock-01-all-topics",
