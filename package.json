@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "verify:esat-identity": "node scripts/verify-esat-question-identity.mjs",
-    "prebuild": "npm run verify:esat-identity && npm run verify:tmua-past-papers && npm run verify:tmua-practice-tests && npm run verify:tmua-test6 && npm run verify:tmua-score-conversions && npm run verify:tmua-predictor-foundation && npm run verify:tmua-test-catalog && npm run verify:tmua-canonical-keys && npm run verify:tmua-server-authority && npm run verify:tmua-authoritative-scoring",
+    "prebuild": "npm run verify:esat-identity && npm run verify:tmua-past-papers && npm run verify:tmua-practice-tests && npm run verify:tmua-test6 && npm run verify:tmua-score-conversions && npm run verify:tmua-predictor-foundation && npm run verify:tmua-test-catalog && npm run verify:tmua-canonical-keys && npm run verify:tmua-server-authority && npm run verify:tmua-authoritative-scoring && npm run verify:tmua-predictor-v1-spec",
     "verify:tmua-past-papers": "node scripts/verify-tmua-past-papers.mjs",
     "verify:tmua-practice-tests": "node scripts/verify-tmua-practice-test-structure.mjs",
     "verify:tmua-test6": "node scripts/verify-tmua-test6.mjs",
@@ -17,7 +17,8 @@
     "verify:tmua-test-catalog": "node scripts/verify-tmua-test-catalog.mjs",
     "verify:tmua-authoritative-scoring": "node scripts/verify-tmua-authoritative-scoring.mjs",
     "verify:tmua-canonical-keys": "node scripts/verify-tmua-canonical-keys.mjs",
-    "verify:tmua-server-authority": "node scripts/verify-tmua-server-authority.mjs"
+    "verify:tmua-server-authority": "node scripts/verify-tmua-server-authority.mjs",
+    "verify:tmua-predictor-v1-spec": "node scripts/verify-tmua-predictor-v1-spec.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

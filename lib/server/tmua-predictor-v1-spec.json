@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "model_version": "tmua-predictor-v1.0.0",
+  "status": "locked_policy_before_engine",
+  "score_scale": {
+    "minimum": 1.0,
+    "maximum": 9.0,
+    "storage_decimals": 2,
+    "display_decimals": 1
+  },
+  "separation": {
+    "observed_score": {
+      "source": "tmua_test_attempt_evaluations.authoritative_tmua_score9",
+      "eligibility": "combined_score_eligible = true AND authoritative_tmua_score9 IS NOT NULL",
+      "selection": "latest practice_test_attempts.submitted_at then attempt_id",
+      "never_replace_with_prediction": true
+    },
+    "predicted_score": {
+      "name": "Predicted TMUA",
+      "must_not_be_labelled_observed": true
+    },
+    "preparation_rank": {
+      "separate_model": true,
+      "not_part_of_predictor_v1": true,
+      "must_not_be_labelled_tmua_rank": true
+    }
+  },
+  "test_evidence": {
+    "table": "tmua_test_attempt_evaluations",
+    "catalogue_table": "tmua_test_catalog",
+    "require_predictor_eligible": true,
+    "use_upstream_effective_weight": true,
+    "recompute_validity": false,
+    "recompute_completion_rules": false,
+    "recompute_timing_rules": false,
+    "recompute_authoritative_full_score": false,
+    "combined_full": {
+      "require_combined_score_eligible": true,
+      "score_field": "authoritative_tmua_score9",
+      "weight_field": "effective_weight",
+      "do_not_double_count_paper_components": true
+    },
+    "paper_component": {
+      "raw_score_range": [
+        0,
+        20
+      ],
+      "paper_1_score_field": "paper_1_raw_score",
+      "paper_2_score_field": "paper_2_raw_score",
+      "paper_1_weight_field": "paper_1_effective_weight",
+      "paper_2_weight_field": "paper_2_effective_weight",
+      "fallback_weight_field": "effective_weight"
+    }
+  },
+  "paper_normalization": {
+    "purpose": "predictor_only_common_scale_not_observed_tmua_score",
+    "conversion_table": "tmua_score_conversion_profiles",
+    "expected_profile_count": 12,
+    "raw20_to_raw40_multiplier": 2,
+    "profile_aggregation": "median",
+    "even_profile_median": "mean_of_middle_two",
+    "require_each_profile_cardinality": 41,
+    "require_conversion_set_hash_in_provenance": true,
+    "silent_profile_set_changes_forbidden": true
+  },
+  "test_family_policy": {
+    "group_by": [
+      "user_id",
+      "test_id"
+    ],
+    "independent_evidence_unit": "test_id",
+    "first_row": "first predictor-eligible row ordered by attempt_number, evaluated_at, attempt_id",
+    "latest_row": "latest predictor-eligible row ordered by attempt_number, evaluated_at, attempt_id",
+    "single_eligible_attempt": {
+      "coefficient": 1.0
+    },
+    "multiple_eligible_attempts": {
+      "first_coefficient": 0.75,
+      "latest_coefficient": 0.25,
+      "intermediate_coefficient": 0.0
+    },
+    "family_signal": "coefficient_and_effective_weight_weighted_mean",
+    "family_weight": "sum_of_coefficient_times_effective_weight",
+    "family_weight_maximum": 1.5,
+    "repeated_attempts_do_not_increase_independent_test_count": true
+  },
+  "qb_evidence": {
+    "event_table": "tmua_qb_attempt_events",
+    "current_state_table": "qb_progress",
+    "current_state_usage": "not_predictor_performance_input",
+    "trusted_event_predicates": {
+      "source": "qb-progress-trigger-v2",
+      "history_quality": "observed"
+    },
+    "legacy_direct_source": {
+      "source": "tmua-question-bank",
+      "predictor_authority": false,
+      "exclude_even_if_predictor_eligible": true
+    },
+    "canonical_question": {
+      "event_metadata_key": "canonical_qid",
+      "table": "tmua_qb_questions",
+      "id_column": "qid",
+      "answer_column": "answer",
+      "topic_column": "topic",
+      "subtopic_column": "subtopic",
+      "active_column": "is_active",
+      "require_server_match": true,
+      "require_active_question": true
+    },
+    "correctness": {
+      "authoritative_input": "selected_answer compared with canonical server answer",
+      "answer_normalization": "trim_uppercase",
+      "event_is_correct_is_audit_only": true,
+      "client_topic_id_is_non_authoritative": true,
+      "difficulty_weighting": false
+    },
+    "first_exposure": {
+      "partition_by": [
+        "user_id",
+        "canonical_qid"
+      ],
+      "order_by": [
+        "attempted_at",
+        "id"
+      ],
+      "rank_before_predictor_eligibility_filter": true,
+      "first_exposure_must_itself_be_predictor_eligible": true,
+      "later_attempt_cannot_replace_excluded_first_exposure": true
+    },
+    "minimum_unique_questions_for_signal": 30,
+    "full_weight_unique_questions": 500,
+    "topic": {
+      "canonical_source": "tmua_qb_questions.topic",
+      "minimum_first_exposures_to_count_topic": 3,
+      "active_topic_denominator": "distinct non-empty topics among active canonical questions",
+      "smoothed_accuracy": {
+        "method": "beta_binomial_mean",
+        "alpha": 1.0,
+        "beta": 1.0
+      },
+      "lower_quartile_rule": "mean_of_lowest_ceil_topic_count_divided_by_4",
+      "no_eligible_topic_fallback": "overall_first_exposure_accuracy"
+    },
+    "balanced_accuracy": {
+      "overall_weight": 0.7,
+      "lower_quartile_topic_weight": 0.3
+    },
+    "recovery": {
+      "first_exposure_must_be_predictor_eligible_and_wrong": true,
+      "later_event_must_be_trusted_and_predictor_eligible": true,
+      "minimum_delay_hours": 24,
+      "success": "at_least_one_later_canonical_correct_response",
+      "neutral_value_when_no_wrong_first_exposures": 0.5
+    },
+    "score_formula": {
+      "intercept": 4.5,
+      "accuracy_center_percent": 55.0,
+      "accuracy_slope_per_percentage_point": 0.075,
+      "recovery_center": 0.5,
+      "recovery_coefficient": 0.3,
+      "minimum": 2.5,
+      "maximum": 8.5
+    },
+    "weight": {
+      "maximum": 1.5,
+      "coverage_question_target": 500,
+      "topic_coverage_floor": 0.25,
+      "formula": "maximum * min(1, unique_questions / coverage_question_target) * max(topic_coverage_floor, topic_coverage)",
+      "when_test_evidence_exists_cap_ratio_to_test_weight": 0.6
+    }
+  },
+  "blend": {
+    "test_signal": "weighted_mean_of_independent_test_family_signals",
+    "test_weight": "sum_of_test_family_weights",
+    "qb_signal_below_minimum_questions": null,
+    "qb_weight_below_minimum_questions": 0.0,
+    "both_sources": "weighted_mean_using_test_weight_and_capped_qb_weight",
+    "test_only": "test_signal",
+    "qb_only": "qb_signal",
+    "no_test_and_insufficient_qb": null,
+    "final_score_clamp": [
+      1.0,
+      9.0
+    ]
+  },
+  "confidence": {
+    "labels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "qb_only_maximum": "low",
+    "high": {
+      "minimum_independent_test_families": 3,
+      "minimum_broad_or_full_families": 1,
+      "minimum_test_weight": 1.5
+    },
+    "medium_any": [
+      {
+        "minimum_independent_test_families": 2,
+        "minimum_broad_or_full_families": 1
+      },
+      {
+        "minimum_independent_test_families": 2,
+        "minimum_test_weight": 1.0
+      },
+      {
+        "minimum_combined_full_families": 1,
+        "minimum_qb_unique_questions": 100,
+        "minimum_qb_topic_coverage": 0.5
+      }
+    ],
+    "test_dispersion": {
+      "metric": "effective_weighted_population_standard_deviation_of_family_signals",
+      "downgrade_one_level_above": 1.0,
+      "force_low_above": 1.5
+    },
+    "not_a_statistical_probability_claim": true
+  },
+  "likely_range": {
+    "label": "Likely range",
+    "not_a_confidence_interval": true,
+    "base_half_width": {
+      "low": 1.2,
+      "medium": 0.8,
+      "high": 0.5
+    },
+    "test_evidence_without_broad_or_full_penalty": 0.2,
+    "qb_only_penalty": 0.2,
+    "dispersion_half_width_multiplier": 0.75,
+    "half_width_policy": "max(base_plus_applicable_penalties, dispersion_multiplier_times_test_standard_deviation)",
+    "minimum_half_width": 0.5,
+    "maximum_half_width": 1.8,
+    "bounds_clamped_to_score_scale": true
+  },
+  "snapshot_policy": {
+    "future_table": "tmua_prediction_snapshots",
+    "append_only": true,
+    "deduplicate_identical_inputs": true,
+    "deduplication_key": [
+      "user_id",
+      "model_version",
+      "input_hash"
+    ],
+    "input_hash_must_include": [
+      "model_version",
+      "sorted_trusted_qb_evidence",
+      "sorted_test_evidence",
+      "conversion_set_hash",
+      "active_topic_set_hash"
+    ],
+    "required_provenance": [
+      "model_version",
+      "conversion_set_hash",
+      "active_topic_set_hash",
+      "test_evidence_count",
+      "qb_unique_questions"
+    ]
+  },
+  "forbidden_in_v1": [
+    "client_authoritative_correctness",
+    "client_authoritative_topic",
+    "legacy_direct_qb_events_as_predictor_evidence",
+    "qb_progress_as_historical_performance_evidence",
+    "arbitrary_question_difficulty_weighting",
+    "population_fitted_machine_learning",
+    "retake_count_as_independent_evidence",
+    "prediction_labelled_as_observed_score",
+    "preparation_rank_inside_prediction_formula",
+    "public_percentile_claims_against_all_tmua_candidates"
+  ]
+}
