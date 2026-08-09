@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
+import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
 const FINGERPRINT =
   "SUBMIT_ROUTE_V4_TMUA_AUTHORITATIVE_20260807";
+
+const SERVER_AUTHORITY =
+  "TMUA_SERVER_CANONICAL_AUTHORITY_V1_20260809";
 
 type CatalogRow = {
   test_id: string;
@@ -216,6 +220,20 @@ function incorrectQuestionNumbers(
   return incorrect;
 }
 
+function exactAnswerArraysMatch(
+  submitted: Array<string | null>,
+  canonical: readonly string[],
+): boolean {
+  if (submitted.length !== canonical.length) {
+    return false;
+  }
+
+  return canonical.every(
+    (expected, index) =>
+      submitted[index] === expected,
+  );
+}
+
 function safeIsoDate(
   value: unknown,
 ): string | null {
@@ -290,15 +308,38 @@ export async function POST(req: Request) {
   const catalog =
     catalogData as CatalogRow | null;
 
+  const canonicalTmuaTest =
+    getCanonicalTmuaTest(testId);
+
   const recognisedTmuaTest =
-    catalog != null;
+    canonicalTmuaTest != null;
+
+  if (canonicalTmuaTest && !catalog) {
+    return internalError(
+      "Protected TMUA test is missing from the catalogue.",
+    );
+  }
+
+  if (catalog && !canonicalTmuaTest) {
+    return internalError(
+      "TMUA catalogue entry has no canonical server answer key.",
+    );
+  }
 
   const submittedAnswers =
     normaliseAnswerArray(body?.answers);
 
+  const submittedCorrectAnswersRaw =
+    body?.correct_answers;
+
   const submittedCorrectAnswers =
     normaliseAnswerArray(
-      body?.correct_answers,
+      submittedCorrectAnswersRaw,
+    );
+
+  const clientCorrectAnswersSupplied =
+    Array.isArray(
+      submittedCorrectAnswersRaw,
     );
 
   let answers = submittedAnswers;
@@ -330,8 +371,17 @@ export async function POST(req: Request) {
       ? null
       : String(body.test_title);
 
+  const submittedScore =
+    body?.score;
+
+
+  const clientScoreSupplied =
+    submittedScore != null &&
+    submittedScore !== "";
+
+
   let rawScore =
-    finiteInteger(body?.score);
+    finiteInteger(submittedScore);
 
   let paper1Score: number | null =
     null;
@@ -347,13 +397,51 @@ export async function POST(req: Request) {
   let scoreConversionProfile:
     string | null = null;
 
-  if (catalog) {
-    totalQuestions =
+  let clientCorrectAnswersMatchCanonical:
+    boolean | null = null;
+
+  let clientScoreMatchesAuthoritative:
+    boolean | null = null;
+
+  if (catalog && canonicalTmuaTest) {
+    const canonicalPaper =
+      canonicalTmuaTest.structure === "full"
+        ? "full"
+        : canonicalTmuaTest.structure === "paper1"
+          ? "1"
+          : "2";
+
+    const catalogExpectedQuestions =
       finiteInteger(
         catalog.expected_questions,
       );
 
-    paper = catalog.paper;
+    if (
+      catalogExpectedQuestions !==
+        canonicalTmuaTest.expectedQuestions ||
+      catalog.paper !== canonicalPaper
+    ) {
+      return internalError(
+        "TMUA catalogue and canonical registry disagree.",
+      );
+    }
+
+    if (
+      !Array.isArray(body?.answers) ||
+      body.answers.length !==
+        canonicalTmuaTest.expectedQuestions
+    ) {
+      return badRequest(
+        `answers must contain exactly ${
+          canonicalTmuaTest.expectedQuestions
+        } entries for this TMUA test.`,
+      );
+    }
+
+    totalQuestions =
+      canonicalTmuaTest.expectedQuestions;
+
+    paper = canonicalPaper;
     testTitle = catalog.title;
 
     scoreConversionProfile =
@@ -361,13 +449,15 @@ export async function POST(req: Request) {
 
     answers =
       normaliseAnswerArray(
-        body?.answers,
+        body.answers,
         totalQuestions,
       );
 
+    // SECURITY: recognised TMUA tests are scored only
+    // against the server-owned canonical answer key.
     correctAnswers =
       normaliseAnswerArray(
-        body?.correct_answers,
+        canonicalTmuaTest.answers,
         totalQuestions,
       );
 
@@ -383,6 +473,16 @@ export async function POST(req: Request) {
         totalQuestions,
       );
 
+    clientCorrectAnswersMatchCanonical =
+      clientCorrectAnswersSupplied
+        ? submittedCorrectAnswers.length ===
+            totalQuestions &&
+          exactAnswerArraysMatch(
+            submittedCorrectAnswers,
+            canonicalTmuaTest.answers,
+          )
+        : null;
+
     rawScore =
       correctCount(
         answers,
@@ -390,6 +490,14 @@ export async function POST(req: Request) {
         0,
         totalQuestions,
       );
+
+    clientScoreMatchesAuthoritative =
+      clientScoreSupplied
+        ? finiteInteger(
+            submittedScore,
+            -1,
+          ) === rawScore
+        : null;
 
     if (paper === "full") {
       paper1Score =
@@ -472,8 +580,45 @@ export async function POST(req: Request) {
 
       raw_mark_authority:
         recognisedTmuaTest
-          ? "submitted_answers_and_key_v1"
+          ? "server_canonical_key_v1"
           : "generic_submission",
+
+      server_authority:
+        recognisedTmuaTest
+          ? SERVER_AUTHORITY
+          : null,
+
+      canonical_key_version:
+        recognisedTmuaTest
+          ? canonicalTmuaTest?.keyVersion ?? null
+          : null,
+
+      canonical_key_sha256:
+        recognisedTmuaTest
+          ? canonicalTmuaTest?.canonicalSha256 ?? null
+          : null,
+
+      client_correct_answers_supplied:
+        recognisedTmuaTest
+          ? clientCorrectAnswersSupplied
+          : null,
+
+      client_correct_answers_match_canonical:
+        recognisedTmuaTest
+          ? clientCorrectAnswersMatchCanonical
+          : null,
+
+      client_score_supplied:
+        recognisedTmuaTest
+          ? clientScoreSupplied
+          : null,
+
+      client_score_matches_authoritative:
+        recognisedTmuaTest
+          ? clientScoreMatchesAuthoritative
+          : null,
+
+
 
       submitted_total_questions:
         finiteInteger(
