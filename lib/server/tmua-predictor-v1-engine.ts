@@ -665,24 +665,35 @@ function positiveWeight(
   preferred: number | null,
   fallback: number | null,
 ): number | null {
-  const candidates =
-    [
-      preferred,
-      fallback,
-    ];
-
-  for (
-    const candidate of candidates
+  /*
+   * A present zero is authoritative: that component contributed
+   * no usable evidence. Fallback is permitted only when the
+   * component-specific field is genuinely absent/null.
+   *
+   * This matches the live evaluation schema, where an unused
+   * paper is represented as raw_score = 0 and effective_weight = 0.
+   */
+  if (
+    preferred !== null
   ) {
-    if (
-      candidate !== null &&
+    return (
       Number.isFinite(
-        candidate,
+        preferred,
       ) &&
-      candidate > 0
-    ) {
-      return candidate;
-    }
+      preferred > 0
+    )
+      ? preferred
+      : null;
+  }
+
+  if (
+    fallback !== null &&
+    Number.isFinite(
+      fallback,
+    ) &&
+    fallback > 0
+  ) {
+    return fallback;
   }
 
   return null;

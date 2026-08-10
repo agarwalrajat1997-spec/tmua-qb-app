@@ -841,6 +841,58 @@ close(
 
 /*
  * ==========================================================
+ * LIVE PAPER-ONLY ROW SHAPE
+ * ==========================================================
+ */
+
+{
+  /*
+   * Production evaluations store the unused paper as
+   * raw_score = 0 and effective_weight = 0 rather than NULL.
+   * The zero component must not fall back to overall weight.
+   */
+  const result =
+    run({
+      tests: [
+        testAttempt({
+          combinedScoreEligible:
+            false,
+
+          authoritativeTmuaScore9:
+            null,
+
+          paper1RawScore:
+            13,
+
+          paper1EffectiveWeight:
+            0.72,
+
+          paper2RawScore:
+            0,
+
+          paper2EffectiveWeight:
+            0,
+
+          effectiveWeight:
+            0.72,
+        }),
+      ],
+    });
+
+  close(
+    result.testSignalScore9,
+    6.2,
+    "Live P1-only row must not manufacture a zero-score P2 component",
+  );
+
+  close(
+    result.testWeight,
+    0.72,
+    "Live P1-only row must retain only P1 effective weight",
+  );
+}
+/*
+ * ==========================================================
  * CONFIDENCE + DISPERSION
  * ==========================================================
  */
