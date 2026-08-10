@@ -2021,11 +2021,10 @@ async function calculateAndPersistPreparationRankV1(
                   .predictorSnapshot
                   .inputHash,
 
-              independent_test_count:
-                record.predictor
-                  .independentTestCount,
+              broad_or_full_independent_test_families:
+                record.broadFamilyCount,
 
-              predictor_test_family_weight:
+              predictor_test_weight:
                 record.predictor
                   .testWeight,
 
