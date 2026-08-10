@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./dashboard.module.css";
+import TmuaPredictionStrip from "./TmuaPredictionStrip";
 
 type PracticeTest = {
   id: string;
@@ -727,6 +728,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         </aside>
 
         <main className={styles.main}>
+        <TmuaPredictionStrip />
           {accessLoading ? (
             <div className={styles.card}>
               <div className={styles.cardTitle}>Loading access...</div>

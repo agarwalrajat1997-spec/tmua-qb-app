@@ -404,7 +404,7 @@ for (
 
 /*
  * ==========================================================
- * SCHEMA-ONLY STAGE
+ * RUNTIME SNAPSHOT ACCESS BOUNDARY
  * ==========================================================
  */
 
@@ -457,7 +457,12 @@ function walk(directory) {
   return results;
 }
 
-const forbiddenRuntimeReferences = [];
+const runtimeSnapshotReferences = [];
+
+const approvedRuntimeSnapshotReferences =
+  new Set([
+    "app/api/tmua/overview/route.ts",
+  ]);
 
 for (
   const file of [
@@ -501,16 +506,38 @@ for (
       "tmua_prediction_snapshots",
     )
   ) {
-    forbiddenRuntimeReferences.push(
+    runtimeSnapshotReferences.push(
       relative,
     );
   }
 }
 
+const unexpectedRuntimeSnapshotReferences =
+  runtimeSnapshotReferences.filter(
+    (relative) =>
+      !approvedRuntimeSnapshotReferences.has(
+        relative,
+      ),
+  );
+
 assert(
-  forbiddenRuntimeReferences.length === 0,
-  "Phase 3B1-A must remain schema-only; runtime snapshot references found in: " +
-    forbiddenRuntimeReferences.join(", "),
+  unexpectedRuntimeSnapshotReferences.length === 0,
+  "Runtime snapshot access is restricted to the approved server overview route; unexpected references found in: " +
+    unexpectedRuntimeSnapshotReferences.join(", "),
+);
+
+assert(
+  runtimeSnapshotReferences.includes(
+    "app/api/tmua/overview/route.ts",
+  ),
+  "Approved TMUA overview route must remain the runtime snapshot integration point.",
+);
+
+assert(
+  runtimeSnapshotReferences.length ===
+    approvedRuntimeSnapshotReferences.size,
+  "Exactly one approved runtime snapshot integration is allowed; found: " +
+    runtimeSnapshotReferences.join(", "),
 );
 
 console.log(
@@ -525,5 +552,5 @@ console.log(
   "scores, weights and counts are constrained; " +
   "QB cannot activate below 30 unique questions; " +
   "typed provenance and deterministic deduplication are protected; " +
-  "Phase 3B1-A remains schema-only.",
+  "runtime snapshot access is restricted to the approved server overview route.",
 );
