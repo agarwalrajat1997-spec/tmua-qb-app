@@ -48,10 +48,76 @@ type PredictorOverview = {
     string;
 };
 
+type PreparationRankOverview = {
+  modelVersion:
+    string;
+
+  hasGenuinePreparationEvidence:
+    boolean;
+
+  score:
+    | number
+    | null;
+
+  rank:
+    | number
+    | null;
+
+  cohortSize:
+    number;
+
+  components:
+    | {
+        performance:
+          number;
+
+        breadth:
+          number;
+
+        evidenceDepth:
+          number;
+
+        recentActivity:
+          number;
+
+        consistency:
+          number;
+
+        recovery:
+          number;
+      }
+    | null;
+
+  calculatedAt:
+    string;
+};
+
+type CountdownOverview = {
+  daysToTmua:
+    number;
+
+  examDate:
+    string;
+
+  examDateLabel:
+    string;
+};
+
 type OverviewResponse = {
-  ok: boolean;
-  predictor?: PredictorOverview;
-  error?: string;
+  ok:
+    boolean;
+
+  predictor?:
+    PredictorOverview;
+
+  preparationRank?:
+    PreparationRankOverview;
+
+  countdown?:
+    CountdownOverview;
+
+  error?:
+    string;
 };
 
 function scoreText(
@@ -78,11 +144,11 @@ function confidenceText(
 
 export default function TmuaPredictionStrip() {
   const [
-    predictor,
-    setPredictor,
+    overview,
+    setOverview,
   ] =
     useState<
-      PredictorOverview |
+      OverviewResponse |
       null
     >(null);
 
@@ -131,15 +197,14 @@ export default function TmuaPredictionStrip() {
             body.ok &&
             body.predictor
           ) {
-            setPredictor(
-              body.predictor,
+            setOverview(
+              body,
             );
           }
         }
         catch {
-          // The predictor is supplementary UI.
-          // Existing dashboard functionality must continue
-          // even if this request fails.
+          // Supplementary dashboard information must never
+          // break the existing workspace.
         }
         finally {
           if (
@@ -164,10 +229,74 @@ export default function TmuaPredictionStrip() {
 
   if (
     !loaded ||
-    !predictor
+    !overview?.predictor
   ) {
     return null;
   }
+
+  const predictor =
+    overview.predictor;
+
+  const preparationRank =
+    overview.preparationRank ??
+    null;
+
+  const countdown =
+    overview.countdown ??
+    null;
+
+  const hasRank =
+    preparationRank?.rank !==
+      null &&
+    preparationRank?.rank !==
+      undefined &&
+    preparationRank.cohortSize >
+      0;
+
+  const rankText =
+    hasRank
+      ? `#${preparationRank.rank} of ${preparationRank.cohortSize}`
+      : null;
+
+  const countdownText =
+    countdown
+      ? `${
+          countdown.daysToTmua
+        } ${
+          countdown.daysToTmua ===
+          1
+            ? "day"
+            : "days"
+        } to TMUA`
+      : null;
+
+  const preparationMeta =
+    rankText
+      ? (
+          <span>
+            Preparation Rank{" "}
+            <strong>
+              {rankText}
+            </strong>
+          </span>
+        )
+      : (
+          <span>
+            Preparation Rank unlocks with recognised test or Question Bank evidence.
+          </span>
+        );
+
+  const countdownMeta =
+    countdown &&
+    countdownText
+      ? (
+          <span>
+            {countdownText}
+            {" \u00b7 "}
+            {countdown.examDateLabel}
+          </span>
+        )
+      : null;
 
   if (
     predictor.status ===
@@ -180,7 +309,7 @@ export default function TmuaPredictionStrip() {
         className={
           styles.strip
         }
-        aria-label="TMUA prediction"
+        aria-label="TMUA preparation overview"
       >
         <div
           className={
@@ -192,7 +321,7 @@ export default function TmuaPredictionStrip() {
               styles.label
             }
           >
-            Your TMUA prediction
+            Your predicted TMUA score
           </span>
 
           <strong
@@ -204,13 +333,14 @@ export default function TmuaPredictionStrip() {
           </strong>
         </div>
 
-        <span
+        <div
           className={
-            styles.detail
+            styles.meta
           }
         >
-          Complete more recognised tests or Question Bank practice.
-        </span>
+          {preparationMeta}
+          {countdownMeta}
+        </div>
       </section>
     );
   }
@@ -226,7 +356,7 @@ export default function TmuaPredictionStrip() {
       className={
         styles.strip
       }
-      aria-label="TMUA prediction"
+      aria-label="TMUA preparation overview"
     >
       <div
         className={
@@ -263,7 +393,7 @@ export default function TmuaPredictionStrip() {
             {scoreText(
               predictor.lowerBound as number,
             )}
-            –
+            {"\u2013"}
             {scoreText(
               predictor.upperBound as number,
             )}
@@ -278,6 +408,9 @@ export default function TmuaPredictionStrip() {
             confidence
           </span>
         ) : null}
+
+        {preparationMeta}
+        {countdownMeta}
       </div>
     </section>
   );

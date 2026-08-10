@@ -160,10 +160,24 @@ assert(
 );
 
 assert(
-  !route.toLowerCase().includes(
-    "preparation rank",
+  route.includes(
+    "preparationRank:",
   ),
-  "Preparation Rank remains outside Predictor API",
+  "Preparation Rank is exposed as a separate overview field",
+);
+
+assert(
+  route.includes(
+    "predictor: {",
+  ),
+  "Predictor remains a distinct overview field",
+);
+
+assert(
+  route.includes(
+    "preparationOverview.preparationRank",
+  ),
+  "Preparation Rank payload remains separate from Predictor payload",
 );
 
 assert(
@@ -261,5 +275,5 @@ console.log(
   "canonical QB authority is preserved; Predictor V1 remains locked; " +
   "snapshots deduplicate by input; dashboard labels predictions correctly; " +
   "prediction strip is attached only to the actual later workspace main; " +
-  "Preparation Rank remains separate.",
+  "Preparation Rank remains a separate model within the shared overview response.",
 );
