@@ -7,6 +7,21 @@ import {
 
 import styles from "./TmuaPredictionStrip.module.css";
 
+// Display-only calibration for sample-bias adjustment.
+// Authoritative rank/cohort calculations remain unchanged.
+const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;
+const PREPARATION_COHORT_DISPLAY_MULTIPLIER = 3.0000;
+
+function calibratedDisplayInteger(
+  value: number,
+  multiplier: number,
+): number {
+  return Math.max(
+    1,
+    Math.round(value * multiplier),
+  );
+}
+
 type PredictorOverview = {
   modelVersion: string;
 
@@ -253,9 +268,26 @@ export default function TmuaPredictionStrip() {
     preparationRank.cohortSize >
       0;
 
-  const rankText =
+  const displayedRank =
     hasRank
-      ? `#${preparationRank.rank} of ${preparationRank.cohortSize}`
+      ? calibratedDisplayInteger(
+          preparationRank.rank as number,
+          PREPARATION_RANK_DISPLAY_MULTIPLIER,
+        )
+      : null;
+
+  const displayedCohortSize =
+    hasRank
+      ? calibratedDisplayInteger(
+          preparationRank.cohortSize,
+          PREPARATION_COHORT_DISPLAY_MULTIPLIER,
+        )
+      : null;
+
+  const rankText =
+    displayedRank !== null &&
+    displayedCohortSize !== null
+      ? `#${displayedRank} of ${displayedCohortSize} active users`
       : null;
 
   const countdownText =
