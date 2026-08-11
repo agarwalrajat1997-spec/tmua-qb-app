@@ -4,8 +4,8 @@
   <title>ESAT Question Bank</title>
 
   <!-- MathJax (same delimiters you already use) -->
-  
-  
+
+
 
 <style>
 .hint-box{
@@ -2120,6 +2120,7 @@ window.MathJax = {
   var progressMap = {};
   var currentVisitQuestionId = "";
   var checkedThisVisit = {};
+  var reattemptPreparedQuestionId = "";
   var lastSavedHash = "";
 
   function nowIso() {
@@ -2241,6 +2242,7 @@ window.MathJax = {
 
     if (qid && qid !== currentVisitQuestionId) {
       currentVisitQuestionId = qid;
+      reattemptPreparedQuestionId = "";
 
       // New visit to a question.
       // If this question was checked earlier in this browser session, clear that marker.
@@ -2511,6 +2513,12 @@ window.MathJax = {
     // Hide only when they revisit the wrong question later.
     if (checkedThisVisit[qid]) return;
 
+    // TS_QB_REATTEMPT_SELECTION_STABILITY_V3
+    // Clear historical wrong-answer UI once on a fresh visit only.
+    // The periodic sync must never erase a new working selection.
+    if (reattemptPreparedQuestionId === qid) return;
+    var preparedAnyAnswerInput = false;
+
     var roots = [];
 
     [
@@ -2551,6 +2559,7 @@ window.MathJax = {
 
       root.querySelectorAll("input[type='radio'], input[type='checkbox']").forEach(function (el) {
         if (isNavigatorElement(el)) return;
+        preparedAnyAnswerInput = true;
 
         el.checked = false;
         el.removeAttribute("disabled");
@@ -2610,6 +2619,10 @@ window.MathJax = {
         btn.hidden = false;
       }
     });
+
+    if (preparedAnyAnswerInput) {
+      reattemptPreparedQuestionId = qid;
+    }
   }
 
   function bindClickHooks() {
@@ -3596,7 +3609,7 @@ window.MathJax = {
     <!-- MOVED UP: Filters + Flag -->
     <button class="btn light" onclick="UI.openFilters()">Filters</button>
 <button id="btnFlag" class="btn light" onclick="ACTIONS.toggleFlag()">Flag for Review</button>
-   
+
   </div>
 </div>
 
@@ -3809,7 +3822,7 @@ window.MathJax = {
         <div class="nav-toolbar">
           <div class="chips">
             <span class="chip"><span class="dot"></span><span id="navShowingLabel">Filtered</span>&nbsp;view</span>
-   
+
           </div>
 
 
@@ -3871,7 +3884,7 @@ window.MathJax = {
             <div class="stat-row"><span>Accuracy</span><strong id="dAcc">0%</strong></div>
             <div class="stat-row"><span>Flagged</span><strong id="dFlagged">0</strong></div>
           </div>
-           
+
           </div>
         </div>
 
@@ -3931,7 +3944,7 @@ window.MathJax = {
     </div>
   </div>
 
-  
+
 
 
 <!-- TS_QB_PROGRESS_SYNC_V1 -->
@@ -4153,7 +4166,7 @@ window.MathJax = {
     return "";
   }
 
-  
+
   // TS_TOPIC_FILTER_ORDER_FIX_V1
   function tsTopicNumber(topic) {
     const m = String(topic || "").trim().match(/^(\d+)/);
@@ -4181,7 +4194,7 @@ function uniqueSorted(arr) {
     return state.answers[questionKey(meta)] || {};
   }
 
-  
+
   // TS_FINAL_CHAPTER_ORDER_FIX_V1
   const TS_CHAPTER_ORDER = [
     "1_Algebra & Functions",
@@ -4445,7 +4458,7 @@ function applyFilters() {
       const label = String(opt.label || "").trim();
       const checked = a.selected === label ? "checked" : "";
       const selectedClass = a.selected === label ? " selected" : "";
-      const locked = (a.checked && a.isCorrect === true) ? "disabled" : "";
+      const locked = a.checked && a.isCorrect === true ? "disabled" : "";
 
       let cls = "option" + selectedClass;
       if (a.checked && label === a.answer) cls += " correct";
