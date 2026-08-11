@@ -68,6 +68,15 @@ export async function proxy(req: NextRequest) {
   }
   let res = NextResponse.next({ request: req });
 
+  // Official TMUA solution PDFs are intentionally public.
+  // Everything else under /practice-tests remains protected.
+  if (
+    req.nextUrl.pathname.startsWith("/practice-tests/solutions/") &&
+    req.nextUrl.pathname.toLowerCase().endsWith(".pdf")
+  ) {
+    return res;
+  }
+
   const supabase = createServerClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
