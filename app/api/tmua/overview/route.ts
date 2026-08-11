@@ -23,6 +23,7 @@ import {
 import {
   calculateTmuaPredictorV1,
 } from "@/lib/server/tmua-predictor-v1-engine";
+import { applyTmuaHighScoreEvidenceGate } from "@/lib/server/tmua-predictor-v1_1-policy";
 
 import {
   buildTmuaPredictionSnapshotInsert,
@@ -2666,13 +2667,18 @@ export async function GET() {
           a.localeCompare(b),
       );
 
-    const result =
+    const rawPredictorResult =
       calculateTmuaPredictorV1({
         conversionProfiles,
         activeTopics,
         testAttempts,
         qbEvents,
       });
+
+    const result =
+      applyTmuaHighScoreEvidenceGate(
+        rawPredictorResult,
+      );
 
     const calculatedAt =
       new Date()
