@@ -1004,6 +1004,62 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 </div>
                 <div className={styles.meta}>Filter · Bookmark · Solutions</div>
               </div>
+              {/* TS_QB_RECOMMENDED_PATH_V2 */}
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Recommended Practice Path</div>
+                <div className={styles.muted} style={{ marginTop: 6, marginBottom: 14, lineHeight: 1.55 }}>
+                  Use the Question Bank in a deliberate cycle: learn a topic, secure accuracy, increase the challenge,
+                  review weak questions, then mix topics so you can recognise methods quickly under exam pressure.
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+                  {[
+                    ["1", "Choose one topic", "Start focused. Use the topic filter and begin with questions that let you establish the core method."],
+                    ["2", "Secure accuracy", "Work until the method feels repeatable. Prioritise correct reasoning before trying to become faster."],
+                    ["3", "Increase difficulty", "Move into harder questions once the standard methods are secure and note where your approach breaks down."],
+                    ["4", "Review weak questions", "Bookmark useful questions and flag anything uncertain, slow or guessed. Re-attempt these before reading the solution."],
+                    ["5", "Mix and repeat", "Use mixed filters to practise switching between methods. Revisit flagged questions until the weakness is genuinely resolved."],
+                  ].map(([n, title, text]) => (
+                    <div key={n} style={{ border: "1px solid rgba(122,31,36,.16)", borderRadius: 14, padding: 14, background: "#FFFDF7" }}>
+                      <div style={{ width: 30, height: 30, display: "grid", placeItems: "center", borderRadius: 999, background: "#FEC94F", color: "#7A1F24", fontWeight: 950, marginBottom: 9 }}>
+                        {n}
+                      </div>
+                      <div style={{ color: "#141414", fontWeight: 900, fontSize: 14, marginBottom: 5 }}>{title}</div>
+                      <div style={{ color: "#667085", fontSize: 12, lineHeight: 1.5, fontWeight: 650 }}>{text}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>How to Use the Question Bank</div>
+                <div className={styles.muted} style={{ marginTop: 6, marginBottom: 14, lineHeight: 1.55 }}>
+                  The controls below help you choose what to practise, move quickly through the bank and create a useful revision list.
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10 }}>
+                  {[
+                    ["Topic & difficulty filters", "Narrow the bank to the exact area and level you want to practise."],
+                    ["Question Navigator", "Jump directly to a question number instead of moving through every question in sequence."],
+                    ["Bookmark", "Save high-value questions that you want to revisit later."],
+                    ["Flag for Review", "Mark questions that were uncertain, slow or guessed so they become a focused revision list."],
+                    ["Check Answer & Solution", "Check your response, then compare your reasoning with the worked solution rather than only noting the final answer."],
+                    ["Keyboard navigation", "Use Alt + N for the next question and Alt + P for the previous question. Shortcuts are ignored while typing in an input or editable field."],
+                  ].map(([title, text]) => (
+                    <div key={title} style={{ border: "1px solid #E7E7E7", borderRadius: 12, padding: 14, background: "#FFFFFF" }}>
+                      <div style={{ color: "#7A1F24", fontWeight: 900, fontSize: 13, marginBottom: 5 }}>{title}</div>
+                      <div style={{ color: "#667085", fontWeight: 650, fontSize: 12, lineHeight: 1.5 }}>{text}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                  <span style={{ padding: "8px 11px", borderRadius: 9, background: "#141414", color: "#FFFFFF", fontSize: 12, fontWeight: 900 }}>Alt + N</span>
+                  <span style={{ color: "#667085", fontSize: 13, fontWeight: 750 }}>Next question</span>
+                  <span style={{ padding: "8px 11px", borderRadius: 9, background: "#141414", color: "#FFFFFF", fontSize: 12, fontWeight: 900, marginLeft: 6 }}>Alt + P</span>
+                  <span style={{ color: "#667085", fontSize: 13, fontWeight: 750 }}>Previous question</span>
+                </div>
+              </div>
 
               <div className={styles.card}>
                 <div className={styles.cardTitle}>Open the Question Bank</div>
