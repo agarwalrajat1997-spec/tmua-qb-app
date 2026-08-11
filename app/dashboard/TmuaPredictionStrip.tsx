@@ -328,7 +328,7 @@ export default function TmuaPredictionStrip() {
   const rankText =
     displayedRank !== null &&
     displayedCohortSize !== null
-      ? `#${displayedRank} out of ${displayedCohortSize} active users`
+      ? `#${displayedRank} out of ${displayedCohortSize} active users.`
       : null;
   const countdownText =
     countdown
