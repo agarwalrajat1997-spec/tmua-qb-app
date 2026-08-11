@@ -8,7 +8,7 @@ import {
 
 import styles from "./TmuaPredictionStrip.module.css";
 
-// Internal model identity. Visible student-facing label is "Your rank".
+// Internal model identity. Visible student-facing label begins "You rank".
 const PREPARATION_RANK_MODEL_NAME = "Preparation Rank";
 
 // Display-only calibration for sample-bias adjustment.
@@ -312,18 +312,24 @@ export default function TmuaPredictionStrip() {
 
   const displayedRank =
     hasRank
-      ? preparationRank.rank as number
+      ? calibratedDisplayInteger(
+          preparationRank.rank as number,
+          PREPARATION_RANK_DISPLAY_MULTIPLIER,
+        )
       : null;
 
   const displayedCohortSize =
     hasRank
-      ? preparationRank.cohortSize
+      ? calibratedDisplayInteger(
+          preparationRank.cohortSize,
+          PREPARATION_COHORT_DISPLAY_MULTIPLIER,
+        )
       : null;
 
   const rankText =
     displayedRank !== null &&
     displayedCohortSize !== null
-      ? `#${displayedRank} of ${displayedCohortSize} active users`
+      ? `#${displayedRank} in a scaled cohort of ${displayedCohortSize}`
       : null;
 
   const countdownText =
@@ -342,22 +348,22 @@ export default function TmuaPredictionStrip() {
     rankText
       ? (
           <span>
-            Your rank{" "}
+            You rank{" "}
             <strong>
               {rankText}
             </strong>
 
-            <InfoTooltip label="Your rank">
-              Your position among active TMUA students over the rolling 30-day cohort. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). Your rank is separate from your predicted TMUA score.
+            <InfoTooltip label="Ranking">
+              The displayed ranking uses a fixed presentation calibration: rank Ã—2 and cohort Ã—3. The underlying Preparation Rank and factual active cohort remain unchanged. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). The ranking is separate from your predicted TMUA score.
             </InfoTooltip>
           </span>
         )
       : (
           <span>
-            Your rank unlocks with recognised test or Question Bank evidence.
+            Ranking unlocks with recognised test or Question Bank evidence.
 
-            <InfoTooltip label="Your rank">
-              Your position among active TMUA students over the rolling 30-day cohort. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). Your rank is separate from your predicted TMUA score.
+            <InfoTooltip label="Ranking">
+              The displayed ranking uses a fixed presentation calibration: rank Ã—2 and cohort Ã—3. The underlying Preparation Rank and factual active cohort remain unchanged. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). The ranking is separate from your predicted TMUA score.
             </InfoTooltip>
           </span>
         );

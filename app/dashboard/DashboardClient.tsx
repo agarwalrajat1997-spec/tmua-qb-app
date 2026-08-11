@@ -1006,7 +1006,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
               </div>
               {/* TS_QB_RECOMMENDED_PATH_V2 */}
               <div className={styles.card}>
-                <div className={styles.cardTitle}>Recommended Practice Path</div>
+                <div className={styles.cardTitle}>Roadmap</div>
                 <div className={styles.muted} style={{ marginTop: 6, marginBottom: 14, lineHeight: 1.55 }}>
                   Use the Question Bank in a deliberate cycle: learn a topic, secure accuracy, increase the challenge,
                   review weak questions, then mix topics so you can recognise methods quickly under exam pressure.
@@ -1031,35 +1031,193 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 </div>
               </div>
 
-              <div className={styles.card}>
-                <div className={styles.cardTitle}>How to Use the Question Bank</div>
-                <div className={styles.muted} style={{ marginTop: 6, marginBottom: 14, lineHeight: 1.55 }}>
-                  The controls below help you choose what to practise, move quickly through the bank and create a useful revision list.
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10 }}>
-                  {[
-                    ["Topic & difficulty filters", "Narrow the bank to the exact area and level you want to practise."],
-                    ["Question Navigator", "Jump directly to a question number instead of moving through every question in sequence."],
-                    ["Bookmark", "Save high-value questions that you want to revisit later."],
-                    ["Flag for Review", "Mark questions that were uncertain, slow or guessed so they become a focused revision list."],
-                    ["Check Answer & Solution", "Check your response, then compare your reasoning with the worked solution rather than only noting the final answer."],
-                    ["Keyboard navigation", "Use Alt + N for the next question and Alt + P for the previous question. Shortcuts are ignored while typing in an input or editable field."],
-                  ].map(([title, text]) => (
-                    <div key={title} style={{ border: "1px solid #E7E7E7", borderRadius: 12, padding: 14, background: "#FFFFFF" }}>
-                      <div style={{ color: "#7A1F24", fontWeight: 900, fontSize: 13, marginBottom: 5 }}>{title}</div>
-                      <div style={{ color: "#667085", fontWeight: 650, fontSize: 12, lineHeight: 1.5 }}>{text}</div>
+              {/* TS_QB_HOWTO_TOGGLE_V3 */}
+              <details className={styles.card}>
+                <summary
+                  style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 14,
+                    listStyle: "none",
+                  }}
+                >
+                  <div>
+                    <div className={styles.cardTitle}>How to Use the Question Bank</div>
+                    <div
+                      className={styles.muted}
+                      style={{
+                        marginTop: 5,
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      Open the guide for filters, navigation, review tools, solutions and keyboard shortcuts.
                     </div>
-                  ))}
-                </div>
+                  </div>
 
-                <div style={{ marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-                  <span style={{ padding: "8px 11px", borderRadius: 9, background: "#141414", color: "#FFFFFF", fontSize: 12, fontWeight: 900 }}>Alt + N</span>
-                  <span style={{ color: "#667085", fontSize: 13, fontWeight: 750 }}>Next question</span>
-                  <span style={{ padding: "8px 11px", borderRadius: 9, background: "#141414", color: "#FFFFFF", fontSize: 12, fontWeight: 900, marginLeft: 6 }}>Alt + P</span>
-                  <span style={{ color: "#667085", fontSize: 13, fontWeight: 750 }}>Previous question</span>
+                  <span
+                    style={{
+                      flex: "0 0 auto",
+                      padding: "8px 11px",
+                      borderRadius: 999,
+                      border: "1px solid rgba(122,31,36,.18)",
+                      background: "#FFFDF7",
+                      color: "#7A1F24",
+                      fontSize: 12,
+                      fontWeight: 900,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Open guide
+                  </span>
+                </summary>
+
+                <div
+                  style={{
+                    marginTop: 16,
+                    paddingTop: 16,
+                    borderTop: "1px solid #ECECEC",
+                  }}
+                >
+                  <div
+                    className={styles.muted}
+                    style={{
+                      marginBottom: 14,
+                      maxWidth: 920,
+                      lineHeight: 1.55,
+                    }}
+                  >
+                    The Question Bank is designed for focused practice, review and quick navigation.
+                    Use these controls to decide exactly what to practise and to return efficiently
+                    to questions that need another attempt.
+                  </div>
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                      gap: 10,
+                    }}
+                  >
+                    {[
+                      {
+                        title: "Topic & difficulty filters",
+                        text: "Narrow the bank to the exact topic and level you want to practise.",
+                      },
+                      {
+                        title: "Question Navigator",
+                        text: "Jump directly to a question number instead of moving through every question in sequence.",
+                      },
+                      {
+                        title: "Bookmark",
+                        text: "Save high-value questions that you want to revisit later.",
+                      },
+                      {
+                        title: "Flag for Review",
+                        text: "Mark questions that were uncertain, slow or guessed so they become a focused revision list.",
+                      },
+                      {
+                        title: "Check Answer & Solution",
+                        text: "Check your response, then compare your reasoning with the worked solution rather than only noting the final answer.",
+                      },
+                      {
+                        title: "Keyboard navigation",
+                        text: "Use Alt + N for the next question and Alt + P for the previous question. Shortcuts are ignored while typing in an input or editable field.",
+                      },
+                    ].map((item) => (
+                      <div
+                        key={item.title}
+                        style={{
+                          border: "1px solid #E7E7E7",
+                          borderRadius: 12,
+                          padding: 14,
+                          background: "#FFFFFF",
+                        }}
+                      >
+                        <div
+                          style={{
+                            color: "#7A1F24",
+                            fontWeight: 900,
+                            fontSize: 13,
+                            marginBottom: 5,
+                          }}
+                        >
+                          {item.title}
+                        </div>
+
+                        <div
+                          style={{
+                            color: "#667085",
+                            fontWeight: 650,
+                            fontSize: 12,
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {item.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: 14,
+                      display: "flex",
+                      gap: 10,
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        padding: "8px 11px",
+                        borderRadius: 9,
+                        background: "#141414",
+                        color: "#FFFFFF",
+                        fontSize: 12,
+                        fontWeight: 900,
+                      }}
+                    >
+                      Alt + N
+                    </span>
+
+                    <span
+                      style={{
+                        color: "#667085",
+                        fontSize: 13,
+                        fontWeight: 750,
+                      }}
+                    >
+                      Next question
+                    </span>
+
+                    <span
+                      style={{
+                        padding: "8px 11px",
+                        borderRadius: 9,
+                        background: "#141414",
+                        color: "#FFFFFF",
+                        fontSize: 12,
+                        fontWeight: 900,
+                        marginLeft: 6,
+                      }}
+                    >
+                      Alt + P
+                    </span>
+
+                    <span
+                      style={{
+                        color: "#667085",
+                        fontSize: 13,
+                        fontWeight: 750,
+                      }}
+                    >
+                      Previous question
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </details>
 
               <div className={styles.card}>
                 <div className={styles.cardTitle}>Open the Question Bank</div>
