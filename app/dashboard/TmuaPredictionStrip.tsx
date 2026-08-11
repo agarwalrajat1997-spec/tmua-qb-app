@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useId,
   useState,
 } from "react";
 
@@ -157,6 +158,44 @@ function confidenceText(
   );
 }
 
+type InfoTooltipProps = {
+  label: string;
+  children: React.ReactNode;
+};
+
+function InfoTooltip({
+  label,
+  children,
+}: InfoTooltipProps) {
+  const tooltipId = useId();
+
+  return (
+    <span className={styles.infoWrap}>
+      <button
+        type="button"
+        className={styles.infoButton}
+        aria-label={`About ${label}`}
+        aria-describedby={tooltipId}
+      >
+        i
+      </button>
+
+      <span
+        id={tooltipId}
+        role="tooltip"
+        className={styles.tooltip}
+      >
+        <strong className={styles.tooltipTitle}>
+          {label}
+        </strong>
+
+        <span className={styles.tooltipText}>
+          {children}
+        </span>
+      </span>
+    </span>
+  );
+}
 export default function TmuaPredictionStrip() {
   const [
     overview,
@@ -270,18 +309,12 @@ export default function TmuaPredictionStrip() {
 
   const displayedRank =
     hasRank
-      ? calibratedDisplayInteger(
-          preparationRank.rank as number,
-          PREPARATION_RANK_DISPLAY_MULTIPLIER,
-        )
+      ? preparationRank.rank as number
       : null;
 
   const displayedCohortSize =
     hasRank
-      ? calibratedDisplayInteger(
-          preparationRank.cohortSize,
-          PREPARATION_COHORT_DISPLAY_MULTIPLIER,
-        )
+      ? preparationRank.cohortSize
       : null;
 
   const rankText =
@@ -299,22 +332,30 @@ export default function TmuaPredictionStrip() {
           1
             ? "day"
             : "days"
-        } to TMUA`
+        } till TMUA`
       : null;
 
   const preparationMeta =
     rankText
       ? (
           <span>
-            Preparation Rank{" "}
+            Your rank{" "}
             <strong>
               {rankText}
             </strong>
+
+            <InfoTooltip label="Your rank">
+              Your position among active TMUA students over the rolling 30-day cohort. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). Your rank is separate from your predicted TMUA score.
+            </InfoTooltip>
           </span>
         )
       : (
           <span>
-            Preparation Rank unlocks with recognised test or Question Bank evidence.
+            Your rank unlocks with recognised test or Question Bank evidence.
+
+            <InfoTooltip label="Your rank">
+              Your position among active TMUA students over the rolling 30-day cohort. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). Your rank is separate from your predicted TMUA score.
+            </InfoTooltip>
           </span>
         );
 
@@ -324,8 +365,10 @@ export default function TmuaPredictionStrip() {
       ? (
           <span>
             {countdownText}
-            {" \u00b7 "}
-            {countdown.examDateLabel}
+
+            <InfoTooltip label="TMUA countdown">
+              Calendar days remaining until your configured TMUA exam date. The countdown updates automatically each day. Current exam date: {countdown.examDateLabel}.
+            </InfoTooltip>
           </span>
         )
       : null;
@@ -355,6 +398,10 @@ export default function TmuaPredictionStrip() {
           >
             Your predicted TMUA score
           </span>
+
+          <InfoTooltip label="Predicted TMUA score">
+            Eligible practice-test evidence is the main signal. Retakes are collapsed within a test family. Verified Question Bank evidence starts contributing after 30 unique first-exposure questions and is capped so that it cannot overpower test evidence. Until enough eligible evidence exists, no synthetic score is shown.
+          </InfoTooltip>
 
           <strong
             className={
@@ -402,6 +449,10 @@ export default function TmuaPredictionStrip() {
         >
           Your predicted TMUA score is
         </span>
+
+        <InfoTooltip label="Predicted TMUA score">
+          Eligible practice-test evidence is the main signal. Retakes are collapsed within a test family. Verified Question Bank evidence starts contributing after 30 unique first-exposure questions and is capped so that it cannot overpower test evidence. Confidence reflects the amount and spread of independent evidence.
+        </InfoTooltip>
 
         <strong
           className={

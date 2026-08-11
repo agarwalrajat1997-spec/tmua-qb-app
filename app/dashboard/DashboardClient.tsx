@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -139,7 +139,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [active, setActive] = useState<"practice" | "bank" | "classes" | "resources">("practice");
+  const [active, setActive] = useState<"practice" | "bank" | "classes" | "resources">("bank");
   const [err, setErr] = useState<string | null>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -611,24 +611,9 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
             <br />
             Workspace
           </div>
-          <div className={styles.sideSub}>Practice tests + question bank + live classes. Clean, focused, tracked.</div>
+          
 
           <ul className={styles.nav}>
-            <li>
-              <button
-                className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`}
-                onClick={() => hasPractice && setActive("practice")}
-                type="button"
-                aria-disabled={!hasPractice}
-                disabled={!hasPractice}
-                style={!hasPractice ? lockStyle : undefined}
-                title={!hasPractice ? "Locked: practice-tests not enabled" : "Practice Tests"}
-              >
-                <span className={styles.step}>1</span>
-                <span className={styles.navLabel}>Practice Tests</span>
-              </button>
-            </li>
-
             <li>
               <button
                 className={`${styles.navBtn} ${active === "bank" ? styles.navBtnOn : ""}`}
@@ -639,8 +624,23 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 style={!hasBank ? lockStyle : undefined}
                 title={!hasBank ? "Locked: tmua-question-bank not enabled" : "Question Bank"}
               >
-                <span className={styles.step}>2</span>
+                <span className={styles.step}>1</span>
                 <span className={styles.navLabel}>Question Bank</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`}
+                onClick={() => hasPractice && setActive("practice")}
+                type="button"
+                aria-disabled={!hasPractice}
+                disabled={!hasPractice}
+                style={!hasPractice ? lockStyle : undefined}
+                title={!hasPractice ? "Locked: practice-tests not enabled" : "Practice Tests"}
+              >
+                <span className={styles.step}>2</span>
+                <span className={styles.navLabel}>Practice Tests</span>
               </button>
             </li>
 
