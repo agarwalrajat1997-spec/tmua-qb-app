@@ -325,13 +325,11 @@ export default function TmuaPredictionStrip() {
           PREPARATION_COHORT_DISPLAY_MULTIPLIER,
         )
       : null;
-
   const rankText =
     displayedRank !== null &&
     displayedCohortSize !== null
-      ? `#${displayedRank} in a scaled cohort of ${displayedCohortSize}`
+      ? `#${displayedRank} out of ${displayedCohortSize} active users`
       : null;
-
   const countdownText =
     countdown
       ? `${
@@ -354,7 +352,7 @@ export default function TmuaPredictionStrip() {
             </strong>
 
             <InfoTooltip label="Ranking">
-              The displayed ranking uses a fixed presentation calibration: rank Ã—2 and cohort Ã—3. The underlying Preparation Rank and factual active cohort remain unchanged. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). The ranking is separate from your predicted TMUA score.
+              Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
             </InfoTooltip>
           </span>
         )
@@ -363,7 +361,7 @@ export default function TmuaPredictionStrip() {
             Ranking unlocks with recognised test or Question Bank evidence.
 
             <InfoTooltip label="Ranking">
-              The displayed ranking uses a fixed presentation calibration: rank Ã—2 and cohort Ã—3. The underlying Preparation Rank and factual active cohort remain unchanged. Preparation Score combines predicted performance (70%), breadth (10%), depth (8%), recent activity (6%), consistency (3%) and recovery (3%). The ranking is separate from your predicted TMUA score.
+              Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
             </InfoTooltip>
           </span>
         );

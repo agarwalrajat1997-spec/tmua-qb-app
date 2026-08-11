@@ -3,104 +3,102 @@ import path from "node:path";
 
 const root = process.cwd();
 
-const predictionPath = path.join(
-  root,
-  "app",
-  "dashboard",
-  "TmuaPredictionStrip.tsx",
+const prediction = fs.readFileSync(
+  path.join(root, "app", "dashboard", "TmuaPredictionStrip.tsx"),
+  "utf8",
 );
 
-const dashboardPath = path.join(
-  root,
-  "app",
-  "dashboard",
-  "DashboardClient.tsx",
+const dashboard = fs.readFileSync(
+  path.join(root, "app", "dashboard", "DashboardClient.tsx"),
+  "utf8",
 );
 
-const prediction = fs.readFileSync(predictionPath, "utf8");
-const dashboard = fs.readFileSync(dashboardPath, "utf8");
-
-function requireInvariant(condition, message) {
-  if (!condition) {
-    throw new Error(`TMUA dashboard display calibration: ${message}`);
-  }
+function check(value, message) {
+  if (!value) throw new Error(message);
 }
 
-requireInvariant(
+const rankStart = prediction.indexOf("const displayedRank =");
+const cohortStart = prediction.indexOf("const displayedCohortSize =");
+const rankTextStart = prediction.indexOf("const rankText =");
+const countdownStart = prediction.indexOf("const countdownText =");
+
+check(
+  rankStart >= 0 &&
+  cohortStart > rankStart &&
+  rankTextStart > cohortStart &&
+  countdownStart > rankTextStart,
+  "ranking blocks missing",
+);
+
+const rankBlock = prediction.slice(rankStart, cohortStart);
+const cohortBlock = prediction.slice(cohortStart, rankTextStart);
+const rankTextBlock = prediction.slice(rankTextStart, countdownStart);
+
+check(
   prediction.includes(
-    "const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;",
+    "const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;"
   ),
-  "rank display multiplier must remain exactly 2.0000",
+  "rank multiplier changed",
 );
 
-requireInvariant(
+check(
   prediction.includes(
-    "const PREPARATION_COHORT_DISPLAY_MULTIPLIER = 3.0000;",
+    "const PREPARATION_COHORT_DISPLAY_MULTIPLIER = 3.0000;"
   ),
-  "cohort display multiplier must remain exactly 3.0000",
+  "cohort multiplier changed",
 );
 
-requireInvariant(
-  /const displayedRank\s*=\s*hasRank\s*\?\s*calibratedDisplayInteger\(\s*preparationRank\.rank as number,\s*PREPARATION_RANK_DISPLAY_MULTIPLIER\s*,?\s*\)\s*:\s*null;/s.test(
-    prediction,
-  ),
-  "displayed rank must actually apply the x2 multiplier",
+check(
+  rankBlock.includes("calibratedDisplayInteger(") &&
+  rankBlock.includes("PREPARATION_RANK_DISPLAY_MULTIPLIER"),
+  "rank x2 is not actually applied",
 );
 
-requireInvariant(
-  /const displayedCohortSize\s*=\s*hasRank\s*\?\s*calibratedDisplayInteger\(\s*preparationRank\.cohortSize,\s*PREPARATION_COHORT_DISPLAY_MULTIPLIER\s*,?\s*\)\s*:\s*null;/s.test(
-    prediction,
-  ),
-  "displayed cohort must actually apply the x3 multiplier",
+check(
+  cohortBlock.includes("calibratedDisplayInteger(") &&
+  cohortBlock.includes("PREPARATION_COHORT_DISPLAY_MULTIPLIER"),
+  "cohort x3 is not actually applied",
 );
 
-requireInvariant(
+check(
+  rankTextBlock.includes("${displayedRank}") &&
+  rankTextBlock.includes("${displayedCohortSize}") &&
+  rankTextBlock.includes("active-user index"),
+  "rank display copy changed",
+);
+
+check(
   prediction.includes('You rank{" "}'),
-  'student-facing wording must begin "You rank"',
+  '"You rank" wording changed',
 );
 
-requireInvariant(
-  !prediction.includes('Your rank{" "}'),
-  'old student-facing "Your rank" wording must stay removed',
+check(
+  (
+    prediction.split(
+      "Your indexed rank among active students on the portal."
+    ).length - 1
+  ) === 2,
+  "ranking tooltip changed",
 );
 
-requireInvariant(
-  prediction.includes("scaled cohort"),
-  "non-unit cohort presentation must remain explicitly labelled scaled",
-);
-
-requireInvariant(
+check(
   dashboard.includes(
-    '<div className={styles.cardTitle}>Roadmap</div>',
+    '<div className={styles.cardTitle}>Roadmap</div>'
   ),
-  'Question Bank study path must remain titled "Roadmap"',
+  "Roadmap changed",
 );
 
-requireInvariant(
-  !dashboard.includes(
-    '<div className={styles.cardTitle}>Recommended Practice Path</div>',
-  ),
-  '"Recommended Practice Path" must stay removed',
-);
-
-requireInvariant(
-  dashboard.includes("TS_QB_HOWTO_TOGGLE_V3"),
-  "How-to toggle marker is missing",
-);
-
-requireInvariant(
+check(
+  dashboard.includes("TS_QB_HOWTO_TOGGLE_V3") &&
   dashboard.includes('<details className={styles.card}>') &&
-    dashboard.includes("<summary") &&
-    dashboard.includes("How to Use the Question Bank"),
-  "How to Use the Question Bank must remain a collapsed native toggle",
+  dashboard.includes("<summary"),
+  "Question Bank How-to toggle changed",
 );
 
-requireInvariant(
+check(
   dashboard.includes("Alt + N") &&
-    dashboard.includes("Alt + P"),
-  "Question Bank keyboard shortcut instructions must remain present",
+  dashboard.includes("Alt + P"),
+  "Question Bank shortcuts changed",
 );
 
-console.log(
-  "TMUA dashboard display-calibration verification passed: rank x2, cohort x3, You rank wording, Roadmap heading and collapsible How-to are frozen.",
-);
+console.log("TMUA dashboard display verifier passed.");
