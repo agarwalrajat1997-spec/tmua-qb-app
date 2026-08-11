@@ -8,6 +8,9 @@ import {
 
 import styles from "./TmuaPredictionStrip.module.css";
 
+// Internal model identity. Visible student-facing label is "Your rank".
+const PREPARATION_RANK_MODEL_NAME = "Preparation Rank";
+
 // Display-only calibration for sample-bias adjustment.
 // Authoritative rank/cohort calculations remain unchanged.
 const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;
@@ -385,6 +388,7 @@ export default function TmuaPredictionStrip() {
           styles.strip
         }
         aria-label="TMUA preparation overview"
+        data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
       >
         <div
           className={
@@ -436,6 +440,7 @@ export default function TmuaPredictionStrip() {
         styles.strip
       }
       aria-label="TMUA preparation overview"
+        data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
     >
       <div
         className={

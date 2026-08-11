@@ -102,7 +102,7 @@ for (
     'CountdownOverview',
     'Preparation Rank',
     'daysToTmua',
-    'to TMUA',
+    'till TMUA',
     'examDateLabel',
     'countdown.examDateLabel',
     'recognised test or Question Bank evidence',
@@ -141,7 +141,7 @@ for (
     'preparationRank.score}',
     'preparationRank.score)',
     '#1 of 18',
-    '63 days to TMUA',
+    '63 days till TMUA',
   ]
 ) {
   forbidText(

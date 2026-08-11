@@ -611,7 +611,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
             <br />
             Workspace
           </div>
-          
+
 
           <ul className={styles.nav}>
             <li>
