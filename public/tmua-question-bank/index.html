@@ -1822,6 +1822,99 @@ window.MathJax = {
 }
 
 </style>
+
+<style id="ts-qb-question-timer-css-v1">
+/* TS_QB_QUESTION_TIMER_UI_V1 */
+.header {
+  position: relative;
+}
+
+#tsQuestionTimerShell {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 7px;
+  min-width: 112px;
+  color: #ffffff;
+  white-space: nowrap;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+#tsQuestionTimerValue {
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 31, 71, 0.20);
+}
+
+#tsQuestionTimerToggle {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  padding: 4px 2px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.96);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  pointer-events: auto;
+  text-transform: uppercase;
+}
+
+#tsQuestionTimerToggle:hover,
+#tsQuestionTimerToggle:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#tsQuestionTimerShell[data-hidden="true"] #tsQuestionTimerValue {
+  display: none;
+}
+
+#tsQuestionTimerShell[data-hidden="true"] {
+  min-width: auto;
+}
+
+@media (max-width: 1180px) {
+  #tsQuestionTimerValue {
+    font-size: 24px;
+  }
+
+  #tsQuestionTimerShell {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 860px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  #tsQuestionTimerShell {
+    position: static;
+    transform: none;
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 8px;
+    padding-bottom: 2px;
+  }
+}
+</style>
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
@@ -4791,6 +4884,1819 @@ function applyFilters() {
     event.preventDefault();
     control.click();
   }, true);
+})();
+</script>
+
+<script id="ts-qb-question-timer-v1">
+(function () {
+  "use strict";
+
+  if (window.__TS_QB_QUESTION_TIMER_V1__) return;
+  window.__TS_QB_QUESTION_TIMER_V1__ = true;
+
+  var PRODUCT =
+    window.location.pathname.indexOf("/esat-question-bank") !== -1
+      ? "esat-question-bank"
+      : "tmua-question-bank";
+
+  var LOAD_URL =
+    "/api/qb/progress/load?product=" +
+    encodeURIComponent(PRODUCT);
+
+  var SAVE_URL = "/api/qb/progress/save";
+
+  var STATE_KEY =
+    "ts_qb_question_timer_state_v1:" +
+    PRODUCT;
+
+  var VISIBILITY_KEY =
+    "ts_qb_question_timer_visible_v1:" +
+    PRODUCT;
+
+  var serverProgress = {};
+  var serverProgressLoaded = false;
+  var entries = {};
+  var activeQid = "";
+  var pendingSubmissionSeconds = {};
+  var actionHooksInstalled = false;
+  var lastLocalCheckpointAt = 0;
+  var tickHandle = null;
+
+  var baseFetch =
+    typeof window.fetch === "function"
+      ? window.fetch.bind(window)
+      : null;
+
+  function nowMs() {
+    return Date.now();
+  }
+
+  function normaliseStatus(value) {
+    var status =
+      String(value == null ? "" : value)
+        .trim()
+        .toLowerCase();
+
+    if (
+      status === "correct" ||
+      status === "right"
+    ) {
+      return "correct";
+    }
+
+    if (
+      status === "wrong" ||
+      status === "incorrect"
+    ) {
+      return "wrong";
+    }
+
+    if (
+      status === "seen" ||
+      status === "visited"
+    ) {
+      return "seen";
+    }
+
+    return status;
+  }
+
+  function safeNumber(value) {
+    var n = Number(value);
+    return Number.isFinite(n) && n >= 0 ? n : null;
+  }
+
+  function loadLocalState() {
+    try {
+      var raw =
+        window.localStorage.getItem(
+          STATE_KEY
+        );
+
+      if (!raw) {
+        return {
+          pendingMs: {},
+          finalSeconds: {}
+        };
+      }
+
+      var parsed = JSON.parse(raw);
+
+      return {
+        pendingMs:
+          parsed &&
+          parsed.pendingMs &&
+          typeof parsed.pendingMs === "object"
+            ? parsed.pendingMs
+            : {},
+        finalSeconds:
+          parsed &&
+          parsed.finalSeconds &&
+          typeof parsed.finalSeconds === "object"
+            ? parsed.finalSeconds
+            : {}
+      };
+    } catch (e) {
+      return {
+        pendingMs: {},
+        finalSeconds: {}
+      };
+    }
+  }
+
+  var localState =
+    loadLocalState();
+
+  function saveLocalState() {
+    try {
+      window.localStorage.setItem(
+        STATE_KEY,
+        JSON.stringify({
+          pendingMs:
+            localState.pendingMs,
+          finalSeconds:
+            localState.finalSeconds
+        })
+      );
+    } catch (e) {}
+  }
+
+  function timerIsVisible() {
+    try {
+      return (
+        window.localStorage.getItem(
+          VISIBILITY_KEY
+        ) !== "hidden"
+      );
+    } catch (e) {
+      return true;
+    }
+  }
+
+  function setTimerVisible(visible) {
+    try {
+      window.localStorage.setItem(
+        VISIBILITY_KEY,
+        visible
+          ? "visible"
+          : "hidden"
+      );
+    } catch (e) {}
+
+    updateVisibilityUi();
+  }
+
+  function ensureUi() {
+    var existing =
+      document.getElementById(
+        "tsQuestionTimerShell"
+      );
+
+    if (existing) return existing;
+
+    var header =
+      document.querySelector(
+        ".header"
+      );
+
+    if (!header) return null;
+
+    var shell =
+      document.createElement("div");
+
+    shell.id =
+      "tsQuestionTimerShell";
+
+    shell.setAttribute(
+      "aria-label",
+      "Time spent on current question"
+    );
+
+    var value =
+      document.createElement("span");
+
+    value.id =
+      "tsQuestionTimerValue";
+
+    value.textContent =
+      "00:00";
+
+    var toggle =
+      document.createElement("button");
+
+    toggle.id =
+      "tsQuestionTimerToggle";
+
+    toggle.type =
+      "button";
+
+    toggle.addEventListener(
+      "click",
+      function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        setTimerVisible(
+          !timerIsVisible()
+        );
+      }
+    );
+
+    shell.appendChild(value);
+    shell.appendChild(toggle);
+    header.appendChild(shell);
+
+    updateVisibilityUi();
+
+    return shell;
+  }
+
+  function updateVisibilityUi() {
+    var shell =
+      document.getElementById(
+        "tsQuestionTimerShell"
+      );
+
+    var toggle =
+      document.getElementById(
+        "tsQuestionTimerToggle"
+      );
+
+    if (!shell || !toggle) return;
+
+    var visible =
+      timerIsVisible();
+
+    shell.setAttribute(
+      "data-hidden",
+      visible ? "false" : "true"
+    );
+
+    toggle.textContent =
+      visible
+        ? "HIDE"
+        : "SHOW TIMER";
+
+    toggle.setAttribute(
+      "aria-label",
+      visible
+        ? "Hide question timer"
+        : "Show question timer"
+    );
+  }
+
+  function formatElapsed(totalMs) {
+    var totalSeconds =
+      Math.max(
+        0,
+        Math.floor(
+          Number(totalMs || 0) /
+            1000
+        )
+      );
+
+    var hours =
+      Math.floor(
+        totalSeconds / 3600
+      );
+
+    var minutes =
+      Math.floor(
+        (totalSeconds % 3600) /
+          60
+      );
+
+    var seconds =
+      totalSeconds % 60;
+
+    function two(value) {
+      return String(value).padStart(
+        2,
+        "0"
+      );
+    }
+
+    if (hours > 0) {
+      return (
+        two(hours) +
+        ":" +
+        two(minutes) +
+        ":" +
+        two(seconds)
+      );
+    }
+
+    return (
+      two(minutes) +
+      ":" +
+      two(seconds)
+    );
+  }
+
+  function currentMetaSafe() {
+    try {
+      if (
+        typeof currentMeta ===
+        "function"
+      ) {
+        return currentMeta();
+      }
+    } catch (e) {}
+
+    return null;
+  }
+
+  function questionIdFromMeta(meta) {
+    if (!meta) return "";
+
+    var candidates = [
+      meta.qid,
+      meta.id,
+      meta.question_id
+    ];
+
+    for (
+      var i = 0;
+      i < candidates.length;
+      i++
+    ) {
+      var value =
+        String(
+          candidates[i] == null
+            ? ""
+            : candidates[i]
+        ).trim();
+
+      if (value) return value;
+    }
+
+    try {
+      if (
+        typeof questionKey ===
+        "function"
+      ) {
+        var key =
+          String(
+            questionKey(meta) || ""
+          ).trim();
+
+        if (key) return key;
+      }
+    } catch (e) {}
+
+    return "";
+  }
+
+  function currentQuestionId() {
+    var meta =
+      currentMetaSafe();
+
+    var fromMeta =
+      questionIdFromMeta(meta);
+
+    if (fromMeta) return fromMeta;
+
+    var title =
+      document.getElementById(
+        "qTitle"
+      );
+
+    if (title) {
+      var match =
+        String(
+          title.textContent || ""
+        ).match(/\d+/);
+
+      if (match) {
+        return String(
+          Number(match[0])
+        );
+      }
+    }
+
+    return "";
+  }
+
+  function currentAppAnswer() {
+    try {
+      var meta =
+        currentMetaSafe();
+
+      if (
+        !meta ||
+        typeof questionKey !==
+          "function" ||
+        typeof state ===
+          "undefined" ||
+        !state ||
+        !state.answers
+      ) {
+        return null;
+      }
+
+      var key =
+        questionKey(meta);
+
+      return (
+        state.answers[key] ||
+        null
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function currentAppStatus() {
+    var answer =
+      currentAppAnswer();
+
+    if (
+      !answer ||
+      answer.checked !== true
+    ) {
+      return "";
+    }
+
+    return answer.isCorrect === true
+      ? "correct"
+      : "wrong";
+  }
+
+  function hasCurrentSelection() {
+    var answer =
+      currentAppAnswer();
+
+    if (
+      answer &&
+      String(
+        answer.selected || ""
+      ).trim()
+    ) {
+      return true;
+    }
+
+    var selectors = [
+      "#qCard input[type='radio']:checked",
+      "#qCard input[type='checkbox']:checked",
+      "#qCard .option.selected",
+      "#qCard .choice.selected",
+      "#qCard .answer.selected",
+      "#qCard label.selected"
+    ];
+
+    for (
+      var i = 0;
+      i < selectors.length;
+      i++
+    ) {
+      try {
+        if (
+          document.querySelector(
+            selectors[i]
+          )
+        ) {
+          return true;
+        }
+      } catch (e) {}
+    }
+
+    return false;
+  }
+
+  function serverRow(qid) {
+    return (
+      serverProgress[qid] ||
+      null
+    );
+  }
+
+  function effectiveStatus(qid) {
+    if (qid === activeQid) {
+      var app =
+        currentAppStatus();
+
+      if (app) return app;
+    }
+
+    var row =
+      serverRow(qid);
+
+    return normaliseStatus(
+      row && row.status
+    );
+  }
+
+  function currentElapsedMs(entry) {
+    if (!entry) return 0;
+
+    var total =
+      Math.max(
+        0,
+        Number(
+          entry.accumulatedMs || 0
+        )
+      );
+
+    if (
+      entry.running &&
+      Number.isFinite(
+        Number(entry.startedAtMs)
+      )
+    ) {
+      total += Math.max(
+        0,
+        nowMs() -
+          Number(
+            entry.startedAtMs
+          )
+      );
+    }
+
+    return total;
+  }
+
+  function localPendingMs(qid) {
+    var value =
+      safeNumber(
+        localState.pendingMs[qid]
+      );
+
+    return value == null
+      ? 0
+      : value;
+  }
+
+  function localFinalSeconds(qid) {
+    return safeNumber(
+      localState.finalSeconds[qid]
+    );
+  }
+
+  function serverSeconds(qid) {
+    var row =
+      serverRow(qid);
+
+    if (!row) return null;
+
+    return safeNumber(
+      row.time_spent
+    );
+  }
+
+  function removePending(qid) {
+    if (
+      Object.prototype.hasOwnProperty.call(
+        localState.pendingMs,
+        qid
+      )
+    ) {
+      delete localState.pendingMs[qid];
+      saveLocalState();
+    }
+  }
+
+  function removeFinal(qid) {
+    if (
+      Object.prototype.hasOwnProperty.call(
+        localState.finalSeconds,
+        qid
+      )
+    ) {
+      delete localState.finalSeconds[qid];
+      saveLocalState();
+    }
+  }
+
+  function persistPendingLocal(
+    qid,
+    elapsedMs
+  ) {
+    if (!qid) return;
+
+    var status =
+      normaliseStatus(
+        effectiveStatus(qid)
+      );
+
+    if (
+      status === "correct" ||
+      status === "wrong"
+    ) {
+      return;
+    }
+
+    localState.pendingMs[qid] =
+      Math.max(
+        0,
+        Math.floor(elapsedMs)
+      );
+
+    saveLocalState();
+  }
+
+  function persistFinalLocal(
+    qid,
+    seconds
+  ) {
+    if (!qid) return;
+
+    delete localState.pendingMs[qid];
+
+    localState.finalSeconds[qid] =
+      Math.max(
+        0,
+        Math.floor(seconds)
+      );
+
+    saveLocalState();
+  }
+
+  function newEntryForQuestion(qid) {
+    var status =
+      normaliseStatus(
+        effectiveStatus(qid)
+      );
+
+    var server =
+      serverSeconds(qid);
+
+    var localFinal =
+      localFinalSeconds(qid);
+
+    var entry = {
+      accumulatedMs: 0,
+      startedAtMs: 0,
+      running: false,
+      frozen: false,
+      submittedWrong: false,
+      missingHistoricalTime: false
+    };
+
+    if (status === "correct") {
+      var finalSeconds =
+        server != null
+          ? server
+          : localFinal;
+
+      if (finalSeconds == null) {
+        entry.missingHistoricalTime =
+          true;
+      }
+      else {
+        entry.accumulatedMs =
+          finalSeconds * 1000;
+      }
+
+      entry.frozen = true;
+      return entry;
+    }
+
+    if (status === "wrong") {
+      entry.accumulatedMs = 0;
+    }
+    else {
+      var fromServer =
+        server == null
+          ? 0
+          : server * 1000;
+
+      entry.accumulatedMs =
+        Math.max(
+          localPendingMs(qid),
+          fromServer
+        );
+    }
+
+    if (
+      document.visibilityState !==
+      "hidden"
+    ) {
+      entry.running = true;
+      entry.startedAtMs =
+        nowMs();
+    }
+
+    return entry;
+  }
+
+  function ensureEntry(qid) {
+    if (!qid) return null;
+
+    if (!entries[qid]) {
+      entries[qid] =
+        newEntryForQuestion(qid);
+    }
+
+    return entries[qid];
+  }
+
+  function renderTimer() {
+    ensureUi();
+
+    var value =
+      document.getElementById(
+        "tsQuestionTimerValue"
+      );
+
+    if (!value) return;
+
+    if (!activeQid) {
+      value.textContent =
+        "00:00";
+      return;
+    }
+
+    var entry =
+      ensureEntry(activeQid);
+
+    if (!entry) {
+      value.textContent =
+        "00:00";
+      return;
+    }
+
+    if (
+      entry.missingHistoricalTime
+    ) {
+      value.textContent =
+        "--:--";
+
+      value.title =
+        "Time was not recorded for this earlier completed attempt.";
+
+      return;
+    }
+
+    value.title =
+      entry.frozen
+        ? "Final time for this question"
+        : "Time spent on this question";
+
+    value.textContent =
+      formatElapsed(
+        currentElapsedMs(entry)
+      );
+  }
+
+  function checkpointUnattemptedToServer(
+    qid,
+    elapsedMs,
+    keepalive
+  ) {
+    if (
+      !baseFetch ||
+      !serverProgressLoaded ||
+      !qid
+    ) {
+      return;
+    }
+
+    var row =
+      serverRow(qid);
+
+    var status =
+      normaliseStatus(
+        row && row.status
+      );
+
+    if (
+      status === "correct" ||
+      status === "wrong"
+    ) {
+      return;
+    }
+
+    var seconds =
+      Math.max(
+        0,
+        Math.floor(
+          Number(elapsedMs || 0) /
+            1000
+        )
+      );
+
+    var update = {
+      question_id: qid,
+      status:
+        status || "seen",
+      selected_answer:
+        row &&
+        row.selected_answer
+          ? row.selected_answer
+          : null,
+      flagged:
+        !!(
+          row &&
+          row.flagged
+        ),
+      time_spent: seconds,
+      last_seen_at:
+        new Date().toISOString()
+    };
+
+    baseFetch(
+      SAVE_URL,
+      {
+        method: "POST",
+        credentials: "include",
+        keepalive: !!keepalive,
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+        body: JSON.stringify({
+          product: PRODUCT,
+          updates: [update]
+        })
+      }
+    )
+      .then(function (res) {
+        if (!res.ok) return;
+
+        if (!serverProgress[qid]) {
+          serverProgress[qid] = {};
+        }
+
+        serverProgress[qid].status =
+          update.status;
+
+        serverProgress[qid].time_spent =
+          seconds;
+      })
+      .catch(function () {});
+  }
+
+  function pauseQuestion(
+    qid,
+    reason
+  ) {
+    if (!qid) return;
+
+    var entry =
+      entries[qid];
+
+    if (!entry) return;
+
+    if (entry.running) {
+      entry.accumulatedMs =
+        currentElapsedMs(entry);
+
+      entry.running = false;
+      entry.startedAtMs = 0;
+    }
+
+    var historical =
+      normaliseStatus(
+        serverRow(qid) &&
+          serverRow(qid).status
+      );
+
+    if (
+      entry.submittedWrong ||
+      historical === "wrong"
+    ) {
+      /*
+        Wrong attempts are intentionally not persisted as the
+        question's timer. A later re-attempt starts from zero.
+      */
+      removePending(qid);
+
+      if (
+        reason === "navigate" ||
+        reason === "pagehide"
+      ) {
+        delete entries[qid];
+      }
+
+      return;
+    }
+
+    if (
+      historical === "correct" ||
+      entry.frozen
+    ) {
+      return;
+    }
+
+    persistPendingLocal(
+      qid,
+      entry.accumulatedMs
+    );
+
+    if (
+      reason === "navigate" ||
+      reason === "pagehide"
+    ) {
+      checkpointUnattemptedToServer(
+        qid,
+        entry.accumulatedMs,
+        reason === "pagehide"
+      );
+    }
+  }
+
+  function resumeQuestion(qid) {
+    if (!qid) return;
+
+    var entry =
+      ensureEntry(qid);
+
+    if (
+      !entry ||
+      entry.frozen ||
+      entry.running
+    ) {
+      return;
+    }
+
+    if (
+      document.visibilityState ===
+      "hidden"
+    ) {
+      return;
+    }
+
+    entry.running = true;
+    entry.startedAtMs =
+      nowMs();
+  }
+
+  function switchQuestion(qid) {
+    if (!qid) return;
+
+    if (
+      activeQid &&
+      qid !== activeQid
+    ) {
+      pauseQuestion(
+        activeQid,
+        "navigate"
+      );
+    }
+
+    if (qid !== activeQid) {
+      activeQid = qid;
+
+      var historical =
+        normaliseStatus(
+          serverRow(qid) &&
+            serverRow(qid).status
+        );
+
+      /*
+        A historical wrong answer always creates a brand-new
+        re-attempt timer on a fresh visit.
+      */
+      if (historical === "wrong") {
+        delete entries[qid];
+        removePending(qid);
+        removeFinal(qid);
+      }
+
+      ensureEntry(qid);
+    }
+
+    resumeQuestion(qid);
+    renderTimer();
+  }
+
+  function syncCurrentQuestion() {
+    var qid =
+      currentQuestionId();
+
+    if (qid) {
+      switchQuestion(qid);
+    }
+  }
+
+  function freezeForSubmission(qid) {
+    if (!qid) return null;
+
+    switchQuestion(qid);
+
+    var entry =
+      ensureEntry(qid);
+
+    if (!entry) return null;
+
+    var elapsed =
+      currentElapsedMs(entry);
+
+    entry.accumulatedMs =
+      elapsed;
+
+    entry.startedAtMs = 0;
+    entry.running = false;
+    entry.frozen = true;
+    entry.missingHistoricalTime =
+      false;
+
+    var seconds =
+      Math.max(
+        0,
+        Math.floor(
+          elapsed / 1000
+        )
+      );
+
+    pendingSubmissionSeconds[qid] =
+      seconds;
+
+    renderTimer();
+
+    return seconds;
+  }
+
+  function resumeAfterFailedSubmission(
+    qid
+  ) {
+    var entry =
+      entries[qid];
+
+    if (!entry) return;
+
+    delete pendingSubmissionSeconds[qid];
+
+    entry.frozen = false;
+    entry.submittedWrong = false;
+
+    resumeQuestion(qid);
+    renderTimer();
+  }
+
+  function finalizeSubmission(
+    qid,
+    status
+  ) {
+    if (!qid) return;
+
+    status =
+      normaliseStatus(status);
+
+    if (
+      status !== "correct" &&
+      status !== "wrong"
+    ) {
+      return;
+    }
+
+    var seconds =
+      safeNumber(
+        pendingSubmissionSeconds[qid]
+      );
+
+    var entry =
+      ensureEntry(qid);
+
+    if (
+      seconds == null &&
+      entry
+    ) {
+      seconds =
+        Math.max(
+          0,
+          Math.floor(
+            currentElapsedMs(entry) /
+              1000
+          )
+        );
+    }
+
+    if (seconds == null) {
+      seconds = 0;
+    }
+
+    if (entry) {
+      entry.accumulatedMs =
+        seconds * 1000;
+
+      entry.startedAtMs = 0;
+      entry.running = false;
+      entry.frozen = true;
+      entry.missingHistoricalTime =
+        false;
+    }
+
+    if (status === "correct") {
+      if (entry) {
+        entry.submittedWrong =
+          false;
+      }
+
+      persistFinalLocal(
+        qid,
+        seconds
+      );
+
+      if (!serverProgress[qid]) {
+        serverProgress[qid] = {};
+      }
+
+      serverProgress[qid].status =
+        "correct";
+
+      serverProgress[qid].time_spent =
+        seconds;
+    }
+    else {
+      if (entry) {
+        entry.submittedWrong =
+          true;
+      }
+
+      removePending(qid);
+      removeFinal(qid);
+
+      if (!serverProgress[qid]) {
+        serverProgress[qid] = {};
+      }
+
+      serverProgress[qid].status =
+        "wrong";
+
+      serverProgress[qid].time_spent =
+        null;
+    }
+
+    renderTimer();
+  }
+
+  function resetWrongForImmediateRetry() {
+    if (!activeQid) return;
+
+    var entry =
+      entries[activeQid];
+
+    if (
+      !entry ||
+      !entry.submittedWrong
+    ) {
+      return;
+    }
+
+    delete pendingSubmissionSeconds[
+      activeQid
+    ];
+
+    entries[activeQid] = {
+      accumulatedMs: 0,
+      startedAtMs: nowMs(),
+      running:
+        document.visibilityState !==
+        "hidden",
+      frozen: false,
+      submittedWrong: false,
+      missingHistoricalTime: false
+    };
+
+    renderTimer();
+  }
+
+  function installActionHooks() {
+    if (actionHooksInstalled) return;
+
+    try {
+      if (
+        typeof ACTIONS ===
+          "undefined" ||
+        !ACTIONS ||
+        typeof ACTIONS.checkAnswer !==
+          "function"
+      ) {
+        return;
+      }
+
+      var originalCheck =
+        ACTIONS.checkAnswer;
+
+      ACTIONS.checkAnswer =
+        async function () {
+          var qid =
+            currentQuestionId();
+
+          var shouldFreeze =
+            !!qid &&
+            hasCurrentSelection();
+
+          if (shouldFreeze) {
+            freezeForSubmission(qid);
+          }
+
+          try {
+            var result =
+              await originalCheck.apply(
+                this,
+                arguments
+              );
+
+            if (shouldFreeze) {
+              var status =
+                currentAppStatus();
+
+              if (
+                status === "correct" ||
+                status === "wrong"
+              ) {
+                finalizeSubmission(
+                  qid,
+                  status
+                );
+              }
+              else {
+                resumeAfterFailedSubmission(
+                  qid
+                );
+              }
+            }
+
+            return result;
+          }
+          catch (error) {
+            if (shouldFreeze) {
+              resumeAfterFailedSubmission(
+                qid
+              );
+            }
+
+            throw error;
+          }
+        };
+
+      if (
+        typeof ACTIONS.setSelected ===
+        "function"
+      ) {
+        var originalSetSelected =
+          ACTIONS.setSelected;
+
+        ACTIONS.setSelected =
+          function () {
+            resetWrongForImmediateRetry();
+
+            return originalSetSelected.apply(
+              this,
+              arguments
+            );
+          };
+      }
+
+      actionHooksInstalled = true;
+    }
+    catch (e) {
+      console.warn(
+        "Question timer action hook failed:",
+        e
+      );
+    }
+  }
+
+  function installFallbackCheckClick() {
+    document.addEventListener(
+      "click",
+      function (event) {
+        if (actionHooksInstalled) return;
+
+        var target =
+          event.target &&
+          event.target.closest
+            ? event.target.closest(
+                "button"
+              )
+            : null;
+
+        if (!target) return;
+
+        var text =
+          String(
+            target.textContent || ""
+          )
+            .trim()
+            .toLowerCase();
+
+        var onclick =
+          String(
+            target.getAttribute(
+              "onclick"
+            ) || ""
+          );
+
+        var isCheck =
+          text === "check" ||
+          text.indexOf(
+            "check answer"
+          ) !== -1 ||
+          onclick.indexOf(
+            "checkAnswer"
+          ) !== -1;
+
+        if (
+          !isCheck ||
+          !hasCurrentSelection()
+        ) {
+          return;
+        }
+
+        var qid =
+          currentQuestionId();
+
+        if (!qid) return;
+
+        freezeForSubmission(qid);
+
+        window.setTimeout(
+          function () {
+            var status =
+              currentAppStatus();
+
+            if (
+              status === "correct" ||
+              status === "wrong"
+            ) {
+              finalizeSubmission(
+                qid,
+                status
+              );
+            }
+            else {
+              resumeAfterFailedSubmission(
+                qid
+              );
+            }
+          },
+          900
+        );
+      },
+      true
+    );
+  }
+
+  function patchProgressSaveFetch() {
+    if (!baseFetch) return;
+
+    window.fetch =
+      function (input, init) {
+        var nextInit = init;
+
+        try {
+          var url =
+            typeof input === "string"
+              ? input
+              : input &&
+                input.url
+              ? input.url
+              : "";
+
+          if (
+            url.indexOf(SAVE_URL) !==
+              -1 &&
+            init &&
+            typeof init.body ===
+              "string"
+          ) {
+            var body =
+              JSON.parse(init.body);
+
+            if (
+              body &&
+              Array.isArray(
+                body.updates
+              )
+            ) {
+              body.updates.forEach(
+                function (update) {
+                  if (!update) return;
+
+                  var qid =
+                    String(
+                      update.question_id ||
+                        ""
+                    ).trim();
+
+                  if (!qid) return;
+
+                  var status =
+                    normaliseStatus(
+                      update.status
+                    );
+
+                  var isSubmission =
+                    !!update.submission_id ||
+                    !!update.answer_submitted_at;
+
+                  if (isSubmission) {
+                    var seconds =
+                      safeNumber(
+                        pendingSubmissionSeconds[
+                          qid
+                        ]
+                      );
+
+                    if (
+                      seconds == null &&
+                      qid === activeQid
+                    ) {
+                      var active =
+                        entries[qid];
+
+                      if (active) {
+                        seconds =
+                          Math.max(
+                            0,
+                            Math.floor(
+                              currentElapsedMs(
+                                active
+                              ) / 1000
+                            )
+                          );
+                      }
+                    }
+
+                    if (
+                      seconds != null
+                    ) {
+                      update.answer_elapsed_seconds =
+                        seconds;
+
+                      if (
+                        status ===
+                        "correct"
+                      ) {
+                        update.time_spent =
+                          seconds;
+                      }
+                      else if (
+                        status ===
+                        "wrong"
+                      ) {
+                        /*
+                          Keep wrong-attempt duration in
+                          answer_elapsed_seconds for analytics,
+                          but do not store it as the question's
+                          persistent timer.
+                        */
+                        update.time_spent =
+                          null;
+                      }
+                    }
+
+                    finalizeSubmission(
+                      qid,
+                      status
+                    );
+                  }
+                  else if (
+                    status === "correct"
+                  ) {
+                    var finalSeconds =
+                      serverSeconds(qid);
+
+                    if (
+                      finalSeconds == null
+                    ) {
+                      finalSeconds =
+                        localFinalSeconds(
+                          qid
+                        );
+                    }
+
+                    if (
+                      finalSeconds != null
+                    ) {
+                      /*
+                        Preserve an already-frozen correct timer
+                        during unrelated flag/review saves.
+                      */
+                      update.time_spent =
+                        finalSeconds;
+                    }
+                  }
+                  else if (
+                    status === "wrong"
+                  ) {
+                    update.time_spent =
+                      null;
+                  }
+                }
+              );
+
+              nextInit =
+                Object.assign(
+                  {},
+                  init,
+                  {
+                    body:
+                      JSON.stringify(body)
+                  }
+                );
+            }
+          }
+        }
+        catch (e) {
+          console.warn(
+            "Question timer progress payload hook failed:",
+            e
+          );
+        }
+
+        return baseFetch(
+          input,
+          nextInit
+        );
+      };
+  }
+
+  function reconcileAfterServerLoad() {
+    if (!activeQid) return;
+
+    var row =
+      serverRow(activeQid);
+
+    if (!row) return;
+
+    var status =
+      normaliseStatus(
+        row.status
+      );
+
+    var old =
+      entries[activeQid];
+
+    if (status === "correct") {
+      var seconds =
+        serverSeconds(
+          activeQid
+        );
+
+      if (seconds == null) {
+        seconds =
+          localFinalSeconds(
+            activeQid
+          );
+      }
+
+      entries[activeQid] = {
+        accumulatedMs:
+          seconds == null
+            ? 0
+            : seconds * 1000,
+        startedAtMs: 0,
+        running: false,
+        frozen: true,
+        submittedWrong: false,
+        missingHistoricalTime:
+          seconds == null
+      };
+
+      removePending(
+        activeQid
+      );
+    }
+    else if (
+      status === "wrong"
+    ) {
+      if (
+        !old ||
+        !old.submittedWrong
+      ) {
+        removePending(
+          activeQid
+        );
+
+        entries[activeQid] = {
+          accumulatedMs: 0,
+          startedAtMs:
+            document.visibilityState ===
+            "hidden"
+              ? 0
+              : nowMs(),
+          running:
+            document.visibilityState !==
+            "hidden",
+          frozen: false,
+          submittedWrong: false,
+          missingHistoricalTime: false
+        };
+      }
+    }
+    else {
+      var serverMs =
+        serverSeconds(activeQid);
+
+      serverMs =
+        serverMs == null
+          ? 0
+          : serverMs * 1000;
+
+      if (!old) {
+        entries[activeQid] =
+          newEntryForQuestion(
+            activeQid
+          );
+      }
+      else if (!old.frozen) {
+        var currentMs =
+          currentElapsedMs(old);
+
+        old.accumulatedMs =
+          Math.max(
+            currentMs,
+            serverMs,
+            localPendingMs(
+              activeQid
+            )
+          );
+
+        old.startedAtMs =
+          old.running
+            ? nowMs()
+            : 0;
+      }
+    }
+
+    renderTimer();
+  }
+
+  function loadServerProgress() {
+    if (!baseFetch) return;
+
+    baseFetch(
+      LOAD_URL,
+      {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store"
+      }
+    )
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error(
+            "HTTP " + res.status
+          );
+        }
+
+        return res.json();
+      })
+      .then(function (payload) {
+        serverProgress =
+          payload &&
+          payload.progress &&
+          typeof payload.progress ===
+            "object"
+            ? payload.progress
+            : {};
+
+        serverProgressLoaded =
+          true;
+
+        reconcileAfterServerLoad();
+      })
+      .catch(function (e) {
+        console.warn(
+          "Question timer progress load failed:",
+          e
+        );
+      });
+  }
+
+  function localCheckpointIfNeeded() {
+    if (!activeQid) return;
+
+    var now =
+      nowMs();
+
+    if (
+      now -
+        lastLocalCheckpointAt <
+      5000
+    ) {
+      return;
+    }
+
+    lastLocalCheckpointAt =
+      now;
+
+    var entry =
+      entries[activeQid];
+
+    if (
+      !entry ||
+      !entry.running ||
+      entry.frozen
+    ) {
+      return;
+    }
+
+    var historical =
+      normaliseStatus(
+        serverRow(activeQid) &&
+          serverRow(activeQid).status
+      );
+
+    if (
+      historical === "correct" ||
+      historical === "wrong"
+    ) {
+      return;
+    }
+
+    persistPendingLocal(
+      activeQid,
+      currentElapsedMs(entry)
+    );
+  }
+
+  function tick() {
+    ensureUi();
+    installActionHooks();
+    syncCurrentQuestion();
+    localCheckpointIfNeeded();
+    renderTimer();
+  }
+
+  document.addEventListener(
+    "visibilitychange",
+    function () {
+      if (!activeQid) return;
+
+      if (
+        document.visibilityState ===
+        "hidden"
+      ) {
+        pauseQuestion(
+          activeQid,
+          "hidden"
+        );
+      }
+      else {
+        resumeQuestion(
+          activeQid
+        );
+      }
+
+      renderTimer();
+    }
+  );
+
+  window.addEventListener(
+    "pagehide",
+    function () {
+      if (activeQid) {
+        pauseQuestion(
+          activeQid,
+          "pagehide"
+        );
+      }
+    }
+  );
+
+  window.addEventListener(
+    "beforeunload",
+    function () {
+      if (!activeQid) return;
+
+      var entry =
+        entries[activeQid];
+
+      if (
+        entry &&
+        entry.running &&
+        !entry.frozen
+      ) {
+        var historical =
+          normaliseStatus(
+            serverRow(activeQid) &&
+              serverRow(activeQid)
+                .status
+          );
+
+        if (
+          historical !== "wrong" &&
+          historical !== "correct"
+        ) {
+          persistPendingLocal(
+            activeQid,
+            currentElapsedMs(entry)
+          );
+        }
+      }
+    }
+  );
+
+  patchProgressSaveFetch();
+  installFallbackCheckClick();
+  ensureUi();
+  installActionHooks();
+  loadServerProgress();
+  syncCurrentQuestion();
+  renderTimer();
+
+  if (!tickHandle) {
+    tickHandle =
+      window.setInterval(
+        tick,
+        250
+      );
+  }
 })();
 </script>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
