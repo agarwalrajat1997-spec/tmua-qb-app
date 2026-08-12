@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Thriving Scholars — ICSE Grade 9 Kinematics Challenge</title>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<style>
+:root{
+  --ts:#FEC94F; --deep:#670D04; --blue:#2438c9; --ink:#18202a; --muted:#68717d;
+  --bg:#f4f6f8; --panel:#fff; --border:#dfe3e8; --soft:#fafbfc; --good:#177245;
+  --bad:#b42318; --review:#c1121f; --graph:#254f9b; --grid:#dfe4ea;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,textarea,select{font:inherit}
+.hidden{display:none!important}
+.topbar{
+  height:58px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;
+  justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:50
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo-dot{width:13px;height:13px;border-radius:50%;background:var(--ts);box-shadow:0 0 0 5px #fff2bd}
+.timer{font-size:20px;font-weight:800;letter-spacing:.04em}
+.timer.warn{color:var(--bad)}
+.top-actions{display:flex;align-items:center;gap:12px;font-size:14px}
+.start{
+  max-width:980px;margin:34px auto;padding:32px;background:#fff;border:2px solid var(--ts);
+  box-shadow:0 8px 26px rgba(254,201,79,.20);border-radius:18px
+}
+.start h1{margin:0 0 8px;color:var(--deep);text-align:center;font-size:32px}
+.start .sub{text-align:center;color:var(--muted);margin-bottom:24px}
+.test-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.test-chip{background:#fff8df;border:1px solid #f1d87e;border-radius:12px;padding:12px}
+.test-chip b{display:block;font-size:22px;color:var(--deep)}
+.rules{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:14px 18px;line-height:1.55}
+.start-form{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:18px}
+label{font-weight:700;font-size:14px}
+select,input[type=email],input[type=text],input[type=number],textarea{
+  width:100%;border:1px solid #bcc4ce;border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink)
+}
+textarea{min-height:150px;resize:vertical;line-height:1.48}
+.primary{background:var(--ts);color:var(--deep);border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
+.primary:hover{filter:brightness(.97)}
+.secondary{background:#fff;color:var(--blue);border:1px solid var(--blue);padding:9px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.dark{background:#111;color:#fff;border:none;padding:10px 16px;border-radius:9px;font-weight:700;cursor:pointer}
+.exam{height:calc(100vh - 58px - 70px);display:grid;grid-template-columns:44% 56%;background:#fff}
+.left-panel,.right-panel{overflow:auto;padding:28px 32px}
+.left-panel{border-right:1px solid var(--border);background:#fcfcfd}
+.right-panel{background:#fff}
+.context-title{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800;margin-bottom:8px}
+.context{line-height:1.58;font-size:16px}
+.question-head{display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--border);padding-bottom:13px;margin-bottom:18px}
+.qbox{background:#111;color:#fff;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:800}
+.qmeta{flex:1}.qmeta b{display:block}.qmeta span{font-size:13px;color:var(--muted)}
+.review-label{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;cursor:pointer}
+.question-text{font-size:20px;line-height:1.42;font-weight:700;margin:0 0 16px}
+.instructions{font-size:14px;color:var(--muted);margin:7px 0 13px}
+.option{display:flex;align-items:flex-start;gap:12px;border:2px solid #d8dde4;border-radius:10px;padding:12px 14px;margin:10px 0;cursor:pointer}
+.option.active{border-color:var(--blue);background:#f3f5ff}
+.option-letter{flex:0 0 28px;height:28px;border-radius:50%;background:#e9ecf3;color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:800}
+.option.active .option-letter{background:var(--blue);color:#fff}
+.number-grid{display:grid;grid-template-columns:1fr 170px;gap:11px 14px;align-items:end}
+.field-help{font-size:12px;color:var(--muted);font-weight:normal;margin-top:4px}
+.unit-wrap{display:flex;align-items:center;gap:8px}
+.unit-wrap input{flex:1}
+.unit{font-size:14px;color:var(--muted);min-width:60px}
+.graph-card{border:1px solid var(--border);border-radius:13px;background:#fff;padding:10px;margin:12px 0}
+.graph-card svg{display:block;width:100%;height:auto;touch-action:none}
+.graph-axis{stroke:#424b57;stroke-width:2}
+.graph-grid{stroke:var(--grid);stroke-width:1}
+.graph-line{stroke:var(--graph);stroke-width:4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+.graph-secondary{stroke:#bd5d1f;stroke-width:4;fill:none;stroke-linejoin:round;stroke-linecap:round}
+.graph-label{font-size:12px;fill:#4d5661}
+.graph-point{fill:#fff;stroke:var(--blue);stroke-width:3;cursor:ns-resize}
+.graph-selected{stroke:#c1121f!important;stroke-width:8!important}
+.small-note{background:#f6f7f9;border-left:4px solid var(--ts);padding:11px 13px;font-size:14px;line-height:1.45;margin:12px 0}
+.footer{
+  height:70px;background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 18px
+}
+.footer-mid{position:absolute;left:50%;transform:translateX(-50%)}
+.footer-right{display:flex;gap:9px}
+.nav-popup,.submit-modal{
+ position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;display:flex;align-items:center;justify-content:center
+}
+.nav-card,.modal-card{background:#fff;border-radius:15px;padding:22px;max-width:560px;width:92%;box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.nav-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:15px}
+.nav-grid button{height:38px;border:1px dashed var(--blue);background:#fff;color:var(--blue);border-radius:7px;cursor:pointer}
+.nav-grid button.answered{border-style:solid;background:#eef1ff}
+.nav-grid button.current{background:var(--blue);color:#fff}
+.nav-grid button.review{outline:2px solid var(--review)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.result{max-width:1050px;margin:25px auto 80px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px}
+.score-hero{text-align:center;border-bottom:1px solid var(--border);padding-bottom:22px}
+.score-big{font-size:72px;font-weight:900;color:var(--deep);line-height:1}
+.skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.skill-card{border:1px solid var(--border);border-radius:12px;padding:14px}
+.skill-card b{font-size:24px;display:block;margin-top:5px}
+.report-table{width:100%;border-collapse:collapse;margin-top:16px}
+.report-table th,.report-table td{border:1px solid #d8dde3;padding:8px;text-align:left;font-size:13px;vertical-align:top}
+.report-table th{background:#f3f4f6}
+.status-good{color:var(--good);font-weight:800}.status-bad{color:var(--bad);font-weight:800}
+.ai-overlay{position:fixed;inset:0;background:rgba(255,255,255,.93);z-index:200;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.spinner{width:45px;height:45px;border:5px solid #ddd;border-top-color:var(--blue);border-radius:50%;animation:spin 1s linear infinite;margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.click-pill{display:inline-block;background:#eef1ff;color:#2438c9;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;margin:6px 0}
+@media(max-width:850px){
+ .exam{height:auto;grid-template-columns:1fr}.left-panel{border-right:none;border-bottom:1px solid var(--border)}
+ .footer{position:sticky;bottom:0}.start-form,.test-grid,.skill-grid{grid-template-columns:1fr 1fr}.number-grid{grid-template-columns:1fr}
+}
+@media(max-width:520px){.start{margin:12px;padding:18px}.start-form,.test-grid,.skill-grid{grid-template-columns:1fr}.left-panel,.right-panel{padding:20px 16px}.nav-grid{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="logo-dot"></span> Thriving Scholars · ICSE Physics</div>
+  <div class="timer hidden" id="timer">90:00</div>
+  <div class="top-actions"><span id="topStudent"></span><button class="secondary hidden" id="submitTop">Submit Test</button></div>
+</div>
+
+<section class="start" id="startScreen">
+  <h1>Motion in One Dimension — Mastery Challenge</h1>
+  <div class="sub">ICSE Grade 9 · Selina-aligned Chapter 2 · Keerthana & Ashritha · Hard / Very Challenging</div>
+  <div class="test-grid">
+    <div class="test-chip"><b>90 min</b>fixed duration</div>
+    <div class="test-chip"><b>20</b>questions</div>
+    <div class="test-chip"><b>60</b>marks</div>
+    <div class="test-chip"><b>40%</b>graph laboratory</div>
+  </div>
+  <div class="rules">
+    <b>Instructions</b>
+    <ul>
+      <li>No calculator. Show careful sign conventions and units.</li>
+      <li>There are no easy warm-up questions. Read every condition before choosing an equation.</li>
+      <li>Written physics answers are rubric-graded. Numerical and interactive graph responses are checked exactly.</li>
+      <li>You may move freely between questions and mark questions for review. The test auto-submits at 00:00.</li>
+      <li>Suggested pacing: Concepts 15 min · Numericals 30 min · Graph Laboratory 35 min · Synthesis 10 min.</li>
+    </ul>
+  </div>
+  <div class="start-form">
+    <div><label for="studentName">Student</label><select id="studentName"><option>Keerthana</option><option>Ashritha</option></select></div>
+    <div><label for="studentEmail">Email for score + report</label><input id="studentEmail" type="email" placeholder="student@example.com"></div>
+  </div>
+  <div style="display:flex;justify-content:center;margin-top:22px"><button class="primary" id="startBtn">Start 90-Minute Test</button></div>
+</section>
+
+<section class="exam hidden" id="exam">
+  <div class="left-panel">
+    <div class="context-title" id="sectionLabel"></div>
+    <div class="context" id="context"></div>
+  </div>
+  <div class="right-panel">
+    <div class="question-head">
+      <div class="qbox" id="qNumber">1</div>
+      <div class="qmeta"><b id="qTitle">Question</b><span id="qMarks"></span></div>
+      <label class="review-label"><input type="checkbox" id="reviewCheck"> Mark for Review</label>
+    </div>
+    <div class="question-text" id="prompt"></div>
+    <div id="answerArea"></div>
+  </div>
+</section>
+
+<div class="footer hidden" id="footer">
+  <div><span id="footerStudent"></span></div>
+  <div class="footer-mid"><button class="dark" id="navBtn">Question 1 of 20</button></div>
+  <div class="footer-right"><button class="secondary" id="backBtn">Back</button><button class="primary" id="nextBtn">Next</button></div>
+</div>
+
+<div class="nav-popup hidden" id="navPopup">
+ <div class="nav-card">
+   <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Question Navigator</h3><button class="secondary" id="closeNav">Close</button></div>
+   <div class="legend"><span>Blue = answered</span><span>Outline = marked for review</span></div>
+   <div class="nav-grid" id="navGrid"></div>
+ </div>
+</div>
+
+<div class="submit-modal hidden" id="submitModal">
+  <div class="modal-card">
+    <h2 style="margin-top:0">Submit assessment?</h2>
+    <p id="submitMessage"></p>
+    <div style="display:flex;justify-content:flex-end;gap:10px"><button class="secondary" id="cancelSubmit">Return to test</button><button class="primary" id="confirmSubmit">Submit & Grade</button></div>
+  </div>
+</div>
+
+<div class="ai-overlay hidden" id="gradingOverlay">
+  <h2>Grading your assessment</h2>
+  <div id="gradingText">Checking written reasoning and building the diagnostic report…</div>
+  <div class="spinner"></div>
+</div>
+
+<section class="result hidden" id="result">
+ <div class="score-hero">
+   <div style="text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800">ICSE Grade 9 Kinematics Diagnostic</div>
+   <div class="score-big" id="scoreBig">0/60</div>
+   <div id="resultBand"></div>
+   <div id="emailStatus" style="margin-top:9px;color:var(--muted)"></div>
+ </div>
+ <h2>Skill Profile</h2>
+ <div class="skill-grid" id="skillGrid"></div>
+ <div class="small-note" id="diagnosis"></div>
+ <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="primary" id="downloadReport">Download Report</button><button class="secondary" onclick="window.print()">Print Report</button></div>
+ <h2>Question-by-Question Report</h2>
+ <div style="overflow:auto"><table class="report-table"><thead><tr><th>Q</th><th>Skill</th><th>Score</th><th>Feedback</th></tr></thead><tbody id="reportBody"></tbody></table></div>
+</section>
+
+<script>
+/*
+ Secure AI grading:
+ Host a POST endpoint at /api/icse-physics-grade, or define window.ICSE_AI_GRADING_ENDPOINT before this script.
+ Request body: {questionId, question, rubric, marks, response}
+ Response JSON: {score:number, feedback:string}
+ No private OpenAI/API secret is embedded in this student-facing HTML.
+*/
+const AI_GRADING_ENDPOINT = window.ICSE_AI_GRADING_ENDPOINT || "/api/icse-physics-grade";
+
+const EMAILJS_PUBLIC_KEY = "9jjn3yBHl6S88hITy";
+const EMAILJS_SERVICE = "service_5l4w8x2";
+const EMAILJS_TEMPLATE = "template_j1jrs4o";
+try { if(window.emailjs) emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){ console.warn(e); }
+
+const questions = [
+{
+ id:1, section:"A · Precision Physics", skill:"Concept precision", marks:2, type:"text",
+ title:"Definition under pressure",
+ context:`A student writes: <b>“Displacement is the shortest distance between two points.”</b><br><br>The statement is incomplete. ICSE definitions must communicate the physical meaning precisely.`,
+ prompt:`Rewrite the statement as a complete definition of <b>displacement</b>, then state <b>two physically meaningful differences</b> between distance and displacement.`,
+ rubric:`2 marks: complete definition includes change in position/straight-line separation AND direction/vector character, plus two valid differences such as path dependence, scalar/vector, or distance ≥ magnitude of displacement. 1 mark: mostly correct but incomplete. 0: major misconception.`,
+ local:["change in position|straight line|shortest","direction|vector","path|scalar|magnitude"]
+},
+{
+ id:2, section:"A · Precision Physics", skill:"Reference frames", marks:2, type:"text",
+ title:"Who is actually moving?",
+ context:`Keerthana is seated inside a train moving uniformly past a station. She says, “I am at rest.” Ashritha, standing on the platform, says, “Keerthana is moving.”`,
+ prompt:`Explain why <b>both statements can be correct</b>. Your explanation must explicitly use a reference object/frame.`,
+ rubric:`2 marks: states motion/rest is relative and correctly identifies Keerthana at rest relative to train but moving relative to platform/ground. 1 mark: idea present but reference frame not clearly applied. 0: claims one observer must be wrong.`,
+ local:["relative|reference","train","platform|ground"]
+},
+{
+ id:3, section:"A · Precision Physics", skill:"Speed & velocity", marks:2, type:"text",
+ title:"Constant speed trap",
+ context:`A student argues: <b>“If speed remains constant, velocity must remain constant.”</b>`,
+ prompt:`Judge the claim, correct it, and give one valid physical example that demonstrates your correction.`,
+ rubric:`2 marks: rejects claim; explains velocity also depends on direction; gives valid example such as uniform circular motion/turning at constant speed. 1 mark: concept right but example/explanation incomplete. 0: accepts claim.`,
+ local:["direction","velocity","constant speed|speed remains","circle|circular|turn"]
+},
+{
+ id:4, section:"A · Precision Physics", skill:"Graph reasoning", marks:2, type:"text",
+ title:"Derive, do not quote",
+ context:`A body has initial velocity <i>u</i> and moves with uniform acceleration <i>a</i>. After time <i>t</i> its velocity is <i>v</i>. Its velocity–time graph is a straight line from <i>u</i> to <i>v</i>.`,
+ prompt:`Using the <b>area under the velocity–time graph</b>, explain why <i>s = (u+v)t/2</i>, and hence obtain <i>s = ut + ½at²</i>.`,
+ rubric:`2 marks: area identified as trapezium or rectangle+triangle, gives s=(u+v)t/2 or s=ut+1/2(v-u)t, then uses v-u=at to obtain s=ut+1/2at². 1 mark: correct idea but one algebraic bridge missing. 0: only quotes final formula.`,
+ local:["area","trapez|rectangle|triangle","v-u|at","ut"]
+},
+{
+ id:5, section:"B · Numerical Reasoning", skill:"Average speed", marks:3, type:"numbers",
+ title:"Unequal fractions of distance",
+ context:`A car covers the first <b>2/5</b> of a journey at 12 m s⁻¹ and the remaining <b>3/5</b> at 18 m s⁻¹. The speed changes instantly at the boundary.`,
+ prompt:`Find the average speed for the complete journey.`,
+ fields:[{key:"avg",label:"Average speed",unit:"m s⁻¹",ans:15,tol:.02,marks:3}],
+ explanation:"Let total distance be D. Total time = (2D/5)/12 + (3D/5)/18 = D/15. Average speed = D ÷ (D/15) = 15 m s⁻¹."
+},
+{
+ id:6, section:"B · Numerical Reasoning", skill:"Average speed", marks:4, type:"numbers",
+ title:"Round trip with waiting time",
+ context:`A cyclist travels 20 km from A to B at 30 km h⁻¹, waits at B for 10 minutes, then returns the same 20 km at 45 km h⁻¹.`,
+ prompt:`Calculate the <b>average speed</b> and the <b>average velocity</b> for the entire trip, including the waiting time.`,
+ fields:[
+   {key:"speed",label:"Average speed",unit:"km h⁻¹",ans:31.3043478,tol:.03,marks:3},
+   {key:"velocity",label:"Average velocity",unit:"km h⁻¹",ans:0,tol:.001,marks:1}
+ ],
+ explanation:"Total time = 20/30 + 10/60 + 20/45 = 23/18 h. Average speed = 40 ÷ (23/18) = 31.30 km h⁻¹. Net displacement is zero, so average velocity is zero."
+},
+{
+ id:7, section:"B · Numerical Reasoning", skill:"Uniform acceleration", marks:3, type:"numbers",
+ title:"Find what was not given",
+ context:`A car's velocity increases uniformly from 10 m s⁻¹ to 25 m s⁻¹ while it covers 105 m.`,
+ prompt:`Determine the acceleration and the time taken.`,
+ fields:[
+   {key:"a",label:"Acceleration",unit:"m s⁻²",ans:2.5,tol:.01,marks:2},
+   {key:"t",label:"Time",unit:"s",ans:6,tol:.01,marks:1}
+ ],
+ explanation:"Using v²=u²+2as: 625−100=210a, so a=2.5 m s⁻². Then v=u+at gives 25=10+2.5t, hence t=6 s."
+},
+{
+ id:8, section:"B · Numerical Reasoning", skill:"Stopping motion", marks:4, type:"numbers",
+ title:"Reaction + braking",
+ context:`A car travels at 72 km h⁻¹. The driver takes 0.75 s to react; during this time the velocity remains unchanged. The brakes then bring the car uniformly to rest in 5 s.`,
+ prompt:`Find all four quantities.`,
+ fields:[
+   {key:"reaction",label:"Reaction distance",unit:"m",ans:15,tol:.02,marks:1},
+   {key:"ret",label:"Retardation magnitude",unit:"m s⁻²",ans:4,tol:.02,marks:1},
+   {key:"brake",label:"Braking distance",unit:"m",ans:50,tol:.03,marks:1},
+   {key:"total",label:"Total stopping distance",unit:"m",ans:65,tol:.03,marks:1}
+ ],
+ explanation:"72 km h⁻¹ = 20 m s⁻¹. Reaction distance = 20×0.75=15 m. Retardation magnitude=20/5=4 m s⁻². Braking distance=(20+0)/2×5=50 m. Total=65 m."
+},
+{
+ id:9, section:"B · Numerical Reasoning", skill:"Gravity", marks:4, type:"numbers",
+ title:"Up, stop, and return",
+ context:`A stone is projected vertically upward with velocity 30 m s⁻¹. Take upward as positive and g = 10 m s⁻² downward.`,
+ prompt:`At exactly t = 5 s, find the velocity, displacement from the projection point, and the <b>total distance actually travelled</b>.`,
+ fields:[
+   {key:"v",label:"Velocity at 5 s",unit:"m s⁻¹",ans:-20,tol:.02,marks:1},
+   {key:"s",label:"Displacement at 5 s",unit:"m",ans:25,tol:.02,marks:1},
+   {key:"d",label:"Total distance travelled",unit:"m",ans:65,tol:.03,marks:2}
+ ],
+ explanation:"v=30−10×5=−20 m s⁻¹. Displacement=30×5−½×10×25=25 m. Maximum height=45 m; it then falls 20 m, so total distance=45+20=65 m."
+},
+{
+ id:10, section:"B · Numerical Reasoning", skill:"Gravity", marks:2, type:"numbers",
+ title:"The fourth second — not four seconds",
+ context:`A body is released from rest and falls freely. Take g = 10 m s⁻².`,
+ prompt:`How far does it fall <b>during the fourth second only</b>?`,
+ fields:[{key:"d",label:"Distance during 4th second",unit:"m",ans:35,tol:.02,marks:2}],
+ explanation:"Distance in first 4 s = 80 m; in first 3 s =45 m. Distance during the fourth second =80−45=35 m."
+},
+{
+ id:11, section:"B · Numerical Reasoning", skill:"Uniform acceleration", marks:4, type:"numbers",
+ title:"Reverse-engineer the motion",
+ context:`A body moves with uniform acceleration. Its displacement data are:<br><br><table style="border-collapse:collapse"><tr><th style="border:1px solid #bbb;padding:6px">t (s)</th><td style="border:1px solid #bbb;padding:6px">0</td><td style="border:1px solid #bbb;padding:6px">1</td><td style="border:1px solid #bbb;padding:6px">2</td><td style="border:1px solid #bbb;padding:6px">3</td><td style="border:1px solid #bbb;padding:6px">4</td></tr><tr><th style="border:1px solid #bbb;padding:6px">s (m)</th><td style="border:1px solid #bbb;padding:6px">0</td><td style="border:1px solid #bbb;padding:6px">5</td><td style="border:1px solid #bbb;padding:6px">14</td><td style="border:1px solid #bbb;padding:6px">27</td><td style="border:1px solid #bbb;padding:6px">?</td></tr></table>`,
+ prompt:`Determine the initial velocity, acceleration, and missing displacement at t = 4 s.`,
+ fields:[
+  {key:"u",label:"Initial velocity",unit:"m s⁻¹",ans:3,tol:.02,marks:1},
+  {key:"a",label:"Acceleration",unit:"m s⁻²",ans:4,tol:.02,marks:1},
+  {key:"s4",label:"Displacement at 4 s",unit:"m",ans:44,tol:.03,marks:2}
+ ],
+ explanation:"At t=1: u+a/2=5. At t=2: 2u+2a=14. Solving gives u=3 m s⁻¹ and a=4 m s⁻². Then s(4)=3×4+½×4×16=44 m."
+},
+{
+ id:12, section:"C · Interactive Graph Laboratory", skill:"Displacement-time graphs", marks:4, type:"custom", custom:"q12",
+ title:"Read every segment, not just the picture",
+ context:`The displacement–time graph below describes a single object. Positive and negative displacement are measured along the same straight line.`,
+ prompt:`(i) Click the segment on which the <b>speed is greatest</b>. Then calculate (ii) total distance travelled, (iii) final displacement, and (iv) average speed over the 12 s journey.`
+},
+{
+ id:13, section:"C · Interactive Graph Laboratory", skill:"Velocity-time graphs", marks:4, type:"custom", custom:"q13",
+ title:"Signed area and direction",
+ context:`The velocity–time graph contains both positive and negative velocity. The object changes direction only when its velocity passes through zero.`,
+ prompt:`Click the time at which direction changes, then find the net displacement, total distance and acceleration from 3 s to 7 s.`
+},
+{
+ id:14, section:"C · Interactive Graph Laboratory", skill:"Acceleration-time graphs", marks:4, type:"custom", custom:"q14",
+ title:"Build velocity from acceleration",
+ context:`The acceleration is +3 m s⁻² from 0–4 s, zero from 4–7 s, and −2 m s⁻² from 7–12 s. Initial velocity is 2 m s⁻¹.`,
+ prompt:`Drag the three blue points vertically to construct the correct velocity–time graph at t=4, 7 and 12 s. Then enter the total displacement from 0–12 s.`
+},
+{
+ id:15, section:"C · Interactive Graph Laboratory", skill:"Gravity graphs", marks:3, type:"custom", custom:"q15",
+ title:"Measure g from an experiment",
+ context:`For a freely falling body released from rest, a student plots displacement s against t². A point on the straight line is (t², s) = (4 s², 19.6 m).`,
+ prompt:`Use the graph relation to determine g, then predict the displacement after 3.0 s.`
+},
+{
+ id:16, section:"C · Interactive Graph Laboratory", skill:"Graph construction", marks:3, type:"custom", custom:"q16",
+ title:"Construct the displacement graph",
+ context:`At t=0 an object is 10 m to the right of O. It moves left at 4 m s⁻¹ for 5 s, remains stationary for 2 s, then moves right at 6 m s⁻¹ for 4 s.`,
+ prompt:`Drag the three blue vertices at t=5 s, 7 s and 11 s to construct the correct displacement–time graph.`
+},
+{
+ id:17, section:"C · Interactive Graph Laboratory", skill:"Graph scales", marks:2, type:"mcq",
+ title:"The visual-slope trap",
+ context:`Two velocity–time plots are drawn with <b>different vertical scales</b>. Car A changes from 0 to 24 m s⁻¹ in 6 s. Car B changes from 0 to 30 m s⁻¹ in 10 s. In the displayed sketches B may look steeper.`,
+ prompt:`Which car actually has the greater acceleration?`,
+ options:["Car A","Car B","They have equal acceleration","It is impossible to know without their masses"],
+ correct:0,
+ explanation:"Acceleration is numerical slope Δv/Δt. Car A: 24/6=4 m s⁻². Car B:30/10=3 m s⁻². Axis appearance cannot replace calculation."
+},
+{
+ id:18, section:"C · Interactive Graph Laboratory", skill:"Graph conversion", marks:4, type:"custom", custom:"q18",
+ title:"Convert s–t into v–t",
+ context:`A displacement–time graph passes through (0,0), (2,8), (5,8), (7,2), and (10,14), with straight-line segments between consecutive points.`,
+ prompt:`The velocity is constant within each time interval. Drag each orange velocity segment to the correct level for 0–2 s, 2–5 s, 5–7 s and 7–10 s.`
+},
+{
+ id:19, section:"D · Synthesis", skill:"Graph reasoning", marks:2, type:"text",
+ title:"Correct the signed-area error",
+ context:`A velocity–time graph has some area above and some area below the time axis. A student says: <b>“The negative area must be subtracted, so the same calculation gives both distance and displacement.”</b>`,
+ prompt:`Correct the student precisely. Explain how the areas must be used to obtain <b>displacement</b> and <b>total distance</b>.`,
+ rubric:`2 marks: displacement is algebraic/signed area; distance is sum of magnitudes/unsigned areas. 1 mark: recognizes distinction but explanation incomplete. 0: treats both identically.`,
+ local:["signed|algebraic|negative","displacement","distance","magnitude|absolute|unsigned"]
+},
+{
+ id:20, section:"D · Synthesis", skill:"Graph synthesis", marks:2, type:"numbers",
+ title:"Catch-up from displacement lines",
+ context:`On a displacement–time graph, car A starts at s=0 and moves uniformly at 8 m s⁻¹. Car B is already 30 m ahead at t=0 and moves in the same direction uniformly at 3 m s⁻¹.`,
+ prompt:`At what time does A catch B, and what is their displacement from A's starting point then?`,
+ fields:[
+  {key:"t",label:"Catch-up time",unit:"s",ans:6,tol:.02,marks:1},
+  {key:"s",label:"Catch-up displacement",unit:"m",ans:48,tol:.03,marks:1}
+ ],
+ explanation:"At catch-up their displacements are equal: 8t=30+3t, so 5t=30 and t=6 s. Then s=8×6=48 m."
+}
+];
+
+let studentName="", studentEmail="", current=0, secondsLeft=5400, timerId=null, examStarted=false, submitted=false, emailSent=false;
+const answers={}, reviewFlags={}, results={};
+const customState={
+ q12:{seg:null,distance:"",displacement:"",avgSpeed:""},
+ q13:{time:null,displacement:"",distance:"",accel:""},
+ q14:{v4:8,v7:8,v12:8,displacement:""},
+ q15:{g:"",s3:""},
+ q16:{s5:0,s7:0,s11:0},
+ q18:{v1:0,v2:0,v3:0,v4:0}
+};
+
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function fmt(n){return Number.isInteger(n)?String(n):Number(n).toFixed(2).replace(/0+$/,"").replace(/\.$/,"");}
+function near(a,b,t){return Number.isFinite(Number(a))&&Math.abs(Number(a)-b)<=t;}
+
+function startExam(){
+ studentName=$("studentName").value;
+ studentEmail=$("studentEmail").value.trim();
+ if(!studentEmail || !studentEmail.includes("@")){alert("Please enter the student's email address for the report.");return;}
+ examStarted=true;
+ $("startScreen").classList.add("hidden"); $("exam").classList.remove("hidden"); $("footer").classList.remove("hidden");
+ $("timer").classList.remove("hidden"); $("submitTop").classList.remove("hidden");
+ $("topStudent").textContent=studentName; $("footerStudent").textContent=studentName;
+ timerId=setInterval(tick,1000); render();
+}
+function tick(){
+ secondsLeft--;
+ const m=Math.floor(secondsLeft/60),s=secondsLeft%60;
+ $("timer").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+ if(secondsLeft<=600)$("timer").classList.add("warn");
+ if(secondsLeft<=0){clearInterval(timerId); submitTest(true);}
+}
+function saveCurrent(){
+ const q=questions[current];
+ if(q.type==="text"){answers[q.id]=$("textAnswer")?.value||"";}
+ if(q.type==="numbers"){
+   const obj={}; q.fields.forEach(f=>obj[f.key]=$(`num_${f.key}`)?.value??""); answers[q.id]=obj;
+ }
+ if(q.type==="mcq"){
+   const selected=document.querySelector('input[name="mcq"]:checked');
+   if(selected)answers[q.id]=Number(selected.value);
+ }
+ if(q.type==="custom"){
+   if(q.custom==="q12"){["distance","displacement","avgSpeed"].forEach(k=>customState.q12[k]=$(`q12_${k}`)?.value??customState.q12[k]);}
+   if(q.custom==="q13"){["displacement","distance","accel"].forEach(k=>customState.q13[k]=$(`q13_${k}`)?.value??customState.q13[k]);}
+   if(q.custom==="q14")customState.q14.displacement=$("q14_displacement")?.value??customState.q14.displacement;
+   if(q.custom==="q15"){customState.q15.g=$("q15_g")?.value??customState.q15.g;customState.q15.s3=$("q15_s3")?.value??customState.q15.s3;}
+ }
+ reviewFlags[q.id]=$("reviewCheck").checked;
+}
+function answered(q){
+ if(q.type==="text")return (answers[q.id]||"").trim().length>0;
+ if(q.type==="numbers")return q.fields.some(f=>answers[q.id]?.[f.key]!=="" && answers[q.id]?.[f.key]!==undefined);
+ if(q.type==="mcq")return answers[q.id]!==undefined;
+ if(q.custom==="q12")return customState.q12.seg!==null||["distance","displacement","avgSpeed"].some(k=>customState.q12[k]!=="");
+ if(q.custom==="q13")return customState.q13.time!==null||["displacement","distance","accel"].some(k=>customState.q13[k]!=="");
+ if(q.custom==="q14")return customState.q14.v4!==8||customState.q14.v7!==8||customState.q14.v12!==8||customState.q14.displacement!=="";
+ if(q.custom==="q15")return customState.q15.g!==""||customState.q15.s3!=="";
+ if(q.custom==="q16")return customState.q16.s5!==0||customState.q16.s7!==0||customState.q16.s11!==0;
+ if(q.custom==="q18")return Object.values(customState.q18).some(v=>v!==0);
+ return false;
+}
+function render(){
+ const q=questions[current];
+ $("qNumber").textContent=q.id; $("qTitle").textContent=q.title; $("qMarks").textContent=`${q.section} · ${q.marks} mark${q.marks===1?"":"s"}`;
+ $("sectionLabel").textContent=q.section; $("context").innerHTML=q.context; $("prompt").innerHTML=q.prompt;
+ $("reviewCheck").checked=!!reviewFlags[q.id];
+ $("navBtn").textContent=`Question ${current+1} of ${questions.length}`;
+ $("backBtn").disabled=current===0; $("nextBtn").textContent=current===questions.length-1?"Review":"Next";
+ renderAnswer(q); renderNavigator();
+}
+function renderAnswer(q){
+ const a=$("answerArea"); a.innerHTML="";
+ if(q.type==="text"){
+   a.innerHTML=`<div class="instructions">Write a concise physics answer. Marks are awarded for meaning, not exact wording.</div><textarea id="textAnswer" placeholder="Type your response here...">${esc(answers[q.id]||"")}</textarea>`;
+ }
+ if(q.type==="numbers"){
+   let h=`<div class="instructions">Enter numerical answers only; include signs where relevant.</div><div class="number-grid">`;
+   q.fields.forEach(f=>{
+     const val=answers[q.id]?.[f.key]??"";
+     h+=`<div><label>${f.label}<div class="field-help">${f.marks} mark${f.marks===1?"":"s"}</div></label></div><div class="unit-wrap"><input type="number" step="any" id="num_${f.key}" value="${esc(val)}"><span class="unit">${f.unit}</span></div>`;
+   }); h+=`</div>`; a.innerHTML=h;
+ }
+ if(q.type==="mcq"){
+   let graph="";
+   if(q.id===17)graph=renderSlopeTrapGraphs();
+   let h=graph+`<div class="instructions">Do not judge steepness visually; use the axis values.</div>`;
+   q.options.forEach((o,i)=>{
+     const sel=answers[q.id]===i;
+     h+=`<label class="option ${sel?"active":""}"><input style="display:none" type="radio" name="mcq" value="${i}" ${sel?"checked":""}><span class="option-letter">${String.fromCharCode(65+i)}</span><span>${o}</span></label>`;
+   }); a.innerHTML=h;
+   a.querySelectorAll(".option").forEach(l=>l.addEventListener("click",()=>{a.querySelectorAll(".option").forEach(x=>x.classList.remove("active"));l.classList.add("active");l.querySelector("input").checked=true;answers[q.id]=Number(l.querySelector("input").value);renderNavigator();}));
+ }
+ if(q.type==="custom"){
+   if(q.custom==="q12")renderQ12(a);
+   if(q.custom==="q13")renderQ13(a);
+   if(q.custom==="q14")renderQ14(a);
+   if(q.custom==="q15")renderQ15(a);
+   if(q.custom==="q16")renderQ16(a);
+   if(q.custom==="q18")renderQ18(a);
+ }
+}
+function renderSlopeTrapGraphs(){
+ return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+ <div class="graph-card"><b>Car A</b><svg viewBox="0 0 300 190"><line class="graph-axis" x1="45" y1="150" x2="275" y2="150"/><line class="graph-axis" x1="45" y1="150" x2="45" y2="25"/><path class="graph-line" d="M45 150 L250 45"/><text class="graph-label" x="236" y="170">6 s</text><text class="graph-label" x="8" y="50">24</text></svg></div>
+ <div class="graph-card"><b>Car B — different scale</b><svg viewBox="0 0 300 190"><line class="graph-axis" x1="45" y1="150" x2="275" y2="150"/><line class="graph-axis" x1="45" y1="150" x2="45" y2="25"/><path class="graph-secondary" d="M45 150 L250 30"/><text class="graph-label" x="230" y="170">10 s</text><text class="graph-label" x="8" y="35">30</text></svg></div>
+ </div>`;
+}
+function axesSvg(xTicks,yTicks,xLabel,yLabel,extra=""){
+ let g=`<line class="graph-axis" x1="70" y1="290" x2="570" y2="290"/><line class="graph-axis" x1="70" y1="290" x2="70" y2="30"/>`;
+ xTicks.forEach(([x,l])=>g+=`<line class="graph-grid" x1="${x}" y1="30" x2="${x}" y2="290"/><text class="graph-label" x="${x-7}" y="310">${l}</text>`);
+ yTicks.forEach(([y,l])=>g+=`<line class="graph-grid" x1="70" y1="${y}" x2="570" y2="${y}"/><text class="graph-label" x="28" y="${y+4}">${l}</text>`);
+ return g+`<text class="graph-label" x="300" y="330">${xLabel}</text><text class="graph-label" x="8" y="20">${yLabel}</text>${extra}`;
+}
+function renderQ12(a){
+ const st=customState.q12;
+ const pts=[[70,160],[195,70],[278,70],[403,160],[486,240],[570,200]];
+ const labels=["A","B","C","D","E","F"];
+ let path=pts.map((p,i)=>(i?"L":"M")+p.join(" ")).join(" ");
+ let overlays="";
+ for(let i=0;i<pts.length-1;i++)overlays+=`<line data-seg="${i}" class="seg-hit ${st.seg===i?"graph-selected":""}" x1="${pts[i][0]}" y1="${pts[i][1]}" x2="${pts[i+1][0]}" y2="${pts[i+1][1]}" stroke="transparent" stroke-width="18" style="cursor:pointer"/>`;
+ let labs=pts.map((p,i)=>`<text class="graph-label" x="${p[0]+5}" y="${p[1]-8}">${labels[i]}</text>`).join("");
+ a.innerHTML=`<div class="graph-card"><svg id="q12svg" viewBox="0 0 640 340">${axesSvg([[70,"0"],[195,"3"],[278,"5"],[403,"8"],[486,"10"],[570,"12"]],[[70,"18"],[160,"0"],[240,"−16"]],"time (s)","displacement (m)") }<path class="graph-line" d="${path}"/>${labs}${overlays}</svg></div>
+ <div class="click-pill">Selected segment: <span id="q12sel">${st.seg===null?"none":labels[st.seg]+labels[st.seg+1]}</span></div>
+ <div class="number-grid">
+ <div><label>Total distance travelled</label></div><div class="unit-wrap"><input id="q12_distance" type="number" step="any" value="${esc(st.distance)}"><span class="unit">m</span></div>
+ <div><label>Final displacement</label></div><div class="unit-wrap"><input id="q12_displacement" type="number" step="any" value="${esc(st.displacement)}"><span class="unit">m</span></div>
+ <div><label>Average speed</label></div><div class="unit-wrap"><input id="q12_avgSpeed" type="number" step="any" value="${esc(st.avgSpeed)}"><span class="unit">m s⁻¹</span></div>
+ </div>`;
+ a.querySelectorAll(".seg-hit").forEach(line=>line.addEventListener("click",()=>{st.seg=Number(line.dataset.seg);renderQ12(a);renderNavigator();}));
+}
+function renderQ13(a){
+ const st=customState.q13, x=t=>70+t/9*500, y=v=>290-(v+6)/20*240;
+ const pts=[[0,6],[3,12],[7,-4],[9,-4]], path=pts.map((p,i)=>(i?"L":"M")+`${x(p[0])} ${y(p[1])}`).join(" ");
+ const marker=st.time===null?"":`<line x1="${x(st.time)}" y1="30" x2="${x(st.time)}" y2="290" stroke="#c1121f" stroke-width="2" stroke-dasharray="6 5"/><circle cx="${x(st.time)}" cy="${y(0)}" r="6" fill="#c1121f"/>`;
+ a.innerHTML=`<div class="graph-card"><svg id="q13svg" viewBox="0 0 640 340">${axesSvg([[70,"0"],[236.7,"3"],[403.3,"6"],[458.9,"7"],[570,"9"]],[[74,"12"],[218,"0"],[266,"−4"]],"time (s)","velocity (m s⁻¹)") }<path class="graph-line" d="${path}"/>${marker}<rect id="q13click" x="70" y="30" width="500" height="260" fill="transparent" style="cursor:crosshair"/></svg></div>
+ <div class="click-pill">Selected direction-change time: <span id="q13time">${st.time===null?"none":st.time.toFixed(1)+" s"}</span></div>
+ <div class="number-grid">
+ <div><label>Net displacement</label></div><div class="unit-wrap"><input id="q13_displacement" type="number" step="any" value="${esc(st.displacement)}"><span class="unit">m</span></div>
+ <div><label>Total distance</label></div><div class="unit-wrap"><input id="q13_distance" type="number" step="any" value="${esc(st.distance)}"><span class="unit">m</span></div>
+ <div><label>Acceleration from 3–7 s</label></div><div class="unit-wrap"><input id="q13_accel" type="number" step="any" value="${esc(st.accel)}"><span class="unit">m s⁻²</span></div>
+ </div>`;
+ const svg=$("q13svg"),rect=$("q13click");
+ rect.addEventListener("pointerdown",e=>{const r=svg.getBoundingClientRect();const ux=(e.clientX-r.left)/r.width*640;st.time=Math.max(0,Math.min(9,(ux-70)/500*9));renderQ13(a);renderNavigator();});
+}
+function renderQ14(a){
+ const st=customState.q14, x=t=>70+t/12*500, y=v=>290-(v+2)/20*250;
+ a.innerHTML=`<div class="small-note"><b>Acceleration program:</b> +3 m s⁻² (0–4 s), 0 (4–7 s), −2 m s⁻² (7–12 s). Initial velocity = 2 m s⁻¹.</div>
+ <div class="graph-card"><svg id="q14svg" viewBox="0 0 640 340">${axesSvg([[70,"0"],[236.7,"4"],[361.7,"7"],[570,"12"]],[[40,"18"],[290,"−2"]],"time (s)","velocity (m s⁻¹)") }<polyline id="q14line" class="graph-line" points="${x(0)},${y(2)} ${x(4)},${y(st.v4)} ${x(7)},${y(st.v7)} ${x(12)},${y(st.v12)}"/><circle class="graph-point drag14" data-key="v4" cx="${x(4)}" cy="${y(st.v4)}" r="8"/><circle class="graph-point drag14" data-key="v7" cx="${x(7)}" cy="${y(st.v7)}" r="8"/><circle class="graph-point drag14" data-key="v12" cx="${x(12)}" cy="${y(st.v12)}" r="8"/></svg></div>
+ <div class="click-pill">Current values: v₄=${st.v4} m/s · v₇=${st.v7} m/s · v₁₂=${st.v12} m/s</div>
+ <div class="number-grid"><div><label>Total displacement 0–12 s</label></div><div class="unit-wrap"><input id="q14_displacement" type="number" step="any" value="${esc(st.displacement)}"><span class="unit">m</span></div></div>`;
+ setupVerticalDrag($("q14svg"),".drag14",-2,18,(key,v)=>{st[key]=Math.round(v);renderQ14(a);renderNavigator();});
+}
+function renderQ15(a){
+ const st=customState.q15;
+ a.innerHTML=`<div class="graph-card"><svg viewBox="0 0 640 330">${axesSvg([[70,"0"],[320,"2"],[570,"4"]],[[290,"0"],[160,"9.8"],[30,"19.6"]],"t² (s²)","s (m)") }<path class="graph-line" d="M70 290 L570 30"/><circle cx="570" cy="30" r="6" fill="#2438c9"/><text class="graph-label" x="470" y="52">(4, 19.6)</text></svg></div>
+ <div class="number-grid">
+ <div><label>Acceleration due to gravity, g</label></div><div class="unit-wrap"><input id="q15_g" type="number" step="any" value="${esc(st.g)}"><span class="unit">m s⁻²</span></div>
+ <div><label>Displacement after 3.0 s</label></div><div class="unit-wrap"><input id="q15_s3" type="number" step="any" value="${esc(st.s3)}"><span class="unit">m</span></div>
+ </div>`;
+}
+function renderQ16(a){
+ const st=customState.q16, x=t=>70+t/11*500, y=s=>290-(s+20)/40*250;
+ a.innerHTML=`<div class="graph-card"><svg id="q16svg" viewBox="0 0 640 340">${axesSvg([[70,"0"],[297.3,"5"],[388.2,"7"],[570,"11"]],[[40,"20"],[165,"0"],[290,"−20"]],"time (s)","displacement (m)") }<polyline class="graph-line" points="${x(0)},${y(10)} ${x(5)},${y(st.s5)} ${x(7)},${y(st.s7)} ${x(11)},${y(st.s11)}"/><circle cx="${x(0)}" cy="${y(10)}" r="7" fill="#111"/><circle class="graph-point drag16" data-key="s5" cx="${x(5)}" cy="${y(st.s5)}" r="8"/><circle class="graph-point drag16" data-key="s7" cx="${x(7)}" cy="${y(st.s7)}" r="8"/><circle class="graph-point drag16" data-key="s11" cx="${x(11)}" cy="${y(st.s11)}" r="8"/></svg></div>
+ <div class="click-pill">Current vertices: (5, ${st.s5}), (7, ${st.s7}), (11, ${st.s11})</div>`;
+ setupVerticalDrag($("q16svg"),".drag16",-20,20,(key,v)=>{st[key]=Math.round(v);renderQ16(a);renderNavigator();});
+}
+function renderQ18(a){
+ const st=customState.q18, x=t=>70+t/10*500, y=v=>290-(v+6)/12*250;
+ const levels=[["v1",0,2],["v2",2,5],["v3",5,7],["v4",7,10]];
+ let segs="",circles="";
+ levels.forEach(([k,t0,t1])=>{segs+=`<line class="graph-secondary" x1="${x(t0)}" y1="${y(st[k])}" x2="${x(t1)}" y2="${y(st[k])}"/>`;circles+=`<circle class="graph-point drag18" data-key="${k}" cx="${x((t0+t1)/2)}" cy="${y(st[k])}" r="8"/>`;});
+ a.innerHTML=`<div class="small-note"><b>Source s–t slopes:</b> use each straight segment's Δs/Δt. Negative slope means negative velocity.</div>
+ <div class="graph-card"><svg id="q18svg" viewBox="0 0 640 340">${axesSvg([[70,"0"],[170,"2"],[320,"5"],[420,"7"],[570,"10"]],[[40,"6"],[165,"0"],[290,"−6"]],"time (s)","velocity (m s⁻¹)") }${segs}${circles}</svg></div>
+ <div class="click-pill">Current levels: ${st.v1}, ${st.v2}, ${st.v3}, ${st.v4} m/s</div>`;
+ setupVerticalDrag($("q18svg"),".drag18",-6,6,(key,v)=>{st[key]=Math.round(v);renderQ18(a);renderNavigator();});
+}
+function setupVerticalDrag(svg,selector,vmin,vmax,onSet){
+ svg.querySelectorAll(selector).forEach(c=>{
+   c.addEventListener("pointerdown",e=>{
+     e.preventDefault(); c.setPointerCapture(e.pointerId);
+     let lastV=null;
+     const move=ev=>{
+       const r=svg.getBoundingClientRect(); const uy=(ev.clientY-r.top)/r.height*340;
+       const frac=Math.max(0,Math.min(1,(290-uy)/250));
+       lastV=vmin+frac*(vmax-vmin);
+       c.setAttribute("cy", String(Math.max(40,Math.min(290,uy))));
+     };
+     const up=()=>{
+       c.removeEventListener("pointermove",move);
+       if(lastV!==null)onSet(c.dataset.key,lastV);
+     };
+     c.addEventListener("pointermove",move);
+     c.addEventListener("pointerup",up,{once:true});
+     c.addEventListener("pointercancel",up,{once:true});
+   });
+ });
+}
+function renderNavigator(){
+ const g=$("navGrid");g.innerHTML="";
+ questions.forEach((q,i)=>{
+   const b=document.createElement("button");b.textContent=q.id;
+   if(i===current)b.classList.add("current");
+   if(answered(q))b.classList.add("answered");
+   if(reviewFlags[q.id])b.classList.add("review");
+   b.addEventListener("click",()=>{saveCurrent();current=i;$("navPopup").classList.add("hidden");render();});g.appendChild(b);
+ });
+}
+function move(delta){saveCurrent();current=Math.max(0,Math.min(questions.length-1,current+delta));render();}
+function openSubmit(){
+ saveCurrent();
+ const unanswered=questions.filter(q=>!answered(q)).length;
+ $("submitMessage").textContent=unanswered?`You still have ${unanswered} unanswered question${unanswered===1?"":"s"}. You can return to the test or submit now.`:"All questions contain a response. Submit now for grading?";
+ $("submitModal").classList.remove("hidden");
+}
+async function submitTest(force=false){
+ if(submitted)return;
+ saveCurrent();
+ if(!force){openSubmit();return;}
+ submitted=true;clearInterval(timerId);
+ $("submitModal").classList.add("hidden");$("gradingOverlay").classList.remove("hidden");
+ await gradeAll();
+ $("gradingText").textContent="Building score profile and emailing the report…";
+ await sendEmailReport();
+ showResults();
+}
+function gradeNumbers(q){
+ let score=0,details=[];
+ q.fields.forEach(f=>{
+   const val=answers[q.id]?.[f.key];
+   const ok=near(val,f.ans,f.tol);if(ok)score+=f.marks;
+   details.push(`${f.label}: ${ok?"correct":"expected "+fmt(f.ans)+" "+f.unit}`);
+ });
+ return {score,feedback:details.join(" · ")+" "+q.explanation};
+}
+function gradeCustom(q){
+ let s=0,fb=[];
+ if(q.custom==="q12"){
+   const x=customState.q12;
+   if(x.seg===3)s++; else fb.push("Greatest speed occurs on DE (slope −8 m s⁻¹; speed 8 m s⁻¹).");
+   if(near(x.distance,60,.05))s++; else fb.push("Total distance = 60 m.");
+   if(near(x.displacement,-8,.05))s++; else fb.push("Final displacement = −8 m.");
+   if(near(x.avgSpeed,5,.03))s++; else fb.push("Average speed = 60/12 = 5 m s⁻¹.");
+ }
+ if(q.custom==="q13"){
+   const x=customState.q13;
+   if(x.time!==null&&Math.abs(x.time-6)<=.3)s++; else fb.push("Direction changes at t=6 s.");
+   if(near(x.displacement,35,.08))s++; else fb.push("Signed area gives displacement 35 m.");
+   if(near(x.distance,55,.08))s++; else fb.push("Unsigned area gives total distance 55 m.");
+   if(near(x.accel,-4,.03))s++; else fb.push("Acceleration from 3–7 s = (−4−12)/4 = −4 m s⁻².");
+ }
+ if(q.custom==="q14"){
+   const x=customState.q14;
+   if(Math.abs(x.v4-14)<=0.1)s++; else fb.push("v(4)=14 m s⁻¹.");
+   if(Math.abs(x.v7-14)<=0.1)s++; else fb.push("v(7)=14 m s⁻¹.");
+   if(Math.abs(x.v12-4)<=0.1)s++; else fb.push("v(12)=4 m s⁻¹.");
+   if(near(x.displacement,119,.08))s++; else fb.push("Total displacement = 32+42+45 =119 m.");
+ }
+ if(q.custom==="q15"){
+   const x=customState.q15;
+   if(near(x.g,9.8,.03))s+=2; else fb.push("For s vs t², slope=g/2=19.6/4=4.9, so g=9.8 m s⁻².");
+   if(near(x.s3,44.1,.08))s++; else fb.push("At 3 s, s=½gt²=44.1 m.");
+ }
+ if(q.custom==="q16"){
+   const x=customState.q16;
+   if(Math.abs(x.s5+10)<=0.1)s++; else fb.push("At 5 s, s=10−4×5=−10 m.");
+   if(Math.abs(x.s7+10)<=0.1)s++; else fb.push("It remains at −10 m until 7 s.");
+   if(Math.abs(x.s11-14)<=0.1)s++; else fb.push("Then +6×4=+24 m, ending at +14 m.");
+ }
+ if(q.custom==="q18"){
+   const x=customState.q18,targets={v1:4,v2:0,v3:-3,v4:4};
+   Object.keys(targets).forEach(k=>{if(Math.abs(x[k]-targets[k])<=0.1)s++;else fb.push(`${k.toUpperCase()} should be ${targets[k]} m s⁻¹.`);});
+ }
+ return {score:s,feedback:fb.length?fb.join(" "):"All interactive graph elements are correct."};
+}
+function localGradeText(q,response){
+ const txt=response.toLowerCase();let hits=0;
+ q.local.forEach(pattern=>{const parts=pattern.split("|");if(parts.some(p=>txt.includes(p)))hits++;});
+ const needed=q.local.length;
+ const score=hits>=Math.ceil(needed*.75)?q.marks:(hits>=Math.ceil(needed*.45)?Math.max(1,q.marks-1):0);
+ return {score,feedback:score===q.marks?"Local rubric: core physics ideas are present and sufficiently precise.":score>0?"Local rubric: partly correct, but one or more required physics distinctions are missing.":"Local rubric: response does not yet establish the required physics idea.",source:"local"};
+}
+async function aiGradeText(q,response){
+ if(!response.trim())return {score:0,feedback:"No response submitted.",source:"none"};
+ const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),9000);
+ try{
+   const res=await fetch(AI_GRADING_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({questionId:q.id,question:q.prompt,rubric:q.rubric,marks:q.marks,response}),signal:controller.signal});
+   clearTimeout(timeout);
+   if(!res.ok)throw new Error("grader unavailable");
+   const j=await res.json();let score=Number(j.score);if(!Number.isFinite(score))throw new Error("invalid score");
+   score=Math.max(0,Math.min(q.marks,score));
+   return {score,feedback:String(j.feedback||"AI rubric graded."),source:"ai"};
+ }catch(e){clearTimeout(timeout);return localGradeText(q,response);}
+}
+async function gradeAll(){
+ for(const q of questions){
+   if(q.type==="text")results[q.id]=await aiGradeText(q,answers[q.id]||"");
+   else if(q.type==="numbers")results[q.id]=gradeNumbers(q);
+   else if(q.type==="mcq")results[q.id]={score:answers[q.id]===q.correct?q.marks:0,feedback:(answers[q.id]===q.correct?"Correct. ":"Incorrect. ")+q.explanation};
+   else results[q.id]=gradeCustom(q);
+ }
+}
+function totalScore(){return questions.reduce((s,q)=>s+(results[q.id]?.score||0),0);}
+function skillStats(){
+ const m={};
+ questions.forEach(q=>{if(!m[q.skill])m[q.skill]={score:0,max:0};m[q.skill].score+=results[q.id]?.score||0;m[q.skill].max+=q.marks;});return m;
+}
+function makeDiagnosis(){
+ const stats=skillStats();
+ const arr=Object.entries(stats).map(([k,v])=>({k,p:v.max?v.score/v.max:0,score:v.score,max:v.max})).sort((a,b)=>a.p-b.p);
+ const weak=arr.slice(0,2),strong=arr[arr.length-1];
+ return `<b>Diagnostic:</b> Primary revision priority: <b>${weak[0].k}</b> (${fmt(weak[0].score)}/${weak[0].max}); secondary priority: <b>${weak[1].k}</b>. Strongest area: <b>${strong.k}</b>. Review mistakes by asking whether the error came from a sign, a unit, a slope, an area, or the physical meaning of the quantity.`;
+}
+function reportText(){
+ const total=totalScore(),pct=total/60*100,stats=skillStats();
+ let t=`Thriving Scholars — ICSE Grade 9 Physics\nMotion in One Dimension — 90-minute Mastery Challenge\nStudent: ${studentName}\nScore: ${fmt(total)}/60 (${pct.toFixed(1)}%)\n\nSKILL PROFILE\n`;
+ Object.entries(stats).forEach(([k,v])=>t+=`${k}: ${fmt(v.score)}/${v.max}\n`);
+ t+=`\nQUESTION REPORT\n`;
+ questions.forEach(q=>t+=`Q${q.id} ${q.skill}: ${fmt(results[q.id]?.score||0)}/${q.marks} — ${results[q.id]?.feedback||""}\n`);
+ return t;
+}
+async function sendEmailReport(){
+ const total=totalScore(),pct=total/60*100,stats=skillStats();
+ const skillText=Object.entries(stats).map(([k,v])=>`${k}: ${fmt(v.score)}/${v.max}`).join("\n");
+ const qText=questions.map(q=>`Q${q.id} ${q.skill}: ${fmt(results[q.id]?.score||0)}/${q.marks} | ${results[q.id]?.feedback||""}`).join("\n");
+ if(emailSent||!studentEmail||!window.emailjs)return;
+ emailSent=true;
+ try{
+   await emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,{
+     name:studentName,
+     test_title:"ICSE Grade 9 Physics — Motion in One Dimension Mastery Challenge",
+     to_email:studentEmail,
+     solution_link:"",
+     session:"90-minute Selina-aligned Kinematics Test",
+     score:`${fmt(total)}/60 (${pct.toFixed(1)}%)`,
+     timestamp:new Date().toLocaleString(),
+     paper1:skillText,
+     paper2:qText
+   });
+   $("emailStatus").textContent=`Report emailed to ${studentEmail}.`;
+ }catch(e){
+   $("emailStatus").textContent=`The on-screen report is complete, but email delivery failed. Use “Download Report” below.`;
+   console.warn("EmailJS send failed",e);
+ }
+}
+function showResults(){
+ $("gradingOverlay").classList.add("hidden");$("exam").classList.add("hidden");$("footer").classList.add("hidden");$("timer").classList.add("hidden");$("submitTop").classList.add("hidden");
+ $("result").classList.remove("hidden");
+ const total=totalScore(),pct=total/60*100;
+ $("scoreBig").textContent=`${fmt(total)}/60`;
+ $("resultBand").textContent=pct>=85?"Exceptional command of Chapter 2":pct>=70?"Strong, with identifiable high-level gaps":pct>=55?"Developing mastery — targeted revision needed":"Major conceptual and graph revision recommended";
+ const sg=$("skillGrid");sg.innerHTML="";
+ Object.entries(skillStats()).forEach(([k,v])=>{const d=document.createElement("div");d.className="skill-card";d.innerHTML=`<span>${k}</span><b>${fmt(v.score)}/${v.max}</b><span style="color:var(--muted)">${(100*v.score/v.max).toFixed(0)}%</span>`;sg.appendChild(d);});
+ $("diagnosis").innerHTML=makeDiagnosis();
+ const tb=$("reportBody");tb.innerHTML="";
+ questions.forEach(q=>{const r=results[q.id]||{score:0,feedback:""};const tr=document.createElement("tr");tr.innerHTML=`<td>${q.id}</td><td>${q.skill}</td><td class="${r.score===q.marks?"status-good":"status-bad"}">${fmt(r.score)}/${q.marks}</td><td>${esc(r.feedback)}</td>`;tb.appendChild(tr);});
+ window.scrollTo(0,0);
+}
+function downloadReport(){
+ const blob=new Blob([reportText()],{type:"text/plain"});const url=URL.createObjectURL(blob);const a=document.createElement("a");
+ a.href=url;a.download=`${studentName.replace(/\s+/g,"_")}_ICSE_Kinematics_Report.txt`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+
+$("startBtn").addEventListener("click",startExam);
+$("backBtn").addEventListener("click",()=>move(-1));
+$("nextBtn").addEventListener("click",()=>{if(current===questions.length-1){saveCurrent();$("navPopup").classList.remove("hidden");renderNavigator();}else move(1);});
+$("reviewCheck").addEventListener("change",()=>{reviewFlags[questions[current].id]=$("reviewCheck").checked;renderNavigator();});
+$("navBtn").addEventListener("click",()=>{saveCurrent();$("navPopup").classList.remove("hidden");renderNavigator();});
+$("closeNav").addEventListener("click",()=>$("navPopup").classList.add("hidden"));
+$("submitTop").addEventListener("click",()=>{saveCurrent();openSubmit();});
+$("cancelSubmit").addEventListener("click",()=>$("submitModal").classList.add("hidden"));
+$("confirmSubmit").addEventListener("click",()=>submitTest(true));
+$("downloadReport").addEventListener("click",downloadReport);
+</script>
+</body>
+</html>
