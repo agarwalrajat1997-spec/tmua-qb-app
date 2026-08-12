@@ -6577,6 +6577,67 @@ function applyFilters() {
     renderTimer();
   }
 
+  /* TS_QB_TIMER_STOP_ON_CHECK_V1_FIX */
+  function settleSubmissionOutcome(
+    qid,
+    attemptsLeft
+  ) {
+    if (!qid) return;
+
+    var status =
+      currentAppStatus();
+
+    if (
+      status !== "correct" &&
+      status !== "wrong"
+    ) {
+      var remote =
+        serverProgress[qid];
+
+      status =
+        normaliseStatus(
+          remote &&
+            remote.status
+        );
+    }
+
+    if (
+      status === "correct" ||
+      status === "wrong"
+    ) {
+      finalizeSubmission(
+        qid,
+        status
+      );
+
+      return;
+    }
+
+    if (attemptsLeft > 0) {
+      window.setTimeout(
+        function () {
+          settleSubmissionOutcome(
+            qid,
+            attemptsLeft - 1
+          );
+        },
+        100
+      );
+
+      return;
+    }
+
+    /*
+      IMPORTANT:
+
+      Check completed successfully.
+      Do NOT restart timing merely because the result state
+      arrived late. The progress-save interception can still
+      finalize the exact correct/wrong outcome afterwards.
+    */
+    renderTimer();
+  }
+
   function finalizeSubmission(
     qid,
     status
@@ -6756,8 +6817,9 @@ function applyFilters() {
                 );
               }
               else {
-                resumeAfterFailedSubmission(
-                  qid
+                settleSubmissionOutcome(
+                  qid,
+                  20
                 );
               }
             }
@@ -6871,8 +6933,9 @@ function applyFilters() {
               );
             }
             else {
-              resumeAfterFailedSubmission(
-                qid
+              settleSubmissionOutcome(
+                qid,
+                20
               );
             }
           },
