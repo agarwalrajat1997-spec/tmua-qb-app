@@ -74,11 +74,13 @@ assert(
   "Authority-sensitive access remains server-only",
 );
 
+const currentUserScopeMatches =
+  route.match(
+    /\.eq\(\s*"user_id"\s*,\s*user\.id\s*,?\s*\)/g,
+  ) ?? [];
+
 assert(
-  count(
-    route,
-    '"user_id",\n                user.id',
-  ) >= 2,
+  currentUserScopeMatches.length >= 2,
   "Test and QB evidence are scoped to current user",
 );
 
