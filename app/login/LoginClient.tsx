@@ -20,14 +20,24 @@ const INFO_LINKS = {
   esat: "https://www.thrivingscholars.com/esat",
 };
 
-const PRICE = { tests: 89, bank: 89, both: 149 };
+const PRICE = {
+  tests: 89,
+  bank: 89,
+  both: 149,
+};
+
+const ESAT_PRICE = 89;
 
 export default function LoginClient({ uiMark }: Props) {
   const router = useRouter();
   const search = useSearchParams();
 
   const nextPath = search.get("next") || "/dashboard";
-  const isEsat = nextPath === "/esat" || nextPath.startsWith("/esat/");
+  const isEsat =
+    nextPath === "/esat" ||
+    nextPath.startsWith("/esat/") ||
+    nextPath.startsWith("/esat-");
+
   const supabase = useMemo(() => supabaseBrowser(), []);
 
   const [email, setEmail] = useState("");
@@ -40,9 +50,19 @@ export default function LoginClient({ uiMark }: Props) {
 
   const enrollState = useMemo(() => {
     const n = (tests ? 1 : 0) + (bank ? 1 : 0);
-    if (n === 0) return { key: "none" as const, label: "Select at least 1 option.", price: 0, save: 0 };
+
+    if (n === 0) {
+      return {
+        key: "none" as const,
+        label: "Select at least 1 option.",
+        price: 0,
+        save: 0,
+      };
+    }
+
     if (n === 2) {
       const sum = PRICE.tests + PRICE.bank;
+
       return {
         key: "both" as const,
         label: "Bundle selected: Practice Tests + Question Bank",
@@ -50,8 +70,22 @@ export default function LoginClient({ uiMark }: Props) {
         save: Math.max(0, sum - PRICE.both),
       };
     }
-    if (tests) return { key: "tests" as const, label: "Practice Test Series selected", price: PRICE.tests, save: 0 };
-    return { key: "bank" as const, label: "Question Bank selected", price: PRICE.bank, save: 0 };
+
+    if (tests) {
+      return {
+        key: "tests" as const,
+        label: "Practice Test Series selected",
+        price: PRICE.tests,
+        save: 0,
+      };
+    }
+
+    return {
+      key: "bank" as const,
+      label: "Question Bank selected",
+      price: PRICE.bank,
+      save: 0,
+    };
   }, [tests, bank]);
 
   useEffect(() => {
@@ -75,14 +109,17 @@ export default function LoginClient({ uiMark }: Props) {
     setMsg(null);
 
     const em = email.trim().toLowerCase();
+
     if (!em || !em.includes("@")) {
       setErr("Enter a valid email.");
       return;
     }
 
     setBusy(true);
+
     try {
-      const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
+      const redirectTo =
+        `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
 
       const { error } = await supabase.auth.signInWithOtp({
         email: em,
@@ -91,7 +128,9 @@ export default function LoginClient({ uiMark }: Props) {
 
       if (error) throw error;
 
-      setMsg("Login link sent. Check inbox + spam. Click ONLY the newest email link.");
+      setMsg(
+        "Login link sent. Check inbox + spam. Click ONLY the newest email link.",
+      );
     } catch (ex: any) {
       setErr(ex?.message || "Could not send login link.");
     } finally {
@@ -121,8 +160,15 @@ export default function LoginClient({ uiMark }: Props) {
     openExternal(url);
   }
 
-  const infoUrl = isEsat ? INFO_LINKS.esat : INFO_LINKS.tmua;
-  const productName = isEsat ? "ESAT" : "TMUA";
+  const infoUrl =
+    isEsat
+      ? INFO_LINKS.esat
+      : INFO_LINKS.tmua;
+
+  const productName =
+    isEsat
+      ? "ESAT"
+      : "TMUA";
 
   return (
     <div className={styles.page} data-ui={uiMark}>
@@ -131,22 +177,31 @@ export default function LoginClient({ uiMark }: Props) {
           <div className={styles.brandName}>Thriving Scholars</div>
           <div className={styles.brandTag}>{productName} Apps</div>
         </div>
-        <div className={styles.brandTag}>Paid Access â€¢ Secure Login</div>
+
+        <div className={styles.brandTag}>
+          Paid Access <span aria-hidden="true">&bull;</span> Secure Login
+        </div>
       </header>
 
       <main className={styles.main}>
         <div className={styles.grid}>
           <section className={`${styles.card} ${styles.leftCard}`}>
             <div className={styles.kicker}>Already enrolled?</div>
-            <div className={styles.bigLine}>Sign in with your registered email</div>
+
+            <div className={styles.bigLine}>
+              Sign in with your registered email
+            </div>
+
             <p className={styles.subLine}>
-              Use the same email you used at checkout. We will send a secure one-time login link to your inbox.
+              Use the same email you used at checkout. We will send a secure
+              one-time login link to your inbox.
             </p>
 
             <div className={styles.hr}></div>
 
             <form className={styles.form} onSubmit={sendLink}>
               <label className={styles.label}>Email</label>
+
               <input
                 className={styles.input}
                 value={email}
@@ -155,32 +210,67 @@ export default function LoginClient({ uiMark }: Props) {
                 autoComplete="email"
               />
 
-              <button className={styles.primaryBtn} type="submit" disabled={busy}>
-                {busy ? "Sending..." : "Send link on email â†’"}
+              <button
+                className={styles.primaryBtn}
+                type="submit"
+                disabled={busy}
+              >
+                {busy ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    Send link on email &rarr;
+                  </>
+                )}
               </button>
 
-              {err && <div className={`${styles.alert} ${styles.err}`}>{err}</div>}
-              {msg && <div className={`${styles.alert} ${styles.ok}`}>{msg}</div>}
+              {err && (
+                <div className={`${styles.alert} ${styles.err}`}>
+                  {err}
+                </div>
+              )}
+
+              {msg && (
+                <div className={`${styles.alert} ${styles.ok}`}>
+                  {msg}
+                </div>
+              )}
             </form>
 
             <div className={styles.note}>
-              <b>Support:</b> outreach@thrivingscholars.com â€¢ WhatsApp +44 7459 070019
+              <b>Support:</b> outreach@thrivingscholars.com{" "}
+              <span aria-hidden="true">&bull;</span>{" "}
+              WhatsApp +44 7459 070019
               <br />
-              If you just purchased, approval may take a short time. If youâ€™re stuck, message us with your payment email.
+              If you just purchased, approval may take a short time. If
+              you're stuck, message us with your payment email.
             </div>
 
-            <div className={styles.tiny}>Tip: Email links are single-use. If you request multiple, click the newest one.</div>
+            <div className={styles.tiny}>
+              Tip: Email links are single-use. If you request multiple,
+              click the newest one.
+            </div>
           </section>
 
           <aside className={`${styles.card} ${styles.rightCard}`}>
             <h3 className={styles.rightTitle}>
-              {isEsat ? "New here? Get ESAT access" : "New here? Enroll for access"}
+              {isEsat
+                ? "New here? Get ESAT access"
+                : "New here? Enroll for access"}
             </h3>
 
             <p className={styles.rightSub}>
-              {isEsat
-                ? "One enrollment gives you access to both the ESAT Question Bank and Practice Tests."
-                : "Choose what you want access to, then enroll. Prices shown in GBP (Â£)."}
+              {isEsat ? (
+                <>
+                  One enrollment gives you complete access to the ESAT
+                  Question Bank and Practice Tests.
+                </>
+              ) : (
+                <>
+                  Choose what you want access to, then enroll. Prices shown
+                  in GBP (&pound;).
+                </>
+              )}
             </p>
 
             <a
@@ -189,16 +279,39 @@ export default function LoginClient({ uiMark }: Props) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Learn more about {productName} preparation â†’
+              Learn more about {productName} preparation &rarr;
             </a>
 
             {isEsat ? (
               <>
-                <div className={styles.hr}></div>
-
                 <div className={styles.esatOffer}>
-                  <div className={styles.esatOfferTitle}>ESAT Question Bank + Practice Tests</div>
-                  <div className={styles.esatOfferText}>One checkout â€¢ both resources included</div>
+                  <div className={styles.offerBadge}>
+                    INTRODUCTORY OFFER
+                  </div>
+
+                  <div className={styles.esatOfferTitle}>
+                    Complete ESAT Access
+                  </div>
+
+                  <div className={styles.esatPriceRow}>
+                    <div className={styles.esatPrice}>
+                      &pound;{ESAT_PRICE}
+                    </div>
+
+                    <div className={styles.esatPriceMeta}>
+                      one-time introductory price
+                    </div>
+                  </div>
+
+                  <div className={styles.esatIncludes}>
+                    <span>Question Bank</span>
+                    <span aria-hidden="true">&bull;</span>
+                    <span>Practice Tests</span>
+                  </div>
+
+                  <div className={styles.esatOfferText}>
+                    Both resources included in one checkout.
+                  </div>
                 </div>
 
                 <button
@@ -206,11 +319,12 @@ export default function LoginClient({ uiMark }: Props) {
                   className={`${styles.enrollBtn} ${styles.singleEnroll}`}
                   onClick={enroll}
                 >
-                  Enroll Now â†’
+                  Get Complete Access for &pound;{ESAT_PRICE} &rarr;
                 </button>
 
                 <div className={styles.bundleNote}>
-                  Already purchased? Sign in with the same email you used at checkout.
+                  Already purchased? Sign in with the same email you used at
+                  checkout.
                 </div>
               </>
             ) : (
@@ -223,8 +337,14 @@ export default function LoginClient({ uiMark }: Props) {
                   <span className={styles.chk}>
                     <input type="checkbox" checked={tests} readOnly />
                   </span>
-                  <span className={styles.optName}>Practice Test Series</span>
-                  <span className={styles.chip}>Â£{PRICE.tests}</span>
+
+                  <span className={styles.optName}>
+                    Practice Test Series
+                  </span>
+
+                  <span className={styles.chip}>
+                    &pound;{PRICE.tests}
+                  </span>
                 </button>
 
                 <button
@@ -235,17 +355,33 @@ export default function LoginClient({ uiMark }: Props) {
                   <span className={styles.chk}>
                     <input type="checkbox" checked={bank} readOnly />
                   </span>
-                  <span className={styles.optName}>Question Bank</span>
-                  <span className={styles.chip}>Â£{PRICE.bank}</span>
+
+                  <span className={styles.optName}>
+                    Question Bank
+                  </span>
+
+                  <span className={styles.chip}>
+                    &pound;{PRICE.bank}
+                  </span>
                 </button>
 
                 <div className={styles.hr}></div>
 
                 <div className={styles.payRow}>
                   <div>
-                    <div className={styles.price}>Â£{enrollState.price}</div>
+                    <div className={styles.price}>
+                      &pound;{enrollState.price}
+                    </div>
+
                     <div className={styles.save}>
-                      {enrollState.key === "both" && enrollState.save > 0 ? `Save Â£${enrollState.save}` : "â€”"}
+                      {enrollState.key === "both" &&
+                      enrollState.save > 0 ? (
+                        <>
+                          Save &pound;{enrollState.save}
+                        </>
+                      ) : (
+                        <>&mdash;</>
+                      )}
                     </div>
                   </div>
 
@@ -260,19 +396,25 @@ export default function LoginClient({ uiMark }: Props) {
                     >
                       Clear
                     </button>
+
                     <button
                       type="button"
                       className={styles.enrollBtn}
                       onClick={enroll}
                       disabled={enrollState.key === "none"}
                     >
-                      Enroll Now â†’
+                      Enroll Now &rarr;
                     </button>
                   </div>
                 </div>
 
-                <div className={styles.mini}>{enrollState.label}</div>
-                <div className={styles.bundleNote}>Bundle includes both products at a discounted price.</div>
+                <div className={styles.mini}>
+                  {enrollState.label}
+                </div>
+
+                <div className={styles.bundleNote}>
+                  Bundle includes both products at a discounted price.
+                </div>
               </>
             )}
           </aside>
