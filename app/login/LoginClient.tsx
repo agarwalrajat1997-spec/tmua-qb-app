@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,10 +7,17 @@ import styles from "./login.module.css";
 
 type Props = { uiMark: string };
 
-const LINKS = {
-  tests: "https://www.thrivingscholars.com/_paylink/AZxDUeBg",
-  bank: "https://www.thrivingscholars.com/_paylink/AZxDURwM",
-  both: "https://www.thrivingscholars.com/_paylink/AZxDXYag",
+const TMUA_LINKS = {
+  tests: "https://buy.stripe.com/cNi7sN4I84d06cjbA60oM00",
+  bank: "https://buy.stripe.com/7sYfZj7UkcJwcAH7jQ0oM01",
+  both: "https://buy.stripe.com/eVq4gBa2scJw6cj0Vs0oM04",
+};
+
+const ESAT_LINK = "https://buy.stripe.com/00w3cxdeE38Wasz7jQ0oM03";
+
+const INFO_LINKS = {
+  tmua: "https://www.thrivingscholars.com/tmua",
+  esat: "https://www.thrivingscholars.com/esat",
 };
 
 const PRICE = { tests: 89, bank: 89, both: 149 };
@@ -20,6 +27,7 @@ export default function LoginClient({ uiMark }: Props) {
   const search = useSearchParams();
 
   const nextPath = search.get("next") || "/dashboard";
+  const isEsat = nextPath === "/esat" || nextPath.startsWith("/esat/");
   const supabase = useMemo(() => supabaseBrowser(), []);
 
   const [email, setEmail] = useState("");
@@ -47,14 +55,12 @@ export default function LoginClient({ uiMark }: Props) {
   }, [tests, bank]);
 
   useEffect(() => {
-    // Show URL error if present (e.g., /login?e=...)
     const e = search?.get("e");
     if (e) setErr(decodeURIComponent(e));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    // Already logged in -> go where the user wanted (honor nextPath)
     (async () => {
       try {
         const { data } = await supabase.auth.getSession();
@@ -93,20 +99,39 @@ export default function LoginClient({ uiMark }: Props) {
     }
   }
 
-  function enroll() {
-    if (enrollState.key === "none") return;
-    const url = enrollState.key === "tests" ? LINKS.tests : enrollState.key === "bank" ? LINKS.bank : LINKS.both;
+  function openExternal(url: string) {
     window.open(url, "_blank", "noopener,noreferrer");
   }
+
+  function enroll() {
+    if (isEsat) {
+      openExternal(ESAT_LINK);
+      return;
+    }
+
+    if (enrollState.key === "none") return;
+
+    const url =
+      enrollState.key === "tests"
+        ? TMUA_LINKS.tests
+        : enrollState.key === "bank"
+          ? TMUA_LINKS.bank
+          : TMUA_LINKS.both;
+
+    openExternal(url);
+  }
+
+  const infoUrl = isEsat ? INFO_LINKS.esat : INFO_LINKS.tmua;
+  const productName = isEsat ? "ESAT" : "TMUA";
 
   return (
     <div className={styles.page} data-ui={uiMark}>
       <header className={styles.topbar}>
         <div className={styles.brandLeft}>
           <div className={styles.brandName}>Thriving Scholars</div>
-          <div className={styles.brandTag}>TMUA Apps</div>
+          <div className={styles.brandTag}>{productName} Apps</div>
         </div>
-        <div className={styles.brandTag}>Paid Access • Secure Login</div>
+        <div className={styles.brandTag}>Paid Access â€¢ Secure Login</div>
       </header>
 
       <main className={styles.main}>
@@ -131,7 +156,7 @@ export default function LoginClient({ uiMark }: Props) {
               />
 
               <button className={styles.primaryBtn} type="submit" disabled={busy}>
-                {busy ? "Sending..." : "Send link on email →"}
+                {busy ? "Sending..." : "Send link on email â†’"}
               </button>
 
               {err && <div className={`${styles.alert} ${styles.err}`}>{err}</div>}
@@ -139,79 +164,117 @@ export default function LoginClient({ uiMark }: Props) {
             </form>
 
             <div className={styles.note}>
-              <b>Support:</b> outreach@thrivingscholars.com • WhatsApp +44 7459 070019
+              <b>Support:</b> outreach@thrivingscholars.com â€¢ WhatsApp +44 7459 070019
               <br />
-              If you just purchased, approval may take a short time. If you’re stuck, message us with your payment email.
+              If you just purchased, approval may take a short time. If youâ€™re stuck, message us with your payment email.
             </div>
 
             <div className={styles.tiny}>Tip: Email links are single-use. If you request multiple, click the newest one.</div>
           </section>
 
           <aside className={`${styles.card} ${styles.rightCard}`}>
-            <h3 className={styles.rightTitle}>New here? Enroll for access</h3>
+            <h3 className={styles.rightTitle}>
+              {isEsat ? "New here? Get ESAT access" : "New here? Enroll for access"}
+            </h3>
+
             <p className={styles.rightSub}>
-              Choose what you want access to, then enroll. Prices shown in <strong>GBP (£)</strong>.
+              {isEsat
+                ? "One enrollment gives you access to both the ESAT Question Bank and Practice Tests."
+                : "Choose what you want access to, then enroll. Prices shown in GBP (Â£)."}
             </p>
 
-            <button
-              type="button"
-              className={`${styles.opt} ${tests ? styles.optOn : ""}`}
-              onClick={() => setTests((v) => !v)}
+            <a
+              className={styles.infoLink}
+              href={infoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <span className={styles.chk}>
-                <input type="checkbox" checked={tests} readOnly />
-              </span>
-              <span className={styles.optName}>Practice Test Series</span>
-              <span className={styles.chip}>£{PRICE.tests}</span>
-            </button>
+              Learn more about {productName} preparation â†’
+            </a>
 
-            <button
-              type="button"
-              className={`${styles.opt} ${bank ? styles.optOn : ""}`}
-              onClick={() => setBank((v) => !v)}
-            >
-              <span className={styles.chk}>
-                <input type="checkbox" checked={bank} readOnly />
-              </span>
-              <span className={styles.optName}>Question Bank</span>
-              <span className={styles.chip}>£{PRICE.bank}</span>
-            </button>
+            {isEsat ? (
+              <>
+                <div className={styles.hr}></div>
 
-            <div className={styles.hr}></div>
-
-            <div className={styles.payRow}>
-              <div>
-                <div className={styles.price}>£{enrollState.price}</div>
-                <div className={styles.save}>
-                  {enrollState.key === "both" && enrollState.save > 0 ? `Save £${enrollState.save}` : "—"}
+                <div className={styles.esatOffer}>
+                  <div className={styles.esatOfferTitle}>ESAT Question Bank + Practice Tests</div>
+                  <div className={styles.esatOfferText}>One checkout â€¢ both resources included</div>
                 </div>
-              </div>
 
-              <div className={styles.actions}>
                 <button
                   type="button"
-                  className={styles.ghostBtn}
-                  onClick={() => {
-                    setTests(false);
-                    setBank(false);
-                  }}
-                >
-                  Clear
-                </button>
-                <button
-                  type="button"
-                  className={styles.enrollBtn}
+                  className={`${styles.enrollBtn} ${styles.singleEnroll}`}
                   onClick={enroll}
-                  disabled={enrollState.key === "none"}
                 >
-                  Enroll Now →
+                  Enroll Now â†’
                 </button>
-              </div>
-            </div>
 
-            <div className={styles.mini}>{enrollState.label}</div>
+                <div className={styles.bundleNote}>
+                  Already purchased? Sign in with the same email you used at checkout.
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className={`${styles.opt} ${tests ? styles.optOn : ""}`}
+                  onClick={() => setTests((v) => !v)}
+                >
+                  <span className={styles.chk}>
+                    <input type="checkbox" checked={tests} readOnly />
+                  </span>
+                  <span className={styles.optName}>Practice Test Series</span>
+                  <span className={styles.chip}>Â£{PRICE.tests}</span>
+                </button>
 
-            <div className={styles.bundleNote}>Bundle includes both products at a discounted price.</div>
+                <button
+                  type="button"
+                  className={`${styles.opt} ${bank ? styles.optOn : ""}`}
+                  onClick={() => setBank((v) => !v)}
+                >
+                  <span className={styles.chk}>
+                    <input type="checkbox" checked={bank} readOnly />
+                  </span>
+                  <span className={styles.optName}>Question Bank</span>
+                  <span className={styles.chip}>Â£{PRICE.bank}</span>
+                </button>
+
+                <div className={styles.hr}></div>
+
+                <div className={styles.payRow}>
+                  <div>
+                    <div className={styles.price}>Â£{enrollState.price}</div>
+                    <div className={styles.save}>
+                      {enrollState.key === "both" && enrollState.save > 0 ? `Save Â£${enrollState.save}` : "â€”"}
+                    </div>
+                  </div>
+
+                  <div className={styles.actions}>
+                    <button
+                      type="button"
+                      className={styles.ghostBtn}
+                      onClick={() => {
+                        setTests(false);
+                        setBank(false);
+                      }}
+                    >
+                      Clear
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.enrollBtn}
+                      onClick={enroll}
+                      disabled={enrollState.key === "none"}
+                    >
+                      Enroll Now â†’
+                    </button>
+                  </div>
+                </div>
+
+                <div className={styles.mini}>{enrollState.label}</div>
+                <div className={styles.bundleNote}>Bundle includes both products at a discounted price.</div>
+              </>
+            )}
           </aside>
         </div>
       </main>
