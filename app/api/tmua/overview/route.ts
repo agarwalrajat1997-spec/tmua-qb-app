@@ -1436,7 +1436,7 @@ async function calculateAndPersistPreparationRankV1(
           },
         );
 
-    const predictor =
+    const rawPredictorForRank =
       calculateTmuaPredictorV1({
         conversionProfiles:
           rankConversionProfiles,
@@ -1449,6 +1449,11 @@ async function calculateAndPersistPreparationRankV1(
           predictorQbEvents,
       });
 
+    const predictor =
+      applyTmuaHighScoreEvidenceGate(
+        rawPredictorForRank,
+      );
+
     const predictorSnapshot =
       buildTmuaPredictionSnapshotInsert(
         userId,
@@ -1460,6 +1465,15 @@ async function calculateAndPersistPreparationRankV1(
       userId ===
       currentUserId
     ) {
+      if (
+        predictor.modelVersion !==
+        currentPredictorResult.modelVersion
+      ) {
+        throw new Error(
+          "Preparation Rank current-user Predictor model version does not match overview Predictor model version",
+        );
+      }
+
       if (
         predictorSnapshot.inputHash !==
         currentPredictorSnapshot.inputHash
