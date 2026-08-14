@@ -1,0 +1,3757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SAT Diagnostic Test 6 — Hard</title>
+
+  <!-- Desmos (for calculator-allowed sections only) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+/* =======================================
+   GLOBAL
+======================================= */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #000;
+}
+.hidden { display: none !important; }
+a { color: #2e53da; }
+
+/* =======================================
+   HEADER
+======================================= */
+.header {
+  background-color: #fafbff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+#timer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  display: none; /* hidden on initial screen */
+}
+.header-buttons { display: flex; align-items: center; gap: 20px; }
+
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius: 999px;
+  background:#e8edff;
+  color:#1e2a6f;
+  font-size:12px;
+  margin-left:6px;
+}
+
+/* Calculator icon */
+#calculator-icon {
+  display: none; /* hidden until exam start / allowed */
+  align-items: center;
+  gap: 6px;
+  color: #000;
+  font-size: 15px;
+  cursor: pointer;
+}
+#calculator-icon i {
+  font-size: 18px;
+}
+#calculator-icon:hover {
+  color: #444;
+}
+
+/* =======================================
+   START SCREEN  ✅ Thriving Scholars Branding
+======================================= */
+#start-screen {
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+
+  /* Thriving Scholars (orange/yellow) */
+  border: 2px solid #FEC94F;
+  box-shadow: 0 8px 24px rgba(254, 201, 79, 0.28);
+
+  text-align: left;
+  overflow-y: auto;                /* ✅ allows scrolling inside */
+  scrollbar-width: thin;           /* ✅ nice thin scrollbar (Firefox) */
+  scrollbar-color: #FEC94F #FFF1DF;
+}
+
+/* ✅ Optional: style scrollbar for Chrome/Safari */
+#start-screen::-webkit-scrollbar {
+  width: 8px;
+}
+#start-screen::-webkit-scrollbar-thumb {
+  background-color: #FEC94F;
+  border-radius: 4px;
+}
+#start-screen::-webkit-scrollbar-track {
+  background-color: #FFF1DF;
+}
+
+#start-screen h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  color: #670D04;                  /* deep TS accent */
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#start-screen p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+#start-screen label {
+  font-weight: 600;
+  color: #111;
+}
+
+#start-screen input,
+#start-screen select {
+  padding: 8px 10px;
+  width: 250px;
+  margin-top: 4px;
+  border: 1px solid #f0d6a0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#start-screen button {
+  background: #FEC94F;             /* TS yellow */
+  color: #670D04;                  /* readable on yellow */
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(254, 201, 79, 0.35);
+}
+
+#start-screen button:hover {
+  background: #F5B935;             /* slightly deeper yellow/orange */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(254, 201, 79, 0.45);
+}
+
+
+/* =======================================
+   MAIN CONTAINER (EXAM)
+======================================= */
+.container {
+  display: none;
+  flex-direction: row;
+  height: calc(100vh - 56px - 70px);
+  overflow: hidden;
+}
+.container.active {
+  display: flex;
+}
+
+/* =======================================
+   LEFT PANEL (Passage Area)
+======================================= */
+.left-panel {
+  flex: 1;
+  background-color: white;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   RIGHT PANEL (Question Area)
+======================================= */
+.right-panel {
+  flex: 1;
+  background-color: white;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   Optional: Nicer Scrollbars
+======================================= */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* =======================================
+   QUESTION HEADER
+======================================= */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbff; /* 🔹 updated color */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.mark-review {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  margin-left: 12px;
+  flex-grow: 1;
+}
+.mark-review input[type="checkbox"] { display: none; }
+.bookmark-icon {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mark-review input[type="checkbox"]:checked + .bookmark-icon {
+  color: #cf0000;
+}
+
+/* =======================================
+   OPTIONS
+======================================= */
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.option-label:hover { border-color: #2e53da; }
+.option-label.active { background: #f0f4ff; border-color: #2e53da; }
+.option-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e8f0;
+  color: #2e53da;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.option-label.active .option-circle {
+  background: #2e53da;
+  color: #fff;
+}
+.option-label input[type="radio"] { display: none; }
+
+/* =======================================
+   FOOTER
+======================================= */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+  background-color: #fafbff;
+  height: 70px;
+  position: relative;
+}
+.footer-left { width: 200px; display: flex; align-items: center; justify-content: flex-start; }
+.footer-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.footer-right { display: flex; align-items: center; gap: 10px; }
+.footer-center button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.footer-buttons button {
+  background-color: #2e53da;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.footer-buttons button:disabled {
+  background-color: #bbb;
+  cursor: default;
+}
+.student-response-cell { background-color: #fafafa; font-style: italic; white-space: pre-wrap; }
+
+/* =======================================
+   NAVIGATOR POPUP
+======================================= */
+#navigator-popup {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  z-index: 9999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+#navigator-popup .nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#navigator-popup .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+#navigator-popup .legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 16px 0;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border: 1px solid #999; display: inline-block; }
+.legend-current { background: #2e53da; color: #fff; }
+.legend-review { background: red; }
+.legend-unanswered { background: transparent; }
+#navigator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+#navigator-grid button {
+  border: 1px dashed #2e53da;
+  background: #fff;
+  color: #2e53da;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#navigator-grid button.current { background: #2e53da; color: #fff; }
+#navigator-grid button.answered { border: 1px solid #2e53da; }
+#navigator-grid button.review { border: 1px solid red; color: red; }
+
+/* =======================================
+   CALCULATOR POPUP
+======================================= */
+#calculator-popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+  z-index: 10000;
+  width: 640px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+#calculator-drag-handle {
+  cursor: move;
+  background: #fafbff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+#calculator {
+  width: 100%;
+  height: 420px;
+}
+#grading-overlay {
+  backdrop-filter: blur(3px);
+  color: #222;
+}
+.spinner {
+  border-color: #ddd;
+  border-top-color: #0078ff;
+}
+
+/* =======================================
+   FRQ
+======================================= */
+.grading-output {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+textarea.frq-input {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+/* =======================================
+   BREAK SCREEN (between I-B → II-A)
+======================================= */
+#break-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  flex-direction: column;
+}
+.break-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 24px;
+}
+#break-timer {
+  background: #222;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+#skip-break {
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+}
+#skip-break:hover {
+  background: #ccc;
+}
+
+/* =======================================
+   SECTION TRANSITION MODAL
+======================================= */
+#section-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+#section-modal .content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 420px;
+  text-align: center;
+}
+#section-modal button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* =======================================
+   REPORT
+======================================= */
+#report-container {
+  padding: 30px;
+  max-width: 950px;
+  margin: 20px auto 90px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow-y: auto;
+  height: calc(100vh - 56px - 40px);
+}
+#report-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+#report-container th, #report-container td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+#report-container thead { background: #f0f0f0; }
+/* =============================
+   SCORE WIDGET (AP SCORE GAUGE)
+============================= */
+.score-container {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  margin: 30px auto;
+}
+
+.score-container svg {
+  width: 230px;
+  height: 230px;
+}
+
+.score-container .arc {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.score-container .label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  fill: #555;
+}
+
+.score-container .score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  color: #000;
+}
+/* ===============================
+   ABC BUTTON
+================================= */
+.eliminate-mode-btn {
+  background-color: #ffffff;
+  color: #2836d1;
+  border: 2px solid #2836d1;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.eliminate-mode-btn:hover {
+  background-color: #f3f4ff;
+}
+.eliminate-mode-btn.active {
+  background-color: #2836d1;
+  color: #ffffff;
+  border-color: #2836d1;
+}
+#footer-bar {
+  position: relative;
+}
+/* replace the whole block with this */
+#color-bar-bottom {
+  /* position: static by default */
+  width: 100%;
+  height: 1px;      /* your dash bar height */
+  margin: 0;        /* optional: ensure it's flush */
+}
+
+
+/* ===============================
+   STRIKEOUT BUTTONS (Right-side A–D)
+================================= */
+.strike-toggle {
+  display: none; /* Hidden until ABC mode is active */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2e53da;
+  background: transparent;
+  border: 2px solid #2e53da;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elimination-active .strike-toggle {
+  display: flex;
+}
+
+/* Hover animation (subtle blue tint like SAT) */
+.strike-toggle:hover {
+  background-color: #f0f4ff;
+}
+
+/* Don’t change on press — visual effect only occurs on option */
+.strike-toggle.active {
+  background-color: transparent;
+  color: #2e53da;
+}
+
+/* ===============================
+   STRUCK OPTION STYLE
+================================= */
+.option-label.struck {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+  color: #666;
+  text-decoration: line-through;
+  position: relative;
+  opacity: 0.75;
+}
+
+.option-label.struck::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.option-label.struck .option-circle {
+  background: #e0e0e0;
+  color: #888;
+} 
+
+/* =======================================
+   COLOR DASH BAR (appears after exam start)
+======================================= */
+.color-bar {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #444 0 24px,        /* dark gray dash */
+    transparent 24px 26px,
+    #00AEEF 26px 50px,  /* blue dash */
+    transparent 50px 52px,
+    #FFD500 52px 76px,  /* yellow dash */
+    transparent 76px 78px
+  );
+  background-size: 78px 5px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hidden by default (like header on start screen) */
+.color-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#footer-student-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 520px 1fr; /* wider left panel so image can actually grow */
+  gap: 18px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+/* Center the image within the LEFT panel */
+.q-media-left{
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: flex-start;   /* keep at top; change to center if you want vertical centering */
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 240px 1fr; /* bigger left panel */
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+.q-media-left{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Bigger images + faint boundary */
+.q-img-sm{
+  width: 320px;              /* bigger */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+
+/* Mobile tweak */
+@media (max-width: 640px){
+  .q-media{
+    grid-template-columns: 1fr;  /* stack image above text */
+  }
+  .q-media-left{
+    justify-content: flex-start;
+  }
+  .q-img-sm{
+    width: min(360px, 100%);
+  }
+}
+/* ================================
+   OPTION IMAGES (MCQ choices)
+   Make images smaller + organized
+================================ */
+
+/* If your option HTML uses <div class="opt-img-wrap"><img class="opt-img" ...></div> */
+.opt-img-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center inside option */
+  align-items: center;
+  padding: 6px 0;
+}
+
+.opt-img{
+  width: 220px;                /* ✅ CHANGE THIS to control option image size */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);   /* faint boundary */
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+}
+
+ 
+/* =======================================
+   STUDENT-PRODUCED RESPONSE (SPR)
+======================================= */
+.spr-wrap {
+  margin-top: 16px;
+  padding: 16px;
+  border: 2px solid #d7dbe7;
+  border-radius: 10px;
+  background: #fafbff;
+}
+.spr-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.spr-input {
+  width: min(320px, 100%);
+  padding: 12px 14px;
+  font-size: 20px;
+  border: 2px solid #9da7c5;
+  border-radius: 8px;
+  outline: none;
+}
+.spr-input:focus {
+  border-color: #2e53da;
+  box-shadow: 0 0 0 3px rgba(46,83,218,.12);
+}
+.spr-note {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title" id="header-title">SAT Diagnostic Test 6</span>
+      <span id="calc-badge" class="badge hidden">Calculator Allowed</span>
+    </div>
+    <div class="header-buttons">
+      <div id="timer">00:00</div>
+      <div id="integrity-status" title="The test records tab visibility, focus, fullscreen exits, clipboard actions, and connection changes."></div>
+      <div id="calculator-icon" onclick="openCalculator()">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Calculator</span>
+      </div>
+    </div>
+  </div>
+
+<div id="start-screen">
+  <h1>Digital SAT Diagnostic Test 6 — Hard</h1>
+  <p>This hard SAT-style diagnostic contains 4 locked modules:</p>
+  <ul>
+    <li><strong>Module 1:</strong> Reading &amp; Writing, 27 questions, 32 minutes — hard</li>
+    <li><strong>Module 2:</strong> Reading &amp; Writing, 27 questions, 32 minutes — harder</li>
+    <li><strong>10-minute break</strong></li>
+    <li><strong>Module 3:</strong> Math, 22 questions, 35 minutes — hard</li>
+    <li><strong>Module 4:</strong> Math, 22 questions, 35 minutes — harder</li>
+  </ul>
+  <p><em>Once you advance to the next module, you cannot return to a completed module.</em></p>
+  <p><em>This is intentionally more challenging than a typical SAT first-stage module. The score report is a diagnostic estimate, not an official College Board conversion.</em></p>
+    <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div>
+        <label>Full Name</label><br>
+        <input type="text" id="student-name">
+      </div>
+      <div>
+        <label>Email (to receive results)</label><br>
+        <input type="email" id="student-email">
+      </div>
+      <div>
+        <label>Exam Session</label><br>
+<select id="test-session">
+  <option value="" selected disabled>Select SAT Session</option>
+  <option value="SAT May 2, 2026">May, 2026</option>
+  <option value="SAT June 6, 2026">June, 2026</option>
+  <option value="SAT August 22, 2026">August, 2026</option>
+  <option value="SAT September 12, 2026">September, 2026</option>
+  <option value="SAT October 3, 2026">October, 2026</option>
+  <option value="SAT November 7, 2026">November, 2026</option>
+  <option value="SAT December 5, 2026">December, 2026</option>
+  <option value="SAT March 6, 2027">March, 2027</option>
+  <option value="SAT May 1, 2027">May, 2027</option>
+  <option value="SAT June 5, 2027">June, 2027</option>
+</select>
+      </div>
+    </div>
+    <input type="checkbox" id="monitoring-consent" name="monitoring-consent" checked hidden>
+    <button onclick="startExam()">Start Exam</button>
+  </div>
+
+  <div id="color-bar" class="color-bar hidden"></div>
+
+  <!-- Main Exam Container -->
+  <div id="main-container" class="container">
+    <div class="left-panel" id="passage"></div>
+
+    <div class="right-panel">
+      <div>
+        <div class="question-header">
+          <div class="q-number" id="q-number">1</div>
+
+          <label class="mark-review">
+            <input type="checkbox" id="mark-review" onchange="toggleBookmark(this)">
+            <i class="fa-regular fa-bookmark bookmark-icon"></i>
+            Mark for Review
+          </label>
+
+          <!-- ABC toggle -->
+          <button id="eliminateBtn" class="eliminate-mode-btn">𝖠̶𝖡̶𝖢̶</button>
+        </div>
+
+        <div class="question-box" id="question-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="color-bar-bottom" class="color-bar hidden"></div>
+
+  <!-- Footer -->
+  <div class="footer-buttons hidden" id="footer-bar">
+    <div class="footer-left">
+      <span id="footer-student-name" style="font-size: 16px; font-weight: 500; color: #000;"></span>
+    </div>
+
+    <div class="footer-center">
+      <button id="navigator-button" onclick="openNavigator()">Question 1 of 1</button>
+    </div>
+
+    <div class="footer-right">
+      <button id="back-btn" onclick="prevQuestion()">Back</button>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+      <button id="finish-section-btn" onclick="finishCurrentSection()">Finish Section</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div id="navigator-popup">
+    <div class="nav-header">
+      <span id="navigator-section-title">Section</span>
+      <button class="close-btn" onclick="closeNavigator()">×</button>
+    </div>
+    <div class="legend">
+      <span><div class="legend-box legend-current"></div> Current</span>
+      <span><div class="legend-box legend-unanswered"></div> Unanswered</span>
+      <span><div class="legend-box legend-review"></div> For Review</span>
+    </div>
+    <div id="navigator-grid"></div>
+  </div>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup">
+    <div id="calculator-drag-handle">
+      <span>Calculator</span>
+      <button onclick="closeCalculator()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="calculator"></div>
+  </div>
+
+  <!-- Section Transition Modal -->
+  <div id="section-modal">
+    <div class="content">
+      <h2 id="section-modal-title">Section complete</h2>
+      <p id="section-modal-text">The next section will begin now. You cannot return to the previous section.</p>
+      <div style="display:flex; justify-content:center; gap:14px; margin-top:18px;">
+        <button id="advance-section-btn" onclick="goToNextSection()" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Start Next Section
+        </button>
+        <button onclick="closeSectionModal()" style="background:#ccc; color:#000; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 10-minute break between Reading & Writing and Math -->
+  <div id="break-screen" class="hidden">
+    <div class="break-content">
+      <div id="break-timer">10:00</div>
+      <h2>Reading &amp; Writing Complete</h2>
+      <p>Your Reading &amp; Writing modules are locked. After the break, Math Module 1 will begin.</p>
+      <button id="skip-break" onclick="skipBreak()">Start Math Now</button>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-container" class="hidden"></div>
+
+  <script>
+/***********************
+ * DATA: Sections
+ ***********************/
+const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
+
+const sections = [
+  {
+    "id": "READING1",
+    "title": "SAT Diagnostic Test 6 — Hard — Reading & Writing Module 1",
+    "durationSec": 1920,
+    "calculatorAllowed": false,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>An economist predicted that a congestion charge would sharply reduce weekday driving. After the city returned much of the revenue to residents through transit credits, however, the decline in driving was smaller than expected. The credits appear to have ______ the charge’s effect on travel behavior without eliminating it.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>replicated</p>",
+          "<p>obscured</p>",
+          "<p>tempered</p>",
+          "<p>reversed</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>Because only a small portion of the settlement’s records survived, historian Lena Ortiz treats her reconstruction of its trade network as ______ rather than definitive; newly discovered ledgers could substantially alter the picture.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>exhaustive</p>",
+          "<p>redundant</p>",
+          "<p>provisional</p>",
+          "<p>incontrovertible</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>Researchers observed that a desert moss recovered more quickly after brief rain when neighboring moss patches were present. <strong>One explanation is that neighboring patches simply mark locations where the soil already retains more water.</strong> Yet when the researchers moved equal amounts of soil among plots, recovery remained faster beside living patches, suggesting that the neighbors themselves contribute to the effect.</p>",
+        "prompt": "<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>It identifies a flaw in the experimental method that prevents the researchers from drawing a conclusion.</p>",
+          "<p>It explains why the researchers expected moved soil to improve moss recovery.</p>",
+          "<p>It presents an alternative explanation that the subsequent evidence helps rule out.</p>",
+          "<p>It states the researchers’ main conclusion before the evidence for that conclusion is introduced.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p><strong>Text 1</strong></p><p>Planting trees can reduce summer temperatures in cities, but the cooling benefit depends heavily on canopy size. Programs that maximize the number of newly planted trees may therefore produce disappointing results if many trees remain small.</p><p><strong>Text 2</strong></p><p>In a five-year trial, drought-tolerant native trees initially produced less shade than several fast-growing species. By year five, however, the native trees had much higher survival rates, and their total surviving canopy area was greater.</p>",
+        "prompt": "<p>Based on the texts, both authors would most likely agree with which statement?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>Native trees provide greater shade than other species immediately after planting.</p>",
+          "<p>The long-term cooling value of a planting program depends on more than the number of trees initially planted.</p>",
+          "<p>Fast-growing tree species should never be used in urban planting programs.</p>",
+          "<p>Tree survival matters only when cities are unable to plant large numbers of trees.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>When two instruments produce nearly identical signals, the new sensor can ______ them only if the signals differ by more than its measurement uncertainty. Below that threshold, the sensor records the signals as effectively indistinguishable.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>substitute for</p>",
+          "<p>differentiate between</p>",
+          "<p>reconcile</p>",
+          "<p>amplify</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>Biologists found that a certain beetle remains active at temperatures that cause related species to become sluggish. The beetle’s cell membranes contain unusually high proportions of lipids that remain flexible in cold conditions. <strong>This flexibility allows proteins embedded in the membranes to continue functioning as temperatures fall.</strong> The finding offers a physiological explanation for the beetle’s cold-weather activity.</p>",
+        "prompt": "<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>It questions whether membrane composition differs among beetle species.</p>",
+          "<p>It supplies a mechanism connecting a cellular trait to the observed behavior.</p>",
+          "<p>It introduces a competing explanation for the beetle’s activity.</p>",
+          "<p>It describes the experimental procedure used to measure beetle activity.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p><strong>Text 1</strong></p><p>A translator of poetry should preserve unusual syntax whenever possible. Even if the resulting English feels unfamiliar, the strangeness may be part of the poem’s artistic effect.</p><p><strong>Text 2</strong></p><p>Reproducing a source poem’s syntax word for word can sometimes distort its effect because grammatical structures carry different associations across languages. A translation may need different syntax to create a comparable experience for the new reader.</p>",
+        "prompt": "<p>How would the author of Text 2 most likely respond to the main claim in Text 1?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>By claiming that syntax has little influence on a poem’s artistic effect.</p>",
+          "<p>By agreeing that unfamiliar syntax always produces the most faithful translation.</p>",
+          "<p>By arguing that preserving syntax is valuable only when doing so also preserves the source poem’s effect.</p>",
+          "<p>By arguing that poetry cannot be meaningfully translated between languages.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>Many migratory bird species have begun arriving at northern breeding grounds earlier in spring. Yet the insects on which some birds feed have shifted their seasonal peaks by different amounts. Species whose arrival dates track insect peaks closely have maintained nesting success, whereas species whose schedules have changed less have experienced declines. The pattern suggests that earlier migration alone is not necessarily beneficial.</p>",
+        "prompt": "<p>Which choice best states the main idea of the text?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>The effect of earlier migration on nesting success depends on whether migration remains synchronized with food availability.</p>",
+          "<p>Bird species that arrive earliest always have the highest nesting success.</p>",
+          "<p>Insect populations have generally declined because birds now arrive earlier.</p>",
+          "<p>Most migratory birds are unable to alter the timing of their spring migration.</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>A materials scientist tested a coating intended to reduce corrosion. Identical metal samples were placed in saltwater; half were coated and half were not. After four weeks, coated samples had lost less mass on average. The scientist repeated the trial using fresh samples and obtained a similar difference.</p>",
+        "prompt": "<p>Which conclusion is best supported by the text?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>The second trial proves that no uncontrolled variable affected either experiment.</p>",
+          "<p>Under the tested conditions, the coating is associated with reduced corrosion, and the repeated trial strengthens confidence in that result.</p>",
+          "<p>Uncoated metal corrodes only because saltwater removes material from its surface.</p>",
+          "<p>The coating prevents corrosion completely in all saltwater environments.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>A researcher measured the electrical resistance of three materials before and after exposure to high humidity.</p><table><tr><th>Material</th><th>Before (Ω)</th><th>After (Ω)</th></tr><tr><td>P</td><td>40</td><td>44</td></tr><tr><td>Q</td><td>75</td><td>90</td></tr><tr><td>R</td><td>120</td><td>126</td></tr></table>",
+        "prompt": "<p>Which choice best uses the data to support the claim that material Q is more sensitive to humidity than materials P and R?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Q’s resistance after exposure was 90 Ω, which was lower than R’s resistance after exposure.</p>",
+          "<p>Q’s resistance increased by 20%, compared with 10% for P and 5% for R.</p>",
+          "<p>R had the greatest resistance both before and after exposure.</p>",
+          "<p>P’s resistance increased by 4 Ω, while Q’s increased by 15 Ω.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>Ecologist Mira Chen hypothesizes that diverse soil-microbe communities help grasslands recover from drought because different microbes perform overlapping nutrient-processing roles. If drought suppresses one microbial group, another may continue the same function.</p>",
+        "prompt": "<p>Which finding, if true, would most directly support Chen’s hypothesis?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Several microbial groups became less abundant during drought in nearly every plot.</p>",
+          "<p>Plots with greater microbial diversity maintained nutrient-cycling rates after drought even though the abundance of several microbial groups declined.</p>",
+          "<p>Some grass species grew taller in wet years than in dry years.</p>",
+          "<p>Plots with greater microbial diversity contained more plant species before drought began.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>After months of practicing alone, Nia finally played her composition for the ensemble. She kept her eyes on the score until the last chord faded. Then, hearing no response, she began gathering the pages. Only when the conductor quietly asked the musicians to play the piece again did Nia look up, startled.</p>",
+        "prompt": "<p>Which choice best states what can reasonably be inferred from the text?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Nia preferred practicing alone to working with other musicians.</p>",
+          "<p>The conductor had previously told Nia that the composition would be performed twice.</p>",
+          "<p>The musicians had been unable to read the final chord of Nia’s composition.</p>",
+          "<p>Nia had interpreted the ensemble’s initial silence as a negative reaction.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>A historian examining a port city’s tax records notices that imports of timber rose sharply during years when local ship registrations also increased. The records do not indicate how the imported timber was used, and timber had many other uses in the city.</p>",
+        "prompt": "<p>Which inference is best supported by the text?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Ship registrations increased because imported timber became less expensive.</p>",
+          "<p>Most imported timber must have been used for purposes unrelated to shipbuilding.</p>",
+          "<p>The increase in timber imports proves that every newly registered ship was built locally.</p>",
+          "<p>The records are consistent with the possibility that increased shipbuilding contributed to higher timber imports, but they do not establish that shipbuilding was the cause.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>A battery was tested at four temperatures.</p><table><tr><th>Temperature (°C)</th><th>Capacity after 100 cycles (%)</th></tr><tr><td>5</td><td>91</td></tr><tr><td>15</td><td>94</td></tr><tr><td>25</td><td>96</td></tr><tr><td>35</td><td>88</td></tr></table><p>An engineer claims that, among the tested temperatures, increasing temperature improves capacity retention only up to a point.</p>",
+        "prompt": "<p>Which choice best uses the data to support the engineer’s claim?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>The battery retains more than 85% capacity at every tested temperature.</p>",
+          "<p>Capacity retention differs by 3 percentage points between 5°C and 15°C.</p>",
+          "<p>The highest tested temperature is 35°C, and the lowest is 5°C.</p>",
+          "<p>Capacity retention rises from 91% at 5°C to 96% at 25°C but falls to 88% at 35°C.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>Cloud cover had thickened throughout the afternoon, making navigation increasingly difficult. The expedition reached the plateau after sunset ______ the researchers postponed the survey until morning, when the markers would be easier to see.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>: therefore,</p>",
+          "<p>; therefore,</p>",
+          "<p>, therefore,</p>",
+          "<p> therefore</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>The glacier’s boundary shifted unevenly between 2001 and 2021, with some sections retreating much faster than others. Using satellite images collected over two decades, ______.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>changes in the glacier’s boundary were mapped by the researchers</p>",
+          "<p>a map of changes in the glacier’s boundary was produced</p>",
+          "<p>the researchers mapped changes in the glacier’s boundary</p>",
+          "<p>the glacier’s boundary showed changes that the researchers mapped</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>The insects were tested under red, blue, and white light as well as in darkness. A series of experiments conducted under different lighting conditions ______ that the insects orient primarily by contrast rather than by color.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>have shown</p>",
+          "<p>show</p>",
+          "<p>showing</p>",
+          "<p>has shown</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "18",
+        "passage": "<p>Many documents in the collection are too fragile to withstand repeated handling. The museum digitized the collection so that researchers could examine ______ records without handling the fragile originals.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>they’re</p>",
+          "<p>their</p>",
+          "<p>it’s</p>",
+          "<p>its</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "19",
+        "passage": "<p>Weather at the remote site changes rapidly, and resupply can take several days. The field team needed three things before departure ______ updated maps, a calibrated sensor, and permission to enter the reserve.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>,</p>",
+          "<p>— and</p>",
+          "<p>;</p>",
+          "<p>:</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "20",
+        "passage": "<p>The exhibition date had been fixed months in advance. By the time the public exhibition opened in June, conservators ______ every painting for structural damage and recorded the results in a shared database.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>are examining</p>",
+          "<p>had examined</p>",
+          "<p>will examine</p>",
+          "<p>examine</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "21",
+        "passage": "<p>Researchers needed a tool that could identify weak transmitters in a noisy environment. The software was designed to measure signal strength, compare readings across sensors, and ______ the location of a source.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>estimated</p>",
+          "<p>estimate</p>",
+          "<p>estimating</p>",
+          "<p>an estimate of</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "22",
+        "passage": "<p>The first prototype was inexpensive and easy to manufacture. ______ it failed after repeated exposure to heat, so the team replaced its outer casing before field testing.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>However,</p>",
+          "<p>For example,</p>",
+          "<p>Therefore,</p>",
+          "<p>Similarly,</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "23",
+        "passage": "<p>Early trials produced many duplicate readings because nearby sensors sampled the same events. The researchers increased the spacing between sensors, reducing overlap in their measurements. ______ the final data set contained fewer duplicate readings.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Consequently,</p>",
+          "<p>For instance,</p>",
+          "<p>Meanwhile,</p>",
+          "<p>Nevertheless,</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "24",
+        "passage": "<p>While researching water purification, a student takes these notes:</p><ul><li>Method A removes dissolved salts by forcing water through a membrane.</li><li>Method A requires substantial pressure and therefore considerable energy.</li><li>Method B evaporates water and condenses the vapor.</li><li>Method B can use waste heat from industrial processes.</li></ul>",
+        "prompt": "<p>The student wants to contrast the main energy demands of the two methods. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Both Method A and Method B can produce purified water from water containing dissolved salts.</p>",
+          "<p>Industrial processes sometimes generate waste heat that can be used for other purposes.</p>",
+          "<p>Method A uses a membrane, while Method B produces vapor that later condenses.</p>",
+          "<p>Method A depends on energy-intensive pressure, whereas Method B can draw on waste heat for evaporation.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "25",
+        "passage": "<p>A student records these notes:</p><ul><li>A survey of 600 commuters found that 48% preferred expanded bus service.</li><li>The survey was conducted only at major train stations.</li><li>Commuters who do not use train stations were less likely to be included.</li></ul>",
+        "prompt": "<p>The student wants to emphasize a limitation of using the survey to represent all commuters in the city. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Of the 600 commuters surveyed, 48% preferred expanded bus service.</p>",
+          "<p>Major train stations provide access to many commuters in the city.</p>",
+          "<p>The survey asked commuters about expanded bus service rather than train service.</p>",
+          "<p>Because the survey sampled commuters at major train stations, it may underrepresent commuters who do not use those stations.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "26",
+        "passage": "<p>A student has taken these notes:</p><ul><li>In 2019, engineers identified excessive vibration in a pedestrian bridge.</li><li>In 2020, they installed temporary dampers.</li><li>Measurements after installation showed lower vibration.</li><li>In 2022, permanent dampers replaced the temporary system.</li></ul>",
+        "prompt": "<p>The student wants to present the sequence of the engineers’ response. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>After identifying excessive vibration in 2019, engineers installed temporary dampers in 2020 and replaced them with permanent dampers in 2022 after measurements showed reduced vibration.</p>",
+          "<p>Engineers studied a pedestrian bridge in 2019, 2020, and 2022.</p>",
+          "<p>Permanent dampers, installed in 2022, can reduce vibration in pedestrian bridges.</p>",
+          "<p>Measurements showed that the temporary dampers installed by engineers reduced bridge vibration.</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "27",
+        "passage": "<p>A student has taken these notes about sculptor Lila Moreno:</p><ul><li>Moreno is known for large public sculptures made from reclaimed steel.</li><li>Her 2018 work <em>Current</em> was built from steel recovered from a demolished factory.</li><li><em>Current</em> was installed beside the river in Moreno’s hometown.</li><li>Critics have interpreted the work as linking industrial history with environmental renewal.</li></ul>",
+        "prompt": "<p>The student is writing for readers already familiar with Moreno and wants to emphasize the significance of <em>Current</em>. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p><em>Current</em>, a 2018 work by Moreno, is installed beside a river in her hometown.</p>",
+          "<p>Critics have written about Moreno’s work, including the sculpture <em>Current</em>.</p>",
+          "<p>By using steel from a demolished factory in a riverside installation, <em>Current</em> connects the city’s industrial past with ideas of environmental renewal.</p>",
+          "<p>Lila Moreno is a sculptor known for creating large public works from reclaimed steel.</p>"
+        ],
+        "correctIndex": "C"
+      }
+    ]
+  },
+  {
+    "id": "READING2",
+    "title": "SAT Diagnostic Test 6 — Harder — Reading & Writing Module 2",
+    "durationSec": 1920,
+    "calculatorAllowed": false,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>Although the new dating technique produced a much narrower age range for the artifact, the researchers remained ______ in their interpretation because the surrounding sediment had been disturbed centuries earlier.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>dismissive</p>",
+          "<p>indifferent</p>",
+          "<p>circumspect</p>",
+          "<p>categorical</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>Two climate records from neighboring valleys appear to conflict: one indicates a wet century while the other indicates drought. Geologist Priya Nair argues that the discrepancy can be ______ if the first record is understood to reflect winter precipitation and the second summer precipitation.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>reconciled</p>",
+          "<p>amplified</p>",
+          "<p>prescribed</p>",
+          "<p>circumvented</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>Some analysts claim that remote work inevitably reduces collaboration because employees encounter one another less often. <strong>That claim is plausible for teams whose coordination depends on frequent unplanned conversation.</strong> But studies of teams that use structured check-ins have found little difference in collaboration between remote and in-person groups.</p>",
+        "prompt": "<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>It supplies evidence proving that remote teams collaborate less effectively.</p>",
+          "<p>It introduces the structured practices that the later sentence evaluates.</p>",
+          "<p>It restates the text’s final conclusion in more cautious language.</p>",
+          "<p>It concedes that the opposing claim may apply under a specific condition before the text limits that claim.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p><strong>Text 1</strong></p><p>Digital restoration can reveal details in damaged paintings that viewers could not otherwise see. When restorers clearly distinguish reconstructed regions from surviving paint in documentation, digital additions can be valuable interpretive tools.</p><p><strong>Text 2</strong></p><p>Because viewers tend to treat polished digital reconstructions as authoritative, even carefully documented restorations can encourage unwarranted confidence about uncertain features. Reconstructions should therefore display uncertainty within the image itself.</p>",
+        "prompt": "<p>How would the author of Text 2 most likely respond to Text 1’s claim about documentation?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>Digital restoration is valuable only when no part of the original painting survives.</p>",
+          "<p>Documentation eliminates the risk that viewers will mistake reconstructed details for surviving paint.</p>",
+          "<p>Documentation is useful but insufficient if the reconstruction itself does not communicate uncertainty to viewers.</p>",
+          "<p>Restorers should avoid recording how reconstructed regions differ from original paint.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>The dormant seeds remained viable for decades, revealing a ______ capacity for germination that became evident only after the soil was disturbed and exposed to light.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>incessant</p>",
+          "<p>negligible</p>",
+          "<p>derivative</p>",
+          "<p>latent</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>Economist Jo Park compares a city’s transportation network to a braided river: traffic can shift among several routes when one route is blocked. <strong>The comparison is not meant to imply that travelers move randomly; rather, it highlights the network’s ability to redistribute flow.</strong> Park uses this idea to explain why closing one street may have smaller effects than a model based on a single route predicts.</p>",
+        "prompt": "<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>It introduces evidence showing that travelers choose routes randomly.</p>",
+          "<p>It argues that route closures never substantially affect traffic.</p>",
+          "<p>It clarifies the intended point of an analogy while rejecting a possible misinterpretation of it.</p>",
+          "<p>It explains why braided rivers are more predictable than transportation networks.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p><strong>Text 1</strong></p><p>Chemical signatures in pottery can identify the geological region where its clay originated. When pottery found far from that region shares the signature, the finding provides strong evidence of long-distance exchange.</p><p><strong>Text 2</strong></p><p>Matching chemical signatures establish that material moved between regions, but not necessarily through trade. Migrants may have carried pottery with them, or finished objects may have changed hands repeatedly without organized exchange.</p>",
+        "prompt": "<p>Based on the texts, the author of Text 2 would most likely agree with Text 1 that chemical signatures can establish which fact?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Craft and Structure",
+        "options": [
+          "<p>Organized trade was the only mechanism by which pottery moved.</p>",
+          "<p>Pottery or its material moved from one region to another.</p>",
+          "<p>The people who made the pottery also transported it to its final location.</p>",
+          "<p>Pottery moved directly between its source region and the site where it was found.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>On islands where a predatory lizard was introduced, one insect species became less abundant near the ground but more abundant in tree canopies. Individuals collected from canopy populations also had larger adhesive pads than individuals from islands without the lizard. Because the shift occurred over several generations, researchers caution that behavior and natural selection may both have contributed.</p>",
+        "prompt": "<p>Which inference is best supported by the text?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Canopy insects on islands without the lizard have larger adhesive pads than ground insects.</p>",
+          "<p>The predator’s presence is associated with both a change in where the insects are found and a difference in a trait that could aid canopy living.</p>",
+          "<p>The insects moved into tree canopies entirely because individuals learned to avoid the ground.</p>",
+          "<p>Larger adhesive pads caused the predatory lizard to be introduced to the islands.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>Some old-growth forests store large amounts of carbon not only because their trees are large but also because decomposition can be unusually slow in cool, wet soils. A warming climate may therefore affect stored carbon through two pathways: by changing tree growth and by accelerating the release of carbon from soil organic matter.</p>",
+        "prompt": "<p>Which choice best states the main idea of the text?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Warming is likely to increase tree growth enough to offset all carbon released from soils.</p>",
+          "<p>Climate warming can alter forest carbon storage by affecting both carbon accumulation in trees and carbon release from soils.</p>",
+          "<p>Old-growth forests store carbon primarily because decomposition stops completely in wet soils.</p>",
+          "<p>Soil organic matter contributes little to carbon storage in old-growth forests.</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>A laboratory measured the output of three solar-cell designs before and after a high-temperature stress test.</p><table><tr><th>Design</th><th>Before (W)</th><th>After (W)</th></tr><tr><td>A</td><td>100</td><td>92</td></tr><tr><td>B</td><td>80</td><td>76</td></tr><tr><td>C</td><td>120</td><td>105</td></tr></table><p>A researcher claims that Design B was the most resistant to the stress test when resistance is measured by percentage of original output retained.</p>",
+        "prompt": "<p>Which choice best uses the data to support the researcher’s claim?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>B retained 95% of its original output, compared with 92% for A and 87.5% for C.</p>",
+          "<p>C lost 15 W, while B lost only 4 W.</p>",
+          "<p>A began at 100 W and ended at 92 W.</p>",
+          "<p>B produced 76 W after the test, less than either A or C.</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>A cognitive scientist proposes that short retrieval quizzes improve later memory because retrieving information strengthens access to it, not simply because quizzes expose students to the material again.</p>",
+        "prompt": "<p>Which experiment would best test the proposed mechanism?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Give all students the same retrieval quiz and compare their scores on that quiz.</p>",
+          "<p>Give one group a retrieval quiz and ask whether the students enjoyed it.</p>",
+          "<p>Compare students who retrieve answers from memory with students who reread the same questions and answers for the same amount of time, then give both groups a delayed test.</p>",
+          "<p>Compare students who take a retrieval quiz with students who study an unrelated subject for less time.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>A researcher argues that a new irrigation system increased crop yield because farms adopting the system produced more grain than farms that did not. However, the adopting farms were also, on average, located in regions with substantially richer soil.</p>",
+        "prompt": "<p>Which finding would most weaken the researcher’s causal claim?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>The new irrigation system requires less water than the older system.</p>",
+          "<p>Farmers reported that the new system was easier to maintain.</p>",
+          "<p>Among farms with similar soil quality, adopters and nonadopters had nearly identical yields.</p>",
+          "<p>Several adopting farms produced more grain than they had the previous year.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>When the committee finally approved Mara’s proposal, she thanked each member with careful formality. Outside the room, her colleague expected celebration, but Mara merely checked the time and said, “Good. Now we can find out whether it works.”</p>",
+        "prompt": "<p>Which choice best describes Mara’s attitude toward the committee’s approval?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>She values the approval mainly because it allows the proposal to be tested.</p>",
+          "<p>She doubts that the committee members understood the proposal.</p>",
+          "<p>She considers approval more important than the proposal’s eventual results.</p>",
+          "<p>She is disappointed that the committee approved the proposal too quickly.</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>Two groups of 40 seedlings were grown under different light conditions. Group X had a median height of 18 cm and an interquartile range of 4 cm. Group Y had a median height of 18 cm and an interquartile range of 9 cm.</p>",
+        "prompt": "<p>Which statement is best supported by the information?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Information and Ideas",
+        "options": [
+          "<p>Group Y has a greater mean height than Group X.</p>",
+          "<p>Every seedling in Group X is closer to 18 cm than every seedling in Group Y.</p>",
+          "<p>Group X and Group Y have identical height distributions because their medians are equal.</p>",
+          "<p>The middle half of Group Y’s heights is more spread out than the middle half of Group X’s heights.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>The researchers initially compared the variables without separating participants by age. The first analysis suggested that the two variables were strongly related ______ however, when the researchers controlled for age, the relationship became much weaker.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>: however,</p>",
+          "<p>; however,</p>",
+          "<p> however;</p>",
+          "<p>, however,</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>The museum’s autumn exhibition will feature several works that combine traditional materials with digital media. Rina Patel’s newest installation, ______ will open at the museum in October.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>which combines projected images with handwoven fabric</p>",
+          "<p>that combines projected images with handwoven fabric</p>",
+          "<p>which combines projected images with handwoven fabric,</p>",
+          "<p>that combines projected images with handwoven fabric,</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>The original classification system placed several visually similar species in the same category despite differences in behavior and habitat. After reviewing more than 2,000 observations, ______.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>the classification system was revised by the research team</p>",
+          "<p>there was a revision to the research team’s classification system</p>",
+          "<p>a revision of the classification system was made</p>",
+          "<p>the research team revised its classification system</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "18",
+        "passage": "<p>Most official reports describe only the expedition’s final route. The collection of letters, field notes, and unpublished sketches ______ historians an unusually detailed view of the expedition’s planning.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>have given</p>",
+          "<p>are giving</p>",
+          "<p>give</p>",
+          "<p>gives</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "19",
+        "passage": "<p>A surprising effect first appeared in a small pilot study. The two laboratories independently reproduced the ______ results, strengthening confidence that the effect was not unique to one research group.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>original studies</p>",
+          "<p>original study</p>",
+          "<p>original studies’</p>",
+          "<p>original study’s</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "20",
+        "passage": "<p>Researchers can trace how the design changed from proposal to construction. The archive contains evidence from three stages of the project ______ early sketches, revised plans, and photographs of the completed structure.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>;</p>",
+          "<p>:</p>",
+          "<p>, and</p>",
+          "<p>. Although</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "21",
+        "passage": "<p>The expeditions were scheduled several weeks apart so that equipment could be established in advance. Before the second expedition reached the site, the first team ______ a weather station there and had begun transmitting daily measurements.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Standard English Conventions",
+        "options": [
+          "<p>installs</p>",
+          "<p>had installed</p>",
+          "<p>will install</p>",
+          "<p>is installing</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "22",
+        "passage": "<p>Engineers are evaluating two alloys for equipment that must operate in polar conditions. Both alloys have nearly the same density. Alloy P remains flexible at low temperatures; ______ Alloy Q becomes brittle below −20°C.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>for example,</p>",
+          "<p>by contrast,</p>",
+          "<p>therefore,</p>",
+          "<p>likewise,</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "23",
+        "passage": "<p>The original algorithm repeats several operations whenever a new data point is added. The revised algorithm requires fewer calculations for each data point. ______ it can process the same data set in substantially less time.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Consequently,</p>",
+          "<p>Specifically,</p>",
+          "<p>Meanwhile,</p>",
+          "<p>Nevertheless,</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "24",
+        "passage": "<p>A student takes these notes:</p><ul><li>Some desert plants open leaf pores at night rather than during the day.</li><li>Night air is generally cooler and more humid.</li><li>Opening pores allows carbon dioxide to enter but also permits water to escape.</li><li>Opening pores at night can reduce water loss.</li></ul>",
+        "prompt": "<p>The student wants to explain the mechanism by which nighttime pore opening conserves water. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Leaf pores allow carbon dioxide to enter a plant and can also permit water to escape.</p>",
+          "<p>Desert plants often live where daytime air is hotter than nighttime air.</p>",
+          "<p>By opening their pores when the air is cooler and more humid, some desert plants can take in carbon dioxide while losing less water.</p>",
+          "<p>Some desert plants differ from other plants because their leaf pores open at night.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "25",
+        "passage": "<p>A student takes these notes:</p><ul><li>Researcher A measured river pollution using chemical samples collected once each month.</li><li>Researcher B used sensors that recorded conductivity every fifteen minutes.</li><li>Chemical samples identify specific pollutants.</li><li>Conductivity sensors can reveal rapid changes but do not identify every pollutant.</li></ul>",
+        "prompt": "<p>The student wants to compare a strength of each approach. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Chemical samples and conductivity sensors are both methods for studying river pollution.</p>",
+          "<p>Researcher A collected samples monthly, while Researcher B collected conductivity data every fifteen minutes.</p>",
+          "<p>Researcher B’s sensors cannot identify every pollutant that chemical samples can detect.</p>",
+          "<p>Researcher A’s sampling can identify specific pollutants, whereas Researcher B’s frequent sensor readings can capture rapid changes.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "26",
+        "passage": "<p>A student has taken these notes about the telescope Helios:</p><ul><li>Helios began observations in 2024.</li><li>Its mirror is segmented.</li><li>It can combine data from its mirror segments to act as one larger reflecting surface.</li><li>This design allows Helios to collect faint light from distant objects.</li></ul>",
+        "prompt": "<p>The student is writing for an audience already familiar with Helios and wants to emphasize why its segmented mirror matters. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Distant objects can emit light that is faint by the time it reaches a telescope.</p>",
+          "<p>The mirror on Helios is made of multiple segments rather than a single piece.</p>",
+          "<p>Helios, which began observations in 2024, is a telescope with a segmented mirror.</p>",
+          "<p>By combining data from its mirror segments as though they formed one larger surface, Helios can collect faint light from distant objects.</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "27",
+        "passage": "<p>A student takes these notes:</p><ul><li>A manuscript was traditionally dated to the 1400s based on handwriting style.</li><li>A recent analysis dated its parchment to 1320–1390.</li><li>Parchment can be stored for years before being written on.</li><li>The ink has not yet been independently dated.</li></ul>",
+        "prompt": "<p>The student wants to emphasize what remains uncertain about the manuscript’s date of writing. Which choice most effectively uses relevant information from the notes?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Expression of Ideas",
+        "options": [
+          "<p>Although the parchment dates to 1320–1390, the manuscript could have been written later because parchment may be stored before use and the ink has not yet been dated.</p>",
+          "<p>The parchment analysis provides a date range of 1320–1390.</p>",
+          "<p>A recent analysis dated the parchment to a period earlier than the traditional date.</p>",
+          "<p>The manuscript was traditionally assigned to the 1400s because of its handwriting style.</p>"
+        ],
+        "correctIndex": "A"
+      }
+    ]
+  },
+  {
+    "id": "MATH1",
+    "title": "SAT Diagnostic Test 6 — Hard — Math Module 1",
+    "durationSec": 2100,
+    "calculatorAllowed": true,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>The system</p><p>\\[2x+3y=13\\]</p><p>\\[5x-2y=4\\]</p>",
+        "prompt": "<p>If the solution is \\((x,y)\\), what is the value of \\(x+y\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Algebra",
+        "options": [
+          "<p>6</p>",
+          "<p>4</p>",
+          "<p>5</p>",
+          "<p>7</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>A fund invests 35% of its money in Asset A and the remaining 65% in Asset B. Over one year, Asset A earns a 12% return, and the fund as a whole earns a 7.45% return.</p>",
+        "prompt": "<p>What is the annual return on Asset B?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Problem-Solving and Data Analysis",
+        "options": [
+          "<p>5%</p>",
+          "<p>4%</p>",
+          "<p>6.5%</p>",
+          "<p>6%</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>An exponential function \\(f(x)=ab^x\\), where \\(a&gt;0\\) and \\(b&gt;1\\), satisfies \\(f(1)=18\\) and \\(f(4)=486\\).</p>",
+        "prompt": "<p>By what percent does \\(f(x)\\) increase whenever \\(x\\) increases by 2?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>800%</p>",
+          "<p>200%</p>",
+          "<p>900%</p>",
+          "<p>300%</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>A linear function \\(g\\) satisfies \\(g(-2)=5\\) and \\(g(4)=-7\\).</p>",
+        "prompt": "<p>What is the \\(x\\)-intercept of the graph of \\(y=g(x)\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Algebra",
+        "options": [
+          "<p>1</p>",
+          "<p>\\(\\frac12\\)</p>",
+          "<p>\\(-\\frac12\\)</p>",
+          "<p>2</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>In a right triangle, the altitude from the right angle to the hypotenuse divides the hypotenuse into segments of lengths 9 and 16. Let \\(\\theta\\) be the smaller acute angle of the triangle.</p>",
+        "prompt": "<p>What is \\(\\tan\\theta\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Geometry and Trigonometry",
+        "options": [
+          "<p>\\(\\frac43\\)</p>",
+          "<p>\\(\\frac34\\)</p>",
+          "<p>\\(\\frac45\\)</p>",
+          "<p>\\(\\frac35\\)</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>The system</p><p>\\[(k+1)x-3y=7\\]</p><p>\\[4x-6y=5\\]</p><p>has no solution.</p>",
+        "prompt": "<p>What is the value of \\(k\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Algebra",
+        "options": [
+          "<p>−1</p>",
+          "<p>1</p>",
+          "<p>2</p>",
+          "<p>0</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>The quadratic function \\(q\\) is defined by \\(q(x)=a(x-4)^2-18\\). If \\(q(1)=0\\) and \\(r\\) and \\(s\\) are the \\(x\\)-intercepts of the graph of \\(y=q(x)\\),</p>",
+        "prompt": "<p>what is the value of \\(r^2+s^2\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>42</p>",
+          "<p>46</p>",
+          "<p>50</p>",
+          "<p>58</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>A study records whether 60 students practiced more than 5 hours and whether they scored at least 14 points.</p><table><tr><th></th><th>14 or more</th><th>Below 14</th></tr><tr><td>More than 5 hours</td><td>24</td><td>6</td></tr><tr><td>5 hours or less</td><td>10</td><td>20</td></tr></table>",
+        "prompt": "<p>A student is selected at random from those who scored at least 14 points. What is the probability that the student practiced more than 5 hours?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Problem-Solving and Data Analysis",
+        "options": [
+          "<p>\\(\\frac34\\)</p>",
+          "<p>\\(\\frac{12}{17}\\)</p>",
+          "<p>\\(\\frac45\\)</p>",
+          "<p>\\(\\frac25\\)</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>A rideshare company charges a fixed booking fee plus \\($1.80\\) per mile for the first 10 miles and \\($1.20\\) per mile for each mile beyond 10. A 6-mile trip costs \\($15.30\\).</p>",
+        "prompt": "<p>How much does an 18-mile trip cost under the same pricing rule?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Algebra",
+        "options": [
+          "<p>\\($30.90\\)</p>",
+          "<p>\\($33.30\\)</p>",
+          "<p>\\($31.50\\)</p>",
+          "<p>\\($32.10\\)</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>For \\(x\\ne -3\\) and \\(x\\ne3\\), consider</p><p>\\[\\frac{\\frac{x}{x-3}+\\frac{3}{3-x}}{\\frac{x^2-9}{x+3}}.\\]</p>",
+        "prompt": "<p>Which expression is equivalent to the given expression?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>\\(\\frac1{x-3}\\)</p>",
+          "<p>\\(\\frac{x}{x^2-9}\\)</p>",
+          "<p>\\(\\frac1{x+3}\\)</p>",
+          "<p>\\(x-3\\)</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>The equation \\[x^2+y^2-6x+8y-11=0\\] represents a circle. A square is circumscribed about the circle so that each side of the square is tangent to the circle.</p>",
+        "prompt": "<p>What is the area of the square?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Geometry and Trigonometry",
+        "options": [
+          "<p>36</p>",
+          "<p>144</p>",
+          "<p>100</p>",
+          "<p>72</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>The line \\[2x-5y=10\\] is shifted 3 units to the right and 4 units down.</p>",
+        "prompt": "<p>What is the \\(x\\)-coordinate of the \\(x\\)-intercept of the shifted line?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Algebra",
+        "options": [
+          "<p>21</p>",
+          "<p>15</p>",
+          "<p>18</p>",
+          "<p>12</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>The polynomial \\(p(x)=2x^3+ax^2+bx-12\\), where \\(a\\) and \\(b\\) are constants, is divisible by both \\(x-2\\) and \\(x+1\\).</p>",
+        "prompt": "<p>What is the value of \\(a-b\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>6</p>",
+          "<p>14</p>",
+          "<p>18</p>",
+          "<p>10</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>A random sample estimates that 62% of a population has a certain characteristic, with a margin of error of 4 percentage points.</p>",
+        "prompt": "<p>Which statement is best supported by this information?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 4,
+        "_domain": "Problem-Solving and Data Analysis",
+        "options": [
+          "<p>The true population percentage must be between 58% and 66%.</p>",
+          "<p>Exactly 4% of the sampled individuals were measured incorrectly.</p>",
+          "<p>A population value of 60% is more consistent with the sample result than a population value of 69%.</p>",
+          "<p>Every other random sample of the same size must produce an estimate between 58% and 66%.</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>A delivery truck carries two types of crates. Type A crates weigh 12 kilograms each, and Type B crates weigh 8 kilograms each. The truck must carry at least 60 crates, including at least 20 Type B crates, and the total crate weight can be at most 680 kilograms.</p>",
+        "prompt": "<p>What is the greatest possible number of Type A crates the truck can carry?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra",
+        "options": [
+          "<p>40</p>",
+          "<p>43</p>",
+          "<p>42</p>",
+          "<p>41</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>The equation \\[x^2+(m-6)x+2m=0\\] has two real solutions whose difference is 4.</p>",
+        "prompt": "<p>What is the sum of all possible values of \\(m\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>12</p>",
+          "<p>16</p>",
+          "<p>20</p>",
+          "<p>24</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>An exponential function \\(h(x)=ab^x\\), where \\(a&gt;0\\) and \\(b&gt;0\\), satisfies \\(h(1)=20\\) and \\(h(4)=540\\).</p>",
+        "prompt": "<p>What is the value of \\(h(-1)\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>\\(\\frac{20}{3}\\)</p>",
+          "<p>20</p>",
+          "<p>\\(\\frac{20}{9}\\)</p>",
+          "<p>\\(\\frac{20}{27}\\)</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "SPR",
+        "number": "18",
+        "passage": "<p>The equations</p><p>\\[2(x+y)+3(x-y)=13\\]</p><p>\\[4(x+y)-(x-y)=19\\]</p><p>have solution \\((x,y)\\).</p>",
+        "prompt": "<p>What is the value of \\(4xy\\)?</p>",
+        "acceptedAnswers": [
+          "24"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra"
+      },
+      {
+        "type": "SPR",
+        "number": "19",
+        "passage": "<p>The quadratic equation \\[x^2-10x+c=0\\] has roots \\(r\\) and \\(s\\). If \\(r^2+s^2=58\\),</p>",
+        "prompt": "<p>what is the value of \\(c\\)?</p>",
+        "acceptedAnswers": [
+          "21"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math"
+      },
+      {
+        "type": "SPR",
+        "number": "20",
+        "passage": "<p>A sphere has surface area \\(100\\pi\\). The sphere is inscribed in a cube, and a second sphere passes through all eight vertices of the cube.</p>",
+        "prompt": "<p>What is the square of the radius of the second sphere?</p>",
+        "acceptedAnswers": [
+          "75"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Geometry and Trigonometry"
+      },
+      {
+        "type": "SPR",
+        "number": "21",
+        "passage": "<p>The function \\(f\\) is linear. It satisfies \\(f(2)=3f(-1)\\) and \\(f(5)=27\\).</p>",
+        "prompt": "<p>What is the value of \\(f(0)\\)?</p>",
+        "acceptedAnswers": [
+          "9"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra"
+      },
+      {
+        "type": "SPR",
+        "number": "22",
+        "passage": "<p>The equation \\[|7-4x|=2x+5\\] has two real solutions.</p>",
+        "prompt": "<p>What is the product of the two solutions?</p>",
+        "acceptedAnswers": [
+          "2"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math"
+      }
+    ]
+  },
+  {
+    "id": "MATH2",
+    "title": "SAT Diagnostic Test 6 — Harder — Math Module 2",
+    "durationSec": 2100,
+    "calculatorAllowed": true,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>The system</p><p>\\[2x+5y=16\\]</p><p>\\[(k-1)x+(2k+1)y=4k+8\\]</p><p>has a unique solution \\((x,y)\\). If \\(x-y=1\\),</p>",
+        "prompt": "<p>what is the value of \\(k\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra",
+        "options": [
+          "<p>3</p>",
+          "<p>1</p>",
+          "<p>5</p>",
+          "<p>−3</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>The polynomial \\(r(x)=(x-2)(x+4)(x-7)\\). A function \\(s\\) is defined by \\(s(x)=r(3x+1)\\). If \\(a,b,c\\) are the three zeros of \\(s\\),</p>",
+        "prompt": "<p>what is the value of \\(abc\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>\\(-\\frac{10}{3}\\)</p>",
+          "<p>\\(-\\frac{10}{9}\\)</p>",
+          "<p>\\(\\frac{10}{3}\\)</p>",
+          "<p>\\(\\frac{10}{9}\\)</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>A 150-liter mixture is 42% acid by volume. It is made by combining solution A, which is 30% acid, and solution B, which is 60% acid. Let \\(a\\) be the liters of pure acid contributed by solution A and \\(b\\) the liters of pure acid contributed by solution B.</p>",
+        "prompt": "<p>If \\(a\\) is \\(p\\%\\) less than \\(b\\), what is \\(p\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Problem-Solving and Data Analysis",
+        "options": [
+          "<p>33\\(\\frac13\\)</p>",
+          "<p>40</p>",
+          "<p>20</p>",
+          "<p>25</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>A circle has center \\((4,-3)\\) and radius 5. The point \\((7,1)\\) lies on the circle. A line is tangent to the circle at \\((7,1)\\).</p>",
+        "prompt": "<p>What is the \\(y\\)-intercept of the tangent line?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Geometry and Trigonometry",
+        "options": [
+          "<p>\\(\\frac{31}{4}\\)</p>",
+          "<p>7</p>",
+          "<p>\\(\\frac{21}{4}\\)</p>",
+          "<p>\\(\\frac{25}{4}\\)</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>\\[7x-2y=4y-3\\]</p><p>\\[ay=bx+9\\]</p><p>In the system, \\(a\\) and \\(b\\) are constants. If the system has infinitely many solutions,</p>",
+        "prompt": "<p>what is the value of \\(a+b\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra",
+        "options": [
+          "<p>18</p>",
+          "<p>−39</p>",
+          "<p>21</p>",
+          "<p>39</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>For \\(k\\ne3\\), the equation</p><p>\\[(k-3)x^2+6x+(k+1)=0\\]</p><p>has exactly one real solution.</p>",
+        "prompt": "<p>What is the sum of all possible values of \\(k\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>6</p>",
+          "<p>0</p>",
+          "<p>2</p>",
+          "<p>−2</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>The lines \\(3x+2y=12\\) and \\(x-y=-1\\) intersect at point \\(P\\). Line \\(m\\) passes through \\(P\\) and is perpendicular to the line \\(4x-3y=10\\).</p>",
+        "prompt": "<p>What is the \\(x\\)-coordinate of the \\(x\\)-intercept of line \\(m\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra",
+        "options": [
+          "<p>5</p>",
+          "<p>6</p>",
+          "<p>8</p>",
+          "<p>4</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>For \\(x&gt;0\\),</p><p>\\[\\frac{\\sqrt[3]{x^{2m+1}}\\sqrt{x^5}}{x^{m/2}}=x^{10/3}.\\]</p>",
+        "prompt": "<p>What is the value of \\(m\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>2</p>",
+          "<p>3</p>",
+          "<p>1</p>",
+          "<p>5</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>A study records membership in a robotics club and enrollment in an honors course for 80 students.</p><table><tr><th></th><th>Honors</th><th>Not honors</th></tr><tr><td>Robotics club</td><td>28</td><td>12</td></tr><tr><td>Not in club</td><td>20</td><td>20</td></tr></table>",
+        "prompt": "<p>A student is chosen at random from those who are in the robotics club or enrolled in honors. What is the probability that the student is in both groups?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Problem-Solving and Data Analysis",
+        "options": [
+          "<p>\\(\\frac23\\)</p>",
+          "<p>\\(\\frac7{12}\\)</p>",
+          "<p>\\(\\frac7{20}\\)</p>",
+          "<p>\\(\\frac7{15}\\)</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>Two cones are similar. The ratio of the lateral surface area of the larger cone to that of the smaller cone is \\(25:9\\). The difference between their volumes is \\(784\\pi\\) cubic units.</p>",
+        "prompt": "<p>What is the volume of the smaller cone?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Geometry and Trigonometry",
+        "options": [
+          "<p>\\(144\\pi\\)</p>",
+          "<p>\\(400\\pi\\)</p>",
+          "<p>\\(288\\pi\\)</p>",
+          "<p>\\(216\\pi\\)</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>A consultant charges a fixed service fee plus \\($90\\) per hour for the first 4 hours of a job. For each hour beyond 4, the hourly charge is 25% lower. A 2-hour job costs \\($240\\).</p>",
+        "prompt": "<p>How much does a 10-hour job cost?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra",
+        "options": [
+          "<p>\\($870\\)</p>",
+          "<p>\\($825\\)</p>",
+          "<p>\\($780\\)</p>",
+          "<p>\\($802.50\\)</p>"
+        ],
+        "correctIndex": "B"
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>The function \\(j\\) is defined by \\(j(x)=2(4)^x-10\\). A second function is defined by \\(g(x)=-2j(x-1)+6\\).</p>",
+        "prompt": "<p>What is the \\(y\\)-intercept of the graph of \\(y=g(x)\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>\\((0,21)\\)</p>",
+          "<p>\\((0,19)\\)</p>",
+          "<p>\\((0,25)\\)</p>",
+          "<p>\\((0,29)\\)</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>A linear model predicts a plant’s height \\(h\\), in centimeters, \\(t\\) days after planting by \\(h=0.62t+18.4\\). For one plant observed at \\(t=20\\), the residual is \\(-3.1\\) cm.</p>",
+        "prompt": "<p>What is the plant’s observed height?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Problem-Solving and Data Analysis",
+        "options": [
+          "<p>30.8 cm</p>",
+          "<p>33.9 cm</p>",
+          "<p>37.0 cm</p>",
+          "<p>27.7 cm</p>"
+        ],
+        "correctIndex": "D"
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>A workshop produces tables \\(x\\) and chairs \\(y\\). The constraints are</p><p>\\[2x+y\\le50,\\qquad x+y\\ge30,\\qquad y\\ge10.\\]</p><p>Both \\(x\\) and \\(y\\) are nonnegative integers.</p>",
+        "prompt": "<p>What is the greatest possible value of \\(x\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra",
+        "options": [
+          "<p>20</p>",
+          "<p>25</p>",
+          "<p>18</p>",
+          "<p>22</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>The polynomial \\(p(x)=x^3+ax^2+bx+24\\) has zeros \\(-2\\), \\(3\\), and a third positive zero.</p>",
+        "prompt": "<p>What is the value of \\(a-b\\)?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math",
+        "options": [
+          "<p>−7</p>",
+          "<p>3</p>",
+          "<p>−3</p>",
+          "<p>7</p>"
+        ],
+        "correctIndex": "C"
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>The equation</p><p>\\[x^2+y^2+ax-8y+4=0\\]</p><p>represents a circle of radius 5, where \\(a&gt;0\\). A square is circumscribed about the circle so that each side of the square is tangent to the circle.</p>",
+        "prompt": "<p>What is the value of \\(a^2\\) plus the area of the square?</p>",
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Geometry and Trigonometry",
+        "options": [
+          "<p>152</p>",
+          "<p>169</p>",
+          "<p>125</p>",
+          "<p>144</p>"
+        ],
+        "correctIndex": "A"
+      },
+      {
+        "type": "SPR",
+        "number": "17",
+        "passage": "<p>\\[\\frac{3a}{8}x=\\frac32+\\frac{15}{8}y\\]</p><p>\\[\\frac{18}{7}y-4=\\frac{4b}{7}x-9\\]</p><p>The positive constants \\(a\\) and \\(b\\) make the system have no solution. If \\(b\\) is \\(p\\%\\) less than \\(a\\),</p>",
+        "prompt": "<p>what is the value of \\(p\\)?</p>",
+        "acceptedAnswers": [
+          "10"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra"
+      },
+      {
+        "type": "SPR",
+        "number": "18",
+        "passage": "<p>The parabola \\(y=x^2-8x+c\\) and the line \\(y=2x-5\\) intersect at two points. The \\(x\\)-coordinates of the intersection points differ by 4.</p>",
+        "prompt": "<p>What is the value of \\(c\\)?</p>",
+        "acceptedAnswers": [
+          "16"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math"
+      },
+      {
+        "type": "SPR",
+        "number": "19",
+        "passage": "<p>A theater can seat at most 240 people. Adult tickets cost \\($15\\) and child tickets cost \\($9\\). At least 35% of all tickets sold must be child tickets, and ticket revenue must be at least \\($3{,}000\\).</p>",
+        "prompt": "<p>What is the least possible number of adult tickets that can be sold?</p>",
+        "acceptedAnswers": [
+          "140"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Problem-Solving and Data Analysis"
+      },
+      {
+        "type": "SPR",
+        "number": "20",
+        "passage": "<p>The table shows three values of \\(x\\) and their corresponding values of \\(y\\) for a linear relationship. The \\(x\\)-intercept is \\(-4\\). The constant \\(d\\) is negative.</p><table><tr><th>\\(x\\)</th><th>\\(y\\)</th></tr><tr><td>\\(-7\\)</td><td>\\(d+3\\)</td></tr><tr><td>\\(-4\\)</td><td>\\(4k+6d\\)</td></tr><tr><td>\\(1-3d\\)</td><td>8</td></tr></table>",
+        "prompt": "<p>What is the value of \\(dk\\)?</p>",
+        "acceptedAnswers": [
+          "-169/6",
+          "-28.1667",
+          "-28.167"
+        ],
+        "tolerance": 0.0006,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Algebra"
+      },
+      {
+        "type": "SPR",
+        "number": "21",
+        "passage": "<p>The function \\(f(x)=ax^2+bx+c\\) satisfies \\(f(-11)=f(-1)\\). The coefficient \\(b\\) is an integer less than \\(-3\\).</p>",
+        "prompt": "<p>What is the greatest possible value of \\(a+b\\)?</p>",
+        "acceptedAnswers": [
+          "-13/3",
+          "-4.3333",
+          "-4.333"
+        ],
+        "tolerance": 0.0006,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Advanced Math"
+      },
+      {
+        "type": "SPR",
+        "number": "22",
+        "passage": "<p>A square has diagonal length \\(16\\sqrt2\\). A circle is inscribed in the square, and a regular hexagon is inscribed in that circle.</p>",
+        "prompt": "<p>What is the perimeter of the regular hexagon?</p>",
+        "acceptedAnswers": [
+          "48"
+        ],
+        "tolerance": 1e-09,
+        "_source": "Thriving Scholars SAT6 rebuilt",
+        "_difficulty": 5,
+        "_domain": "Geometry and Trigonometry"
+      }
+    ]
+  }
+];
+
+/***********************
+ * STATE
+ ***********************/
+let currentSectionIndex = 0;
+let currentIndex = 0;
+let reviewFlags = [];
+let studentAnswers = {};
+let timer = null;
+let seconds = 0;
+let desmosCalculator = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let examStarted = false;
+let eliminateMode = false;
+let eliminateState = {};
+let emailSent = false;
+let breakTimer = null;
+let breakSeconds = 600;
+
+/***********************
+ * INTEGRITY MONITORING STATE
+ ***********************/
+const TEST_ID = "sat-diagnostic-test-6";
+const TEST_TITLE = "SAT Diagnostic Test 6 — Hard";
+const REPORT_ENDPOINT = "/api/sat-test-report";
+const MONITOR_BATCH_INTERVAL_MS = 30000;
+const MAX_INTEGRITY_EVENTS = 1200;
+
+let attemptId = "";
+let attemptStartedAt = null;
+let attemptSubmittedAt = null;
+let integrityEvents = [];
+let lastSentEventIndex = 0;
+let hiddenStartedAt = null;
+let blurStartedAt = null;
+let monitorBatchTimer = null;
+let finalReportSubmitted = false;
+let testCompleted = false;
+let monitoringPaused = false;
+let integritySummary = {
+  tabSwitches: 0,
+  totalHiddenMs: 0,
+  longestHiddenMs: 0,
+  windowBlurCount: 0,
+  totalBlurMs: 0,
+  fullscreenExits: 0,
+  copyCount: 0,
+  cutCount: 0,
+  pasteCount: 0,
+  contextMenuCount: 0,
+  offlineCount: 0,
+  onlineCount: 0,
+  pageHideCount: 0,
+  reloadOrExitWarnings: 0
+};
+
+/***********************
+ * START EXAM
+ ***********************/
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("student-email").value.trim();
+  const sessionInput = document.getElementById("test-session").value;
+  const consentInput = document.getElementById("monitoring-consent");
+
+  if (!nameInput || !emailInput) {
+    alert("Please enter your name and email to begin.");
+    return;
+  }
+
+  if (!sessionInput) {
+    alert("Please select your SAT exam session.");
+    return;
+  }
+
+  if (!sections.length || sections.some(sec => !Array.isArray(sec.items) || sec.items.length === 0)) {
+    alert("Question data could not be loaded. Please check the test file.");
+    return;
+  }
+
+  studentName = nameInput;
+  studentEmail = emailInput;
+  testSession = sessionInput;
+  examStarted = true;
+  testCompleted = false;
+  monitoringPaused = false;
+
+  initialiseIntegrityMonitoring();
+  trackIntegrityEvent("TEST_STARTED", {
+    consentAcknowledged: !consentInput || consentInput.checked,
+    session: testSession
+  });
+  sendAttemptStart();
+
+  const header = document.querySelector(".header");
+  const footerBar = document.getElementById("footer-bar");
+  const mainContainer = document.getElementById("main-container");
+  const startScreen = document.getElementById("start-screen");
+  const timerEl = document.getElementById("timer");
+  const colorBarTop = document.getElementById("color-bar");
+  const colorBarBottom = document.getElementById("color-bar-bottom");
+  const integrityStatus = document.getElementById("integrity-status");
+
+  document.getElementById("footer-student-name").textContent = studentName;
+
+  if (startScreen) startScreen.classList.add("hidden");
+  if (header) header.classList.remove("hidden");
+  if (footerBar) footerBar.classList.remove("hidden");
+  if (colorBarTop) colorBarTop.classList.remove("hidden");
+  if (colorBarBottom) colorBarBottom.classList.remove("hidden");
+  if (mainContainer) mainContainer.classList.add("active");
+  if (timerEl) timerEl.style.display = "block";
+  if (integrityStatus) integrityStatus.classList.add("active");
+
+  requestExamFullscreen();
+  startSection(0);
+}
+
+/***********************
+ * INTEGRITY MONITORING
+ ***********************/
+function makeEventId() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
+}
+
+function currentQuestionContext() {
+  const section = sections[currentSectionIndex];
+  return {
+    sectionId: section ? section.id : null,
+    sectionTitle: section ? section.title : null,
+    questionNumber: section && section.items[currentIndex]
+      ? Number(section.items[currentIndex].number || currentIndex + 1)
+      : null,
+    secondsRemaining: Number.isFinite(seconds) ? Math.max(0, seconds) : null
+  };
+}
+
+function initialiseIntegrityMonitoring() {
+  attemptId = makeEventId();
+  attemptStartedAt = new Date();
+  attemptSubmittedAt = null;
+  integrityEvents = [];
+  lastSentEventIndex = 0;
+  hiddenStartedAt = null;
+  blurStartedAt = null;
+  finalReportSubmitted = false;
+  monitoringPaused = false;
+  integritySummary = {
+    tabSwitches: 0,
+    totalHiddenMs: 0,
+    longestHiddenMs: 0,
+    windowBlurCount: 0,
+    totalBlurMs: 0,
+    fullscreenExits: 0,
+    copyCount: 0,
+    cutCount: 0,
+    pasteCount: 0,
+    contextMenuCount: 0,
+    offlineCount: 0,
+    onlineCount: 0,
+    pageHideCount: 0,
+    reloadOrExitWarnings: 0
+  };
+
+  if (monitorBatchTimer) clearInterval(monitorBatchTimer);
+  monitorBatchTimer = setInterval(() => {
+    if (examStarted && !testCompleted && !monitoringPaused) sendPendingIntegrityEvents("scheduled");
+  }, MONITOR_BATCH_INTERVAL_MS);
+}
+
+function trackIntegrityEvent(type, metadata = {}) {
+  if ((!examStarted && type !== "TEST_STARTED") || testCompleted) return;
+  if (monitoringPaused && !["BREAK_STARTED", "BREAK_ENDED", "RELOAD_OR_EXIT_ATTEMPT"].includes(type)) return;
+  if (integrityEvents.length >= MAX_INTEGRITY_EVENTS) return;
+
+  const context = currentQuestionContext();
+  integrityEvents.push({
+    eventId: makeEventId(),
+    type,
+    occurredAt: new Date().toISOString(),
+    sectionId: context.sectionId,
+    sectionTitle: context.sectionTitle,
+    questionNumber: context.questionNumber,
+    secondsRemaining: context.secondsRemaining,
+    metadata
+  });
+}
+
+function formatDuration(ms) {
+  const totalSeconds = Math.max(0, Math.round((ms || 0) / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return minutes > 0 ? `${minutes}m ${secs}s` : `${secs}s`;
+}
+
+function clientInfo() {
+  return {
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    platform: navigator.userAgentData?.platform || navigator.platform || "unknown",
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown",
+    screenWidth: window.screen?.width || null,
+    screenHeight: window.screen?.height || null,
+    viewportWidth: window.innerWidth,
+    viewportHeight: window.innerHeight,
+    devicePixelRatio: window.devicePixelRatio || 1,
+    onlineAtStart: navigator.onLine
+  };
+}
+
+function baseAttemptPayload() {
+  return {
+    version: 1,
+    attemptId,
+    testId: TEST_ID,
+    testTitle: TEST_TITLE,
+    student: {
+      name: studentName,
+      email: studentEmail,
+      session: testSession
+    },
+    startedAt: attemptStartedAt ? attemptStartedAt.toISOString() : null,
+    client: clientInfo()
+  };
+}
+
+async function postMonitoringPayload(payload, useBeacon = false) {
+  try {
+    const body = JSON.stringify(payload);
+    if (useBeacon && navigator.sendBeacon) {
+      const blob = new Blob([body], { type: "application/json" });
+      return navigator.sendBeacon(REPORT_ENDPOINT, blob);
+    }
+
+    const response = await fetch(REPORT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+      credentials: "same-origin"
+    });
+
+    if (!response.ok) throw new Error(`Report endpoint returned ${response.status}`);
+    return true;
+  } catch (error) {
+    console.warn("Integrity report delivery deferred:", error);
+    return false;
+  }
+}
+
+function sendAttemptStart() {
+  postMonitoringPayload({
+    kind: "start",
+    ...baseAttemptPayload()
+  });
+}
+
+async function sendPendingIntegrityEvents(reason = "manual", useBeacon = false) {
+  if (!attemptId) return false;
+  const pending = integrityEvents.slice(lastSentEventIndex);
+  if (!pending.length) return true;
+
+  const delivered = await postMonitoringPayload({
+    kind: "events",
+    reason,
+    ...baseAttemptPayload(),
+    events: pending
+  }, useBeacon);
+
+  if (delivered && !useBeacon) lastSentEventIndex = integrityEvents.length;
+  return delivered;
+}
+
+async function requestExamFullscreen() {
+  try {
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen({ navigationUI: "hide" });
+      trackIntegrityEvent("FULLSCREEN_ENTERED");
+    } else if (!document.documentElement.requestFullscreen) {
+      trackIntegrityEvent("FULLSCREEN_UNAVAILABLE");
+    }
+  } catch (error) {
+    trackIntegrityEvent("FULLSCREEN_REQUEST_DECLINED", { message: String(error?.message || error) });
+  }
+}
+
+function closeOpenAbsenceIntervals(closedAtSubmission = false) {
+  const now = Date.now();
+  if (hiddenStartedAt !== null) {
+    const durationMs = now - hiddenStartedAt;
+    integritySummary.totalHiddenMs += durationMs;
+    integritySummary.longestHiddenMs = Math.max(integritySummary.longestHiddenMs, durationMs);
+    trackIntegrityEvent("TAB_VISIBLE", { durationMs, closedAtSubmission });
+    hiddenStartedAt = null;
+  }
+  if (blurStartedAt !== null) {
+    const durationMs = now - blurStartedAt;
+    integritySummary.totalBlurMs += durationMs;
+    trackIntegrityEvent("WINDOW_FOCUS", { durationMs, closedAtSubmission });
+    blurStartedAt = null;
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (!examStarted || testCompleted || monitoringPaused) return;
+  if (document.hidden) {
+    hiddenStartedAt = Date.now();
+    integritySummary.tabSwitches += 1;
+    trackIntegrityEvent("TAB_HIDDEN");
+    sendPendingIntegrityEvents("tab-hidden", true);
+  } else {
+    const durationMs = hiddenStartedAt === null ? 0 : Date.now() - hiddenStartedAt;
+    if (hiddenStartedAt !== null) {
+      integritySummary.totalHiddenMs += durationMs;
+      integritySummary.longestHiddenMs = Math.max(integritySummary.longestHiddenMs, durationMs);
+    }
+    trackIntegrityEvent("TAB_VISIBLE", { durationMs });
+    hiddenStartedAt = null;
+  }
+});
+
+window.addEventListener("blur", () => {
+  if (!examStarted || testCompleted || monitoringPaused || document.hidden) return;
+  blurStartedAt = Date.now();
+  integritySummary.windowBlurCount += 1;
+  trackIntegrityEvent("WINDOW_BLUR");
+});
+
+window.addEventListener("focus", () => {
+  if (!examStarted || testCompleted || monitoringPaused || blurStartedAt === null) return;
+  const durationMs = Date.now() - blurStartedAt;
+  integritySummary.totalBlurMs += durationMs;
+  trackIntegrityEvent("WINDOW_FOCUS", { durationMs });
+  blurStartedAt = null;
+});
+
+document.addEventListener("fullscreenchange", () => {
+  if (!examStarted || testCompleted || monitoringPaused) return;
+  if (!document.fullscreenElement) {
+    integritySummary.fullscreenExits += 1;
+    trackIntegrityEvent("FULLSCREEN_EXIT");
+  }
+});
+
+["copy", "cut", "paste"].forEach(action => {
+  document.addEventListener(action, event => {
+    if (!examStarted || testCompleted || monitoringPaused) return;
+    if (action === "copy") integritySummary.copyCount += 1;
+    if (action === "cut") integritySummary.cutCount += 1;
+    if (action === "paste") integritySummary.pasteCount += 1;
+    trackIntegrityEvent(action.toUpperCase(), {
+      targetTag: event.target?.tagName || null,
+      targetType: event.target?.type || null
+    });
+  });
+});
+
+document.addEventListener("contextmenu", event => {
+  if (!examStarted || testCompleted || monitoringPaused) return;
+  integritySummary.contextMenuCount += 1;
+  trackIntegrityEvent("CONTEXT_MENU", { targetTag: event.target?.tagName || null });
+});
+
+window.addEventListener("offline", () => {
+  if (!examStarted || testCompleted || monitoringPaused) return;
+  integritySummary.offlineCount += 1;
+  trackIntegrityEvent("CONNECTION_OFFLINE");
+  sendPendingIntegrityEvents("offline", true);
+});
+
+window.addEventListener("online", () => {
+  if (!examStarted || testCompleted || monitoringPaused) return;
+  integritySummary.onlineCount += 1;
+  trackIntegrityEvent("CONNECTION_ONLINE");
+  sendPendingIntegrityEvents("online");
+});
+
+window.addEventListener("pagehide", () => {
+  if (!examStarted || testCompleted || monitoringPaused) return;
+  integritySummary.pageHideCount += 1;
+  trackIntegrityEvent("PAGE_HIDE");
+  sendPendingIntegrityEvents("page-hide", true);
+});
+
+window.addEventListener("beforeunload", event => {
+  if (!examStarted || testCompleted) return;
+  integritySummary.reloadOrExitWarnings += 1;
+  trackIntegrityEvent("RELOAD_OR_EXIT_ATTEMPT", { duringBreak: monitoringPaused });
+  sendPendingIntegrityEvents("before-unload", true);
+  event.preventDefault();
+  event.returnValue = "";
+});
+
+/***********************
+ * SECTION LOGIC
+ ***********************/
+function startSection(secIdx) {
+  if (secIdx === 2 && monitoringPaused) {
+    monitoringPaused = false;
+    trackIntegrityEvent("BREAK_ENDED");
+    requestExamFullscreen();
+  }
+
+  currentSectionIndex = secIdx;
+  currentIndex = 0;
+  trackIntegrityEvent("SECTION_STARTED", { sectionIndex: secIdx });
+
+  document.getElementById("break-screen")?.classList.add("hidden");
+  document.getElementById("main-container")?.classList.add("active");
+  document.getElementById("footer-bar")?.classList.remove("hidden");
+  document.getElementById("timer").style.display = "block";
+
+  const sec = sections[secIdx];
+  reviewFlags = new Array(sec.items.length).fill(false);
+
+  document.getElementById("header-title").textContent = sec.title;
+  document.getElementById("calc-badge").classList.toggle("hidden", !sec.calculatorAllowed);
+
+  if (sec.calculatorAllowed) {
+    document.getElementById("calculator-icon").style.display = "flex";
+  } else {
+    document.getElementById("calculator-icon").style.display = "none";
+    closeCalculator();
+  }
+
+  const finishBtn = document.getElementById("finish-section-btn");
+  finishBtn.textContent = (secIdx === sections.length - 1) ? "Finish Exam" : "Finish Section";
+
+  buildNavigator();
+  loadQuestion(0);
+
+  if (timer) clearInterval(timer);
+  seconds = sec.durationSec;
+  updateTimerDisplay();
+
+  timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay();
+    if (seconds < 0) {
+      clearInterval(timer);
+      finishCurrentSection();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(Math.max(0, seconds) / 60);
+  const sec = Math.max(0, seconds) % 60;
+  document.getElementById("timer").textContent =
+    `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/***********************
+ * QUESTION RENDERING
+ ***********************/
+document.getElementById("eliminateBtn").addEventListener("click", function () {
+  eliminateMode = !eliminateMode;
+  this.classList.toggle("active", eliminateMode);
+  const rightPanel = document.querySelector(".right-panel");
+  rightPanel.classList.toggle("elimination-active", eliminateMode);
+});
+
+function loadQuestion(i) {
+  const section = sections[currentSectionIndex];
+  const item = section.items[i];
+  currentIndex = i;
+  trackIntegrityEvent("QUESTION_VIEWED", { questionIndex: i });
+
+  document.getElementById("passage").innerHTML = item.passage || "";
+  const box = document.getElementById("question-box");
+  box.innerHTML = "";
+  document.getElementById("q-number").textContent = i + 1;
+  document.getElementById("mark-review").checked = reviewFlags[i];
+
+  const bookmarkIcon = document.querySelector(".bookmark-icon");
+  const markBox = document.getElementById("mark-review");
+  if (markBox.checked) {
+    bookmarkIcon.classList.remove("fa-regular");
+    bookmarkIcon.classList.add("fa-solid");
+    bookmarkIcon.style.color = "#CF0000";
+  } else {
+    bookmarkIcon.classList.remove("fa-solid");
+    bookmarkIcon.classList.add("fa-regular");
+    bookmarkIcon.style.color = "#000";
+  }
+
+  if (item.type === "SPR") {
+    renderSPR(item, box, section, i);
+  } else {
+    renderMC(item, box, section, i);
+  }
+
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+
+  updateNavigator();
+  updateNavButtons();
+  updateNavigatorButton();
+}
+
+function renderMC(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name];
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const optionsContainer = document.createElement("div");
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  item.options.forEach((opt, k) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letters[k]);
+    if (saved === k) label.classList.add("active");
+
+    const circle = document.createElement("div");
+    circle.className = "option-circle";
+    circle.textContent = letters[k];
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = k;
+    if (saved === k) input.checked = true;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "option-text";
+    textSpan.innerHTML = opt;
+
+    const strikeBtn = document.createElement("button");
+    strikeBtn.className = "strike-toggle";
+    strikeBtn.textContent = "⊘";
+    strikeBtn.title = "Eliminate Option";
+
+    label.addEventListener("click", (event) => {
+      if (event.target.classList.contains("strike-toggle")) return;
+      optionsContainer.querySelectorAll(".option-label").forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      input.checked = true;
+      studentAnswers[name] = k;
+      updateNavigator();
+    });
+
+    strikeBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const sec = sections[currentSectionIndex];
+      const qKey = `s${sec.id}-q${idx}`;
+      if (!eliminateState[qKey]) eliminateState[qKey] = {};
+
+      const now = !label.classList.contains("struck");
+      label.classList.toggle("struck", now);
+      strikeBtn.classList.toggle("active", now);
+      eliminateState[qKey][letters[k]] = now;
+    });
+
+    label.appendChild(circle);
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    label.appendChild(strikeBtn);
+    optionsContainer.appendChild(label);
+  });
+
+  promptHTML.appendChild(optionsContainer);
+  container.appendChild(promptHTML);
+
+  const sec = sections[currentSectionIndex];
+  const qKey = `s${sec.id}-q${idx}`;
+  const state = eliminateState[qKey] || {};
+  Object.keys(state).forEach(letter => {
+    const opt = optionsContainer.querySelector(`.option-label[data-choice="${letter}"]`);
+    if (opt && state[letter]) {
+      opt.classList.add("struck");
+      const btn = opt.querySelector(".strike-toggle");
+      btn.classList.add("active");
+    }
+  });
+}
+
+
+function renderSPR(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name] ?? "";
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const wrap = document.createElement("div");
+  wrap.className = "spr-wrap";
+
+  const label = document.createElement("label");
+  label.className = "spr-label";
+  label.textContent = "Student-produced response";
+
+  const input = document.createElement("input");
+  input.className = "spr-input";
+  input.type = "text";
+  input.inputMode = "decimal";
+  input.autocomplete = "off";
+  input.placeholder = "Enter answer";
+  input.value = saved;
+
+  input.addEventListener("input", () => {
+    studentAnswers[name] = input.value;
+    updateNavigator();
+  });
+
+  const note = document.createElement("div");
+  note.className = "spr-note";
+  note.textContent = "Enter an integer, decimal, or fraction as appropriate.";
+
+  wrap.appendChild(label);
+  wrap.appendChild(input);
+  wrap.appendChild(note);
+  promptHTML.appendChild(wrap);
+  container.appendChild(promptHTML);
+}
+
+/***********************
+ * NAVIGATION WITHIN SECTION
+ ***********************/
+function prevQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex > 0) loadQuestion(currentIndex - 1);
+}
+
+function nextQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex < section.items.length - 1) loadQuestion(currentIndex + 1);
+}
+
+function updateNavButtons() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("back-btn").disabled = currentIndex === 0;
+  document.getElementById("next-btn").disabled = currentIndex === section.items.length - 1;
+}
+
+function updateNavigatorButton() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-button").textContent = `Question ${currentIndex + 1} of ${section.items.length}`;
+}
+
+function openNavigator() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-section-title").textContent = section.title;
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function buildNavigator() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  const section = sections[currentSectionIndex];
+
+  section.items.forEach((_, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = idx + 1;
+    btn.onclick = () => {
+      loadQuestion(idx);
+      closeNavigator();
+    };
+    grid.appendChild(btn);
+  });
+
+  updateNavigator();
+}
+
+function updateNavigator() {
+  const section = sections[currentSectionIndex];
+  const buttons = document.querySelectorAll("#navigator-grid button");
+
+  buttons.forEach((btn, idx) => {
+    const baseKey = `s${section.id}-q${idx}`;
+    const answered = studentAnswers[baseKey] !== undefined && String(studentAnswers[baseKey]).trim() !== "";
+    btn.classList.toggle("current", idx === currentIndex);
+    btn.classList.toggle("answered", answered && idx !== currentIndex);
+    btn.classList.toggle("review", reviewFlags[idx]);
+  });
+}
+
+function toggleBookmark(checkbox) {
+  const icon = checkbox.nextElementSibling;
+  icon.classList.toggle("fa-regular", !checkbox.checked);
+  icon.classList.toggle("fa-solid", checkbox.checked);
+  icon.style.color = checkbox.checked ? "#CF0000" : "#000";
+  reviewFlags[currentIndex] = checkbox.checked;
+  updateNavigator();
+}
+
+/***********************
+ * FINISH SECTION & NEXT
+ ***********************/
+function finishCurrentSection() {
+  if (timer) clearInterval(timer);
+  trackIntegrityEvent("SECTION_FINISHED", { sectionIndex: currentSectionIndex });
+  sendPendingIntegrityEvents("section-finished");
+
+  if (currentSectionIndex < sections.length - 1) {
+    const title = document.getElementById("section-modal-title");
+    const text = document.getElementById("section-modal-text");
+    const advance = document.getElementById("advance-section-btn");
+
+    if (currentSectionIndex === 1) {
+      title.textContent = "Reading & Writing complete";
+      text.textContent = "Your Reading & Writing modules will be locked. A 10-minute break begins next.";
+      advance.textContent = "Begin Break";
+    } else {
+      title.textContent = "Module complete";
+      text.textContent = "The next module will begin now. You cannot return to this module.";
+      advance.textContent = "Start Next Module";
+    }
+    document.getElementById("section-modal").style.display = "flex";
+  } else {
+    showFinalReport();
+  }
+}
+
+function closeSectionModal() {
+  document.getElementById("section-modal").style.display = "none";
+
+  if (!timer) {
+    timer = setInterval(() => {
+      seconds--;
+      updateTimerDisplay();
+      if (seconds < 0) {
+        clearInterval(timer);
+        finishCurrentSection();
+      }
+    }, 1000);
+  }
+}
+
+function goToNextSection() {
+  document.getElementById("section-modal").style.display = "none";
+  const nextIdx = currentSectionIndex + 1;
+
+  if (nextIdx === 2) {
+    startBreak();
+    return;
+  }
+
+  if (nextIdx < sections.length) {
+    startSection(nextIdx);
+  }
+}
+
+function startBreak() {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  closeOpenAbsenceIntervals(false);
+  trackIntegrityEvent("BREAK_STARTED");
+  sendPendingIntegrityEvents("break-start");
+  monitoringPaused = true;
+
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  closeCalculator();
+  document.getElementById("timer").style.display = "none";
+
+  const screen = document.getElementById("break-screen");
+  screen.classList.remove("hidden");
+  breakSeconds = 600;
+  updateBreakTimer();
+
+  if (breakTimer) clearInterval(breakTimer);
+  breakTimer = setInterval(() => {
+    breakSeconds--;
+    updateBreakTimer();
+    if (breakSeconds <= 0) {
+      clearInterval(breakTimer);
+      breakTimer = null;
+      startSection(2);
+    }
+  }, 1000);
+}
+
+function updateBreakTimer() {
+  const m = Math.floor(Math.max(0, breakSeconds) / 60);
+  const s = Math.max(0, breakSeconds) % 60;
+  document.getElementById("break-timer").textContent =
+    `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function skipBreak() {
+  if (breakTimer) {
+    clearInterval(breakTimer);
+    breakTimer = null;
+  }
+  startSection(2);
+}
+
+/***********************
+ * CALCULATOR POPUP
+ ***********************/
+function openCalculator() {
+  const section = sections[currentSectionIndex];
+  if (!section || !section.calculatorAllowed) return;
+
+  document.getElementById("calculator-popup").style.display = "block";
+
+  if (!desmosCalculator) {
+    const elt = document.getElementById("calculator");
+    desmosCalculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      keypad: true,
+      settingsMenu: false,
+      zoomButtons: true,
+      expressionsTopbar: false,
+      border: false
+    });
+  }
+}
+
+function closeCalculator() {
+  document.getElementById("calculator-popup").style.display = "none";
+}
+
+(function makeDraggable() {
+  const popup = document.getElementById("calculator-popup");
+  const handle = document.getElementById("calculator-drag-handle");
+  let offsetX = 0, offsetY = 0, isDown = false;
+
+  handle.addEventListener("mousedown", (e) => {
+    isDown = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDown = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    popup.style.left = `${e.clientX - offsetX}px`;
+    popup.style.top = `${e.clientY - offsetY}px`;
+  });
+})();
+
+/***********************
+ * SCORE HELPERS
+ ***********************/
+function roundToNearest10(n) {
+  return Math.round(n / 10) * 10;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function predictSectionScore(correct, total) {
+  if (!total) return 200;
+  const rawScore = 200 + (correct / total) * 600;
+  return clamp(roundToNearest10(rawScore), 200, 800);
+}
+
+
+function parseNumericResponse(value) {
+  if (value === undefined || value === null) return NaN;
+  let s = String(value).trim().replace(/−/g, "-").replace(/,/g, "");
+  if (!s) return NaN;
+  if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(s)) {
+    const [a,b] = s.split("/").map(Number);
+    if (b === 0) return NaN;
+    return a / b;
+  }
+  return Number(s);
+}
+
+function isSPRCorrect(userValue, item) {
+  const u = parseNumericResponse(userValue);
+  if (!Number.isFinite(u)) return false;
+  const tol = Number(item.tolerance ?? 1e-9);
+  return (item.acceptedAnswers || []).some(ans => {
+    const a = parseNumericResponse(ans);
+    return Number.isFinite(a) && Math.abs(u - a) <= tol;
+  });
+}
+
+/***********************
+ * FINAL REPORT
+ ***********************/
+function showFinalReport() {
+  if (timer) clearInterval(timer);
+  if (breakTimer) clearInterval(breakTimer);
+
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("break-screen").classList.add("hidden");
+  document.getElementById("report-container").classList.remove("hidden");
+  document.getElementById("header-title").textContent = "SAT Diagnostic Test 6 — Score Report";
+  document.getElementById("calc-badge").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  const letters = ["A","B","C","D","E","F","G","H"];
+
+  let readingCorrect = 0;
+  let readingTotal = 0;
+  let mathCorrect = 0;
+  let mathTotal = 0;
+  const rows = [];
+
+  sections.forEach(sec => {
+    sec.items.forEach((item, idx) => {
+      const key = `s${sec.id}-q${idx}`;
+      const userAns = studentAnswers[key];
+
+      let isCorrect = false;
+      let your = "–";
+      let corr = "–";
+
+      if (item.type === "SPR") {
+        your = (userAns !== undefined && String(userAns).trim() !== "") ? String(userAns).trim() : "–";
+        corr = (item.acceptedAnswers || []).join(" or ");
+        isCorrect = isSPRCorrect(userAns, item);
+      } else {
+        let correctIdx = item.correctIndex;
+        if (typeof correctIdx === "string") correctIdx = letters.indexOf(correctIdx);
+        your = (userAns !== undefined) ? letters[userAns] : "–";
+        corr = letters[correctIdx];
+        isCorrect = userAns === correctIdx;
+      }
+
+      if (sec.id.startsWith("READING")) {
+        readingTotal++;
+        if (isCorrect) readingCorrect++;
+      } else if (sec.id.startsWith("MATH")) {
+        mathTotal++;
+        if (isCorrect) mathCorrect++;
+      }
+
+      rows.push({
+        section: sec.id,
+        q: item.number || idx + 1,
+        your,
+        correct: corr,
+        status: isCorrect ? "✅" : "❌"
+      });
+    });
+  });
+
+  const readingScore = predictSectionScore(readingCorrect, readingTotal);
+  const mathScore = predictSectionScore(mathCorrect, mathTotal);
+  const satScore = readingScore + mathScore;
+
+  const report = document.getElementById("report-container");
+  report.innerHTML = `
+    <h1>SAT Diagnostic Test 6 — Completed</h1>
+    <p><strong>Name:</strong> ${escapeHtml(studentName)} &nbsp; | &nbsp; <strong>Email:</strong> ${escapeHtml(studentEmail)} &nbsp; | &nbsp; <strong>Session:</strong> ${escapeHtml(testSession)}</p>
+    <p><strong>Reading & Writing:</strong> ${readingCorrect} / ${readingTotal} correct → Diagnostic estimate: ${readingScore} / 800</p>
+    <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Diagnostic estimate: ${mathScore} / 800</p>
+    <p><strong>Total diagnostic estimate:</strong> ${satScore} / 1600</p>
+    <p style="font-size:13px; color:#666;">This test is intentionally hard. These scores use a simple raw-performance estimate and are not an official College Board conversion or equating table.</p>
+
+    <div class="score-container">
+      <svg viewBox="0 0 230 230">
+        <path class="arc" d="M 65 50 A 85 85 0 0 0 65 180" />
+        <path class="arc" d="M 165 50 A 85 85 0 0 1 165 180" />
+        <defs><path id="curveTop" d="M 70 50 A 80 80 0 0 1 160 50" /></defs>
+        <text class="label"><textPath href="#curveTop" startOffset="50%" text-anchor="middle">TOTAL</textPath></text>
+      </svg>
+      <div class="score" style="font-size:58px;">${satScore}</div>
+    </div>
+
+    <h2>Question Detail</h2>
+    <table>
+      <thead>
+        <tr><th>Module</th><th>Q#</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.section}</td>
+            <td>${r.q}</td>
+            <td>${r.your}</td>
+            <td>${r.correct}</td>
+            <td>${r.status}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+
+  closeOpenAbsenceIntervals(true);
+  attemptSubmittedAt = new Date();
+  trackIntegrityEvent("TEST_SUBMITTED", {
+    readingScore,
+    readingCorrect,
+    readingTotal,
+    mathScore,
+    mathCorrect,
+    mathTotal,
+    satScore
+  });
+  testCompleted = true;
+  examStarted = false;
+  monitoringPaused = false;
+
+  if (monitorBatchTimer) {
+    clearInterval(monitorBatchTimer);
+    monitorBatchTimer = null;
+  }
+
+  const integrityStatus = document.getElementById("integrity-status");
+  if (integrityStatus) integrityStatus.classList.remove("active");
+
+  const answerReport = rows.map(row => ({
+    section: row.section,
+    question: row.q,
+    studentAnswer: row.your,
+    correctAnswer: row.correct,
+    isCorrect: row.status === "✅"
+  }));
+
+  if (!finalReportSubmitted) {
+    finalReportSubmitted = true;
+    postMonitoringPayload({
+      kind: "final",
+      ...baseAttemptPayload(),
+      submittedAt: attemptSubmittedAt.toISOString(),
+      durationSec: attemptStartedAt
+        ? Math.max(0, Math.round((attemptSubmittedAt.getTime() - attemptStartedAt.getTime()) / 1000))
+        : null,
+      score: {
+        readingScore,
+        readingCorrect,
+        readingTotal,
+        mathScore,
+        mathCorrect,
+        mathTotal,
+        satScore
+      },
+      integritySummary,
+      events: integrityEvents,
+      answers: answerReport
+    }).then(delivered => {
+      if (!delivered) {
+        console.warn("The final integrity report could not be delivered. It remains included in the email report data.");
+      }
+    });
+  }
+
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+
+  if (!emailSent && typeof emailjs !== "undefined" && studentEmail) {
+    emailSent = true;
+    const timestamp = new Date().toLocaleString();
+
+    const readingAnalysisText = rows
+      .filter(r => r.section.startsWith("READING"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const mathAnalysisText = rows
+      .filter(r => r.section.startsWith("MATH"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const integrityTimelineText = integrityEvents
+      .filter(event => [
+        "TAB_HIDDEN", "TAB_VISIBLE", "WINDOW_BLUR", "WINDOW_FOCUS",
+        "FULLSCREEN_EXIT", "COPY", "CUT", "PASTE", "CONTEXT_MENU",
+        "CONNECTION_OFFLINE", "CONNECTION_ONLINE", "PAGE_HIDE",
+        "RELOAD_OR_EXIT_ATTEMPT"
+      ].includes(event.type))
+      .map(event => {
+        const eventTime = new Date(event.occurredAt).toLocaleTimeString();
+        const section = event.sectionId || "No section";
+        const question = event.questionNumber ? `Q${event.questionNumber}` : "No question";
+        const duration = Number(event.metadata?.durationMs || 0) > 0
+          ? ` | Away: ${formatDuration(event.metadata.durationMs)}`
+          : "";
+        return `${eventTime} | ${event.type} | ${section} | ${question}${duration}`;
+      })
+      .join("\n");
+
+    const integrityEmailText = [
+      "TEST INTEGRITY REPORT",
+      "",
+      `Attempt ID: ${attemptId || "N/A"}`,
+      `Tab/window switches: ${integritySummary.tabSwitches}`,
+      `Total tab-hidden time: ${formatDuration(integritySummary.totalHiddenMs)}`,
+      `Longest tab-hidden period: ${formatDuration(integritySummary.longestHiddenMs)}`,
+      `Window focus losses: ${integritySummary.windowBlurCount}`,
+      `Total window-unfocused time: ${formatDuration(integritySummary.totalBlurMs)}`,
+      `Fullscreen exits: ${integritySummary.fullscreenExits}`,
+      `Copy actions: ${integritySummary.copyCount}`,
+      `Paste actions: ${integritySummary.pasteCount}`,
+      `Cut actions: ${integritySummary.cutCount}`,
+      `Right-click actions: ${integritySummary.contextMenuCount}`,
+      `Connection losses: ${integritySummary.offlineCount}`,
+      `Reload/exit attempts: ${integritySummary.reloadOrExitWarnings}`,
+      "",
+      "ACTIVITY TIMELINE",
+      integrityTimelineText || "No reportable integrity events recorded."
+    ].join("\n");
+
+    const paper2WithIntegrity = `${mathAnalysisText}\n\n---\n\n${integrityEmailText}`;
+
+    emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+      name: studentName,
+      test_title: "SAT Diagnostic Test 6 — Hard Exam",
+      to_email: studentEmail,
+      solution_link: solutionPDF,
+      session: testSession,
+      score: `RW ${readingScore}/800 | Math ${mathScore}/800 | Total ${satScore}/1600`,
+      timestamp: timestamp,
+      paper1: readingAnalysisText,
+      paper2: paper2WithIntegrity,
+      integrity_report: integrityEmailText,
+      integrity_attempt_id: attemptId,
+      integrity_tab_switches: String(integritySummary.tabSwitches),
+      integrity_fullscreen_exits: String(integritySummary.fullscreenExits)
+    }).then(() => {
+      console.log("✅ Email report sent successfully.");
+    }).catch(err => {
+      console.error("❌ Email send failed:", err);
+    });
+  }
+}
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("9jjn3yBHl6S88hITy");
+    })();
+  </script>
+
+</body>
+</html>
