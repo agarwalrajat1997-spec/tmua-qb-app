@@ -50,7 +50,7 @@ const sql =
   fs.readFileSync(
     migrationPath,
     "utf8",
-  );
+  ).replace(/\r\n/g, "\n");
 
 contains(
   sql,

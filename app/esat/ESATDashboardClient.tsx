@@ -44,7 +44,15 @@ const ESAT_RESOURCE_PDFS: ResourcePdf[] = [
     href: "/esat-resources/esat-content-specification.pdf",
   },
 ];
-type TrackKey = "engineering" | "physical" | "life";
+type TrackKey =
+  | "engineering"
+  | "physics-chemistry"
+  | "physics-biology"
+  | "maths2-chemistry"
+  | "maths2-biology"
+  | "chemistry-biology";
+
+type Difficulty = "easy" | "standard" | "hard";
 
 type MockTile = {
   test_id: string;
@@ -52,7 +60,10 @@ type MockTile = {
   badge: string;
   duration_minutes: number;
   subjects: string;
-  href: string;
+  href?: string;
+  level: 0 | 1 | 2 | 3;
+  difficulty: Difficulty;
+  available?: boolean;
   solutionUrl?: string | null;
 };
 
@@ -72,39 +83,77 @@ type AttemptSummary = {
   submitted_at?: string | null;
 };
 
+type StudentAccessRow = {
+  product?: string | null;
+  approved?: boolean | null;
+  expires_at?: string | null;
+};
+
+function errorMessage(error: unknown, fallback: string) {
+  return error instanceof Error ? error.message : typeof error === "string" ? error : fallback;
+}
+
 const TRACKS: Track[] = [
   {
     key: "engineering",
     label: "Engineering",
     subjects: "Math 1 + Physics + Math 2",
     mocks: [
-      { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html" },
-      { test_id: "esat-mock-02", title: "ESAT Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html" },
-{ test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html" },
-      { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html" },
-      { test_id: "esat-mock-13", title: "ESAT Mock Test 5", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-13/index.html" },
+      { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html", level: 1, difficulty: "easy", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c93aaad4b62f4ad88b94adc4c190aaec.pdf" },
+      { test_id: "esat-mock-02", title: "ESAT Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html", level: 2, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c0a40b1e8699422eb30c2c72f7e29b6c.pdf" },
+      { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html", level: 2, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_3d9e1cd4a1df423183eed281e2afd28b.pdf" },
+      { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html", level: 3, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-mock-04-solutions.pdf" },
+      { test_id: "esat-mock-13", title: "ESAT Mock Test 5", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-13/index.html", level: 3, difficulty: "hard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_b1abc3e8fdd54180b56d226cfa280892.pdf" },
     ],
   },
   {
-    key: "physical",
-    label: "Physical Sciences",
+    key: "physics-chemistry",
+    label: "Physics + Chemistry",
     subjects: "Math 1 + Physics + Chemistry",
     mocks: [
-      { test_id: "esat-mock-05", title: "ESAT Mock Test 5", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-05/index.html" },
-      { test_id: "esat-mock-06", title: "ESAT Mock Test 6", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-06/index.html" },
-      { test_id: "esat-mock-07", title: "ESAT Mock Test 7", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-07/index.html" },
-      { test_id: "esat-mock-08", title: "ESAT Mock Test 8", badge: "PHYSICAL SCIENCES", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-mock-08/index.html" },
+      { test_id: "esat-physics-chemistry-level-0", title: "Level 0 Easy", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-physics-chemistry-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-chemistry-level-0-solutions.pdf" },
+      { test_id: "esat-physics-chemistry-level-1", title: "Level 1 Standard", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-physics-chemistry-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-chemistry-level-1-solutions.pdf" },
+      { test_id: "esat-physics-chemistry-level-2", title: "Level 2 Hard", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-physics-chemistry-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-chemistry-level-2-solutions.pdf" },
     ],
   },
   {
-    key: "life",
-    label: "Life Sciences",
+    key: "physics-biology",
+    label: "Physics + Biology",
+    subjects: "Math 1 + Physics + Biology",
+    mocks: [
+      { test_id: "esat-physics-biology-level-0", title: "Level 0 Easy", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-physics-biology-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-biology-level-0-solutions.pdf" },
+      { test_id: "esat-physics-biology-level-1", title: "Level 1 Standard", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-physics-biology-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-biology-level-1-solutions.pdf" },
+      { test_id: "esat-physics-biology-level-2", title: "Level 2 Hard", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-physics-biology-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-biology-level-2-solutions.pdf" },
+    ],
+  },
+  {
+    key: "maths2-chemistry",
+    label: "Maths 2 + Chemistry",
+    subjects: "Math 1 + Math 2 + Chemistry",
+    mocks: [
+      { test_id: "esat-maths2-chemistry-level-0", title: "Level 0 Easy", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-maths2-chemistry-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-chemistry-level-0-solutions.pdf" },
+      { test_id: "esat-maths2-chemistry-level-1", title: "Level 1 Standard", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-maths2-chemistry-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-chemistry-level-1-solutions.pdf" },
+      { test_id: "esat-maths2-chemistry-level-2", title: "Level 2 Hard", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-maths2-chemistry-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-chemistry-level-2-solutions.pdf" },
+    ],
+  },
+  {
+    key: "maths2-biology",
+    label: "Maths 2 + Biology",
+    subjects: "Math 1 + Math 2 + Biology",
+    mocks: [
+      { test_id: "esat-maths2-biology-level-0", title: "Level 0 Easy", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-maths2-biology-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-biology-level-0-solutions.pdf" },
+      { test_id: "esat-maths2-biology-level-1", title: "Level 1 Standard", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-maths2-biology-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-biology-level-1-solutions.pdf" },
+      { test_id: "esat-maths2-biology-level-2", title: "Level 2 Hard", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-maths2-biology-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-biology-level-2-solutions.pdf" },
+    ],
+  },
+  {
+    key: "chemistry-biology",
+    label: "Chemistry + Biology",
     subjects: "Math 1 + Chemistry + Biology",
     mocks: [
-      { test_id: "esat-mock-09", title: "ESAT Mock Test 9", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-09/index.html" },
-      { test_id: "esat-mock-10", title: "ESAT Mock Test 10", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-10/index.html" },
-      { test_id: "esat-mock-11", title: "ESAT Mock Test 11", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-11/index.html" },
-      { test_id: "esat-mock-12", title: "ESAT Mock Test 12", badge: "LIFE SCIENCES", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-mock-12/index.html" },
+      { test_id: "esat-chemistry-biology-level-0", title: "Level 0 Easy", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-chemistry-biology-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-chemistry-biology-level-0-solutions.pdf" },
+      { test_id: "esat-chemistry-biology-level-1", title: "Level 1 Standard", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-chemistry-biology-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-chemistry-biology-level-1-solutions.pdf" },
+      { test_id: "esat-chemistry-biology-level-2", title: "Level 2 Hard", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-chemistry-biology-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-chemistry-biology-level-2-solutions.pdf" },
     ],
   },
 ];
@@ -180,13 +229,14 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
 
         const now = Date.now();
 
-        const ps = (data || [])
-          .filter((r: any) => {
+        const accessRows = (data || []) as StudentAccessRow[];
+        const ps = accessRows
+          .filter((r) => {
             if (!r?.approved) return false;
             if (!r?.expires_at) return true;
             return new Date(r.expires_at).getTime() > now;
           })
-          .map((r: any) => String(r.product || ""))
+          .map((r) => String(r.product || ""))
           .filter(
             (p): p is EsatProduct =>
               p === "esat-practice-tests" ||
@@ -203,8 +253,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
         else setActive("practice");
 
         setLoading(false);
-      } catch (e: any) {
-        setErr(String(e?.message || e));
+      } catch (e: unknown) {
+        setErr(errorMessage(e, "Could not load ESAT access."));
         setLoading(false);
       }
     }
@@ -247,10 +297,10 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
         }
 
         if (!cancelled) setLatestByTestId(map);
-      } catch (e: any) {
+      } catch (e: unknown) {
         if (!cancelled) {
           setLatestByTestId({});
-          setAttemptsErr(e?.message || "Failed to load attempts.");
+          setAttemptsErr(errorMessage(e, "Failed to load attempts."));
         }
       } finally {
         if (!cancelled) setAttemptsLoading(false);
@@ -269,14 +319,13 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
   const currentTrack = TRACKS.find((t) => t.key === activeTrack) || TRACKS[0];
 
   // ESAT practice-test display policy
-  // Engineering: tests 1-3 Level 1, tests 4-5 Level 2.
-  // Physical/Life: one Level 1 test + one Level 2 test.
-  const visibleMocks = currentTrack.mocks.slice(
-    0,
-    activeTrack === "engineering" ? 5 : 2
-  );
+  // Engineering: test 1 is Level 1 Easy, tests 2-3 are Level 2 Standard,
+  // and tests 4-5 are Level 3 Hard.
+  // Every new pathway has one explicit Level 0, Level 1, and Level 2 tile.
+  const visibleMocks = currentTrack.mocks;
 
   function openTest(t: MockTile) {
+    if (t.available === false || !t.href) return;
     window.location.href = t.href;
   }
 
@@ -297,8 +346,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
       if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
 
       setModalAttempts((json?.attempts || []) as AttemptSummary[]);
-    } catch (e: any) {
-      setModalErr(e?.message || "Failed to load attempts.");
+    } catch (e: unknown) {
+      setModalErr(errorMessage(e, "Failed to load attempts."));
       setModalAttempts([]);
     } finally {
       setModalLoading(false);
@@ -499,6 +548,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                     key={track.key}
                     type="button"
                     onClick={() => setActiveTrack(track.key)}
+                    aria-pressed={activeTrack === track.key}
                     style={{
                       border: activeTrack === track.key ? "2px solid #7A1F24" : "2px solid rgba(0,0,0,.14)",
                       background: activeTrack === track.key ? "#FFF3D1" : "#ffffff",
@@ -524,41 +574,50 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                   maxWidth: 1120,
                 }}
               >
-                {visibleMocks.map((mock, mockIndex) => {
+                {visibleMocks.map((mock) => {
                   const latest = latestByTestId[mock.test_id];
                   const attempted = !!latest;
                   const total = latest?.total_questions || 0;
                   const score = latest?.score ?? 0;
                   const date = fmtDate(latest?.submitted_at);
 
-                  const isLevel2 =
-                    activeTrack === "engineering"
-                      ? mockIndex >= 3
-                      : mockIndex >= 1;
+                  const level = mock.level;
+                  const unavailable = mock.available === false || !mock.href;
+                  const levelTag = `LEVEL ${level}`;
+                  const levelDescription =
+                    mock.difficulty === "easy"
+                      ? "Easy"
+                      : mock.difficulty === "standard"
+                        ? "ESAT standard"
+                        : "Hard ESAT";
 
-                  const levelTag = isLevel2
-                    ? "LEVEL 2"
-                    : "LEVEL 1";
+                  const levelColor =
+                    mock.difficulty === "easy"
+                      ? "#2F7D4A"
+                      : mock.difficulty === "standard"
+                        ? "#D97706"
+                        : "#B4232C";
 
-                  const levelDescription = isLevel2
-                    ? "Harder than actual ESAT"
-                    : "ESAT standard";
+                  const levelBackground =
+                    mock.difficulty === "easy"
+                      ? "#F7FCF8"
+                      : mock.difficulty === "standard"
+                        ? "#FFFBF2"
+                        : "#FFF8F8";
 
-                  const levelColor = isLevel2
-                    ? "#9F2D33"
-                    : "#2F7D4A";
+                  const levelBorder =
+                    mock.difficulty === "easy"
+                      ? "#B9DDC3"
+                      : mock.difficulty === "standard"
+                        ? "#F2C56B"
+                        : "#E7BABC";
 
-                  const levelBackground = isLevel2
-                    ? "#FFF8F8"
-                    : "#F7FCF8";
-
-                  const levelBorder = isLevel2
-                    ? "#E7BABC"
-                    : "#B9DDC3";
-
-                  const levelPillBackground = isLevel2
-                    ? "#FBE7E8"
-                    : "#E4F4E8";
+                  const levelPillBackground =
+                    mock.difficulty === "easy"
+                      ? "#E4F4E8"
+                      : mock.difficulty === "standard"
+                        ? "#FFF1CC"
+                        : "#FBE7E8";
 
                   return (
                     <article
@@ -661,7 +720,9 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                           minHeight: 18,
                         }}
                       >
-                        {attempted
+                        {unavailable
+                          ? "Test content coming soon"
+                          : attempted
                           ? `Attempt 1 · Score ${score}/${total || 81}${date ? ` · ${date}` : ""}`
                           : "Not attempted yet"}
                       </div>
@@ -670,53 +731,58 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                         <button
                           type="button"
                           onClick={() => openTest(mock)}
+                          disabled={unavailable}
                           style={{
                             border: 0,
-                            background: "#FEC94F",
-                            color: "#141414",
+                            background: unavailable ? "#E5E7EB" : "#FEC94F",
+                            color: unavailable ? "#6B7280" : "#141414",
                             borderRadius: 12,
                             padding: "11px 13px",
                             fontSize: 13,
                             fontWeight: 950,
-                            cursor: "pointer",
+                            cursor: unavailable ? "not-allowed" : "pointer",
                           }}
                         >
-                          {attempted ? "Retake →" : "Start →"}
+                          {unavailable ? "Coming soon" : attempted ? "Retake →" : "Start →"}
                         </button>
 
-                        <button
-                          type="button"
-                          onClick={() => openAttempts(mock)}
-                          style={{
-                            border: "1px solid #E5E7EB",
-                            background: "#ffffff",
-                            color: "#141414",
-                            borderRadius: 12,
-                            padding: "11px 13px",
-                            fontSize: 13,
-                            fontWeight: 950,
-                            cursor: "pointer",
-                          }}
-                        >
-                          View attempts
-                        </button>
+                        {!unavailable ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => openAttempts(mock)}
+                              style={{
+                                border: "1px solid #E5E7EB",
+                                background: "#ffffff",
+                                color: "#141414",
+                                borderRadius: 12,
+                                padding: "11px 13px",
+                                fontSize: 13,
+                                fontWeight: 950,
+                                cursor: "pointer",
+                              }}
+                            >
+                              View attempts
+                            </button>
 
-                        <button
-                          type="button"
-                          onClick={() => openSolutions(mock)}
-                          style={{
-                            border: "1px solid #E5E7EB",
-                            background: "#ffffff",
-                            color: "#141414",
-                            borderRadius: 12,
-                            padding: "11px 13px",
-                            fontSize: 13,
-                            fontWeight: 950,
-                            cursor: "pointer",
-                          }}
-                        >
-                          Solutions
-                        </button>
+                            <button
+                              type="button"
+                              onClick={() => openSolutions(mock)}
+                              style={{
+                                border: "1px solid #E5E7EB",
+                                background: "#ffffff",
+                                color: "#141414",
+                                borderRadius: 12,
+                                padding: "11px 13px",
+                                fontSize: 13,
+                                fontWeight: 950,
+                                cursor: "pointer",
+                              }}
+                            >
+                              Solutions
+                            </button>
+                          </>
+                        ) : null}
                       </div>
                     </article>
                   );
