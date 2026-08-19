@@ -59,9 +59,11 @@
         const paper3 = String(payload.paper3 || "").trim();
 
         payload.paper1 = paper1;
-        payload.paper2 = paper3 && !paper2.includes(paper3)
-          ? `${paper2}\n\n${paper3}`.trim()
-          : paper2;
+        if (paper3 && !paper2.includes(paper3)) {
+          payload.paper2 = `${paper2}\n\n${paper3}`;
+        } else {
+          payload.paper2 = paper2;
+        }
         payload.paper3 = paper3;
       }
 
