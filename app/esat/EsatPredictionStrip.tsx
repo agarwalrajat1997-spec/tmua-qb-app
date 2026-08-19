@@ -237,12 +237,11 @@ export default function EsatPredictionStrip() {
       )
     : null;
 
-  const shouldBuild =
+  if (
     predictor.status === "insufficient_evidence" ||
     predictor.score === null ||
-    predictor.score < 3.5;
-
-  if (shouldBuild) {
+    predictor.score < 3.5
+  ) {
     return (
       <section
         className={styles.strip}
