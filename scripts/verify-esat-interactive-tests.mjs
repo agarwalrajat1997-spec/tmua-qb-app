@@ -244,7 +244,10 @@ for (const marker of [
   "skipBreakHandler",
   "recombinedEsatPath",
   "__tsThreeSectionAdapter",
-  "payload.paper2 = `${paper2}\\n\\n${paper3}`",
+  'APP_ORIGIN = "https://app.thrivingscholars.com"',
+  "payload.solution_link = absoluteEsatSolutionUrl(payload.solution_link)",
+  "rewriteEsatSolutionLinks",
+  "paper3 && !paper2.includes(paper3)",
 ]) {
   if (!fullscreenController.includes(marker)) {
     failures.push(`Fullscreen controller is missing ${marker}.`);
