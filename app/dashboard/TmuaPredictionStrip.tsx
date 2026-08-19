@@ -176,7 +176,8 @@ export default function TmuaPredictionStrip() {
 
   const preparationMeta = rankText ? (
     <span>
-      You rank <strong>{rankText}</strong>
+      You rank{" "}
+      <strong>{rankText}</strong>
       <InfoTooltip label="Ranking">
         Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
       </InfoTooltip>
