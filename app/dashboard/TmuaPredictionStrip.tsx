@@ -384,7 +384,9 @@ export default function TmuaPredictionStrip() {
     predictor.status ===
       "insufficient_evidence" ||
     predictor.score ===
-      null
+      null ||
+    predictor.score <
+      3.5
   ) {
     return (
       <section
