@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useState,
+} from "react";
+
 import styles from "./TmuaPredictionStrip.module.css";
 
+// Internal model identity. Visible student-facing label begins "You rank".
 const PREPARATION_RANK_MODEL_NAME = "Preparation Rank";
 
 // Display-only calibration for sample-bias adjustment.
@@ -10,74 +16,160 @@ const PREPARATION_RANK_MODEL_NAME = "Preparation Rank";
 const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;
 const PREPARATION_COHORT_DISPLAY_MULTIPLIER = 3.0000;
 
-function calibratedDisplayInteger(value: number, multiplier: number): number {
-  return Math.max(1, Math.round(value * multiplier));
+function calibratedDisplayInteger(
+  value: number,
+  multiplier: number,
+): number {
+  return Math.max(
+    1,
+    Math.round(value * multiplier),
+  );
 }
 
 type PredictorOverview = {
   modelVersion: string;
-  status: "predicted" | "insufficient_evidence";
-  score: number | null;
-  lowerBound: number | null;
-  upperBound: number | null;
-  confidence: "low" | "medium" | "high" | null;
-  testEvidenceCount: number;
-  independentTestCount: number;
-  qbUniqueQuestions: number;
-  qbTopicCoverage: number;
-  calculatedAt: string;
+
+  status:
+    | "predicted"
+    | "insufficient_evidence";
+
+  score:
+    | number
+    | null;
+
+  lowerBound:
+    | number
+    | null;
+
+  upperBound:
+    | number
+    | null;
+
+  confidence:
+    | "low"
+    | "medium"
+    | "high"
+    | null;
+
+  testEvidenceCount:
+    number;
+
+  independentTestCount:
+    number;
+
+  qbUniqueQuestions:
+    number;
+
+  qbTopicCoverage:
+    number;
+
+  calculatedAt:
+    string;
 };
 
 type PreparationRankOverview = {
-  modelVersion: string;
-  hasGenuinePreparationEvidence: boolean;
-  score: number | null;
-  rank: number | null;
-  cohortSize: number;
-  components: {
-    performance: number;
-    breadth: number;
-    evidenceDepth: number;
-    recentActivity: number;
-    consistency: number;
-    recovery: number;
-  } | null;
-  calculatedAt: string;
+  modelVersion:
+    string;
+
+  hasGenuinePreparationEvidence:
+    boolean;
+
+  score:
+    | number
+    | null;
+
+  rank:
+    | number
+    | null;
+
+  cohortSize:
+    number;
+
+  components:
+    | {
+        performance:
+          number;
+
+        breadth:
+          number;
+
+        evidenceDepth:
+          number;
+
+        recentActivity:
+          number;
+
+        consistency:
+          number;
+
+        recovery:
+          number;
+      }
+    | null;
+
+  calculatedAt:
+    string;
 };
 
 type CountdownOverview = {
-  daysToTmua: number;
-  examDate: string;
-  examDateLabel: string;
+  daysToTmua:
+    number;
+
+  examDate:
+    string;
+
+  examDateLabel:
+    string;
 };
 
 type OverviewResponse = {
-  ok: boolean;
-  predictor?: PredictorOverview;
-  preparationRank?: PreparationRankOverview;
-  countdown?: CountdownOverview;
-  error?: string;
+  ok:
+    boolean;
+
+  predictor?:
+    PredictorOverview;
+
+  preparationRank?:
+    PreparationRankOverview;
+
+  countdown?:
+    CountdownOverview;
+
+  error?:
+    string;
 };
 
-function scoreText(value: number): string {
-  return value.toFixed(1);
+function scoreText(
+  value: number,
+): string {
+  return value
+    .toFixed(1);
 }
 
-function confidenceText(value: PredictorOverview["confidence"]): string {
+function confidenceText(
+  value:
+    PredictorOverview["confidence"],
+): string {
   if (!value) {
     return "";
   }
 
-  return value.charAt(0).toUpperCase() + value.slice(1);
+  return (
+    value.charAt(0)
+      .toUpperCase() +
+    value.slice(1)
+  );
 }
+
+type InfoTooltipProps = {
+  label: string;
+  children: React.ReactNode;
+};
 
 function InfoTooltip({
   label,
   children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
+}: InfoTooltipProps) {
   const tooltipId = useId();
 
   return (
@@ -90,137 +182,249 @@ function InfoTooltip({
       >
         i
       </button>
-      <span id={tooltipId} role="tooltip" className={styles.tooltip}>
-        <strong className={styles.tooltipTitle}>{label}</strong>
-        <span className={styles.tooltipText}>{children}</span>
+
+      <span
+        id={tooltipId}
+        role="tooltip"
+        className={styles.tooltip}
+      >
+        <strong className={styles.tooltipTitle}>
+          {label}
+        </strong>
+
+        <span className={styles.tooltipText}>
+          {children}
+        </span>
       </span>
     </span>
   );
 }
-
 export default function TmuaPredictionStrip() {
-  const [overview, setOverview] = useState<OverviewResponse | null>(null);
-  const [loaded, setLoaded] = useState(false);
+  const [
+    overview,
+    setOverview,
+  ] =
+    useState<
+      OverviewResponse |
+      null
+    >(null);
 
-  useEffect(() => {
-    let cancelled = false;
+  const [
+    loaded,
+    setLoaded,
+  ] =
+    useState(false);
 
-    async function load() {
-      try {
-        const response = await fetch("/api/tmua/overview", {
-          method: "GET",
-          cache: "no-store",
-          credentials: "same-origin",
-        });
+  useEffect(
+    () => {
+      let cancelled =
+        false;
 
-        if (!response.ok) {
-          return;
+      async function load() {
+        try {
+          const response =
+            await fetch(
+              "/api/tmua/overview",
+              {
+                method:
+                  "GET",
+
+                cache:
+                  "no-store",
+
+                credentials:
+                  "same-origin",
+              },
+            );
+
+          if (
+            !response.ok
+          ) {
+            return;
+          }
+
+          const body =
+            (
+              await response.json()
+            ) as
+              OverviewResponse;
+
+          if (
+            !cancelled &&
+            body.ok &&
+            body.predictor
+          ) {
+            setOverview(
+              body,
+            );
+          }
         }
-
-        const body = (await response.json()) as OverviewResponse;
-        if (!cancelled && body.ok && body.predictor) {
-          setOverview(body);
+        catch {
+          // Supplementary dashboard information must never
+          // break the existing workspace.
+        }
+        finally {
+          if (
+            !cancelled
+          ) {
+            setLoaded(
+              true,
+            );
+          }
         }
       }
-      catch {
-        // Supplementary dashboard information must never break the workspace.
-      }
-      finally {
-        if (!cancelled) {
-          setLoaded(true);
-        }
-      }
-    }
 
-    void load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+      void load();
 
-  if (!loaded || !overview?.predictor) {
+      return () => {
+        cancelled =
+          true;
+      };
+    },
+    [],
+  );
+
+  if (
+    !loaded ||
+    !overview?.predictor
+  ) {
     return null;
   }
 
-  const predictor = overview.predictor;
-  const preparationRank = overview.preparationRank ?? null;
-  const countdown = overview.countdown ?? null;
+  const predictor =
+    overview.predictor;
+
+  const preparationRank =
+    overview.preparationRank ??
+    null;
+
+  const countdown =
+    overview.countdown ??
+    null;
 
   const hasRank =
-    preparationRank?.rank !== null &&
-    preparationRank?.rank !== undefined &&
-    preparationRank.cohortSize > 0;
+    preparationRank?.rank !==
+      null &&
+    preparationRank?.rank !==
+      undefined &&
+    preparationRank.cohortSize >
+      0;
 
-  const displayedRank = hasRank
-    ? calibratedDisplayInteger(
-        preparationRank.rank as number,
-        PREPARATION_RANK_DISPLAY_MULTIPLIER,
-      )
-    : null;
-
-  const displayedCohortSize = hasRank
-    ? calibratedDisplayInteger(
-        preparationRank.cohortSize,
-        PREPARATION_COHORT_DISPLAY_MULTIPLIER,
-      )
-    : null;
-
-  const rankText =
-    displayedRank !== null && displayedCohortSize !== null
-      ? `#${displayedRank} out of ${displayedCohortSize} active users.`
+  const displayedRank =
+    hasRank
+      ? calibratedDisplayInteger(
+          preparationRank.rank as number,
+          PREPARATION_RANK_DISPLAY_MULTIPLIER,
+        )
       : null;
 
-  const countdownText = countdown
-    ? `${countdown.daysToTmua} ${countdown.daysToTmua === 1 ? "day" : "days"} till TMUA`
-    : null;
+  const displayedCohortSize =
+    hasRank
+      ? calibratedDisplayInteger(
+          preparationRank.cohortSize,
+          PREPARATION_COHORT_DISPLAY_MULTIPLIER,
+        )
+      : null;
+  const rankText =
+    displayedRank !== null &&
+    displayedCohortSize !== null
+      ? `#${displayedRank} out of ${displayedCohortSize} active users.`
+      : null;
+  const countdownText =
+    countdown
+      ? `${
+          countdown.daysToTmua
+        } ${
+          countdown.daysToTmua ===
+          1
+            ? "day"
+            : "days"
+        } till TMUA`
+      : null;
 
-  const preparationMeta = rankText ? (
-    <span>
-      You rank{" "}
-      <strong>{rankText}</strong>
-      <InfoTooltip label="Ranking">
-        Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
-      </InfoTooltip>
-    </span>
-  ) : (
-    <span>
-      Ranking unlocks with recognised test or Question Bank evidence.
-      <InfoTooltip label="Ranking">
-        Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
-      </InfoTooltip>
-    </span>
-  );
+  const preparationMeta =
+    rankText
+      ? (
+          <span>
+            You rank{" "}
+            <strong>
+              {rankText}
+            </strong>
 
-  const countdownMeta = countdown && countdownText ? (
-    <span>
-      {countdownText}
-      <InfoTooltip label="TMUA countdown">
-        Calendar days remaining until your configured TMUA exam date. The countdown updates automatically each day. Current exam date: {countdown.examDateLabel}.
-      </InfoTooltip>
-    </span>
-  ) : null;
+            <InfoTooltip label="Ranking">
+              Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
+            </InfoTooltip>
+          </span>
+        )
+      : (
+          <span>
+            Ranking unlocks with recognised test or Question Bank evidence.
 
-  const shouldBuild =
-    predictor.status === "insufficient_evidence" ||
-    predictor.score === null ||
-    predictor.score < 3.5;
+            <InfoTooltip label="Ranking">
+              Your rank among the active students on the portal. Rank combines your predicted score, breadth-depth of questions attempted, and consistency.
+            </InfoTooltip>
+          </span>
+        );
 
-  if (shouldBuild) {
+  const countdownMeta =
+    countdown &&
+    countdownText
+      ? (
+          <span>
+            {countdownText}
+
+            <InfoTooltip label="TMUA countdown">
+              Calendar days remaining until your configured TMUA exam date. The countdown updates automatically each day. Current exam date: {countdown.examDateLabel}.
+            </InfoTooltip>
+          </span>
+        )
+      : null;
+
+  if (
+    predictor.status ===
+      "insufficient_evidence" ||
+    predictor.score ===
+      null
+  ) {
     return (
       <section
-        className={styles.strip}
+        className={
+          styles.strip
+        }
         aria-label="TMUA preparation overview"
         data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
       >
-        <div className={styles.copy}>
-          <span className={styles.label}>Your predicted TMUA score</span>
+        <div
+          className={
+            styles.copy
+          }
+        >
+          <span
+            className={
+              styles.label
+            }
+          >
+            Your predicted TMUA score
+          </span>
+
           <InfoTooltip label="Predicted TMUA score">
-            Eligible practice-test evidence is the main signal. Retakes are collapsed within a test family. Verified Question Bank evidence starts contributing after 30 unique first-exposure questions and is capped so that it cannot overpower test evidence. Predictions below 3.5 remain in the building state. Until enough eligible evidence exists, no score is shown.
+            Eligible practice-test evidence is the main signal. Retakes are collapsed within a test family. Verified Question Bank evidence starts contributing after 30 unique first-exposure questions and is capped so that it cannot overpower test evidence. Until enough eligible evidence exists, no synthetic score is shown.
           </InfoTooltip>
-          <strong className={styles.building}>is still building.</strong>
+
+          <strong
+            className={
+              styles.building
+            }
+          >
+            is still building.
+          </strong>
         </div>
 
-        <div className={styles.meta}>
+        <div
+          className={
+            styles.meta
+          }
+        >
           {preparationMeta}
           {countdownMeta}
         </div>
@@ -229,33 +433,72 @@ export default function TmuaPredictionStrip() {
   }
 
   const hasRange =
-    predictor.lowerBound !== null && predictor.upperBound !== null;
+    predictor.lowerBound !==
+      null &&
+    predictor.upperBound !==
+      null;
 
   return (
     <section
-      className={styles.strip}
+      className={
+        styles.strip
+      }
       aria-label="TMUA preparation overview"
-      data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
+        data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
     >
-      <div className={styles.copy}>
-        <span className={styles.label}>Your predicted TMUA score is</span>
+      <div
+        className={
+          styles.copy
+        }
+      >
+        <span
+          className={
+            styles.label
+          }
+        >
+          Your predicted TMUA score is
+        </span>
+
         <InfoTooltip label="Predicted TMUA score">
           Eligible practice-test evidence is the main signal. Retakes are collapsed within a test family. Verified Question Bank evidence starts contributing after 30 unique first-exposure questions and is capped so that it cannot overpower test evidence. Confidence reflects the amount and spread of independent evidence.
         </InfoTooltip>
-        <strong className={styles.score}>{scoreText(predictor.score)}</strong>
+
+        <strong
+          className={
+            styles.score
+          }
+        >
+          {scoreText(
+            predictor.score,
+          )}
+        </strong>
       </div>
 
-      <div className={styles.meta}>
+      <div
+        className={
+          styles.meta
+        }
+      >
         {hasRange ? (
           <span>
-            Likely range {scoreText(predictor.lowerBound as number)}
+            Likely range{" "}
+            {scoreText(
+              predictor.lowerBound as number,
+            )}
             {"\u2013"}
-            {scoreText(predictor.upperBound as number)}
+            {scoreText(
+              predictor.upperBound as number,
+            )}
           </span>
         ) : null}
 
         {predictor.confidence ? (
-          <span>{confidenceText(predictor.confidence)} confidence</span>
+          <span>
+            {confidenceText(
+              predictor.confidence,
+            )}{" "}
+            confidence
+          </span>
         ) : null}
 
         {preparationMeta}
