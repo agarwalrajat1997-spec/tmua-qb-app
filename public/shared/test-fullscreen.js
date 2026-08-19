@@ -7,10 +7,6 @@
   const nativeFetch = window.fetch.bind(window);
   const APP_ORIGIN = "https://app.thrivingscholars.com";
 
-  // The 15 recombined ESAT papers expose three section fields, while the
-  // existing EmailJS template renders paper1 and paper2. Preserve paper3 for
-  // future templates and combine sections 2 and 3 into paper2 for today's
-  // report so no module is omitted.
   const recombinedEsatPath = /^\/esat-practice-tests\/tests\/esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012](?:\/index\.html|\/)?$/;
 
   const absoluteEsatSolutionUrl = value => {
@@ -38,53 +34,6 @@
       if (absolute && absolute !== raw) el.setAttribute(attr, absolute);
     });
   };
-
-  const installEsatEmailReportAdapter = () => {
-    if (!recombinedEsatPath.test(location.pathname)) return true;
-    const client = window.emailjs;
-    if (!client || typeof client.send !== "function") return false;
-    if (client.__tsThreeSectionAdapter) return true;
-
-    const nativeSend = client.send.bind(client);
-    client.send = (serviceId, templateId, templateParams, ...rest) => {
-      const payload = templateParams && typeof templateParams === "object"
-        ? { ...templateParams }
-        : templateParams;
-
-      if (payload) {
-        payload.solution_link = absoluteEsatSolutionUrl(payload.solution_link);
-
-        const labelled = (section, analysis) => {
-          const name = String(payload[`section${section}_name`] || `Section ${section}`).trim();
-          const score = String(payload[`section${section}_score`] || "Not available").trim();
-          const body = String(analysis || "").trim();
-          if (body.startsWith(`${name} Score:`)) return body;
-          return `${name} Score: ${score}${body ? `\n${body}` : ""}`;
-        };
-
-        const paper1 = labelled(1, payload.paper1);
-        const paper2 = labelled(2, payload.paper2);
-        const paper3 = labelled(3, payload.paper3);
-        payload.paper1 = paper1;
-        payload.paper2 = `${paper2}\n\n${paper3}`;
-        payload.paper3 = paper3;
-      }
-
-      return nativeSend(serviceId, templateId, payload, ...rest);
-    };
-    client.__tsThreeSectionAdapter = true;
-    return true;
-  };
-
-  if (!installEsatEmailReportAdapter()) {
-    let attempts = 0;
-    const timer = setInterval(() => {
-      attempts += 1;
-      if (installEsatEmailReportAdapter() || attempts >= 40) {
-        clearInterval(timer);
-      }
-    }, 250);
-  }
 
   const current = () =>
     document.fullscreenElement ||
@@ -260,6 +209,88 @@
 
   if (document.body) observe();
   else document.addEventListener("DOMContentLoaded", observe, { once: true });
+
+  // Install the recombined-paper email adapter only after the fullscreen
+  // controller is fully registered. A report-hook failure must never disable
+  // fullscreen behavior for these tests.
+  const installEsatEmailReportAdapter = () => {
+    if (!recombinedEsatPath.test(location.pathname)) return true;
+
+    try {
+      const client = window.emailjs;
+      if (!client || typeof client.send !== "function") return false;
+      if (client.__tsThreeSectionAdapter) return true;
+
+      const nativeSend = client.send.bind(client);
+      const wrappedSend = (serviceId, templateId, templateParams, ...rest) => {
+        const payload = templateParams && typeof templateParams === "object"
+          ? { ...templateParams }
+          : templateParams;
+
+        if (payload) {
+          payload.solution_link = absoluteEsatSolutionUrl(payload.solution_link);
+
+          const labelled = (section, analysis) => {
+            const name = String(payload[`section${section}_name`] || `Section ${section}`).trim();
+            const score = String(payload[`section${section}_score`] || "Not available").trim();
+            const body = String(analysis || "").trim();
+            if (body.startsWith(`${name} Score:`)) return body;
+            return `${name} Score: ${score}${body ? `\n${body}` : ""}`;
+          };
+
+          const paper1 = labelled(1, payload.paper1);
+          const paper2 = labelled(2, payload.paper2);
+          const paper3 = labelled(3, payload.paper3);
+          payload.paper1 = paper1;
+          payload.paper2 = `${paper2}\n\n${paper3}`;
+          payload.paper3 = paper3;
+        }
+
+        return nativeSend(serviceId, templateId, payload, ...rest);
+      };
+
+      let installed = false;
+      try {
+        client.send = wrappedSend;
+        installed = client.send === wrappedSend;
+      } catch {}
+
+      if (!installed) {
+        try {
+          const descriptor = Object.getOwnPropertyDescriptor(client, "send");
+          if (!descriptor || descriptor.configurable) {
+            Object.defineProperty(client, "send", {
+              value: wrappedSend,
+              configurable: true,
+              writable: true
+            });
+            installed = client.send === wrappedSend;
+          }
+        } catch {}
+      }
+
+      if (!installed) {
+        console.info("[TS ESAT report] Could not install EmailJS report adapter.");
+        return false;
+      }
+
+      try { client.__tsThreeSectionAdapter = true; } catch {}
+      return true;
+    } catch (e) {
+      console.info("[TS ESAT report] Adapter installation failed.", e);
+      return false;
+    }
+  };
+
+  if (!installEsatEmailReportAdapter()) {
+    let attempts = 0;
+    const reportTimer = setInterval(() => {
+      attempts += 1;
+      if (installEsatEmailReportAdapter() || attempts >= 40) {
+        clearInterval(reportTimer);
+      }
+    }, 250);
+  }
 
   addEventListener("pagehide", () => void exit());
 })();
