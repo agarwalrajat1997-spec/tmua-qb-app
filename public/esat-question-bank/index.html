@@ -5571,6 +5571,7 @@ function applyFilters() {
   var entries = {};
   var activeQid = "";
   var pendingSubmissionSeconds = {};
+  var pendingSubmissionIds = {};
   var actionHooksInstalled = false;
   var lastLocalCheckpointAt = 0;
   var tickHandle = null;
@@ -5617,6 +5618,20 @@ function applyFilters() {
   function safeNumber(value) {
     var n = Number(value);
     return Number.isFinite(n) && n >= 0 ? n : null;
+  }
+
+  function newSubmissionId(qid) {
+    var randomPart =
+      window.crypto &&
+      typeof window.crypto.randomUUID === "function"
+        ? window.crypto.randomUUID()
+        : String(Math.random()).slice(2) + "-" + String(nowMs());
+
+    return [
+      PRODUCT,
+      qid,
+      randomPart
+    ].join("|");
   }
 
   function loadLocalState() {
@@ -6555,6 +6570,9 @@ function applyFilters() {
     pendingSubmissionSeconds[qid] =
       seconds;
 
+    pendingSubmissionIds[qid] =
+      newSubmissionId(qid);
+
     renderTimer();
 
     return seconds;
@@ -6569,6 +6587,7 @@ function applyFilters() {
     if (!entry) return;
 
     delete pendingSubmissionSeconds[qid];
+    delete pendingSubmissionIds[qid];
 
     entry.frozen = false;
     entry.submittedWrong = false;
@@ -6749,6 +6768,10 @@ function applyFilters() {
     }
 
     delete pendingSubmissionSeconds[
+      activeQid
+    ];
+
+    delete pendingSubmissionIds[
       activeQid
     ];
 
@@ -6994,6 +7017,29 @@ function applyFilters() {
                     normaliseStatus(
                       update.status
                     );
+
+                  var hasPendingSubmission =
+                    Object.prototype.hasOwnProperty.call(
+                      pendingSubmissionSeconds,
+                      qid
+                    );
+
+                  if (
+                    hasPendingSubmission &&
+                    (
+                      status === "correct" ||
+                      status === "wrong"
+                    )
+                  ) {
+                    update.answer_submitted_at =
+                      update.answer_submitted_at ||
+                      new Date().toISOString();
+
+                    update.submission_id =
+                      update.submission_id ||
+                      pendingSubmissionIds[qid] ||
+                      newSubmissionId(qid);
+                  }
 
                   var isSubmission =
                     !!update.submission_id ||

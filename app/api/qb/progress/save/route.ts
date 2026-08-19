@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import {
+  ESAT_TABLE_CANDIDATES,
+  adminClient,
+} from "@/app/api/esat/qb/_server";
 
 type QBUpdate =
   | {
@@ -19,7 +25,9 @@ type QBUpdate =
 async function supabaseServer() {
   const cookieStore = await cookies();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const key =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
   return createServerClient(url, key, {
     cookies: {
       get(name: string) {
@@ -45,6 +53,137 @@ function toIsoOrNull(x: any): string | null {
   const d = new Date(s);
   if (Number.isNaN(d.getTime())) return null;
   return d.toISOString();
+}
+
+function normaliseAnswer(value: unknown): string {
+  return String(value ?? "").trim().toUpperCase();
+}
+
+async function captureEsatPredictorEvents(
+  user: { id: string; email?: string | null },
+  rows: any[],
+) {
+  const submittedRows = rows.filter(
+    (row) =>
+      row.product === "esat-question-bank" &&
+      typeof row.submission_id === "string" &&
+      row.submission_id.trim() !== "" &&
+      normaliseAnswer(row.selected_answer) !== "",
+  );
+
+  if (submittedRows.length === 0) {
+    return;
+  }
+
+  const admin = adminClient();
+  const qids = [
+    ...new Set(
+      submittedRows.map((row) => String(row.question_id)),
+    ),
+  ];
+
+  let canonicalRows: any[] | null = null;
+
+  for (const table of ESAT_TABLE_CANDIDATES) {
+    const result = await admin
+      .from(table)
+      .select("qid,topic,difficulty,answer,is_active")
+      .in("qid", qids)
+      .eq("is_active", true);
+
+    if (!result.error) {
+      canonicalRows = result.data ?? [];
+      break;
+    }
+  }
+
+  if (canonicalRows == null) {
+    throw new Error(
+      "Unable to load canonical ESAT questions for predictor capture.",
+    );
+  }
+
+  const canonicalByQid = new Map(
+    canonicalRows.map((row) => [String(row.qid), row]),
+  );
+
+  const eventRows = submittedRows.flatMap((row) => {
+    const question = canonicalByQid.get(String(row.question_id));
+
+    if (!question) {
+      return [];
+    }
+
+    const selectedAnswer = normaliseAnswer(row.selected_answer);
+    const canonicalAnswer = normaliseAnswer(question.answer);
+
+    if (!selectedAnswer || !canonicalAnswer) {
+      return [];
+    }
+
+    const responseSeconds = Number.isFinite(
+      Number(row.answer_elapsed_seconds),
+    )
+      ? Math.max(0, Math.round(Number(row.answer_elapsed_seconds)))
+      : null;
+
+    const predictorEligible =
+      responseSeconds !== null && responseSeconds >= 10;
+
+    const isCorrect = selectedAnswer === canonicalAnswer;
+    const numericDifficulty = Number(question.difficulty);
+
+    return [{
+      user_id: user.id,
+      email: user.email?.toLowerCase() ?? null,
+      product: "esat-question-bank",
+      question_id: String(question.qid),
+      topic_id: String(question.topic ?? "") || null,
+      selected_answer: selectedAnswer,
+      is_correct: isCorrect,
+      attempted_at:
+        row.answer_submitted_at ?? row.updated_at ?? new Date().toISOString(),
+      source: "qb-progress-trigger-v2",
+      client_event_id:
+        `esat-qb-progress|${user.id}|${row.submission_id}`,
+      history_quality: "observed",
+      metadata: {
+        capture_version: "20260819-1",
+        canonical_qid: String(question.qid),
+        saved_status: String(row.status ?? ""),
+      },
+      status: isCorrect ? "correct" : "wrong",
+      difficulty: Number.isFinite(numericDifficulty)
+        ? numericDifficulty
+        : null,
+      response_seconds: responseSeconds,
+      predictor_eligible: predictorEligible,
+      exclusion_reason:
+        responseSeconds === null
+          ? "missing_response_time"
+          : responseSeconds < 10
+            ? "under_10_seconds"
+            : null,
+      submission_id: String(row.submission_id),
+    }];
+  });
+
+  if (eventRows.length === 0) {
+    return;
+  }
+
+  const { error } = await admin
+    .from("tmua_qb_attempt_events")
+    .upsert(eventRows, {
+      onConflict: "client_event_id",
+      ignoreDuplicates: true,
+    });
+
+  if (error) {
+    throw new Error(
+      `ESAT predictor event capture failed: ${error.message}`,
+    );
+  }
 }
 
 export async function POST(req: Request) {
@@ -138,6 +277,10 @@ export async function POST(req: Request) {
 
     if (error) {
       return jsonErr(500, "Supabase upsert failed", { message: error.message });
+    }
+
+    if (product === "esat-question-bank") {
+      await captureEsatPredictorEvents(auth.user, rows);
     }
 
     return NextResponse.json({ ok: true, saved: rows.length });

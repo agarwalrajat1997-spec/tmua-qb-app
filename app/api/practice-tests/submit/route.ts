@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { getCanonicalEsatTest } from "@/lib/server/esat-canonical-tests";
+import { estimateEsatTestScores } from "@/lib/server/esat-score-estimates";
 import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -9,6 +11,9 @@ const FINGERPRINT =
 
 const SERVER_AUTHORITY =
   "TMUA_SERVER_CANONICAL_AUTHORITY_V1_20260809";
+
+const ESAT_SERVER_AUTHORITY =
+  "ESAT_SERVER_CANONICAL_AUTHORITY_V1_20260819";
 
 type CatalogRow = {
   test_id: string;
@@ -271,6 +276,9 @@ export async function POST(req: Request) {
     );
   }
 
+  // This long-lived compatibility endpoint accepts several generations
+  // of standalone test payloads before normalising them below.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let body: any;
 
   try {
@@ -313,6 +321,12 @@ export async function POST(req: Request) {
 
   const recognisedTmuaTest =
     canonicalTmuaTest != null;
+
+  const canonicalEsatTest =
+    getCanonicalEsatTest(testId);
+
+  const recognisedEsatTest =
+    canonicalEsatTest != null;
 
   if (canonicalTmuaTest && !catalog) {
     return internalError(
@@ -402,6 +416,9 @@ export async function POST(req: Request) {
 
   let clientScoreMatchesAuthoritative:
     boolean | null = null;
+
+  let esatScoreEstimate:
+    ReturnType<typeof estimateEsatTestScores> | null = null;
 
   if (catalog && canonicalTmuaTest) {
     const canonicalPaper =
@@ -528,6 +545,90 @@ export async function POST(req: Request) {
         totalQuestions,
       );
   }
+  else if (canonicalEsatTest) {
+    if (
+      !Array.isArray(body?.answers) ||
+      body.answers.length !==
+        canonicalEsatTest.expectedQuestions
+    ) {
+      return badRequest(
+        `answers must contain exactly ${
+          canonicalEsatTest.expectedQuestions
+        } entries for this ESAT test.`,
+      );
+    }
+
+    totalQuestions =
+      canonicalEsatTest.expectedQuestions;
+
+    paper = "full";
+
+    answers = normaliseAnswerArray(
+      body.answers,
+      totalQuestions,
+    );
+
+    // SECURITY: recognised ESAT papers are scored only against
+    // the committed server-owned canonical answer key.
+    correctAnswers = normaliseAnswerArray(
+      canonicalEsatTest.answers,
+      totalQuestions,
+    );
+
+    timeSpent = normaliseTimeArray(
+      body?.time_spent,
+      totalQuestions,
+    );
+
+    flags = normaliseFlagArray(
+      body?.flags,
+      totalQuestions,
+    );
+
+    clientCorrectAnswersMatchCanonical =
+      clientCorrectAnswersSupplied
+        ? submittedCorrectAnswers.length === totalQuestions &&
+          exactAnswerArraysMatch(
+            submittedCorrectAnswers,
+            canonicalEsatTest.answers,
+          )
+        : null;
+
+    const sectionScores =
+      canonicalEsatTest.sectionRanges.map(
+        ([start, end]) =>
+          correctCount(
+            answers,
+            correctAnswers,
+            start,
+            end - start,
+          ),
+      );
+
+    rawScore = sectionScores.reduce(
+      (sum, value) => sum + value,
+      0,
+    );
+
+    paper1Score = sectionScores[0];
+    paper2Score = sectionScores[1];
+
+    esatScoreEstimate = estimateEsatTestScores(
+      testId,
+      sectionScores,
+    );
+
+    clientScoreMatchesAuthoritative =
+      clientScoreSupplied
+        ? finiteInteger(submittedScore, -1) === rawScore
+        : null;
+
+    incorrect = incorrectQuestionNumbers(
+      answers,
+      correctAnswers,
+      totalQuestions,
+    );
+  }
 
   const submittedAt =
     new Date().toISOString();
@@ -541,7 +642,7 @@ export async function POST(req: Request) {
     paper,
     total_questions: totalQuestions,
 
-    // For recognised TMUA tests, this value is recomputed by
+    // For recognised TMUA and ESAT tests, this is recomputed by
     // the server from submitted responses rather than trusting
     // body.score.
     score: rawScore,
@@ -572,51 +673,75 @@ export async function POST(req: Request) {
       recognised_tmua_test:
         recognisedTmuaTest,
 
+      recognised_esat_test:
+        recognisedEsatTest,
+
       submission_route:
         FINGERPRINT,
 
       raw_score_recomputed_server_side:
-        recognisedTmuaTest,
+        recognisedTmuaTest ||
+        recognisedEsatTest,
 
       raw_mark_authority:
         recognisedTmuaTest
           ? "server_canonical_key_v1"
+          : recognisedEsatTest
+            ? "server_esat_canonical_key_v1"
           : "generic_submission",
 
       server_authority:
         recognisedTmuaTest
           ? SERVER_AUTHORITY
+          : recognisedEsatTest
+            ? ESAT_SERVER_AUTHORITY
           : null,
 
       canonical_key_version:
         recognisedTmuaTest
           ? canonicalTmuaTest?.keyVersion ?? null
+          : recognisedEsatTest
+            ? canonicalEsatTest?.keyVersion ?? null
           : null,
 
       canonical_key_sha256:
         recognisedTmuaTest
           ? canonicalTmuaTest?.canonicalSha256 ?? null
+          : recognisedEsatTest
+            ? canonicalEsatTest?.canonicalSha256 ?? null
           : null,
 
       client_correct_answers_supplied:
-        recognisedTmuaTest
+        recognisedTmuaTest || recognisedEsatTest
           ? clientCorrectAnswersSupplied
           : null,
 
       client_correct_answers_match_canonical:
-        recognisedTmuaTest
+        recognisedTmuaTest || recognisedEsatTest
           ? clientCorrectAnswersMatchCanonical
           : null,
 
       client_score_supplied:
-        recognisedTmuaTest
+        recognisedTmuaTest || recognisedEsatTest
           ? clientScoreSupplied
           : null,
 
       client_score_matches_authoritative:
-        recognisedTmuaTest
+        recognisedTmuaTest || recognisedEsatTest
           ? clientScoreMatchesAuthoritative
           : null,
+
+      esat_score_estimate_version:
+        esatScoreEstimate?.version ?? null,
+
+      esat_modules:
+        esatScoreEstimate?.modules ?? null,
+
+      esat_predicted_combined_practice_score:
+        esatScoreEstimate?.predictedCombinedPracticeScore ?? null,
+
+      esat_combined_score_official:
+        esatScoreEstimate?.combinedScoreOfficial ?? null,
 
 
 
@@ -698,8 +823,8 @@ export async function POST(req: Request) {
   let attemptNumber =
     finalAttempt?.attempt_number ?? null;
 
-  // Unknown tests such as ESAT intentionally have no TMUA
-  // evaluation row. Preserve the previous attempt-number
+  // Non-TMUA tests, including recognised ESAT papers, intentionally
+  // have no TMUA evaluation row. Preserve the generic attempt-number
   // behaviour for those submissions.
   if (attemptNumber == null) {
     const {

@@ -462,6 +462,7 @@ const runtimeSnapshotReferences = [];
 const approvedRuntimeSnapshotReferences =
   new Set([
     "app/api/tmua/overview/route.ts",
+    "app/api/esat/overview/route.ts",
   ]);
 
 for (
@@ -534,9 +535,16 @@ assert(
 );
 
 assert(
+  runtimeSnapshotReferences.includes(
+    "app/api/esat/overview/route.ts",
+  ),
+  "Approved ESAT overview route must remain a server-owned snapshot integration point.",
+);
+
+assert(
   runtimeSnapshotReferences.length ===
     approvedRuntimeSnapshotReferences.size,
-  "Exactly one approved runtime snapshot integration is allowed; found: " +
+  "Only approved runtime snapshot integrations are allowed; found: " +
     runtimeSnapshotReferences.join(", "),
 );
 
@@ -552,5 +560,5 @@ console.log(
   "scores, weights and counts are constrained; " +
   "QB cannot activate below 30 unique questions; " +
   "typed provenance and deterministic deduplication are protected; " +
-  "runtime snapshot access is restricted to the approved server overview route.",
+  "runtime snapshot access is restricted to the approved server overview routes.",
 );

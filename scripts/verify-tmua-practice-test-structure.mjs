@@ -80,6 +80,8 @@ if (!fs.existsSync(pdf) || fs.statSync(pdf).size < 10000) {
 for (const text of [
   "requestFullscreen",
   "exitFullscreen",
+  "skipBreakLabel",
+  "skipBreakHandler",
   "/api/practice-tests/submit",
   "MutationObserver",
   "__TS_TEST_FULLSCREEN_V2__"

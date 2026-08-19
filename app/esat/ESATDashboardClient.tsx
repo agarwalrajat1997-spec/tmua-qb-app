@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "../dashboard/dashboard.module.css";
+import EsatPredictionStrip from "./EsatPredictionStrip";
 
 type EsatProduct = "esat-practice-tests" | "esat-question-bank" | "esat-classes";
 type Section = "practice" | "bank" | "classes" | "resources";
@@ -99,11 +100,11 @@ const TRACKS: Track[] = [
     label: "Engineering",
     subjects: "Math 1 + Physics + Math 2",
     mocks: [
-      { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html", level: 1, difficulty: "easy", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c93aaad4b62f4ad88b94adc4c190aaec.pdf" },
-      { test_id: "esat-mock-02", title: "ESAT Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html", level: 2, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c0a40b1e8699422eb30c2c72f7e29b6c.pdf" },
-      { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html", level: 2, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_3d9e1cd4a1df423183eed281e2afd28b.pdf" },
-      { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html", level: 3, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-mock-04-solutions.pdf" },
-      { test_id: "esat-mock-13", title: "ESAT Mock Test 5", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-13/index.html", level: 3, difficulty: "hard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_b1abc3e8fdd54180b56d226cfa280892.pdf" },
+      { test_id: "esat-mock-01", title: "ESAT Mock Test 1", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-01/index.html", level: 0, difficulty: "easy", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c93aaad4b62f4ad88b94adc4c190aaec.pdf" },
+      { test_id: "esat-mock-02", title: "ESAT Test 2", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html", level: 1, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c0a40b1e8699422eb30c2c72f7e29b6c.pdf" },
+      { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html", level: 1, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_3d9e1cd4a1df423183eed281e2afd28b.pdf" },
+      { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-mock-04-solutions.pdf" },
+      { test_id: "esat-mock-05", title: "ESAT Mock Test 5", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-13/index.html", level: 2, difficulty: "hard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_b1abc3e8fdd54180b56d226cfa280892.pdf" },
     ],
   },
   {
@@ -319,9 +320,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
   const currentTrack = TRACKS.find((t) => t.key === activeTrack) || TRACKS[0];
 
   // ESAT practice-test display policy
-  // Engineering: test 1 is Level 1 Easy, tests 2-3 are Level 2 Standard,
-  // and tests 4-5 are Level 3 Hard.
-  // Every new pathway has one explicit Level 0, Level 1, and Level 2 tile.
+  // Every pathway uses the same scale: Level 0 Easy, Level 1 Standard,
+  // and Level 2 Hard. Engineering has 1/2/2 tests in those bands.
   const visibleMocks = currentTrack.mocks;
 
   function openTest(t: MockTile) {
@@ -507,6 +507,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
         </aside>
 
         <main className={styles.main}>
+          {!showNoAccess ? <EsatPredictionStrip /> : null}
+
           {showNoAccess ? (
             <div className={styles.card}>
               <div className={styles.cardTitle}>No ESAT products enabled</div>
@@ -588,8 +590,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                     mock.difficulty === "easy"
                       ? "Easy"
                       : mock.difficulty === "standard"
-                        ? "ESAT standard"
-                        : "Hard ESAT";
+                        ? "Standard"
+                        : "Hard";
 
                   const levelColor =
                     mock.difficulty === "easy"

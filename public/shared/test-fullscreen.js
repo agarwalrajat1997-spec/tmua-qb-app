@@ -6,6 +6,47 @@
   const root = document.documentElement;
   const nativeFetch = window.fetch.bind(window);
 
+  // The 15 recombined ESAT papers expose three section fields, while the
+  // existing EmailJS template renders paper1 and paper2. Preserve paper3 for
+  // future templates and combine sections 2 and 3 into paper2 for today's
+  // report so no module is omitted.
+  const recombinedEsatPath = /^\/esat-practice-tests\/tests\/esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012](?:\/index\.html|\/)?$/;
+
+  const installEsatEmailReportAdapter = () => {
+    if (!recombinedEsatPath.test(location.pathname)) return;
+    const client = window.emailjs;
+    if (!client || typeof client.send !== "function" || client.__tsThreeSectionAdapter) return;
+
+    const nativeSend = client.send.bind(client);
+    client.send = (serviceId, templateId, templateParams, ...rest) => {
+      const payload = templateParams && typeof templateParams === "object"
+        ? { ...templateParams }
+        : templateParams;
+
+      if (payload) {
+        const labelled = (section, analysis) => {
+          const name = String(payload[`section${section}_name`] || `Section ${section}`).trim();
+          const score = String(payload[`section${section}_score`] || "Not available").trim();
+          const body = String(analysis || "").trim();
+          if (body.startsWith(`${name} Score:`)) return body;
+          return `${name} Score: ${score}${body ? `\n${body}` : ""}`;
+        };
+
+        const paper1 = labelled(1, payload.paper1);
+        const paper2 = labelled(2, payload.paper2);
+        const paper3 = labelled(3, payload.paper3);
+        payload.paper1 = paper1;
+        payload.paper2 = `${paper2}\n\n${paper3}`;
+        payload.paper3 = paper3;
+      }
+
+      return nativeSend(serviceId, templateId, payload, ...rest);
+    };
+    client.__tsThreeSectionAdapter = true;
+  };
+
+  installEsatEmailReportAdapter();
+
   const current = () =>
     document.fullscreenElement ||
     document.webkitFullscreenElement ||
@@ -60,6 +101,9 @@
     /^(start|begin)(?:\s+(?:test|exam|paper|mock|paper\s*[12]))?\s*$/i;
   const submitLabel =
     /^(submit|finish|complete|end)(?:\s+(?:test|exam|paper|mock|answers|paper\s*[12]))?\s*$/i;
+  const skipBreakLabel =
+    /^(skip\s+break|start\s+(?:paper\s*2|math)(?:\s+now)?)\s*$/i;
+  const skipBreakHandler = /(?:^|[^\w$])skipBreak\s*\(/;
 
   const control = target =>
     target instanceof Element ? target.closest(selector) : null;
@@ -99,6 +143,16 @@
   document.addEventListener("click", event => {
     const el = control(event.target);
     if (!el) return;
+    const onclick = el.getAttribute("onclick") || "";
+
+    if (
+      el.dataset.fullscreenBreak === "true" ||
+      skipBreakHandler.test(onclick) ||
+      skipBreakLabel.test(label(el))
+    ) {
+      void enter();
+      return;
+    }
 
     if (
       startIds.has(el.id) ||
@@ -143,7 +197,7 @@
       if (response.ok && url.includes("/api/practice-tests/submit")) {
         void exit();
       }
-    } catch (_) {}
+    } catch {}
     return response;
   };
 

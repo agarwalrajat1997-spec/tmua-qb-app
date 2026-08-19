@@ -14,6 +14,12 @@ const solutionsRoot = path.join(
   "esat-practice-tests",
   "solutions",
 );
+const fullscreenController = fs.readFileSync(
+  path.join(root, "public", "shared", "test-fullscreen.js"),
+  "utf8",
+);
+const difficultyByLevel = ["easy", "standard", "hard"];
+const difficultyLabelByLevel = ["Easy", "Standard", "Hard"];
 
 const pathways = [
   ["physics-chemistry", ["Mathematics 1", "Physics", "Chemistry"]],
@@ -27,6 +33,8 @@ const expectedTests = pathways.flatMap(([pathway, modules]) =>
   [0, 1, 2].map((level) => ({
     testId: `esat-${pathway}-level-${level}`,
     modules,
+    level,
+    difficulty: difficultyByLevel[level],
   })),
 );
 
@@ -34,26 +42,36 @@ const engineeringTests = [
   {
     folder: "esat-mock-01",
     testId: "esat-mock-01",
+    level: 0,
+    difficulty: "easy",
     solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c93aaad4b62f4ad88b94adc4c190aaec.pdf",
   },
   {
     folder: "esat-mock-02",
     testId: "esat-mock-02",
+    level: 1,
+    difficulty: "standard",
     solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_c0a40b1e8699422eb30c2c72f7e29b6c.pdf",
   },
   {
     folder: "esat-mock-03",
     testId: "esat-mock-03",
+    level: 1,
+    difficulty: "standard",
     solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_3d9e1cd4a1df423183eed281e2afd28b.pdf",
   },
   {
     folder: "esat-mock-04",
     testId: "esat-mock-04",
+    level: 2,
+    difficulty: "hard",
     solutionUrl: "/esat-practice-tests/solutions/esat-mock-04-solutions.pdf",
   },
   {
     folder: "esat-mock-13",
     testId: "esat-mock-05",
+    level: 2,
+    difficulty: "hard",
     solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_b1abc3e8fdd54180b56d226cfa280892.pdf",
   },
 ];
@@ -151,6 +169,13 @@ for (const { testId, modules } of expectedTests) {
   if (!content.includes("/shared/mathjax-tex-mml-chtml.js")) {
     failures.push(`${testId}: local MathJax is missing.`);
   }
+  if (!content.includes("/shared/test-fullscreen.js")) {
+    failures.push(`${testId}: shared fullscreen controller is missing.`);
+  }
+  if (!content.includes("paper3: analyses[2]") ||
+      !content.includes('payload[`section${index + 1}_score`]')) {
+    failures.push(`${testId}: third-section email data is incomplete.`);
+  }
 
   const pdfPath = path.join(solutionsRoot, `${testId}-solutions.pdf`);
   if (!fs.existsSync(pdfPath) || fs.statSync(pdfPath).size < 100_000) {
@@ -191,6 +216,38 @@ for (const { folder, solutionUrl } of engineeringTests) {
   if (!dashboard.includes(`href: "/esat-practice-tests/tests/${folder}/index.html"`) ||
       !dashboard.includes(`solutionUrl: "${solutionUrl}"`)) {
     failures.push(`${folder}: dashboard test or solution link is missing.`);
+  }
+}
+
+for (const { testId, level, difficulty } of expectedTests) {
+  const title = `Level ${level} ${difficultyLabelByLevel[level]}`;
+  const entry = new RegExp(
+    `test_id: "${testId}"[^\\n]+title: "${title}"[^\\n]+level: ${level}, difficulty: "${difficulty}"`,
+  );
+  if (!entry.test(dashboard)) {
+    failures.push(`${testId}: dashboard level/difficulty UI is inconsistent.`);
+  }
+}
+
+for (const { folder, level, difficulty } of engineeringTests) {
+  const entry = new RegExp(
+    `href: "/esat-practice-tests/tests/${folder}/index.html"[^\\n]+level: ${level}, difficulty: "${difficulty}"`,
+  );
+  if (!entry.test(dashboard)) {
+    failures.push(`${folder}: Engineering level/difficulty UI is inconsistent.`);
+  }
+}
+
+for (const marker of [
+  "requestFullscreen",
+  "skipBreakLabel",
+  "skipBreakHandler",
+  "recombinedEsatPath",
+  "__tsThreeSectionAdapter",
+  "payload.paper2 = `${paper2}\\n\\n${paper3}`",
+]) {
+  if (!fullscreenController.includes(marker)) {
+    failures.push(`Fullscreen controller is missing ${marker}.`);
   }
 }
 
