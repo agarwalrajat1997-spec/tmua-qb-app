@@ -1,16 +1,16 @@
 (() => {
   "use strict";
-  if (window.__TS_TEST_FULLSCREEN_V3__) return;
-  window.__TS_TEST_FULLSCREEN_V3__ = true;
+  if (window.__TS_TEST_FULLSCREEN_V2__) return;
+  window.__TS_TEST_FULLSCREEN_V2__ = true;
 
   const root = document.documentElement;
   const nativeFetch = window.fetch.bind(window);
   const APP_ORIGIN = "https://app.thrivingscholars.com";
 
   // The 15 recombined ESAT papers expose three section fields, while the
-  // existing EmailJS template renders paper1 and paper2. Match the working
-  // original ESAT mocks by combining sections 2 and 3 into paper2. Keep
-  // paper3 as well for any future three-field template.
+  // existing EmailJS template renders paper1 and paper2. Preserve paper3 for
+  // future templates and combine sections 2 and 3 into paper2 for today's
+  // report so no module is omitted.
   const recombinedEsatPath = /^\/esat-practice-tests\/tests\/esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012](?:\/index\.html|\/)?$/;
 
   const absoluteEsatSolutionUrl = value => {
@@ -33,9 +33,9 @@
       'a[href^="/esat-practice-tests/solutions/"],iframe[src^="/esat-practice-tests/solutions/"]'
     ).forEach(el => {
       const attr = el.tagName === "IFRAME" ? "src" : "href";
-      const value = el.getAttribute(attr);
-      const absolute = absoluteEsatSolutionUrl(value);
-      if (absolute && absolute !== value) el.setAttribute(attr, absolute);
+      const raw = el.getAttribute(attr);
+      const absolute = absoluteEsatSolutionUrl(raw);
+      if (absolute && absolute !== raw) el.setAttribute(attr, absolute);
     });
   };
 
@@ -54,16 +54,19 @@
       if (payload) {
         payload.solution_link = absoluteEsatSolutionUrl(payload.solution_link);
 
-        const paper1 = String(payload.paper1 || "").trim();
-        const paper2 = String(payload.paper2 || "").trim();
-        const paper3 = String(payload.paper3 || "").trim();
+        const labelled = (section, analysis) => {
+          const name = String(payload[`section${section}_name`] || `Section ${section}`).trim();
+          const score = String(payload[`section${section}_score`] || "Not available").trim();
+          const body = String(analysis || "").trim();
+          if (body.startsWith(`${name} Score:`)) return body;
+          return `${name} Score: ${score}${body ? `\n${body}` : ""}`;
+        };
 
+        const paper1 = labelled(1, payload.paper1);
+        const paper2 = labelled(2, payload.paper2);
+        const paper3 = labelled(3, payload.paper3);
         payload.paper1 = paper1;
-        if (paper3 && !paper2.includes(paper3)) {
-          payload.paper2 = `${paper2}\n\n${paper3}`;
-        } else {
-          payload.paper2 = paper2;
-        }
+        payload.paper2 = `${paper2}\n\n${paper3}`;
         payload.paper3 = paper3;
       }
 
@@ -75,10 +78,10 @@
 
   if (!installEsatEmailReportAdapter()) {
     let attempts = 0;
-    const retry = setInterval(() => {
+    const timer = setInterval(() => {
       attempts += 1;
       if (installEsatEmailReportAdapter() || attempts >= 40) {
-        clearInterval(retry);
+        clearInterval(timer);
       }
     }, 250);
   }
