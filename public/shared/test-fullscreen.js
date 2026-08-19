@@ -1,21 +1,49 @@
 (() => {
   "use strict";
-  if (window.__TS_TEST_FULLSCREEN_V2__) return;
-  window.__TS_TEST_FULLSCREEN_V2__ = true;
+  if (window.__TS_TEST_FULLSCREEN_V3__) return;
+  window.__TS_TEST_FULLSCREEN_V3__ = true;
 
   const root = document.documentElement;
   const nativeFetch = window.fetch.bind(window);
+  const APP_ORIGIN = "https://app.thrivingscholars.com";
 
   // The 15 recombined ESAT papers expose three section fields, while the
-  // existing EmailJS template renders paper1 and paper2. Preserve paper3 for
-  // future templates and combine sections 2 and 3 into paper2 for today's
-  // report so no module is omitted.
+  // existing EmailJS template renders paper1 and paper2. Match the working
+  // original ESAT mocks by combining sections 2 and 3 into paper2. Keep
+  // paper3 as well for any future three-field template.
   const recombinedEsatPath = /^\/esat-practice-tests\/tests\/esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012](?:\/index\.html|\/)?$/;
 
-  const installEsatEmailReportAdapter = () => {
+  const absoluteEsatSolutionUrl = value => {
+    const raw = String(value || "").trim();
+    if (!raw) return raw;
+    try {
+      const url = new URL(raw, APP_ORIGIN);
+      if (url.pathname.startsWith("/esat-practice-tests/solutions/")) {
+        return `${APP_ORIGIN}${url.pathname}${url.search}${url.hash}`;
+      }
+      return url.href;
+    } catch {
+      return raw;
+    }
+  };
+
+  const rewriteEsatSolutionLinks = () => {
     if (!recombinedEsatPath.test(location.pathname)) return;
+    document.querySelectorAll(
+      'a[href^="/esat-practice-tests/solutions/"],iframe[src^="/esat-practice-tests/solutions/"]'
+    ).forEach(el => {
+      const attr = el.tagName === "IFRAME" ? "src" : "href";
+      const value = el.getAttribute(attr);
+      const absolute = absoluteEsatSolutionUrl(value);
+      if (absolute && absolute !== value) el.setAttribute(attr, absolute);
+    });
+  };
+
+  const installEsatEmailReportAdapter = () => {
+    if (!recombinedEsatPath.test(location.pathname)) return true;
     const client = window.emailjs;
-    if (!client || typeof client.send !== "function" || client.__tsThreeSectionAdapter) return;
+    if (!client || typeof client.send !== "function") return false;
+    if (client.__tsThreeSectionAdapter) return true;
 
     const nativeSend = client.send.bind(client);
     client.send = (serviceId, templateId, templateParams, ...rest) => {
@@ -24,28 +52,34 @@
         : templateParams;
 
       if (payload) {
-        const labelled = (section, analysis) => {
-          const name = String(payload[`section${section}_name`] || `Section ${section}`).trim();
-          const score = String(payload[`section${section}_score`] || "Not available").trim();
-          const body = String(analysis || "").trim();
-          if (body.startsWith(`${name} Score:`)) return body;
-          return `${name} Score: ${score}${body ? `\n${body}` : ""}`;
-        };
+        payload.solution_link = absoluteEsatSolutionUrl(payload.solution_link);
 
-        const paper1 = labelled(1, payload.paper1);
-        const paper2 = labelled(2, payload.paper2);
-        const paper3 = labelled(3, payload.paper3);
+        const paper1 = String(payload.paper1 || "").trim();
+        const paper2 = String(payload.paper2 || "").trim();
+        const paper3 = String(payload.paper3 || "").trim();
+
         payload.paper1 = paper1;
-        payload.paper2 = `${paper2}\n\n${paper3}`;
+        payload.paper2 = paper3 && !paper2.includes(paper3)
+          ? `${paper2}\n\n${paper3}`.trim()
+          : paper2;
         payload.paper3 = paper3;
       }
 
       return nativeSend(serviceId, templateId, payload, ...rest);
     };
     client.__tsThreeSectionAdapter = true;
+    return true;
   };
 
-  installEsatEmailReportAdapter();
+  if (!installEsatEmailReportAdapter()) {
+    let attempts = 0;
+    const retry = setInterval(() => {
+      attempts += 1;
+      if (installEsatEmailReportAdapter() || attempts >= 40) {
+        clearInterval(retry);
+      }
+    }, 250);
+  }
 
   const current = () =>
     document.fullscreenElement ||
@@ -173,6 +207,7 @@
     let checks = 0;
     const timer = setInterval(() => {
       checks += 1;
+      rewriteEsatSolutionLinks();
       if (
         resultsVisible() ||
         !el.isConnected ||
@@ -195,6 +230,7 @@
         ? input
         : String(input?.url || "");
       if (response.ok && url.includes("/api/practice-tests/submit")) {
+        rewriteEsatSolutionLinks();
         void exit();
       }
     } catch {}
@@ -202,11 +238,13 @@
   };
 
   const observer = new MutationObserver(() => {
+    rewriteEsatSolutionLinks();
     if (current() && resultsVisible()) void exit();
   });
 
   const observe = () => {
     if (!document.body) return;
+    rewriteEsatSolutionLinks();
     observer.observe(document.body, {
       subtree: true,
       childList: true,
