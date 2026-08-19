@@ -211,7 +211,7 @@ export default function EsatPredictionStrip() {
           <strong>{rankText}</strong>
 
           <InfoTooltip label="Ranking">
-            Your rank is based on the rolling 30-day active ESAT cohort and combines your predicted practice score, breadth-depth of questions attempted, and consistency. The displayed rank and cohort use the same calibrated presentation as TMUA to account for Thriving Scholars students who also prepare outside the portal.
+            Your rank is based on the rolling 30-day active ESAT cohort and combines your predicted practice score, breadth-depth of questions attempted, and consistency.
           </InfoTooltip>
         </span>
       )
