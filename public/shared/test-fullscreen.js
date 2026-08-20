@@ -5,7 +5,7 @@
 
   const root = document.documentElement;
   const nativeFetch = window.fetch.bind(window);
-  const APP_ORIGIN = "https://app.thrivingscholars.com";
+  const APP_ORIGIN = window.location.origin;
 
   const recombinedEsatPath = /^\/esat-practice-tests\/tests\/esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012](?:\/index\.html|\/)?$/;
 
@@ -145,7 +145,7 @@
     if (
       startIds.has(el.id) ||
       el.dataset.fullscreenStart === "true" ||
-      startLabel.test(label(el))
+      (startLabel.test(label(el)) || /^(start|begin)\b/i.test(label(el)))
     ) {
       void enter();
       return;

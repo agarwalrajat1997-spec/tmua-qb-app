@@ -1239,12 +1239,12 @@ function sendResultsEmail(totalScore, sectionResults, timestamp) {
     name: studentName,
     test_title: testTitle,
     to_email: studentEmail,
-    solution_link: solutionPDF,
+    solution_link: new URL(solutionPDF, window.location.origin).href,
     session: testSession,
     score: `${totalScore} / 81`,
     timestamp: timestamp,
     paper1: analyses[0],
-    paper2: analyses[1],
+    paper2: `${analyses[1]}\n\n${analyses[2]}`,
     paper3: analyses[2]
   };
   sectionNames.forEach((name, index) => {
@@ -1398,6 +1398,6 @@ window.addEventListener("contextmenu", function(e) {
   });
 })();
 </script>
-  <script src="/shared/test-fullscreen.js?v=20260803-1" defer></script>
+  <script src="/shared/test-fullscreen.js?v=20260820-4" defer></script>
 </body>
 </html>

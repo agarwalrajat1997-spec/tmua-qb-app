@@ -3,7 +3,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const testsRoot = path.join(root, "public", "esat-practice-tests", "tests");
-const fullscreenVersion = "20260820-2";
+const fullscreenVersion = "20260820-4";
 
 const pathways = [
   "physics-chemistry",
