@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
+import { safeLoginDestination } from "@/lib/auth/login-destination";
 import styles from "./login.module.css";
 
 type Props = { uiMark: string };
@@ -32,7 +33,7 @@ export default function LoginClient({ uiMark }: Props) {
   const router = useRouter();
   const search = useSearchParams();
 
-  const nextPath = search.get("next") || "/dashboard";
+  const nextPath = safeLoginDestination(search.get("next"));
   const isEsat =
     nextPath === "/esat" ||
     nextPath.startsWith("/esat/") ||
@@ -118,8 +119,18 @@ export default function LoginClient({ uiMark }: Props) {
     setBusy(true);
 
     try {
-      const redirectTo =
-        `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
+      const intentResponse = await fetch("/api/auth/login-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ next: nextPath }),
+        cache: "no-store",
+      });
+
+      if (!intentResponse.ok) {
+        throw new Error("Could not save the requested portal.");
+      }
+
+      const redirectTo = `${window.location.origin}/auth/callback`;
 
       const { error } = await supabase.auth.signInWithOtp({
         email: em,
