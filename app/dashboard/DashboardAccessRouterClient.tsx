@@ -91,6 +91,21 @@ export default function DashboardAccessRouterClient() {
         const tmuaProducts = ["practice-tests", "tmua-question-bank", "tmua-classes"];
         const hasTMUA = products.some((p) => tmuaProducts.includes(p));
 
+        const esatProducts = [
+          "esat-practice-tests",
+          "esat-question-bank",
+          "esat-classes",
+        ];
+        const hasESAT = products.some((p) => esatProducts.includes(p));
+
+        // The Supabase Site URL historically points at /dashboard. If an
+        // ESAT-only login ever lands here, send it to the ESAT portal instead
+        // of showing the TMUA dashboard's false "No products enabled" state.
+        if (hasESAT && !hasSAT && !hasAMC && !hasTMUA) {
+          window.location.replace("/esat");
+          return;
+        }
+
         if (requestedView === "sat" && hasSAT) {
           setState({
             mode: "sat",
@@ -225,5 +240,4 @@ export default function DashboardAccessRouterClient() {
     </div>
   );
 }
-
 
