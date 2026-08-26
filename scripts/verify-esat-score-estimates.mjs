@@ -10,7 +10,7 @@ assert.equal(
   ESAT_SCORE_ESTIMATE_VERSION,
   "ESAT_EVIDENCE_CALIBRATED_V2_20260818",
 );
-assert.equal(Object.keys(ESAT_TEST_PROFILES).length, 20);
+assert.equal(Object.keys(ESAT_TEST_PROFILES).length, 26);
 assert.equal(Object.keys(ESAT_PAPER_CALIBRATIONS).length, 21);
 
 for (

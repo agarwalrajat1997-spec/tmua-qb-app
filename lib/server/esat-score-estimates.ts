@@ -448,7 +448,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-physics-chemistry-level-0": {
-    title: "Physics + Chemistry — Level 0 Easy",
+    title: "Physics + Chemistry â€” Level 0 Easy",
     difficulty: "easy",
     modules: ["Mathematics 1", "Physics", "Chemistry"],
     calibrationIds: [
@@ -458,7 +458,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-physics-chemistry-level-1": {
-    title: "Physics + Chemistry — Level 1 Standard",
+    title: "Physics + Chemistry â€” Level 1 Standard",
     difficulty: "standard",
     modules: ["Mathematics 1", "Physics", "Chemistry"],
     calibrationIds: [
@@ -468,7 +468,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-physics-chemistry-level-2": {
-    title: "Physics + Chemistry — Level 2 Harder than ESAT",
+    title: "Physics + Chemistry â€” Level 2 Harder than ESAT",
     difficulty: "hard",
     modules: ["Mathematics 1", "Physics", "Chemistry"],
     calibrationIds: [
@@ -478,7 +478,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-physics-biology-level-0": {
-    title: "Physics + Biology — Level 0 Easy",
+    title: "Physics + Biology â€” Level 0 Easy",
     difficulty: "easy",
     modules: ["Mathematics 1", "Physics", "Biology"],
     calibrationIds: [
@@ -488,7 +488,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-physics-biology-level-1": {
-    title: "Physics + Biology — Level 1 Standard",
+    title: "Physics + Biology â€” Level 1 Standard",
     difficulty: "standard",
     modules: ["Mathematics 1", "Physics", "Biology"],
     calibrationIds: [
@@ -498,7 +498,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-physics-biology-level-2": {
-    title: "Physics + Biology — Level 2 Harder than ESAT",
+    title: "Physics + Biology â€” Level 2 Harder than ESAT",
     difficulty: "hard",
     modules: ["Mathematics 1", "Physics", "Biology"],
     calibrationIds: [
@@ -508,7 +508,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-maths2-chemistry-level-0": {
-    title: "Maths 2 + Chemistry — Level 0 Easy",
+    title: "Maths 2 + Chemistry â€” Level 0 Easy",
     difficulty: "easy",
     modules: ["Mathematics 1", "Mathematics 2", "Chemistry"],
     calibrationIds: [
@@ -518,7 +518,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-maths2-chemistry-level-1": {
-    title: "Maths 2 + Chemistry — Level 1 Standard",
+    title: "Maths 2 + Chemistry â€” Level 1 Standard",
     difficulty: "standard",
     modules: ["Mathematics 1", "Mathematics 2", "Chemistry"],
     calibrationIds: [
@@ -528,7 +528,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-maths2-chemistry-level-2": {
-    title: "Maths 2 + Chemistry — Level 2 Harder than ESAT",
+    title: "Maths 2 + Chemistry â€” Level 2 Harder than ESAT",
     difficulty: "hard",
     modules: ["Mathematics 1", "Mathematics 2", "Chemistry"],
     calibrationIds: [
@@ -538,7 +538,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-maths2-biology-level-0": {
-    title: "Maths 2 + Biology — Level 0 Easy",
+    title: "Maths 2 + Biology â€” Level 0 Easy",
     difficulty: "easy",
     modules: ["Mathematics 1", "Mathematics 2", "Biology"],
     calibrationIds: [
@@ -548,7 +548,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-maths2-biology-level-1": {
-    title: "Maths 2 + Biology — Level 1 Standard",
+    title: "Maths 2 + Biology â€” Level 1 Standard",
     difficulty: "standard",
     modules: ["Mathematics 1", "Mathematics 2", "Biology"],
     calibrationIds: [
@@ -558,7 +558,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-maths2-biology-level-2": {
-    title: "Maths 2 + Biology — Level 2 Harder than ESAT",
+    title: "Maths 2 + Biology â€” Level 2 Harder than ESAT",
     difficulty: "hard",
     modules: ["Mathematics 1", "Mathematics 2", "Biology"],
     calibrationIds: [
@@ -568,7 +568,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-chemistry-biology-level-0": {
-    title: "Chemistry + Biology — Level 0 Easy",
+    title: "Chemistry + Biology â€” Level 0 Easy",
     difficulty: "easy",
     modules: ["Mathematics 1", "Chemistry", "Biology"],
     calibrationIds: [
@@ -578,7 +578,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-chemistry-biology-level-1": {
-    title: "Chemistry + Biology — Level 1 Standard",
+    title: "Chemistry + Biology â€” Level 1 Standard",
     difficulty: "standard",
     modules: ["Mathematics 1", "Chemistry", "Biology"],
     calibrationIds: [
@@ -588,7 +588,7 @@ const TEST_PROFILES: Readonly<
     ],
   },
   "esat-chemistry-biology-level-2": {
-    title: "Chemistry + Biology — Level 2 Harder than ESAT",
+    title: "Chemistry + Biology â€” Level 2 Harder than ESAT",
     difficulty: "hard",
     modules: ["Mathematics 1", "Chemistry", "Biology"],
     calibrationIds: [
@@ -596,6 +596,42 @@ const TEST_PROFILES: Readonly<
       "chemistry-hard",
       "biology-hard",
     ],
+  },
+  "esat-recall-2024-25-engineering": {
+    title: "ESAT 2024â€“25 Recall Mock â€” Engineering",
+    difficulty: "hard",
+    modules: ["Mathematics 1", "Mathematics 2", "Physics"],
+    calibrationIds: ["engineering-05-m1", "engineering-05-m2", "engineering-05-physics"],
+  },
+  "esat-recall-2024-25-physics-chemistry": {
+    title: "ESAT 2024â€“25 Recall Mock â€” Physics + Chemistry",
+    difficulty: "hard",
+    modules: ["Mathematics 1", "Physics", "Chemistry"],
+    calibrationIds: ["engineering-05-m1", "engineering-05-physics", "chemistry-hard"],
+  },
+  "esat-recall-2024-25-physics-biology": {
+    title: "ESAT 2024â€“25 Recall Mock â€” Physics + Biology",
+    difficulty: "hard",
+    modules: ["Mathematics 1", "Physics", "Biology"],
+    calibrationIds: ["engineering-05-m1", "engineering-05-physics", "biology-hard"],
+  },
+  "esat-recall-2024-25-maths2-chemistry": {
+    title: "ESAT 2024â€“25 Recall Mock â€” Maths 2 + Chemistry",
+    difficulty: "hard",
+    modules: ["Mathematics 1", "Mathematics 2", "Chemistry"],
+    calibrationIds: ["engineering-05-m1", "engineering-05-m2", "chemistry-hard"],
+  },
+  "esat-recall-2024-25-maths2-biology": {
+    title: "ESAT 2024â€“25 Recall Mock â€” Maths 2 + Biology",
+    difficulty: "hard",
+    modules: ["Mathematics 1", "Mathematics 2", "Biology"],
+    calibrationIds: ["engineering-05-m1", "engineering-05-m2", "biology-hard"],
+  },
+  "esat-recall-2024-25-chemistry-biology": {
+    title: "ESAT 2024â€“25 Recall Mock â€” Chemistry + Biology",
+    difficulty: "hard",
+    modules: ["Mathematics 1", "Chemistry", "Biology"],
+    calibrationIds: ["engineering-05-m1", "chemistry-hard", "biology-hard"],
   },
 });
 

@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESAT 2024–2025 Recall Mock</title>
+<script async="" src="/shared/mathjax-tex-mml-chtml.js?v=3" type="text/javascript"></script>
+<style>
+    .top-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .options label {
+      display: block;
+    }
+
+    #flag-btn {
+      background-color: white;
+      color: black;
+      border: 1px solid black;
+      font-size: 14px;
+      font-weight: normal;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #flag-btn.flagged {
+      background-color: yellow;
+      font-weight: bold;
+      border: 2px solid #999;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: white;
+    }
+    .header {
+      background: #0074c1;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .timer {
+      font-size: 14px;
+      text-align: right;
+    }
+    .container {
+      padding: 20px 40px;
+      font-size: 19px;
+      line-height: 1.6;
+    }
+    .question-number {
+      font-weight: 800;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .container p {
+      font-size: 19px;
+      line-height: 1.65;
+      margin: 12px 0;
+    }
+    .options {
+      margin-top: 18px;
+      margin-bottom: 40px;
+    }
+    .option {
+      margin: 10px 0;
+      font-size: 19px;
+      line-height: 1.8;
+    }
+    input[type="radio"] {
+      transform: scale(1.35);
+      margin-right: 12px;
+    }
+    .footer {
+      background: #0074c1;
+      padding: 10px 20px;
+      text-align: right;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
+    }
+    .footer button {
+      font-size: 16px;
+      padding: 6px 16px;
+      margin-left: 10px;
+      background: #005fa3;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .footer button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    #instructions {
+      padding: 40px;
+      font-size: 18px;
+    }
+    #exam-interface {
+      display: none;
+    }
+    #exam-interface .container {
+      padding-bottom: 110px;
+    }
+
+    #instructions {
+      max-width: 1250px;
+      min-height: 560px;
+      margin: 60px auto;
+      background: #ffffff;
+      border: 2px solid #f2b233;
+      border-radius: 22px;
+      box-shadow:
+        0 18px 48px rgba(15, 23, 42, 0.12),
+        0 10px 26px rgba(242, 178, 51, 0.18);
+      padding: 64px 64px 70px;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 0;
+    }
+
+    #instructions::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: #f3f5f7;
+      z-index: -1;
+    }
+
+    #instructions #test-title {
+      margin: 0 0 18px 0;
+      font-size: 30px;
+      font-weight: 800;
+      color: #0b1220;
+    }
+
+    #instructions p {
+      margin: 10px 0;
+      color: #0f172a;
+    }
+
+    #instructions > div:first-of-type {
+      margin: 34px 0 26px !important;
+    }
+
+    #instructions input[type="text"],
+    #instructions input[type="email"],
+    #instructions select {
+      border: 1.6px solid rgba(242, 178, 51, 0.65) !important;
+      border-radius: 10px !important;
+      background: #fff !important;
+      outline: none !important;
+    }
+
+    #instructions input[type="text"]:focus,
+    #instructions input[type="email"]:focus,
+    #instructions select:focus {
+      border-color: #f2b233 !important;
+      box-shadow: 0 0 0 4px rgba(242, 178, 51, 0.18) !important;
+    }
+
+    #instructions button {
+      background: #f6c44a !important;
+      color: #2b1a00 !important;
+      border: none !important;
+      border-radius: 12px !important;
+      box-shadow: 0 12px 24px rgba(246, 196, 74, 0.35) !important;
+      cursor: pointer !important;
+    }
+
+    #instructions button:hover {
+      filter: brightness(0.98);
+      transform: translateY(-1px);
+    }
+
+    #instructions button:active {
+      transform: translateY(0px);
+      box-shadow: 0 10px 18px rgba(246, 196, 74, 0.28) !important;
+    }
+
+    #instructions table {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .question-media,
+    .question-image {
+      margin: 14px 0 18px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .question-media img,
+    .question-image img {
+      display: block;
+      max-width: 420px;
+      width: 100%;
+      height: auto;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px;
+      background: #ffffff;
+    }
+
+    .question-image svg,
+    .question-media svg {
+      display: block;
+      max-width: 520px;
+      width: 100%;
+      height: auto;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px;
+      background: #ffffff;
+    }
+
+
+    .arithmetic-diagram {
+      justify-content: center;
+      margin: 18px 0 22px;
+    }
+    .addition-table {
+      border-collapse: collapse;
+      font-size: 24px;
+      line-height: 1.2;
+      margin: 0 auto;
+      font-family: Georgia, serif;
+    }
+    .addition-table td {
+      border: none;
+      min-width: 30px;
+      padding: 2px 6px;
+      text-align: right;
+    }
+    .addition-table .sumline td {
+      border-top: 2px solid #111;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-family: Georgia, serif;
+      font-size: 17px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #f2f2f2;
+    }
+
+    .section-chip {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-left: 8px;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+    }
+
+    #break-screen {
+      display: none;
+      text-align: center;
+      padding: 40px;
+      min-height: 100vh;
+      background: #f3f5f7;
+      box-sizing: border-box;
+    }
+
+    #break-card {
+      max-width: 760px;
+      margin: 80px auto;
+      background: #ffffff;
+      border: 2px solid #f2b233;
+      border-radius: 22px;
+      padding: 46px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.12);
+    }
+
+    #break-screen button {
+      background: #f6c44a;
+      color: #2b1a00;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #navigator-popup button {
+      cursor: pointer;
+    }
+
+    .result-wrap {
+      padding: 40px;
+      max-width: 980px;
+      margin: auto;
+    }
+
+    .result-card {
+      text-align: center;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 12px 24px rgba(15,23,42,0.06);
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0 30px;
+    }
+
+    .result-mini {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      background: #f9fafb;
+    }
+
+    .result-mini h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+    }
+
+    .result-mini div {
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 950px) {
+      #instructions {
+        margin: 24px 16px;
+        padding: 40px 22px 44px;
+        min-height: auto;
+      }
+      .container {
+        padding: 20px;
+      }
+      .header {
+        align-items: flex-start;
+        gap: 18px;
+      }
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+<link href="/shared/esat-score-estimates.css?v=20260818-1" rel="stylesheet"/>
+</head>
+<body>
+<div id="instructions">
+<h2 id="test-title">ESAT 2024–2025 Recall Mock</h2><p style="margin-top:-8px;font-weight:700;color:#8b1e1e;">Hard · Engineering</p>
+<p><strong>Time allowed:</strong> 2 hours - three sections of 40 minutes each</p>
+<p><strong>Calculators are not permitted.</strong></p>
+<div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+<div>
+<label for="student-name" style="font-size: 16px;">Enter your full name:</label><br/>
+<input id="student-name" placeholder="Full Name" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;" type="text"/>
+</div>
+<div>
+<label for="student-email" style="font-size: 16px;">Email (to receive results):</label><br/>
+<input id="student-email" placeholder="example@email.com" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;" type="email"/>
+</div>
+<div>
+<label for="test-date" style="font-size: 16px;">Select your ESAT test session:</label><br/>
+<select id="test-date" style="padding: 8px; font-size: 16px; width: 240px; margin-top: 5px;">
+<option value="October 2026">October 2026</option>
+<option value="January 2027">January 2027</option>
+<option value="October 2027">October 2027</option>
+</select>
+</div>
+<div style="margin-top: 28px;">
+<button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
+</div>
+</div>
+<table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
+<thead>
+<tr style="background: #f2f2f2;">
+<th style="border: 1px solid #ccc; padding: 10px;">Section</th>
+<th style="border: 1px solid #ccc; padding: 10px;">Subject</th>
+<th style="border: 1px solid #ccc; padding: 10px;">No. of Questions</th>
+<th style="border: 1px solid #ccc; padding: 10px;">Time</th>
+</tr>
+</thead>
+<tbody><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">1</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Mathematics 1</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td></tr><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">2</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Mathematics 2</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td></tr><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">3</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Physics</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td></tr></tbody>
+</table>
+<p style="font-size: 16px; margin-top: 20px;">
+    Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
+    You should attempt <strong>all 27 questions</strong> in each section.
+  </p>
+<p style="font-size: 16px;">
+    A countdown timer will begin once the test starts. You may navigate between questions within the current section at any time. The current section will automatically submit when the time expires. After Mathematics 1 and Physics, you will get an optional 5-minute break before the next section begins.
+  </p>
+<p style="font-weight: bold; font-size: 16px;">When you're ready, click the START EXAM button at the top to begin.</p>
+</div>
+<div id="exam-interface">
+<div class="header">
+<div><strong>(ESAT) Engineering and Science Admissions Test</strong><span class="section-chip" id="section-chip">Mathematics 1</span></div>
+<div class="timer">
+      ⏲️ Time Remaining <span id="time">40:00</span><br/>
+      📄 <span id="counter">Q1 of 27</span><br/>
+<button id="flag-btn" onclick="toggleFlag()" style="margin-top: 8px; padding: 4px 10px; font-size: 14px;">⚑ Flag for Review</button>
+</div>
+</div>
+<div class="container" id="question-container"></div>
+<div class="footer">
+<button id="prev-btn" onclick="prevQuestion()">← Previous</button>
+<button id="next-btn" onclick="nextQuestion()">Next →</button>
+<button onclick="openNavigator()">Navigator</button>
+<button onclick="confirmSubmit()">Submit</button>
+</div>
+</div>
+<div id="break-screen">
+<div id="break-card">
+<h2 id="break-title">End of Section</h2>
+<p id="break-copy">You can take a 5-minute break before starting the next section.</p>
+<p>Time Remaining: <span id="break-timer">05:00</span></p>
+<button onclick="skipBreak()">Skip Break</button>
+</div>
+</div>
+<div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:340px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+<h3 id="navigator-heading" style="margin-top: 0; color:#0074c1;"></h3>
+<div id="navigator-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom: 20px;"></div>
+<button onclick="closeNavigator()" style="background:#ccc; padding:6px 12px; border: none; border-radius: 4px;">Close</button>
+</div>
+<script>
+const solutionPDF = "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-engineering-solutions.pdf";
+const sectionNames = ["Mathematics 1", "Mathematics 2", "Physics"];
+const sectionKeys = ["mathematics_1", "mathematics_2", "physics"];
+const pathwayName = "Engineering";
+const testId = "esat-recall-2024-25-engineering";
+const questions = ["<div class=\"question-number\">Question 1</div>\n<p>A tank contains an alloy in which copper and zinc are in the mass ratio \\(5:3\\). Exactly \\(8\\text{ kg}\\) of the well-mixed alloy is removed and replaced by \\(8\\text{ kg}\\) of pure zinc. The new copper-to-zinc ratio is \\(3:2\\).</p>\n<p>What was the original mass of alloy in the tank?</p>\n<div><label><input name=\"q1\" type=\"radio\" value=\"A\"/> \\(80\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"B\"/> \\(192\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"C\"/> \\(200\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"D\"/> \\(\\frac{200}{9}\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"E\"/> \\(320\\text{ kg}\\)</label><br/></div>", "<div class=\"question-number\">Question 2</div>\n<p>For positive integers \\(a\\) and \\(b\\), the highest common factor of \\(a\\) and \\(b\\) is \\(6\\), and their lowest common multiple is \\(180\\).</p>\n<p>How many <em>ordered</em> pairs \\((a,b)\\) satisfy these conditions?</p>\n<div><label><input name=\"q2\" type=\"radio\" value=\"A\"/> \\(8\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"B\"/> \\(4\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"C\"/> \\(6\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"D\"/> \\(3\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"E\"/> \\(16\\)</label><br/></div>", "<div class=\"question-number\">Question 3</div>\n<p>A vehicle travels a route of length \\(D\\). On one day it covers the first third of the route at speed \\(v\\) and the remainder at speed \\(2v\\), taking \\(48\\) minutes in total.</p>\n<p>On another day it covers the first half at speed \\(4v/3\\), stops for \\(6\\) minutes, and then covers the second half at constant speed \\(kv\\). The total time is again \\(48\\) minutes.</p>\n<p>What is \\(k\\)?</p>\n<div><label><input name=\"q3\" type=\"radio\" value=\"A\"/> \\(2\\)</label><br/><label><input name=\"q3\" type=\"radio\" value=\"B\"/> \\(\\frac94\\)</label><br/><label><input name=\"q3\" type=\"radio\" value=\"C\"/> \\(\\frac52\\)</label><br/><label><input name=\"q3\" type=\"radio\" value=\"D\"/> \\(\\frac{12}{5}\\)</label><br/><label><input name=\"q3\" type=\"radio\" value=\"E\"/> \\(\\frac83\\)</label><br/></div>", "<div class=\"question-number\">Question 4</div>\n<p>A circle has centre \\(O\\), radius \\(10\\), and chord \\(AB\\) of length \\(12\\). A tangent is drawn at \\(A\\). Let \\(\\theta\\) be the acute angle between the tangent and chord \\(AB\\).</p>\n<p>What is \\(\\tan\\theta\\)?</p>\n<div class=\"question-image\"><svg aria-label=\"Circle with chord AB and a tangent at A\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 360\">\n<rect fill=\"#fff\" height=\"360\" width=\"700\"></rect><g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6\">\n<circle cx=\"350\" cy=\"190\" r=\"120\"></circle><line x1=\"446\" x2=\"446\" y1=\"118\" y2=\"262\"></line><line x1=\"350\" x2=\"446\" y1=\"190\" y2=\"118\"></line><line x1=\"398\" x2=\"494\" y1=\"54\" y2=\"182\"></line><path d=\"M461 138 A25 25 0 0 1 446 143\" stroke=\"#7a211b\" stroke-width=\"3\"></path>\n<circle cx=\"350\" cy=\"190\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"446\" cy=\"118\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"446\" cy=\"262\" fill=\"#182230\" r=\"4\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"332\" y=\"214\">O</text><text x=\"455\" y=\"112\">A</text><text x=\"455\" y=\"282\">B</text><text x=\"454\" y=\"202\">12</text><text x=\"383\" y=\"146\">10</text><text x=\"411\" y=\"48\">tangent</text><text fill=\"#7a211b\" x=\"463\" y=\"153\">θ</text></g></svg></div>\n<div><label><input name=\"q4\" type=\"radio\" value=\"A\"/> \\(\\frac43\\)</label><br/><label><input name=\"q4\" type=\"radio\" value=\"B\"/> \\(\\frac35\\)</label><br/><label><input name=\"q4\" type=\"radio\" value=\"C\"/> \\(\\frac45\\)</label><br/><label><input name=\"q4\" type=\"radio\" value=\"D\"/> \\(\\frac54\\)</label><br/><label><input name=\"q4\" type=\"radio\" value=\"E\"/> \\(\\frac34\\)</label><br/></div>", "<div class=\"question-number\">Question 5</div>\n<p>In trapezium \\(ABCD\\), \\(AB\\parallel CD\\). The diagonals \\(AC\\) and \\(BD\\) meet at \\(P\\), and \\(AB:CD=3:5\\). The area of triangle \\(APB\\) is \\(27\\).</p>\n<p>What is the area of triangle \\(CPD\\)?</p>\n<div class=\"question-image\"><svg aria-label=\"Trapezium ABCD with diagonals intersecting at P\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 350\">\n<rect fill=\"#fff\" height=\"350\" width=\"700\"></rect><g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.7\">\n<polygon points=\"260,70 440,70 500,295 200,295\"></polygon><line x1=\"260\" x2=\"500\" y1=\"70\" y2=\"295\"></line><line x1=\"440\" x2=\"200\" y1=\"70\" y2=\"295\"></line>\n<circle cx=\"350\" cy=\"154.4\" fill=\"#7a211b\" r=\"4\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"244\" y=\"57\">A</text><text x=\"446\" y=\"57\">B</text><text x=\"507\" y=\"310\">C</text><text x=\"179\" y=\"310\">D</text><text fill=\"#7a211b\" x=\"360\" y=\"151\">P</text><text x=\"335\" y=\"54\">3</text><text x=\"344\" y=\"324\">5</text></g></svg></div>\n<div><label><input name=\"q5\" type=\"radio\" value=\"A\"/> \\(45\\)</label><br/><label><input name=\"q5\" type=\"radio\" value=\"B\"/> \\(125\\)</label><br/><label><input name=\"q5\" type=\"radio\" value=\"C\"/> \\(\\frac{243}{25}\\)</label><br/><label><input name=\"q5\" type=\"radio\" value=\"D\"/> \\(75\\)</label><br/><label><input name=\"q5\" type=\"radio\" value=\"E\"/> \\(192\\)</label><br/></div>", "<div class=\"question-number\">Question 6</div>\n<p>The sequence begins</p>\\[7,\\ 14,\\ 25,\\ 40,\\ldots\\]<p>and has constant second differences. Let \\(n\\) be the smallest index for which the \\(n\\)th term exceeds \\(500\\), and let \\(e\\) be the amount by which that term exceeds \\(500\\).</p>\n<p>Which pair \\((n,e)\\) is correct?</p>\n<div><label><input name=\"q6\" type=\"radio\" value=\"A\"/> \\((15,31)\\)</label><br/><label><input name=\"q6\" type=\"radio\" value=\"B\"/> \\((16,32)\\)</label><br/><label><input name=\"q6\" type=\"radio\" value=\"C\"/> \\((16,31)\\)</label><br/><label><input name=\"q6\" type=\"radio\" value=\"D\"/> \\((15,32)\\)</label><br/><label><input name=\"q6\" type=\"radio\" value=\"E\"/> \\((17,69)\\)</label><br/></div>", "<div class=\"question-number\">Question 7</div>\n<p>A sample has recorded mass \\(2.400\\text{ kg}\\), correct to the nearest \\(0.010\\text{ kg}\\), and recorded volume \\(800\\text{ cm}^3\\), correct to the nearest \\(10\\text{ cm}^3\\).</p>\n<p>If its density is \\(\\rho\\text{ g cm}^{-3}\\), which statement gives the exact bounds for \\(\\rho\\)?</p>\n<div><label><input name=\"q7\" type=\"radio\" value=\"A\"/> \\(\\frac{479}{159}\\le\\rho&lt;\\frac{481}{161}\\)</label><br/><label><input name=\"q7\" type=\"radio\" value=\"B\"/> \\(\\frac{479}{161}&lt;\\rho&lt;\\frac{481}{159}\\)</label><br/><label><input name=\"q7\" type=\"radio\" value=\"C\"/> \\(\\frac{480}{161}\\le\\rho&lt;\\frac{480}{159}\\)</label><br/><label><input name=\"q7\" type=\"radio\" value=\"D\"/> \\(\\frac{2395}{800}\\le\\rho&lt;\\frac{2405}{800}\\)</label><br/><label><input name=\"q7\" type=\"radio\" value=\"E\"/> \\(2.995\\le\\rho&lt;3.005\\)</label><br/></div>", "<div class=\"question-number\">Question 8</div>\n<p>A bag contains \\(4\\) red, \\(3\\) blue and \\(2\\) green counters. Two counters are drawn at random without replacement.</p>\n<p>Given that the counters are different colours, what is the probability that one of them is green?</p>\n<div><label><input name=\"q8\" type=\"radio\" value=\"A\"/> \\(\\frac5{13}\\)</label><br/><label><input name=\"q8\" type=\"radio\" value=\"B\"/> \\(\\frac6{13}\\)</label><br/><label><input name=\"q8\" type=\"radio\" value=\"C\"/> \\(\\frac7{13}\\)</label><br/><label><input name=\"q8\" type=\"radio\" value=\"D\"/> \\(\\frac7{18}\\)</label><br/><label><input name=\"q8\" type=\"radio\" value=\"E\"/> \\(\\frac{14}{27}\\)</label><br/></div>", "<div class=\"question-number\">Question 9</div>\n<p>The graph shows the volume \\(V\\) litres of water remaining in tank A, \\(t\\) minutes after draining begins. At \\(t=0\\), an empty tank B starts filling at a constant rate of \\(12\\) litres per minute.</p>\n<p>At what time do the two tanks contain the same volume?</p>\n<div class=\"question-image\"><svg aria-label=\"Piecewise linear graph through 0,120; 4,96; and 10,0\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 390\">\n<rect fill=\"#fff\" height=\"390\" width=\"700\"></rect><g stroke=\"#98a2b3\" stroke-width=\"1\"><line x1=\"90\" x2=\"630\" y1=\"320\" y2=\"320\"></line><line x1=\"90\" x2=\"90\" y1=\"320\" y2=\"40\"></line></g>\n<g stroke=\"#d0d5dd\" stroke-dasharray=\"4 5\" stroke-width=\"1\"><line x1=\"90\" x2=\"306\" y1=\"96\" y2=\"96\"></line><line x1=\"306\" x2=\"306\" y1=\"320\" y2=\"96\"></line><line x1=\"630\" x2=\"630\" y1=\"320\" y2=\"40\"></line></g>\n<polyline fill=\"none\" points=\"90,40 306,96 630,320\" stroke=\"#0f6f9f\" stroke-linejoin=\"round\" stroke-width=\"4\"></polyline><g fill=\"#0f6f9f\"><circle cx=\"90\" cy=\"40\" r=\"5\"></circle><circle cx=\"306\" cy=\"96\" r=\"5\"></circle><circle cx=\"630\" cy=\"320\" r=\"5\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"17\" font-weight=\"650\"><text x=\"640\" y=\"325\">t</text><text x=\"74\" y=\"30\">V</text><text x=\"69\" y=\"326\">0</text><text x=\"296\" y=\"344\">4</text><text x=\"619\" y=\"344\">10</text><text x=\"48\" y=\"102\">96</text><text x=\"39\" y=\"46\">120</text><text fill=\"#0f6f9f\" x=\"420\" y=\"145\">tank A</text><text x=\"518\" y=\"368\">time (min)</text><text x=\"6\" y=\"72\">volume (L)</text></g></svg></div>\n<div><label><input name=\"q9\" type=\"radio\" value=\"A\"/> \\(\\frac{40}{7}\\text{ min}\\)</label><br/><label><input name=\"q9\" type=\"radio\" value=\"B\"/> \\(5\\text{ min}\\)</label><br/><label><input name=\"q9\" type=\"radio\" value=\"C\"/> \\(6\\text{ min}\\)</label><br/><label><input name=\"q9\" type=\"radio\" value=\"D\"/> \\(\\frac{20}{3}\\text{ min}\\)</label><br/><label><input name=\"q9\" type=\"radio\" value=\"E\"/> \\(8\\text{ min}\\)</label><br/></div>", "<div class=\"question-number\">Question 10</div>\n<p>A square \\(ABCD\\) has side length \\(12\\). Inside it, quarter-circles of radius \\(12\\) are drawn with centres \\(A\\) and \\(C\\). The shaded lens is the region lying inside both quarter-circles.</p>\n<p>What is the exact area of the shaded region?</p>\n<div class=\"question-image\"><svg aria-label=\"Square with two opposite-centred quarter-circles and their lens-shaped overlap shaded\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 390\">\n<rect fill=\"#fff\" height=\"390\" width=\"700\"></rect><path d=\"M190 35 A300 300 0 0 1 490 335 A300 300 0 0 1 190 35 Z\" fill=\"#dbeafe\" stroke=\"none\"></path>\n<g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-width=\"2.6\"><rect height=\"300\" width=\"300\" x=\"190\" y=\"35\"></rect><path d=\"M190 35 A300 300 0 0 1 490 335\" stroke=\"#0f6f9f\" stroke-width=\"3.5\"></path><path d=\"M490 335 A300 300 0 0 1 190 35\" stroke=\"#7a211b\" stroke-width=\"3.5\"></path></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"170\" y=\"354\">A</text><text x=\"500\" y=\"354\">B</text><text x=\"500\" y=\"30\">C</text><text x=\"170\" y=\"30\">D</text><text x=\"326\" y=\"364\">12</text><text x=\"160\" y=\"195\">12</text><text fill=\"#0f6f9f\" x=\"304\" y=\"190\">overlap</text></g></svg></div>\n<div><label><input name=\"q10\" type=\"radio\" value=\"A\"/> \\(36\\pi-72\\)</label><br/><label><input name=\"q10\" type=\"radio\" value=\"B\"/> \\(72\\pi\\)</label><br/><label><input name=\"q10\" type=\"radio\" value=\"C\"/> \\(144-36\\pi\\)</label><br/><label><input name=\"q10\" type=\"radio\" value=\"D\"/> \\(72\\pi-72\\)</label><br/><label><input name=\"q10\" type=\"radio\" value=\"E\"/> \\(72\\pi-144\\)</label><br/></div>", "<div class=\"question-number\">Question 11</div>\n<p>Let \\(u=\\sqrt3+\\sqrt2\\) and \\(v=\\sqrt3-\\sqrt2\\).</p>\n<p>What is the value of</p>\\[\\frac{u^6+v^6}{u^2+v^2}\\ ?\\]\n<div><label><input name=\"q11\" type=\"radio\" value=\"A\"/> \\(10\\)</label><br/><label><input name=\"q11\" type=\"radio\" value=\"B\"/> \\(94\\)</label><br/><label><input name=\"q11\" type=\"radio\" value=\"C\"/> \\(97\\)</label><br/><label><input name=\"q11\" type=\"radio\" value=\"D\"/> \\(100\\)</label><br/><label><input name=\"q11\" type=\"radio\" value=\"E\"/> \\(103\\)</label><br/><label><input name=\"q11\" type=\"radio\" value=\"F\"/> \\(970\\)</label><br/></div>", "<div class=\"question-number\">Question 12</div>\n<p>The point \\(P\\) lies on the line \\(y=2x+1\\) and is equidistant from \\(A=(0,4)\\) and \\(B=(6,0)\\). The origin is \\(O\\).</p>\n<p>What is \\(OP^2\\)?</p>\n<div><label><input name=\"q12\" type=\"radio\" value=\"A\"/> \\(169\\)</label><br/><label><input name=\"q12\" type=\"radio\" value=\"B\"/> \\(218\\)</label><br/><label><input name=\"q12\" type=\"radio\" value=\"C\"/> \\(196\\)</label><br/><label><input name=\"q12\" type=\"radio\" value=\"D\"/> \\(224\\)</label><br/><label><input name=\"q12\" type=\"radio\" value=\"E\"/> \\(49\\)</label><br/></div>", "<div class=\"question-number\">Question 13</div>\n<p>Two distinct cards are selected at random from cards numbered \\(1\\) to \\(8\\). It is known that their product is even and their sum is <strong>not</strong> divisible by \\(3\\).</p>\n<p>What is the probability that their product is divisible by \\(4\\)?</p>\n<div><label><input name=\"q13\" type=\"radio\" value=\"A\"/> \\(\\frac9{22}\\)</label><br/><label><input name=\"q13\" type=\"radio\" value=\"B\"/> \\(\\frac12\\)</label><br/><label><input name=\"q13\" type=\"radio\" value=\"C\"/> \\(\\frac5{14}\\)</label><br/><label><input name=\"q13\" type=\"radio\" value=\"D\"/> \\(\\frac7{11}\\)</label><br/><label><input name=\"q13\" type=\"radio\" value=\"E\"/> \\(\\frac9{14}\\)</label><br/></div>", "<div class=\"question-number\">Question 14</div>\n<p>Let</p>\\[N=2^4\\cdot3^3\\cdot5^2.\\]<p>How many positive divisors of \\(N\\) are divisible by exactly one of \\(12\\) and \\(18\\)?</p>\n<div><label><input name=\"q14\" type=\"radio\" value=\"A\"/> \\(9\\)</label><br/><label><input name=\"q14\" type=\"radio\" value=\"B\"/> \\(6\\)</label><br/><label><input name=\"q14\" type=\"radio\" value=\"C\"/> \\(18\\)</label><br/><label><input name=\"q14\" type=\"radio\" value=\"D\"/> \\(33\\)</label><br/><label><input name=\"q14\" type=\"radio\" value=\"E\"/> \\(15\\)</label><br/><label><input name=\"q14\" type=\"radio\" value=\"F\"/> \\(51\\)</label><br/></div>", "<div class=\"question-number\">Question 15</div>\n<p>Containers \\(A,B,C\\) initially hold liquid in the ratio \\(1:3:5\\). Half of the liquid in \\(A\\) is transferred to \\(B\\). Then half of the resulting amount in \\(B\\) is transferred to \\(C\\). Finally, \\(C\\) contains \\(100\\) litres more than \\(A\\).</p>\n<p>How much liquid was there originally in total?</p>\n<div><label><input name=\"q15\" type=\"radio\" value=\"A\"/> \\(144\\text{ L}\\)</label><br/><label><input name=\"q15\" type=\"radio\" value=\"B\"/> \\(200\\text{ L}\\)</label><br/><label><input name=\"q15\" type=\"radio\" value=\"C\"/> \\(150\\text{ L}\\)</label><br/><label><input name=\"q15\" type=\"radio\" value=\"D\"/> \\(180\\text{ L}\\)</label><br/><label><input name=\"q15\" type=\"radio\" value=\"E\"/> \\(108\\text{ L}\\)</label><br/></div>", "<div class=\"question-number\">Question 16</div>\n<p>Triangle \\(ABC\\) is right-angled at \\(C\\), with \\(AC=6\\), \\(BC=8\\) and \\(AB=10\\). The circle with diameter \\(AB\\) is shown. The tangent to the circle at \\(C\\) meets the line \\(AB\\), extended beyond \\(A\\), at \\(T\\).</p>\n<p>What is \\(CT\\)?</p>\n<div class=\"question-image\"><svg aria-label=\"Right triangle ABC on a circle with diameter AB and tangent CT\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 390\">\n<rect fill=\"#fff\" height=\"390\" width=\"700\"></rect><g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6\">\n<circle cx=\"365\" cy=\"285\" r=\"75\"></circle><line x1=\"290\" x2=\"440\" y1=\"285\" y2=\"285\"></line><line x1=\"290\" x2=\"344\" y1=\"285\" y2=\"213\"></line><line x1=\"344\" x2=\"440\" y1=\"213\" y2=\"285\"></line><line stroke=\"#7a211b\" stroke-width=\"3.2\" x1=\"97.14\" x2=\"344\" y1=\"285\" y2=\"213\"></line><line stroke-dasharray=\"6 5\" x1=\"365\" x2=\"344\" y1=\"285\" y2=\"213\"></line><path d=\"M337 222 L346 225 L350 216\"></path>\n<circle cx=\"97.14\" cy=\"285\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"290\" cy=\"285\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"440\" cy=\"285\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"344\" cy=\"213\" fill=\"#182230\" r=\"4\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"80\" y=\"310\">T</text><text x=\"279\" y=\"310\">A</text><text x=\"446\" y=\"310\">B</text><text x=\"337\" y=\"198\">C</text><text x=\"362\" y=\"306\">O</text><text x=\"301\" y=\"238\">6</text><text x=\"396\" y=\"242\">8</text><text x=\"351\" y=\"334\">10</text><text fill=\"#7a211b\" x=\"185\" y=\"245\">tangent</text></g></svg></div>\n<div><label><input name=\"q16\" type=\"radio\" value=\"A\"/> \\(\\frac{60}{7}\\)</label><br/><label><input name=\"q16\" type=\"radio\" value=\"B\"/> \\(12\\)</label><br/><label><input name=\"q16\" type=\"radio\" value=\"C\"/> \\(15\\)</label><br/><label><input name=\"q16\" type=\"radio\" value=\"D\"/> \\(\\frac{120}{7}\\)</label><br/><label><input name=\"q16\" type=\"radio\" value=\"E\"/> \\(20\\)</label><br/></div>", "<div class=\"question-number\">Question 17</div>\n<p>A right-angled triangle has perpendicular sides \\(9\\) and \\(12\\). A square is placed with one side on the hypotenuse and the opposite side parallel to it, with the other two vertices lying on the perpendicular sides.</p>\n<p>What is the side length of the square?</p>\n<div><label><input name=\"q17\" type=\"radio\" value=\"A\"/> \\(\\frac{180}{37}\\)</label><br/><label><input name=\"q17\" type=\"radio\" value=\"B\"/> \\(\\frac{36}{7}\\)</label><br/><label><input name=\"q17\" type=\"radio\" value=\"C\"/> \\(\\frac{60}{11}\\)</label><br/><label><input name=\"q17\" type=\"radio\" value=\"D\"/> \\(\\frac{72}{13}\\)</label><br/><label><input name=\"q17\" type=\"radio\" value=\"E\"/> \\(6\\)</label><br/></div>", "<div class=\"question-number\">Question 18</div>\n<p>A data set contains only the values shown.</p>\n<table class=\"data-table\">\n<thead><tr>\n<th>Value</th>\n<th>1</th>\n<th>2</th>\n<th>3</th>\n<th>4</th>\n<th>5</th>\n</tr></thead>\n<tbody><tr>\n<th>Frequency</th>\n<td>2</td>\n<td>\\(a\\)</td>\n<td>4</td>\n<td>\\(b\\)</td>\n<td>2</td>\n</tr></tbody>\n</table>\n<p>There are \\(20\\) observations and their mean is \\(3.1\\). Two observations are selected at random without replacement.</p>\n<p>What is the probability that they have equal values?</p>\n<div><label><input name=\"q18\" type=\"radio\" value=\"A\"/> \\(\\frac{39}{200}\\)</label><br/><label><input name=\"q18\" type=\"radio\" value=\"B\"/> \\(\\frac{39}{190}\\)</label><br/><label><input name=\"q18\" type=\"radio\" value=\"C\"/> \\(\\frac{31}{190}\\)</label><br/><label><input name=\"q18\" type=\"radio\" value=\"D\"/> \\(\\frac{39}{380}\\)</label><br/><label><input name=\"q18\" type=\"radio\" value=\"E\"/> \\(\\frac3{10}\\)</label><br/></div>", "<div class=\"question-number\">Question 19</div>\n<p>A price is increased by \\(p\\%\\), where \\(p&gt;0\\). The increased price is then reduced by \\((p+10)\\%\\). The final price is \\(12\\%\\) below the original price.</p>\n<p>What is \\(p\\)?</p>\n<div><label><input name=\"q19\" type=\"radio\" value=\"A\"/> \\(-20\\)</label><br/><label><input name=\"q19\" type=\"radio\" value=\"B\"/> \\(12\\)</label><br/><label><input name=\"q19\" type=\"radio\" value=\"C\"/> \\(22\\)</label><br/><label><input name=\"q19\" type=\"radio\" value=\"D\"/> \\(10\\)</label><br/><label><input name=\"q19\" type=\"radio\" value=\"E\"/> \\(20\\)</label><br/></div>", "<div class=\"question-number\">Question 20</div>\n<p>What is the smallest positive integer \\(n\\) for which both \\(72n\\) is a perfect square and \\(50n\\) is a perfect cube?</p>\n<div><label><input name=\"q20\" type=\"radio\" value=\"A\"/> \\(20000\\)</label><br/><label><input name=\"q20\" type=\"radio\" value=\"B\"/> \\(5000\\)</label><br/><label><input name=\"q20\" type=\"radio\" value=\"C\"/> \\(10000\\)</label><br/><label><input name=\"q20\" type=\"radio\" value=\"D\"/> \\(16000\\)</label><br/><label><input name=\"q20\" type=\"radio\" value=\"E\"/> \\(40000\\)</label><br/></div>", "<div class=\"question-number\">Question 21</div>\n<p>Triangle \\(ABC\\) is right-angled at \\(A\\), with \\(AB=12\\) and \\(AC=9\\). For a point \\(P\\) on the hypotenuse, perpendiculars from \\(P\\) to \\(AB\\) and \\(AC\\) form a rectangle having \\(A\\) and \\(P\\) as opposite vertices.</p>\n<p>There are two positions, \\(P_1\\) and \\(P_2\\), for which the rectangle has area \\(18\\). What is \\(P_1P_2\\)?</p>\n<div class=\"question-image\"><svg aria-label=\"Right triangle with two points on the hypotenuse and corresponding rectangles of equal area\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 400\">\n<rect fill=\"#fff\" height=\"400\" width=\"700\"></rect><g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6\"><polyline points=\"140,330 500,330 140,60 140,330\"></polyline><path d=\"M140 330 H216.08 V117.06 H140\" stroke=\"#7a211b\" stroke-dasharray=\"7 5\"></path><path d=\"M140 330 H423.92 V272.94 H140\" stroke=\"#0f6f9f\" stroke-dasharray=\"7 5\"></path><line stroke=\"#155e3b\" stroke-width=\"3.3\" x1=\"216.08\" x2=\"423.92\" y1=\"117.06\" y2=\"272.94\"></line><path d=\"M140 310 H160 V330\"></path>\n<circle cx=\"216.08\" cy=\"117.06\" fill=\"#7a211b\" r=\"5\"></circle><circle cx=\"423.92\" cy=\"272.94\" fill=\"#0f6f9f\" r=\"5\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"121\" y=\"350\">A</text><text x=\"508\" y=\"350\">B</text><text x=\"121\" y=\"52\">C</text><text fill=\"#7a211b\" x=\"190\" y=\"105\">P₁</text><text fill=\"#0f6f9f\" x=\"433\" y=\"271\">P₂</text><text x=\"316\" y=\"358\">12</text><text x=\"108\" y=\"202\">9</text></g></svg></div>\n<div><label><input name=\"q21\" type=\"radio\" value=\"A\"/> \\(3\\sqrt3\\)</label><br/><label><input name=\"q21\" type=\"radio\" value=\"B\"/> \\(4\\sqrt3\\)</label><br/><label><input name=\"q21\" type=\"radio\" value=\"C\"/> \\(5\\)</label><br/><label><input name=\"q21\" type=\"radio\" value=\"D\"/> \\(5\\sqrt3\\)</label><br/><label><input name=\"q21\" type=\"radio\" value=\"E\"/> \\(7\\sqrt3\\)</label><br/></div>", "<div class=\"question-number\">Question 22</div>\n<p>At a point \\(A\\) on a circle, a tangent is drawn. Chords \\(AB\\) and \\(AC\\) lie on opposite sides of the radius through \\(A\\). The acute angles between the tangent and the chords \\(AB\\) and \\(AC\\) are \\(32^\\circ\\) and \\(48^\\circ\\), respectively.</p>\n<p>What is the smaller angle \\(BOC\\), where \\(O\\) is the centre?</p>\n<div class=\"question-image\"><svg aria-label=\"Circle with tangent at A and chords AB and AC\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 390\">\n<rect fill=\"#fff\" height=\"390\" width=\"700\"></rect><g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6\"><circle cx=\"360\" cy=\"195\" r=\"130\"></circle><line x1=\"230\" x2=\"230\" y1=\"30\" y2=\"360\"></line><line x1=\"230\" x2=\"303.01\" y1=\"195\" y2=\"78.16\"></line><line x1=\"230\" x2=\"373.59\" y1=\"195\" y2=\"324.29\"></line><line stroke-dasharray=\"6 5\" x1=\"360\" x2=\"230\" y1=\"195\" y2=\"195\"></line><circle cx=\"360\" cy=\"195\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"230\" cy=\"195\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"303.01\" cy=\"78.16\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"373.59\" cy=\"324.29\" fill=\"#182230\" r=\"4\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"210\" y=\"200\">A</text><text x=\"294\" y=\"65\">B</text><text x=\"390\" y=\"347\">C</text><text x=\"369\" y=\"184\">O</text><text fill=\"#7a211b\" x=\"243\" y=\"133\">32°</text><text fill=\"#0f6f9f\" x=\"244\" y=\"279\">48°</text></g></svg></div>\n<div><label><input name=\"q22\" type=\"radio\" value=\"A\"/> \\(100^\\circ\\)</label><br/><label><input name=\"q22\" type=\"radio\" value=\"B\"/> \\(80^\\circ\\)</label><br/><label><input name=\"q22\" type=\"radio\" value=\"C\"/> \\(160^\\circ\\)</label><br/><label><input name=\"q22\" type=\"radio\" value=\"D\"/> \\(200^\\circ\\)</label><br/><label><input name=\"q22\" type=\"radio\" value=\"E\"/> \\(40^\\circ\\)</label><br/></div>", "<div class=\"question-number\">Question 23</div>\n<p>An increasing arithmetic sequence has positive integer terms. Its terms satisfy</p>\n        \\[u_6^2=u_3u_{11}\\qquad\\text{and}\\qquad u_{11}-u_3=48.\\]\n        <p>What is the first term of the sequence?</p>\n<div><label><input name=\"q23\" type=\"radio\" value=\"A\"/> \\(6\\)</label><br/><label><input name=\"q23\" type=\"radio\" value=\"B\"/> \\(9\\)</label><br/><label><input name=\"q23\" type=\"radio\" value=\"C\"/> \\(12\\)</label><br/><label><input name=\"q23\" type=\"radio\" value=\"D\"/> \\(18\\)</label><br/><label><input name=\"q23\" type=\"radio\" value=\"E\"/> \\(15\\)</label><br/></div>", "<div class=\"question-number\">Question 24</div>\n<p>Two fair six-sided dice are thrown.</p>\n<p>Given that the product of the two scores is divisible by \\(6\\), what is the probability that their sum is prime?</p>\n<div><label><input name=\"q24\" type=\"radio\" value=\"A\"/> \\(\\frac7{15}\\)</label><br/><label><input name=\"q24\" type=\"radio\" value=\"B\"/> \\(\\frac8{15}\\)</label><br/><label><input name=\"q24\" type=\"radio\" value=\"C\"/> \\(\\frac12\\)</label><br/><label><input name=\"q24\" type=\"radio\" value=\"D\"/> \\(\\frac35\\)</label><br/><label><input name=\"q24\" type=\"radio\" value=\"E\"/> \\(\\frac29\\)</label><br/></div>", "<div class=\"question-number\">Question 25</div>\n<p>The arithmetic sequence</p>\\[5,12,19,26,\\ldots\\]<p>contains terms that are divisible by \\(11\\) but not divisible by \\(3\\). What is the position of the \\(15\\)th such term?</p>\n<div><label><input name=\"q25\" type=\"radio\" value=\"A\"/> \\(214\\)</label><br/><label><input name=\"q25\" type=\"radio\" value=\"B\"/> \\(225\\)</label><br/><label><input name=\"q25\" type=\"radio\" value=\"C\"/> \\(236\\)</label><br/><label><input name=\"q25\" type=\"radio\" value=\"D\"/> \\(247\\)</label><br/><label><input name=\"q25\" type=\"radio\" value=\"E\"/> \\(258\\)</label><br/><label><input name=\"q25\" type=\"radio\" value=\"F\"/> \\(159\\)</label><br/></div>", "<div class=\"question-number\">Question 26</div>\n<p>A positive real number \\(x\\) satisfies</p>\\[x+\\frac1x=3.\\]<p>For positive integers \\(n\\), define</p>\\[A_n=x^n+\\frac1{x^n}.\\]<p>What is the remainder when \\(A_{2025}\\) is divided by \\(10\\)?</p>\n<div><label><input name=\"q26\" type=\"radio\" value=\"A\"/> \\(2\\)</label><br/><label><input name=\"q26\" type=\"radio\" value=\"B\"/> \\(3\\)</label><br/><label><input name=\"q26\" type=\"radio\" value=\"C\"/> \\(5\\)</label><br/><label><input name=\"q26\" type=\"radio\" value=\"D\"/> \\(7\\)</label><br/><label><input name=\"q26\" type=\"radio\" value=\"E\"/> \\(8\\)</label><br/></div>", "<div class=\"question-number\">Question 27</div>\n<p>In triangle \\(ABC\\), point \\(D\\) lies on \\(AB\\) with \\(AD:DB=1:2\\), and point \\(E\\) lies on \\(AC\\) with \\(AE:EC=1:3\\). Lines \\(DC\\) and \\(EB\\) intersect at \\(P\\).</p>\n<p>What is \\(EP:PB\\)?</p>\n<div class=\"question-image\"><svg aria-label=\"Triangle ABC with cevians DC and EB intersecting at P\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 380\">\n<rect fill=\"#fff\" height=\"380\" width=\"700\"></rect><g fill=\"none\" stroke=\"#182230\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.6\"><polyline points=\"180,45 85,315 610,315 180,45\"></polyline><line x1=\"148.33\" x2=\"610\" y1=\"135\" y2=\"315\"></line><line x1=\"287.5\" x2=\"85\" y1=\"112.5\" y2=\"315\"></line><circle cx=\"180\" cy=\"45\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"85\" cy=\"315\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"610\" cy=\"315\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"148.33\" cy=\"135\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"287.5\" cy=\"112.5\" fill=\"#182230\" r=\"4\"></circle><circle cx=\"232.27\" cy=\"167.73\" fill=\"#7a211b\" r=\"5\"></circle></g>\n<g fill=\"#182230\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"175\" y=\"32\">A</text><text x=\"65\" y=\"322\">B</text><text x=\"620\" y=\"322\">C</text><text x=\"127\" y=\"140\">D</text><text x=\"298\" y=\"109\">E</text><text fill=\"#7a211b\" x=\"243\" y=\"171\">P</text><text x=\"117\" y=\"82\">1</text><text x=\"104\" y=\"235\">2</text><text x=\"227\" y=\"72\">1</text><text x=\"465\" y=\"222\">3</text></g></svg></div>\n<div><label><input name=\"q27\" type=\"radio\" value=\"A\"/> \\(3:7\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"B\"/> \\(8:3\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"C\"/> \\(3:8\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"D\"/> \\(4:9\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"E\"/> \\(2:7\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"F\"/> \\(3:11\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"G\"/> \\(11:3\\)</label><br/><label><input name=\"q27\" type=\"radio\" value=\"H\"/> \\(8:11\\)</label><br/></div>", "<div class=\"question-number\">Question 1</div>\n<div class=\"stem-content\">A geometric progression has positive terms, first term \\(a\\) and common ratio \\(r\\). The sum of its first three terms is \\(14\\), and the sum of its first six terms is \\(126\\). What is \\(a+r^2\\)?</div>\n<div><label><input name=\"q28\" type=\"radio\" value=\"A\"/> \\(4\\)</label><br/><label><input name=\"q28\" type=\"radio\" value=\"B\"/> \\(6\\)</label><br/><label><input name=\"q28\" type=\"radio\" value=\"C\"/> \\(8\\)</label><br/><label><input name=\"q28\" type=\"radio\" value=\"D\"/> \\(10\\)</label><br/><label><input name=\"q28\" type=\"radio\" value=\"E\"/> \\(14\\)</label><br/></div>", "<div class=\"question-number\">Question 2</div>\n<div class=\"stem-content\">The polynomial \\(p(x)=x^3+ax^2+bx+6\\) is divisible by \\(x-3\\). It also leaves the same remainder when divided by \\(x-1\\) and by \\(x+2\\). What is \\(p(2)\\)?</div>\n<div><label><input name=\"q29\" type=\"radio\" value=\"A\"/> \\(-11\\)</label><br/><label><input name=\"q29\" type=\"radio\" value=\"B\"/> \\(-9\\)</label><br/><label><input name=\"q29\" type=\"radio\" value=\"C\"/> \\(-5\\)</label><br/><label><input name=\"q29\" type=\"radio\" value=\"D\"/> \\(-4\\)</label><br/><label><input name=\"q29\" type=\"radio\" value=\"E\"/> \\(-7\\)</label><br/><label><input name=\"q29\" type=\"radio\" value=\"F\"/> \\(-2\\)</label><br/></div>", "<div class=\"question-number\">Question 3</div>\n<div class=\"stem-content\">The table shows three values of a twice-differentiable function \\(f\\).\n  <table class=\"data-table\">\n<tr>\n<th>\\(x\\)</th>\n<td>0</td>\n<td>1</td>\n<td>3</td>\n</tr>\n<tr>\n<th>\\(f(x)\\)</th>\n<td>4</td>\n<td>7</td>\n<td>5</td>\n</tr>\n</table>\n  It is known that \\(f''(x)&lt;0\\) for \\(0&lt;x&lt;3\\). The trapezium rule is applied separately on \\([0,1]\\) and \\([1,3]\\). Which statement is correct?</div>\n<div><label><input name=\"q30\" type=\"radio\" value=\"A\"/> The estimate is \\(\\tfrac{35}{2}\\) and is an underestimate.</label><br/><label><input name=\"q30\" type=\"radio\" value=\"B\"/> The estimate is \\(\\tfrac{35}{2}\\) and is an overestimate.</label><br/><label><input name=\"q30\" type=\"radio\" value=\"C\"/> The estimate is \\(\\tfrac{23}{2}\\) and is an underestimate.</label><br/><label><input name=\"q30\" type=\"radio\" value=\"D\"/> The estimate is \\(\\tfrac{27}{2}\\) and is an underestimate.</label><br/><label><input name=\"q30\" type=\"radio\" value=\"E\"/> The estimate is \\(23\\) and is an overestimate.</label><br/></div>", "<div class=\"question-number\">Question 4</div>\n<div class=\"stem-content\">For an arithmetic progression, the sum of the first \\(10\\) terms is \\(5\\), and the sum of the first \\(20\\) terms is \\(110\\). What is the sum of the positive terms among its first \\(30\\) terms?</div>\n<div><label><input name=\"q31\" type=\"radio\" value=\"A\"/> \\(285\\)</label><br/><label><input name=\"q31\" type=\"radio\" value=\"B\"/> \\(300\\)</label><br/><label><input name=\"q31\" type=\"radio\" value=\"C\"/> \\(325\\)</label><br/><label><input name=\"q31\" type=\"radio\" value=\"D\"/> \\(315\\)</label><br/><label><input name=\"q31\" type=\"radio\" value=\"E\"/> \\(330\\)</label><br/></div>", "<div class=\"question-number\">Question 5</div>\n<div class=\"stem-content\">The curve \\(y=x^3-6x^2+9x+4\\) has two stationary points. The straight line joining them meets the \\(x\\)-axis at \\((q,0)\\). What is \\(q\\)?</div>\n<div><label><input name=\"q32\" type=\"radio\" value=\"A\"/> \\(5\\)</label><br/><label><input name=\"q32\" type=\"radio\" value=\"B\"/> \\(4\\)</label><br/><label><input name=\"q32\" type=\"radio\" value=\"C\"/> \\(6\\)</label><br/><label><input name=\"q32\" type=\"radio\" value=\"D\"/> \\(3\\)</label><br/><label><input name=\"q32\" type=\"radio\" value=\"E\"/> \\(2\\)</label><br/></div>", "<div class=\"question-number\">Question 6</div>\n<div class=\"stem-content\">Solve \\(\\log_2(x^2-5x+6)&gt;0\\).</div>\n<div><label><input name=\"q33\" type=\"radio\" value=\"A\"/> \\(2&lt;x&lt;3\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"B\"/> \\(x&lt;2\\) or \\(x&gt;3\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"C\"/> \\(\\tfrac{5-\\sqrt5}{2}&lt;x&lt;\\tfrac{5+\\sqrt5}{2}\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"D\"/> \\(x&lt;\\tfrac{5-\\sqrt5}{2}\\) or \\(x&gt;3\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"E\"/> \\(x&lt;\\tfrac{5-\\sqrt5}{2}\\) or \\(x&gt;\\tfrac{5+\\sqrt5}{2}\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"F\"/> \\(x\\le\\tfrac{5-\\sqrt5}{2}\\text{ or }x\\ge\\tfrac{5+\\sqrt5}{2}\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"G\"/> \\(x&lt;\\tfrac{5-\\sqrt5}{2}\\)</label><br/><label><input name=\"q33\" type=\"radio\" value=\"H\"/> \\(x&gt;\\tfrac{5+\\sqrt5}{2}\\)</label><br/></div>", "<div class=\"question-number\">Question 7</div>\n<div class=\"stem-content\">An acute angle \\(\\theta\\) satisfies \\(\\tan\\theta+\\sec\\theta=3\\). What is \\(\\sin2\\theta\\)?</div>\n<div><label><input name=\"q34\" type=\"radio\" value=\"A\"/> \\(\\tfrac45\\)</label><br/><label><input name=\"q34\" type=\"radio\" value=\"B\"/> \\(\\tfrac35\\)</label><br/><label><input name=\"q34\" type=\"radio\" value=\"C\"/> \\(\\tfrac{16}{25}\\)</label><br/><label><input name=\"q34\" type=\"radio\" value=\"D\"/> \\(\\tfrac{24}{25}\\)</label><br/><label><input name=\"q34\" type=\"radio\" value=\"E\"/> \\(\\tfrac{25}{24}\\)</label><br/></div>", "<div class=\"question-number\">Question 8</div>\n<div class=\"stem-content\">In triangle \\(ABC\\), point \\(D\\) lies on \\(BC\\) with \\(BD:DC=5:6\\), and \\(F\\) is the midpoint of \\(AC\\). The lines \\(AD\\) and \\(BF\\) meet at \\(X\\). Find \\(AX:XD\\).</div>\n<div class=\"question-image\">\n<svg aria-label=\"Triangle ABC with D on BC, F the midpoint of AC, and cevians AD and BF meeting at X\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 520 245\">\n<defs><style>.g{stroke:#15253d;stroke-width:3;fill:none}.a{fill:#ffffff;stroke:#15253d;stroke-width:2}.t{font:700 18px Arial;fill:#15253d}.m{font:15px Arial;fill:#526078}</style></defs>\n<path class=\"g\" d=\"M70 205 L235 32 L455 205 Z\"></path>\n<path class=\"g\" d=\"M235 32 L245 205 M70 205 L345 118\"></path>\n<circle class=\"a\" cx=\"235\" cy=\"32\" r=\"5\"></circle><circle class=\"a\" cx=\"70\" cy=\"205\" r=\"5\"></circle>\n<circle class=\"a\" cx=\"455\" cy=\"205\" r=\"5\"></circle><circle class=\"a\" cx=\"245\" cy=\"205\" r=\"5\"></circle>\n<circle class=\"a\" cx=\"345\" cy=\"118\" r=\"5\"></circle><circle class=\"a\" cx=\"242\" cy=\"151\" r=\"5\"></circle>\n<text class=\"t\" x=\"226\" y=\"22\">A</text><text class=\"t\" x=\"48\" y=\"224\">B</text>\n<text class=\"t\" x=\"462\" y=\"224\">C</text><text class=\"t\" x=\"237\" y=\"227\">D</text>\n<text class=\"t\" x=\"353\" y=\"113\">F</text><text class=\"t\" x=\"222\" y=\"149\">X</text>\n<text class=\"m\" x=\"165\" y=\"224\">5</text><text class=\"m\" x=\"365\" y=\"224\">6</text>\n</svg>\n</div>\n<div><label><input name=\"q35\" type=\"radio\" value=\"A\"/> \\(11:5\\)</label><br/><label><input name=\"q35\" type=\"radio\" value=\"B\"/> \\(5:11\\)</label><br/><label><input name=\"q35\" type=\"radio\" value=\"C\"/> \\(11:6\\)</label><br/><label><input name=\"q35\" type=\"radio\" value=\"D\"/> \\(6:11\\)</label><br/><label><input name=\"q35\" type=\"radio\" value=\"E\"/> \\(16:5\\)</label><br/></div>", "<div class=\"question-number\">Question 9</div>\n<div class=\"stem-content\">A straight line with positive intercepts on the coordinate axes passes through \\((2,3)\\). The triangle enclosed by the line and the positive coordinate axes has area \\(12\\). What is the sum of the two intercepts?</div>\n<div><label><input name=\"q36\" type=\"radio\" value=\"A\"/> \\(8\\)</label><br/><label><input name=\"q36\" type=\"radio\" value=\"B\"/> \\(10\\)</label><br/><label><input name=\"q36\" type=\"radio\" value=\"C\"/> \\(12\\)</label><br/><label><input name=\"q36\" type=\"radio\" value=\"D\"/> \\(11\\)</label><br/><label><input name=\"q36\" type=\"radio\" value=\"E\"/> \\(9\\)</label><br/><label><input name=\"q36\" type=\"radio\" value=\"F\"/> \\(24\\)</label><br/></div>", "<div class=\"question-number\">Question 10</div>\n<div class=\"stem-content\">A positive geometric progression has sum to infinity \\(24\\), and the sum of its first three terms is \\(21\\). What is the sum of all terms whose positions are positive multiples of \\(3\\)?</div>\n<div><label><input name=\"q37\" type=\"radio\" value=\"A\"/> \\(8\\)</label><br/><label><input name=\"q37\" type=\"radio\" value=\"B\"/> \\(\\tfrac{24}{7}\\)</label><br/><label><input name=\"q37\" type=\"radio\" value=\"C\"/> \\(\\tfrac{12}{7}\\)</label><br/><label><input name=\"q37\" type=\"radio\" value=\"D\"/> \\(3\\)</label><br/><label><input name=\"q37\" type=\"radio\" value=\"E\"/> \\(6\\)</label><br/></div>", "<div class=\"question-number\">Question 11</div>\n<div class=\"stem-content\">Solve \\(2^x+2^{-x}=\\tfrac52\\).</div>\n<div><label><input name=\"q38\" type=\"radio\" value=\"A\"/> \\(x=-1\\) only</label><br/><label><input name=\"q38\" type=\"radio\" value=\"B\"/> \\(x=0,\\pm1\\)</label><br/><label><input name=\"q38\" type=\"radio\" value=\"C\"/> \\(x=1\\) only</label><br/><label><input name=\"q38\" type=\"radio\" value=\"D\"/> \\(x=\\pm2\\)</label><br/><label><input name=\"q38\" type=\"radio\" value=\"E\"/> \\(x=\\pm1\\)</label><br/></div>", "<div class=\"question-number\">Question 12</div>\n<div class=\"stem-content\">Let\n  \\[A=\\int_0^{1/2}(\\sqrt{x}-x\\sqrt{x})^2\\,dx,\\qquad\n    B=\\int_{1/2}^{1}(\\sqrt{x}-x\\sqrt{x})^2\\,dx.\\]\n  What is \\(A:B\\)?</div>\n<div><label><input name=\"q39\" type=\"radio\" value=\"A\"/> \\(5:11\\)</label><br/><label><input name=\"q39\" type=\"radio\" value=\"B\"/> \\(16:5\\)</label><br/><label><input name=\"q39\" type=\"radio\" value=\"C\"/> \\(11:16\\)</label><br/><label><input name=\"q39\" type=\"radio\" value=\"D\"/> \\(11:5\\)</label><br/><label><input name=\"q39\" type=\"radio\" value=\"E\"/> \\(5:16\\)</label><br/></div>", "<div class=\"question-number\">Question 13</div>\n<div class=\"stem-content\">The equation \\(x^2-4x+k=0\\) has two distinct real roots \\(\\alpha\\) and \\(\\beta\\). Given that \\(\\alpha^4+\\beta^4=194\\), find \\(k\\).</div>\n<div><label><input name=\"q40\" type=\"radio\" value=\"A\"/> \\(31\\)</label><br/><label><input name=\"q40\" type=\"radio\" value=\"B\"/> \\(-1\\)</label><br/><label><input name=\"q40\" type=\"radio\" value=\"C\"/> \\(1\\)</label><br/><label><input name=\"q40\" type=\"radio\" value=\"D\"/> \\(4\\)</label><br/><label><input name=\"q40\" type=\"radio\" value=\"E\"/> \\(32\\)</label><br/></div>", "<div class=\"question-number\">Question 14</div>\n<div class=\"stem-content\">What is the coefficient of \\(x^3\\) in \\((1+2x)^5(1-x)^3\\)?</div>\n<div><label><input name=\"q41\" type=\"radio\" value=\"A\"/> \\(-11\\)</label><br/><label><input name=\"q41\" type=\"radio\" value=\"B\"/> \\(-13\\)</label><br/><label><input name=\"q41\" type=\"radio\" value=\"C\"/> \\(-9\\)</label><br/><label><input name=\"q41\" type=\"radio\" value=\"D\"/> \\(11\\)</label><br/><label><input name=\"q41\" type=\"radio\" value=\"E\"/> \\(-15\\)</label><br/></div>", "<div class=\"question-number\">Question 15</div>\n<div class=\"stem-content\">For \\(k&gt;0\\), the equation \\(|x^2-4x+3|=k\\) has exactly three distinct real solutions. What is the sum of those solutions?</div>\n<div><label><input name=\"q42\" type=\"radio\" value=\"A\"/> \\(4\\)</label><br/><label><input name=\"q42\" type=\"radio\" value=\"B\"/> \\(2\\)</label><br/><label><input name=\"q42\" type=\"radio\" value=\"C\"/> \\(6\\)</label><br/><label><input name=\"q42\" type=\"radio\" value=\"D\"/> \\(4+\\sqrt2\\)</label><br/><label><input name=\"q42\" type=\"radio\" value=\"E\"/> \\(8\\)</label><br/></div>", "<div class=\"question-number\">Question 16</div>\n<div class=\"stem-content\">The line \\(y=2x+1\\) cuts the circle \\(x^2+y^2=25\\) in a chord. What is the area of the triangle whose vertices are the origin and the two endpoints of the chord?</div>\n<div><label><input name=\"q43\" type=\"radio\" value=\"A\"/> \\(\\tfrac{\\sqrt{31}}5\\)</label><br/><label><input name=\"q43\" type=\"radio\" value=\"B\"/> \\(\\tfrac{4\\sqrt{31}}5\\)</label><br/><label><input name=\"q43\" type=\"radio\" value=\"C\"/> \\(\\tfrac{2\\sqrt{31}}5\\)</label><br/><label><input name=\"q43\" type=\"radio\" value=\"D\"/> \\(2\\sqrt{31}\\)</label><br/><label><input name=\"q43\" type=\"radio\" value=\"E\"/> \\(\\sqrt{31}\\)</label><br/></div>", "<div class=\"question-number\">Question 17</div>\n<div class=\"stem-content\">For \\(f(x)=x^2-4x+3\\), evaluate\n  \\[\\frac{\\displaystyle\\int_0^4|f(x)|\\,dx}\n          {\\displaystyle\\left|\\int_0^4 f(x)\\,dx\\right|}.\\]</div>\n<div><label><input name=\"q44\" type=\"radio\" value=\"A\"/> \\(3\\)</label><br/><label><input name=\"q44\" type=\"radio\" value=\"B\"/> \\(2\\)</label><br/><label><input name=\"q44\" type=\"radio\" value=\"C\"/> \\(1\\)</label><br/><label><input name=\"q44\" type=\"radio\" value=\"D\"/> \\(4\\)</label><br/><label><input name=\"q44\" type=\"radio\" value=\"E\"/> \\(\\tfrac13\\)</label><br/></div>", "<div class=\"question-number\">Question 18</div>\n<div class=\"stem-content\">The curve \\(y=x^3-3x^2+kx\\) has two distinct stationary points. The gradient of the straight line joining them is \\(-1\\). Find \\(k\\).</div>\n<div><label><input name=\"q45\" type=\"radio\" value=\"A\"/> \\(\\tfrac12\\)</label><br/><label><input name=\"q45\" type=\"radio\" value=\"B\"/> \\(1\\)</label><br/><label><input name=\"q45\" type=\"radio\" value=\"C\"/> \\(3\\)</label><br/><label><input name=\"q45\" type=\"radio\" value=\"D\"/> \\(\\tfrac32\\)</label><br/><label><input name=\"q45\" type=\"radio\" value=\"E\"/> \\(\\tfrac92\\)</label><br/></div>", "<div class=\"question-number\">Question 19</div>\n<div class=\"stem-content\">Let \\(f(x)=x^2-1\\) and \\(g(x)=2x+1\\). If the real solutions of \\(f(g(x))=g(f(x))\\) are \\(r\\) and \\(s\\), what is \\(f(r)+f(s)\\)?</div>\n<div><label><input name=\"q46\" type=\"radio\" value=\"A\"/> \\(-2\\)</label><br/><label><input name=\"q46\" type=\"radio\" value=\"B\"/> \\(\\tfrac12\\)</label><br/><label><input name=\"q46\" type=\"radio\" value=\"C\"/> \\(1\\)</label><br/><label><input name=\"q46\" type=\"radio\" value=\"D\"/> \\(2\\)</label><br/><label><input name=\"q46\" type=\"radio\" value=\"E\"/> \\(3\\)</label><br/></div>", "<div class=\"question-number\">Question 20</div>\n<div class=\"stem-content\">The solutions of \\(2\\sin^2x+\\sin x-1=0\\) for \\(0\\le x&lt;2\\pi\\) have sum</div>\n<div><label><input name=\"q47\" type=\"radio\" value=\"A\"/> \\(3\\pi\\)</label><br/><label><input name=\"q47\" type=\"radio\" value=\"B\"/> \\(\\tfrac{11\\pi}{4}\\)</label><br/><label><input name=\"q47\" type=\"radio\" value=\"C\"/> \\(\\tfrac{5\\pi}{2}\\)</label><br/><label><input name=\"q47\" type=\"radio\" value=\"D\"/> \\(2\\pi\\)</label><br/><label><input name=\"q47\" type=\"radio\" value=\"E\"/> \\(\\tfrac{9\\pi}{4}\\)</label><br/></div>", "<div class=\"question-number\">Question 21</div>\n<div class=\"stem-content\">Let \\(f(x)=|x^2-4x+3|\\). How many real solutions does \\(f(|x|)=1\\) have?</div>\n<div><label><input name=\"q48\" type=\"radio\" value=\"A\"/> \\(2\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"B\"/> \\(3\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"C\"/> \\(4\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"D\"/> \\(6\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"E\"/> \\(8\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"F\"/> \\(5\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"G\"/> \\(7\\)</label><br/><label><input name=\"q48\" type=\"radio\" value=\"H\"/> \\(12\\)</label><br/></div>", "<div class=\"question-number\">Question 22</div>\n<div class=\"stem-content\">The line \\(y=kx+1\\) intersects the parabola \\(y=x^2-4x+5\\) at two points whose \\(x\\)-coordinates differ by \\(4\\). What is the sum of all possible values of \\(k\\)?</div>\n<div><label><input name=\"q49\" type=\"radio\" value=\"A\"/> \\(-4\\)</label><br/><label><input name=\"q49\" type=\"radio\" value=\"B\"/> \\(-4\\sqrt2\\)</label><br/><label><input name=\"q49\" type=\"radio\" value=\"C\"/> \\(8\\)</label><br/><label><input name=\"q49\" type=\"radio\" value=\"D\"/> \\(4\\)</label><br/><label><input name=\"q49\" type=\"radio\" value=\"E\"/> \\(-8\\)</label><br/></div>", "<div class=\"question-number\">Question 23</div>\n<div class=\"stem-content\">Two distinct tangents drawn from the origin touch the parabola \\(y=x^2-4x+5\\). What is the product of the \\(x\\)-coordinates of the two points of contact?</div>\n<div><label><input name=\"q50\" type=\"radio\" value=\"A\"/> \\(0\\)</label><br/><label><input name=\"q50\" type=\"radio\" value=\"B\"/> \\(-5\\)</label><br/><label><input name=\"q50\" type=\"radio\" value=\"C\"/> \\(-8\\)</label><br/><label><input name=\"q50\" type=\"radio\" value=\"D\"/> \\(5\\)</label><br/><label><input name=\"q50\" type=\"radio\" value=\"E\"/> \\(-4\\)</label><br/></div>", "<div class=\"question-number\">Question 24</div>\n<div class=\"stem-content\">A circle has centre \\(O\\) and radius \\(1\\). A point \\(P\\) satisfies \\(OP=2\\), and the tangents from \\(P\\) touch the circle at \\(A\\) and \\(B\\). What is the area of the smaller segment bounded by chord \\(AB\\) and the minor arc \\(AB\\)?</div>\n<div class=\"question-image\">\n<svg aria-label=\"A unit circle with external point P and tangents PA and PB\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 440 250\">\n<defs><style>.g{stroke:#15253d;stroke-width:3;fill:none}.r{stroke:#8f1d2c;stroke-width:3;fill:none}.a{fill:#fff;stroke:#15253d;stroke-width:2}.t{font:700 18px Arial;fill:#15253d}.m{font:15px Arial;fill:#526078}</style></defs>\n<circle class=\"g\" cx=\"145\" cy=\"125\" r=\"88\"></circle>\n<path class=\"g\" d=\"M145 125 L188.8 48.8 M145 125 L188.8 201.2 M145 125 L321 125\"></path>\n<path class=\"r\" d=\"M321 125 L188.8 48.8 M321 125 L188.8 201.2\"></path>\n<path class=\"g\" d=\"M188.8 48.8 L188.8 201.2\"></path>\n<circle class=\"a\" cx=\"145\" cy=\"125\" r=\"5\"></circle><circle class=\"a\" cx=\"321\" cy=\"125\" r=\"5\"></circle>\n<circle class=\"a\" cx=\"188.8\" cy=\"48.8\" r=\"5\"></circle><circle class=\"a\" cx=\"188.8\" cy=\"201.2\" r=\"5\"></circle>\n<text class=\"t\" x=\"125\" y=\"122\">O</text><text class=\"t\" x=\"330\" y=\"130\">P</text>\n<text class=\"t\" x=\"194\" y=\"44\">A</text><text class=\"t\" x=\"194\" y=\"220\">B</text>\n<text class=\"m\" x=\"226\" y=\"116\">2</text><text class=\"m\" x=\"153\" y=\"82\">1</text>\n</svg>\n</div>\n<div><label><input name=\"q51\" type=\"radio\" value=\"A\"/> \\(\\tfrac\\pi6-\\tfrac{\\sqrt3}{8}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"B\"/> \\(\\tfrac\\pi3+\\tfrac{\\sqrt3}{4}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"C\"/> \\(\\tfrac{2\\pi}{3}-\\tfrac{\\sqrt3}{4}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"D\"/> \\(\\tfrac\\pi3-\\tfrac{\\sqrt3}{2}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"E\"/> \\(\\tfrac\\pi3-\\tfrac{\\sqrt3}{4}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"F\"/> \\(\\tfrac{2\\pi}{3}-\\tfrac{\\sqrt3}{2}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"G\"/> \\(\\tfrac\\pi6-\\tfrac{\\sqrt3}{4}\\)</label><br/><label><input name=\"q51\" type=\"radio\" value=\"H\"/> \\(\\tfrac\\pi3-\\tfrac{\\sqrt3}{8}\\)</label><br/></div>", "<div class=\"question-number\">Question 25</div>\n<div class=\"stem-content\">In triangle \\(ABC\\), side \\(a\\) is opposite angle \\(A\\), and side \\(b\\) is opposite angle \\(B\\). Given \\(a=2\\), \\(b=2\\sqrt3\\), and \\(A=30^\\circ\\), two non-congruent triangles are possible. What is the sum of their areas?</div>\n<div><label><input name=\"q52\" type=\"radio\" value=\"A\"/> \\(\\sqrt3\\)</label><br/><label><input name=\"q52\" type=\"radio\" value=\"B\"/> \\(3\\sqrt3\\)</label><br/><label><input name=\"q52\" type=\"radio\" value=\"C\"/> \\(2\\sqrt3\\)</label><br/><label><input name=\"q52\" type=\"radio\" value=\"D\"/> \\(4\\sqrt3\\)</label><br/><label><input name=\"q52\" type=\"radio\" value=\"E\"/> \\(6\\)</label><br/></div>", "<div class=\"question-number\">Question 26</div>\n<div class=\"stem-content\">A circle has centre \\(O\\) and radius \\(5\\). A chord \\(AB\\) has length \\(8\\). The tangents at \\(A\\) and \\(B\\) meet at \\(P\\). Find the area of quadrilateral \\(OAPB\\).</div>\n<div class=\"question-image\">\n<svg aria-label=\"Circle centre O with chord AB and tangents meeting at P\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 440 250\">\n<defs><style>.g{stroke:#15253d;stroke-width:3;fill:none}.r{stroke:#8f1d2c;stroke-width:3;fill:none}.d{stroke:#8290a6;stroke-width:2;stroke-dasharray:7 6}.a{fill:#fff;stroke:#15253d;stroke-width:2}.t{font:700 18px Arial;fill:#15253d}.m{font:15px Arial;fill:#526078}</style></defs>\n<circle class=\"g\" cx=\"138\" cy=\"125\" r=\"88\"></circle>\n<path class=\"r\" d=\"M190.8 54.6 L284.7 125 L190.8 195.4 Z\"></path>\n<path class=\"g\" d=\"M138 125 L190.8 54.6 M138 125 L190.8 195.4 M138 125 L284.7 125\"></path>\n<path class=\"d\" d=\"M190.8 54.6 L190.8 195.4\"></path>\n<circle class=\"a\" cx=\"138\" cy=\"125\" r=\"5\"></circle><circle class=\"a\" cx=\"284.7\" cy=\"125\" r=\"5\"></circle>\n<circle class=\"a\" cx=\"190.8\" cy=\"54.6\" r=\"5\"></circle><circle class=\"a\" cx=\"190.8\" cy=\"195.4\" r=\"5\"></circle>\n<text class=\"t\" x=\"118\" y=\"122\">O</text><text class=\"t\" x=\"293\" y=\"130\">P</text>\n<text class=\"t\" x=\"197\" y=\"50\">A</text><text class=\"t\" x=\"197\" y=\"214\">B</text>\n<text class=\"m\" x=\"151\" y=\"78\">5</text><text class=\"m\" x=\"170\" y=\"133\">8</text><text class=\"m\" x=\"200\" y=\"139\">M</text>\n</svg>\n</div>\n<div><label><input name=\"q53\" type=\"radio\" value=\"A\"/> \\(\\tfrac{50}{3}\\)</label><br/><label><input name=\"q53\" type=\"radio\" value=\"B\"/> \\(\\tfrac{80}{3}\\)</label><br/><label><input name=\"q53\" type=\"radio\" value=\"C\"/> \\(25\\)</label><br/><label><input name=\"q53\" type=\"radio\" value=\"D\"/> \\(\\tfrac{200}{3}\\)</label><br/><label><input name=\"q53\" type=\"radio\" value=\"E\"/> \\(\\tfrac{100}{3}\\)</label><br/></div>", "<div class=\"question-number\">Question 27</div>\n<div class=\"stem-content\">A curve satisfies \\(\\displaystyle\\frac{dy}{dx}=3x(x-2)\\). It is tangent to the \\(x\\)-axis at its positive stationary point. What is the finite area enclosed by the curve and the \\(x\\)-axis?</div>\n<div><label><input name=\"q54\" type=\"radio\" value=\"A\"/> \\(\\tfrac92\\)</label><br/><label><input name=\"q54\" type=\"radio\" value=\"B\"/> \\(\\tfrac{27}{4}\\)</label><br/><label><input name=\"q54\" type=\"radio\" value=\"C\"/> \\(\\tfrac{11}{4}\\)</label><br/><label><input name=\"q54\" type=\"radio\" value=\"D\"/> \\(4\\)</label><br/><label><input name=\"q54\" type=\"radio\" value=\"E\"/> \\(8\\)</label><br/></div>", "<div class=\"question-number\">Question 1</div>\n<p>Three identical \\(6\\,\\Omega\\) resistors are connected to an ideal \\(12\\text{ V}\\) source as shown. Initially switch \\(S\\) is open; it is then closed.</p>\n<div class=\"question-image\"><svg aria-label=\"Six ohm resistor in series with two parallel six ohm branches, the lower branch controlled by an open switch\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 250\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"white\" height=\"250\" width=\"700\"></rect><g fill=\"none\" stroke=\"#111827\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3\"><line x1=\"75\" x2=\"75\" y1=\"190\" y2=\"60\"></line><line x1=\"75\" x2=\"155\" y1=\"60\" y2=\"60\"></line><line x1=\"170\" x2=\"170\" y1=\"35\" y2=\"85\"></line><line x1=\"188\" x2=\"188\" y1=\"46\" y2=\"74\"></line><line x1=\"155\" x2=\"170\" y1=\"60\" y2=\"60\"></line><line x1=\"188\" x2=\"240\" y1=\"60\" y2=\"60\"></line><polyline points=\"240,60 257,43 276,77 295,43 314,77 333,43 350,60\"></polyline><line x1=\"350\" x2=\"400\" y1=\"60\" y2=\"60\"></line><line x1=\"400\" x2=\"400\" y1=\"60\" y2=\"155\"></line><line x1=\"400\" x2=\"445\" y1=\"92\" y2=\"92\"></line><polyline points=\"445,92 462,75 481,109 500,75 519,109 538,75 555,92\"></polyline><line x1=\"555\" x2=\"620\" y1=\"92\" y2=\"92\"></line><line x1=\"400\" x2=\"440\" y1=\"155\" y2=\"155\"></line><circle cx=\"440\" cy=\"155\" fill=\"#111827\" r=\"4\"></circle><line x1=\"440\" x2=\"482\" y1=\"155\" y2=\"135\"></line><circle cx=\"490\" cy=\"155\" fill=\"#111827\" r=\"4\"></circle><line x1=\"490\" x2=\"510\" y1=\"155\" y2=\"155\"></line><polyline points=\"510,155 527,138 546,172 565,138 584,172 601,155\"></polyline><line x1=\"601\" x2=\"620\" y1=\"155\" y2=\"155\"></line><line x1=\"620\" x2=\"620\" y1=\"92\" y2=\"190\"></line><line x1=\"620\" x2=\"75\" y1=\"190\" y2=\"190\"></line></g><g fill=\"#111827\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"132\" y=\"25\">12 V</text><text x=\"276\" y=\"28\">R₁ = 6 Ω</text><text x=\"480\" y=\"58\">R₂ = 6 Ω</text><text x=\"533\" y=\"210\">R₃ = 6 Ω</text><text x=\"455\" y=\"128\">S</text></g></svg></div>\n<p>Which statements about closing \\(S\\) are correct?</p>\n<ol class=\"statement-list\">\n<li>The current supplied by the source increases.</li>\n<li>The potential difference across \\(R_1\\) increases.</li>\n<li>The power dissipated in \\(R_2\\) decreases.</li>\n</ol>\n<div><label><input name=\"q55\" type=\"radio\" value=\"A\"/> 1 only</label><br/><label><input name=\"q55\" type=\"radio\" value=\"B\"/> 2 only</label><br/><label><input name=\"q55\" type=\"radio\" value=\"C\"/> 1 and 3 only</label><br/><label><input name=\"q55\" type=\"radio\" value=\"D\"/> 2 and 3 only</label><br/><label><input name=\"q55\" type=\"radio\" value=\"E\"/> 1, 2 and 3</label><br/></div>", "<div class=\"question-number\">Question 2</div>\n<p>A particle starts from rest. It accelerates uniformly to \\(12\\text{ m s}^{-1}\\) in \\(4\\text{ s}\\), travels at this velocity for \\(3\\text{ s}\\), then changes velocity uniformly to \\(-4\\text{ m s}^{-1}\\) over the next \\(4\\text{ s}\\). What are its total displacement and total distance travelled?</p>\n<div class=\"question-image\"><svg aria-label=\"Velocity time graph rising to 12, remaining constant, then falling to minus 4\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 250\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"white\" height=\"250\" width=\"700\"></rect><g fill=\"none\" stroke=\"#111827\" stroke-linecap=\"round\" stroke-width=\"2.6\"><line x1=\"80\" x2=\"650\" y1=\"190\" y2=\"190\"></line><line x1=\"110\" x2=\"110\" y1=\"225\" y2=\"30\"></line><polyline points=\"110,190 300,65 440,65 625,225\" stroke-width=\"4\"></polyline><line x1=\"300\" x2=\"300\" y1=\"190\" y2=\"197\"></line><line x1=\"440\" x2=\"440\" y1=\"190\" y2=\"197\"></line><line x1=\"578\" x2=\"578\" y1=\"190\" y2=\"197\"></line><line x1=\"625\" x2=\"625\" y1=\"190\" y2=\"197\"></line></g><g fill=\"#111827\" font-family=\"Arial,sans-serif\" font-size=\"17\" font-weight=\"650\"><text x=\"35\" y=\"38\">v / m s⁻¹</text><text x=\"646\" y=\"185\">t / s</text><text x=\"78\" y=\"72\">12</text><text x=\"78\" y=\"230\">−4</text><text x=\"294\" y=\"215\">4</text><text x=\"434\" y=\"215\">7</text><text x=\"568\" y=\"215\">10</text><text x=\"618\" y=\"215\">11</text></g></svg></div>\n<div><label><input name=\"q56\" type=\"radio\" value=\"A\"/> \\(80\\text{ m},\\ 80\\text{ m}\\)</label><br/><label><input name=\"q56\" type=\"radio\" value=\"B\"/> \\(76\\text{ m},\\ 80\\text{ m}\\)</label><br/><label><input name=\"q56\" type=\"radio\" value=\"C\"/> \\(80\\text{ m},\\ 84\\text{ m}\\)</label><br/><label><input name=\"q56\" type=\"radio\" value=\"D\"/> \\(76\\text{ m},\\ 76\\text{ m}\\)</label><br/><label><input name=\"q56\" type=\"radio\" value=\"E\"/> \\(72\\text{ m},\\ 76\\text{ m}\\)</label><br/></div>", "<div class=\"question-number\">Question 3</div>\n<p>Five complete cycles of a wave pass a fixed point in medium \\(X\\) in \\(0.020\\text{ s}\\). Adjacent crests in \\(X\\) are \\(0.80\\text{ m}\\) apart. The wave then enters medium \\(Y\\) obliquely, where its speed is \\(\\tfrac34\\) of its speed in \\(X\\). Which row gives the speed, frequency and wavelength in \\(Y\\), together with the direction of bending?</p>\n<div><label><input name=\"q57\" type=\"radio\" value=\"A\"/> \\(150\\text{ m s}^{-1},\\ 250\\text{ Hz},\\ 0.60\\text{ m}\\); towards the normal</label><br/><label><input name=\"q57\" type=\"radio\" value=\"B\"/> \\(150\\text{ m s}^{-1},\\ 187.5\\text{ Hz},\\ 0.80\\text{ m}\\); towards the normal</label><br/><label><input name=\"q57\" type=\"radio\" value=\"C\"/> \\(200\\text{ m s}^{-1},\\ 250\\text{ Hz},\\ 0.60\\text{ m}\\); away from the normal</label><br/><label><input name=\"q57\" type=\"radio\" value=\"D\"/> \\(150\\text{ m s}^{-1},\\ 250\\text{ Hz},\\ 0.60\\text{ m}\\); away from the normal</label><br/><label><input name=\"q57\" type=\"radio\" value=\"E\"/> \\(200\\text{ m s}^{-1},\\ 250\\text{ Hz},\\ 0.80\\text{ m}\\); no change in direction</label><br/></div>", "<div class=\"question-number\">Question 4</div>\n<p>Two rods \\(P\\) and \\(Q\\) of equal cross-sectional area are joined end to end. Rod \\(P\\) has length \\(L\\) and thermal conductivity \\(k\\). Rod \\(Q\\) has length \\(2L\\) and thermal conductivity \\(3k\\). The free end of \\(P\\) is kept at \\(100^\\circ\\text{C}\\), and the free end of \\(Q\\) at \\(20^\\circ\\text{C}\\). Assume one-dimensional conduction: the rods' sides are thermally insulated, contact resistance at the junction is negligible, and no heat is lost to the surroundings. In steady state, the transfer rate through a rod is \\(kA\\Delta T/L\\). What is the junction temperature?</p>\n<div><label><input name=\"q58\" type=\"radio\" value=\"A\"/> \\(36^\\circ\\text{C}\\)</label><br/><label><input name=\"q58\" type=\"radio\" value=\"B\"/> \\(44^\\circ\\text{C}\\)</label><br/><label><input name=\"q58\" type=\"radio\" value=\"C\"/> \\(52^\\circ\\text{C}\\)</label><br/><label><input name=\"q58\" type=\"radio\" value=\"D\"/> \\(60^\\circ\\text{C}\\)</label><br/><label><input name=\"q58\" type=\"radio\" value=\"E\"/> \\(68^\\circ\\text{C}\\)</label><br/><label><input name=\"q58\" type=\"radio\" value=\"F\"/> \\(48^\\circ\\text{C}\\)</label><br/></div>", "<div class=\"question-number\">Question 5</div>\n<p>A simple AC generator contains a coil of \\(N\\) turns rotating at angular speed \\(\\omega\\) in a uniform magnetic field and is connected to a fixed resistor. For this generator, \\(V_{\\rm peak}\\propto N\\omega\\), \\(f\\propto\\omega\\), and the average power in the resistor is proportional to \\(V_{\\rm peak}^2\\).</p>\n<p>The coil is replaced by one of \\(2N\\) turns rotating at angular speed \\(\\omega/2\\), with all other factors unchanged. How do the peak voltage and the energy delivered to the resistor in one complete cycle change?</p>\n<div><label><input name=\"q59\" type=\"radio\" value=\"A\"/> Peak voltage doubles; energy per cycle doubles</label><br/><label><input name=\"q59\" type=\"radio\" value=\"B\"/> Peak voltage is unchanged; energy per cycle is unchanged</label><br/><label><input name=\"q59\" type=\"radio\" value=\"C\"/> Peak voltage halves; energy per cycle halves</label><br/><label><input name=\"q59\" type=\"radio\" value=\"D\"/> Peak voltage doubles; energy per cycle is four times as large</label><br/><label><input name=\"q59\" type=\"radio\" value=\"E\"/> Peak voltage is unchanged; energy per cycle doubles</label><br/></div>", "<div class=\"question-number\">Question 6</div>\n<p>An ideal \\(12\\text{ V}\\) source supplies a \\(4\\,\\Omega\\) resistor in series with two parallel branches. One branch is \\(6\\,\\Omega\\); the other contains an ideal diode in series with \\(3\\,\\Omega\\). With the first polarity the diode conducts. When the source polarity is reversed, the diode blocks. What is the ratio</p>\n<p>\\[\\frac{\\text{power drawn with the diode conducting}}{\\text{power drawn with the diode blocking}}?\\]</p>\n<div class=\"question-image\"><svg aria-label=\"Circuit with the shown source polarity forward-biasing a diode in series with 3 ohms, parallel to 6 ohms\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 250\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"white\" height=\"250\" width=\"700\"></rect><g fill=\"none\" stroke=\"#111827\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3\"><line x1=\"80\" x2=\"80\" y1=\"190\" y2=\"60\"></line><line x1=\"80\" x2=\"160\" y1=\"60\" y2=\"60\"></line><line x1=\"175\" x2=\"175\" y1=\"46\" y2=\"74\"></line><line x1=\"191\" x2=\"191\" y1=\"36\" y2=\"84\"></line><line x1=\"160\" x2=\"175\" y1=\"60\" y2=\"60\"></line><line x1=\"191\" x2=\"245\" y1=\"60\" y2=\"60\"></line><polyline points=\"245,60 262,43 281,77 300,43 319,77 338,43 355,60\"></polyline><line x1=\"355\" x2=\"405\" y1=\"60\" y2=\"60\"></line><line x1=\"405\" x2=\"405\" y1=\"60\" y2=\"155\"></line><line x1=\"405\" x2=\"450\" y1=\"92\" y2=\"92\"></line><polyline points=\"450,92 467,75 486,109 505,75 524,109 543,75 560,92\"></polyline><line x1=\"560\" x2=\"615\" y1=\"92\" y2=\"92\"></line><line x1=\"405\" x2=\"442\" y1=\"155\" y2=\"155\"></line><polygon fill=\"none\" points=\"442,137 442,173 478,155\"></polygon><line x1=\"483\" x2=\"483\" y1=\"135\" y2=\"175\"></line><line x1=\"483\" x2=\"510\" y1=\"155\" y2=\"155\"></line><polyline points=\"510,155 527,138 546,172 565,138 584,172 601,155\"></polyline><line x1=\"601\" x2=\"615\" y1=\"155\" y2=\"155\"></line><line x1=\"615\" x2=\"615\" y1=\"92\" y2=\"190\"></line><line x1=\"615\" x2=\"80\" y1=\"190\" y2=\"190\"></line></g><g fill=\"#111827\" font-family=\"Arial,sans-serif\" font-size=\"18\" font-weight=\"700\"><text x=\"140\" y=\"25\">12 V</text><text x=\"286\" y=\"27\">4 Ω</text><text x=\"495\" y=\"58\">6 Ω</text><text x=\"545\" y=\"215\">3 Ω</text></g></svg></div>\n<div><label><input name=\"q60\" type=\"radio\" value=\"A\"/> \\(\\tfrac23\\)</label><br/><label><input name=\"q60\" type=\"radio\" value=\"B\"/> \\(\\tfrac53\\)</label><br/><label><input name=\"q60\" type=\"radio\" value=\"C\"/> \\(\\tfrac32\\)</label><br/><label><input name=\"q60\" type=\"radio\" value=\"D\"/> \\(\\tfrac52\\)</label><br/><label><input name=\"q60\" type=\"radio\" value=\"E\"/> \\(\\tfrac{10}{3}\\)</label><br/></div>", "<div class=\"question-number\">Question 7</div>\n<p>A Geiger counter records the following counts in repeated \\(30\\text{ s}\\) intervals. The source and detector remain fixed.</p>\n<table class=\"data-table\">\n<thead><tr>\n<th>Measurement</th>\n<th>1</th>\n<th>2</th>\n<th>3</th>\n<th>4</th>\n</tr></thead>\n<tbody>\n<tr>\n<th>Source + background</th>\n<td>148</td>\n<td>161</td>\n<td>153</td>\n<td>139</td>\n</tr>\n<tr>\n<th>Background only</th>\n<td>18</td>\n<td>22</td>\n<td>16</td>\n<td>24</td>\n</tr>\n</tbody>\n</table>\n<p>Which statements are correct?</p>\n<ol class=\"statement-list\">\n<li>Repeated counts can differ even if the source activity and apparatus are unchanged.</li>\n<li>The best estimate from these data of the source-only count in \\(30\\text{ s}\\) is \\(130.25\\).</li>\n<li>Subtracting the mean background removes all random uncertainty from the source estimate.</li>\n</ol>\n<div><label><input name=\"q61\" type=\"radio\" value=\"A\"/> 1 only</label><br/><label><input name=\"q61\" type=\"radio\" value=\"B\"/> 2 only</label><br/><label><input name=\"q61\" type=\"radio\" value=\"C\"/> 1 and 2 only</label><br/><label><input name=\"q61\" type=\"radio\" value=\"D\"/> 2 and 3 only</label><br/><label><input name=\"q61\" type=\"radio\" value=\"E\"/> 1, 2 and 3</label><br/></div>", "<div class=\"question-number\">Question 8</div>\n<p>A \\(1200\\text{ kg}\\) car pulls an \\(800\\text{ kg}\\) trailer along a horizontal road. The resistive forces on the car and trailer are \\(400\\text{ N}\\) and \\(200\\text{ N}\\), respectively. Both accelerate forwards at \\(1.5\\text{ m s}^{-2}\\). What are the driving force on the car and the force exerted by the trailer on the car?</p>\n<div><label><input name=\"q62\" type=\"radio\" value=\"A\"/> \\(3600\\text{ N}\\) forwards; \\(1400\\text{ N}\\) backwards</label><br/><label><input name=\"q62\" type=\"radio\" value=\"B\"/> \\(3000\\text{ N}\\) forwards; \\(1200\\text{ N}\\) backwards</label><br/><label><input name=\"q62\" type=\"radio\" value=\"C\"/> \\(3600\\text{ N}\\) forwards; \\(1200\\text{ N}\\) backwards</label><br/><label><input name=\"q62\" type=\"radio\" value=\"D\"/> \\(3400\\text{ N}\\) forwards; \\(1400\\text{ N}\\) backwards</label><br/><label><input name=\"q62\" type=\"radio\" value=\"E\"/> \\(3600\\text{ N}\\) forwards; \\(1400\\text{ N}\\) forwards</label><br/></div>", "<div class=\"question-number\">Question 9</div>\n<p>A sound source emits \\(240\\text{ Hz}\\) while moving directly towards a stationary observer at \\(60\\text{ m s}^{-1}\\). The speed of sound in the still air is \\(360\\text{ m s}^{-1}\\). During one source period, a crest travels at the speed of sound while the source moves closer to the preceding crest. What frequency does the observer detect?</p>\n<div><label><input name=\"q63\" type=\"radio\" value=\"A\"/> \\(270\\text{ Hz}\\)</label><br/><label><input name=\"q63\" type=\"radio\" value=\"B\"/> \\(288\\text{ Hz}\\)</label><br/><label><input name=\"q63\" type=\"radio\" value=\"C\"/> \\(240\\text{ Hz}\\)</label><br/><label><input name=\"q63\" type=\"radio\" value=\"D\"/> \\(300\\text{ Hz}\\)</label><br/><label><input name=\"q63\" type=\"radio\" value=\"E\"/> \\(320\\text{ Hz}\\)</label><br/></div>", "<div class=\"question-number\">Question 10</div>\n<p>A transformer has \\(240\\text{ V}\\) across its primary and \\(12\\text{ V}\\) across its secondary. A \\(6\\,\\Omega\\) resistor is connected across the secondary. The transformer is 80% efficient, where efficiency is secondary output power divided by primary input power. Assume that its terminal voltage ratio still obeys \\(V_s/V_p=N_s/N_p\\). What are the primary current \\(I_p\\) and the turns ratio \\(N_s/N_p\\)?</p>\n<div><label><input name=\"q64\" type=\"radio\" value=\"A\"/> \\(I_p=\\tfrac1{10}\\text{ A},\\ N_s/N_p=\\tfrac1{20}\\)</label><br/><label><input name=\"q64\" type=\"radio\" value=\"B\"/> \\(I_p=\\tfrac18\\text{ A},\\ N_s/N_p=\\tfrac1{10}\\)</label><br/><label><input name=\"q64\" type=\"radio\" value=\"C\"/> \\(I_p=\\tfrac1{10}\\text{ A},\\ N_s/N_p=\\tfrac1{10}\\)</label><br/><label><input name=\"q64\" type=\"radio\" value=\"D\"/> \\(I_p=\\tfrac18\\text{ A},\\ N_s/N_p=\\tfrac1{20}\\)</label><br/><label><input name=\"q64\" type=\"radio\" value=\"E\"/> \\(I_p=\\tfrac15\\text{ A},\\ N_s/N_p=\\tfrac1{20}\\)</label><br/></div>", "<div class=\"question-number\">Question 11</div>\n<p>A fixed mass of ideal gas initially has pressure \\(p\\), volume \\(V\\), absolute temperature \\(T\\) and density \\(\\rho\\). It is first compressed isothermally to volume \\(V/2\\). Keeping this new volume fixed, it is then heated until its absolute temperature is \\(3T/2\\). What are its final pressure and density? For this question, use \\(pV/T=\\text{constant}\\) for a fixed mass of ideal gas.</p>\n<div><label><input name=\"q65\" type=\"radio\" value=\"A\"/> \\(\\tfrac32p,\\ 2\\rho\\)</label><br/><label><input name=\"q65\" type=\"radio\" value=\"B\"/> \\(2p,\\ \\tfrac32\\rho\\)</label><br/><label><input name=\"q65\" type=\"radio\" value=\"C\"/> \\(3p,\\ 2\\rho\\)</label><br/><label><input name=\"q65\" type=\"radio\" value=\"D\"/> \\(3p,\\ 3\\rho\\)</label><br/><label><input name=\"q65\" type=\"radio\" value=\"E\"/> \\(4p,\\ 2\\rho\\)</label><br/></div>", "<div class=\"question-number\">Question 12</div>\n<p>An object falls vertically through a fluid. Its weight is \\(W\\), its upthrust is a constant \\(U\\), and its drag force is \\(kv^2\\), where \\(v\\) is its speed. Its terminal speed is \\(v_t\\). What is the resultant force when its speed is \\(v_t/2\\)?</p>\n<div><label><input name=\"q66\" type=\"radio\" value=\"A\"/> \\(\\tfrac14(W-U)\\) downward</label><br/><label><input name=\"q66\" type=\"radio\" value=\"B\"/> \\(\\tfrac12(W-U)\\) downward</label><br/><label><input name=\"q66\" type=\"radio\" value=\"C\"/> \\(\\tfrac34(W-U)\\) upward</label><br/><label><input name=\"q66\" type=\"radio\" value=\"D\"/> \\(\\tfrac14(W-U)\\) upward</label><br/><label><input name=\"q66\" type=\"radio\" value=\"E\"/> \\(\\tfrac34(W-U)\\) downward</label><br/></div>", "<div class=\"question-number\">Question 13</div>\n<p>The graph shows the current-voltage characteristic of a filament lamp. The lamp is connected in series with a \\(4\\,\\Omega\\) resistor across an ideal \\(12\\text{ V}\\) source. What power is dissipated in the lamp?</p>\n<div class=\"question-image\"><svg aria-label=\"Smooth current voltage graph for a filament lamp without a marked operating point\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 250\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"white\" height=\"250\" width=\"700\"></rect><g fill=\"none\" stroke=\"#d1d5db\" stroke-width=\"1\"><path d=\"M100 205H630M100 170H630M100 135H630M100 100H630M100 65H630M100 30H630\"></path><path d=\"M100 205V30M188 205V30M276 205V30M365 205V30M453 205V30M542 205V30M630 205V30\"></path></g><g fill=\"none\" stroke=\"#111827\" stroke-width=\"2.5\"><line x1=\"100\" x2=\"645\" y1=\"205\" y2=\"205\"></line><line x1=\"100\" x2=\"100\" y1=\"215\" y2=\"20\"></line></g><path d=\"M100 205 C170 145, 260 112, 365 100 S520 68, 630 60\" fill=\"none\" stroke=\"#7a211b\" stroke-width=\"4\"></path><g fill=\"#111827\" font-family=\"Arial,sans-serif\" font-size=\"15\" font-weight=\"650\"><text x=\"35\" y=\"25\">I / A</text><text x=\"655\" y=\"226\">V / V</text><text x=\"183\" y=\"226\">2</text><text x=\"271\" y=\"226\">4</text><text x=\"360\" y=\"226\">6</text><text x=\"448\" y=\"226\">8</text><text x=\"535\" y=\"226\">10</text><text x=\"623\" y=\"226\">12</text><text x=\"72\" y=\"174\">0.5</text><text x=\"78\" y=\"139\">1.0</text><text x=\"78\" y=\"104\">1.5</text><text x=\"78\" y=\"69\">2.0</text></g></svg></div>\n<div><label><input name=\"q67\" type=\"radio\" value=\"A\"/> \\(4.5\\text{ W}\\)</label><br/><label><input name=\"q67\" type=\"radio\" value=\"B\"/> \\(6\\text{ W}\\)</label><br/><label><input name=\"q67\" type=\"radio\" value=\"C\"/> \\(9\\text{ W}\\)</label><br/><label><input name=\"q67\" type=\"radio\" value=\"D\"/> \\(12\\text{ W}\\)</label><br/><label><input name=\"q67\" type=\"radio\" value=\"E\"/> \\(18\\text{ W}\\)</label><br/></div>", "<div class=\"question-number\">Question 14</div>\n<p>Equal masses of solids \\(A\\) and \\(B\\), both initially at \\(20^\\circ\\text{C}\\), are heated by identical constant-power heaters. Energy loss is negligible. The results are:</p>\n<table class=\"data-table\">\n<thead><tr>\n<th>Solid</th>\n<th>Melting temperature</th>\n<th>Time to reach melting temperature</th>\n<th>Time at constant temperature while melting</th>\n</tr></thead>\n<tbody>\n<tr>\n<th>A</th>\n<td>\\(60^\\circ\\text{C}\\)</td>\n<td>\\(40\\text{ s}\\)</td>\n<td>\\(50\\text{ s}\\)</td>\n</tr>\n<tr>\n<th>B</th>\n<td>\\(80^\\circ\\text{C}\\)</td>\n<td>\\(60\\text{ s}\\)</td>\n<td>\\(30\\text{ s}\\)</td>\n</tr>\n</tbody>\n</table>\n<p>Which statements are correct?</p>\n<ol class=\"statement-list\">\n<li>Solid B has the higher melting point.</li>\n<li>In the solid state, A has the greater specific heat capacity.</li>\n<li>A has the greater specific latent heat of fusion.</li>\n</ol>\n<div><label><input name=\"q68\" type=\"radio\" value=\"A\"/> 1 only</label><br/><label><input name=\"q68\" type=\"radio\" value=\"B\"/> 2 only</label><br/><label><input name=\"q68\" type=\"radio\" value=\"C\"/> 1 and 3 only</label><br/><label><input name=\"q68\" type=\"radio\" value=\"D\"/> 2 and 3 only</label><br/><label><input name=\"q68\" type=\"radio\" value=\"E\"/> 1, 2 and 3</label><br/></div>", "<div class=\"question-number\">Question 15</div>\n<p>An ultrasound pulse travels normally through \\(3.0\\text{ cm}\\) of soft tissue at \\(1500\\text{ m s}^{-1}\\), then through bone at \\(3000\\text{ m s}^{-1}\\). It reflects from a boundary within the bone and returns along the same path. The echo is received \\(60\\,\\mu\\text{s}\\) after emission. How far below the surface is the reflecting boundary?</p>\n<div class=\"question-image\"><svg aria-label=\"Ultrasound pulse travelling through 3 centimetres of soft tissue and an unknown thickness of bone before reflection\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 220\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"white\" height=\"220\" width=\"700\"></rect><rect fill=\"#eff6ff\" height=\"72\" stroke=\"#111827\" stroke-width=\"2\" width=\"530\" x=\"85\" y=\"35\"></rect><rect fill=\"#fff7ed\" height=\"78\" stroke=\"#111827\" stroke-width=\"2\" width=\"530\" x=\"85\" y=\"107\"></rect><line stroke=\"#7a211b\" stroke-width=\"4\" x1=\"85\" x2=\"615\" y1=\"185\" y2=\"185\"></line><g fill=\"none\" stroke=\"#0f6f9f\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"4\"><line x1=\"320\" x2=\"320\" y1=\"18\" y2=\"185\"></line><polyline points=\"310,169 320,185 330,169\"></polyline><line x1=\"380\" x2=\"380\" y1=\"185\" y2=\"18\"></line><polyline points=\"370,34 380,18 390,34\"></polyline></g><g fill=\"#111827\" font-family=\"Arial,sans-serif\" font-size=\"17\" font-weight=\"650\"><text x=\"105\" y=\"65\">soft tissue: 3.0 cm</text><text x=\"105\" y=\"90\">v = 1500 m s⁻¹</text><text x=\"105\" y=\"140\">bone: unknown thickness</text><text x=\"105\" y=\"165\">v = 3000 m s⁻¹</text><text x=\"470\" y=\"207\">reflecting boundary</text></g></svg></div>\n<div><label><input name=\"q69\" type=\"radio\" value=\"A\"/> \\(6.0\\text{ cm}\\)</label><br/><label><input name=\"q69\" type=\"radio\" value=\"B\"/> \\(3.0\\text{ cm}\\)</label><br/><label><input name=\"q69\" type=\"radio\" value=\"C\"/> \\(4.5\\text{ cm}\\)</label><br/><label><input name=\"q69\" type=\"radio\" value=\"D\"/> \\(7.5\\text{ cm}\\)</label><br/><label><input name=\"q69\" type=\"radio\" value=\"E\"/> \\(9.0\\text{ cm}\\)</label><br/></div>", "<div class=\"question-number\">Question 16</div>\n<p>An electric pump takes in power at \\(500\\text{ W}\\) and is \\(80\\%\\) efficient. It pumps water at \\(2.0\\text{ kg s}^{-1}\\) from a large reservoir to an outlet \\(15\\text{ m}\\) higher. The reservoir surface and outlet are both at atmospheric pressure, and the speed of the reservoir surface is negligible. Neglect all losses other than those represented by the efficiency, and take \\(g=10\\text{ N kg}^{-1}\\).</p>\n<p>What is the speed of the water as it leaves the outlet?</p>\n<div><label><input name=\"q70\" type=\"radio\" value=\"A\"/> \\(5\\text{ m s}^{-1}\\)</label><br/><label><input name=\"q70\" type=\"radio\" value=\"B\"/> \\(5\\sqrt2\\text{ m s}^{-1}\\)</label><br/><label><input name=\"q70\" type=\"radio\" value=\"C\"/> \\(10\\text{ m s}^{-1}\\)</label><br/><label><input name=\"q70\" type=\"radio\" value=\"D\"/> \\(10\\sqrt2\\text{ m s}^{-1}\\)</label><br/><label><input name=\"q70\" type=\"radio\" value=\"E\"/> \\(20\\text{ m s}^{-1}\\)</label><br/></div>", "<div class=\"question-number\">Question 17</div>\n<p>The north pole of a bar magnet moves directly towards one end of a coil at speed \\(u\\), is stopped, and is then pulled away. As it passes the same positions on the way out, its speed is \\(u/2\\). Which statements are correct?</p>\n<ol class=\"statement-list\">\n<li>While the north pole approaches, the near face of the coil behaves as a north pole.</li>\n<li>While the magnet is stationary, the induced potential difference is zero.</li>\n<li>While the magnet recedes through the same positions, the induced potential difference has the opposite direction and a smaller magnitude than during approach.</li>\n</ol>\n<div><label><input name=\"q71\" type=\"radio\" value=\"A\"/> 1 only</label><br/><label><input name=\"q71\" type=\"radio\" value=\"B\"/> 2 only</label><br/><label><input name=\"q71\" type=\"radio\" value=\"C\"/> 1 and 2 only</label><br/><label><input name=\"q71\" type=\"radio\" value=\"D\"/> 2 and 3 only</label><br/><label><input name=\"q71\" type=\"radio\" value=\"E\"/> 1, 2 and 3</label><br/></div>", "<div class=\"question-number\">Question 18</div>\n<p>A source emits alpha, beta-minus and gamma radiation. A detector has a background rate of \\(20\\text{ counts min}^{-1}\\). It records:</p>\n<ul class=\"statement-list\">\n<li>\\(620\\text{ counts min}^{-1}\\) with no absorber;</li>\n<li>\\(420\\text{ counts min}^{-1}\\) after paper is inserted;</li>\n<li>\\(170\\text{ counts min}^{-1}\\) after aluminium is added behind the paper;</li>\n<li>\\(20\\text{ counts min}^{-1}\\) after thick lead is added.</li>\n</ul>\n<p>Assume the paper removes only alpha, the aluminium then removes only beta-minus, and the lead removes the remaining gamma. Which option gives, respectively, the ratio of the source's beta-minus count rate to its gamma count rate and the fraction of the source-only count rate due to alpha radiation?</p>\n<div><label><input name=\"q72\" type=\"radio\" value=\"A\"/> \\(2:1;\\ \\tfrac13\\)</label><br/><label><input name=\"q72\" type=\"radio\" value=\"B\"/> \\(5:3;\\ \\tfrac13\\)</label><br/><label><input name=\"q72\" type=\"radio\" value=\"C\"/> \\(3:2;\\ \\tfrac{10}{31}\\)</label><br/><label><input name=\"q72\" type=\"radio\" value=\"D\"/> \\(5:4;\\ \\tfrac12\\)</label><br/><label><input name=\"q72\" type=\"radio\" value=\"E\"/> \\(3:5;\\ \\tfrac13\\)</label><br/></div>", "<div class=\"question-number\">Question 19</div>\n<p>A vertical-sided container of base area \\(A\\) holds an oil layer of density \\(\\rho\\) and depth \\(2h\\) above a liquid of density \\(2\\rho\\) and depth \\(h\\). The same volumes of both liquids are transferred to a second vertical-sided container of base area \\(2A\\). Compared with the first container, how do the gauge pressure and the total force due to liquid pressure on the horizontal base change?</p>\n<div><label><input name=\"q73\" type=\"radio\" value=\"A\"/> Pressure halves; force halves</label><br/><label><input name=\"q73\" type=\"radio\" value=\"B\"/> Pressure halves; force is unchanged</label><br/><label><input name=\"q73\" type=\"radio\" value=\"C\"/> Pressure is unchanged; force doubles</label><br/><label><input name=\"q73\" type=\"radio\" value=\"D\"/> Pressure becomes one quarter; force halves</label><br/><label><input name=\"q73\" type=\"radio\" value=\"E\"/> Pressure doubles; force is unchanged</label><br/></div>", "<div class=\"question-number\">Question 20</div>\n<p>A positively charged rod is brought close to an initially neutral isolated metal sphere without touching it. While the rod remains nearby, the sphere is briefly connected to Earth. The Earth connection is removed before the rod is taken away. What is the final charge on the sphere, and what happened while it was earthed?</p>\n<div><label><input name=\"q74\" type=\"radio\" value=\"A\"/> Neutral; equal numbers of electrons flowed in both directions</label><br/><label><input name=\"q74\" type=\"radio\" value=\"B\"/> Positive; electrons flowed from Earth to the sphere</label><br/><label><input name=\"q74\" type=\"radio\" value=\"C\"/> Negative; electrons flowed from Earth to the sphere</label><br/><label><input name=\"q74\" type=\"radio\" value=\"D\"/> Positive; electrons flowed from the sphere to Earth</label><br/><label><input name=\"q74\" type=\"radio\" value=\"E\"/> Negative; positive charge flowed from Earth to the sphere</label><br/></div>", "<div class=\"question-number\">Question 21</div>\n<p>Two otherwise identical hot metal containers are at the same temperature in identical cooler surroundings. The initial net radiative loss from the dull black container is four times that from the polished silver container. Each also loses energy by non-radiative processes at the same rate \\(H\\). The measured initial total loss rates are \\(70\\text{ W}\\) for the black container and \\(40\\text{ W}\\) for the silver container. What fraction of the black container's total loss is by radiation?</p>\n<div><label><input name=\"q75\" type=\"radio\" value=\"A\"/> \\(\\tfrac37\\)</label><br/><label><input name=\"q75\" type=\"radio\" value=\"B\"/> \\(\\tfrac12\\)</label><br/><label><input name=\"q75\" type=\"radio\" value=\"C\"/> \\(\\tfrac35\\)</label><br/><label><input name=\"q75\" type=\"radio\" value=\"D\"/> \\(\\tfrac47\\)</label><br/><label><input name=\"q75\" type=\"radio\" value=\"E\"/> \\(\\tfrac57\\)</label><br/></div>", "<div class=\"question-number\">Question 22</div>\n<p>A particle of mass \\(m\\) travels at speed \\(3u\\). It collides with a particle of mass \\(2m\\) travelling in the same direction at speed \\(u\\). They stick together. Which option gives their common speed and the fraction of the initial kinetic energy that is lost?</p>\n<div><label><input name=\"q76\" type=\"radio\" value=\"A\"/> \\(\\tfrac{5u}{3};\\ \\tfrac8{25}\\)</label><br/><label><input name=\"q76\" type=\"radio\" value=\"B\"/> \\(\\tfrac{4u}{3};\\ \\tfrac14\\)</label><br/><label><input name=\"q76\" type=\"radio\" value=\"C\"/> \\(\\tfrac{5u}{3};\\ \\tfrac4{33}\\)</label><br/><label><input name=\"q76\" type=\"radio\" value=\"D\"/> \\(\\tfrac{4u}{3};\\ \\tfrac13\\)</label><br/><label><input name=\"q76\" type=\"radio\" value=\"E\"/> \\(\\tfrac{5u}{3};\\ \\tfrac8{33}\\)</label><br/></div>", "<div class=\"question-number\">Question 23</div>\n<p>In medium \\(X\\), a wave has speed \\(v\\), wavelength \\(\\lambda\\) and period \\(T\\). It enters normally into a slab of medium \\(Y\\), where its speed is \\(3v/4\\). The slab thickness is \\(6\\lambda\\). How many wavelengths fit across the slab, and how long does the wave take to cross it?</p>\n<div><label><input name=\"q77\" type=\"radio\" value=\"A\"/> \\(6\\) wavelengths; \\(6T\\)</label><br/><label><input name=\"q77\" type=\"radio\" value=\"B\"/> \\(8\\) wavelengths; \\(6T\\)</label><br/><label><input name=\"q77\" type=\"radio\" value=\"C\"/> \\(8\\) wavelengths; \\(8T\\)</label><br/><label><input name=\"q77\" type=\"radio\" value=\"D\"/> \\(6\\) wavelengths; \\(8T\\)</label><br/><label><input name=\"q77\" type=\"radio\" value=\"E\"/> \\(9\\) wavelengths; \\(8T\\)</label><br/></div>", "<div class=\"question-number\">Question 24</div>\n<p>In an original transmission system, power \\(P\\) enters cables of total resistance \\(R\\) at voltage \\(V\\). The power lost in the cables is exactly \\(P/5\\).</p>\n<p>In a redesigned system, the same generator power \\(P\\) enters a transformer of efficiency \\(80\\%\\), whose output sends power through the same cables at voltage \\(4V\\). At the far end, a second transformer of efficiency \\(75\\%\\) supplies a load.</p>\n<p>What fraction of \\(P\\) reaches the load?</p>\n<div><label><input name=\"q78\" type=\"radio\" value=\"A\"/> \\(\\tfrac35\\)</label><br/><label><input name=\"q78\" type=\"radio\" value=\"B\"/> \\(\\tfrac{297}{500}\\)</label><br/><label><input name=\"q78\" type=\"radio\" value=\"C\"/> \\(\\tfrac{99}{125}\\)</label><br/><label><input name=\"q78\" type=\"radio\" value=\"D\"/> \\(\\tfrac{12}{25}\\)</label><br/><label><input name=\"q78\" type=\"radio\" value=\"E\"/> \\(\\tfrac{99}{100}\\)</label><br/></div>", "<div class=\"question-number\">Question 25</div>\n<p>A trolley of mass \\(m\\) is initially at rest. The horizontal force on it varies with time as shown. Immediately after \\(t=3T\\), it collides with a stationary trolley of mass \\(3m\\); the trolleys stick together. They then move up a smooth ramp and come momentarily to rest at vertical height \\(h\\).</p>\n<div class=\"question-image\"><svg aria-label=\"Force-time graph with a positive triangular pulse from zero to two T of height three F, followed by a negative rectangular pulse of magnitude F until three T\" class=\"diagram-svg\" role=\"img\" viewbox=\"0 0 700 250\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"white\" height=\"250\" width=\"700\"></rect><g fill=\"none\" stroke=\"#111827\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.7\"><line x1=\"90\" x2=\"640\" y1=\"170\" y2=\"170\"></line><line x1=\"90\" x2=\"90\" y1=\"215\" y2=\"25\"></line><polyline points=\"90,170 310,45 530,170\" stroke=\"#7a211b\" stroke-width=\"4\"></polyline><polyline points=\"530,205 630,205 630,170\" stroke=\"#0f6f9f\" stroke-width=\"4\"></polyline><line stroke=\"#0f6f9f\" stroke-width=\"4\" x1=\"530\" x2=\"530\" y1=\"170\" y2=\"205\"></line><line stroke=\"#6b7280\" stroke-dasharray=\"6 5\" x1=\"310\" x2=\"310\" y1=\"45\" y2=\"170\"></line><line stroke=\"#6b7280\" stroke-dasharray=\"6 5\" x1=\"530\" x2=\"530\" y1=\"170\" y2=\"215\"></line><line stroke=\"#6b7280\" stroke-dasharray=\"6 5\" x1=\"630\" x2=\"630\" y1=\"170\" y2=\"215\"></line></g><g fill=\"#111827\" font-family=\"Arial,sans-serif\" font-size=\"17\" font-weight=\"650\"><text x=\"14\" y=\"20\">force / N</text><text x=\"647\" y=\"160\">time</text><text x=\"61\" y=\"50\">3F</text><text x=\"58\" y=\"211\">−F</text><text x=\"300\" y=\"194\">T</text><text x=\"512\" y=\"194\">2T</text><text x=\"608\" y=\"194\">3T</text></g></svg></div>\n<p>Which expression gives \\(h\\)?</p>\n<div><label><input name=\"q79\" type=\"radio\" value=\"A\"/> \\(\\dfrac{F^2T^2}{2m^2g}\\)</label><br/><label><input name=\"q79\" type=\"radio\" value=\"B\"/> \\(\\dfrac{F^2T^2}{4m^2g}\\)</label><br/><label><input name=\"q79\" type=\"radio\" value=\"C\"/> \\(\\dfrac{F^2T^2}{32m^2g}\\)</label><br/><label><input name=\"q79\" type=\"radio\" value=\"D\"/> \\(\\dfrac{F^2T^2}{8m^2g}\\)</label><br/><label><input name=\"q79\" type=\"radio\" value=\"E\"/> \\(\\dfrac{9F^2T^2}{32m^2g}\\)</label><br/></div>", "<div class=\"question-number\">Question 26</div>\n<p>A lift of mass \\(m\\) is moving vertically upward. At three instants \\(X\\), \\(Y\\) and \\(Z\\), its upward speed has the same value \\(v\\). Its acceleration is upward with magnitude \\(a\\) at \\(X\\), zero at \\(Y\\), and downward with magnitude \\(a\\) at \\(Z\\), where \\(0&lt;a&lt;g\\). The cable remains taut and resistive forces are negligible.</p>\n<p>Which ordering is correct for the instantaneous powers \\(P_X,P_Y,P_Z\\) delivered to the lift by the cable?</p>\n<div><label><input name=\"q80\" type=\"radio\" value=\"A\"/> \\(P_X&gt;P_Y&gt;P_Z\\)</label><br/><label><input name=\"q80\" type=\"radio\" value=\"B\"/> \\(P_Z&gt;P_Y&gt;P_X\\)</label><br/><label><input name=\"q80\" type=\"radio\" value=\"C\"/> \\(P_X=P_Y=P_Z\\)</label><br/><label><input name=\"q80\" type=\"radio\" value=\"D\"/> \\(P_X&gt;P_Z&gt;P_Y\\)</label><br/><label><input name=\"q80\" type=\"radio\" value=\"E\"/> \\(P_Y&gt;P_X&gt;P_Z\\)</label><br/></div>", "<div class=\"question-number\">Question 27</div>\n<p>A nucleus initially has mass number \\(A\\), proton number \\(Z\\) and neutron number \\(N=A-Z\\). It emits some alpha particles and some beta-minus particles. Its final mass number is \\(A-12\\), and its final neutron number is \\(N-8\\). How many emissions of each type occurred, and what is the final proton number?</p>\n<div><label><input name=\"q81\" type=\"radio\" value=\"A\"/> 3 alpha, 2 beta-minus; \\(Z-8\\)</label><br/><label><input name=\"q81\" type=\"radio\" value=\"B\"/> 3 alpha, 4 beta-minus; \\(Z-2\\)</label><br/><label><input name=\"q81\" type=\"radio\" value=\"C\"/> 2 alpha, 2 beta-minus; \\(Z-2\\)</label><br/><label><input name=\"q81\" type=\"radio\" value=\"D\"/> 3 alpha, 2 beta-minus; \\(Z-6\\)</label><br/><label><input name=\"q81\" type=\"radio\" value=\"E\"/> 3 alpha, 2 beta-minus; \\(Z-4\\)</label><br/></div>"];
+const correctAnswers = ["C", "A", "D", "E", "D", "B", "B", "C", "A", "E", "C", "B", "E", "E", "A", "D", "A", "B", "D", "A", "D", "C", "E", "B", "D", "E", "C", "B", "D", "A", "C", "A", "E", "D", "A", "B", "B", "E", "D", "C", "A", "C", "C", "A", "D", "C", "C", "D", "E", "B", "E", "B", "E", "B", "E", "B", "A", "C", "E", "B", "C", "A", "B", "D", "C", "E", "C", "C", "A", "C", "E", "B", "B", "C", "D", "E", "C", "B", "D", "A", "E"];
+const answerKeyBySection = {"mathematics_1": ["C", "A", "D", "E", "D", "B", "B", "C", "A", "E", "C", "B", "E", "E", "A", "D", "A", "B", "D", "A", "D", "C", "E", "B", "D", "E", "C"], "mathematics_2": ["B", "D", "A", "C", "A", "E", "D", "A", "B", "B", "E", "D", "C", "A", "C", "C", "A", "D", "C", "C", "D", "E", "B", "E", "B", "E", "B"], "physics": ["E", "B", "A", "C", "E", "B", "C", "A", "B", "D", "C", "E", "C", "C", "A", "C", "E", "B", "B", "C", "D", "E", "C", "B", "D", "A", "E"]};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){ if(window.emailjs){ try{ emailjs.init("9jjn3yBHl6S88hITy"); }catch(_){ } } })();
+
+const SECTION_SIZE = 27;
+const SECTION_SECONDS = 40 * 60;
+const BREAK_SECONDS = 5 * 60;
+const totalQuestions = questions.length;
+const userAnswers = new Array(totalQuestions).fill(null);
+const flags = new Array(totalQuestions).fill(false);
+const timeSpent = new Array(totalQuestions).fill(0);
+let sectionIndex = 0;
+let current = 0;
+let studentName = "Student";
+let studentEmail = "";
+let testSession = "";
+let attemptNumber = 1;
+let timerInterval = null;
+let breakInterval = null;
+let sectionDeadline = null;
+let breakDeadline = null;
+let lastTimestamp = Date.now();
+let finalisingSection = false;
+
+const ACTIVE_KEY = `${testId}::active-state-v3`;
+const timerDisplay = document.getElementById("time");
+const counter = document.getElementById("counter");
+const container = document.getElementById("question-container");
+const sectionChip = document.getElementById("section-chip");
+
+function formatTime(seconds){ const s=Math.max(0,Math.ceil(Number(seconds)||0)); return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`; }
+function currentSectionStart(){ return sectionIndex*SECTION_SIZE; }
+function currentSectionEnd(){ return currentSectionStart()+SECTION_SIZE-1; }
+function currentQuestionInSection(){ return current-currentSectionStart()+1; }
+function commitVisibleTime(){ const now=Date.now(); if(document.getElementById("exam-interface").style.display!=="none") timeSpent[current]+=(now-lastTimestamp)/1000; lastTimestamp=now; }
+function getRemainingSeconds(deadline){ return deadline ? Math.max(0,Math.ceil((deadline-Date.now())/1000)) : SECTION_SECONDS; }
+
+function getLocalAttemptHistory(){
+  try{ const p=JSON.parse(localStorage.getItem(`${testId}::attempt-history`)||"[]"); return Array.isArray(p)?p:[]; }catch(_){ return []; }
+}
+function persistActive(){
+  try{
+    const state={version:3,testId,studentName,studentEmail,testSession,attemptNumber,sectionIndex,current,userAnswers,flags,timeSpent,sectionDeadline,breakDeadline,savedAt:Date.now()};
+    localStorage.setItem(ACTIVE_KEY,JSON.stringify(state));
+  }catch(err){ console.warn("Active-attempt autosave unavailable",err); }
+}
+function loadActive(){
+  try{ const s=JSON.parse(localStorage.getItem(ACTIVE_KEY)||"null"); return s&&s.testId===testId&&Array.isArray(s.userAnswers)?s:null; }catch(_){ return null; }
+}
+function clearActive(){ try{localStorage.removeItem(ACTIVE_KEY);}catch(_){} }
+function restoreActive(s){
+  studentName=s.studentName||"Student"; studentEmail=s.studentEmail||""; testSession=s.testSession||""; attemptNumber=Number(s.attemptNumber)||1;
+  sectionIndex=Math.min(2,Math.max(0,Number(s.sectionIndex)||0)); current=Math.min(totalQuestions-1,Math.max(currentSectionStart(),Number(s.current)||currentSectionStart()));
+  for(let i=0;i<totalQuestions;i++){ userAnswers[i]=s.userAnswers[i]??null; flags[i]=Boolean(s.flags&&s.flags[i]); timeSpent[i]=Number(s.timeSpent&&s.timeSpent[i])||0; }
+  sectionDeadline=Number(s.sectionDeadline)||Date.now()+SECTION_SECONDS*1000; breakDeadline=Number(s.breakDeadline)||null;
+}
+
+function startExam(){
+  const enteredName=document.getElementById("student-name").value.trim();
+  const enteredEmail=document.getElementById("student-email").value.trim();
+  const selectedSession=document.getElementById("test-date").value;
+  const saved=loadActive();
+  if(saved && confirm("A saved attempt for this test was found. Resume it?")){
+    restoreActive(saved);
+  }else{
+    clearActive(); studentName=enteredName||"Student"; studentEmail=enteredEmail; testSession=selectedSession; attemptNumber=getLocalAttemptHistory().length+1;
+    sectionIndex=0; current=0; sectionDeadline=Date.now()+SECTION_SECONDS*1000; breakDeadline=null; lastTimestamp=Date.now();
+  }
+  document.getElementById("instructions").style.display="none";
+  document.getElementById("break-screen").style.display="none";
+  document.getElementById("exam-interface").style.display="block";
+  renderQuestion(); generateNavigatorButtons(); startSectionTimer(); persistActive();
+}
+function startSectionTimer(){ clearInterval(timerInterval); updateTimer(); timerInterval=setInterval(updateTimer,250); }
+function updateTimer(){
+  const left=getRemainingSeconds(sectionDeadline); timerDisplay.textContent=formatTime(left);
+  if(left<=0 && !finalisingSection){ clearInterval(timerInterval); commitVisibleTime(); finishCurrentSection(false); }
+}
+function safeTypeset(){ try{ if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise([container]); else if(window.MathJax&&MathJax.Hub) MathJax.Hub.Queue(["Typeset",MathJax.Hub,container]); }catch(e){console.warn(e);} }
+function renderQuestion(){
+  container.innerHTML=questions[current]; sectionChip.textContent=sectionNames[sectionIndex]; counter.textContent=`Q${currentQuestionInSection()} of ${SECTION_SIZE} (${sectionNames[sectionIndex]})`;
+  const selected=userAnswers[current]; if(selected){ const radio=container.querySelector(`input[type=radio][value="${CSS.escape(selected)}"]`); if(radio) radio.checked=true; }
+  container.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener("change",()=>{userAnswers[current]=r.value; updateNavigatorButton(current); persistActive();}));
+  document.getElementById("prev-btn").disabled=current===currentSectionStart();
+  document.getElementById("next-btn").textContent=current===currentSectionEnd()?"Finish Section →":"Next →";
+  updateFlagButton(); updateNavigatorButton(current); lastTimestamp=Date.now(); safeTypeset(); persistActive();
+}
+function goTo(index){ if(index<currentSectionStart()||index>currentSectionEnd())return; commitVisibleTime(); current=index; renderQuestion(); }
+function prevQuestion(){ if(current>currentSectionStart())goTo(current-1); }
+function nextQuestion(){
+  if(current<currentSectionEnd()){ goTo(current+1); return; }
+  if(confirm(`Submit ${sectionNames[sectionIndex]}? You will not be able to return to this section.`)){ commitVisibleTime(); finishCurrentSection(true); }
+}
+function toggleFlag(){ flags[current]=!flags[current]; updateFlagButton(); updateNavigatorButton(current); persistActive(); }
+function updateFlagButton(){ const b=document.getElementById("flag-btn"); if(!b)return; b.classList.toggle("flagged",flags[current]); b.textContent=flags[current]?"⚑ Flagged for Review":"⚑ Flag for Review"; }
+function openNavigator(){ generateNavigatorButtons(); document.getElementById("navigator-popup").style.display="block"; }
+function closeNavigator(){ document.getElementById("navigator-popup").style.display="none"; }
+function jumpTo(i){ goTo(i); closeNavigator(); }
+function generateNavigatorButtons(){
+  const grid=document.getElementById("navigator-grid"); grid.innerHTML=""; document.getElementById("navigator-heading").textContent=sectionNames[sectionIndex];
+  for(let i=0;i<SECTION_SIZE;i++){ const a=currentSectionStart()+i,b=document.createElement("button"); b.textContent=i+1;b.dataset.index=a;b.id=`nav-btn-${a}`;b.style.padding="10px";b.style.border="1px solid #cbd5e1";b.style.borderRadius="6px";b.onclick=()=>jumpTo(a);grid.appendChild(b);updateNavigatorButton(a); }
+}
+function updateNavigatorButton(i){ const b=document.getElementById(`nav-btn-${i}`); if(!b)return; b.style.background=flags[i]?"#f59e0b":(userAnswers[i]?"#dbeafe":"white"); b.style.color=flags[i]?"#111827":"#0f172a"; b.style.fontWeight=(i===current)?"800":"600"; b.textContent=`${i-currentSectionStart()+1}${flags[i]?" ⚑":""}`; }
+function confirmSubmit(){ if(confirm(`Submit ${sectionNames[sectionIndex]}? You will not be able to return to this section.`)){ commitVisibleTime(); finishCurrentSection(true); } }
+function finishCurrentSection(manual){
+  if(finalisingSection)return; finalisingSection=true; clearInterval(timerInterval); persistActive();
+  if(sectionIndex<sectionNames.length-1){ showBreakScreen(); } else { submitExam(); }
+  finalisingSection=false;
+}
+function showBreakScreen(){
+  document.getElementById("exam-interface").style.display="none"; document.getElementById("break-screen").style.display="flex";
+  document.getElementById("break-title").textContent=`End of ${sectionNames[sectionIndex]}`;
+  document.getElementById("break-copy").textContent=`You can take a 5-minute break before starting ${sectionNames[sectionIndex+1]}.`;
+  breakDeadline=Date.now()+BREAK_SECONDS*1000; persistActive(); clearInterval(breakInterval); updateBreakTimer(); breakInterval=setInterval(updateBreakTimer,250);
+}
+function updateBreakTimer(){ const left=getRemainingSeconds(breakDeadline); document.getElementById("break-timer").textContent=formatTime(left); if(left<=0){clearInterval(breakInterval);beginNextSection();} }
+function skipBreak(){ clearInterval(breakInterval); beginNextSection(); }
+function beginNextSection(){ sectionIndex++;current=currentSectionStart();sectionDeadline=Date.now()+SECTION_SECONDS*1000;breakDeadline=null;document.getElementById("break-screen").style.display="none";document.getElementById("exam-interface").style.display="block";renderQuestion();generateNavigatorButtons();startSectionTimer();persistActive(); }
+
+function sectionRows(section){
+  const start=section*SECTION_SIZE; let score=0,rows=[];
+  for(let i=start;i<start+SECTION_SIZE;i++){ const good=userAnswers[i]===correctAnswers[i]; if(good)score++; const sec=Math.round(timeSpent[i]||0); rows.push(`<tr><td>${i-start+1}</td><td>${correctAnswers[i]}</td><td>${userAnswers[i]||"–"}</td><td>${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}</td><td>${flags[i]?"Flagged":(good?"Correct":"Incorrect")}</td></tr>`); }
+  return {score,rows:rows.join("")};
+}
+function buildSectionEmailAnalysis(title,section){
+  const start=section*SECTION_SIZE; let out=`${title} Analysis\n`;
+  for(let i=start;i<start+SECTION_SIZE;i++){const sec=Math.round(timeSpent[i]||0);out+=`Q.${i-start+1} Correct: ${correctAnswers[i]} Yours: ${userAnswers[i]||"-"} Time: ${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}${flags[i]?" Flagged":""}\n`;}
+  return out.trim();
+}
+function saveAttemptSummary(totalScore,scores){
+  const key=`${testId}::attempt-history`; const history=getLocalAttemptHistory(); const payload={testId,attemptNumber,studentName,studentEmail,testSession,totalScore,sectionScores:scores,submittedAt:new Date().toISOString()}; history.push(payload);
+  try{localStorage.setItem(key,JSON.stringify(history));localStorage.setItem(`${testId}::latest-result`,JSON.stringify(payload));}catch(_){}
+}
+window.TS_BUILD_INCORRECT_LIST=window.TS_BUILD_INCORRECT_LIST||function(ans,key){return key.map((v,i)=>ans[i]===v?null:i+1).filter(Boolean)};
+window.TS_SAVE_ATTEMPT=window.TS_SAVE_ATTEMPT||async function(opts){
+  try{ const payload={test_id:String(opts.test_id||"").trim(),test_title:String(opts.test_title||"").trim(),paper:String(opts.paper||"full"),total_questions:Number(opts.total_questions||81),score:Number(opts.score||0),answers:opts.answers||[],correct_answers:opts.correct_answers||[],time_spent:opts.time_spent||[],flags:opts.flags||[],incorrect:opts.incorrect||[]};
+    const res=await fetch("/api/practice-tests/submit",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); let body={};try{body=await res.json();}catch(_){} return {ok:res.ok,status:res.status,body};
+  }catch(err){return {ok:false,error:String(err)}}
+};
+async function saveRemoteAttempt(totalScore){ return window.TS_SAVE_ATTEMPT({test_id:testId,test_title:"ESAT 2024–2025 Recall Mock",paper:"full",total_questions:totalQuestions,score:totalScore,answers:userAnswers,correct_answers:correctAnswers,time_spent:timeSpent,flags,incorrect:window.TS_BUILD_INCORRECT_LIST(userAnswers,correctAnswers)}); }
+function sendResultsEmail(totalScore,scores,timestamp){
+  if(!studentEmail)return Promise.resolve({ok:false,skipped:true,reason:"no email entered"}); if(!window.emailjs||!emailjs.send)return Promise.resolve({ok:false,skipped:true,reason:"EmailJS unavailable"});
+  const payload={name:studentName,test_title:"ESAT 2024–2025 Recall Mock",to_email:studentEmail,solution_link:solutionPDF,session:testSession,score:`${totalScore} / ${totalQuestions}`,timestamp};
+  sectionNames.forEach((name,i)=>{ payload[`paper${i+1}`]=buildSectionEmailAnalysis(name,i); payload[`${sectionKeys[i]}_score`]=`${scores[i]} / 27`; });
+  return emailjs.send("service_5l4w8x2","template_j1jrs4o",payload).then(r=>({ok:true,status:r&&r.status})).catch(e=>({ok:false,error:String(e)}));
+}
+function statusText(r,yes,no){if(!r)return"Not checked";if(r.ok)return yes;if(r.skipped)return`Skipped: ${r.reason||"not available"}`;return no;}
+async function submitExam(){
+  if(window.__ESAT_SUBMIT_DONE)return;window.__ESAT_SUBMIT_DONE=true;clearInterval(timerInterval);clearInterval(breakInterval);commitVisibleTime();
+  const sections=sectionNames.map((_,i)=>sectionRows(i));const scores=sections.map(x=>x.score);const totalScore=scores.reduce((a,b)=>a+b,0);const timestamp=new Date().toLocaleString();saveAttemptSummary(totalScore,scores);
+  const settled=await Promise.allSettled([saveRemoteAttempt(totalScore),sendResultsEmail(totalScore,scores,timestamp)]);const saveR=settled[0].status==="fulfilled"?settled[0].value:{ok:false,error:String(settled[0].reason)};const mailR=settled[1].status==="fulfilled"?settled[1].value:{ok:false,error:String(settled[1].reason)};
+  clearActive();
+  const cards=sectionNames.map((n,i)=>`<div class="result-mini"><h3>${n}</h3><div>${scores[i]} / 27</div></div>`).join("");
+  const analyses=sectionNames.map((n,i)=>`<h3>${n}</h3><table><thead><tr><th>Question</th><th>Correct</th><th>Your answer</th><th>Time</th><th>Status</th></tr></thead><tbody>${sections[i].rows}</tbody></table>`).join("");
+  const solutionBlock=solutionPDF?`<h3 style="margin-top:40px;">📄 View Full Solutions</h3><iframe id="solution-frame" src="${solutionPDF}" width="100%" height="600" style="border:1px solid #ccc;margin-top:10px;"></iframe>`:"";
+  container.innerHTML=`<div class="result-wrap"><div class="result-card"><div style="font-size:120px;">${totalScore>=55?"😊":"😐"}</div><h1>Exam Completed</h1><table style="border-collapse:collapse;margin:20px auto;font-size:18px;"><tr><td><strong>Name</strong></td><td>${studentName}</td></tr><tr><td><strong>Pathway</strong></td><td>${pathwayName}</td></tr><tr><td><strong>Session</strong></td><td>${testSession}</td></tr><tr><td><strong>Attempt</strong></td><td>${attemptNumber}</td></tr><tr><td><strong>Submitted</strong></td><td>${timestamp}</td></tr><tr><td><strong>Attempt Save</strong></td><td>${statusText(saveR,"Saved to attempt history","Could not save to attempt history")}</td></tr><tr><td><strong>Result Email</strong></td><td>${statusText(mailR,"Email sent","Email could not be sent")}</td></tr><tr><td><strong>Total Score</strong></td><td>${totalScore} / ${totalQuestions}</td></tr></table><div class="result-grid">${cards}</div>${analyses}<button onclick="location.reload()" style="margin-top:26px;">Reattempt Test</button>${solutionBlock}</div></div>`;
+  document.querySelector(".footer").style.display="none";document.querySelector(".header").style.display="none";document.getElementById("exam-interface").style.display="block";document.getElementById("break-screen").style.display="none";safeTypeset();
+  try{window.dispatchEvent(new CustomEvent("ts-esat-result",{detail:{testId,pathway:pathwayName,totalScore,scores,sectionNames}}));}catch(_){}
+}
+window.addEventListener("beforeunload",()=>{commitVisibleTime();persistActive();});
+setInterval(()=>{if(document.getElementById("exam-interface").style.display!=="none"&&!window.__ESAT_SUBMIT_DONE){commitVisibleTime();persistActive();}},5000);
+document.addEventListener("keydown",function(e){
+  if(!e.altKey||e.ctrlKey||e.metaKey)return;const el=document.activeElement;const tag=(el&&el.tagName||"").toLowerCase();if(tag==="input"||tag==="textarea"||tag==="select"||(el&&el.isContentEditable))return;
+  const k=String(e.key||"").toLowerCase();const action=k==="n"?nextQuestion:k==="p"?prevQuestion:k==="f"?toggleFlag:k==="v"?openNavigator:null;if(action){e.preventDefault();action();}
+},true);
+window.addEventListener("contextmenu",e=>e.preventDefault(),true);
+</script>
+<script src="/shared/esat-score-estimates.js?v=20260818-1"></script>
+<script src="/shared/esat-score-result-hook.js?v=20260818-1"></script>
+<script src="/shared/test-fullscreen.js?v=20260803-1" defer></script>
+
+</body>
+</html>

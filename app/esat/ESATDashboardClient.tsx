@@ -105,6 +105,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-mock-03", title: "ESAT Mock Test 3", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-03/index.html", level: 1, difficulty: "standard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_3d9e1cd4a1df423183eed281e2afd28b.pdf" },
       { test_id: "esat-mock-04", title: "ESAT Mock Test 4", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-04/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-mock-04-solutions.pdf" },
       { test_id: "esat-mock-05", title: "ESAT Mock Test 5", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Physics + Math 2", href: "/esat-practice-tests/tests/esat-mock-13/index.html", level: 2, difficulty: "hard", solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_b1abc3e8fdd54180b56d226cfa280892.pdf" },
+      { test_id: "esat-recall-2024-25-engineering", title: "ESAT 2024â€“25 Recall Mock", badge: "ENGINEERING", duration_minutes: 120, subjects: "Math 1 + Math 2 + Physics", href: "/esat-practice-tests/tests/esat-recall-2024-25-engineering/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-engineering-solutions.pdf" },
     ],
   },
   {
@@ -115,6 +116,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-physics-chemistry-level-0", title: "Level 0 Easy", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-physics-chemistry-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-chemistry-level-0-solutions.pdf" },
       { test_id: "esat-physics-chemistry-level-1", title: "Level 1 Standard", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-physics-chemistry-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-chemistry-level-1-solutions.pdf" },
       { test_id: "esat-physics-chemistry-level-2", title: "Level 2 Hard", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-physics-chemistry-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-chemistry-level-2-solutions.pdf" },
+      { test_id: "esat-recall-2024-25-physics-chemistry", title: "ESAT 2024â€“25 Recall Mock", badge: "PHYSICS + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Physics + Chemistry", href: "/esat-practice-tests/tests/esat-recall-2024-25-physics-chemistry/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-physics-chemistry-solutions.pdf" },
     ],
   },
   {
@@ -125,6 +127,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-physics-biology-level-0", title: "Level 0 Easy", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-physics-biology-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-biology-level-0-solutions.pdf" },
       { test_id: "esat-physics-biology-level-1", title: "Level 1 Standard", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-physics-biology-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-biology-level-1-solutions.pdf" },
       { test_id: "esat-physics-biology-level-2", title: "Level 2 Hard", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-physics-biology-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-physics-biology-level-2-solutions.pdf" },
+      { test_id: "esat-recall-2024-25-physics-biology", title: "ESAT 2024â€“25 Recall Mock", badge: "PHYSICS + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Physics + Biology", href: "/esat-practice-tests/tests/esat-recall-2024-25-physics-biology/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-physics-biology-solutions.pdf" },
     ],
   },
   {
@@ -135,6 +138,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-maths2-chemistry-level-0", title: "Level 0 Easy", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-maths2-chemistry-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-chemistry-level-0-solutions.pdf" },
       { test_id: "esat-maths2-chemistry-level-1", title: "Level 1 Standard", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-maths2-chemistry-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-chemistry-level-1-solutions.pdf" },
       { test_id: "esat-maths2-chemistry-level-2", title: "Level 2 Hard", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-maths2-chemistry-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-chemistry-level-2-solutions.pdf" },
+      { test_id: "esat-recall-2024-25-maths2-chemistry", title: "ESAT 2024â€“25 Recall Mock", badge: "MATHS 2 + CHEMISTRY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Chemistry", href: "/esat-practice-tests/tests/esat-recall-2024-25-maths2-chemistry/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-maths2-chemistry-solutions.pdf" },
     ],
   },
   {
@@ -145,6 +149,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-maths2-biology-level-0", title: "Level 0 Easy", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-maths2-biology-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-biology-level-0-solutions.pdf" },
       { test_id: "esat-maths2-biology-level-1", title: "Level 1 Standard", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-maths2-biology-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-biology-level-1-solutions.pdf" },
       { test_id: "esat-maths2-biology-level-2", title: "Level 2 Hard", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-maths2-biology-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-maths2-biology-level-2-solutions.pdf" },
+      { test_id: "esat-recall-2024-25-maths2-biology", title: "ESAT 2024â€“25 Recall Mock", badge: "MATHS 2 + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Math 2 + Biology", href: "/esat-practice-tests/tests/esat-recall-2024-25-maths2-biology/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-maths2-biology-solutions.pdf" },
     ],
   },
   {
@@ -155,6 +160,7 @@ const TRACKS: Track[] = [
       { test_id: "esat-chemistry-biology-level-0", title: "Level 0 Easy", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", level: 0, difficulty: "easy", href: "/esat-practice-tests/tests/esat-chemistry-biology-level-0/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-chemistry-biology-level-0-solutions.pdf" },
       { test_id: "esat-chemistry-biology-level-1", title: "Level 1 Standard", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", level: 1, difficulty: "standard", href: "/esat-practice-tests/tests/esat-chemistry-biology-level-1/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-chemistry-biology-level-1-solutions.pdf" },
       { test_id: "esat-chemistry-biology-level-2", title: "Level 2 Hard", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", level: 2, difficulty: "hard", href: "/esat-practice-tests/tests/esat-chemistry-biology-level-2/index.html", solutionUrl: "/esat-practice-tests/solutions/esat-chemistry-biology-level-2-solutions.pdf" },
+      { test_id: "esat-recall-2024-25-chemistry-biology", title: "ESAT 2024â€“25 Recall Mock", badge: "CHEMISTRY + BIOLOGY", duration_minutes: 120, subjects: "Math 1 + Chemistry + Biology", href: "/esat-practice-tests/tests/esat-recall-2024-25-chemistry-biology/index.html", level: 2, difficulty: "hard", solutionUrl: "/esat-practice-tests/solutions/esat-2024-2025-recall-mock-chemistry-biology-solutions.pdf" },
     ],
   },
 ];
@@ -498,7 +504,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                     flex: "0 0 auto",
                   }}
                 >
-                  📁
+                  ðŸ“
                 </span>
                 <span>Resources</span>
               </button>
@@ -694,7 +700,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                           marginBottom: 10,
                         }}
                       >
-                        {mock.badge} · {mock.duration_minutes} min
+                        {mock.badge} Â· {mock.duration_minutes} min
                       </div>
 
                       <div
@@ -725,7 +731,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                         {unavailable
                           ? "Test content coming soon"
                           : attempted
-                          ? `Attempt 1 · Score ${score}/${total || 81}${date ? ` · ${date}` : ""}`
+                          ? `Attempt 1 Â· Score ${score}/${total || 81}${date ? ` Â· ${date}` : ""}`
                           : "Not attempted yet"}
                       </div>
 
@@ -745,7 +751,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                             cursor: unavailable ? "not-allowed" : "pointer",
                           }}
                         >
-                          {unavailable ? "Coming soon" : attempted ? "Retake →" : "Start →"}
+                          {unavailable ? "Coming soon" : attempted ? "Retake â†’" : "Start â†’"}
                         </button>
 
                         {!unavailable ? (
@@ -799,7 +805,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                 <div className={styles.meta}>
                   <span className={styles.dot} /> ESAT Question Bank
                 </div>
-                <div className={styles.meta}>Topic practice · Difficulty filters · Solutions</div>
+                <div className={styles.meta}>Topic practice Â· Difficulty filters Â· Solutions</div>
               </div>
 
               <div className={styles.card}>
@@ -824,7 +830,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                 <div className={styles.meta}>
                   <span className={styles.dot} /> Downloadable ESAT PDFs
                 </div>
-                <div className={styles.meta}>Formula sheets · Specification · Subject guides</div>
+                <div className={styles.meta}>Formula sheets Â· Specification Â· Subject guides</div>
               </div>
 
               <section
@@ -866,7 +872,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                         marginBottom: 14,
                       }}
                     >
-                      📄
+                      ðŸ“„
                     </div>
 
                     <div
@@ -907,7 +913,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                         letterSpacing: ".06em",
                       }}
                     >
-                      Download PDF →
+                      Download PDF â†’
                     </div>
                   </a>
                 ))}
@@ -921,7 +927,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                 <div className={styles.meta}>
                   <span className={styles.dot} /> ESAT Live Classes
                 </div>
-                <div className={styles.meta}>Batches · Schedule · Join Zoom</div>
+                <div className={styles.meta}>Batches Â· Schedule Â· Join Zoom</div>
               </div>
 
               <div className={styles.card}>
@@ -1013,7 +1019,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                     <b>Attempt {modalAttempts.length - index}</b>
                     <div className={styles.muted}>
                       Score {a.score ?? 0}/{a.total_questions || 81}
-                      {a.submitted_at ? ` · ${fmtDate(a.submitted_at)}` : ""}
+                      {a.submitted_at ? ` Â· ${fmtDate(a.submitted_at)}` : ""}
                     </div>
                   </div>
                 ))

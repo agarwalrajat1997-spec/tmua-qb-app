@@ -16,7 +16,7 @@ assert.equal(
   ESAT_CANONICAL_KEY_VERSION,
   "esat-canonical-keys-20260819-v1",
 );
-assert.equal(Object.keys(ESAT_CANONICAL_TESTS).length, 20);
+assert.equal(Object.keys(ESAT_CANONICAL_TESTS).length, 26);
 assert.deepEqual(
   Object.keys(ESAT_CANONICAL_TESTS).sort(),
   Object.keys(ESAT_TEST_PROFILES).sort(),
@@ -58,5 +58,5 @@ for (const [testId, canonical] of Object.entries(ESAT_CANONICAL_TESTS)) {
 }
 
 console.log(
-  "ESAT canonical-key verification passed: 20 full papers and 1,620 answers match their source HTML exactly.",
+  "ESAT canonical-key verification passed: 26 full papers and 2,106 answers match their source HTML exactly.",
 );

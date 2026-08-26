@@ -28,8 +28,8 @@ const PRODUCT_GATES: ProductGate[] = [
   { prefix: "/group-sessions", product: "group-sessions" },
 
   // ESAT
-  { prefix: "/esat", product: "esat-question-bank" },
   { prefix: "/esat-question-bank", product: "esat-question-bank" },
+  { prefix: "/esat-practice-tests", product: "esat-practice-tests" },
 ];
 
 function matchProductGate(pathname: string) {
@@ -79,6 +79,13 @@ export async function proxy(req: NextRequest) {
     return res;
   }
 
+  // ESAT solution PDFs are intentionally public; tests remain entitlement-protected.
+  if (
+    req.nextUrl.pathname.startsWith("/esat-practice-tests/solutions/") &&
+    req.nextUrl.pathname.toLowerCase().endsWith(".pdf")
+  ) {
+    return res;
+  }
   const supabase = createServerClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
@@ -168,5 +175,6 @@ export const config = {
 
     "/esat/:path*",
     "/esat-question-bank/:path*",
+    "/esat-practice-tests/:path*",
   ],
 };
