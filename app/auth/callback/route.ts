@@ -1,25 +1,27 @@
 ﻿import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
-
-function safeNext(next: string | null) {
-  if (!next) return "/dashboard";
-  if (!next.startsWith("/")) return "/dashboard";
-  if (next.startsWith("//")) return "/dashboard";
-  if (next.includes("\\") || next.includes("\u0000")) return "/dashboard";
-  return next;
-}
+import {
+  decodeLoginDestination,
+  LOGIN_DESTINATION_COOKIE,
+  safeLoginDestination,
+} from "@/lib/auth/login-destination";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
-  const next = safeNext(url.searchParams.get("next"));
 
   if (!code) {
     return NextResponse.redirect(new URL("/login?e=missing_code", url.origin));
   }
 
   const cookieStore = await cookies();
+  const cookieDestination = decodeLoginDestination(
+    cookieStore.get(LOGIN_DESTINATION_COOKIE)?.value,
+  );
+  const next = safeLoginDestination(
+    url.searchParams.get("next") ?? cookieDestination,
+  );
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnon =
@@ -53,6 +55,9 @@ export async function GET(req: Request) {
   if (error) {
     return NextResponse.redirect(new URL("/login?e=callback_exchange_failed", url.origin));
   }
+
+  res.cookies.delete(LOGIN_DESTINATION_COOKIE);
+  res.headers.set("Cache-Control", "private, no-store");
 
   return res;
 }
