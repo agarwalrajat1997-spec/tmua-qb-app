@@ -1,0 +1,75 @@
+import { createClient } from "@supabase/supabase-js";
+import { createHash } from "node:crypto";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+const RELEASE_TOKEN = "esat_release_20260827_7WnP5gQz9Kx2Vh8Lm4Cs6Rt3Yu1Bd0Fa";
+const BUCKET = "esat-recall-tests";
+const PREFIX = "tests/";
+const MAX_BYTES = 4_250_000;
+const ALLOWED = new Set([
+  "esat-recall-2024-25-engineering.html.gz",
+  "esat-recall-2024-25-physics-chemistry.html.gz",
+  "esat-recall-2024-25-physics-biology.html.gz",
+  "esat-recall-2024-25-maths2-chemistry.html.gz",
+  "esat-recall-2024-25-maths2-biology.html.gz",
+  "esat-recall-2024-25-chemistry-biology.html.gz",
+]);
+
+function json(body: unknown, status = 200) {
+  return Response.json(body, {
+    status,
+    headers: {
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
+}
+
+export async function POST(request: Request) {
+  if (request.headers.get("authorization") !== `Bearer ${RELEASE_TOKEN}`) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
+  const objectName = request.headers.get("x-esat-object")?.trim() ?? "";
+  if (!ALLOWED.has(objectName)) {
+    return json({ error: "Invalid object name" }, 400);
+  }
+
+  const declaredLength = Number(request.headers.get("content-length") ?? "0");
+  if (declaredLength > MAX_BYTES) {
+    return json({ error: "Payload too large" }, 413);
+  }
+
+  const bytes = new Uint8Array(await request.arrayBuffer());
+  if (bytes.byteLength < 100_000 || bytes.byteLength > MAX_BYTES) {
+    return json({ error: "Invalid payload size", bytes: bytes.byteLength }, 400);
+  }
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_KEY;
+  if (!url || !serviceKey) {
+    return json({ error: "Server storage configuration is unavailable" }, 500);
+  }
+
+  const supabase = createClient(url, serviceKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const path = `${PREFIX}${objectName}`;
+  const { error } = await supabase.storage.from(BUCKET).upload(path, bytes, {
+    contentType: "application/gzip",
+    cacheControl: "3600",
+    upsert: true,
+  });
+  if (error) {
+    return json({ error: error.message }, 500);
+  }
+
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  return json({ ok: true, bucket: BUCKET, path, bytes: bytes.byteLength, sha256 });
+}
+
+export function GET() {
+  return new Response("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });
+}
