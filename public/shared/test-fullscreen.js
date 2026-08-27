@@ -7,7 +7,7 @@
   const nativeFetch = window.fetch.bind(window);
   const APP_ORIGIN = window.location.origin;
 
-  const recombinedEsatPath = /^\/esat-practice-tests\/tests\/esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012](?:\/index\.html|\/)?$/;
+  const recombinedEsatPath = /^\/esat-practice-tests\/tests\/(?:esat-(?:physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology)-level-[012]|esat-recall-2024-25-(?:engineering|physics-chemistry|physics-biology|maths2-chemistry|maths2-biology|chemistry-biology))(?:\/index\.html|\/)?$/;
 
   const absoluteEsatSolutionUrl = value => {
     const raw = String(value || "").trim();
@@ -238,9 +238,17 @@
             return `${name} Score: ${score}${body ? `\n${body}` : ""}`;
           };
 
-          const paper1 = labelled(1, payload.paper1);
-          const paper2 = labelled(2, payload.paper2);
-          const paper3 = labelled(3, payload.paper3);
+          const rawPaper1 = String(payload.paper1 || "").trim();
+          const rawPaper2 = String(payload.paper2 || "").trim();
+          const rawPaper3 = String(payload.paper3 || "").trim();
+          const paper2AlreadyContainsPaper3 =
+            Boolean(rawPaper3) && rawPaper2.includes(rawPaper3);
+          const rawPaper2Only = paper2AlreadyContainsPaper3
+            ? rawPaper2.slice(0, rawPaper2.lastIndexOf(rawPaper3)).trim()
+            : rawPaper2;
+          const paper1 = labelled(1, rawPaper1);
+          const paper2 = labelled(2, rawPaper2Only);
+          const paper3 = labelled(3, rawPaper3);
           payload.paper1 = paper1;
           payload.paper2 = `${paper2}\n\n${paper3}`;
           payload.paper3 = paper3;

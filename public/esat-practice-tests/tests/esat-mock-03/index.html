@@ -1141,7 +1141,7 @@ function sendResultsEmail(totalScore, math1Score, physicsScore, math2Score, time
     name: studentName,
     test_title: testTitle,
     to_email: studentEmail,
-    solution_link: solutionPDF,
+    solution_link: new URL(solutionPDF, window.location.origin).href,
     session: testSession,
     score: `${totalScore} / 81`,
     timestamp: timestamp,
@@ -1282,6 +1282,6 @@ window.addEventListener("contextmenu", function(e) {
 </script>
   <script src="/shared/esat-score-estimates.js?v=20260818-1"></script>
   <script src="/shared/esat-score-result-hook.js?v=20260818-1"></script>
-  <script src="/shared/test-fullscreen.js?v=20260803-1" defer></script>
+  <script src="/shared/test-fullscreen.js?v=20260827-1" defer></script>
 </body>
 </html>

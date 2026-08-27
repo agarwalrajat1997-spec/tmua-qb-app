@@ -599,8 +599,24 @@ window.TS_SAVE_ATTEMPT=window.TS_SAVE_ATTEMPT||async function(opts){
 async function saveRemoteAttempt(totalScore){ return window.TS_SAVE_ATTEMPT({test_id:testId,test_title:"ESAT 2024–2025 Recall Mock",paper:"full",total_questions:totalQuestions,score:totalScore,answers:userAnswers,correct_answers:correctAnswers,time_spent:timeSpent,flags,incorrect:window.TS_BUILD_INCORRECT_LIST(userAnswers,correctAnswers)}); }
 function sendResultsEmail(totalScore,scores,timestamp){
   if(!studentEmail)return Promise.resolve({ok:false,skipped:true,reason:"no email entered"}); if(!window.emailjs||!emailjs.send)return Promise.resolve({ok:false,skipped:true,reason:"EmailJS unavailable"});
-  const payload={name:studentName,test_title:"ESAT 2024–2025 Recall Mock",to_email:studentEmail,solution_link:solutionPDF,session:testSession,score:`${totalScore} / ${totalQuestions}`,timestamp};
-  sectionNames.forEach((name,i)=>{ payload[`paper${i+1}`]=buildSectionEmailAnalysis(name,i); payload[`${sectionKeys[i]}_score`]=`${scores[i]} / 27`; });
+  const emailAnalyses=sectionNames.map((name,i)=>buildSectionEmailAnalysis(name,i));
+  const payload={
+    name:studentName,
+    test_title:"ESAT 2024–2025 Recall Mock",
+    to_email:studentEmail,
+    solution_link:new URL(solutionPDF,window.location.origin).href,
+    session:testSession,
+    score:`${totalScore} / ${totalQuestions}`,
+    timestamp,
+    paper1:emailAnalyses[0],
+    paper2:`${emailAnalyses[1]}\n\n${emailAnalyses[2]}`,
+    paper3:emailAnalyses[2]
+  };
+  sectionNames.forEach((name,i)=>{
+    payload[`section${i+1}_name`]=name;
+    payload[`section${i+1}_score`]=`${scores[i]} / 27`;
+    payload[`${sectionKeys[i]}_score`]=`${scores[i]} / 27`;
+  });
   return emailjs.send("service_5l4w8x2","template_j1jrs4o",payload).then(r=>({ok:true,status:r&&r.status})).catch(e=>({ok:false,error:String(e)}));
 }
 function statusText(r,yes,no){if(!r)return"Not checked";if(r.ok)return yes;if(r.skipped)return`Skipped: ${r.reason||"not available"}`;return no;}
@@ -626,7 +642,7 @@ window.addEventListener("contextmenu",e=>e.preventDefault(),true);
 </script>
 <script src="/shared/esat-score-estimates.js?v=20260818-1"></script>
 <script src="/shared/esat-score-result-hook.js?v=20260818-1"></script>
-<script src="/shared/test-fullscreen.js?v=20260803-1" defer></script>
+<script src="/shared/test-fullscreen.js?v=20260827-1" defer></script>
 
 </body>
 </html>
