@@ -374,7 +374,11 @@
 <div id="instructions">
 <h2 id="test-title">ESAT 2024–2025 Recall Mock</h2><p style="margin-top:-8px;font-weight:700;color:#8b1e1e;">Hard · Physics + Chemistry</p>
 <p><strong>Time allowed:</strong> 2 hours - three sections of 40 minutes each</p>
-<p><strong>Calculators are not permitted.</strong></p>
+<p><strong>Calculators are not permitted.</strong>
+<span id="ts-recall-methodology-v1" role="note" style="display:block;max-width:1080px;margin:14px 0 18px;padding:12px 14px;border-left:4px solid #f4bd42;border-radius:4px;background:#fff8e7;color:#273248;font-size:0.95rem;font-weight:400;line-height:1.45;box-sizing:border-box;">
+  <span style="display:block;margin-bottom:4px;"><strong>How this mock was compiled:</strong> The questions were independently written against the published ESAT specification, informed by general topic, format and difficulty recollections that students shared publicly on social media and discussion forums after sitting the test.</span>
+  <span style="display:block;"><strong>Approximation notice:</strong> This is original, recall-informed practice material only. It is not an official UAT-UK or Pearson VUE paper, is not endorsed by either organisation, and is not a reproduction or claimed reconstruction of any live test. Its wording, values, answer options and difficulty may differ from the actual examination.</span>
+</span></p>
 <div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
 <div>
 <label for="student-name" style="font-size: 16px;">Enter your full name:</label><br/>
@@ -393,7 +397,7 @@
 </select>
 </div>
 <div style="margin-top: 28px;">
-<button onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
+<button data-fullscreen-start="true" onclick="startExam()" style="font-size: 16px; padding: 10px 20px;">Start Exam</button>
 </div>
 </div>
 <table style="border-collapse: collapse; width: 100%; font-size: 16px; margin-top: 20px;">
@@ -438,7 +442,7 @@
 <h2 id="break-title">End of Section</h2>
 <p id="break-copy">You can take a 5-minute break before starting the next section.</p>
 <p>Time Remaining: <span id="break-timer">05:00</span></p>
-<button onclick="skipBreak()">Skip Break</button>
+<button data-fullscreen-break="true" onclick="skipBreak()">Skip Break</button>
 </div>
 </div>
 <div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:340px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
