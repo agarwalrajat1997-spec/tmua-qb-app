@@ -36,7 +36,7 @@ export async function GET(req: Request) {
       .from("SAT_qb_progress")
       .select("question_id,status,selected_answer,flagged,time_spent,last_seen_at,updated_at")
       .eq("user_id", auth.user.id)
-      .eq("product", "SAT-question-bank");
+    .eq("product", "sat-question-bank");
 
     if (error) {
       return jsonErr(500, "Supabase load failed", { message: error.message });
@@ -54,7 +54,7 @@ export async function GET(req: Request) {
       };
     }
 
-    return NextResponse.json({ ok: true, product: "SAT-question-bank", progress });
+  return NextResponse.json({ ok: true, product: "sat-question-bank", progress });
   } catch (e: any) {
     return NextResponse.json(
       { error: "Unhandled error in /api/qb/progress/load", message: String(e?.message || e), stack: String(e?.stack || "") },
@@ -62,5 +62,4 @@ export async function GET(req: Request) {
     );
   }
 }
-
 

@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
         rows.push({
           user_id: auth.user.id,
-          product: "SAT-question-bank",
+      product: "sat-question-bank",
           question_id: qid,
           status: v.status ?? null,
           selected_answer: v.selected_answer ?? v.selectedAnswer ?? null,
@@ -90,7 +90,7 @@ export async function POST(req: Request) {
 
       rows.push({
         user_id: auth.user.id,
-        product: "SAT-question-bank",
+    product: "sat-question-bank",
         question_id: qid,
         status: (u as any).status ?? null,
         selected_answer: (u as any).selected_answer ?? null,
@@ -121,5 +121,4 @@ export async function POST(req: Request) {
     );
   }
 }
-
 

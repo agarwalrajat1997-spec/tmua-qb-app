@@ -5,6 +5,8 @@ const DEFAULT_DESTINATION = "/dashboard";
 
 const ALLOWED_DESTINATION_PREFIXES = [
   "/dashboard",
+  "/amc",
+  "/sat",
   "/tmua-question-bank",
   "/practice-tests",
   "/amc-question-bank",

@@ -42,7 +42,21 @@ function loginRedirect(req: NextRequest) {
   const url = req.nextUrl.clone();
   const next = req.nextUrl.pathname + req.nextUrl.search;
 
-  url.pathname = "/login";
+  if (
+    req.nextUrl.pathname === "/amc" ||
+    req.nextUrl.pathname.startsWith("/amc/") ||
+    req.nextUrl.pathname.startsWith("/amc-")
+  ) {
+    url.pathname = "/amc-login";
+  } else if (
+    req.nextUrl.pathname === "/sat" ||
+    req.nextUrl.pathname.startsWith("/sat/") ||
+    req.nextUrl.pathname.startsWith("/sat-")
+  ) {
+    url.pathname = "/sat-login";
+  } else {
+    url.pathname = "/login";
+  }
   url.search = "";
   url.searchParams.set("next", next);
 
@@ -157,6 +171,9 @@ export async function proxy(req: NextRequest) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
+
+    "/amc/:path*",
+    "/sat/:path*",
 
     "/tmua-question-bank/:path*",
     "/practice-tests/:path*",

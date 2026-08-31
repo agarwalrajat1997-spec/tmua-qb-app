@@ -96,7 +96,7 @@ export async function requireSATAccess() {
     .from("student_access")
     .select("approved")
     .eq("email", email)
-    .eq("product", "SAT-question-bank")
+    .eq("product", "sat-question-bank")
     .maybeSingle();
 
   if (error) {
@@ -119,5 +119,4 @@ export async function requireSATAccess() {
     user,
   };
 }
-
 
