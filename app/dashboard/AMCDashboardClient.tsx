@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import styles from "./dashboard.module.css";
@@ -44,84 +44,110 @@ const PRACTICE_TESTS = [
     level: "AMC 8 + AMC 10 · Number Theory",
     detail: "Number theory practice restored from the original Wix digital test.",
     tags: ["25 questions", "75 minutes", "Worked solutions"],
-    href: "/amc-practice-tests/tests/amc-10-mock-test-1/",
+    href: "/amc-practice-tests/tests/amc-10-mock-test-1/index.html",
   },
   {
     title: "AMC 10 Topical Test 2",
     level: "AMC 8 + AMC 10 · Number Theory",
     detail: "A second focused paper covering number patterns, factors and reasoning.",
     tags: ["25 questions", "75 minutes", "Instant score"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-2/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-2/index.html",
   },
   {
     title: "AMC 10 Topical Test 3",
     level: "AMC 8 + AMC 10 · Algebra",
     detail: "Arithmetic and algebra questions with original notation preserved.",
     tags: ["25 questions", "75 minutes", "Instant score"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-3/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-3/index.html",
   },
   {
     title: "AMC 10 Topical Test 4",
     level: "AMC 8 + AMC 10 · Algebra",
     detail: "A second arithmetic and algebra paper for timed contest practice.",
     tags: ["25 questions", "75 minutes", "Worked solutions"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-4/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-4/index.html",
   },
   {
     title: "AMC 10 Topical Test 5",
     level: "AMC 8 + AMC 10 · Geometry",
     detail: "Geometry practice with the original diagrams preserved exactly.",
     tags: ["25 questions", "75 minutes", "Instant score"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-5/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-5/index.html",
   },
   {
     title: "AMC 10 Topical Test 6",
     level: "AMC 8 + AMC 10 · Geometry",
     detail: "A second geometry paper covering angles, circles and spatial reasoning.",
     tags: ["25 questions", "75 minutes", "Worked solutions"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-6/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-6/index.html",
   },
   {
     title: "AMC 10 Topical Test 7",
     level: "AMC 8 + AMC 10 · Combinatorics",
     detail: "Combinatorics and probability practice in a restored digital format.",
     tags: ["25 questions", "75 minutes", "Instant score"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-7/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-7/index.html",
   },
   {
     title: "AMC 10 Topical Test 8",
     level: "AMC 8 + AMC 10 · Logic",
     detail: "Logic and structured reasoning questions with full worked solutions.",
     tags: ["25 questions", "75 minutes", "Worked solutions"],
-    href: "/amc-practice-tests/tests/amc-10-topical-test-8/",
+    href: "/amc-practice-tests/tests/amc-10-topical-test-8/index.html",
   },
   {
     title: "AMC 8 Full Mock Test 1",
     level: "AMC 8 · All Topics",
     detail: "A complete AMC 8-style paper covering the full topic range.",
     tags: ["25 questions", "40 minutes", "Instant score"],
-    href: "/amc-practice-tests/tests/amc-8-full-mock-test-1/",
+    href: "/amc-practice-tests/tests/amc-8-full-mock-test-1/index.html",
   },
   {
     title: "AMC 8 Full Mock Test 2",
     level: "AMC 8 · All Topics",
     detail: "A second complete AMC 8-style paper with original diagrams and solutions.",
     tags: ["25 questions", "40 minutes", "Worked solutions"],
-    href: "/amc-practice-tests/tests/amc-8-full-mock-test-2/",
+    href: "/amc-practice-tests/tests/amc-8-full-mock-test-2/index.html",
   },
   {
     title: "Pre-AMC 8 Mock Test",
     level: "AMC 8 Foundations",
     detail: "A full timed foundation paper for students building toward AMC 8.",
     tags: ["25 questions", "75 minutes", "Instant score"],
-    href: "/amc-practice-tests/tests/pre-amc-8-mock-test/",
+    href: "/amc-practice-tests/tests/pre-amc-8-mock-test/index.html",
   },
   {
     title: "AMC 10 Diagnostic Test",
     level: "AMC 10 · All Topics",
     detail: "Identify strengths, missed topics and the highest-priority areas to review.",
     tags: ["25 questions", "75 minutes", "Topic analysis"],
-    href: "/amc-practice-tests/tests/amc-10-diagnostic-test/",
+    href: "/amc-practice-tests/tests/amc-10-diagnostic-test/index.html",
+  },
+] as const;
+
+const PRACTICE_TEST_SECTIONS = [
+  {
+    heading: "AMC 10 Topical Practice Tests",
+    description:
+      "Build one contest skill at a time with eight focused 75-minute papers.",
+    groups: [
+      { heading: "Number Theory", tests: PRACTICE_TESTS.slice(0, 2) },
+      { heading: "Algebra", tests: PRACTICE_TESTS.slice(2, 4) },
+      { heading: "Geometry", tests: PRACTICE_TESTS.slice(4, 6) },
+      { heading: "Combinatorics & Logic", tests: PRACTICE_TESTS.slice(6, 8) },
+    ],
+  },
+  {
+    heading: "AMC 8 Full-Length Practice",
+    description:
+      "Rehearse the complete 25-question AMC 8 format under a 40-minute time limit.",
+    groups: [{ heading: "Full Mock Tests", tests: PRACTICE_TESTS.slice(8, 10) }],
+  },
+  {
+    heading: "Diagnostics & Foundations",
+    description:
+      "Choose the right starting point, uncover gaps and plan what to study next.",
+    groups: [{ heading: "Readiness Checks", tests: PRACTICE_TESTS.slice(10, 12) }],
   },
 ] as const;
 
@@ -276,27 +302,43 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
                 </div>
               </div>
 
-              <div className={styles.grid}>
-                {PRACTICE_TESTS.map((test) => (
-                  <article className={styles.test} key={test.href}>
-                    <div className={styles.testMeta}>{test.level}</div>
-                    <div className={styles.testTitle}>{test.title}</div>
-                    <div className={styles.muted}>{test.detail}</div>
-                    <div className={styles.tags}>
-                      {test.tags.map((tag) => (
-                        <span className={styles.tag} key={tag}>
-                          {tag}
-                        </span>
-                      ))}
+              <div className={styles.testLibrary}>
+                {PRACTICE_TEST_SECTIONS.map((section) => (
+                  <section className={styles.testSection} key={section.heading}>
+                    <div className={styles.sectionIntro}>
+                      <h2 className={styles.sectionTitle}>{section.heading}</h2>
+                      <p className={styles.sectionDescription}>{section.description}</p>
                     </div>
-                    <button
-                      className={styles.go}
-                      type="button"
-                      onClick={() => (window.location.href = test.href)}
-                    >
-                      Start test
-                    </button>
-                  </article>
+
+                    {section.groups.map((group) => (
+                      <div className={styles.topicGroup} key={group.heading}>
+                        <div className={styles.topicHeading}>
+                          <h3>{group.heading}</h3>
+                          <span aria-hidden="true" />
+                        </div>
+
+                        <div className={styles.testGrid}>
+                          {group.tests.map((test) => (
+                            <article className={styles.test} key={test.href}>
+                              <div className={styles.testMeta}>{test.level}</div>
+                              <div className={styles.testTitle}>{test.title}</div>
+                              <div className={styles.muted}>{test.detail}</div>
+                              <div className={styles.tags}>
+                                {test.tags.map((tag) => (
+                                  <span className={styles.tag} key={tag}>
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                              <a className={styles.go} href={test.href}>
+                                Start test <span aria-hidden="true">→</span>
+                              </a>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </section>
                 ))}
               </div>
             </>
@@ -335,3 +377,4 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
     </div>
   );
 }
+

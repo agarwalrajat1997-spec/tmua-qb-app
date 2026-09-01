@@ -77,7 +77,7 @@ assert(
 );
 
 for (const test of tests) {
-  const href = `/amc-practice-tests/tests/${test.slug}/`;
+  const href = `/amc-practice-tests/tests/${test.slug}/index.html`;
   const filePath = `public/amc-practice-tests/tests/${test.slug}/index.html`;
   const [html, file] = await Promise.all([readFile(filePath, "utf8"), stat(filePath)]);
   assert(file.size > 10_000, `${test.title} is unexpectedly small.`);
@@ -105,6 +105,26 @@ for (const test of tests) {
   }
 }
 
+for (const heading of [
+  "AMC 10 Topical Practice Tests",
+  "Number Theory",
+  "Algebra",
+  "Geometry",
+  "Combinatorics & Logic",
+  "AMC 8 Full-Length Practice",
+  "Full Mock Tests",
+  "Diagnostics & Foundations",
+  "Readiness Checks",
+]) {
+  assert(dashboard.includes(heading), `Catalogue heading is missing: ${heading}`);
+}
+
+assert(
+  dashboard.includes('<a className={styles.go} href={test.href}>'),
+  "Start test controls must be real links to the standalone test pages.",
+);
+
 console.log(
   `Verified ${tests.length} restored AMC practice tests, solution links, timers, answer keys and protected catalogue routes.`,
 );
+

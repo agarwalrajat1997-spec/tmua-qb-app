@@ -1,4 +1,4 @@
-﻿:root{ --ts-saffron:#FEC94F; --ts-saffron-soft:#FFF3D1; --ts-maroon:#7A1F24; --ts-ink:#141414; --ts-muted:#5E5E5E; --ts-border: rgba(0,0,0,.10); --ts-bg:#FFFDF7; --ts-panel:#ffffff; --shadow-1: 0 1px 0 rgba(0,0,0,.04); --shadow-2: 0 14px 34px rgba(0,0,0,.06); --r: 18px;
+:root{ --ts-saffron:#FEC94F; --ts-saffron-soft:#FFF3D1; --ts-maroon:#7A1F24; --ts-ink:#141414; --ts-muted:#5E5E5E; --ts-border: rgba(0,0,0,.10); --ts-bg:#FFFDF7; --ts-panel:#ffffff; --shadow-1: 0 1px 0 rgba(0,0,0,.04); --shadow-2: 0 14px 34px rgba(0,0,0,.06); --r: 18px;
 }
 .page{ min-height:100vh; background:var(--ts-bg); color:var(--ts-ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
@@ -43,19 +43,43 @@
 }
 .cardTitle{ font-weight:950; font-size:18px; margin:0 0 6px; }
 .muted{ color:var(--ts-muted); font-weight:800; font-size:13px; line-height:1.45; }
-.grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:12px;
+.testLibrary{ display:flex; flex-direction:column; gap:34px; margin-top:28px;
 }
-@media (max-width:1100px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media (max-width:720px){ .grid{ grid-template-columns:1fr; } .shell{ grid-template-columns:1fr; } .sidebar{ display:none; }
+.testSection{ scroll-margin-top:104px;
 }
-.test{ border:1px solid var(--ts-border); border-radius:16px; padding:12px; background:#fff; display:flex; flex-direction:column; gap:10px;
+.sectionIntro{ border-left:5px solid var(--ts-maroon); padding:2px 0 3px 15px; margin-bottom:19px;
 }
-.testTitle{ font-weight:950; }
+.sectionTitle{ margin:0; font-size:28px; line-height:1.15; font-weight:950; letter-spacing:-.025em; color:rgba(20,20,20,.88);
+}
+.sectionDescription{ margin:6px 0 0; color:var(--ts-muted); font-weight:800; font-size:14px; line-height:1.45;
+}
+.topicGroup + .topicGroup{ margin-top:23px;
+}
+.topicHeading{ display:flex; align-items:center; gap:12px; margin-bottom:10px;
+}
+.topicHeading h3{ margin:0; color:var(--ts-maroon); font-size:14px; font-weight:950; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap;
+}
+.topicHeading span{ height:1px; width:100%; background:rgba(122,31,36,.18);
+}
+.testGrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px;
+}
+@media (max-width:900px){ .testGrid{ grid-template-columns:1fr; } }
+@media (max-width:720px){ .shell{ grid-template-columns:1fr; } .sidebar{ display:none; }
+}
+.test{ border:1px solid var(--ts-border); border-radius:16px; padding:15px; background:#fff; display:flex; flex-direction:column; gap:10px; box-shadow:var(--shadow-1); transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.test:hover{ transform:translateY(-2px); border-color:rgba(122,31,36,.22); box-shadow:0 12px 28px rgba(0,0,0,.07);
+}
+.testTitle{ font-weight:950; font-size:17px; }
 .testMeta{ display:flex; gap:8px; flex-wrap:wrap; color:var(--ts-muted); font-weight:800; font-size:13px; }
 .tags{ display:flex; gap:8px; flex-wrap:wrap; }
 .tag{ font-size:12px; font-weight:900; padding:6px 8px; border-radius:999px; border:1px solid var(--ts-border); background:#fff;
 }
-.go{ height:44px; border-radius:14px; border:0; background:var(--ts-saffron); font-weight:950; cursor:pointer;
+.go{ min-height:44px; border-radius:14px; border:0; background:var(--ts-saffron); color:var(--ts-ink); font-weight:950; cursor:pointer; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:auto;
+}
+.go:hover{ background:#f9bd2f;
+}
+.go:focus-visible{ outline:3px solid rgba(122,31,36,.35); outline-offset:2px;
 }
 .tableWrap{ border:1px solid var(--ts-border); border-radius:16px; overflow:hidden; background:#fff;
 }
@@ -78,6 +102,9 @@
   .brandTag,.pill{ display:none; }
   .main{ padding:20px 16px 36px; }
   .h1{ font-size:34px; }
+  .testLibrary{ gap:30px; margin-top:24px; }
+  .sectionTitle{ font-size:24px; }
+  .topicHeading h3{ white-space:normal; }
   .mobileNav{ display:flex; gap:8px; overflow-x:auto; margin:0 -16px 20px; padding:0 16px 4px; scrollbar-width:none; }
   .mobileNav::-webkit-scrollbar{ display:none; }
 }
@@ -129,3 +156,4 @@
 .card {
   max-width: 100%;
 }
+
