@@ -783,7 +783,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
               <div className={styles.card}>
                 <div className={styles.cardTitle}>Topic tests</div>
-                <div className={styles.grid}>
+                <div className={styles.tmuaTestGrid}>
                   {topicTests.map((t) => {
                     const latest = latestByTestId[t.test_id];
                     const attempted = !!latest;
@@ -854,7 +854,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
               <div className={styles.card}>
                 <div className={styles.cardTitle}>Full-length tests by Thriving Scholars</div>
-                <div className={styles.grid}>
+                <div className={styles.tmuaTestGrid}>
                   {thrivingFullTests.map((t) => {
                     const latest = latestByTestId[t.test_id];
                     const attempted = !!latest;
@@ -925,7 +925,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
               <div className={styles.card}>
                 <div className={styles.cardTitle}>Official TMUA past papers</div>
-                <div className={styles.grid}>
+                <div className={styles.tmuaTestGrid}>
                   {officialPastPapers.map((t) => {
                     const latest = latestByTestId[t.test_id];
                     const attempted = !!latest;
@@ -1535,7 +1535,6 @@ src="/tmua-classes/index.html"
     </div>
   );
 }
-
 
 
 

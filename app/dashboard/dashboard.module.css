@@ -43,6 +43,10 @@
 }
 .cardTitle{ font-weight:950; font-size:18px; margin:0 0 6px; }
 .muted{ color:var(--ts-muted); font-weight:800; font-size:13px; line-height:1.45; }
+.tmuaTestGrid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:12px;
+}
+@media (max-width:1100px){ .tmuaTestGrid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:720px){ .tmuaTestGrid{ grid-template-columns:1fr; } }
 .testLibrary{ display:flex; flex-direction:column; gap:34px; margin-top:28px;
 }
 .testSection{ scroll-margin-top:104px;
