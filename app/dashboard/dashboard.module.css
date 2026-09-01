@@ -67,6 +67,20 @@
 }
 .support{ margin-top:10px; color:var(--ts-muted); font-weight:900; font-size:13px;
 }
+.mobileNav{ display:none; }
+.mobileNavBtn{ flex:0 0 auto; min-height:40px; border-radius:999px; border:1px solid var(--ts-border); background:#fff; color:var(--ts-ink); padding:8px 12px; font-weight:900; cursor:pointer;
+}
+.mobileNavBtnOn{ background:var(--ts-maroon); border-color:var(--ts-maroon); color:#fff;
+}
+
+@media (max-width:720px){
+  .topbar{ height:auto; min-height:72px; padding:12px 16px; gap:12px; }
+  .brandTag,.pill{ display:none; }
+  .main{ padding:20px 16px 36px; }
+  .h1{ font-size:34px; }
+  .mobileNav{ display:flex; gap:8px; overflow-x:auto; margin:0 -16px 20px; padding:0 16px 4px; scrollbar-width:none; }
+  .mobileNav::-webkit-scrollbar{ display:none; }
+}
 
 /* ts-dashboard-browser-scroll-v3 */
 /* Use the browser/page scrollbar at the far right. Do not trap scroll inside dashboard main. */
@@ -115,4 +129,3 @@
 .card {
   max-width: 100%;
 }
-

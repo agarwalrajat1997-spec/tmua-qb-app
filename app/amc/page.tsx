@@ -25,7 +25,12 @@ function activeProducts(
   );
 }
 
-export default async function AMCPortalPage() {
+type Props = {
+  searchParams: Promise<{ section?: string }>;
+};
+
+export default async function AMCPortalPage({ searchParams }: Props) {
+  const { section } = await searchParams;
   const supabase = await supabaseServer();
   const {
     data: { user },
@@ -54,5 +59,11 @@ export default async function AMCPortalPage() {
     );
   }
 
-  return <AMCDashboardClient email={user.email} hasTmua={false} />;
+  return (
+    <AMCDashboardClient
+      email={user.email}
+      hasTmua={false}
+      initialSection={section === "practice-tests" ? "practice-tests" : null}
+    />
+  );
 }

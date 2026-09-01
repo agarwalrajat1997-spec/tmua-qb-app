@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMC 10 Diagnostic Test | Thriving Scholars</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      },
+      chtml: { scale: 1.02 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <style>
+    :root {
+      --blue: #0074c1;
+      --blue-dark: #005fa3;
+      --gold: #f2b233;
+      --ink: #142033;
+      --muted: #667085;
+      --line: #dfe5ec;
+      --page: #f3f5f7;
+      --green: #16845b;
+      --green-soft: #ecfdf3;
+      --amber: #b7791f;
+      --amber-soft: #fff8e6;
+      --red: #b42318;
+      --red-soft: #fff1f0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--page);
+      color: var(--ink);
+    }
+
+    button, input, select { font: inherit; }
+    button { transition: transform .15s ease, filter .15s ease, box-shadow .15s ease; }
+    button:hover { filter: brightness(.98); }
+    button:active { transform: translateY(1px); }
+
+    /* ---------- START SCREEN ---------- */
+    #instructions {
+      max-width: 1250px;
+      min-height: 580px;
+      margin: 48px auto;
+      background: #fff;
+      border: 2px solid var(--gold);
+      border-radius: 22px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 10px 26px rgba(242, 178, 51, .18);
+      padding: 58px 64px 66px;
+    }
+
+    #instructions h1 {
+      margin: 0 0 8px;
+      font: 800 34px/1.18 Arial, sans-serif;
+      color: #0b1220;
+    }
+
+    #instructions .subtitle {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font: 500 17px/1.5 Arial, sans-serif;
+    }
+
+    .start-meta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .meta-pill {
+      border: 1px solid #ead79d;
+      background: #fffaf0;
+      border-radius: 999px;
+      padding: 8px 13px;
+      font: 700 14px Arial, sans-serif;
+    }
+
+    .candidate-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 30px 0 26px;
+    }
+
+    .field { min-width: 230px; flex: 1 1 230px; }
+    .field label { font: 700 14px Arial, sans-serif; }
+    .field input, .field select {
+      width: 100%;
+      margin-top: 7px;
+      padding: 11px 12px;
+      border: 1.6px solid rgba(242, 178, 51, .7);
+      border-radius: 10px;
+      outline: none;
+      background: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .field input:focus, .field select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(242, 178, 51, .17);
+    }
+
+    .start-button {
+      min-width: 160px;
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 12px;
+      background: #f6c44a;
+      color: #2b1a00;
+      font: 800 16px Arial, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(246, 196, 74, .35);
+    }
+
+    .exam-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 22px 0 18px;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, .06);
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+    }
+    .exam-table th, .exam-table td { border: 1px solid #d9dee5; padding: 12px; }
+    .exam-table th { background: #f2f4f7; }
+    .exam-table td:first-child, .exam-table td:nth-child(3), .exam-table td:nth-child(4) { text-align: center; }
+
+    .instructions-copy {
+      font: 16px/1.65 Arial, sans-serif;
+      color: #1f2937;
+    }
+    .instructions-copy strong { color: #111827; }
+    .diagnostic-note {
+      margin-top: 18px;
+      padding: 13px 15px;
+      border-left: 4px solid var(--gold);
+      background: #fffaf0;
+      border-radius: 8px;
+    }
+
+    /* ---------- EXAM INTERFACE ---------- */
+    #exam-interface { display: none; min-height: 100vh; background: #fff; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--blue);
+      color: #fff;
+      padding: 11px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, .15);
+      font-family: Arial, sans-serif;
+    }
+    .header-title { font-size: 19px; font-weight: 800; }
+    .header-subtitle { margin-top: 2px; font-size: 12px; opacity: .9; }
+
+    .top-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 7px;
+    }
+    .timer { font-size: 13px; line-height: 1.45; text-align: right; }
+    #flag-btn {
+      background: #fff;
+      color: #111;
+      border: 1px solid rgba(255,255,255,.85);
+      font-size: 13px;
+      padding: 6px 13px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #flag-btn.flagged { background: #ffe46b; font-weight: 800; border-color: #d8a900; }
+
+    .container {
+      min-height: calc(100vh - 134px);
+      padding: 32px 6vw 120px;
+      font-size: 19px;
+      line-height: 1.62;
+      background: #fff;
+    }
+
+    .question-shell { max-width: 1040px; margin: 0 auto; }
+    .question-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: baseline;
+      margin-bottom: 20px;
+      padding-bottom: 11px;
+      border-bottom: 1px solid var(--line);
+    }
+    .question-number { font: 800 23px Arial, sans-serif; }
+    .question-topic {
+      color: var(--blue-dark);
+      font: 800 12px Arial, sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    .question-copy p { margin: 11px 0; }
+    .question-copy ul { margin: 8px 0 8px 28px; }
+
+    .question-media { display: flex; justify-content: center; margin: 16px 0 21px; }
+    .question-media img {
+      display: block;
+      max-width: 390px;
+      width: 100%;
+      height: auto;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .options { margin-top: 22px; margin-bottom: 38px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 11px 0;
+      padding: 12px 14px;
+      border: 1px solid #dfe3e8;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #fff;
+      font-size: 19px;
+      line-height: 1.5;
+    }
+    .option:hover { border-color: #8bc5eb; background: #f7fbfe; }
+    .option.selected { border-color: var(--blue); background: #eef8ff; }
+    .option input { transform: scale(1.25); margin-top: 5px; flex: 0 0 auto; }
+    .option-letter { font: 800 16px Arial, sans-serif; min-width: 20px; }
+    .option-text { flex: 1; }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 22;
+      background: var(--blue);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      box-shadow: 0 -2px 10px rgba(15, 23, 42, .12);
+    }
+    .footer button {
+      font: 700 15px Arial, sans-serif;
+      padding: 8px 16px;
+      background: var(--blue-dark);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .footer button:disabled { opacity: .45; cursor: not-allowed; }
+    .footer .submit-btn { background: #0f5132; }
+
+    /* ---------- NAVIGATOR ---------- */
+    #navigator-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, .48);
+      padding: 8vh 20px 20px;
+    }
+    .navigator-card {
+      width: min(440px, 100%);
+      margin: 0 auto;
+      background: #fff;
+      border: 2px solid var(--blue);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 16px 38px rgba(0,0,0,.25);
+      font-family: Arial, sans-serif;
+    }
+    .navigator-card h3 { margin: 0 0 10px; color: var(--blue-dark); }
+    .navigator-legend { font-size: 12px; color: var(--muted); margin-bottom: 15px; }
+    #navigator-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; }
+    .nav-btn {
+      min-height: 42px;
+      border: 1px solid #cfd6df;
+      border-radius: 7px;
+      background: #fff;
+      cursor: pointer;
+      font: 700 14px Arial, sans-serif;
+    }
+    .nav-btn.answered { background: #eaf5ff; border-color: #79bce7; }
+    .nav-btn.flagged { background: #ffe46b; border-color: #d6aa00; }
+    .nav-btn.current { outline: 3px solid rgba(0,116,193,.2); border-color: var(--blue); }
+    .navigator-close {
+      margin-top: 16px;
+      padding: 8px 14px;
+      border: 0;
+      border-radius: 6px;
+      background: #d0d5dd;
+      cursor: pointer;
+    }
+
+    /* ---------- REPORT ---------- */
+    .report-wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 8px 0 40px;
+      font-family: Arial, sans-serif;
+    }
+    .report-hero {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f8fbff, #fff);
+    }
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(0,116,193,.23);
+    }
+    .score-circle strong { font-size: 43px; line-height: 1; }
+    .score-circle span { margin-top: 5px; font-size: 13px; }
+    .report-hero h1 { margin: 0 0 7px; font-size: 31px; }
+    .report-hero p { margin: 4px 0; color: #475467; }
+    .readiness-label { margin-top: 12px; font-size: 17px; font-weight: 800; color: var(--blue-dark); }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .report-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(15,23,42,.05);
+    }
+    .report-card.full { grid-column: 1 / -1; }
+    .report-card h2 { margin: 0 0 14px; font-size: 21px; }
+    .report-card h3 { margin: 17px 0 6px; font-size: 16px; }
+
+    .topic-row { margin: 15px 0; }
+    .topic-row:first-child { margin-top: 5px; }
+    .topic-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .bar-track { height: 18px; overflow: hidden; border-radius: 999px; background: #eef1f5; }
+    .bar-fill { height: 100%; border-radius: 999px; min-width: 2px; }
+    .bar-fill.strong { background: var(--green); }
+    .bar-fill.developing { background: #e5a11a; }
+    .bar-fill.focus { background: #d64545; }
+
+    .insight-box {
+      padding: 13px 14px;
+      border-radius: 10px;
+      margin: 10px 0;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .insight-box.good { background: var(--green-soft); border: 1px solid #a6f4c5; }
+    .insight-box.improve { background: var(--amber-soft); border: 1px solid #f2cf73; }
+
+    .report-table-wrap { overflow-x: auto; }
+    .report-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .report-table th, .report-table td { border: 1px solid #d0d5dd; padding: 8px; text-align: center; }
+    .report-table th { background: #f2f4f7; }
+    .report-table td.topic-cell { text-align: left; }
+
+    .solution-panel iframe { width: 100%; height: 620px; border: 1px solid #d0d5dd; border-radius: 8px; }
+    .solution-link {
+      display: inline-block;
+      margin: 2px 0 13px;
+      padding: 9px 14px;
+      border-radius: 7px;
+      background: var(--blue-dark);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      #instructions { margin: 24px 16px; padding: 38px 24px 44px; min-height: auto; }
+      .container { padding: 25px 20px 120px; }
+      .report-grid { grid-template-columns: 1fr; }
+      .report-card.full { grid-column: auto; }
+      .report-hero { grid-template-columns: 1fr; text-align: center; }
+      .score-circle { margin: 0 auto; }
+    }
+
+    @media (max-width: 620px) {
+      .header { align-items: flex-start; }
+      .header-title { font-size: 15px; }
+      .footer { justify-content: center; flex-wrap: wrap; }
+      .footer button { padding: 8px 11px; font-size: 13px; }
+      .question-topline { align-items: flex-start; }
+      .question-topic { max-width: 42%; }
+      .option { font-size: 17px; }
+      #navigator-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+/* Keep the page itself fixed while the exam is running */
+body.exam-active {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header + scrollable question area + footer */
+#exam-interface {
+  display: none;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+/* Header stays above the internal scrollbar */
+#exam-interface .header {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Only this middle section scrolls */
+#exam-interface .container {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 40px;
+}
+
+/* Footer stays below the internal scrollbar */
+#exam-interface .footer {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Optional scrollbar styling */
+#exam-interface .container::-webkit-scrollbar {
+  width: 10px;
+}
+
+#exam-interface .container::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+
+#exam-interface .container::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
+  border: 2px solid #f1f3f5;
+}
+
+#exam-interface .container::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+  </style>
+</head>
+<body>
+
+<section id="instructions">
+  <h1 id="test-title">AMC 10 Diagnostic Test</h1>
+  <p class="subtitle">A full 25-question diagnostic designed to identify strengths and priority areas across the major AMC 10 ideas.</p>
+
+  <div class="start-meta">
+    <span class="meta-pill">75 minutes</span>
+    <span class="meta-pill">25 multiple-choice questions</span>
+    <span class="meta-pill">No calculator</span>
+    <span class="meta-pill">Raw diagnostic score out of 25</span>
+  </div>
+
+  <div class="candidate-row">
+    <div class="field">
+      <label for="student-name">Enter your full name</label>
+      <input type="text" id="student-name" placeholder="Full name" autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label for="studentEmail">Email for the result report</label>
+      <input type="email" id="studentEmail" placeholder="example@email.com" autocomplete="email">
+    </div>
+
+    <div class="field">
+      <label for="test-date">Select your diagnostic session</label>
+      <select id="test-date">
+        <option value="AMC 10 Diagnostic 2026">AMC 10 Diagnostic 2026</option>
+        <option value="AMC 10 Diagnostic 2027">AMC 10 Diagnostic 2027</option>
+        <option value="Independent Diagnostic">Independent Diagnostic</option>
+      </select>
+    </div>
+
+    <button class="start-button" onclick="startExam()">Start Exam</button>
+  </div>
+
+  <table class="exam-table">
+    <thead>
+      <tr>
+        <th>Assessment</th>
+        <th>Major ideas covered</th>
+        <th>Questions</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>AMC 10 Diagnostic</td>
+        <td>Algebra and modelling, number theory, geometry, counting and probability</td>
+        <td>25</td>
+        <td>75 minutes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="instructions-copy">
+    <p>Choose the one correct answer for each question. This diagnostic awards one mark for each correct response and does not subtract marks for incorrect answers.</p>
+   
+    <div class="diagnostic-note"><strong>Final report:</strong> Your result screen will include a raw score, question-by-question analysis, time spent, and a bar-chart breakdown of the AMC 10 topics in which you performed strongly and those that need more work.</div>
+  </div>
+</section>
+
+<section id="exam-interface">
+  <header class="header">
+    <div>
+      <div class="header-title">AMC 10 Diagnostic Test</div>
+      <div class="header-subtitle">Thriving Scholars · Student assessment</div>
+    </div>
+    <div class="top-right">
+      <div class="timer">Time Remaining: <strong id="time">75:00</strong><br>Question <span id="counter">1 of 25</span></div>
+      <button id="flag-btn" onclick="toggleFlag()">⚑ Flag for Review</button>
+    </div>
+  </header>
+
+  <main class="container" id="question-container"></main>
+
+  <footer class="footer">
+    <button id="prev-btn" onclick="prevQuestion()">← Previous</button>
+    <button id="next-btn" onclick="nextQuestion()">Next →</button>
+    <button onclick="openNavigator()">Navigator</button>
+    <button class="submit-btn" onclick="confirmSubmit()">Submit</button>
+  </footer>
+</section>
+
+<div id="navigator-popup" role="dialog" aria-modal="true" aria-label="Question navigator">
+  <div class="navigator-card">
+    <h3>Jump to Question</h3>
+    <div class="navigator-legend">Blue = answered · Yellow = flagged · Outline = current question</div>
+    <div id="navigator-grid"></div>
+    <button class="navigator-close" onclick="closeNavigator()">Close</button>
+  </div>
+</div>
+
+<script>
+  const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_baae373bc18b47daafe42e24e61476ae.pdf";
+  const publicSolutionURL = ""; // Optional: replace with the hosted public PDF URL for emails.
+
+  const EMAIL_CONFIG = {
+    enabled: true,
+    publicKey: "9jjn3yBHl6S88hITy",
+    serviceId: "service_5l4w8x2",
+    templateId: "template_j1jrs4o"
+  };
+
+  const questions = [
+    {
+      topic: "Algebra",
+      bigIdea: "Algebra & Modelling",
+      prompt: String.raw`Airline A charges 8 cents per mile with an initial fee of $50. Airline B charges 10 cents per mile with an initial fee of $40. How many miles must a flight be if it costs the same for both airlines?`,
+      choices: ["50", "100", "500", "1000", "5000"]
+    },
+    {
+      topic: "Arithmetic / Scheduling",
+      bigIdea: "Algebra & Modelling",
+      prompt: String.raw`A woodworker has a \(20\)-foot board and, beginning on Monday, cuts off one \(2\)-foot piece at the end of each working day. The woodworker does not work on Saturdays or Sundays. The process stops when the remaining board is itself a \(2\)-foot piece. On what day is the final cut made?`,
+      choices: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    },
+    {
+      topic: "Rates",
+      bigIdea: "Algebra & Modelling",
+      prompt: String.raw`Larry can make one batch of \(3\) cookies every \(8\) minutes. Mary can make one batch of \(5\) cookies every \(12\) minutes. They both start making cookies at 3:00 PM. At what time will they have made a combined total of \(60\) cookies?`,
+      choices: ["4:12 PM", "4:20 PM", "4:24 PM", "4:32 PM", "4:36 PM"]
+    },
+    {
+      topic: "Geometry / Area",
+      bigIdea: "Geometry",
+      prompt: String.raw`Triangle \(ABC\) has area \(60\) and \(BC=9\). Point \(D\) lies on line \(BC\) with \(CD=6\). What is the positive difference between the two possible areas of triangle \(ABD\)?`,
+      choices: [String.raw`\(20\)`, String.raw`\(60\)`, String.raw`\(80\)`, String.raw`\(100\)`, String.raw`\(120\)`]
+    },
+    {
+      topic: "Remainders",
+      bigIdea: "Number Theory",
+      prompt: String.raw`When a number is divided by \(8\), it has a certain quotient and remainder \(5\). When the same number is divided by \(5\), its quotient is doubled and its remainder is \(3\). What is the number?`,
+      choices: [String.raw`\(8\)`, String.raw`\(13\)`, String.raw`\(21\)`, String.raw`\(40\)`, String.raw`\(53\)`]
+    },
+    {
+      topic: "Counting",
+      bigIdea: "Counting & Probability",
+      prompt: String.raw`How many four-digit numbers consist of only odd digits or only even digits?`,
+      choices: [String.raw`\(500\)`, String.raw`\(625\)`, String.raw`\(1000\)`, String.raw`\(1125\)`, String.raw`\(1250\)`]
+    },
+    {
+      topic: "Quadratics",
+      bigIdea: "Algebra & Modelling",
+      prompt: String.raw`What is the sum of all integers \(n\) such that the equation
+        \[
+          x^2-2nx+n^2-4=0
+        \]
+        has both solutions strictly between \(-3\) and \(5\)?`,
+      choices: [String.raw`\(-3\)`, String.raw`\(-1\)`, String.raw`\(1\)`, String.raw`\(3\)`, String.raw`\(5\)`]
+    },
+    {
+      topic: "Polygons",
+      bigIdea: "Geometry",
+      prompt: String.raw`A regular \(n\)-gon has \(2015\) diagonals. What is the value of \(n\)?`,
+      choices: [String.raw`\(55\)`, String.raw`\(58\)`, String.raw`\(65\)`, String.raw`\(68\)`, String.raw`\(70\)`]
+    },
+    {
+      topic: "Probability",
+      bigIdea: "Counting & Probability",
+      prompt: String.raw`A bag contains \(3\) red balls, \(4\) blue balls, and \(5\) green balls. Three balls are chosen at random without replacement. What is the probability that all three balls have different colours?`,
+      choices: [String.raw`\(\frac{1}{22}\)`, String.raw`\(\frac{1}{11}\)`, String.raw`\(\frac{12}{65}\)`, String.raw`\(\frac{5}{26}\)`, String.raw`\(\frac{3}{11}\)`]
+    },
+    {
+      topic: "Difference of Squares",
+      bigIdea: "Number Theory",
+      prompt: String.raw`If \(x\) and \(y\) are positive integers such that
+        \[
+          x^2=31+y^2,
+        \]
+        what is the value of \(x^2+y^2\)?`,
+      choices: [String.raw`\(31\)`, String.raw`\(481\)`, String.raw`\(705\)`, String.raw`\(736\)`, String.raw`\(961\)`]
+    },
+    {
+      topic: "Solid Geometry",
+      bigIdea: "Geometry",
+      prompt: String.raw`The surface area of a sphere is twice the surface area of a cube. What is the ratio of the volume of the sphere to the volume of the cube?`,
+      choices: [String.raw`\(\frac{2\sqrt{3\pi}}{\pi}\)`, String.raw`\(2\)`, String.raw`\(\frac{4\sqrt{3\pi}}{\pi}\)`, String.raw`\(4\)`, String.raw`\(2\pi\)`]
+    },
+    {
+      topic: "Congruences",
+      bigIdea: "Number Theory",
+      prompt: String.raw`When a teacher divided a class into equal groups of \(3\), there were \(2\) students left over. When the class was divided into equal groups of \(5\), there were \(4\) students left over. When it was divided into equal groups of \(4\), there were no students left over. What is the least possible number of students?`,
+      choices: [String.raw`\(44\)`, String.raw`\(56\)`, String.raw`\(68\)`, String.raw`\(84\)`, String.raw`\(104\)`]
+    },
+    {
+      topic: "Similarity",
+      bigIdea: "Geometry",
+      prompt: String.raw`In square \(ABCD\), point \(E\) lies on segment \(AD\), and segments \(BD\) and \(CE\) intersect at \(F\). The line \(CE\) is extended past \(E\) to meet the extension of \(AB\) at \(G\). If \(EF=9\) and \(CF=15\), what is \(EG\)?`,
+      image: "https://assets.thrivingscholars.com/images/tmua/d3a91bde-835b-41ca-883b-eebf26bb1fb1.png",
+      imageAlt: "Square ABCD with points E, F, and G for Question 13",
+      choices: [String.raw`\(6\)`, String.raw`\(12\)`, String.raw`\(16\)`, String.raw`\(20\)`, String.raw`\(24\)`]
+    },
+    {
+      topic: "Combinatorics / Recurrence",
+      bigIdea: "Counting & Probability",
+      prompt: String.raw`There is an ample supply of identical \(1\times1\) tiles and identical \(2\times2\) tiles. Using these two types of tiles, how many ways are there to tile a \(3\times8\) grid?`,
+      choices: [String.raw`\(34\)`, String.raw`\(66\)`, String.raw`\(96\)`, String.raw`\(130\)`, String.raw`\(171\)`]
+    },
+    {
+      topic: "Tangential Quadrilaterals",
+      bigIdea: "Geometry",
+      prompt: String.raw`An isosceles trapezoid has parallel sides of lengths \(15\) and \(60\). A circle is inscribed in the trapezoid, touching all four sides. What is the radius of the circle?`,
+      choices: [String.raw`\(15\)`, String.raw`\(25\)`, String.raw`\(30\)`, String.raw`\(45\)`, String.raw`\(50\)`]
+    },
+    {
+      topic: "Factorials",
+      bigIdea: "Number Theory",
+      prompt: String.raw`There exist three-digit integers \(n\) such that \((n-1)!\) ends in \(A\) consecutive zeroes while \(n!\) ends in \(A+3\) consecutive zeroes. What is the sum of the digits of the largest possible value of \(n-1\)?`,
+      choices: [String.raw`\(7\)`, String.raw`\(8\)`, String.raw`\(13\)`, String.raw`\(19\)`, String.raw`\(20\)`]
+    },
+    {
+      topic: "Factoring",
+      bigIdea: "Number Theory",
+      prompt: String.raw`A rectangle with positive integer side lengths has area \(A\text{ cm}^2\) and perimeter \(P\text{ cm}\). Which of the following numbers cannot equal \(A+P\)?`,
+      choices: [String.raw`\(100\)`, String.raw`\(102\)`, String.raw`\(104\)`, String.raw`\(106\)`, String.raw`\(108\)`]
+    },
+    {
+      topic: "Perfect Squares",
+      bigIdea: "Number Theory",
+      prompt: String.raw`For how many positive integers \(n\) is
+        \[
+          n^{2015}-n
+        \]
+        the square of an integer?`,
+      choices: [String.raw`\(1\)`, String.raw`\(2\)`, String.raw`\(3\)`, String.raw`\(4\)`, String.raw`\(5\)`]
+    },
+    {
+      topic: "Circles",
+      bigIdea: "Geometry",
+      prompt: String.raw`Points \(A,B,C,D\) lie on a circle. Chords \(AC\) and \(BD\) are perpendicular and intersect at \(E\) inside the circle. If \(AC=27\), \(AD=5\), and \(AE=3\), what is the distance from \(E\) to the centre of the circle?`,
+      image: "https://assets.thrivingscholars.com/images/tmua/f409ab21-0873-4873-869b-52ffa29bbc34.png",
+      imageAlt: "Perpendicular chords AC and BD inside a circle for Question 19",
+      choices: [String.raw`\(7\)`, String.raw`\(\frac{7\sqrt5}{2}\)`, String.raw`\(\frac{21}{2}\)`, String.raw`\(\frac{7\sqrt{10}}{2}\)`, String.raw`\(\frac{7\sqrt{13}}{2}\)`]
+    },
+    {
+      topic: "Valuations",
+      bigIdea: "Counting & Probability",
+      prompt: String.raw`Santa has \(64\) distinct gifts to give to \(40\) different elves. Let \(N\) be the number of distributions for which the numbers of gifts received by any two elves differ by at most \(1\). When \(N\) is written in base \(4\), how many consecutive zeroes appear at the end?`,
+      choices: [String.raw`\(9\)`, String.raw`\(19\)`, String.raw`\(20\)`, String.raw`\(21\)`, String.raw`\(32\)`]
+    },
+    {
+      topic: "Coordinate Geometry",
+      bigIdea: "Geometry",
+      prompt: String.raw`Equiangular hexagon \(ABCDEF\) has side lengths
+        \[
+          AB=1,\qquad BC=EF=2,\qquad CD=3.
+        \]
+        What is the area of \(ABCDEF\)?`,
+      choices: [String.raw`\(6\sqrt2\)`, String.raw`\(\frac{13\sqrt2}{2}\)`, String.raw`\(\frac{11\sqrt3}{2}\)`, String.raw`\(6\sqrt3\)`, String.raw`\(12\)`]
+    },
+    {
+      topic: "Graph Reasoning",
+      bigIdea: "Counting & Probability",
+      prompt: String.raw`At a large party there are \(2015\) married couples. Each person knows their own spouse. One man asks every other person how many people at the party they do not know, and receives a different integer from every person. How many people does his wife know?<br><br>Assume that knowing is symmetric and that no one counts themself.`,
+      choices: [String.raw`\(1\)`, String.raw`\(2\)`, String.raw`\(2014\)`, String.raw`\(2015\)`, String.raw`\(4029\)`]
+    },
+    {
+      topic: "Sequences",
+      bigIdea: "Algebra & Modelling",
+      prompt: String.raw`Brian, Chris, and Paul compare their scores on two tests. Their math scores, in that order, form an arithmetic progression, while their history scores, in the same order, form a geometric progression. Their respective combined scores are \(168,169,172\), and the sum of the three math scores is \(255\). If Paul scored higher in math than in history, what is the range of the three math scores?`,
+      choices: [String.raw`\(11\)`, String.raw`\(15\)`, String.raw`\(22\)`, String.raw`\(26\)`, String.raw`\(30\)`]
+    },
+    {
+      topic: "Floor Function",
+      bigIdea: "Number Theory",
+      prompt: String.raw`Let \(\lfloor x\rfloor\) denote the greatest integer less than or equal to \(x\). How many distinct values occur in
+        \[
+          \left\{
+          \left\lfloor\frac{1^2}{2015}\right\rfloor,
+          \left\lfloor\frac{2^2}{2015}\right\rfloor,
+          \ldots,
+          \left\lfloor\frac{2015^2}{2015}\right\rfloor
+          \right\}?
+        \]`,
+      choices: [String.raw`\(503\)`, String.raw`\(1008\)`, String.raw`\(1009\)`, String.raw`\(1511\)`, String.raw`\(1512\)`]
+    },
+    {
+      topic: "Graphs / Double Counting",
+      bigIdea: "Counting & Probability",
+      prompt: String.raw`There are \(12k\) mathematicians at a conference. Each mathematician shakes hands with \(3k+6\) other mathematicians. There is a constant \(c\) such that, for every pair of mathematicians, exactly \(c\) mathematicians shook hands with both of them. What is the value of \(k\)?`,
+      choices: [String.raw`\(1\)`, String.raw`\(2\)`, String.raw`\(3\)`, String.raw`\(4\)`, String.raw`\(5\)`]
+    }
+  ];
+
+  const correctAnswers = [
+    "C", "D", "B", "C", "B",
+    "D", "D", "C", "E", "B",
+    "C", "A", "C", "E", "A",
+    "D", "B", "A", "E", "C",
+    "C", "D", "E", "E", "C"
+  ];
+
+  const topicOrder = [
+    "Algebra & Modelling",
+    "Number Theory",
+    "Geometry",
+    "Counting & Probability"
+  ];
+
+  let userAnswers = new Array(questions.length).fill(null);
+  let flags = new Array(questions.length).fill(false);
+  let timeSpent = new Array(questions.length).fill(0);
+  let current = 0;
+  let remainingSeconds = 75 * 60;
+  let timerInterval = null;
+  let lastTimestamp = Date.now();
+  let studentName = "";
+  let testSession = "";
+  let submitted = false;
+
+  const timerDisplay = document.getElementById("time");
+  const container = document.getElementById("question-container");
+  const counter = document.getElementById("counter");
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>'"]/g, character => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "'": "&#39;",
+      '"': "&quot;"
+    })[character]);
+  }
+
+  function letterFor(index) {
+    return String.fromCharCode(65 + index);
+  }
+
+  function recordCurrentQuestionTime() {
+    if (submitted) return;
+    const now = Date.now();
+    timeSpent[current] += Math.max(0, (now - lastTimestamp) / 1000);
+    lastTimestamp = now;
+  }
+
+  function renderQuestion() {
+    const question = questions[current];
+    const imageHTML = question.image
+      ? `<div class="question-media"><img src="${question.image}" alt="${escapeHTML(question.imageAlt || `Diagram for Question ${current + 1}`)}"></div>`
+      : "";
+
+    const choicesHTML = question.choices.map((choice, index) => {
+      const letter = letterFor(index);
+      const selected = userAnswers[current] === letter ? " selected" : "";
+      const checked = userAnswers[current] === letter ? " checked" : "";
+      return `
+        <label class="option${selected}" data-letter="${letter}">
+          <input type="radio" name="q${current + 1}" value="${letter}"${checked}>
+          <span class="option-letter">${letter}</span>
+          <span class="option-text">${choice}</span>
+        </label>`;
+    }).join("");
+
+    container.innerHTML = `
+      <div class="question-shell">
+        <div class="question-topline">
+          <div class="question-number">Question ${current + 1}</div>
+          <div class="question-topic">${escapeHTML(question.topic)}</div>
+        </div>
+        <div class="question-copy">${question.prompt}</div>
+        ${imageHTML}
+        <div class="options">${choicesHTML}</div>
+      </div>`;
+
+    counter.textContent = `${current + 1} of ${questions.length}`;
+    updateFlagButton();
+    updateNavigator();
+
+    document.querySelectorAll(`input[name="q${current + 1}"]`).forEach(input => {
+      input.addEventListener("change", () => {
+        userAnswers[current] = input.value;
+        document.querySelectorAll(".option").forEach(label => label.classList.remove("selected"));
+        input.closest(".option").classList.add("selected");
+        updateNavigator();
+      });
+    });
+
+    document.getElementById("prev-btn").disabled = current === 0;
+    document.getElementById("next-btn").disabled = current === questions.length - 1;
+
+    if (window.MathJax?.typesetPromise) {
+      if (window.MathJax.typesetClear) window.MathJax.typesetClear([container]);
+      window.MathJax.typesetPromise([container]).catch(error => console.error("MathJax error", error));
+    }
+  }
+
+ function startExam() {
+  const nameInput = document
+    .getElementById("student-name")
+    .value
+    .trim();
+
+  const emailInput = document
+    .getElementById("studentEmail")
+    .value
+    .trim();
+
+  if (!nameInput) {
+    alert("Please enter your full name before starting the test.");
+    return;
+  }
+
+  if (
+    !emailInput ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput)
+  ) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  studentName = nameInput;
+  testSession = document.getElementById("test-date").value;
+
+  document.getElementById("instructions").style.display = "none";
+  document.body.classList.add("exam-active");
+  document.getElementById("exam-interface").style.display = "flex";
+
+  lastTimestamp = Date.now();
+
+  renderQuestion();
+  updateTimerDisplay();
+
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+  function updateTimer() {
+    if (submitted) return;
+    remainingSeconds -= 1;
+    if (remainingSeconds <= 0) {
+      remainingSeconds = 0;
+      updateTimerDisplay();
+      submitExam(true);
+      return;
+    }
+    updateTimerDisplay();
+  }
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
+    timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  function nextQuestion() {
+    if (current >= questions.length - 1) return;
+    recordCurrentQuestionTime();
+    current += 1;
+    renderQuestion();
+  }
+
+  function prevQuestion() {
+    if (current <= 0) return;
+    recordCurrentQuestionTime();
+    current -= 1;
+    renderQuestion();
+  }
+
+  function toggleFlag() {
+    flags[current] = !flags[current];
+    updateFlagButton();
+    updateNavigator();
+  }
+
+  function updateFlagButton() {
+    const button = document.getElementById("flag-btn");
+    button.classList.toggle("flagged", flags[current]);
+    button.textContent = flags[current] ? "⚑ Flagged for Review" : "⚑ Flag for Review";
+  }
+
+  function openNavigator() {
+    updateNavigator();
+    document.getElementById("navigator-popup").style.display = "block";
+  }
+
+  function closeNavigator() {
+    document.getElementById("navigator-popup").style.display = "none";
+  }
+
+  function jumpTo(index) {
+    if (index === current) {
+      closeNavigator();
+      return;
+    }
+    recordCurrentQuestionTime();
+    current = index;
+    renderQuestion();
+    closeNavigator();
+  }
+
+  function generateNavigatorButtons() {
+    const grid = document.getElementById("navigator-grid");
+    grid.innerHTML = "";
+    questions.forEach((_, index) => {
+      const button = document.createElement("button");
+      button.id = `nav-btn-${index}`;
+      button.className = "nav-btn";
+      button.textContent = index + 1;
+      button.onclick = () => jumpTo(index);
+      grid.appendChild(button);
+    });
+  }
+
+  function updateNavigator() {
+    questions.forEach((_, index) => {
+      const button = document.getElementById(`nav-btn-${index}`);
+      if (!button) return;
+      button.classList.toggle("answered", Boolean(userAnswers[index]));
+      button.classList.toggle("flagged", flags[index]);
+      button.classList.toggle("current", index === current);
+      button.textContent = flags[index] ? `⚑ ${index + 1}` : String(index + 1);
+    });
+  }
+
+  function confirmSubmit() {
+    const unanswered = userAnswers.filter(answer => !answer).length;
+    const message = unanswered
+      ? `You still have ${unanswered} unanswered question${unanswered === 1 ? "" : "s"}. Submit anyway?`
+      : "Are you sure you want to submit the test?";
+    if (confirm(message)) submitExam(false);
+  }
+
+  function calculateTopicStats() {
+    const stats = Object.fromEntries(topicOrder.map(topic => [topic, { correct: 0, total: 0, incorrectQuestions: [] }]));
+
+    questions.forEach((question, index) => {
+      const stat = stats[question.bigIdea];
+      stat.total += 1;
+      if (userAnswers[index] === correctAnswers[index]) {
+        stat.correct += 1;
+      } else {
+        stat.incorrectQuestions.push(index + 1);
+      }
+    });
+
+    return stats;
+  }
+
+  function performanceLabel(score) {
+    if (score >= 20) return "Strong AMC 10 readiness";
+    if (score >= 15) return "Developing well toward AMC 10 readiness";
+    if (score >= 10) return "Building the core AMC 10 toolkit";
+    return "Foundation stage — focus on core ideas first";
+  }
+
+  function topicBarClass(percentage) {
+    if (percentage >= 75) return "strong";
+    if (percentage >= 50) return "developing";
+    return "focus";
+  }
+
+  function buildTopicReport(stats) {
+    const rows = topicOrder.map(topic => {
+      const stat = stats[topic];
+      const percentage = stat.total ? Math.round(100 * stat.correct / stat.total) : 0;
+      return { topic, ...stat, percentage };
+    });
+
+    const maxPercentage = Math.max(...rows.map(row => row.percentage));
+    const minPercentage = Math.min(...rows.map(row => row.percentage));
+    const strengths = rows.filter(row => row.percentage === maxPercentage).map(row => row.topic);
+    const priorities = rows.filter(row => row.percentage === minPercentage).map(row => row.topic);
+
+    const bars = rows.map(row => `
+      <div class="topic-row">
+        <div class="topic-label">
+          <span>${escapeHTML(row.topic)}</span>
+          <span>${row.correct}/${row.total} · ${row.percentage}%</span>
+        </div>
+        <div class="bar-track" aria-label="${escapeHTML(row.topic)} score ${row.percentage}%">
+          <div class="bar-fill ${topicBarClass(row.percentage)}" style="width:${row.percentage}%"></div>
+        </div>
+      </div>`).join("");
+
+    const priorityQuestionText = rows
+      .filter(row => priorities.includes(row.topic))
+      .map(row => `${row.topic}: ${row.incorrectQuestions.length ? `Q${row.incorrectQuestions.join(", Q")}` : "no missed questions"}`)
+      .join("; ");
+
+    return {
+      bars,
+      strengths: strengths.join(", "),
+      priorities: priorities.join(", "),
+      priorityQuestionText,
+      plainText: rows.map(row => `${row.topic}: ${row.correct}/${row.total} (${row.percentage}%)`).join("\n")
+    };
+  }
+
+  function formatTime(secondsValue) {
+    const seconds = Math.round(secondsValue);
+    return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+  }
+
+  function sendResultEmail(score, incorrectList, topicReport) {
+    if (!EMAIL_CONFIG.enabled || !window.emailjs) return;
+
+    try {
+      if (!window.__emailJSInitialised) {
+        emailjs.init(EMAIL_CONFIG.publicKey);
+        window.__emailJSInitialised = true;
+      }
+
+      const analysisLines = questions.map((question, index) =>
+        `Q${index + 1} | ${question.bigIdea} | Correct: ${correctAnswers[index]} | Yours: ${userAnswers[index] || "-"} | Time: ${formatTime(timeSpent[index])}`
+      ).join("\n");
+
+      emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, {
+        name: studentName,
+        session: testSession,
+        score: `${score} / ${questions.length}`,
+        timestamp: new Date().toLocaleString(),
+        incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
+        paper1: `AMC 10 Diagnostic Analysis\n\n${analysisLines}\n\nTopic breakdown\n${topicReport.plainText}`,
+        to_email: document.getElementById("studentEmail").value.trim(),
+        solution_link: publicSolutionURL || "Solutions available on the result screen",
+        test_title: "AMC 10 Diagnostic Test"
+      }).then(
+        response => console.log("Result email sent", response),
+        error => console.error("Result email failed", error)
+      );
+    } catch (error) {
+      console.error("EmailJS setup failed", error);
+    }
+  }
+
+  function submitExam(autoSubmitted) {
+    if (submitted) return;
+    recordCurrentQuestionTime();
+    submitted = true;
+    clearInterval(timerInterval);
+
+    let score = 0;
+    const incorrectList = [];
+    userAnswers.forEach((answer, index) => {
+      if (answer === correctAnswers[index]) score += 1;
+      else incorrectList.push(index + 1);
+    });
+
+    const topicStats = calculateTopicStats();
+    const topicReport = buildTopicReport(topicStats);
+    sendResultEmail(score, incorrectList, topicReport);
+
+    const timeRows = questions.map((question, index) => {
+      const answer = userAnswers[index] || "-";
+      const correct = correctAnswers[index];
+      const status = answer === correct ? "Correct" : answer === "-" ? "Unanswered" : "Incorrect";
+      return `
+        <tr>
+          <td>${index + 1}</td>
+          <td class="topic-cell">${escapeHTML(question.topic)}</td>
+          <td>${answer}</td>
+          <td>${correct}</td>
+          <td>${formatTime(timeSpent[index])}</td>
+          <td>${status}</td>
+        </tr>`;
+    }).join("");
+
+    const percentage = Math.round(100 * score / questions.length);
+    const safeName = escapeHTML(studentName);
+    const submitMessage = autoSubmitted ? "Time expired, so the test was submitted automatically." : "Your diagnostic has been submitted.";
+
+    container.innerHTML = `
+      <div class="report-wrap">
+        <section class="report-hero">
+          <div class="score-circle"><strong>${score}</strong><span>out of 25</span></div>
+          <div>
+            <h1>AMC 10 Diagnostic Complete</h1>
+            <p><strong>${safeName}</strong> · ${escapeHTML(testSession)}</p>
+            <p>${submitMessage}</p>
+            <div class="readiness-label">${performanceLabel(score)} · ${percentage}% raw score</div>
+          </div>
+        </section>
+
+        <div class="report-grid">
+          <section class="report-card">
+            <h2>Topic breakdown</h2>
+            <p style="margin-top:-5px;color:#667085;font-size:14px;">Performance across the four major AMC 10 idea groups.</p>
+            ${topicReport.bars}
+          </section>
+
+          <section class="report-card">
+            <h2>Diagnostic interpretation</h2>
+            <div class="insight-box good"><strong>Where you did well:</strong><br>${escapeHTML(topicReport.strengths)}</div>
+            <div class="insight-box improve"><strong>Where you can improve:</strong><br>${escapeHTML(topicReport.priorities)}</div>
+            <h3>Priority review questions</h3>
+            <p style="font-size:14px;line-height:1.55;">${escapeHTML(topicReport.priorityQuestionText)}</p>
+            <p style="font-size:13px;color:#667085;">The bars report accuracy within this diagnostic. They are intended to guide revision rather than predict an official AMC score.</p>
+          </section>
+
+          <section class="report-card full">
+            <h2>Question-by-question analysis</h2>
+            <div class="report-table-wrap">
+              <table class="report-table">
+                <thead>
+                  <tr><th>Q</th><th>Topic</th><th>Your answer</th><th>Correct</th><th>Time</th><th>Status</th></tr>
+                </thead>
+                <tbody>${timeRows}</tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="report-card full solution-panel">
+            <h2>Fully worked solutions</h2>
+            <a class="solution-link" href="${solutionPDF}" target="_blank" rel="noopener">Open the complete solution booklet</a>
+            <iframe id="solution-frame" title="AMC 10 fully worked solutions"></iframe>
+          </section>
+        </div>
+      </div>`;
+
+    const frame = document.getElementById("solution-frame");
+    if (frame) frame.src = solutionPDF;
+
+    document.querySelector(".footer").style.display = "none";
+    document.getElementById("flag-btn").style.display = "none";
+    counter.textContent = "Report";
+    if (window.MathJax?.typesetPromise) {
+      window.MathJax.typesetPromise([container]).catch(error => console.error("MathJax report error", error));
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  document.addEventListener("keydown", event => {
+    if (document.getElementById("exam-interface").style.display !== "block" || submitted) return;
+    if (!event.altKey) return;
+
+    const key = event.key.toLowerCase();
+    if (key === "n") nextQuestion();
+    if (key === "p") prevQuestion();
+    if (key === "f") toggleFlag();
+    if (key === "g") openNavigator();
+  });
+
+  document.getElementById("navigator-popup").addEventListener("click", event => {
+    if (event.target.id === "navigator-popup") closeNavigator();
+  });
+
+  generateNavigatorButtons();
+  updateNavigator();
+</script>
+</body>
+</html>

@@ -6,9 +6,11 @@ import styles from "./dashboard.module.css";
 type Props = {
   email?: string | null;
   hasTmua?: boolean;
+  initialSection?: "practice-tests" | null;
 };
 
 type AMCPaper = "AMC 8" | "AMC 10" | "AMC 12";
+type AMCView = AMCPaper | "Practice Tests";
 
 const PAPERS: Array<{
   paper: AMCPaper;
@@ -36,14 +38,115 @@ const PAPERS: Array<{
   },
 ];
 
+const PRACTICE_TESTS = [
+  {
+    title: "AMC 10 Topical Test 1",
+    level: "AMC 8 + AMC 10 · Number Theory",
+    detail: "Number theory practice restored from the original Wix digital test.",
+    tags: ["25 questions", "75 minutes", "Worked solutions"],
+    href: "/amc-practice-tests/tests/amc-10-mock-test-1/",
+  },
+  {
+    title: "AMC 10 Topical Test 2",
+    level: "AMC 8 + AMC 10 · Number Theory",
+    detail: "A second focused paper covering number patterns, factors and reasoning.",
+    tags: ["25 questions", "75 minutes", "Instant score"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-2/",
+  },
+  {
+    title: "AMC 10 Topical Test 3",
+    level: "AMC 8 + AMC 10 · Algebra",
+    detail: "Arithmetic and algebra questions with original notation preserved.",
+    tags: ["25 questions", "75 minutes", "Instant score"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-3/",
+  },
+  {
+    title: "AMC 10 Topical Test 4",
+    level: "AMC 8 + AMC 10 · Algebra",
+    detail: "A second arithmetic and algebra paper for timed contest practice.",
+    tags: ["25 questions", "75 minutes", "Worked solutions"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-4/",
+  },
+  {
+    title: "AMC 10 Topical Test 5",
+    level: "AMC 8 + AMC 10 · Geometry",
+    detail: "Geometry practice with the original diagrams preserved exactly.",
+    tags: ["25 questions", "75 minutes", "Instant score"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-5/",
+  },
+  {
+    title: "AMC 10 Topical Test 6",
+    level: "AMC 8 + AMC 10 · Geometry",
+    detail: "A second geometry paper covering angles, circles and spatial reasoning.",
+    tags: ["25 questions", "75 minutes", "Worked solutions"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-6/",
+  },
+  {
+    title: "AMC 10 Topical Test 7",
+    level: "AMC 8 + AMC 10 · Combinatorics",
+    detail: "Combinatorics and probability practice in a restored digital format.",
+    tags: ["25 questions", "75 minutes", "Instant score"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-7/",
+  },
+  {
+    title: "AMC 10 Topical Test 8",
+    level: "AMC 8 + AMC 10 · Logic",
+    detail: "Logic and structured reasoning questions with full worked solutions.",
+    tags: ["25 questions", "75 minutes", "Worked solutions"],
+    href: "/amc-practice-tests/tests/amc-10-topical-test-8/",
+  },
+  {
+    title: "AMC 8 Full Mock Test 1",
+    level: "AMC 8 · All Topics",
+    detail: "A complete AMC 8-style paper covering the full topic range.",
+    tags: ["25 questions", "40 minutes", "Instant score"],
+    href: "/amc-practice-tests/tests/amc-8-full-mock-test-1/",
+  },
+  {
+    title: "AMC 8 Full Mock Test 2",
+    level: "AMC 8 · All Topics",
+    detail: "A second complete AMC 8-style paper with original diagrams and solutions.",
+    tags: ["25 questions", "40 minutes", "Worked solutions"],
+    href: "/amc-practice-tests/tests/amc-8-full-mock-test-2/",
+  },
+  {
+    title: "Pre-AMC 8 Mock Test",
+    level: "AMC 8 Foundations",
+    detail: "A full timed foundation paper for students building toward AMC 8.",
+    tags: ["25 questions", "75 minutes", "Instant score"],
+    href: "/amc-practice-tests/tests/pre-amc-8-mock-test/",
+  },
+  {
+    title: "AMC 10 Diagnostic Test",
+    level: "AMC 10 · All Topics",
+    detail: "Identify strengths, missed topics and the highest-priority areas to review.",
+    tags: ["25 questions", "75 minutes", "Topic analysis"],
+    href: "/amc-practice-tests/tests/amc-10-diagnostic-test/",
+  },
+] as const;
+
 function bankUrl(paper: AMCPaper) {
   return `/amc-question-bank?paper=${encodeURIComponent(paper)}`;
 }
 
-export default function AMCDashboardClient({ email, hasTmua }: Props) {
-  const [active, setActive] = useState<AMCPaper>("AMC 8");
+export default function AMCDashboardClient({ email, hasTmua, initialSection }: Props) {
+  const [active, setActive] = useState<AMCView>(
+    initialSection === "practice-tests" ? "Practice Tests" : "AMC 8",
+  );
 
-  const activePaper = PAPERS.find((p) => p.paper === active) || PAPERS[0];
+  const activePaper =
+    active === "Practice Tests"
+      ? null
+      : PAPERS.find((paper) => paper.paper === active) || PAPERS[0];
+
+  function selectView(view: AMCView) {
+    setActive(view);
+
+    const url = new URL(window.location.href);
+    if (view === "Practice Tests") url.searchParams.set("section", "practice-tests");
+    else url.searchParams.delete("section");
+    window.history.replaceState({}, "", url);
+  }
 
   function logout() {
     window.location.href = "/api/logout";
@@ -76,7 +179,7 @@ export default function AMCDashboardClient({ email, hasTmua }: Props) {
           </div>
 
           <div className={styles.sideSub}>
-            AMC 8 + AMC 10 + AMC 12 question banks. Clean, focused, tracked.
+            Question banks and timed AMC 8 + AMC 10 practice tests in one focused workspace.
           </div>
 
           <ul className={styles.nav}>
@@ -84,7 +187,7 @@ export default function AMCDashboardClient({ email, hasTmua }: Props) {
               <li key={p.paper}>
                 <button
                   className={`${styles.navBtn} ${active === p.paper ? styles.navBtnOn : ""}`}
-                  onClick={() => setActive(p.paper)}
+                  onClick={() => selectView(p.paper)}
                   type="button"
                   title={p.label}
                 >
@@ -93,6 +196,17 @@ export default function AMCDashboardClient({ email, hasTmua }: Props) {
                 </button>
               </li>
             ))}
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "Practice Tests" ? styles.navBtnOn : ""}`}
+                onClick={() => selectView("Practice Tests")}
+                type="button"
+                title="AMC Practice Tests"
+              >
+                <span className={styles.step}>4</span>
+                <span className={styles.navLabel}>Practice Tests</span>
+              </button>
+            </li>
           </ul>
 
           <div className={styles.card} style={{ margin: "16px 18px 0" }}>
@@ -121,30 +235,101 @@ export default function AMCDashboardClient({ email, hasTmua }: Props) {
         </aside>
 
         <main className={styles.main}>
-          <div className={styles.h1}>{activePaper.label}</div>
-
-          <div className={styles.metaRow}>
-            <div className={styles.meta}>
-              <span className={styles.dot} /> {activePaper.paper}
-            </div>
-            <div className={styles.meta}>Question Bank</div>
-            <div className={styles.meta}>Practice · Track · Review</div>
-          </div>
-
-          <div className={styles.card}>
-            <div className={styles.cardTitle}>Open {activePaper.label}</div>
-            <div className={styles.muted}>{activePaper.description}</div>
-
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+          <nav className={styles.mobileNav} aria-label="AMC workspace sections">
+            {PAPERS.map((paper) => (
               <button
-                className={`${styles.btn} ${styles.btnPrimary}`}
+                className={`${styles.mobileNavBtn} ${active === paper.paper ? styles.mobileNavBtnOn : ""}`}
+                key={paper.paper}
+                onClick={() => selectView(paper.paper)}
                 type="button"
-                onClick={() => (window.location.href = bankUrl(activePaper.paper))}
               >
-                Open {activePaper.paper} Question Bank
+                {paper.paper}
               </button>
-            </div>
-          </div>
+            ))}
+            <button
+              className={`${styles.mobileNavBtn} ${active === "Practice Tests" ? styles.mobileNavBtnOn : ""}`}
+              onClick={() => selectView("Practice Tests")}
+              type="button"
+            >
+              Practice Tests
+            </button>
+          </nav>
+
+          {active === "Practice Tests" ? (
+            <>
+              <div className={styles.h1}>AMC Practice Tests</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> AMC 8 + AMC 10
+                </div>
+                <div className={styles.meta}>Timed practice</div>
+                <div className={styles.meta}>Score · Analyse · Review</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Restored Thriving Scholars practice tests</div>
+                <div className={styles.muted}>
+                  All eight topical tests, both AMC 8 full mocks and two additional digital
+                  diagnostics are now together in one distraction-free exam library. Your score
+                  and the original worked solution booklet appear when you submit.
+                </div>
+              </div>
+
+              <div className={styles.grid}>
+                {PRACTICE_TESTS.map((test) => (
+                  <article className={styles.test} key={test.href}>
+                    <div className={styles.testMeta}>{test.level}</div>
+                    <div className={styles.testTitle}>{test.title}</div>
+                    <div className={styles.muted}>{test.detail}</div>
+                    <div className={styles.tags}>
+                      {test.tags.map((tag) => (
+                        <span className={styles.tag} key={tag}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <button
+                      className={styles.go}
+                      type="button"
+                      onClick={() => (window.location.href = test.href)}
+                    >
+                      Start test
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.h1}>{activePaper?.label}</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> {activePaper?.paper}
+                </div>
+                <div className={styles.meta}>Question Bank</div>
+                <div className={styles.meta}>Practice · Track · Review</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Open {activePaper?.label}</div>
+                <div className={styles.muted}>{activePaper?.description}</div>
+
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+                  <button
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                    type="button"
+                    onClick={() =>
+                      activePaper && (window.location.href = bankUrl(activePaper.paper))
+                    }
+                  >
+                    Open {activePaper?.paper} Question Bank
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </main>
       </div>
     </div>

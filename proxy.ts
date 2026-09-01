@@ -16,6 +16,7 @@ const PRODUCT_GATES: ProductGate[] = [
   { prefix: "/practice-tests", product: "practice-tests" },
 
   { prefix: "/amc-question-bank", product: "amc-question-bank" },
+  { prefix: "/amc-practice-tests", product: "amc-question-bank" },
   { prefix: "/amc-8-question-bank", product: "amc-question-bank" },
   { prefix: "/amc-10-question-bank", product: "amc-question-bank" },
   { prefix: "/amc-12-question-bank", product: "amc-question-bank" },
@@ -179,6 +180,7 @@ export const config = {
     "/practice-tests/:path*",
 
     "/amc-question-bank/:path*",
+    "/amc-practice-tests/:path*",
     "/amc-8-question-bank/:path*",
     "/amc-10-question-bank/:path*",
     "/amc-12-question-bank/:path*",
