@@ -16,6 +16,7 @@
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script defer src="/amc-practice-tests/email-report.js"></script>
 
   <style>
     :root {
@@ -588,13 +589,6 @@ body.exam-active {
   const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_baae373bc18b47daafe42e24e61476ae.pdf";
   const publicSolutionURL = ""; // Optional: replace with the hosted public PDF URL for emails.
 
-  const EMAIL_CONFIG = {
-    enabled: true,
-    publicKey: "9jjn3yBHl6S88hITy",
-    serviceId: "service_5l4w8x2",
-    templateId: "template_j1jrs4o"
-  };
-
   const questions = [
     {
       topic: "Algebra",
@@ -1085,35 +1079,25 @@ body.exam-active {
   }
 
   function sendResultEmail(score, incorrectList, topicReport) {
-    if (!EMAIL_CONFIG.enabled || !window.emailjs) return;
-
-    try {
-      if (!window.__emailJSInitialised) {
-        emailjs.init(EMAIL_CONFIG.publicKey);
-        window.__emailJSInitialised = true;
-      }
-
-      const analysisLines = questions.map((question, index) =>
-        `Q${index + 1} | ${question.bigIdea} | Correct: ${correctAnswers[index]} | Yours: ${userAnswers[index] || "-"} | Time: ${formatTime(timeSpent[index])}`
-      ).join("\n");
-
-      emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, {
-        name: studentName,
-        session: testSession,
-        score: `${score} / ${questions.length}`,
-        timestamp: new Date().toLocaleString(),
-        incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
-        paper1: `AMC 10 Diagnostic Analysis\n\n${analysisLines}\n\nTopic breakdown\n${topicReport.plainText}`,
-        to_email: document.getElementById("studentEmail").value.trim(),
-        solution_link: publicSolutionURL || "Solutions available on the result screen",
-        test_title: "AMC 10 Diagnostic Test"
-      }).then(
-        response => console.log("Result email sent", response),
-        error => console.error("Result email failed", error)
-      );
-    } catch (error) {
-      console.error("EmailJS setup failed", error);
+    if (!window.TS_AMC_EMAIL_REPORT) {
+      return Promise.reject(new Error("The score-report service did not load."));
     }
+
+    const analysisLines = questions.map((question, index) =>
+      `Q${index + 1} | ${question.bigIdea} | Correct: ${correctAnswers[index]} | Yours: ${userAnswers[index] || "-"} | Time: ${formatTime(timeSpent[index])}`
+    ).join("\n");
+
+    return window.TS_AMC_EMAIL_REPORT.send({
+      name: studentName,
+      session: testSession,
+      score: `${score} / ${questions.length}`,
+      timestamp: new Date().toLocaleString(),
+      incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
+      paper1: `AMC 10 Diagnostic Analysis\n\n${analysisLines}\n\nTopic breakdown\n${topicReport.plainText}`,
+      studentEmail: document.getElementById("studentEmail").value.trim(),
+      solutionLink: publicSolutionURL || solutionPDF,
+      testTitle: "AMC 10 Diagnostic Test"
+    });
   }
 
   function submitExam(autoSubmitted) {
@@ -1131,7 +1115,7 @@ body.exam-active {
 
     const topicStats = calculateTopicStats();
     const topicReport = buildTopicReport(topicStats);
-    sendResultEmail(score, incorrectList, topicReport);
+    const emailPromise = sendResultEmail(score, incorrectList, topicReport);
 
     const timeRows = questions.map((question, index) => {
       const answer = userAnswers[index] || "-";
@@ -1160,6 +1144,7 @@ body.exam-active {
             <h1>AMC 10 Diagnostic Complete</h1>
             <p><strong>${safeName}</strong> · ${escapeHTML(testSession)}</p>
             <p>${submitMessage}</p>
+            <p id="email-status">Sending your detailed score report…</p>
             <div class="readiness-label">${performanceLabel(score)} · ${percentage}% raw score</div>
           </div>
         </section>
@@ -1200,6 +1185,17 @@ body.exam-active {
         </div>
       </div>`;
 
+    const emailStatus = document.getElementById("email-status");
+    emailPromise.then(
+      () => {
+        emailStatus.textContent = "Detailed score report emailed successfully.";
+      },
+      error => {
+        console.error("Score report email failed", error);
+        emailStatus.textContent = "Your score is shown here, but the email could not be sent. Please contact outreach@thrivingscholars.com.";
+      }
+    );
+
     const frame = document.getElementById("solution-frame");
     if (frame) frame.src = solutionPDF;
 
@@ -1232,3 +1228,4 @@ body.exam-active {
 </script>
 </body>
 </html>
+

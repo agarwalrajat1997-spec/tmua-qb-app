@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AMC 10 Topical Test 6 | Thriving Scholars</title>
   <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/amc-practice-tests/email-report.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script defer src="/amc-practice-tests/email-report.js"></script>
   <style>
     :root { --ink:#1b1c20; --muted:#6b6d76; --cream:#fffaf2; --orange:#f28a12; --red:#6f1717; --line:#eadfce; --green:#1f7a4f; }
     * { box-sizing:border-box; }
@@ -78,10 +81,21 @@
   </header>
   <main class="wrap">
     <section class="intro" id="intro">
-      <div class="eyebrow">Restored digital practice test</div>
+      <div class="eyebrow">Timed AMC practice test</div>
       <h1>AMC 10 Topical Test 6</h1>
       <div class="muted">Geometry. Work without a calculator, choose one answer per question and use the flag tool for questions you want to revisit.</div>
       <div class="facts"><span class="fact">25 questions</span><span class="fact">75 minutes</span><span class="fact">Instant score</span><span class="fact">Worked solutions</span></div>
+      <div class="student-fields">
+        <label class="student-field">
+          Full name
+          <input id="studentName" type="text" autocomplete="name" placeholder="Student name" />
+        </label>
+        <label class="student-field">
+          Email for your score report
+          <input id="studentEmail" type="email" autocomplete="email" placeholder="name@example.com" />
+        </label>
+      </div>
+      <p class="report-note">A detailed score report will be emailed to you after submission.</p>
       <button class="primary" id="start">Start exam</button>
     </section>
 
@@ -104,7 +118,9 @@
       <div class="eyebrow">Test complete</div>
       <h1>AMC 10 Topical Test 6</h1>
       <div class="score" id="score">0 / 25</div>
+      <p class="muted" id="resultStudent"></p>
       <p class="muted" id="resultSummary"></p>
+      <p class="email-status" id="emailStatus" role="status"></p>
       <div class="review" id="review"></div>
       <div class="facts"><span class="fact">Green = correct</span><span class="fact">Red = incorrect</span><span class="fact">Grey = unanswered</span></div>
       <a class="primary" href="https://www.thrivingscholars.com/_files/ugd/98f2c5_dc0d5feedb0b4832bd490d524fd4a0d4.pdf" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none">Open worked solutions ↗</a>
@@ -119,6 +135,10 @@
     let current = 0;
     let seconds = config.minutes * 60;
     let timerHandle = null;
+    let studentName = "";
+    let studentEmail = "";
+    let questionStartedAt = null;
+    const timeSpent = Array(25).fill(0);
 
     const intro = document.getElementById("intro");
     const exam = document.getElementById("exam");
@@ -131,6 +151,12 @@
       const minutes = Math.floor(value / 60);
       const remaining = value % 60;
       return String(minutes).padStart(2, "0") + ":" + String(remaining).padStart(2, "0");
+    }
+
+    function recordQuestionTime() {
+      if (questionStartedAt === null) return;
+      timeSpent[current] += Math.max(0, (Date.now() - questionStartedAt) / 1000);
+      questionStartedAt = Date.now();
     }
 
     function updateTimer() {
@@ -147,7 +173,11 @@
         button.className = "qbtn" + (index === current ? " current" : "") + (response ? " answered" : "") + (flagged[index] ? " flagged" : "");
         button.textContent = index + 1;
         button.setAttribute("aria-label", "Go to question " + (index + 1));
-        button.addEventListener("click", () => { current = index; renderQuestion(); });
+        button.addEventListener("click", () => {
+          recordQuestionTime();
+          current = index;
+          renderQuestion();
+        });
         grid.appendChild(button);
       });
     }
@@ -172,9 +202,25 @@
     }
 
     function startExam() {
+      const nameInput = document.getElementById("studentName").value.trim();
+      const emailInput = document.getElementById("studentEmail").value.trim();
+
+      if (!nameInput) {
+        window.alert("Please enter your full name before starting the test.");
+        return;
+      }
+
+      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(emailInput)) {
+        window.alert("Please enter a valid email address.");
+        return;
+      }
+
+      studentName = nameInput;
+      studentEmail = emailInput;
       intro.hidden = true;
       exam.hidden = false;
       seconds = config.minutes * 60;
+      questionStartedAt = Date.now();
       updateTimer();
       timerHandle = window.setInterval(updateTimer, 1000);
       renderQuestion();
@@ -187,12 +233,17 @@
         const message = unanswered ? "You still have " + unanswered + " unanswered question" + (unanswered === 1 ? "" : "s") + ". Submit anyway?" : "Submit your answers now?";
         if (!window.confirm(message)) return;
       }
+      recordQuestionTime();
+      questionStartedAt = null;
       window.clearInterval(timerHandle);
       exam.hidden = true;
       result.hidden = false;
       const correct = responses.filter((answer, index) => answer === config.answers[index]).length;
       document.getElementById("score").textContent = correct + " / 25";
+      document.getElementById("resultStudent").textContent = "Score report for " + studentName;
       document.getElementById("resultSummary").textContent = expired ? "Time expired. Your saved responses were scored automatically." : "Your responses have been scored. Use the worked solution booklet to review every missed or uncertain question.";
+      const emailStatus = document.getElementById("emailStatus");
+      emailStatus.textContent = "Sending your detailed score report…";
       const review = document.getElementById("review");
       review.innerHTML = "";
       responses.forEach((answer, index) => {
@@ -202,15 +253,50 @@
         item.title = "Correct answer: " + config.answers[index];
         review.appendChild(item);
       });
+      const incorrectList = responses
+        .map((answer, index) => (answer === config.answers[index] ? null : index + 1))
+        .filter((questionNumber) => questionNumber !== null);
+      const analysis = responses
+        .map((answer, index) =>
+          "Q" + (index + 1) +
+          " | Correct: " + config.answers[index] +
+          " | Yours: " + (answer || "-") +
+          " | Time: " + formatTime(Math.round(timeSpent[index]))
+        )
+        .join("\n");
+      const reportPromise = window.TS_AMC_EMAIL_REPORT
+        ? window.TS_AMC_EMAIL_REPORT.send({
+            name: studentName,
+            studentEmail,
+            session: new Date().toLocaleDateString("en-GB", { month: "long", year: "numeric" }),
+            score: correct + " / 25",
+            timestamp: new Date().toLocaleString(),
+            incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
+            paper1: config.title + " Analysis\n\n" + analysis,
+            solutionLink: config.solution,
+            testTitle: config.title,
+          })
+        : Promise.reject(new Error("The score-report service did not load."));
+
+      reportPromise.then(
+        () => {
+          emailStatus.textContent = "Detailed score report emailed to " + studentEmail + ".";
+        },
+        (error) => {
+          console.error("Score report email failed", error);
+          emailStatus.textContent = "Your score is shown here, but the email could not be sent. Please contact outreach@thrivingscholars.com.";
+        },
+      );
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     document.getElementById("start").addEventListener("click", startExam);
-    document.getElementById("previous").addEventListener("click", () => { if (current > 0) { current -= 1; renderQuestion(); } });
-    document.getElementById("next").addEventListener("click", () => { if (current < 24) { current += 1; renderQuestion(); } else { document.querySelector(".navigator").scrollIntoView({ behavior: "smooth" }); } });
+    document.getElementById("previous").addEventListener("click", () => { if (current > 0) { recordQuestionTime(); current -= 1; renderQuestion(); } });
+    document.getElementById("next").addEventListener("click", () => { if (current < 24) { recordQuestionTime(); current += 1; renderQuestion(); } else { document.querySelector(".navigator").scrollIntoView({ behavior: "smooth" }); } });
     document.getElementById("flag").addEventListener("click", () => { flagged[current] = !flagged[current]; renderQuestion(); });
     document.getElementById("submit").addEventListener("click", () => finish(false));
     document.getElementById("restart").addEventListener("click", () => window.location.reload());
   </script>
 </body>
 </html>
+

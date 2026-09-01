@@ -2,6 +2,7 @@ import { access, readFile, stat } from "node:fs/promises";
 
 const dashboardPath = "app/dashboard/AMCDashboardClient.tsx";
 const proxyPath = "proxy.ts";
+const emailReportPath = "public/amc-practice-tests/email-report.js";
 const tests = [
   {
     title: "Pre-AMC 8 Mock Test",
@@ -62,9 +63,10 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const [dashboard, proxy] = await Promise.all([
+const [dashboard, proxy, emailReport] = await Promise.all([
   readFile(dashboardPath, "utf8"),
   readFile(proxyPath, "utf8"),
+  readFile(emailReportPath, "utf8"),
 ]);
 
 assert(
@@ -89,6 +91,29 @@ for (const test of tests) {
   );
   assert(html.includes(test.solution), `${test.title} solution booklet is missing.`);
   assert(html.includes(test.timer), `${test.title} timer is missing.`);
+  assert(
+    html.includes('/amc-practice-tests/email-report.js'),
+    `${test.title} does not load the shared score-report service.`,
+  );
+  assert(html.includes("studentEmail"), `${test.title} has no student email field.`);
+  assert(
+    html.includes("TS_AMC_EMAIL_REPORT"),
+    `${test.title} does not send the shared score report.`,
+  );
+  assert(
+    !html.toLowerCase().includes("restored digital practice test"),
+    `${test.title} contains migration wording.`,
+  );
+
+  for (const [scriptIndex, source] of [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)].map(
+    (match) => match[1],
+  ).entries()) {
+    try {
+      new Function(source);
+    } catch (error) {
+      throw new Error(`${test.title} inline script ${scriptIndex + 1} does not parse: ${error.message}`);
+    }
+  }
 
   if (test.questionImages) {
     assert(
@@ -105,26 +130,83 @@ for (const test of tests) {
   }
 }
 
+assert(
+  emailReport.includes('ownerEmail: "outreach@thrivingscholars.com"'),
+  "Thriving Scholars must receive a copy of every score report.",
+);
+assert(
+  emailReport.includes("Promise.allSettled"),
+  "Student and staff report deliveries must be tracked independently.",
+);
+const deliveries = [];
+const reportWindow = {
+  emailjs: {
+    init() {},
+    send(serviceId, templateId, payload) {
+      deliveries.push({ serviceId, templateId, payload });
+      return Promise.resolve({ status: 200 });
+    },
+  },
+};
+const scoreReporter = new Function(
+  "window",
+  `${emailReport}\nreturn window.TS_AMC_EMAIL_REPORT;`,
+)(reportWindow);
+await scoreReporter.send({
+  name: "Test Student",
+  studentEmail: "student@example.com",
+  score: "20 / 25",
+  incorrect: "2, 7, 14, 19, 24",
+  paper1: "Question analysis",
+  solutionLink: "https://example.com/solutions.pdf",
+  testTitle: "AMC Verification Test",
+});
+assert(deliveries.length === 2, "Score report must be sent to the student and Thriving Scholars.");
+assert(
+  deliveries.some(({ payload }) => payload.to_email === "student@example.com"),
+  "Student score-report delivery is missing.",
+);
+assert(
+  deliveries.some(({ payload }) => payload.to_email === "outreach@thrivingscholars.com"),
+  "Thriving Scholars score-report copy is missing.",
+);
+await access("public/amc-practice-tests/email-report.css");
+
 for (const heading of [
+  "Diagnostic Tests",
+  "Pre-AMC 8 & AMC 10",
+  "AMC 8 Full-Length Practice",
+  "Full Mock Tests",
   "AMC 10 Topical Practice Tests",
   "Number Theory",
   "Algebra",
   "Geometry",
   "Combinatorics & Logic",
-  "AMC 8 Full-Length Practice",
-  "Full Mock Tests",
-  "Diagnostics & Foundations",
-  "Readiness Checks",
 ]) {
   assert(dashboard.includes(heading), `Catalogue heading is missing: ${heading}`);
 }
+
+const diagnosticPosition = dashboard.indexOf('heading: "Diagnostic Tests"');
+const amc8Position = dashboard.indexOf('heading: "AMC 8 Full-Length Practice"');
+const amc10Position = dashboard.indexOf('heading: "AMC 10 Topical Practice Tests"');
+assert(
+  diagnosticPosition < amc8Position && amc8Position < amc10Position,
+  "Catalogue order must be Diagnostic Tests, AMC 8, then AMC 10.",
+);
 
 assert(
   dashboard.includes('<a className={styles.go} href={test.href}>'),
   "Start test controls must be real links to the standalone test pages.",
 );
 
+for (const internalPhrase of ["restored", "original Wix", "preserved exactly"]) {
+  assert(
+    !dashboard.toLowerCase().includes(internalPhrase.toLowerCase()),
+    `Student-facing catalogue contains internal wording: ${internalPhrase}`,
+  );
+}
+
 console.log(
-  `Verified ${tests.length} restored AMC practice tests, solution links, timers, answer keys and protected catalogue routes.`,
+  `Verified ${tests.length} AMC practice tests, email reports, solution links, timers, answer keys and protected catalogue routes.`,
 );
 

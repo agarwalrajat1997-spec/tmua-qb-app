@@ -42,7 +42,7 @@ const PRACTICE_TESTS = [
   {
     title: "AMC 10 Topical Test 1",
     level: "AMC 8 + AMC 10 · Number Theory",
-    detail: "Number theory practice restored from the original Wix digital test.",
+    detail: "Focused number theory practice covering factors, divisibility and sequences.",
     tags: ["25 questions", "75 minutes", "Worked solutions"],
     href: "/amc-practice-tests/tests/amc-10-mock-test-1/index.html",
   },
@@ -70,7 +70,7 @@ const PRACTICE_TESTS = [
   {
     title: "AMC 10 Topical Test 5",
     level: "AMC 8 + AMC 10 · Geometry",
-    detail: "Geometry practice with the original diagrams preserved exactly.",
+    detail: "Geometry practice covering angles, circles and spatial reasoning.",
     tags: ["25 questions", "75 minutes", "Instant score"],
     href: "/amc-practice-tests/tests/amc-10-topical-test-5/index.html",
   },
@@ -84,7 +84,7 @@ const PRACTICE_TESTS = [
   {
     title: "AMC 10 Topical Test 7",
     level: "AMC 8 + AMC 10 · Combinatorics",
-    detail: "Combinatorics and probability practice in a restored digital format.",
+    detail: "Timed combinatorics and probability practice with instant scoring.",
     tags: ["25 questions", "75 minutes", "Instant score"],
     href: "/amc-practice-tests/tests/amc-10-topical-test-7/index.html",
   },
@@ -105,7 +105,7 @@ const PRACTICE_TESTS = [
   {
     title: "AMC 8 Full Mock Test 2",
     level: "AMC 8 · All Topics",
-    detail: "A second complete AMC 8-style paper with original diagrams and solutions.",
+    detail: "A second complete AMC 8-style paper with clear diagrams and worked solutions.",
     tags: ["25 questions", "40 minutes", "Worked solutions"],
     href: "/amc-practice-tests/tests/amc-8-full-mock-test-2/index.html",
   },
@@ -127,6 +127,18 @@ const PRACTICE_TESTS = [
 
 const PRACTICE_TEST_SECTIONS = [
   {
+    heading: "Diagnostic Tests",
+    description:
+      "Start here to identify the right level and the topics to prioritise next.",
+    groups: [{ heading: "Pre-AMC 8 & AMC 10", tests: PRACTICE_TESTS.slice(10, 12) }],
+  },
+  {
+    heading: "AMC 8 Full-Length Practice",
+    description:
+      "Rehearse the complete 25-question AMC 8 format under a 40-minute time limit.",
+    groups: [{ heading: "Full Mock Tests", tests: PRACTICE_TESTS.slice(8, 10) }],
+  },
+  {
     heading: "AMC 10 Topical Practice Tests",
     description:
       "Build one contest skill at a time with eight focused 75-minute papers.",
@@ -136,18 +148,6 @@ const PRACTICE_TEST_SECTIONS = [
       { heading: "Geometry", tests: PRACTICE_TESTS.slice(4, 6) },
       { heading: "Combinatorics & Logic", tests: PRACTICE_TESTS.slice(6, 8) },
     ],
-  },
-  {
-    heading: "AMC 8 Full-Length Practice",
-    description:
-      "Rehearse the complete 25-question AMC 8 format under a 40-minute time limit.",
-    groups: [{ heading: "Full Mock Tests", tests: PRACTICE_TESTS.slice(8, 10) }],
-  },
-  {
-    heading: "Diagnostics & Foundations",
-    description:
-      "Choose the right starting point, uncover gaps and plan what to study next.",
-    groups: [{ heading: "Readiness Checks", tests: PRACTICE_TESTS.slice(10, 12) }],
   },
 ] as const;
 
@@ -294,11 +294,11 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
               </div>
 
               <div className={styles.card}>
-                <div className={styles.cardTitle}>Restored Thriving Scholars practice tests</div>
+                <div className={styles.cardTitle}>Thriving Scholars practice tests</div>
                 <div className={styles.muted}>
                   All eight topical tests, both AMC 8 full mocks and two additional digital
                   diagnostics are now together in one distraction-free exam library. Your score
-                  and the original worked solution booklet appear when you submit.
+                  and the worked solution booklet appear when you submit.
                 </div>
               </div>
 
