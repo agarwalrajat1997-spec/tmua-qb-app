@@ -101,6 +101,10 @@ for (const test of tests) {
     `${test.title} does not send the shared score report.`,
   );
   assert(
+    html.includes("TS_AMC_EMAIL_REPORT?.validEmail(emailInput)"),
+    `${test.title} does not use the shared email validator.`,
+  );
+  assert(
     !html.toLowerCase().includes("restored digital practice test"),
     `${test.title} contains migration wording.`,
   );
@@ -152,6 +156,16 @@ const scoreReporter = new Function(
   "window",
   `${emailReport}\nreturn window.TS_AMC_EMAIL_REPORT;`,
 )(reportWindow);
+assert(
+  scoreReporter.validEmail("rajat.agarwal@thrivingscholars.com"),
+  "The shared validator must accept a valid Thriving Scholars email address.",
+);
+for (const invalidEmail of ["student@", "student example.com", "student@example"]) {
+  assert(
+    !scoreReporter.validEmail(invalidEmail),
+    `The shared validator incorrectly accepts ${invalidEmail}.`,
+  );
+}
 await scoreReporter.send({
   name: "Test Student",
   studentEmail: "student@example.com",
@@ -209,4 +223,3 @@ for (const internalPhrase of ["restored", "original Wix", "preserved exactly"]) 
 console.log(
   `Verified ${tests.length} AMC practice tests, email reports, solution links, timers, answer keys and protected catalogue routes.`,
 );
-

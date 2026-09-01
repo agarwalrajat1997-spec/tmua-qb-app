@@ -888,10 +888,7 @@ body.exam-active {
     return;
   }
 
-  if (
-    !emailInput ||
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput)
-  ) {
+  if (!window.TS_AMC_EMAIL_REPORT?.validEmail(emailInput)) {
     alert("Please enter a valid email address.");
     return;
   }
@@ -1228,4 +1225,3 @@ body.exam-active {
 </script>
 </body>
 </html>
-

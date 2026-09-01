@@ -859,7 +859,7 @@ function startExam() {
     return;
   }
 
-  if (!emailInput || !emailInput.includes("@")) {
+  if (!window.TS_AMC_EMAIL_REPORT?.validEmail(emailInput)) {
     alert("Please enter a valid email address.");
     return;
   }
@@ -1111,4 +1111,3 @@ window.onload = function () {
 
 </body>
 </html>
-
