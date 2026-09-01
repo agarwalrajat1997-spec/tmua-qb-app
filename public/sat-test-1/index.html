@@ -1,0 +1,2164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SAT Diagnostic Test — Full Exam Flow</title>
+
+  <!-- Desmos (for calculator-allowed sections only) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+/* =======================================
+   GLOBAL
+======================================= */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #000;
+}
+.hidden { display: none !important; }
+a { color: #2e53da; }
+
+/* =======================================
+   HEADER
+======================================= */
+.header {
+  background-color: #fafbff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+#timer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  display: none; /* hidden on initial screen */
+}
+.header-buttons { display: flex; align-items: center; gap: 20px; }
+
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius: 999px;
+  background:#e8edff;
+  color:#1e2a6f;
+  font-size:12px;
+  margin-left:6px;
+}
+
+/* Calculator icon */
+#calculator-icon {
+  display: none; /* hidden until exam start / allowed */
+  align-items: center;
+  gap: 6px;
+  color: #000;
+  font-size: 15px;
+  cursor: pointer;
+}
+#calculator-icon i {
+  font-size: 18px;
+}
+#calculator-icon:hover {
+  color: #444;
+}
+
+/* =======================================
+   START SCREEN  ✅ Staffs Prep Branding
+======================================= */
+#start-screen {
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+
+  /* Thriving Scholars (orange/yellow) */
+  border: 2px solid #FEC94F;
+  box-shadow: 0 8px 24px rgba(254, 201, 79, 0.28);
+
+  text-align: left;
+  overflow-y: auto;                /* ✅ allows scrolling inside */
+  scrollbar-width: thin;           /* ✅ nice thin scrollbar (Firefox) */
+  scrollbar-color: #FEC94F #FFF1DF;
+}
+
+/* ✅ Optional: style scrollbar for Chrome/Safari */
+#start-screen::-webkit-scrollbar {
+  width: 8px;
+}
+#start-screen::-webkit-scrollbar-thumb {
+  background-color: #FEC94F;
+  border-radius: 4px;
+}
+#start-screen::-webkit-scrollbar-track {
+  background-color: #FFF1DF;
+}
+
+#start-screen h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  color: #670D04;                  /* deep TS accent */
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#start-screen p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+#start-screen label {
+  font-weight: 600;
+  color: #111;
+}
+
+#start-screen input,
+#start-screen select {
+  padding: 8px 10px;
+  width: 250px;
+  margin-top: 4px;
+  border: 1px solid #f0d6a0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#start-screen button {
+  background: #FEC94F;             /* TS yellow */
+  color: #670D04;                  /* readable on yellow */
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(254, 201, 79, 0.35);
+}
+
+#start-screen button:hover {
+  background: #F5B935;             /* slightly deeper yellow/orange */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(254, 201, 79, 0.45);
+}
+
+
+/* =======================================
+   MAIN CONTAINER (EXAM)
+======================================= */
+.container {
+  display: none;
+  flex-direction: row;
+  height: calc(100vh - 56px - 70px);
+  overflow: hidden;
+}
+.container.active {
+  display: flex;
+}
+
+/* =======================================
+   LEFT PANEL (Passage Area)
+======================================= */
+.left-panel {
+  flex: 1;
+  background-color: white;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   RIGHT PANEL (Question Area)
+======================================= */
+.right-panel {
+  flex: 1;
+  background-color: white;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   Optional: Nicer Scrollbars
+======================================= */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* =======================================
+   QUESTION HEADER
+======================================= */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbff; /* 🔹 updated color */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.mark-review {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  margin-left: 12px;
+  flex-grow: 1;
+}
+.mark-review input[type="checkbox"] { display: none; }
+.bookmark-icon {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mark-review input[type="checkbox"]:checked + .bookmark-icon {
+  color: #cf0000;
+}
+
+/* =======================================
+   OPTIONS
+======================================= */
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.option-label:hover { border-color: #2e53da; }
+.option-label.active { background: #f0f4ff; border-color: #2e53da; }
+.option-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e8f0;
+  color: #2e53da;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.option-label.active .option-circle {
+  background: #2e53da;
+  color: #fff;
+}
+.option-label input[type="radio"] { display: none; }
+
+/* =======================================
+   FOOTER
+======================================= */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+  background-color: #fafbff;
+  height: 70px;
+  position: relative;
+}
+.footer-left { width: 200px; display: flex; align-items: center; justify-content: flex-start; }
+.footer-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.footer-right { display: flex; align-items: center; gap: 10px; }
+.footer-center button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.footer-buttons button {
+  background-color: #2e53da;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.footer-buttons button:disabled {
+  background-color: #bbb;
+  cursor: default;
+}
+.student-response-cell { background-color: #fafafa; font-style: italic; white-space: pre-wrap; }
+
+/* =======================================
+   NAVIGATOR POPUP
+======================================= */
+#navigator-popup {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  z-index: 9999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+#navigator-popup .nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#navigator-popup .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+#navigator-popup .legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 16px 0;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border: 1px solid #999; display: inline-block; }
+.legend-current { background: #2e53da; color: #fff; }
+.legend-review { background: red; }
+.legend-unanswered { background: transparent; }
+#navigator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+#navigator-grid button {
+  border: 1px dashed #2e53da;
+  background: #fff;
+  color: #2e53da;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#navigator-grid button.current { background: #2e53da; color: #fff; }
+#navigator-grid button.answered { border: 1px solid #2e53da; }
+#navigator-grid button.review { border: 1px solid red; color: red; }
+
+/* =======================================
+   CALCULATOR POPUP
+======================================= */
+#calculator-popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+  z-index: 10000;
+  width: 640px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+#calculator-drag-handle {
+  cursor: move;
+  background: #fafbff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+#calculator {
+  width: 100%;
+  height: 420px;
+}
+#grading-overlay {
+  backdrop-filter: blur(3px);
+  color: #222;
+}
+.spinner {
+  border-color: #ddd;
+  border-top-color: #0078ff;
+}
+
+/* =======================================
+   FRQ
+======================================= */
+.grading-output {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+textarea.frq-input {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+/* =======================================
+   BREAK SCREEN (between I-B → II-A)
+======================================= */
+#break-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  flex-direction: column;
+}
+.break-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 24px;
+}
+#break-timer {
+  background: #222;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+#skip-break {
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+}
+#skip-break:hover {
+  background: #ccc;
+}
+
+/* =======================================
+   SECTION TRANSITION MODAL
+======================================= */
+#section-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+#section-modal .content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 420px;
+  text-align: center;
+}
+#section-modal button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* =======================================
+   REPORT
+======================================= */
+#report-container {
+  padding: 30px;
+  max-width: 950px;
+  margin: 20px auto 90px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow-y: auto;
+  height: calc(100vh - 56px - 40px);
+}
+#report-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+#report-container th, #report-container td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+#report-container thead { background: #f0f0f0; }
+/* =============================
+   SCORE WIDGET (AP SCORE GAUGE)
+============================= */
+.score-container {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  margin: 30px auto;
+}
+
+.score-container svg {
+  width: 230px;
+  height: 230px;
+}
+
+.score-container .arc {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.score-container .label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  fill: #555;
+}
+
+.score-container .score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  color: #000;
+}
+/* ===============================
+   ABC BUTTON
+================================= */
+.eliminate-mode-btn {
+  background-color: #ffffff;
+  color: #2836d1;
+  border: 2px solid #2836d1;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.eliminate-mode-btn:hover {
+  background-color: #f3f4ff;
+}
+.eliminate-mode-btn.active {
+  background-color: #2836d1;
+  color: #ffffff;
+  border-color: #2836d1;
+}
+#footer-bar {
+  position: relative;
+}
+/* replace the whole block with this */
+#color-bar-bottom {
+  /* position: static by default */
+  width: 100%;
+  height: 1px;      /* your dash bar height */
+  margin: 0;        /* optional: ensure it's flush */
+}
+
+
+/* ===============================
+   STRIKEOUT BUTTONS (Right-side A–D)
+================================= */
+.strike-toggle {
+  display: none; /* Hidden until ABC mode is active */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2e53da;
+  background: transparent;
+  border: 2px solid #2e53da;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elimination-active .strike-toggle {
+  display: flex;
+}
+
+/* Hover animation (subtle blue tint like SAT) */
+.strike-toggle:hover {
+  background-color: #f0f4ff;
+}
+
+/* Don’t change on press — visual effect only occurs on option */
+.strike-toggle.active {
+  background-color: transparent;
+  color: #2e53da;
+}
+
+/* ===============================
+   STRUCK OPTION STYLE
+================================= */
+.option-label.struck {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+  color: #666;
+  text-decoration: line-through;
+  position: relative;
+  opacity: 0.75;
+}
+
+.option-label.struck::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.option-label.struck .option-circle {
+  background: #e0e0e0;
+  color: #888;
+} 
+
+/* =======================================
+   COLOR DASH BAR (appears after exam start)
+======================================= */
+.color-bar {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #444 0 24px,        /* dark gray dash */
+    transparent 24px 26px,
+    #00AEEF 26px 50px,  /* blue dash */
+    transparent 50px 52px,
+    #FFD500 52px 76px,  /* yellow dash */
+    transparent 76px 78px
+  );
+  background-size: 78px 5px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hidden by default (like header on start screen) */
+.color-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#footer-student-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 520px 1fr; /* wider left panel so image can actually grow */
+  gap: 18px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+/* Center the image within the LEFT panel */
+.q-media-left{
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: flex-start;   /* keep at top; change to center if you want vertical centering */
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 240px 1fr; /* bigger left panel */
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+.q-media-left{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Bigger images + faint boundary */
+.q-img-sm{
+  width: 320px;              /* bigger */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+
+/* Mobile tweak */
+@media (max-width: 640px){
+  .q-media{
+    grid-template-columns: 1fr;  /* stack image above text */
+  }
+  .q-media-left{
+    justify-content: flex-start;
+  }
+  .q-img-sm{
+    width: min(360px, 100%);
+  }
+}
+/* ================================
+   OPTION IMAGES (MCQ choices)
+   Make images smaller + organized
+================================ */
+
+/* If your option HTML uses <div class="opt-img-wrap"><img class="opt-img" ...></div> */
+.opt-img-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center inside option */
+  align-items: center;
+  padding: 6px 0;
+}
+
+.opt-img{
+  width: 220px;                /* ✅ CHANGE THIS to control option image size */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);   /* faint boundary */
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+}
+
+ </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title" id="header-title">SAT Math Test 1</span>
+      <span id="calc-badge" class="badge hidden">Calculator Allowed</span>
+    </div>
+    <div class="header-buttons">
+      <div id="timer">00:00</div>
+      <div id="calculator-icon" onclick="openCalculator()">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Calculator</span>
+      </div>
+    </div>
+  </div>
+
+<div id="start-screen">
+  <h1>Digital SAT Math Test 1</h1>
+  <p>This test will run in 2 math modules continuously:</p>
+  <ul>
+    <li><strong>Module 1:</strong> Math, 22 questions, 35 minutes</li>
+    <li><strong>Module 2:</strong> Math, 22 questions, 35 minutes</li>
+  </ul>
+  <p><em>Once you advance to the next module, you cannot return.</em></p>
+  <p><em>This is a math-only SAT-style diagnostic. The final score shown is a predicted Math score out of 800 based on raw performance.</em></p>
+    <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div>
+        <label>Full Name</label><br>
+        <input type="text" id="student-name">
+      </div>
+      <div>
+        <label>Email (to receive results)</label><br>
+        <input type="email" id="student-email">
+      </div>
+      <div>
+        <label>Exam Session</label><br>
+<select id="test-session">
+  <option value="" selected disabled>Select SAT Session</option>
+  <option value="SAT May 2, 2026">May, 2026</option>
+  <option value="SAT June 6, 2026">June, 2026</option>
+  <option value="SAT August 22, 2026">August, 2026</option>
+  <option value="SAT September 12, 2026">September, 2026</option>
+  <option value="SAT October 3, 2026">October, 2026</option>
+  <option value="SAT November 7, 2026">November, 2026</option>
+  <option value="SAT December 5, 2026">December, 2026</option>
+  <option value="SAT March 6, 2027">March, 2027</option>
+  <option value="SAT May 1, 2027">May, 2027</option>
+  <option value="SAT June 5, 2027">June, 2027</option>
+</select>
+      </div>
+    </div>
+    <button onclick="startExam()">Start Exam</button>
+  </div>
+
+  <div id="color-bar" class="color-bar hidden"></div>
+
+  <!-- Main Exam Container -->
+  <div id="main-container" class="container">
+    <div class="left-panel" id="passage"></div>
+
+    <div class="right-panel">
+      <div>
+        <div class="question-header">
+          <div class="q-number" id="q-number">1</div>
+
+          <label class="mark-review">
+            <input type="checkbox" id="mark-review" onchange="toggleBookmark(this)">
+            <i class="fa-regular fa-bookmark bookmark-icon"></i>
+            Mark for Review
+          </label>
+
+          <!-- ABC toggle -->
+          <button id="eliminateBtn" class="eliminate-mode-btn">𝖠̶𝖡̶𝖢̶</button>
+        </div>
+
+        <div class="question-box" id="question-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="color-bar-bottom" class="color-bar hidden"></div>
+
+  <!-- Footer -->
+  <div class="footer-buttons hidden" id="footer-bar">
+    <div class="footer-left">
+      <span id="footer-student-name" style="font-size: 16px; font-weight: 500; color: #000;"></span>
+    </div>
+
+    <div class="footer-center">
+      <button id="navigator-button" onclick="openNavigator()">Question 1 of 1</button>
+    </div>
+
+    <div class="footer-right">
+      <button id="back-btn" onclick="prevQuestion()">Back</button>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+      <button id="finish-section-btn" onclick="finishCurrentSection()">Finish Section</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div id="navigator-popup">
+    <div class="nav-header">
+      <span id="navigator-section-title">Section</span>
+      <button class="close-btn" onclick="closeNavigator()">×</button>
+    </div>
+    <div class="legend">
+      <span><div class="legend-box legend-current"></div> Current</span>
+      <span><div class="legend-box legend-unanswered"></div> Unanswered</span>
+      <span><div class="legend-box legend-review"></div> For Review</span>
+    </div>
+    <div id="navigator-grid"></div>
+  </div>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup">
+    <div id="calculator-drag-handle">
+      <span>Calculator</span>
+      <button onclick="closeCalculator()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="calculator"></div>
+  </div>
+
+  <!-- Section Transition Modal -->
+  <div id="section-modal">
+    <div class="content">
+      <h2 id="section-modal-title">Section complete</h2>
+      <p id="section-modal-text">The next section will begin now. You cannot return to the previous section.</p>
+      <div style="display:flex; justify-content:center; gap:14px; margin-top:18px;">
+        <button onclick="goToNextSection()" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Start Next Section
+        </button>
+        <button onclick="closeSectionModal()" style="background:#ccc; color:#000; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-container" class="hidden"></div>
+
+  <script>
+/***********************
+ * DATA: Sections
+ ***********************/
+const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
+
+const sections = [
+  {
+    id: "MATH1",
+    title: "Math Module 1",
+    subtitle: "22 Questions",
+    durationSec: 35 * 60,
+    calculatorAllowed: true,
+    items: [
+      {
+        type: "MC",
+        number: "1",
+        passage: `<p>\\((x+7)\\) is a factor of the quadratic function \\(y=f(x)\\), and \\(x=c\\) is a positive zero of the function.</p><p>The minimum of the function is \\(\\left(\\frac{63}{8}, k\\right)\\).</p>`,
+        prompt: `<p>What is the value of \\(c\\)?</p>`,
+        options: [
+          "\\(14\\)",
+          "\\(\\frac{91}{8}\\)",
+          "\\(\\frac{91}{4}\\)",
+          "\\(\\frac{63}{4}\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "2",
+        passage: `<p>For two acute angles, \\(\\angle A\\) and \\(\\angle B\\), \\(\\cos A = \\sin B\\).</p><p>The measures, in degrees, of \\(\\angle A\\) and \\(\\angle B\\) are \\(13x + 10\\) and \\(48 + 3x\\), respectively.</p>`,
+        prompt: `<p>What is the value of \\(x\\)?</p>`,
+        options: [
+          "\\(1\\)",
+          "\\(2\\)",
+          "\\(3\\)",
+          "\\(4\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "3",
+        passage: `<p>A baseball coach charges each athlete \\$150 for the first month and \\$95 for each additional month.</p><p>Let \\(R(m)\\) be the total revenue, in dollars, for \\(m\\) months and \\(n\\) athletes, where \\(m\\) and \\(n\\) are positive integers.</p>`,
+        prompt: `<p>Which function correctly represents \\(R(m)\\)?</p>`,
+        options: [
+          "\\(R(m)=95mn+55\\)",
+          "\\(R(m)=95mn+150\\)",
+          "\\(R(m)=95mn+55n\\)",
+          "\\(R(m)=95m+150n\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "4",
+        passage: `<p>In the system below, \\(p\\) is a constant, and the graphs intersect at exactly one point \\((x,y)\\) in the \\(xy\\)-plane.</p><p>\\[y=-3x^2-58\\]</p><p>\\[y=px-46\\]</p>`,
+        prompt: `<p>Which of the following could be the value of \\(x\\)?</p>`,
+        options: [
+          "\\(-2\\)",
+          "\\(-4\\)",
+          "\\(12\\)",
+          "\\(16\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "5",
+        passage: `<p>\\(f(x)=-7x+b\\)</p><p>The point \\((-4,0)\\) lies on the graph of \\(f(x)-20\\).</p>`,
+        prompt: `<p>Which of the following gives the equation for \\(f(x)+20\\)?</p>`,
+        options: [
+          "\\(f(x)=-7x-28\\)",
+          "\\(f(x)=-7x-8\\)",
+          "\\(f(x)=-7x+8\\)",
+          "\\(f(x)=-7x+12\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "6",
+        passage: `<p>The positive number \\(a\\) is 480% of the number \\(b\\), and \\(a\\) is 70% of the number \\(c\\).</p><p>If \\(c\\) is \\(p\\)% of \\(b\\), then \\(p\\) is a positive number.</p>`,
+        prompt: `<p>Which of the following is closest to the value of \\(p\\)?</p>`,
+        options: [
+          "\\(267\\)",
+          "\\(336\\)",
+          "\\(550\\)",
+          "\\(685\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "7",
+        passage: `<p>\\(f(x)=a^x-b\\)</p><p>The exponential function passes through the points \\((c,8)\\) and \\((2c,350)\\).</p>`,
+        prompt: `<p>What is a possible value of \\(b\\)?</p>`,
+        options: [
+          "\\(9\\)",
+          "\\(10\\)",
+          "\\(11\\)",
+          "\\(19\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "8",
+        passage: `<table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Cylinder</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Volume</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Surface Area</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border:1px solid #ccc; padding:8px;">A</td>
+              <td style="border:1px solid #ccc; padding:8px;">\\(1{,}296\\pi\\)</td>
+              <td style="border:1px solid #ccc; padding:8px;">\\(k\\pi\\)</td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #ccc; padding:8px;">B</td>
+              <td style="border:1px solid #ccc; padding:8px;">\\(162{,}000\\pi\\)</td>
+              <td style="border:1px solid #ccc; padding:8px;">\\(j\\pi\\)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>If the radius of cylinder A is 9 cm, use the formulas below.</p>
+        <p>Volume \\(=\\pi r^2 h\\)</p>
+        <p>Surface area \\(=2\\pi r^2 + 2\\pi rh\\)</p>`,
+        prompt: `<p>What is the value of \\(j-k\\)?</p>`,
+        options: [
+          "\\(10{,}350\\)",
+          "\\(10{,}800\\)",
+          "\\(11{,}250\\)",
+          "\\(11{,}700\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "9",
+        passage: `<p>For the function \\(f\\), every increase of \\(\\tfrac{1}{2}\\) in the value of \\(x\\) multiplies the value of \\(f(x)\\) by a constant factor \\(c\\).</p>`,
+        prompt: `<p>Which form of \\(f\\) displays the value of \\(c\\) as the base or coefficient?</p>`,
+        options: [
+          "\\(f(x)=56(2)^{6x}\\)",
+          "\\(f(x)=56(8)^{2x}\\)",
+          "\\(f(x)=56(64)^x\\)",
+          "\\(f(x)=56(4{,}096)^{\\tfrac{x}{2}}\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "10",
+        passage: `<p>The quadratic function \\(ax^2 + 200x + c\\) has at least one real solution.</p>`,
+        prompt: `<p>What is the greatest possible value of \\(ac\\)?</p>`,
+        options: [
+          "\\(5{,}000\\)",
+          "\\(8{,}000\\)",
+          "\\(10{,}000\\)",
+          "\\(20{,}000\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "11",
+        passage: `<p>A polygon has exactly 97 sides.</p><p>The measure of each of the 97 interior angles is \\(\\left(180p\\right)^\\circ\\).</p>`,
+        prompt: `<p>What is the value of \\(p\\)?</p>`,
+        options: [
+          "\\(\\frac{94}{97}\\)",
+          "\\(\\frac{95}{97}\\)",
+          "\\(\\frac{96}{97}\\)",
+          "\\(\\frac{97}{95}\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "12",
+        passage: `<p>A certain town has an area of 5.48 square miles.</p><p>\\(1\\) mile \\(= 1{,}760\\) yards.</p>`,
+        prompt: `<p>Which of the following is closest to the area, in square yards, of this town?</p>`,
+        options: [
+          "\\(552\\)",
+          "\\(964\\)",
+          "\\(9{,}645\\)",
+          "\\(16{,}974{,}848\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "13",
+        passage: `<p>One equation in a system of linear equations is given below.</p><p>\\[7x = 105y - 133\\]</p><p>The system has no solution.</p>`,
+        prompt: `<p>Which equation could be the second equation in this system?</p>`,
+        options: [
+          "\\(x = 15y\\)",
+          "\\(\\frac{1}{7}x = 15y\\)",
+          "\\(x = 15y - 19\\)",
+          "\\(\\frac{1}{7}x = 15y - 19\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "14",
+        passage: `<p>In triangle \\(ABC\\), the sum of the measures of angle \\(A\\) and angle \\(B\\) is 90 degrees.</p><p>The value of \\(\\sin(A)\\) is \\(\\frac{2\\sqrt{7}}{8}\\).</p>`,
+        prompt: `<p>What is the value of \\(\\cos(B)\\)?</p>`,
+        options: [
+          "\\(\\frac{2\\sqrt{7}}{8}\\)",
+          "\\(\\frac{\\sqrt{7}}{8}\\)",
+          "\\(\\frac{\\sqrt{7}}{4}\\)",
+          "\\(\\frac{1}{2}\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "15",
+        passage: `<p>\\[25\\lvert x - 4 \\rvert = k\\]</p><p>The equation has only one solution.</p>`,
+        prompt: `<p>What is the value of \\(\\frac{k}{25}\\)?</p>`,
+        options: [
+          "\\(-5\\) only",
+          "\\(5\\) only",
+          "\\(5\\) or \\(-5\\)",
+          "\\(0\\)"
+        ],
+        correctIndex: "D"
+      },
+     // REPLACE Q16 WITH THIS
+{
+  type: "MC",
+  number: "16",
+  passage: `<p>\\(92x - 1{,}789 = kx - 1{,}790\\)</p><p>In the equation above, \\(k\\) is a positive integer constant greater than 91.</p>`,
+  prompt: `<p>If the equation has exactly one solution, what is the least possible value of \\(k\\)?</p>`,
+  options: [
+    "\\(92\\)",
+    "\\(93\\)",
+    "\\(94\\)",
+    "\\(183\\)"
+  ],
+  correctIndex: "B"
+},
+      {
+        type: "MC",
+        number: "17",
+        passage: `<p>In the \\(xy\\)-plane, the graph of the equation below is a circle.</p><p>\\[(x + 7)^2 + (y - 11)^2 = 25\\]</p>`,
+        prompt: `<p>Which point lies on this circle?</p>`,
+        options: [
+          "\\((-7, 11)\\)",
+          "\\((11, -7)\\)",
+          "\\((-7, 15)\\)",
+          "\\((-2, 11)\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "18",
+        passage: `<p>The area of a triangle is equal to \\(x^2\\) square inches.</p><p>The base of the triangle is \\(5 + 2x\\) inches, and the height is \\(x - 2\\) inches.</p>`,
+        prompt: `<p>What is the value of \\(x\\)?</p>`,
+        options: [
+          "\\(2.5\\)",
+          "\\(2.7\\)",
+          "\\(5\\)",
+          "\\(10\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "19",
+        passage: `<p>A circle in the \\(xy\\)-plane has center \\((3,-7)\\) and radius 12.</p><p>An equation of the circle is \\(x^2 + y^2 + ax + by + c = 0\\), where \\(a\\), \\(b\\), and \\(c\\) are constants.</p>`,
+        prompt: `<p>What is the value of \\(c\\)?</p>`,
+        options: [
+          "\\(-170\\)",
+          "\\(-86\\)",
+          "\\(86\\)",
+          "\\(170\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "20",
+        passage: `<p>Sphere A has radius \\(7x\\), and sphere B has radius \\(91x\\).</p>`,
+        prompt: `<p>The volume of sphere B is how many times the volume of sphere A?</p>`,
+        options: [
+          "\\(169\\)",
+          "\\(507\\)",
+          "\\(2{,}197\\)",
+          "\\(8{,}281\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "21",
+        passage: `<p>One gallon of resin costs \\$79 and covers 48 square feet of countertop.</p><p>The countertops in a room have total surface area \\(k\\) square feet, and the resin must cover the countertops twice.</p>`,
+        prompt: `<p>Which equation represents the cost \\(c\\), in dollars, of the resin needed?</p>`,
+        options: [
+          "\\(c = \\dfrac{48k}{79}\\)",
+          "\\(c = \\dfrac{96k}{79}\\)",
+          "\\(c = 79\\left(\\dfrac{k}{24}\\right)\\)",
+          "\\(c = 79\\left(\\dfrac{k}{96}\\right)\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "22",
+        passage: `<p>Consider the system below.</p><p>\\[\\begin{aligned}10x + 8y &= 15 \\\\ 25x + 20y &= 37.5\\end{aligned}\\]</p>`,
+        prompt: `<p>For each real number \\(r\\), which point lies on the graph of each equation?</p>`,
+        options: [
+          "\\((r,\\; -\\tfrac{4r}{5} + \\tfrac{15}{8})\\)",
+          "\\((r,\\; \\tfrac{r}{5} + \\tfrac{4}{5})\\)",
+          "\\(( -\\tfrac{4r}{5} + \\tfrac{3}{2},\\; r )\\)",
+          "\\(( \\tfrac{2r}{5} + 10,\\; -\\tfrac{2r}{5} + 25 )\\)"
+        ],
+        correctIndex: "C"
+      }
+    ]
+  },
+  {
+    id: "MATH2",
+    title: "Math Module 2",
+    subtitle: "22 Questions",
+    durationSec: 35 * 60,
+    calculatorAllowed: true,
+    items: [
+      {
+        type: "MC",
+        number: "23",
+        passage: `<p>A researcher selected 2 random samples of employees in a large company to estimate the percentage of employees that planned to vote in favor of a new division.</p><ul><li>First sample estimate: 68%</li><li>Margin of error: 9.7%</li><li>Second sample estimate: 84%</li><li>Margin of error: 6.7%</li></ul><p>Assume the margins of error were calculated in the same way.</p>`,
+        prompt: `<p>Which of the following best explains why the second sample obtained a smaller margin of error than the first sample?</p>`,
+        options: [
+          "The first sample contained fewer employees than the second sample.",
+          "The first sample contained more employees than the second sample.",
+          "The first sample contained a lower percentage of employees that planned to vote in favor of a new division.",
+          "The first sample contained a higher percentage of employees that planned to vote in favor of a new division."
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "24",
+        passage: `<p>The function \\(f\\) is defined by \\(f(x) = a^x + b\\), where \\(a\\) and \\(b\\) are constants.</p><p>In the \\(xy\\)-plane, the graph of \\(y=f(x)\\) has an \\(x\\)-intercept at \\((3,0)\\) and a \\(y\\)-intercept at \\((0,-342)\\).</p>`,
+        prompt: `<p>What is the value of \\(a+b\\)?</p>`,
+        options: [
+          "\\(-343\\)",
+          "\\(-336\\)",
+          "\\(-49\\)",
+          "\\(336\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "25",
+        passage: `<p>684 is \\(p\\%\\) greater than 9.</p>`,
+        prompt: `<p>What is the value of \\(p\\)?</p>`,
+        options: [
+          "\\(750\\)",
+          "\\(7{,}500\\)",
+          "\\(75\\)",
+          "\\(760\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "26",
+        passage: `<p>Two numbers \\(a\\) and \\(b\\) are each greater than zero, and the fifth root of \\(a\\) is equal to the cube root of \\(b\\).</p>`,
+        prompt: `<p>For what value of \\(x\\) is \\(a^{8x-4} = b\\)?</p>`,
+        options: [
+          "\\(\\frac{3}{5}\\)",
+          "\\(\\frac{23}{40}\\)",
+          "\\(\\frac{5}{8}\\)",
+          "\\(\\frac{23}{8}\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "27",
+        passage: `<p>Consider the system below.</p><p>\\[(j-k)-16(m+l)=689\\]</p><p>\\[(j-k)+12(m+l)=1235\\]</p>`,
+        prompt: `<p>What is the value of \\(7(j-k)\\)?</p>`,
+        options: [
+          "\\(6{,}789\\)",
+          "\\(7{,}000\\)",
+          "\\(7{,}007\\)",
+          "\\(7{,}070\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "28",
+        passage: `<p>A model initially estimates that there are 24,000 bacteria on a petri dish.</p><p>Fourteen days later, the model estimates that there are 96,000 bacteria.</p><p>Assuming exponential growth, \\(B=a(2)^{xd}\\) gives the estimated number of bacteria \\(d\\) days after the initial measurement.</p>`,
+        prompt: `<p>What is the value of \\(x\\)?</p>`,
+        options: [
+          "\\(\\frac{1}{14}\\)",
+          "\\(\\frac{1}{7}\\)",
+          "\\(7\\)",
+          "\\(14\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "29",
+        passage: `<p>A 30% chlorine solution is added to 12 liters of a 10% chlorine solution.</p><p>The final mixture is a 15% chlorine solution.</p>`,
+        prompt: `<p>How many liters of the 30% solution must be added?</p>`,
+        options: [
+          "\\(2\\)",
+          "\\(4\\)",
+          "\\(6\\)",
+          "\\(8\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "30",
+        passage: `<p>In the \\(xy\\)-plane, point \\(a\\) is \\((1,0)\\), point \\(b\\) is \\((0,0)\\), and point \\(c\\) is \\((-1,0)\\).</p>`,
+        prompt: `<p>Which of the following gives a possible angle measure, in radians, of \\(\\angle abc\\)?</p>`,
+        options: [
+          "\\(\\frac{456\\pi}{6}\\)",
+          "\\(\\frac{459\\pi}{6}\\)",
+          "\\(\\frac{462\\pi}{6}\\)",
+          "\\(\\frac{468\\pi}{6}\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "31",
+        passage: `<p>Two data sets \\(A\\) and \\(B\\) have 56 values in total.</p><ul><li>The average of all 56 values is 193.</li><li>Data set \\(A\\) has 32 values with average 208.</li></ul>`,
+        prompt: `<p>What is the average of data set \\(B\\)?</p>`,
+        options: [
+          "\\(163\\)",
+          "\\(168\\)",
+          "\\(173\\)",
+          "\\(178\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "32",
+        passage: `<p>Lines \\(k\\) and \\(l\\) are perpendicular.</p><p>The points \\((4,m)\\) and \\((9,m+3)\\) lie on line \\(k\\), and lines \\(k\\) and \\(l\\) intersect at \\((9,m+3)\\).</p>`,
+        prompt: `<p>Which of the following can lie on line \\(l\\)?</p>`,
+        options: [
+          "\\((m-6,-4)\\)",
+          "\\((m+9,24)\\)",
+          "\\((21,m-17)\\)",
+          "\\((24,m+12)\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "33",
+        passage: `<p>Data set A consists of 37 different values with:</p><ul><li>minimum = 230</li><li>maximum = 278</li><li>mean = 244</li><li>standard deviation = 9</li></ul><p>The values 230 and 278 are removed to create data set B.</p>`,
+        prompt: `<p>Which statement is true?</p>`,
+        options: [
+          "Both the mean and standard deviation of data set B are less than those in data set A.",
+          "Both the mean and standard deviation of data set B are greater than those in data set A.",
+          "The standard deviation of data set B is less than the standard deviation in data set A, but the mean of both data sets is the same.",
+          "The standard deviation of data set B is greater than the standard deviation in data set A, but the mean of both data sets is the same."
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "34",
+        passage: `<p>If \\(a&gt;0\\), \\(x^2+y^2=a\\), and \\(xy=a-10\\).</p>`,
+        prompt: `<p>What is \\((x+y)^2\\) in terms of \\(a\\)?</p>`,
+        options: [
+          "\\(a-20\\)",
+          "\\(2a-10\\)",
+          "\\(2a-20\\)",
+          "\\(3a-20\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "35",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/fdaf950f-fcec-41b9-9ef1-ccac4dafdb77.png" alt="Rectangle diagram"></div><p>Rectangle A has width 50 feet and length 45 feet and is located inside rectangle B.</p><p>A uniform distance \\(x\\), in feet, separates the sides of rectangle A from rectangle B.</p><p>The area of rectangle B is 2,646 square feet.</p>`,
+        prompt: `<p>What is the value of \\(x\\)?</p>`,
+        options: [
+          "\\(1\\)",
+          "\\(2\\)",
+          "\\(3\\)",
+          "\\(4\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "36",
+        passage: `<p>\\(f(x)=200(b)^x\\)</p><p>When \\(x\\) increases by 1, \\(f(x)\\) increases by \\(c\\%\\).</p>`,
+        prompt: `<p>Which of the following expresses \\(c\\) in terms of \\(b\\)?</p>`,
+        options: [
+          "\\(c=\\frac{200b}{100}\\)",
+          "\\(c=\\frac{2b}{100}\\)",
+          "\\(c=(b+1)100\\)",
+          "\\(c=(b-1)100\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "37",
+        passage: `<p>A 34-pound dog eats two types of canned food: chicken and beef.</p><ul><li>Chicken recommendation: 1.25 cans per 16 pounds per day</li><li>Beef recommendation: 0.85 cans per 23 pounds per day</li></ul><p>Let \\(c\\) be the number of cans of chicken food and \\(b\\) be the number of cans of beef food the dog eats in a day.</p>`,
+        prompt: `<p>Which equation describes all possible values of \\(c\\) and \\(b\\)?</p>`,
+        options: [
+          "\\(\\frac{1.25}{16}c+\\frac{0.85}{23}b=34\\)",
+          "\\(\\frac{16}{1.25}c+\\frac{23}{0.85}b=34\\)",
+          "\\(\\frac{1.25}{16}b+\\frac{0.85}{23}c=34\\)",
+          "\\(\\frac{16}{1.25}b+\\frac{23}{0.85}c=34\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "38",
+        passage: `<p>A quadratic function models the height, in feet, of an object above the ground in terms of time, in seconds, after the object is launched.</p><p>The object launches from the ground and reaches its maximum height of 576 feet 12 seconds after launch.</p>`,
+        prompt: `<p>Based on the model, what is the height of the object 16 seconds after launch?</p>`,
+        options: [
+          "\\(384\\)",
+          "\\(432\\)",
+          "\\(480\\)",
+          "\\(512\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "39",
+        passage: `<p>A small business owner budgets \\$3,600 to purchase timber each year.</p><ul><li>At least 345 slats must be purchased.</li><li>Pine pulpwood costs \\$7.25 per slat.</li><li>Pine sawtimber costs \\$24.75 per slat.</li></ul>`,
+        prompt: `<p>What is the maximum number of pine sawtimber slats the owner can purchase and still stay within budget while maintaining the discount?</p>`,
+        options: [
+          "\\(60\\)",
+          "\\(61\\)",
+          "\\(62\\)",
+          "\\(63\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "40",
+        passage: `<p>A 180-gram metal alloy is 50% aluminum.</p><p>It is made from:</p><ul><li>a first alloy that is 30% aluminum</li><li>a second alloy that is 60% aluminum</li></ul>`,
+        prompt: `<p>What is the mass, in grams, of the second alloy?</p>`,
+        options: [
+          "\\(60\\)",
+          "\\(90\\)",
+          "\\(120\\)",
+          "\\(150\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "41",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/56a00bcf-ce49-4dd6-b5f4-9c8cbd55539f.png" alt="Right triangle diagram"></div><p>In the figure, the hypotenuse is 64.</p><p><em>Note: Figure not drawn to scale.</em></p>`,
+        prompt: `<p>What is \\(\\cos(x^\\circ)\\)?</p>`,
+        options: [
+          "\\(\\frac{\\sqrt{3}}{2}\\)",
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{2\\sqrt{3}}{3}\\)",
+          "\\(2\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "42",
+        passage: `<table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Position</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Frequency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Point guard</td><td style="border:1px solid #ccc; padding:8px;">26</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Shooting guard</td><td style="border:1px solid #ccc; padding:8px;">16</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Small forward</td><td style="border:1px solid #ccc; padding:8px;">11</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Power forward or center</td><td style="border:1px solid #ccc; padding:8px;">35</td></tr>
+          </tbody>
+        </table>
+        <p>If one of the 88 players is selected at random, the probability of selecting a player who is categorized as a power forward, given that the player is not categorized as a shooting guard, is \\(\\frac{3}{12}\\).</p>`,
+        prompt: `<p>How many of these players are categorized as a center?</p>`,
+        options: [
+          "\\(15\\)",
+          "\\(16\\)",
+          "\\(17\\)",
+          "\\(18\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "43",
+        passage: `<p>A quadratic function models the height, in feet, of an object above the ground in terms of time, in seconds, after the object is launched off an elevated surface.</p><ul><li>At 9 seconds, the object is 294 feet above the ground.</li><li>At 13 seconds, the object is 310 feet above the ground.</li><li>At launch, the object is 24 feet above the ground.</li></ul>`,
+        prompt: `<p>What is the height, in feet, of the object 18 seconds after it is launched?</p>`,
+        options: [
+          "\\(96\\)",
+          "\\(192\\)",
+          "\\(222\\)",
+          "\\(240\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "44",
+        passage: `<p>A rectangular pyramid has a square base with area \\(324\\) square meters.</p><p>The volume of the pyramid is \\(4{,}320\\) cubic meters.</p>`,
+        prompt: `<p>What is the surface area, in square meters, of one of the triangular faces?</p>`,
+        options: [
+          "\\(324\\)",
+          "\\(360\\)",
+          "\\(369\\)",
+          "\\(378\\)"
+        ],
+        correctIndex: "C"
+      }
+    ]
+  }
+];/***********************
+ * STATE
+ ***********************/
+let currentSectionIndex = 0;
+let currentIndex = 0;
+let reviewFlags = [];
+let studentAnswers = {};
+let timer = null;
+let seconds = 0;
+let desmosCalculator = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let examStarted = false;
+let eliminateMode = false;
+let eliminateState = {};
+let emailSent = false;
+
+/***********************
+ * START EXAM
+ ***********************/
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("student-email").value.trim();
+  const sessionInput = document.getElementById("test-session").value;
+
+  if (!nameInput || !emailInput) {
+    alert("Please enter your name and email to begin.");
+    return;
+  }
+
+  if (!sections.length || sections.some(sec => !Array.isArray(sec.items) || sec.items.length === 0)) {
+    alert("Please paste your Reading and Math MCQ arrays into the code before starting the test.");
+    return;
+  }
+
+  studentName = nameInput;
+  studentEmail = emailInput;
+  testSession = sessionInput;
+  examStarted = true;
+
+  const header = document.querySelector(".header");
+  const footerBar = document.getElementById("footer-bar");
+  const mainContainer = document.getElementById("main-container");
+  const startScreen = document.getElementById("start-screen");
+  const timerEl = document.getElementById("timer");
+  const colorBarTop = document.getElementById("color-bar");
+  const colorBarBottom = document.getElementById("color-bar-bottom");
+
+  document.getElementById("footer-student-name").textContent = studentName;
+
+  if (startScreen) startScreen.classList.add("hidden");
+
+  if (header) header.classList.remove("hidden");
+  if (footerBar) footerBar.classList.remove("hidden");
+  if (colorBarTop) colorBarTop.classList.remove("hidden");
+  if (colorBarBottom) colorBarBottom.classList.remove("hidden");
+  if (mainContainer) mainContainer.classList.add("active");
+  if (timerEl) timerEl.style.display = "block";
+
+  startSection(0);
+}
+
+/***********************
+ * SECTION LOGIC
+ ***********************/
+function startSection(secIdx) {
+  currentSectionIndex = secIdx;
+  currentIndex = 0;
+
+  const sec = sections[secIdx];
+  reviewFlags = new Array(sec.items.length).fill(false);
+
+  document.getElementById("header-title").textContent = sec.title;
+  document.getElementById("calc-badge").classList.toggle("hidden", !sec.calculatorAllowed);
+
+  if (sec.calculatorAllowed) {
+    document.getElementById("calculator-icon").style.display = "flex";
+  } else {
+    document.getElementById("calculator-icon").style.display = "none";
+    closeCalculator();
+  }
+
+  const finishBtn = document.getElementById("finish-section-btn");
+  finishBtn.textContent = (secIdx === sections.length - 1) ? "Finish Exam" : "Finish Section";
+
+  buildNavigator();
+  loadQuestion(0);
+
+  if (timer) clearInterval(timer);
+  seconds = sec.durationSec;
+  updateTimerDisplay();
+
+  timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay();
+    if (seconds < 0) {
+      clearInterval(timer);
+      finishCurrentSection();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(Math.max(0, seconds) / 60);
+  const sec = Math.max(0, seconds) % 60;
+  document.getElementById("timer").textContent =
+    `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/***********************
+ * QUESTION RENDERING
+ ***********************/
+document.getElementById("eliminateBtn").addEventListener("click", function () {
+  eliminateMode = !eliminateMode;
+  this.classList.toggle("active", eliminateMode);
+  const rightPanel = document.querySelector(".right-panel");
+  rightPanel.classList.toggle("elimination-active", eliminateMode);
+});
+
+function loadQuestion(i) {
+  const section = sections[currentSectionIndex];
+  const item = section.items[i];
+  currentIndex = i;
+
+  document.getElementById("passage").innerHTML = item.passage || "";
+  const box = document.getElementById("question-box");
+  box.innerHTML = "";
+  document.getElementById("q-number").textContent = i + 1;
+  document.getElementById("mark-review").checked = reviewFlags[i];
+
+  const bookmarkIcon = document.querySelector(".bookmark-icon");
+  const markBox = document.getElementById("mark-review");
+  if (markBox.checked) {
+    bookmarkIcon.classList.remove("fa-regular");
+    bookmarkIcon.classList.add("fa-solid");
+    bookmarkIcon.style.color = "#CF0000";
+  } else {
+    bookmarkIcon.classList.remove("fa-solid");
+    bookmarkIcon.classList.add("fa-regular");
+    bookmarkIcon.style.color = "#000";
+  }
+
+  renderMC(item, box, section, i);
+
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+
+  updateNavigator();
+  updateNavButtons();
+  updateNavigatorButton();
+}
+
+function renderMC(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name];
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const optionsContainer = document.createElement("div");
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  item.options.forEach((opt, k) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letters[k]);
+    if (saved === k) label.classList.add("active");
+
+    const circle = document.createElement("div");
+    circle.className = "option-circle";
+    circle.textContent = letters[k];
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = k;
+    if (saved === k) input.checked = true;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "option-text";
+    textSpan.innerHTML = opt;
+
+    const strikeBtn = document.createElement("button");
+    strikeBtn.className = "strike-toggle";
+    strikeBtn.textContent = "⊘";
+    strikeBtn.title = "Eliminate Option";
+
+    label.addEventListener("click", (event) => {
+      if (event.target.classList.contains("strike-toggle")) return;
+      optionsContainer.querySelectorAll(".option-label").forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      input.checked = true;
+      studentAnswers[name] = k;
+      updateNavigator();
+    });
+
+    strikeBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const sec = sections[currentSectionIndex];
+      const qKey = `s${sec.id}-q${idx}`;
+      if (!eliminateState[qKey]) eliminateState[qKey] = {};
+
+      const now = !label.classList.contains("struck");
+      label.classList.toggle("struck", now);
+      strikeBtn.classList.toggle("active", now);
+      eliminateState[qKey][letters[k]] = now;
+    });
+
+    label.appendChild(circle);
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    label.appendChild(strikeBtn);
+    optionsContainer.appendChild(label);
+  });
+
+  promptHTML.appendChild(optionsContainer);
+  container.appendChild(promptHTML);
+
+  const sec = sections[currentSectionIndex];
+  const qKey = `s${sec.id}-q${idx}`;
+  const state = eliminateState[qKey] || {};
+  Object.keys(state).forEach(letter => {
+    const opt = optionsContainer.querySelector(`.option-label[data-choice="${letter}"]`);
+    if (opt && state[letter]) {
+      opt.classList.add("struck");
+      const btn = opt.querySelector(".strike-toggle");
+      btn.classList.add("active");
+    }
+  });
+}
+
+/***********************
+ * NAVIGATION WITHIN SECTION
+ ***********************/
+function prevQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex > 0) loadQuestion(currentIndex - 1);
+}
+
+function nextQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex < section.items.length - 1) loadQuestion(currentIndex + 1);
+}
+
+function updateNavButtons() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("back-btn").disabled = currentIndex === 0;
+  document.getElementById("next-btn").disabled = currentIndex === section.items.length - 1;
+}
+
+function updateNavigatorButton() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-button").textContent = `Question ${currentIndex + 1} of ${section.items.length}`;
+}
+
+function openNavigator() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-section-title").textContent = section.title;
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function buildNavigator() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  const section = sections[currentSectionIndex];
+
+  section.items.forEach((_, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = idx + 1;
+    btn.onclick = () => {
+      loadQuestion(idx);
+      closeNavigator();
+    };
+    grid.appendChild(btn);
+  });
+
+  updateNavigator();
+}
+
+function updateNavigator() {
+  const section = sections[currentSectionIndex];
+  const buttons = document.querySelectorAll("#navigator-grid button");
+
+  buttons.forEach((btn, idx) => {
+    const baseKey = `s${section.id}-q${idx}`;
+    const answered = studentAnswers[baseKey] !== undefined;
+    btn.classList.toggle("current", idx === currentIndex);
+    btn.classList.toggle("answered", answered && idx !== currentIndex);
+    btn.classList.toggle("review", reviewFlags[idx]);
+  });
+}
+
+function toggleBookmark(checkbox) {
+  const icon = checkbox.nextElementSibling;
+  icon.classList.toggle("fa-regular", !checkbox.checked);
+  icon.classList.toggle("fa-solid", checkbox.checked);
+  icon.style.color = checkbox.checked ? "#CF0000" : "#000";
+  reviewFlags[currentIndex] = checkbox.checked;
+  updateNavigator();
+}
+
+/***********************
+ * FINISH SECTION & NEXT
+ ***********************/
+function finishCurrentSection() {
+  if (timer) clearInterval(timer);
+
+  if (currentSectionIndex < sections.length - 1) {
+    document.getElementById("section-modal-title").textContent = "Section complete";
+    document.getElementById("section-modal-text").textContent =
+      "The next section will begin now. You cannot return to this section.";
+    document.getElementById("section-modal").style.display = "flex";
+  } else {
+    showFinalReport();
+  }
+}
+
+function closeSectionModal() {
+  document.getElementById("section-modal").style.display = "none";
+
+  if (!timer) {
+    timer = setInterval(() => {
+      seconds--;
+      updateTimerDisplay();
+      if (seconds < 0) {
+        clearInterval(timer);
+        finishCurrentSection();
+      }
+    }, 1000);
+  }
+}
+
+function goToNextSection() {
+  document.getElementById("section-modal").style.display = "none";
+  const nextIdx = currentSectionIndex + 1;
+  if (nextIdx < sections.length) {
+    startSection(nextIdx);
+  }
+}
+
+/***********************
+ * CALCULATOR POPUP
+ ***********************/
+function openCalculator() {
+  const section = sections[currentSectionIndex];
+  if (!section || !section.calculatorAllowed) return;
+
+  document.getElementById("calculator-popup").style.display = "block";
+
+  if (!desmosCalculator) {
+    const elt = document.getElementById("calculator");
+    desmosCalculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      keypad: true,
+      settingsMenu: false,
+      zoomButtons: true,
+      expressionsTopbar: false,
+      border: false
+    });
+  }
+}
+
+function closeCalculator() {
+  document.getElementById("calculator-popup").style.display = "none";
+}
+
+(function makeDraggable() {
+  const popup = document.getElementById("calculator-popup");
+  const handle = document.getElementById("calculator-drag-handle");
+  let offsetX = 0, offsetY = 0, isDown = false;
+
+  handle.addEventListener("mousedown", (e) => {
+    isDown = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDown = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    popup.style.left = `${e.clientX - offsetX}px`;
+    popup.style.top = `${e.clientY - offsetY}px`;
+  });
+})();
+
+/***********************
+ * SCORE HELPERS
+ ***********************/
+function roundToNearest10(n) {
+  return Math.round(n / 10) * 10;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function predictSectionScore(correct, total) {
+  if (!total) return 200;
+  const rawScore = 200 + (correct / total) * 600;
+  return clamp(roundToNearest10(rawScore), 200, 800);
+}
+
+/***********************
+ * FINAL REPORT
+ ***********************/
+function showFinalReport() {
+  if (timer) clearInterval(timer);
+
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("report-container").classList.remove("hidden");
+  document.getElementById("header-title").textContent = "SAT Diagnostic Test — Score Report";
+  document.getElementById("calc-badge").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  const letters = ["A","B","C","D","E","F","G","H"];
+
+  let readingCorrect = 0;
+  let readingTotal = 0;
+  let mathCorrect = 0;
+  let mathTotal = 0;
+  const rows = [];
+
+  sections.forEach(sec => {
+    sec.items.forEach((item, idx) => {
+      if (item.type !== "MC") return;
+
+      const key = `s${sec.id}-q${idx}`;
+      const userAns = studentAnswers[key];
+
+      let correctIdx = item.correctIndex;
+      if (typeof correctIdx === "string") {
+        correctIdx = letters.indexOf(correctIdx);
+      }
+
+      const your = (userAns !== undefined) ? letters[userAns] : "–";
+      const corr = letters[correctIdx];
+      const isCorrect = userAns === correctIdx;
+
+      if (sec.id.startsWith("READING")) {
+        readingTotal++;
+        if (isCorrect) readingCorrect++;
+      } else if (sec.id.startsWith("MATH")) {
+        mathTotal++;
+        if (isCorrect) mathCorrect++;
+      }
+
+      rows.push({
+        section: sec.id,
+        q: item.number || idx + 1,
+        your,
+        correct: corr,
+        status: isCorrect ? "✅" : "❌"
+      });
+    });
+  });
+
+  const readingScore = predictSectionScore(readingCorrect, readingTotal);
+  const mathScore = predictSectionScore(mathCorrect, mathTotal);
+  const satScore = mathScore;
+
+  const report = document.getElementById("report-container");
+  report.innerHTML = `
+    <h1>SAT Diagnostic Test — Completed</h1>
+    <p><strong>Name:</strong> ${studentName} &nbsp; | &nbsp; <strong>Email:</strong> ${studentEmail} &nbsp; | &nbsp; <strong>Session:</strong> ${testSession}</p>
+    <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Predicted Math score: ${mathScore} / 800</p>
+    <p><strong>Predicted Math Score:</strong> ${mathScore} / 800</p>
+    <p style="font-size:13px; color:#666;">This is a simple diagnostic estimate based on raw performance in this test, not an official College Board conversion.</p>
+
+    <div class="score-container">
+      <svg viewBox="0 0 230 230">
+        <path class="arc" d="M 65 50 A 85 85 0 0 0 65 180" />
+        <path class="arc" d="M 165 50 A 85 85 0 0 1 165 180" />
+        <defs>
+          <path id="curveTop" d="M 70 50 A 80 80 0 0 1 160 50" />
+        </defs>
+        <text class="label">
+          <textPath href="#curveTop" startOffset="50%" text-anchor="middle">SCORE</textPath>
+        </text>
+      </svg>
+      <div class="score" style="font-size:68px;">${satScore}</div>
+    </div>
+
+    <h2>Question Detail</h2>
+    <table>
+      <thead>
+        <tr><th>Section</th><th>Q#</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.section}</td>
+            <td>${r.q}</td>
+            <td>${r.your}</td>
+            <td>${r.correct}</td>
+            <td>${r.status}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+
+    ${solutionPDF ? `
+      <h3>📄 View Full Solutions</h3>
+      <iframe src="${solutionPDF}" width="100%" height="480px" style="border:1px solid #ccc;"></iframe>
+    ` : ""}
+  `;
+
+  if (!emailSent && typeof emailjs !== "undefined" && studentEmail) {
+    emailSent = true;
+
+    const timestamp = new Date().toLocaleString();
+    const readingAnalysisText = rows
+      .filter(r => r.section.startsWith("READING"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const mathAnalysisText = rows
+      .filter(r => r.section.startsWith("MATH"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+      name: studentName,
+      test_title: "SAT Diagnostic Math Test 1",
+      to_email: studentEmail,
+      solution_link: solutionPDF,
+      session: testSession,
+      score: `Math ${mathScore}/800 | ${mathCorrect}/${mathTotal} correct`,
+      timestamp: timestamp,
+      paper1: readingAnalysisText,
+      paper2: mathAnalysisText
+    }).then(() => {
+      console.log("✅ Email report sent successfully.");
+    }).catch(err => {
+      console.error("❌ Email send failed:", err);
+    });
+  }
+}
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("9jjn3yBHl6S88hITy");
+    })();
+  </script>
+
+</body>
+</html>

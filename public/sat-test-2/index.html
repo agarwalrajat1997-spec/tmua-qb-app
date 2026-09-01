@@ -1,0 +1,2172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SAT Math Diagnostic Test — Full Exam Flow</title>
+
+  <!-- Desmos (for calculator-allowed sections only) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+/* =======================================
+   GLOBAL
+======================================= */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #000;
+}
+.hidden { display: none !important; }
+a { color: #2e53da; }
+
+/* =======================================
+   HEADER
+======================================= */
+.header {
+  background-color: #fafbff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+#timer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  display: none; /* hidden on initial screen */
+}
+.header-buttons { display: flex; align-items: center; gap: 20px; }
+
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius: 999px;
+  background:#e8edff;
+  color:#1e2a6f;
+  font-size:12px;
+  margin-left:6px;
+}
+
+/* Calculator icon */
+#calculator-icon {
+  display: none; /* hidden until exam start / allowed */
+  align-items: center;
+  gap: 6px;
+  color: #000;
+  font-size: 15px;
+  cursor: pointer;
+}
+#calculator-icon i {
+  font-size: 18px;
+}
+#calculator-icon:hover {
+  color: #444;
+}
+
+/* =======================================
+   START SCREEN  ✅ Staffs Prep Branding
+======================================= */
+#start-screen {
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+
+  /* Thriving Scholars (orange/yellow) */
+  border: 2px solid #FEC94F;
+  box-shadow: 0 8px 24px rgba(254, 201, 79, 0.28);
+
+  text-align: left;
+  overflow-y: auto;                /* ✅ allows scrolling inside */
+  scrollbar-width: thin;           /* ✅ nice thin scrollbar (Firefox) */
+  scrollbar-color: #FEC94F #FFF1DF;
+}
+
+/* ✅ Optional: style scrollbar for Chrome/Safari */
+#start-screen::-webkit-scrollbar {
+  width: 8px;
+}
+#start-screen::-webkit-scrollbar-thumb {
+  background-color: #FEC94F;
+  border-radius: 4px;
+}
+#start-screen::-webkit-scrollbar-track {
+  background-color: #FFF1DF;
+}
+
+#start-screen h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  color: #670D04;                  /* deep TS accent */
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#start-screen p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+#start-screen label {
+  font-weight: 600;
+  color: #111;
+}
+
+#start-screen input,
+#start-screen select {
+  padding: 8px 10px;
+  width: 250px;
+  margin-top: 4px;
+  border: 1px solid #f0d6a0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#start-screen button {
+  background: #FEC94F;             /* TS yellow */
+  color: #670D04;                  /* readable on yellow */
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(254, 201, 79, 0.35);
+}
+
+#start-screen button:hover {
+  background: #F5B935;             /* slightly deeper yellow/orange */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(254, 201, 79, 0.45);
+}
+
+
+/* =======================================
+   MAIN CONTAINER (EXAM)
+======================================= */
+.container {
+  display: none;
+  flex-direction: row;
+  height: calc(100vh - 56px - 70px);
+  overflow: hidden;
+}
+.container.active {
+  display: flex;
+}
+
+/* =======================================
+   LEFT PANEL (Passage Area)
+======================================= */
+.left-panel {
+  flex: 1;
+  background-color: white;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   RIGHT PANEL (Question Area)
+======================================= */
+.right-panel {
+  flex: 1;
+  background-color: white;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   Optional: Nicer Scrollbars
+======================================= */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* =======================================
+   QUESTION HEADER
+======================================= */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbff; /* 🔹 updated color */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.mark-review {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  margin-left: 12px;
+  flex-grow: 1;
+}
+.mark-review input[type="checkbox"] { display: none; }
+.bookmark-icon {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mark-review input[type="checkbox"]:checked + .bookmark-icon {
+  color: #cf0000;
+}
+
+/* =======================================
+   OPTIONS
+======================================= */
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.option-label:hover { border-color: #2e53da; }
+.option-label.active { background: #f0f4ff; border-color: #2e53da; }
+.option-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e8f0;
+  color: #2e53da;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.option-label.active .option-circle {
+  background: #2e53da;
+  color: #fff;
+}
+.option-label input[type="radio"] { display: none; }
+
+/* =======================================
+   FOOTER
+======================================= */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+  background-color: #fafbff;
+  height: 70px;
+  position: relative;
+}
+.footer-left { width: 200px; display: flex; align-items: center; justify-content: flex-start; }
+.footer-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.footer-right { display: flex; align-items: center; gap: 10px; }
+.footer-center button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.footer-buttons button {
+  background-color: #2e53da;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.footer-buttons button:disabled {
+  background-color: #bbb;
+  cursor: default;
+}
+.student-response-cell { background-color: #fafafa; font-style: italic; white-space: pre-wrap; }
+
+/* =======================================
+   NAVIGATOR POPUP
+======================================= */
+#navigator-popup {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  z-index: 9999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+#navigator-popup .nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#navigator-popup .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+#navigator-popup .legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 16px 0;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border: 1px solid #999; display: inline-block; }
+.legend-current { background: #2e53da; color: #fff; }
+.legend-review { background: red; }
+.legend-unanswered { background: transparent; }
+#navigator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+#navigator-grid button {
+  border: 1px dashed #2e53da;
+  background: #fff;
+  color: #2e53da;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#navigator-grid button.current { background: #2e53da; color: #fff; }
+#navigator-grid button.answered { border: 1px solid #2e53da; }
+#navigator-grid button.review { border: 1px solid red; color: red; }
+
+/* =======================================
+   CALCULATOR POPUP
+======================================= */
+#calculator-popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+  z-index: 10000;
+  width: 640px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+#calculator-drag-handle {
+  cursor: move;
+  background: #fafbff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+#calculator {
+  width: 100%;
+  height: 420px;
+}
+#grading-overlay {
+  backdrop-filter: blur(3px);
+  color: #222;
+}
+.spinner {
+  border-color: #ddd;
+  border-top-color: #0078ff;
+}
+
+/* =======================================
+   FRQ
+======================================= */
+.grading-output {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+textarea.frq-input {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+/* =======================================
+   BREAK SCREEN (between I-B → II-A)
+======================================= */
+#break-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  flex-direction: column;
+}
+.break-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 24px;
+}
+#break-timer {
+  background: #222;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+#skip-break {
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+}
+#skip-break:hover {
+  background: #ccc;
+}
+
+/* =======================================
+   SECTION TRANSITION MODAL
+======================================= */
+#section-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+#section-modal .content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 420px;
+  text-align: center;
+}
+#section-modal button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* =======================================
+   REPORT
+======================================= */
+#report-container {
+  padding: 30px;
+  max-width: 950px;
+  margin: 20px auto 90px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow-y: auto;
+  height: calc(100vh - 56px - 40px);
+}
+#report-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+#report-container th, #report-container td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+#report-container thead { background: #f0f0f0; }
+/* =============================
+   SCORE WIDGET (AP SCORE GAUGE)
+============================= */
+.score-container {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  margin: 30px auto;
+}
+
+.score-container svg {
+  width: 230px;
+  height: 230px;
+}
+
+.score-container .arc {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.score-container .label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  fill: #555;
+}
+
+.score-container .score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  color: #000;
+}
+/* ===============================
+   ABC BUTTON
+================================= */
+.eliminate-mode-btn {
+  background-color: #ffffff;
+  color: #2836d1;
+  border: 2px solid #2836d1;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.eliminate-mode-btn:hover {
+  background-color: #f3f4ff;
+}
+.eliminate-mode-btn.active {
+  background-color: #2836d1;
+  color: #ffffff;
+  border-color: #2836d1;
+}
+#footer-bar {
+  position: relative;
+}
+/* replace the whole block with this */
+#color-bar-bottom {
+  /* position: static by default */
+  width: 100%;
+  height: 1px;      /* your dash bar height */
+  margin: 0;        /* optional: ensure it's flush */
+}
+
+
+/* ===============================
+   STRIKEOUT BUTTONS (Right-side A–D)
+================================= */
+.strike-toggle {
+  display: none; /* Hidden until ABC mode is active */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2e53da;
+  background: transparent;
+  border: 2px solid #2e53da;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elimination-active .strike-toggle {
+  display: flex;
+}
+
+/* Hover animation (subtle blue tint like SAT) */
+.strike-toggle:hover {
+  background-color: #f0f4ff;
+}
+
+/* Don’t change on press — visual effect only occurs on option */
+.strike-toggle.active {
+  background-color: transparent;
+  color: #2e53da;
+}
+
+/* ===============================
+   STRUCK OPTION STYLE
+================================= */
+.option-label.struck {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+  color: #666;
+  text-decoration: line-through;
+  position: relative;
+  opacity: 0.75;
+}
+
+.option-label.struck::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.option-label.struck .option-circle {
+  background: #e0e0e0;
+  color: #888;
+} 
+
+/* =======================================
+   COLOR DASH BAR (appears after exam start)
+======================================= */
+.color-bar {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #444 0 24px,        /* dark gray dash */
+    transparent 24px 26px,
+    #00AEEF 26px 50px,  /* blue dash */
+    transparent 50px 52px,
+    #FFD500 52px 76px,  /* yellow dash */
+    transparent 76px 78px
+  );
+  background-size: 78px 5px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hidden by default (like header on start screen) */
+.color-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#footer-student-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 520px 1fr; /* wider left panel so image can actually grow */
+  gap: 18px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+/* Center the image within the LEFT panel */
+.q-media-left{
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: flex-start;   /* keep at top; change to center if you want vertical centering */
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 240px 1fr; /* bigger left panel */
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+.q-media-left{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Bigger images + faint boundary */
+.q-img-sm{
+  width: 320px;              /* bigger */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+
+/* Mobile tweak */
+@media (max-width: 640px){
+  .q-media{
+    grid-template-columns: 1fr;  /* stack image above text */
+  }
+  .q-media-left{
+    justify-content: flex-start;
+  }
+  .q-img-sm{
+    width: min(360px, 100%);
+  }
+}
+/* ================================
+   OPTION IMAGES (MCQ choices)
+   Make images smaller + organized
+================================ */
+
+/* If your option HTML uses <div class="opt-img-wrap"><img class="opt-img" ...></div> */
+.opt-img-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center inside option */
+  align-items: center;
+  padding: 6px 0;
+}
+
+.opt-img{
+  width: 220px;                /* ✅ CHANGE THIS to control option image size */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);   /* faint boundary */
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+}
+
+ </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title" id="header-title">SAT Math Test 2</span>
+      <span id="calc-badge" class="badge hidden">Calculator Allowed</span>
+    </div>
+    <div class="header-buttons">
+      <div id="timer">00:00</div>
+      <div id="calculator-icon" onclick="openCalculator()">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Calculator</span>
+      </div>
+    </div>
+  </div>
+
+<div id="start-screen">
+  <h1>Digital SAT Math Test 2</h1>
+  <p>This test will run in 2 math modules continuously:</p>
+  <ul>
+    <li><strong>Module 1:</strong> Math, 22 questions, 35 minutes</li>
+    <li><strong>Module 2:</strong> Math, 22 questions, 35 minutes</li>
+  </ul>
+  <p><em>Once you advance to the next module, you cannot return.</em></p>
+  <p><em>This is a math-only SAT-style diagnostic. The final score shown is a predicted Math score out of 800 based on raw performance.</em></p>
+    <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div>
+        <label>Full Name</label><br>
+        <input type="text" id="student-name">
+      </div>
+      <div>
+        <label>Email (to receive results)</label><br>
+        <input type="email" id="student-email">
+      </div>
+      <div>
+        <label>Exam Session</label><br>
+<select id="test-session">
+  <option value="" selected disabled>Select SAT Session</option>
+  <option value="SAT May 2, 2026">May, 2026</option>
+  <option value="SAT June 6, 2026">June, 2026</option>
+  <option value="SAT August 22, 2026">August, 2026</option>
+  <option value="SAT September 12, 2026">September, 2026</option>
+  <option value="SAT October 3, 2026">October, 2026</option>
+  <option value="SAT November 7, 2026">November, 2026</option>
+  <option value="SAT December 5, 2026">December, 2026</option>
+  <option value="SAT March 6, 2027">March, 2027</option>
+  <option value="SAT May 1, 2027">May, 2027</option>
+  <option value="SAT June 5, 2027">June, 2027</option>
+</select>
+      </div>
+    </div>
+    <button onclick="startExam()">Start Exam</button>
+  </div>
+
+  <div id="color-bar" class="color-bar hidden"></div>
+
+  <!-- Main Exam Container -->
+  <div id="main-container" class="container">
+    <div class="left-panel" id="passage"></div>
+
+    <div class="right-panel">
+      <div>
+        <div class="question-header">
+          <div class="q-number" id="q-number">1</div>
+
+          <label class="mark-review">
+            <input type="checkbox" id="mark-review" onchange="toggleBookmark(this)">
+            <i class="fa-regular fa-bookmark bookmark-icon"></i>
+            Mark for Review
+          </label>
+
+          <!-- ABC toggle -->
+          <button id="eliminateBtn" class="eliminate-mode-btn">𝖠̶𝖡̶𝖢̶</button>
+        </div>
+
+        <div class="question-box" id="question-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="color-bar-bottom" class="color-bar hidden"></div>
+
+  <!-- Footer -->
+  <div class="footer-buttons hidden" id="footer-bar">
+    <div class="footer-left">
+      <span id="footer-student-name" style="font-size: 16px; font-weight: 500; color: #000;"></span>
+    </div>
+
+    <div class="footer-center">
+      <button id="navigator-button" onclick="openNavigator()">Question 1 of 1</button>
+    </div>
+
+    <div class="footer-right">
+      <button id="back-btn" onclick="prevQuestion()">Back</button>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+      <button id="finish-section-btn" onclick="finishCurrentSection()">Finish Section</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div id="navigator-popup">
+    <div class="nav-header">
+      <span id="navigator-section-title">Section</span>
+      <button class="close-btn" onclick="closeNavigator()">×</button>
+    </div>
+    <div class="legend">
+      <span><div class="legend-box legend-current"></div> Current</span>
+      <span><div class="legend-box legend-unanswered"></div> Unanswered</span>
+      <span><div class="legend-box legend-review"></div> For Review</span>
+    </div>
+    <div id="navigator-grid"></div>
+  </div>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup">
+    <div id="calculator-drag-handle">
+      <span>Calculator</span>
+      <button onclick="closeCalculator()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="calculator"></div>
+  </div>
+
+  <!-- Section Transition Modal -->
+  <div id="section-modal">
+    <div class="content">
+      <h2 id="section-modal-title">Section complete</h2>
+      <p id="section-modal-text">The next section will begin now. You cannot return to the previous section.</p>
+      <div style="display:flex; justify-content:center; gap:14px; margin-top:18px;">
+        <button onclick="goToNextSection()" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Start Next Section
+        </button>
+        <button onclick="closeSectionModal()" style="background:#ccc; color:#000; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-container" class="hidden"></div>
+
+  <script>
+/***********************
+ * DATA: Sections
+ ***********************/
+const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
+
+const sections = [
+  {
+    id: "MATH1",
+    title: "Math Module 1",
+    subtitle: "22 Questions",
+    durationSec: 35 * 60,
+    calculatorAllowed: true,
+    items: [
+      {
+        type: "MC",
+        number: "45",
+        passage: `<p>\\(n^{\\tfrac{5}{3}} = k^{\\tfrac{2}{5}}\\)</p><p>\\(n^{a+1} = k\\)</p>`,
+        prompt: `<p>What is the value of \\(a\\)?</p>`,
+        options: [
+          "\\(\\tfrac{19}{6}\\)",
+          "\\(\\tfrac{5}{6}\\)",
+          "\\(\\tfrac{6}{19}\\)",
+          "\\(\\tfrac{25}{6}\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "46",
+        passage: `<p>\\(3x^2 + bx - 112 = (ax + m)(x - l)\\)</p><p>Given that \\(a\\), \\(m\\), and \\(l\\) are integers, which of the following must be true?</p>`,
+        prompt: `<p>Choose the correct statement.</p>`,
+        options: [
+          "\\(m\\) is a factor of \\(b\\)",
+          "\\(a\\) is a factor of 112",
+          "\\(a\\) is a factor of \\(b\\)",
+          "\\(l\\) is a factor of 112"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "47",
+        passage: `<p>The perimeter of a right isosceles triangle is \\(76 + 76\\sqrt{2}\\).</p>`,
+        prompt: `<p>What is the length of the hypotenuse?</p>`,
+        options: [
+          "\\(38\\)",
+          "\\(38\\sqrt{2}\\)",
+          "\\(76\\)",
+          "\\(76\\sqrt{2}\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "48",
+        passage: `<table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Sample</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Percent in favor</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Margin of error</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border:1px solid #ccc; padding:8px;">A</td>
+              <td style="border:1px solid #ccc; padding:8px;">67.83%</td>
+              <td style="border:1px solid #ccc; padding:8px;">7.8%</td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #ccc; padding:8px;">B</td>
+              <td style="border:1px solid #ccc; padding:8px;">72.94%</td>
+              <td style="border:1px solid #ccc; padding:8px;">4.5%</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>The samples were selected from the same population, and the margins of error were calculated using the same method.</p>`,
+        prompt: `<p>Which is the most appropriate reason that the margin of error for sample A is greater than the margin of error for sample B?</p>`,
+        options: [
+          "Sample A had a larger sample size.",
+          "Sample A had a smaller sample size.",
+          "Sample A had a smaller number of votes that could not be recorded.",
+          "Sample A had a lower percent of favorable responses."
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "49",
+        passage: `<p>360 is \\(p\\)% of 10.</p>`,
+        prompt: `<p>What is the value of \\(p\\)?</p>`,
+        options: [
+          "\\(360\\)",
+          "\\(3{,}600\\)",
+          "\\(36\\)",
+          "\\(360{,}000\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "50",
+        passage: `<p>The vertex of the function \\(f(x)\\) is \\((9,-13)\\), and the point \\((3,-4)\\) lies on the parabola.</p><p>If \\(g(x)=4f(x-2)\\), determine the requested value.</p>`,
+        prompt: `<p>What is \\(g(0)-f(0)\\)?</p>`,
+        options: [
+          "\\(57.75\\)",
+          "\\(61.75\\)",
+          "\\(69\\)",
+          "\\(54.5\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "51",
+        passage: `<p>\\(-377x + k = 377x + k\\)</p><p>Here, \\(k\\) is a constant.</p>`,
+        prompt: `<p>How many solutions does the equation have?</p>`,
+        options: [
+          "No solutions",
+          "One solution",
+          "Two solutions",
+          "Infinite solutions"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "52",
+        passage: `<p>The density of a certain type of wood is 770 kilograms per cubic meter.</p><p>A sample of this wood is in the shape of a cube, and each edge has length 0.7 meters.</p>`,
+        prompt: `<p>To the nearest whole number, what is the mass, in kilograms, of this sample?</p>`,
+        options: [
+          "264",
+          "377",
+          "1,571",
+          "2,245"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "53",
+        passage: `<p>The graph of a linear equation passes through the points \\((-21,-\\tfrac{89}{2})\\) and \\((12,\\tfrac{65}{2})\\).</p><p>The graph also passes through the point \\((\\tfrac{27}{4},a)\\).</p>`,
+        prompt: `<p>What is the value of \\(a\\)?</p>`,
+        options: [
+          "\\(18.25\\)",
+          "\\(19.5\\)",
+          "\\(20.25\\)",
+          "\\(21.75\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "54",
+        passage: `<p>In triangle \\(ABC\\), \\(\\angle B\\) is a right angle and the length of \\(AB\\) is 456 millimeters.</p><p>If \\(\\cos C = \\tfrac{7}{25}\\), then use the triangle relationships to determine \\(BC\\).</p>`,
+        prompt: `<p>What is the length, in millimeters, of \\(BC\\)?</p>`,
+        options: [
+          "\\(127\\)",
+          "\\(133\\)",
+          "\\(171\\)",
+          "\\(456\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "55",
+        passage: `<p>In triangle \\(ABC\\) and triangle \\(DEF\\), sides \\(BC\\) and \\(EF\\) each have length 37 inches, and angles \\(B\\) and \\(E\\) each measure 63°.</p><p>Which additional information is sufficient to prove whether triangle \\(ABC\\) is congruent to triangle \\(DEF\\)?</p><p>I. The measures of angles \\(A\\) and \\(C\\) are equal.</p><p>II. The lengths of sides \\(AC\\) and \\(DF\\) are equal.</p><p>III. The measures of angles \\(A\\) and \\(D\\) are equal.</p>`,
+        prompt: `<p>Choose the correct statement.</p>`,
+        options: [
+          "I is sufficient, but II and III are not.",
+          "II is sufficient, but I and III are not.",
+          "III is sufficient, but I and II are not.",
+          "II and III are sufficient, but I is not."
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "56",
+        passage: `<p>\\[77x^2 + (7j + 11k)x + jk = 0\\]</p><p>In the equation above, \\(j\\) and \\(k\\) are positive constants.</p><p>The product of the solutions is \\(ajk\\), where \\(a\\) is a constant.</p>`,
+        prompt: `<p>What is the value of \\(a\\)?</p>`,
+        options: [
+          "\\(\\tfrac{1}{11}\\)",
+          "\\(\\tfrac{1}{77}\\)",
+          "\\(\\tfrac{1}{7}\\)",
+          "\\(\\tfrac{7}{11}\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "57",
+        passage: `<p>The number \\(j\\) is 2,400% greater than the number \\(k\\).</p><p>The number \\(k\\) is 350% greater than 8.</p>`,
+        prompt: `<p>What is the value of \\(j\\)?</p>`,
+        options: [
+          "\\(324\\)",
+          "\\(720\\)",
+          "\\(900\\)",
+          "\\(1{,}200\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "58",
+        passage: `<p>A square is inscribed in a circle with equation \\(x^2 + y^2 - 8x + 10y = 27\\).</p>`,
+        prompt: `<p>What is the area of the square?</p>`,
+        options: [
+          "\\(68\\)",
+          "\\(136\\)",
+          "\\(272\\)",
+          "\\(34\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "59",
+        passage: `<p>The equation below relates distinct positive real numbers \\(a\\), \\(b\\), and \\(c\\).</p><p>\\[a = 19b\\cdot \\sqrt[5]{\\left(\\frac{c}{20}\\right)^4}\\]</p>`,
+        prompt: `<p>Which equation correctly expresses \\(c\\) in terms of \\(a\\) and \\(b\\)?</p>`,
+        options: [
+          "\\(20\\left(\\frac{a}{19b}\\right)^4\\)",
+          "\\(20\\left(\\frac{a}{19b}\\right)^{\\tfrac{1}{4}}\\)",
+          "\\(20\\left(\\frac{a}{19b}\\right)^{\\tfrac{4}{5}}\\)",
+          "\\(20\\left(\\frac{a}{19b}\\right)^{\\tfrac{5}{4}}\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "60",
+        passage: `<p>Triangle \\(ABC\\) is inscribed in a circle with radius 85.</p><p>The length of \\(AC\\) is 170 and the length of \\(BC\\) is 168.</p>`,
+        prompt: `<p>What is the value of \\(\\frac{AB}{BC}\\)?</p>`,
+        options: [
+          "\\(\\tfrac{13}{84}\\)",
+          "\\(\\tfrac{13}{85}\\)",
+          "\\(\\tfrac{84}{13}\\)",
+          "\\(\\tfrac{26}{168}\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "61",
+        passage: `<p>For the exponential function \\(f\\), the value of \\(f(2)\\) is \\(k\\), where \\(k\\) is a constant.</p>`,
+        prompt: `<p>Which equivalent form of the function shows the value of \\(k\\) as the coefficient or the base?</p>`,
+        options: [
+          "\\(f(x)=729(3)^{x+2}\\)",
+          "\\(f(x)=6{,}561(3)^x\\)",
+          "\\(f(x)=177{,}147(3)^{x-3}\\)",
+          "\\(f(x)=59{,}049(3)^{x-2}\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "62",
+        passage: `<p>Two numbers \\(r\\) and \\(s\\) are each greater than zero, and the fourth root of \\(r\\) is equal to the seventh root of \\(s\\).</p>`,
+        prompt: `<p>For what value of \\(x\\) is \\(r^{4x-5}=s\\)?</p>`,
+        options: [
+          "\\(\\tfrac{3}{20}\\)",
+          "\\(\\tfrac{1}{6}\\)",
+          "\\(\\tfrac{27}{16}\\)",
+          "\\(\\tfrac{7}{4}\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "63",
+        passage: `<p>The quadratic expression \\(ax^2 + 98x + c\\) has at least one real root.</p>`,
+        prompt: `<p>What is the greatest possible value of \\(ac\\)?</p>`,
+        options: [
+          "\\(1{,}201\\)",
+          "\\(2{,}401\\)",
+          "\\(4{,}802\\)",
+          "\\(9{,}604\\)"
+        ],
+        correctIndex: "B"
+      },
+     // REPLACE Q64 WITH THIS
+{
+  type: "MC",
+  number: "64",
+  passage: `<p>Consider the quadratic equation below, where \\(k\\) is a positive integer.</p><p>\\[-x^2 + kx - 3{,}786 = 0\\]</p>`,
+  prompt: `<p>If the equation has no real solutions, what is the greatest possible value of \\(k\\)?</p>`,
+  options: [
+    "\\(122\\)",
+    "\\(123\\)",
+    "\\(124\\)",
+    "\\(126\\)"
+  ],
+  correctIndex: "B"
+},
+      {
+        type: "MC",
+        number: "65",
+        passage: `<table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">\\(x\\)</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">\\(g(x)\\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="border:1px solid #ccc; padding:8px;">4</td><td style="border:1px solid #ccc; padding:8px;">9</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">2</td><td style="border:1px solid #ccc; padding:8px;">0</td></tr>
+          </tbody>
+        </table>
+        <p>\\(g(x)=\\frac{f(x)+5}{x+8}\\), where \\(f\\) is a linear function.</p>`,
+        prompt: `<p>What is the y-coordinate of the y-intercept of the graph of \\(y=f(x)\\) in the \\(xy\\)-plane?</p>`,
+        options: [
+          "\\(-101\\)",
+          "\\(-107\\)",
+          "\\(-113\\)",
+          "\\(-119\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "66",
+        passage: `<p>Evaluate the expression below.</p><p>\\[\\sin(x^\\circ)\\cos(90-x^\\circ)+\\sin(90-x^\\circ)\\cos(x^\\circ)\\]</p>`,
+        prompt: `<p>What is its value?</p>`,
+        options: [
+          "0.5",
+          "1",
+          "2",
+          "90"
+        ],
+        correctIndex: "B"
+      }
+    ]
+  },
+  {
+    id: "MATH2",
+    title: "Math Module 2",
+    subtitle: "22 Questions",
+    durationSec: 35 * 60,
+    calculatorAllowed: true,
+    items: [
+      {
+        type: "MC",
+        number: "67",
+        passage: `<p>There are red, blue, green, and black marbles in a bag.</p><ul><li>26 black marbles</li><li>8 green marbles</li><li>26 blue and red marbles combined</li></ul><p>Given that a randomly selected marble is not black, the probability of selecting a red marble is \\(\\tfrac{5}{17}\\).</p>`,
+        prompt: `<p>How many blue marbles are in the bag?</p>`,
+        options: [
+          "\\(12\\)",
+          "\\(14\\)",
+          "\\(16\\)",
+          "\\(18\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "68",
+        passage: `<p>A gardener is purchasing topsoil for a new garden in the shape of a rectangular prism.</p><p>The dimensions are 54 feet by 192 feet by 2 feet.</p><p>Topsoil costs \\$96 per cubic yard.</p><p>Use \\(1\\) yard \\(=3\\) feet.</p>`,
+        prompt: `<p>How much does the gardener need to spend, in dollars?</p>`,
+        options: [
+          "\\(24{,}576\\)",
+          "\\(36{,}864\\)",
+          "\\(73{,}728\\)",
+          "\\(147{,}456\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "69",
+        passage: `<p>In the \\(xy\\)-plane, consider the circle with equation</p><p>\\[(x+k)^2+(y-j)^2=841\\]</p>`,
+        prompt: `<p>Which of the following points lies on this circle?</p>`,
+        options: [
+          "\\((k+20,\\ j+21)\\)",
+          "\\((k-20,\\ j-21)\\)",
+          "\\((-k+21,\\ j+20)\\)",
+          "\\((-k-21,\\ -j-20)\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "70",
+        passage: `<p>For the equation below, determine the values of \\(k\\) for which there is no solution.</p><p>\\[4-4\\left|\\frac{7}{8}+\\frac{4}{5}x\\right|=\\frac{57}{12}+k\\]</p>`,
+        prompt: `<p>Which inequality gives all possible values of \\(k\\)?</p>`,
+        options: [
+          "\\(k&lt;-\\tfrac{3}{4}\\)",
+          "\\(k&gt;-\\tfrac{3}{4}\\)",
+          "\\(k\\le\\tfrac{3}{4}\\)",
+          "\\(k\\ge\\tfrac{3}{4}\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "71",
+        passage: `<p>A table weighs 348 pounds and puts equal amounts of pressure on each of its 4 identical legs.</p><p>The pressure that each leg exerts on the floor is 12 pounds per square inch.</p>`,
+        prompt: `<p>What is the area, in square inches, of the bottom of each leg that is touching the floor?</p>`,
+        options: [
+          "\\(6.5\\)",
+          "\\(7.25\\)",
+          "\\(8\\)",
+          "\\(12\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "72",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/9b13c239-1424-4a0f-a530-c1e405d911e4.png" alt="Parallel lines diagram"></div><p>Lines \\(a\\) and \\(b\\) are parallel.</p><p><em>Note: Figure not drawn to scale.</em></p>`,
+        prompt: `<p>What is the value of \\(x+y\\)?</p>`,
+        options: [
+          "\\(20\\)",
+          "\\(21\\)",
+          "\\(22\\)",
+          "\\(24\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "73",
+        passage: `<p>The functions \\(f\\) and \\(g\\) are defined for \\(x\\ge 0\\).</p><p>I. \\(f(x)=232(0.4)^{x+2}\\)</p><p>II. \\(g(x)=232(0.4)(0.4)(0.4)^{x-2}\\)</p>`,
+        prompt: `<p>Which equation displays, as a constant or coefficient, the maximum value of the function it defines, where \\(x\\ge 0\\)?</p>`,
+        options: [
+          "I only",
+          "II only",
+          "I and II",
+          "Neither I nor II"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "74",
+        passage: `<p>An equilateral triangle with side length \\(k\\) is inscribed in a circle.</p>`,
+        prompt: `<p>Which of the following defines the radius \\(r\\) in terms of \\(k\\)?</p>`,
+        options: [
+          "\\(\\tfrac{k}{2}\\)",
+          "\\(\\tfrac{k\\sqrt{3}}{6}\\)",
+          "\\(\\tfrac{k\\sqrt{3}}{3}\\)",
+          "\\(\\tfrac{k\\sqrt{3}}{2}\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "75",
+        passage: `<p>The function \\(f\\) is defined by \\(f(x)=3^x\\).</p><p>The function \\(g\\) is an increasing linear function.</p><p>In the \\(xy\\)-plane, the graphs of \\(y=f(x)\\) and \\(y=g(x)\\) intersect at two points \\((a,j)\\) and \\((b,k)\\), where \\(j&lt;k\\).</p>`,
+        prompt: `<p>When \\(g(x)&gt;f(x)\\), which of the following must be true?</p>`,
+        options: [
+          "\\(x&gt;k\\)",
+          "\\(x&lt;j\\)",
+          "\\(x&lt;j\\) or \\(x&gt;b\\)",
+          "\\(a&lt;x&lt;b\\)"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "76",
+        passage: `<p>If \\(\\frac{2a}{b}=4.25\\) and \\(\\frac{a}{bn}=8.5\\), determine \\(n\\).</p>`,
+        prompt: `<p>What is the value of \\(n\\)?</p>`,
+        options: [
+          "\\(0.125\\)",
+          "\\(0.25\\)",
+          "\\(0.5\\)",
+          "\\(2\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "77",
+        passage: `<p>An object’s speed is increasing at a rate of 4.80 meters per second squared.</p><p>Use \\(1\\) mile \\(=1609\\) meters.</p>`,
+        prompt: `<p>What is this rate in miles per minute squared, rounded to the nearest tenth?</p>`,
+        options: [
+          "\\(9.6\\)",
+          "\\(10.1\\)",
+          "\\(10.7\\)",
+          "\\(11.4\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "78",
+        passage: `<p>An acceptable noise criterion rating for the background noise in a school classroom is 30.</p><p>For a noise criterion rating of 30, the equation</p><p>\\[y=19(0.978)^{x-50}+37\\]</p><p>gives the estimated sound pressure level, \\(y\\), in decibels, as a function of the octave band center frequency, \\(x\\), in hertz, where \\(x\\ge 50\\).</p>`,
+        prompt: `<p>Which of the following is the best interpretation of 37 in this context?</p>`,
+        options: [
+          "37 is 19 less than the estimated sound pressure level, in decibels, at an octave band frequency of 50.",
+          "37 is 19 less than the estimated sound pressure level, in decibels, at an octave band frequency of 0.",
+          "37 is the estimated sound pressure level, in decibels, at an octave band frequency of 0.",
+          "37 is the value the estimated sound pressure level approaches as the octave band center frequency becomes very large."
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "79",
+        passage: `<p>The graph of the quadratic function \\(y=f(x)\\) intersects the \\(x\\)-axis at \\(x=74\\) and \\(x=k\\), where \\(k\\) is a constant.</p><p>The maximum value of \\(y=f(x)\\) occurs at the point \\((17,m)\\).</p>`,
+        prompt: `<p>What is the value of \\(k\\)?</p>`,
+        options: [
+          "\\(-40\\)",
+          "\\(-23\\)",
+          "\\(17\\)",
+          "\\(40\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "80",
+        passage: `<table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">\\(x\\)</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">\\(f(x)\\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="border:1px solid #ccc; padding:8px;">-9</td><td style="border:1px solid #ccc; padding:8px;">155</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">-3</td><td style="border:1px solid #ccc; padding:8px;">227</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">3</td><td style="border:1px solid #ccc; padding:8px;">155</td></tr>
+          </tbody>
+        </table>
+        <p>Three points on the quadratic function \\(f(x)\\) are given above.</p><p>If \\(g(x)=f(x+4)\\), determine the y-intercept of \\(g\\).</p>`,
+        prompt: `<p>What is the y-intercept of the function \\(g(x)\\)?</p>`,
+        options: [
+          "\\(113\\)",
+          "\\(129\\)",
+          "\\(155\\)",
+          "\\(227\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "81",
+        passage: `<p>Triangle \\(ABC\\) is an equilateral triangle with height 30 meters.</p>`,
+        prompt: `<p>What is the perimeter of triangle \\(ABC\\), in meters?</p>`,
+        options: [
+          "\\(60\\sqrt{3}\\)",
+          "\\(90\\)",
+          "\\(90\\sqrt{3}\\)",
+          "\\(120\\sqrt{3}\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "82",
+        passage: `<p>Consider the expression</p><p>\\[-19(6x-4)^2 + 6(6x-3)^2\\]</p><p>This can be rewritten as \\(\\frac{a}{9}x^2 + \\frac{b}{9}x + \\frac{c}{9}\\), where \\(a\\), \\(b\\), and \\(c\\) are constants.</p>`,
+        prompt: `<p>What is the value of \\(a+b+c\\)?</p>`,
+        options: [
+          "\\(-198\\)",
+          "\\(-66\\)",
+          "\\(198\\)",
+          "\\(66\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "83",
+        passage: `<p>A rectangular area consists of 3,179 equal squares, each with area \\(k\\).</p><p>The length of the rectangular area is 2.75 times the width, and the width is equal to \\(x\\sqrt{k}\\).</p>`,
+        prompt: `<p>What is the value of \\(x\\)?</p>`,
+        options: [
+          "\\(17\\)",
+          "\\(26\\)",
+          "\\(34\\)",
+          "\\(52\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "84",
+        passage: `<p>\\(7x-9y=39\\)</p><p>\\(35x-45y=195\\)</p><p>The two equations represent the same line.</p>`,
+        prompt: `<p>For any real number \\(r\\), which point lies on the graph of both equations?</p>`,
+        options: [
+          "\\((3r,\\ \\tfrac{7r-13}{3})\\)",
+          "\\((\\tfrac{7r+13}{3},\\ 3r)\\)",
+          "\\((3r,\\ \\tfrac{13-7r}{3})\\)",
+          "\\((\\tfrac{7r-39}{9},\\ r)\\)"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "85",
+        passage: `<p>\\(f(x)=x^2+5x-6\\)</p><p>\\(g(x)=x^2+2x-35\\)</p><p>The quadratic function \\(f(x)\\) has solutions \\(j\\) and \\(k\\), where \\(j&lt;k\\).</p><p>The quadratic function \\(g(x)\\) has solutions \\(l\\) and \\(m\\), where \\(l&lt;m\\).</p><p>The quadratic function \\(h(x)=x^2+7x+c\\) has solutions \\(k+l\\) and \\(m+j\\).</p>`,
+        prompt: `<p>If \\(h(x)\\) can be rewritten as \\((x+a)(x+b)\\), what is the value of \\(c\\)?</p>`,
+        options: [
+          "\\(-6\\)",
+          "\\(0\\)",
+          "\\(6\\)",
+          "\\(12\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "86",
+        passage: `<p>For the exponential function \\(f(x)=16^{x+4}\\), consider only values where \\(x\\ge 0\\).</p>`,
+        prompt: `<p>Which answer choice expresses the minimum value as either a constant or a coefficient?</p>`,
+        options: [
+          "\\(f(x)=64(16)^x\\)",
+          "\\(f(x)=65{,}536(16)^x\\)",
+          "\\(f(x)=1{,}048{,}576(16)^x\\)",
+          "\\(f(x)=\\tfrac{1}{65{,}536}(16)^x\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "87",
+        passage: `<p>For the parabola \\(ax^2+bx+c\\), the \\(x\\)-intercepts are \\((14,0)\\) and \\((k,0)\\).</p><p>If \\(f(27)=f(11)\\), determine \\(k\\).</p>`,
+        prompt: `<p>What is the value of \\(k\\)?</p>`,
+        options: [
+          "\\(14\\)",
+          "\\(20\\)",
+          "\\(24\\)",
+          "\\(27\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "88",
+        passage: `<p>A quadratic function models a projectile’s height, in meters, above the ground in terms of time, in seconds, after it was launched.</p><p>The model estimates that the projectile was launched from an initial height of \\(a\\) meters and reached a maximum height of 134 meters 6 seconds after launch.</p>`,
+        prompt: `<p>How many seconds after launch does the model estimate it will return to a height of \\(a\\) meters?</p>`,
+        options: [
+          "\\(6\\)",
+          "\\(8\\)",
+          "\\(9\\)",
+          "\\(12\\)"
+        ],
+        correctIndex: "D"
+      }
+    ]
+  }
+];/***********************
+ * STATE
+ ***********************/
+let currentSectionIndex = 0;
+let currentIndex = 0;
+let reviewFlags = [];
+let studentAnswers = {};
+let timer = null;
+let seconds = 0;
+let desmosCalculator = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let examStarted = false;
+let eliminateMode = false;
+let eliminateState = {};
+let emailSent = false;
+
+/***********************
+ * START EXAM
+ ***********************/
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("student-email").value.trim();
+  const sessionInput = document.getElementById("test-session").value;
+
+  if (!nameInput || !emailInput) {
+    alert("Please enter your name and email to begin.");
+    return;
+  }
+
+  if (!sections.length || sections.some(sec => !Array.isArray(sec.items) || sec.items.length === 0)) {
+    alert("Please paste your Reading and Math MCQ arrays into the code before starting the test.");
+    return;
+  }
+
+  studentName = nameInput;
+  studentEmail = emailInput;
+  testSession = sessionInput;
+  examStarted = true;
+
+  const header = document.querySelector(".header");
+  const footerBar = document.getElementById("footer-bar");
+  const mainContainer = document.getElementById("main-container");
+  const startScreen = document.getElementById("start-screen");
+  const timerEl = document.getElementById("timer");
+  const colorBarTop = document.getElementById("color-bar");
+  const colorBarBottom = document.getElementById("color-bar-bottom");
+
+  document.getElementById("footer-student-name").textContent = studentName;
+
+  if (startScreen) startScreen.classList.add("hidden");
+
+  if (header) header.classList.remove("hidden");
+  if (footerBar) footerBar.classList.remove("hidden");
+  if (colorBarTop) colorBarTop.classList.remove("hidden");
+  if (colorBarBottom) colorBarBottom.classList.remove("hidden");
+  if (mainContainer) mainContainer.classList.add("active");
+  if (timerEl) timerEl.style.display = "block";
+
+  startSection(0);
+}
+
+/***********************
+ * SECTION LOGIC
+ ***********************/
+function startSection(secIdx) {
+  currentSectionIndex = secIdx;
+  currentIndex = 0;
+
+  const sec = sections[secIdx];
+  reviewFlags = new Array(sec.items.length).fill(false);
+
+  document.getElementById("header-title").textContent = sec.title;
+  document.getElementById("calc-badge").classList.toggle("hidden", !sec.calculatorAllowed);
+
+  if (sec.calculatorAllowed) {
+    document.getElementById("calculator-icon").style.display = "flex";
+  } else {
+    document.getElementById("calculator-icon").style.display = "none";
+    closeCalculator();
+  }
+
+  const finishBtn = document.getElementById("finish-section-btn");
+  finishBtn.textContent = (secIdx === sections.length - 1) ? "Finish Exam" : "Finish Section";
+
+  buildNavigator();
+  loadQuestion(0);
+
+  if (timer) clearInterval(timer);
+  seconds = sec.durationSec;
+  updateTimerDisplay();
+
+  timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay();
+    if (seconds < 0) {
+      clearInterval(timer);
+      finishCurrentSection();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(Math.max(0, seconds) / 60);
+  const sec = Math.max(0, seconds) % 60;
+  document.getElementById("timer").textContent =
+    `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/***********************
+ * QUESTION RENDERING
+ ***********************/
+document.getElementById("eliminateBtn").addEventListener("click", function () {
+  eliminateMode = !eliminateMode;
+  this.classList.toggle("active", eliminateMode);
+  const rightPanel = document.querySelector(".right-panel");
+  rightPanel.classList.toggle("elimination-active", eliminateMode);
+});
+
+function loadQuestion(i) {
+  const section = sections[currentSectionIndex];
+  const item = section.items[i];
+  currentIndex = i;
+
+  document.getElementById("passage").innerHTML = item.passage || "";
+  const box = document.getElementById("question-box");
+  box.innerHTML = "";
+  document.getElementById("q-number").textContent = i + 1;
+  document.getElementById("mark-review").checked = reviewFlags[i];
+
+  const bookmarkIcon = document.querySelector(".bookmark-icon");
+  const markBox = document.getElementById("mark-review");
+  if (markBox.checked) {
+    bookmarkIcon.classList.remove("fa-regular");
+    bookmarkIcon.classList.add("fa-solid");
+    bookmarkIcon.style.color = "#CF0000";
+  } else {
+    bookmarkIcon.classList.remove("fa-solid");
+    bookmarkIcon.classList.add("fa-regular");
+    bookmarkIcon.style.color = "#000";
+  }
+
+  renderMC(item, box, section, i);
+
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+
+  updateNavigator();
+  updateNavButtons();
+  updateNavigatorButton();
+}
+
+function renderMC(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name];
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const optionsContainer = document.createElement("div");
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  item.options.forEach((opt, k) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letters[k]);
+    if (saved === k) label.classList.add("active");
+
+    const circle = document.createElement("div");
+    circle.className = "option-circle";
+    circle.textContent = letters[k];
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = k;
+    if (saved === k) input.checked = true;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "option-text";
+    textSpan.innerHTML = opt;
+
+    const strikeBtn = document.createElement("button");
+    strikeBtn.className = "strike-toggle";
+    strikeBtn.textContent = "⊘";
+    strikeBtn.title = "Eliminate Option";
+
+    label.addEventListener("click", (event) => {
+      if (event.target.classList.contains("strike-toggle")) return;
+      optionsContainer.querySelectorAll(".option-label").forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      input.checked = true;
+      studentAnswers[name] = k;
+      updateNavigator();
+    });
+
+    strikeBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const sec = sections[currentSectionIndex];
+      const qKey = `s${sec.id}-q${idx}`;
+      if (!eliminateState[qKey]) eliminateState[qKey] = {};
+
+      const now = !label.classList.contains("struck");
+      label.classList.toggle("struck", now);
+      strikeBtn.classList.toggle("active", now);
+      eliminateState[qKey][letters[k]] = now;
+    });
+
+    label.appendChild(circle);
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    label.appendChild(strikeBtn);
+    optionsContainer.appendChild(label);
+  });
+
+  promptHTML.appendChild(optionsContainer);
+  container.appendChild(promptHTML);
+
+  const sec = sections[currentSectionIndex];
+  const qKey = `s${sec.id}-q${idx}`;
+  const state = eliminateState[qKey] || {};
+  Object.keys(state).forEach(letter => {
+    const opt = optionsContainer.querySelector(`.option-label[data-choice="${letter}"]`);
+    if (opt && state[letter]) {
+      opt.classList.add("struck");
+      const btn = opt.querySelector(".strike-toggle");
+      btn.classList.add("active");
+    }
+  });
+}
+
+/***********************
+ * NAVIGATION WITHIN SECTION
+ ***********************/
+function prevQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex > 0) loadQuestion(currentIndex - 1);
+}
+
+function nextQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex < section.items.length - 1) loadQuestion(currentIndex + 1);
+}
+
+function updateNavButtons() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("back-btn").disabled = currentIndex === 0;
+  document.getElementById("next-btn").disabled = currentIndex === section.items.length - 1;
+}
+
+function updateNavigatorButton() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-button").textContent = `Question ${currentIndex + 1} of ${section.items.length}`;
+}
+
+function openNavigator() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-section-title").textContent = section.title;
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function buildNavigator() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  const section = sections[currentSectionIndex];
+
+  section.items.forEach((_, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = idx + 1;
+    btn.onclick = () => {
+      loadQuestion(idx);
+      closeNavigator();
+    };
+    grid.appendChild(btn);
+  });
+
+  updateNavigator();
+}
+
+function updateNavigator() {
+  const section = sections[currentSectionIndex];
+  const buttons = document.querySelectorAll("#navigator-grid button");
+
+  buttons.forEach((btn, idx) => {
+    const baseKey = `s${section.id}-q${idx}`;
+    const answered = studentAnswers[baseKey] !== undefined;
+    btn.classList.toggle("current", idx === currentIndex);
+    btn.classList.toggle("answered", answered && idx !== currentIndex);
+    btn.classList.toggle("review", reviewFlags[idx]);
+  });
+}
+
+function toggleBookmark(checkbox) {
+  const icon = checkbox.nextElementSibling;
+  icon.classList.toggle("fa-regular", !checkbox.checked);
+  icon.classList.toggle("fa-solid", checkbox.checked);
+  icon.style.color = checkbox.checked ? "#CF0000" : "#000";
+  reviewFlags[currentIndex] = checkbox.checked;
+  updateNavigator();
+}
+
+/***********************
+ * FINISH SECTION & NEXT
+ ***********************/
+function finishCurrentSection() {
+  if (timer) clearInterval(timer);
+
+  if (currentSectionIndex < sections.length - 1) {
+    document.getElementById("section-modal-title").textContent = "Section complete";
+    document.getElementById("section-modal-text").textContent =
+      "The next section will begin now. You cannot return to this section.";
+    document.getElementById("section-modal").style.display = "flex";
+  } else {
+    showFinalReport();
+  }
+}
+
+function closeSectionModal() {
+  document.getElementById("section-modal").style.display = "none";
+
+  if (!timer) {
+    timer = setInterval(() => {
+      seconds--;
+      updateTimerDisplay();
+      if (seconds < 0) {
+        clearInterval(timer);
+        finishCurrentSection();
+      }
+    }, 1000);
+  }
+}
+
+function goToNextSection() {
+  document.getElementById("section-modal").style.display = "none";
+  const nextIdx = currentSectionIndex + 1;
+  if (nextIdx < sections.length) {
+    startSection(nextIdx);
+  }
+}
+
+/***********************
+ * CALCULATOR POPUP
+ ***********************/
+function openCalculator() {
+  const section = sections[currentSectionIndex];
+  if (!section || !section.calculatorAllowed) return;
+
+  document.getElementById("calculator-popup").style.display = "block";
+
+  if (!desmosCalculator) {
+    const elt = document.getElementById("calculator");
+    desmosCalculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      keypad: true,
+      settingsMenu: false,
+      zoomButtons: true,
+      expressionsTopbar: false,
+      border: false
+    });
+  }
+}
+
+function closeCalculator() {
+  document.getElementById("calculator-popup").style.display = "none";
+}
+
+(function makeDraggable() {
+  const popup = document.getElementById("calculator-popup");
+  const handle = document.getElementById("calculator-drag-handle");
+  let offsetX = 0, offsetY = 0, isDown = false;
+
+  handle.addEventListener("mousedown", (e) => {
+    isDown = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDown = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    popup.style.left = `${e.clientX - offsetX}px`;
+    popup.style.top = `${e.clientY - offsetY}px`;
+  });
+})();
+
+/***********************
+ * SCORE HELPERS
+ ***********************/
+function roundToNearest10(n) {
+  return Math.round(n / 10) * 10;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function predictSectionScore(correct, total) {
+  if (!total) return 200;
+  const rawScore = 200 + (correct / total) * 600;
+  return clamp(roundToNearest10(rawScore), 200, 800);
+}
+
+/***********************
+ * FINAL REPORT
+ ***********************/
+function showFinalReport() {
+  if (timer) clearInterval(timer);
+
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("report-container").classList.remove("hidden");
+  document.getElementById("header-title").textContent = "SAT Diagnostic Test — Score Report";
+  document.getElementById("calc-badge").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  const letters = ["A","B","C","D","E","F","G","H"];
+
+  let readingCorrect = 0;
+  let readingTotal = 0;
+  let mathCorrect = 0;
+  let mathTotal = 0;
+  const rows = [];
+
+  sections.forEach(sec => {
+    sec.items.forEach((item, idx) => {
+      if (item.type !== "MC") return;
+
+      const key = `s${sec.id}-q${idx}`;
+      const userAns = studentAnswers[key];
+
+      let correctIdx = item.correctIndex;
+      if (typeof correctIdx === "string") {
+        correctIdx = letters.indexOf(correctIdx);
+      }
+
+      const your = (userAns !== undefined) ? letters[userAns] : "–";
+      const corr = letters[correctIdx];
+      const isCorrect = userAns === correctIdx;
+
+      if (sec.id.startsWith("READING")) {
+        readingTotal++;
+        if (isCorrect) readingCorrect++;
+      } else if (sec.id.startsWith("MATH")) {
+        mathTotal++;
+        if (isCorrect) mathCorrect++;
+      }
+
+      rows.push({
+        section: sec.id,
+        q: item.number || idx + 1,
+        your,
+        correct: corr,
+        status: isCorrect ? "✅" : "❌"
+      });
+    });
+  });
+
+  const readingScore = predictSectionScore(readingCorrect, readingTotal);
+  const mathScore = predictSectionScore(mathCorrect, mathTotal);
+  const satScore = mathScore;
+
+  const report = document.getElementById("report-container");
+  report.innerHTML = `
+    <h1>SAT Diagnostic Test — Completed</h1>
+    <p><strong>Name:</strong> ${studentName} &nbsp; | &nbsp; <strong>Email:</strong> ${studentEmail} &nbsp; | &nbsp; <strong>Session:</strong> ${testSession}</p>
+    <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Predicted Math score: ${mathScore} / 800</p>
+    <p><strong>Predicted Math Score:</strong> ${mathScore} / 800</p>
+    <p style="font-size:13px; color:#666;">This is a simple diagnostic estimate based on raw performance in this test, not an official College Board conversion.</p>
+
+    <div class="score-container">
+      <svg viewBox="0 0 230 230">
+        <path class="arc" d="M 65 50 A 85 85 0 0 0 65 180" />
+        <path class="arc" d="M 165 50 A 85 85 0 0 1 165 180" />
+        <defs>
+          <path id="curveTop" d="M 70 50 A 80 80 0 0 1 160 50" />
+        </defs>
+        <text class="label">
+          <textPath href="#curveTop" startOffset="50%" text-anchor="middle">SCORE</textPath>
+        </text>
+      </svg>
+      <div class="score" style="font-size:68px;">${satScore}</div>
+    </div>
+
+    <h2>Question Detail</h2>
+    <table>
+      <thead>
+        <tr><th>Section</th><th>Q#</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.section}</td>
+            <td>${r.q}</td>
+            <td>${r.your}</td>
+            <td>${r.correct}</td>
+            <td>${r.status}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+
+    ${solutionPDF ? `
+      <h3>📄 View Full Solutions</h3>
+      <iframe src="${solutionPDF}" width="100%" height="480px" style="border:1px solid #ccc;"></iframe>
+    ` : ""}
+  `;
+
+  if (!emailSent && typeof emailjs !== "undefined" && studentEmail) {
+    emailSent = true;
+
+    const timestamp = new Date().toLocaleString();
+    const readingAnalysisText = rows
+      .filter(r => r.section.startsWith("READING"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const mathAnalysisText = rows
+      .filter(r => r.section.startsWith("MATH"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+      name: studentName,
+      test_title: "SAT Diagnostic Math Test 2",
+      to_email: studentEmail,
+      solution_link: solutionPDF,
+      session: testSession,
+      score: `Math ${mathScore}/800 | ${mathCorrect}/${mathTotal} correct`,
+      timestamp: timestamp,
+      paper1: readingAnalysisText,
+      paper2: mathAnalysisText
+    }).then(() => {
+      console.log("✅ Email report sent successfully.");
+    }).catch(err => {
+      console.error("❌ Email send failed:", err);
+    });
+  }
+}
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("9jjn3yBHl6S88hITy");
+    })();
+  </script>
+
+</body>
+</html>
