@@ -1,6 +1,7 @@
 import { access, readFile, stat } from "node:fs/promises";
 
 const dashboardPath = "app/dashboard/AMCDashboardClient.tsx";
+const amcPagePath = "app/amc/page.tsx";
 const proxyPath = "proxy.ts";
 const emailReportPath = "public/amc-practice-tests/email-report.js";
 const tests = [
@@ -59,12 +60,22 @@ const tests = [
   },
 ];
 
+const resources = [
+  ["AMC 8 Comprehensive Cheat Sheet", "amc-8-comprehensive-cheat-sheet-thriving-scholars.pdf", 11],
+  ["AMC 8 Compendium", "amc-8-compendium.pdf", 307],
+  ["AMC 10 Comprehensive Cheat Sheet", "amc-10-comprehensive-cheat-sheet-thriving-scholars.pdf", 10],
+  ["AMC 10 Compendium", "amc-10-compendium.pdf", 757],
+  ["AMC 12 Comprehensive Cheat Sheet", "amc-12-comprehensive-cheat-sheet-thriving-scholars.pdf", 10],
+  ["AMC 12 Compendium", "amc-12-compendium.pdf", 471],
+];
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const [dashboard, proxy, emailReport] = await Promise.all([
+const [dashboard, amcPage, proxy, emailReport] = await Promise.all([
   readFile(dashboardPath, "utf8"),
+  readFile(amcPagePath, "utf8"),
   readFile(proxyPath, "utf8"),
   readFile(emailReportPath, "utf8"),
 ]);
@@ -76,6 +87,14 @@ assert(
 assert(
   proxy.includes('"/amc-practice-tests/:path*"'),
   "AMC practice-test routes must be included in the proxy matcher.",
+);
+assert(
+  proxy.includes('{ prefix: "/amc-resources", product: "amc-question-bank" }'),
+  "AMC resource routes must use the existing AMC entitlement.",
+);
+assert(
+  proxy.includes('"/amc-resources/:path*"'),
+  "AMC resource routes must be included in the proxy matcher.",
 );
 
 for (const test of tests) {
@@ -186,6 +205,21 @@ assert(
 );
 await access("public/amc-practice-tests/email-report.css");
 
+for (const [title, filename, pages] of resources) {
+  const href = `/amc-resources/${filename}`;
+  const filePath = `public${href}`;
+  const [pdf, file] = await Promise.all([readFile(filePath), stat(filePath)]);
+  assert(file.size > 900_000, `${title} PDF is unexpectedly small.`);
+  assert(pdf.subarray(0, 5).toString("ascii") === "%PDF-", `${title} is not a valid PDF file.`);
+  assert(dashboard.includes(title), `${title} is missing from the AMC resources tab.`);
+  assert(dashboard.includes(href), `${title} has no download link.`);
+  assert(dashboard.includes(`pages: ${pages}`), `${title} page count is missing.`);
+}
+
+assert(dashboard.includes('AMCView = AMCPaper | "Practice Tests" | "Resources"'), "AMC Resources is not a selectable view.");
+assert(dashboard.includes('url.searchParams.set("section", "resources")'), "AMC Resources does not preserve its URL state.");
+assert(amcPage.includes('section === "resources"'), "The AMC route does not open the Resources tab directly.");
+
 for (const heading of [
   "Diagnostic Tests",
   "Pre-AMC 8 & AMC 10",
@@ -221,5 +255,5 @@ for (const internalPhrase of ["restored", "original Wix", "preserved exactly"]) 
 }
 
 console.log(
-  `Verified ${tests.length} AMC practice tests, email reports, solution links, timers, answer keys and protected catalogue routes.`,
+  `Verified ${tests.length} AMC practice tests and ${resources.length} protected AMC PDF resources, including email reports, solution links, timers and answer keys.`,
 );

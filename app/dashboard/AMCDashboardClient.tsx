@@ -6,11 +6,11 @@ import styles from "./dashboard.module.css";
 type Props = {
   email?: string | null;
   hasTmua?: boolean;
-  initialSection?: "practice-tests" | null;
+  initialSection?: "practice-tests" | "resources" | null;
 };
 
 type AMCPaper = "AMC 8" | "AMC 10" | "AMC 12";
-type AMCView = AMCPaper | "Practice Tests";
+type AMCView = AMCPaper | "Practice Tests" | "Resources";
 
 const PAPERS: Array<{
   paper: AMCPaper;
@@ -151,17 +151,90 @@ const PRACTICE_TEST_SECTIONS = [
   },
 ] as const;
 
+const AMC_RESOURCE_SECTIONS = [
+  {
+    heading: "AMC 8",
+    description: "Quick revision and a deep archive for the AMC 8 syllabus.",
+    resources: [
+      {
+        title: "AMC 8 Comprehensive Cheat Sheet",
+        description:
+          "An 11-page Thriving Scholars quick reference covering core knowledge, high-yield methods and contest strategy.",
+        kind: "Quick reference",
+        pages: 11,
+        href: "/amc-resources/amc-8-comprehensive-cheat-sheet-thriving-scholars.pdf",
+      },
+      {
+        title: "AMC 8 Compendium",
+        description:
+          "A 307-page AMC 8 problem compendium spanning 1985–2026 for structured long-form practice.",
+        kind: "Problem archive",
+        pages: 307,
+        href: "/amc-resources/amc-8-compendium.pdf",
+      },
+    ],
+  },
+  {
+    heading: "AMC 10",
+    description: "Formula review and an extensive AMC 10 competition archive.",
+    resources: [
+      {
+        title: "AMC 10 Comprehensive Cheat Sheet",
+        description:
+          "A 10-page Thriving Scholars reference for formulas, recurring structures and late-question techniques.",
+        kind: "Quick reference",
+        pages: 10,
+        href: "/amc-resources/amc-10-comprehensive-cheat-sheet-thriving-scholars.pdf",
+      },
+      {
+        title: "AMC 10 Compendium",
+        description:
+          "A comprehensive 757-page AMC 10 problem collection for sustained contest preparation.",
+        kind: "Problem archive",
+        pages: 757,
+        href: "/amc-resources/amc-10-compendium.pdf",
+      },
+    ],
+  },
+  {
+    heading: "AMC 12",
+    description: "Advanced revision and past-problem practice for AMC 12.",
+    resources: [
+      {
+        title: "AMC 12 Comprehensive Cheat Sheet",
+        description:
+          "A 10-page Thriving Scholars toolkit covering algebra, trigonometry, geometry, number theory and combinatorics.",
+        kind: "Quick reference",
+        pages: 10,
+        href: "/amc-resources/amc-12-comprehensive-cheat-sheet-thriving-scholars.pdf",
+      },
+      {
+        title: "AMC 12 Compendium",
+        description:
+          "A 471-page AMC 12 problem compendium covering the 2008–2025 competition years.",
+        kind: "Problem archive",
+        pages: 471,
+        href: "/amc-resources/amc-12-compendium.pdf",
+      },
+    ],
+  },
+] as const;
+
 function bankUrl(paper: AMCPaper) {
   return `/amc-question-bank?paper=${encodeURIComponent(paper)}`;
 }
 
 export default function AMCDashboardClient({ email, hasTmua, initialSection }: Props) {
   const [active, setActive] = useState<AMCView>(
-    initialSection === "practice-tests" ? "Practice Tests" : "AMC 8",
+    initialSection === "practice-tests"
+      ? "Practice Tests"
+      : initialSection === "resources"
+        ? "Resources"
+        : "AMC 8",
   );
 
   const activePaper =
-    active === "Practice Tests"
+    active === "Practice Tests" || active === "Resources"
       ? null
       : PAPERS.find((paper) => paper.paper === active) || PAPERS[0];
 
@@ -170,6 +243,7 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
 
     const url = new URL(window.location.href);
     if (view === "Practice Tests") url.searchParams.set("section", "practice-tests");
+    else if (view === "Resources") url.searchParams.set("section", "resources");
     else url.searchParams.delete("section");
     window.history.replaceState({}, "", url);
   }
@@ -233,6 +307,17 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
                 <span className={styles.navLabel}>Practice Tests</span>
               </button>
             </li>
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "Resources" ? styles.navBtnOn : ""}`}
+                onClick={() => selectView("Resources")}
+                type="button"
+                title="AMC Resources"
+              >
+                <span className={styles.step}>5</span>
+                <span className={styles.navLabel}>Resources</span>
+              </button>
+            </li>
           </ul>
 
           <div className={styles.card} style={{ margin: "16px 18px 0" }}>
@@ -278,6 +363,13 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
               type="button"
             >
               Practice Tests
+            </button>
+            <button
+              className={`${styles.mobileNavBtn} ${active === "Resources" ? styles.mobileNavBtnOn : ""}`}
+              onClick={() => selectView("Resources")}
+              type="button"
+            >
+              Resources
             </button>
           </nav>
 
@@ -342,6 +434,63 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
                 ))}
               </div>
             </>
+          ) : active === "Resources" ? (
+            <>
+              <div className={styles.h1}>AMC Resources</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> Downloadable AMC PDFs
+                </div>
+                <div className={styles.meta}>AMC 8 · AMC 10 · AMC 12</div>
+                <div className={styles.meta}>Cheat sheets · Compendia</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Build your revision library</div>
+                <div className={styles.muted}>
+                  Use the concise cheat sheets for fast recall, then move to the compendia for
+                  deeper problem practice. Every resource opens as a downloadable PDF.
+                </div>
+              </div>
+
+              <div className={styles.resourceLibrary}>
+                {AMC_RESOURCE_SECTIONS.map((section) => (
+                  <section className={styles.testSection} key={section.heading}>
+                    <div className={styles.sectionIntro}>
+                      <h2 className={styles.sectionTitle}>{section.heading} Resources</h2>
+                      <p className={styles.sectionDescription}>{section.description}</p>
+                    </div>
+
+                    <div className={styles.resourceGrid}>
+                      {section.resources.map((resource) => (
+                        <a
+                          className={styles.resourceCard}
+                          href={resource.href}
+                          key={resource.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          download
+                        >
+                          <span className={styles.resourceIcon} aria-hidden="true">
+                            PDF
+                          </span>
+                          <div className={styles.resourceType}>
+                            {resource.kind} · {resource.pages} pages
+                          </div>
+                          <div className={styles.resourceTitle}>{resource.title}</div>
+                          <p className={styles.resourceDescription}>{resource.description}</p>
+                          <div className={styles.resourceFooter}>
+                            <span className={styles.resourceLevel}>{section.heading}</span>
+                            <span className={styles.resourceAction}>Download PDF →</span>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </>
           ) : (
             <>
               <div className={styles.h1}>{activePaper?.label}</div>
@@ -377,4 +526,3 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
     </div>
   );
 }
-

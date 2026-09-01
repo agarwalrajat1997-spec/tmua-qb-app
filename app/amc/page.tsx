@@ -63,7 +63,9 @@ export default async function AMCPortalPage({ searchParams }: Props) {
     <AMCDashboardClient
       email={user.email}
       hasTmua={false}
-      initialSection={section === "practice-tests" ? "practice-tests" : null}
+      initialSection={
+        section === "practice-tests" || section === "resources" ? section : null
+      }
     />
   );
 }
