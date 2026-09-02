@@ -1,36 +1,5 @@
 begin;
 
-create table if not exists public.sat_question_reports (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid null references auth.users(id) on delete set null,
-  user_email text not null,
-  qid text not null references public.sat_qb_questions(qid) on delete cascade,
-  report_text text not null,
-  context jsonb not null default '{}'::jsonb,
-  status text not null default 'open',
-  created_at timestamptz not null default now(),
-  resolved_at timestamptz null,
-  constraint sat_question_reports_text_length
-    check (char_length(btrim(report_text)) between 5 and 4000),
-  constraint sat_question_reports_status_valid
-    check (status in ('open', 'reviewing', 'resolved', 'dismissed')),
-  constraint sat_question_reports_context_object
-    check (jsonb_typeof(context) = 'object')
-);
-
-create index if not exists sat_question_reports_open_created_idx
-  on public.sat_question_reports (status, created_at desc);
-
-create index if not exists sat_question_reports_qid_created_idx
-  on public.sat_question_reports (qid, created_at desc);
-
-alter table public.sat_question_reports enable row level security;
-revoke all on table public.sat_question_reports from anon, authenticated;
-grant all on table public.sat_question_reports to service_role;
-
-comment on table public.sat_question_reports is
-  'Authenticated SAT Question Bank issue reports. Writes are server-only via the service role.';
-
 create or replace function public.publish_sat_qb_release(
   p_expected_count integer,
   p_expected_qid_md5 text

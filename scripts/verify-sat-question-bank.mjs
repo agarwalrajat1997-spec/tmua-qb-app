@@ -15,6 +15,9 @@ const saveRoute = read("app/api/sat/qb/progress/save/route.ts");
 const migration = read(
   "supabase/migrations/20260902053000_sat_qb_publish_and_reports.sql"
 );
+const publishRepairMigration = read(
+  "supabase/migrations/20260902054600_fix_sat_qb_publish_where.sql"
+);
 const releasePython = read(
   "scripts/sat-qb-release/publish_sat_qb_release.py"
 );
@@ -63,6 +66,12 @@ assert.match(migration, /revoke all on table public\.sat_question_reports from a
 assert.match(migration, /publish_sat_qb_release/i);
 assert.match(migration, /embedded image data remains/i);
 assert.match(migration, /grant execute on function[\s\S]*to service_role/i);
+for (const sql of [migration, publishRepairMigration]) {
+  assert.match(
+    sql,
+    /update public\.sat_qb_questions[\s\S]*where is_active is distinct from true[\s\S]*or answer_verified is distinct from true/i
+  );
+}
 
 assert.match(releasePython, /EXPECTED_AUTO_PASS = 230/);
 assert.match(releasePython, /EXPECTED_CORRECTED = 265/);
