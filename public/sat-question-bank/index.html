@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAT Question Bank | Thriving Scholars</title>
+  <meta name="color-scheme" content="light">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --ts-yellow: #fec94f;
+      --ts-yellow-dark: #f5b935;
+      --ts-cream: #fff8e8;
+      --ts-maroon: #670d04;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: #d8dee8;
+      --soft: #f4f6fa;
+      --blue: #2e53da;
+      --green: #16744a;
+      --red: #b42318;
+      --header-height: 62px;
+      --footer-height: 70px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body { background: #f0f2f5; color: var(--ink); overflow: hidden; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .hidden { display: none !important; }
+
+    .app-header {
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 18px;
+      background: #fafbff;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      z-index: 20;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 11px;
+      display: grid; place-items: center;
+      background: var(--ts-yellow); color: var(--ts-maroon);
+      font-weight: 900; letter-spacing: -.04em;
+      box-shadow: 0 5px 14px rgba(254, 201, 79, .32);
+    }
+    .brand-copy strong { display: block; color: var(--ts-maroon); font-size: 15px; }
+    .brand-copy span { color: var(--muted); font-size: 12px; }
+    .header-center { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; }
+    .header-center strong { display: block; font-size: 15px; }
+    .header-center span { color: var(--muted); font-size: 12px; }
+    .header-actions { display: flex; align-items: center; gap: 9px; }
+    .header-link, .icon-button {
+      border: 1px solid var(--line); background: #fff; color: var(--ink);
+      border-radius: 9px; padding: 9px 12px; text-decoration: none; font-weight: 700;
+    }
+    .header-link:hover, .icon-button:hover { border-color: #9aa6b5; background: var(--soft); }
+
+    .shell { display: grid; grid-template-columns: 288px 1fr; height: calc(100vh - var(--header-height)); }
+    .filters {
+      background: #fff; border-right: 1px solid var(--line); overflow-y: auto;
+      padding: 19px 17px 28px;
+    }
+    .filters h2 { margin: 0 0 4px; font-size: 18px; color: var(--ts-maroon); }
+    .filters-intro { margin: 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .field { display: grid; gap: 6px; margin-bottom: 14px; }
+    .field label { font-size: 12px; font-weight: 800; color: #334155; text-transform: uppercase; letter-spacing: .04em; }
+    .field select, .field input, .report-dialog textarea {
+      width: 100%; border: 1px solid #cbd5e1; border-radius: 9px; padding: 10px 11px;
+      background: #fff; color: var(--ink); outline: none;
+    }
+    .field select:focus, .field input:focus, .report-dialog textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(46,83,218,.12); }
+    .checkbox-row { display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 700; margin: 3px 0 16px; }
+    .checkbox-row input { width: 17px; height: 17px; accent-color: var(--ts-maroon); }
+    .filter-summary {
+      border: 1px solid #f1d48b; background: var(--ts-cream); color: var(--ts-maroon);
+      border-radius: 12px; padding: 12px; margin: 10px 0 14px; font-weight: 800; font-size: 14px;
+    }
+    .filter-summary span { display: block; color: #6d5847; font-weight: 400; font-size: 12px; margin-top: 4px; }
+    .primary, .secondary, .danger-quiet {
+      border: 0; border-radius: 10px; padding: 11px 16px; font-weight: 800;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .primary { background: var(--ts-yellow); color: var(--ts-maroon); box-shadow: 0 4px 12px rgba(254,201,79,.28); }
+    .primary:hover { background: var(--ts-yellow-dark); transform: translateY(-1px); }
+    .primary:disabled { cursor: not-allowed; opacity: .55; transform: none; }
+    .secondary { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+    .secondary:hover { background: var(--soft); border-color: #9aa6b5; }
+    .filter-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+
+    .workspace { min-width: 0; height: 100%; display: flex; flex-direction: column; }
+    .loading, .empty-state {
+      margin: auto; width: min(560px, calc(100% - 32px)); background: #fff;
+      border: 2px solid var(--ts-yellow); border-radius: 16px; padding: 34px;
+      text-align: center; box-shadow: 0 10px 28px rgba(46, 37, 23, .10);
+    }
+    .loading h1, .empty-state h2 { color: var(--ts-maroon); margin-top: 0; }
+    .spinner {
+      width: 34px; height: 34px; border: 4px solid #f4deb0; border-top-color: var(--ts-maroon);
+      border-radius: 50%; margin: 0 auto 18px; animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .question-toolbar {
+      min-height: 48px; background: #fff; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 16px;
+    }
+    .question-id { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .q-number {
+      flex: 0 0 34px; width: 34px; height: 34px; display: grid; place-items: center;
+      background: #111; color: #fff; font-weight: 900; border-radius: 3px;
+    }
+    .q-identity { min-width: 0; }
+    .q-identity strong { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .q-identity span { font-size: 12px; color: var(--muted); }
+    .toolbar-actions { display: flex; align-items: center; gap: 8px; }
+    .flag-button.active { background: #fff2c8; border-color: #e0ae2f; color: var(--ts-maroon); }
+    .timer { min-width: 62px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 800; }
+
+    .question-stage {
+      flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(390px, 1fr);
+      background: #fff;
+    }
+    .passage-panel, .answer-panel { min-width: 0; overflow-y: auto; padding: 30px clamp(24px, 4vw, 52px); }
+    .passage-panel { border-right: 2px solid #cfd5df; font-size: 17px; line-height: 1.7; }
+    .answer-panel { font-size: 16px; }
+    .prompt-html > :first-child, .solution-html > :first-child { margin-top: 0; }
+    .prompt-html p { margin: 0 0 1em; }
+    .prompt-html table, .solution-html table { border-collapse: collapse; width: 100%; margin: 14px 0; }
+    .prompt-html th, .prompt-html td, .solution-html th, .solution-html td { border: 1px solid #94a3b8; padding: 7px 9px; }
+    .asset-list { display: grid; gap: 14px; margin: 18px 0; }
+    .question-asset { display: block; max-width: 100%; max-height: 520px; object-fit: contain; margin: 0 auto; border-radius: 4px; }
+    .meta-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 17px; }
+    .chip { border-radius: 999px; padding: 5px 9px; background: #eef2ff; color: #26377d; font-size: 12px; font-weight: 800; }
+    .chip.difficulty { background: #fff2c8; color: #7a3c00; }
+    .answer-heading { font-size: 18px; margin: 0 0 14px; }
+    .options { display: grid; gap: 11px; }
+    .option {
+      display: grid; grid-template-columns: 34px 1fr 34px; align-items: start; gap: 11px;
+      padding: 13px; border: 1px solid #aeb7c5; border-radius: 11px; background: #fff;
+      cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s;
+    }
+    .option:hover { border-color: #66758a; box-shadow: 0 2px 8px rgba(15,23,42,.07); }
+    .option.selected { border: 2px solid var(--blue); padding: 12px; background: #f4f6ff; }
+    .option.eliminated { opacity: .47; }
+    .option.correct { border-color: var(--green); background: #edf9f2; }
+    .option.incorrect { border-color: var(--red); background: #fff2f0; }
+    .option input { position: absolute; opacity: 0; pointer-events: none; }
+    .option-key {
+      width: 30px; height: 30px; border: 1px solid #8b98aa; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 900; background: #fff;
+    }
+    .option.selected .option-key { color: #fff; background: var(--blue); border-color: var(--blue); }
+    .option-content { line-height: 1.5; min-width: 0; }
+    .option-content > :first-child { margin-top: 2px; }
+    .option-content > :last-child { margin-bottom: 0; }
+    .option-image { max-width: 100%; max-height: 260px; object-fit: contain; display: block; margin: 9px auto 0; }
+    .eliminate {
+      width: 30px; height: 30px; border-radius: 50%; border: 1px solid #cbd5e1;
+      background: #fff; color: #64748b; font-weight: 900;
+    }
+    .eliminate:hover { color: var(--red); border-color: var(--red); }
+    .option.eliminated .eliminate { color: #fff; background: #64748b; }
+    .check-row { display: flex; justify-content: flex-end; gap: 9px; margin-top: 18px; }
+    .feedback {
+      margin-top: 17px; border-radius: 12px; padding: 14px 16px; border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .feedback.correct { border-color: #86cfaa; background: #eefaf3; }
+    .feedback.incorrect { border-color: #f0aaa3; background: #fff4f2; }
+    .feedback-title { margin: 0 0 10px; font-size: 18px; }
+    .solution-html { line-height: 1.65; }
+    .tip-card { margin-top: 12px; padding: 12px 14px; border-left: 4px solid var(--ts-yellow); background: var(--ts-cream); border-radius: 6px; line-height: 1.55; }
+
+    .question-footer {
+      min-height: var(--footer-height); background: #fafbff; border-top: 1px solid var(--line);
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; padding: 10px 16px;
+    }
+    .footer-progress { color: var(--muted); font-size: 13px; }
+    .footer-center { text-align: center; }
+    .footer-right { justify-self: end; display: flex; gap: 9px; }
+
+    .report-button {
+      position: fixed; right: 20px; bottom: 86px; z-index: 70;
+      display: inline-flex; align-items: center; gap: 8px; border: 1px solid #d7b154;
+      background: #fff8df; color: var(--ts-maroon); padding: 10px 13px; border-radius: 999px;
+      font-weight: 900; box-shadow: 0 8px 22px rgba(17,24,39,.14);
+    }
+    .report-button:hover { background: #ffefc2; transform: translateY(-1px); }
+    .report-button svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; }
+
+    .overlay {
+      position: fixed; inset: 0; z-index: 100; background: rgba(15,23,42,.55);
+      display: grid; place-items: center; padding: 18px;
+    }
+    .dialog { width: min(560px, 100%); max-height: min(760px, 92vh); overflow: auto; background: #fff; border-radius: 16px; box-shadow: 0 24px 70px rgba(0,0,0,.25); }
+    .dialog-header, .dialog-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 18px; }
+    .dialog-header { border-bottom: 1px solid var(--line); }
+    .dialog-footer { border-top: 1px solid var(--line); justify-content: flex-end; }
+    .dialog-header h2 { margin: 0; font-size: 19px; color: var(--ts-maroon); }
+    .dialog-body { padding: 18px; }
+    .report-context { background: var(--soft); border: 1px solid var(--line); padding: 11px 12px; border-radius: 10px; margin-bottom: 13px; line-height: 1.45; }
+    .report-dialog label { display: block; font-weight: 800; margin-bottom: 7px; }
+    .report-dialog textarea { min-height: 145px; resize: vertical; }
+    .form-message { margin-top: 10px; font-weight: 800; }
+    .form-message.success { color: var(--green); }
+    .form-message.error { color: var(--red); }
+    .navigator-dialog { width: min(850px, 100%); }
+    .navigator-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 8px; }
+    .nav-cell { min-height: 42px; border: 1px solid #aeb7c5; background: #fff; border-radius: 7px; font-weight: 800; }
+    .nav-cell.current { outline: 3px solid var(--blue); outline-offset: 1px; }
+    .nav-cell.answered { background: #e8edff; border-color: #8ea0e9; }
+    .nav-cell.correct { background: #dff5e8; border-color: #68b58b; }
+    .nav-cell.incorrect { background: #ffe4e1; border-color: #df8c84; }
+    .nav-cell.flagged { box-shadow: inset 0 -5px 0 var(--ts-yellow); }
+    .nav-legend { display: flex; flex-wrap: wrap; gap: 13px; color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+    .nav-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 13px; height: 13px; border-radius: 3px; border: 1px solid #94a3b8; }
+
+    .mobile-filter-button { display: none; }
+    @media (max-width: 900px) {
+      .header-center { display: none; }
+      .shell { grid-template-columns: 1fr; }
+      .filters {
+        position: fixed; z-index: 85; left: 0; top: var(--header-height); bottom: 0; width: min(330px, 88vw);
+        transform: translateX(-105%); transition: transform .2s ease; box-shadow: 12px 0 30px rgba(15,23,42,.18);
+      }
+      .filters.open { transform: translateX(0); }
+      .mobile-filter-button { display: inline-flex; }
+      .question-stage { grid-template-columns: 1fr; overflow-y: auto; }
+      .passage-panel, .answer-panel { overflow: visible; padding: 23px 20px; }
+      .passage-panel { border-right: 0; border-bottom: 2px solid #cfd5df; }
+      .question-footer { grid-template-columns: auto 1fr; }
+      .footer-progress { display: none; }
+      .footer-center { text-align: left; }
+      .report-button span { display: none; }
+      .report-button { width: 44px; height: 44px; padding: 0; justify-content: center; right: 13px; bottom: 82px; }
+    }
+    @media (max-width: 560px) {
+      .brand-copy span, .header-link { display: none; }
+      .app-header { padding: 0 10px; }
+      .question-toolbar { padding: 7px 9px; }
+      .q-identity span { display: none; }
+      .timer { min-width: 52px; font-size: 13px; }
+      .icon-button { padding: 8px 9px; }
+      .question-footer { padding: 9px; }
+      .question-footer button { padding: 10px 11px; }
+      .option { grid-template-columns: 31px 1fr 31px; gap: 8px; padding: 11px; }
+      .option.selected { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark">TS</div>
+      <div class="brand-copy"><strong>Thriving Scholars</strong><span>Digital SAT preparation</span></div>
+    </div>
+    <div class="header-center"><strong>SAT Question Bank</strong><span id="headerCount">Loading questions…</span></div>
+    <div class="header-actions">
+      <button id="mobileFilterButton" class="icon-button mobile-filter-button" type="button">Filters</button>
+      <a class="header-link" href="/sat">SAT dashboard</a>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside id="filters" class="filters" aria-label="Question filters">
+      <h2>Build your practice</h2>
+      <p class="filters-intro">Choose a section, topic, difficulty, or progress state. Your answers and flags save automatically.</p>
+
+      <div class="field">
+        <label for="paperFilter">Section</label>
+        <select id="paperFilter"><option value="">All sections</option><option>Reading and Writing</option><option>Math</option></select>
+      </div>
+      <div class="field">
+        <label for="topicFilter">Domain / topic</label>
+        <select id="topicFilter"><option value="">All topics</option></select>
+      </div>
+      <div class="field">
+        <label for="difficultyFilter">Difficulty</label>
+        <select id="difficultyFilter"><option value="">All difficulties</option><option value="1">1 — Foundation</option><option value="2">2 — Developing</option><option value="3">3 — Medium</option><option value="4">4 — Hard</option><option value="5">5 — Very hard</option></select>
+      </div>
+      <div class="field">
+        <label for="statusFilter">Progress</label>
+        <select id="statusFilter"><option value="">All progress</option><option value="unanswered">Unanswered</option><option value="answered">Answered</option><option value="correct">Correct</option><option value="incorrect">Needs another try</option></select>
+      </div>
+      <div class="field">
+        <label for="searchFilter">Search</label>
+        <input id="searchFilter" type="search" placeholder="Topic, subtopic, or qid">
+      </div>
+      <label class="checkbox-row"><input id="flaggedFilter" type="checkbox"> Flagged only</label>
+
+      <div id="filterSummary" class="filter-summary">0 questions<span>Adjust filters to build a set.</span></div>
+      <div class="filter-actions">
+        <button id="resetFilters" type="button" class="secondary">Reset</button>
+        <button id="randomQuestion" type="button" class="primary">Random</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <section id="loading" class="loading" aria-live="polite">
+        <div class="spinner"></div>
+        <h1>Preparing your SAT Question Bank</h1>
+        <p id="loadingText">Loading your questions and saved progress…</p>
+      </section>
+
+      <section id="emptyState" class="empty-state hidden">
+        <h2>No questions match these filters</h2>
+        <p>Clear one or more filters to continue practising.</p>
+        <button id="emptyReset" class="primary" type="button">Show all questions</button>
+      </section>
+
+      <section id="questionWorkspace" class="workspace hidden">
+        <div class="question-toolbar">
+          <div class="question-id">
+            <div id="questionNumber" class="q-number">1</div>
+            <div class="q-identity"><strong id="questionLabel">Question</strong><span id="questionQid"></span></div>
+          </div>
+          <div class="toolbar-actions">
+            <span id="questionTimer" class="timer" title="Time on this question">00:00</span>
+            <button id="flagButton" class="icon-button flag-button" type="button" aria-pressed="false">☆ Review</button>
+          </div>
+        </div>
+
+        <div class="question-stage">
+          <article class="passage-panel">
+            <div id="promptHtml" class="prompt-html"></div>
+            <div id="assetList" class="asset-list"></div>
+          </article>
+          <section class="answer-panel">
+            <div id="metaChips" class="meta-chips"></div>
+            <h2 class="answer-heading">Which choice is the best answer?</h2>
+            <div id="options" class="options" role="radiogroup" aria-label="Answer choices"></div>
+            <div class="check-row">
+              <button id="clearAnswer" class="secondary" type="button">Clear</button>
+              <button id="checkAnswer" class="primary" type="button">Check answer</button>
+            </div>
+            <div id="feedback" class="feedback hidden" aria-live="polite">
+              <h3 id="feedbackTitle" class="feedback-title"></h3>
+              <div id="solutionHtml" class="solution-html"></div>
+              <div id="tipCard" class="tip-card hidden"></div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="question-footer">
+          <div id="footerProgress" class="footer-progress"></div>
+          <div class="footer-center"><button id="openNavigator" class="secondary" type="button">Question navigator</button></div>
+          <div class="footer-right"><button id="previousQuestion" class="secondary" type="button">Back</button><button id="nextQuestion" class="primary" type="button">Next</button></div>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <button id="reportButton" class="report-button hidden" type="button" title="Report a problem in this question" aria-label="Report a problem in this question">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2l1.7 1.7M16 2l-1.7 1.7M5 7H2m20 0h-3M5 16H2m20 0h-3M7 11h10v6a5 5 0 0 1-10 0v-6Z"></path><path d="M9 11V8a3 3 0 0 1 6 0v3M12 14v4"></path></svg>
+    <span>Report a problem</span>
+  </button>
+
+  <div id="reportOverlay" class="overlay hidden">
+    <div class="dialog report-dialog" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+      <div class="dialog-header"><h2 id="reportTitle">Report a problem</h2><button class="secondary" data-close="report" type="button">Close</button></div>
+      <div class="dialog-body">
+        <div id="reportContext" class="report-context"></div>
+        <label for="reportText">What should we review?</label>
+        <textarea id="reportText" maxlength="4000" placeholder="Describe a typo, wrong answer, broken image, or unclear solution."></textarea>
+        <div id="reportMessage" class="form-message hidden" aria-live="polite"></div>
+      </div>
+      <div class="dialog-footer"><button class="secondary" data-close="report" type="button">Cancel</button><button id="submitReport" class="primary" type="button">Submit report</button></div>
+    </div>
+  </div>
+
+  <div id="navigatorOverlay" class="overlay hidden">
+    <div class="dialog navigator-dialog" role="dialog" aria-modal="true" aria-labelledby="navigatorTitle">
+      <div class="dialog-header"><h2 id="navigatorTitle">Question navigator</h2><button class="secondary" data-close="navigator" type="button">Close</button></div>
+      <div class="dialog-body">
+        <div class="nav-legend"><span><i class="legend-dot"></i> Unanswered</span><span><i class="legend-dot" style="background:#e8edff"></i> Answered</span><span><i class="legend-dot" style="background:#dff5e8"></i> Correct</span><span><i class="legend-dot" style="background:#ffe4e1"></i> Retry</span><span><i class="legend-dot" style="box-shadow:inset 0 -4px 0 #fec94f"></i> Flagged</span></div>
+        <div id="navigatorGrid" class="navigator-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    'use strict';
+
+    const state = {
+      all: [], filtered: [], progress: {}, cache: new Map(), currentIndex: 0,
+      current: null, selected: '', checked: null, eliminated: new Set(),
+      timerStartedAt: 0, timerBase: 0, timerHandle: null, requestToken: 0
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const els = {
+      filters: $('filters'), paper: $('paperFilter'), topic: $('topicFilter'), difficulty: $('difficultyFilter'),
+      status: $('statusFilter'), search: $('searchFilter'), flagged: $('flaggedFilter'), summary: $('filterSummary'),
+      loading: $('loading'), loadingText: $('loadingText'), empty: $('emptyState'), workspace: $('questionWorkspace'),
+      qNumber: $('questionNumber'), qLabel: $('questionLabel'), qid: $('questionQid'), timer: $('questionTimer'),
+      flag: $('flagButton'), prompt: $('promptHtml'), assets: $('assetList'), chips: $('metaChips'), options: $('options'),
+      feedback: $('feedback'), feedbackTitle: $('feedbackTitle'), solution: $('solutionHtml'), tip: $('tipCard'),
+      prev: $('previousQuestion'), next: $('nextQuestion'), footerProgress: $('footerProgress'),
+      reportButton: $('reportButton'), reportOverlay: $('reportOverlay'), reportContext: $('reportContext'),
+      reportText: $('reportText'), reportMessage: $('reportMessage'), submitReport: $('submitReport'),
+      navigatorOverlay: $('navigatorOverlay'), navigatorGrid: $('navigatorGrid')
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+    }
+
+    function safeHtml(value) {
+      const template = document.createElement('template');
+      template.innerHTML = String(value || '');
+      template.content.querySelectorAll('script, iframe, object, embed, form, meta, link').forEach((node) => node.remove());
+      template.content.querySelectorAll('*').forEach((node) => {
+        [...node.attributes].forEach((attr) => {
+          const name = attr.name.toLowerCase();
+          const val = attr.value.trim().toLowerCase();
+          if (name.startsWith('on') || ((name === 'href' || name === 'src') && val.startsWith('javascript:'))) {
+            node.removeAttribute(attr.name);
+          }
+        });
+      });
+      return template.innerHTML;
+    }
+
+    function safeImageUrl(value) {
+      const url = String(value || '').trim();
+      return /^https:\/\//i.test(url) || /^data:image\/(png|jpeg|jpg|webp|gif);base64,/i.test(url) ? url : '';
+    }
+
+    async function api(url, options) {
+      const response = await fetch(url, { cache: 'no-store', credentials: 'same-origin', ...options });
+      const data = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        location.href = '/sat-login?next=' + encodeURIComponent('/sat-question-bank');
+        throw new Error('Please sign in again.');
+      }
+      if (!response.ok || data.ok === false) throw new Error(data.error || `Request failed (${response.status})`);
+      return data;
+    }
+
+    function typeset() {
+      if (window.MathJax?.typesetPromise) {
+        window.MathJax.typesetClear?.([els.workspace]);
+        window.MathJax.typesetPromise([els.workspace]).catch(() => {});
+      }
+    }
+
+    function progressFor(qid) { return state.progress[qid] || {}; }
+    function normalStatus(qid) {
+      const p = progressFor(qid);
+      if (p.status === 'correct' || p.status === 'incorrect') return p.status;
+      if (p.selected_answer) return 'answered';
+      return 'unanswered';
+    }
+
+    function updateTopics() {
+      const current = els.topic.value;
+      const paper = els.paper.value;
+      const topics = [...new Set(state.all.filter(q => !paper || q.paper === paper).map(q => q.topic).filter(Boolean))].sort();
+      els.topic.innerHTML = '<option value="">All topics</option>' + topics.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
+      if (topics.includes(current)) els.topic.value = current;
+    }
+
+    function applyFilters(preferredQid) {
+      const paper = els.paper.value;
+      const topic = els.topic.value;
+      const difficulty = els.difficulty.value;
+      const status = els.status.value;
+      const search = els.search.value.trim().toLowerCase();
+      const flaggedOnly = els.flagged.checked;
+      state.filtered = state.all.filter((q) => {
+        if (paper && q.paper !== paper) return false;
+        if (topic && q.topic !== topic) return false;
+        if (difficulty && String(q.difficulty) !== difficulty) return false;
+        if (status && normalStatus(q.qid) !== status) return false;
+        if (flaggedOnly && !progressFor(q.qid).flagged) return false;
+        if (search && ![q.qid, q.paper, q.topic, q.subtopic].join(' ').toLowerCase().includes(search)) return false;
+        return true;
+      });
+
+      els.summary.innerHTML = `${state.filtered.length.toLocaleString()} questions<span>${state.all.length.toLocaleString()} in the complete bank</span>`;
+      $('headerCount').textContent = `${state.all.length.toLocaleString()} live questions`;
+
+      if (!state.filtered.length) {
+        stopTimer(true);
+        els.loading.classList.add('hidden'); els.workspace.classList.add('hidden'); els.empty.classList.remove('hidden');
+        els.reportButton.classList.add('hidden');
+        return;
+      }
+
+      els.empty.classList.add('hidden'); els.workspace.classList.remove('hidden'); els.reportButton.classList.remove('hidden');
+      const desired = preferredQid || state.current?.qid;
+      const found = desired ? state.filtered.findIndex(q => q.qid === desired) : -1;
+      state.currentIndex = found >= 0 ? found : Math.min(state.currentIndex, state.filtered.length - 1);
+      showQuestion(state.currentIndex);
+    }
+
+    function resetFilters() {
+      els.paper.value = ''; updateTopics(); els.topic.value = ''; els.difficulty.value = '';
+      els.status.value = ''; els.search.value = ''; els.flagged.checked = false; state.currentIndex = 0; applyFilters();
+    }
+
+    async function saveProgress(qid, patch) {
+      if (!qid) return;
+      state.progress[qid] = { ...progressFor(qid), ...patch };
+      try {
+        await api('/api/sat/qb/progress/save', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ updates: [{ question_id: qid, ...patch, last_seen_at: new Date().toISOString() }] })
+        });
+      } catch (error) { console.warn('SAT progress save failed:', error); }
+    }
+
+    function currentSeconds() {
+      return state.timerBase + (state.timerStartedAt ? Math.floor((Date.now() - state.timerStartedAt) / 1000) : 0);
+    }
+
+    function paintTimer() {
+      const seconds = Math.max(0, currentSeconds());
+      const minutes = Math.floor(seconds / 60);
+      els.timer.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')}`;
+    }
+
+    function startTimer() {
+      clearInterval(state.timerHandle); state.timerStartedAt = Date.now(); paintTimer();
+      state.timerHandle = setInterval(paintTimer, 1000);
+    }
+
+    function stopTimer(save) {
+      clearInterval(state.timerHandle); state.timerHandle = null;
+      if (!state.current || !state.timerStartedAt) return;
+      const seconds = currentSeconds(); state.timerBase = seconds; state.timerStartedAt = 0;
+      if (save) saveProgress(state.current.qid, { time_spent: seconds });
+    }
+
+    function renderAssets(assets) {
+      els.assets.innerHTML = '';
+      (Array.isArray(assets) ? assets : []).forEach((asset, index) => {
+        const url = safeImageUrl(asset?.url || asset?.image_url);
+        if (!url) return;
+        const img = document.createElement('img'); img.className = 'question-asset'; img.src = url;
+        img.alt = String(asset?.alt || `Question diagram ${index + 1}`); img.loading = 'eager';
+        if (Number(asset?.width)) img.width = Number(asset.width);
+        if (Number(asset?.height)) img.height = Number(asset.height);
+        els.assets.appendChild(img);
+      });
+    }
+
+    function renderOptions(question) {
+      els.options.innerHTML = '';
+      (Array.isArray(question.options) ? question.options : []).forEach((option) => {
+        const key = String(option.key || '').trim();
+        const label = document.createElement('label'); label.className = 'option'; label.dataset.key = key;
+        if (state.selected === key) label.classList.add('selected');
+        if (state.eliminated.has(key)) label.classList.add('eliminated');
+        label.innerHTML = `<input type="radio" name="sat-answer" value="${escapeHtml(key)}" ${state.selected === key ? 'checked' : ''}><span class="option-key">${escapeHtml(key)}</span><span class="option-content">${safeHtml(option.html || '')}</span><button class="eliminate" type="button" aria-label="Eliminate option ${escapeHtml(key)}" title="Eliminate this choice">×</button>`;
+        const imageUrl = safeImageUrl(option.image_url);
+        if (imageUrl) {
+          const img = document.createElement('img'); img.className = 'option-image'; img.src = imageUrl;
+          img.alt = String(option.image_alt || `Option ${key} image`); label.querySelector('.option-content').appendChild(img);
+        }
+        label.addEventListener('click', (event) => {
+          if (event.target.closest('.eliminate')) return;
+          selectAnswer(key);
+        });
+        label.querySelector('.eliminate').addEventListener('click', (event) => {
+          event.preventDefault(); event.stopPropagation();
+          state.eliminated.has(key) ? state.eliminated.delete(key) : state.eliminated.add(key);
+          label.classList.toggle('eliminated', state.eliminated.has(key));
+        });
+        els.options.appendChild(label);
+      });
+    }
+
+    function selectAnswer(key) {
+      if (!state.current) return;
+      state.selected = key; state.checked = null;
+      els.feedback.classList.add('hidden');
+      [...els.options.querySelectorAll('.option')].forEach((node) => {
+        const selected = node.dataset.key === key; node.classList.toggle('selected', selected);
+        node.classList.remove('correct', 'incorrect'); node.querySelector('input').checked = selected;
+      });
+      saveProgress(state.current.qid, { selected_answer: key, status: 'answered', flagged: !!progressFor(state.current.qid).flagged, time_spent: currentSeconds() });
+      refreshPosition();
+    }
+
+    async function checkAnswer(restore = false) {
+      if (!state.current || !state.selected) {
+        if (!restore) alert('Choose an answer first.');
+        return;
+      }
+      $('checkAnswer').disabled = true;
+      try {
+        const result = await api('/api/sat/qb/check', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ qid: state.current.qid, selected: state.selected })
+        });
+        state.checked = result; const status = result.isCorrect ? 'correct' : 'incorrect';
+        els.feedback.className = `feedback ${status}`;
+        els.feedbackTitle.textContent = result.isCorrect ? 'Correct' : `Not quite — the correct answer is ${result.answer}`;
+        els.solution.innerHTML = safeHtml(result.solution_html || '<p>No written solution is available yet.</p>');
+        if (state.current.nice_tip_html) { els.tip.innerHTML = safeHtml(state.current.nice_tip_html); els.tip.classList.remove('hidden'); }
+        else { els.tip.innerHTML = ''; els.tip.classList.add('hidden'); }
+        [...els.options.querySelectorAll('.option')].forEach((node) => {
+          node.classList.toggle('correct', node.dataset.key === result.answer);
+          node.classList.toggle('incorrect', node.dataset.key === state.selected && !result.isCorrect);
+        });
+        if (!restore) await saveProgress(state.current.qid, { selected_answer: state.selected, status, flagged: !!progressFor(state.current.qid).flagged, time_spent: currentSeconds() });
+        refreshPosition(); typeset();
+      } catch (error) {
+        if (!restore) alert(error.message || 'Could not check this answer.');
+      } finally { $('checkAnswer').disabled = false; }
+    }
+
+    function renderQuestion(question) {
+      state.current = question; state.eliminated = new Set();
+      const p = progressFor(question.qid); state.selected = p.selected_answer || ''; state.checked = null;
+      state.timerBase = Number(p.time_spent || 0); state.timerStartedAt = 0;
+      els.prompt.innerHTML = safeHtml(question.prompt_html || '<p>Question text unavailable.</p>');
+      renderAssets(question.page_assets); renderOptions(question);
+      els.chips.innerHTML = [question.paper, question.topic, question.subtopic].filter(Boolean).map(v => `<span class="chip">${escapeHtml(v)}</span>`).join('') + (question.difficulty ? `<span class="chip difficulty">Difficulty ${escapeHtml(question.difficulty)}</span>` : '');
+      const activeNumber = state.currentIndex + 1;
+      els.qNumber.textContent = activeNumber;
+      els.qLabel.textContent = `Question ${activeNumber}`;
+      els.qid.textContent = question.qid;
+      const flagged = !!p.flagged; els.flag.classList.toggle('active', flagged); els.flag.setAttribute('aria-pressed', String(flagged)); els.flag.textContent = flagged ? '★ Review' : '☆ Review';
+      els.feedback.className = 'feedback hidden'; els.solution.innerHTML = ''; els.tip.classList.add('hidden');
+      refreshPosition(); startTimer(); typeset();
+      if (p.status === 'correct' || p.status === 'incorrect') checkAnswer(true);
+    }
+
+    async function showQuestion(index) {
+      if (!state.filtered.length) return;
+      stopTimer(true); state.currentIndex = Math.max(0, Math.min(index, state.filtered.length - 1));
+      const meta = state.filtered[state.currentIndex]; const token = ++state.requestToken;
+      els.prompt.innerHTML = '<p>Loading question…</p>'; els.assets.innerHTML = ''; els.options.innerHTML = '';
+      els.feedback.classList.add('hidden'); refreshPosition();
+      try {
+        let question = state.cache.get(meta.qid);
+        if (!question) { const data = await api('/api/sat/qb/question?qid=' + encodeURIComponent(meta.qid)); question = data.question; state.cache.set(meta.qid, question); }
+        if (token !== state.requestToken) return;
+        renderQuestion(question);
+      } catch (error) {
+        if (token !== state.requestToken) return;
+        els.prompt.innerHTML = `<p><strong>Could not load this question.</strong></p><p>${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    function refreshPosition() {
+      const total = state.filtered.length; const pos = total ? state.currentIndex + 1 : 0;
+      els.prev.disabled = pos <= 1; els.next.disabled = pos >= total;
+      $('openNavigator').textContent = `Question ${pos} of ${total}`;
+      const done = state.filtered.filter(q => normalStatus(q.qid) !== 'unanswered').length;
+      const correct = state.filtered.filter(q => normalStatus(q.qid) === 'correct').length;
+      els.footerProgress.textContent = `${done} answered · ${correct} correct`;
+      els.summary.innerHTML = `${total.toLocaleString()} questions<span>${done} answered in this set</span>`;
+    }
+
+    function buildNavigator() {
+      els.navigatorGrid.innerHTML = '';
+      state.filtered.forEach((q, index) => {
+        const button = document.createElement('button'); button.className = `nav-cell ${normalStatus(q.qid)}`;
+        if (index === state.currentIndex) button.classList.add('current');
+        if (progressFor(q.qid).flagged) button.classList.add('flagged');
+        button.type = 'button'; button.textContent = index + 1; button.title = `${q.qid} · ${q.topic || q.paper}`;
+        button.addEventListener('click', () => { closeOverlay('navigator'); showQuestion(index); });
+        els.navigatorGrid.appendChild(button);
+      });
+    }
+
+    function openReport() {
+      if (!state.current) return;
+      els.reportContext.innerHTML = `<strong>${escapeHtml(state.current.qid)}</strong><br>${escapeHtml(state.current.paper)} · ${escapeHtml(state.current.topic || 'General')} · Difficulty ${escapeHtml(state.current.difficulty || '—')}`;
+      els.reportText.value = ''; els.reportMessage.className = 'form-message hidden'; els.reportMessage.textContent = '';
+      els.reportOverlay.classList.remove('hidden'); setTimeout(() => els.reportText.focus(), 20);
+    }
+
+    async function submitReport() {
+      if (!state.current) return;
+      const text = els.reportText.value.trim();
+      if (text.length < 5) { els.reportMessage.className = 'form-message error'; els.reportMessage.textContent = 'Please add a short description.'; return; }
+      els.submitReport.disabled = true; els.submitReport.textContent = 'Submitting…';
+      try {
+        await api('/api/sat/qb/report', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ qid: state.current.qid, report_text: text, selected_answer: state.selected, checked_status: state.checked ? (state.checked.isCorrect ? 'correct' : 'incorrect') : 'not checked', page_url: location.href })
+        });
+        els.reportMessage.className = 'form-message success'; els.reportMessage.textContent = 'Thanks — your report has been recorded for review.';
+        els.reportText.value = ''; setTimeout(() => closeOverlay('report'), 1200);
+      } catch (error) { els.reportMessage.className = 'form-message error'; els.reportMessage.textContent = error.message || 'Could not submit the report.'; }
+      finally { els.submitReport.disabled = false; els.submitReport.textContent = 'Submit report'; }
+    }
+
+    function closeOverlay(name) { $(name + 'Overlay').classList.add('hidden'); }
+
+    async function init() {
+      try {
+        const [listData, progressData] = await Promise.all([
+          api('/api/sat/qb/list'),
+          api('/api/sat/qb/progress/load').catch((error) => { console.warn(error); return { progress: {} }; })
+        ]);
+        state.all = Array.isArray(listData.questions) ? listData.questions : [];
+        state.progress = progressData.progress || {};
+        if (!state.all.length) throw new Error('The SAT Question Bank is not published yet.');
+        updateTopics(); els.loading.classList.add('hidden'); applyFilters();
+      } catch (error) {
+        els.loadingText.textContent = error.message || 'Could not load the SAT Question Bank.';
+        els.loading.querySelector('.spinner').classList.add('hidden');
+      }
+    }
+
+    [els.paper, els.difficulty, els.status, els.flagged].forEach((node) => node.addEventListener('change', () => {
+      if (node === els.paper) updateTopics(); applyFilters();
+    }));
+    els.topic.addEventListener('change', () => applyFilters());
+    let searchTimer; els.search.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(() => applyFilters(), 180); });
+    $('resetFilters').addEventListener('click', resetFilters); $('emptyReset').addEventListener('click', resetFilters);
+    $('randomQuestion').addEventListener('click', () => { if (state.filtered.length) showQuestion(Math.floor(Math.random() * state.filtered.length)); });
+    $('mobileFilterButton').addEventListener('click', () => els.filters.classList.toggle('open'));
+    els.prev.addEventListener('click', () => showQuestion(state.currentIndex - 1)); els.next.addEventListener('click', () => showQuestion(state.currentIndex + 1));
+    $('clearAnswer').addEventListener('click', () => { if (!state.current) return; state.selected = ''; state.checked = null; els.feedback.classList.add('hidden'); [...els.options.querySelectorAll('.option')].forEach(n => { n.classList.remove('selected','correct','incorrect'); n.querySelector('input').checked = false; }); saveProgress(state.current.qid, { selected_answer: null, status: null, time_spent: currentSeconds() }); refreshPosition(); });
+    $('checkAnswer').addEventListener('click', () => checkAnswer(false));
+    els.flag.addEventListener('click', () => { if (!state.current) return; const value = !progressFor(state.current.qid).flagged; state.progress[state.current.qid] = { ...progressFor(state.current.qid), flagged: value }; els.flag.classList.toggle('active', value); els.flag.setAttribute('aria-pressed', String(value)); els.flag.textContent = value ? '★ Review' : '☆ Review'; saveProgress(state.current.qid, { flagged: value, selected_answer: state.selected || null, status: progressFor(state.current.qid).status || null, time_spent: currentSeconds() }); refreshPosition(); });
+    $('openNavigator').addEventListener('click', () => { buildNavigator(); els.navigatorOverlay.classList.remove('hidden'); });
+    els.reportButton.addEventListener('click', openReport); els.submitReport.addEventListener('click', submitReport);
+    document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => closeOverlay(btn.dataset.close)));
+    [els.reportOverlay, els.navigatorOverlay].forEach(overlay => overlay.addEventListener('click', (event) => { if (event.target === overlay) overlay.classList.add('hidden'); }));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') { els.reportOverlay.classList.add('hidden'); els.navigatorOverlay.classList.add('hidden'); els.filters.classList.remove('open'); }
+      if (event.target.matches('input, textarea, select')) return;
+      if (event.key === 'ArrowLeft' && state.currentIndex > 0) showQuestion(state.currentIndex - 1);
+      if (event.key === 'ArrowRight' && state.currentIndex < state.filtered.length - 1) showQuestion(state.currentIndex + 1);
+      if (/^[1-4]$/.test(event.key) && state.current?.options?.[Number(event.key)-1]) selectAnswer(state.current.options[Number(event.key)-1].key);
+    });
+    addEventListener('beforeunload', () => stopTimer(true));
+    init();
+  })();
+  </script>
+</body>
+</html>

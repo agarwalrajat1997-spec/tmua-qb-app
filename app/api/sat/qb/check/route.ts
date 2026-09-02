@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   const supabase = adminClient();
 
   const { data, error } = await supabase
-    .from("SAT_qb_questions")
+    .from("sat_qb_questions")
     .select("qid, answer, solution_html")
     .eq("qid", qid)
     .eq("is_active", true)
@@ -41,5 +41,4 @@ export async function POST(req: Request) {
     solution_html: data.solution_html || "",
   });
 }
-
 

@@ -8,24 +8,36 @@ async function supabaseServer() {
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
   return createServerClient(url, key, {
     cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value;
+      getAll() {
+        return cookieStore.getAll();
       },
-      set(name: string, value: string, options: any) {
-        cookieStore.set({ name, value, ...options });
-      },
-      remove(name: string, options: any) {
-        cookieStore.set({ name, value: "", ...options });
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          cookieStore.set({ name, value, ...options });
+        });
       },
     },
   });
 }
 
-function jsonErr(status: number, error: string, extra?: any) {
+function jsonErr(status: number, error: string, extra?: unknown) {
   return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status });
 }
 
-export async function GET(req: Request) {
+type ProgressRecord = {
+  status: string | null;
+  selected_answer: string | null;
+  flagged: boolean;
+  time_spent: number;
+  last_seen_at: string;
+  updated_at: string;
+};
+
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+export async function GET() {
   try {
     const supabase = await supabaseServer();
 
@@ -33,16 +45,16 @@ export async function GET(req: Request) {
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
     const { data, error } = await supabase
-      .from("SAT_qb_progress")
+      .from("sat_qb_progress")
       .select("question_id,status,selected_answer,flagged,time_spent,last_seen_at,updated_at")
       .eq("user_id", auth.user.id)
-    .eq("product", "sat-question-bank");
+      .eq("product", "sat-question-bank");
 
     if (error) {
       return jsonErr(500, "Supabase load failed", { message: error.message });
     }
 
-    const progress: Record<string, any> = {};
+    const progress: Record<string, ProgressRecord> = {};
     for (const row of data || []) {
       progress[row.question_id] = {
         status: row.status,
@@ -54,12 +66,14 @@ export async function GET(req: Request) {
       };
     }
 
-  return NextResponse.json({ ok: true, product: "sat-question-bank", progress });
-  } catch (e: any) {
+    return NextResponse.json({ ok: true, product: "sat-question-bank", progress });
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: "Unhandled error in /api/qb/progress/load", message: String(e?.message || e), stack: String(e?.stack || "") },
+      {
+        error: "Unhandled error in /api/sat/qb/progress/load",
+        message: errorMessage(error),
+      },
       { status: 500 }
     );
   }
 }
-

@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const supabase = adminClient();
 
   const { data, error } = await supabase
-    .from("SAT_qb_questions")
+    .from("sat_qb_questions")
     .select(`
       qid,
       display_order,
@@ -48,5 +48,4 @@ export async function GET(req: Request) {
     question: data,
   });
 }
-
 

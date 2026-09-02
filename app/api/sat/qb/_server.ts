@@ -6,6 +6,9 @@ import { createServerClient } from "@supabase/ssr";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+export const SAT_QUESTIONS_TABLE = "sat_qb_questions";
+export const SAT_PROGRESS_TABLE = "sat_qb_progress";
+
 const NO_STORE_HEADERS = {
   "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
 };
@@ -76,7 +79,8 @@ export async function requireSATAccess() {
   ) {
     return {
       ok: true as const,
-      user: { email: "local-dev@thrivingscholars.com" },
+      user: { id: null, email: "local-dev@thrivingscholars.com" },
+      email: "local-dev@thrivingscholars.com",
     };
   }
 
@@ -91,13 +95,16 @@ export async function requireSATAccess() {
 
   const email = user.email.toLowerCase();
   const supabase = adminClient();
+  const nowIso = new Date().toISOString();
 
   const { data, error } = await supabase
     .from("student_access")
-    .select("approved")
-    .eq("email", email)
+    .select("approved, expires_at")
+    .ilike("email", email)
     .eq("product", "sat-question-bank")
-    .maybeSingle();
+    .eq("approved", true)
+    .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
+    .limit(1);
 
   if (error) {
     console.error("SAT access check failed:", error);
@@ -107,7 +114,7 @@ export async function requireSATAccess() {
     };
   }
 
-  if (!data?.approved) {
+  if (!data || data.length === 0) {
     return {
       ok: false as const,
       response: json({ ok: false, error: "No SAT Question Bank access" }, 403),
@@ -117,6 +124,6 @@ export async function requireSATAccess() {
   return {
     ok: true as const,
     user,
+    email,
   };
 }
-

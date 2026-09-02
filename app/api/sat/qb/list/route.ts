@@ -3,7 +3,19 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const ALLOWED_PAPERS = new Set(["SAT 8", "SAT 10", "SAT 12"]);
+const ALLOWED_PAPERS = new Set(["Math", "Reading and Writing"]);
+
+type SATQuestionMeta = {
+  qid: string;
+  display_order: number;
+  paper_question_number: number | null;
+  kind: string;
+  paper: string;
+  topic: string | null;
+  subtopic: string | null;
+  difficulty: number | null;
+  tags: unknown;
+};
 
 export async function GET(req: Request) {
   const access = await requireSATAccess();
@@ -17,13 +29,13 @@ export async function GET(req: Request) {
 
   const pageSize = 1000;
   let from = 0;
-  let allQuestions: any[] = [];
+  let allQuestions: SATQuestionMeta[] = [];
 
   while (true) {
     const to = from + pageSize - 1;
 
     let query = supabase
-      .from("SAT_qb_questions")
+      .from("sat_qb_questions")
       .select(`
         qid,
         display_order,
@@ -43,6 +55,7 @@ export async function GET(req: Request) {
 
     const { data, error } = await query
       .order("display_order", { ascending: true })
+      .order("qid", { ascending: true })
       .range(from, to);
 
     if (error) {
@@ -69,4 +82,3 @@ export async function GET(req: Request) {
     questions: allQuestions,
   });
 }
-
