@@ -23,7 +23,7 @@ const PRODUCT_GATES: ProductGate[] = [
   { prefix: "/amc-12-question-bank", product: "amc-question-bank" },
 
   { prefix: "/sat-question-bank", product: "sat-question-bank" },
-  { prefix: "/sat-qb-app", product: "sat-question-bank" },
+  { prefix: "/sat-question-bank-app.html", product: "sat-question-bank" },
   { prefix: "/sat-practice-tests", product: "sat-practice-tests" },
 
   { prefix: "/classes", product: "classes" },
@@ -189,7 +189,7 @@ export const config = {
     "/amc-12-question-bank/:path*",
 
     "/sat-question-bank/:path*",
-    "/sat-qb-app/:path*",
+    "/sat-question-bank-app.html",
     "/sat-practice-tests/:path*",
 
     "/classes/:path*",

@@ -7,7 +7,7 @@ export default function SATQuestionBankPage() {
     <main style={{ margin: 0 }}>
       <iframe
         className="tsQbIframe"
-        src="/sat-qb-app/index.html"
+        src="/sat-question-bank-app.html"
         style={{ width: "100%", height: "100vh", border: "0" }}
         title="SAT Question Bank"
       />

@@ -5,9 +5,10 @@ import path from "node:path";
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
-const html = read("public/sat-qb-app/index.html");
+const html = read("public/sat-question-bank-app.html");
 const pageRoute = read("app/sat-question-bank/page.tsx");
 const proxy = read("proxy.ts");
+const releaseRoute = read("app/api/sat/qb/release/route.ts");
 const listRoute = read("app/api/sat/qb/list/route.ts");
 const questionRoute = read("app/api/sat/qb/question/route.ts");
 const checkRoute = read("app/api/sat/qb/check/route.ts");
@@ -53,10 +54,13 @@ assert.match(html, /class="question-stage"/);
 assert.match(html, /id="navigatorGrid"/);
 assert.match(html, /id="flagButton"/);
 assert.doesNotMatch(html, /EMAILJS_(PUBLIC_KEY|SERVICE_ID|TEMPLATE_ID)/);
-assert.match(pageRoute, /src="\/sat-qb-app\/index\.html"/);
+assert.match(pageRoute, /src="\/sat-question-bank-app\.html"/);
 assert.doesNotMatch(pageRoute, /src="\/sat-question-bank\/index\.html"/);
-assert.match(proxy, /prefix: "\/sat-qb-app", product: "sat-question-bank"/);
-assert.match(proxy, /"\/sat-qb-app\/:path\*"/);
+assert.doesNotMatch(pageRoute, /src="\/sat-qb-app\/index\.html"/);
+assert.match(proxy, /prefix: "\/sat-question-bank-app\.html", product: "sat-question-bank"/);
+assert.match(proxy, /"\/sat-question-bank-app\.html"/);
+assert.match(releaseRoute, /sat-qb-phase4-root-static-v1/);
+assert.match(releaseRoute, /force-dynamic/);
 
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
   .map((match) => match[1])
