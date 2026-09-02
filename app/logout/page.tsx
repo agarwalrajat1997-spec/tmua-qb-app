@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 
-const LOGO = "https://static.wixstatic.com/media/98f2c5_10c22a0527574cd38fc480acd8716345~mv2.png/v1/fill/w_1628,h_287,al_c,q_90,enc_avif,quality_auto/ThrivingScholars_edited_edited_edited_pn.png";
+const LOGO = "https://media.thrivingscholars.com/images/98f2c5_10c22a0527574cd38fc480acd8716345~mv2.png";
 const STAMP = "2026-02-26 15:47:34 UTC";
 
 export default function LogoutPage() {
