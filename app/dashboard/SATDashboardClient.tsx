@@ -13,42 +13,63 @@ type Props = {
 
 type SATTab = "bank" | "tests";
 
-const TESTS = [
+const TEST_GROUPS = [
   {
-    title: "SAT Full-Length Test 1",
-    badge: "Full-Length",
-    href: "/sat-practice-tests/tests/sat-full-length-1/index.html",
-    meta: "Reading & Writing + Math",
+    id: "quick-diagnostic",
+    title: "Quick diagnostic",
+    description: "Start here for a shorter baseline across Reading and Writing and Math.",
+    tests: [
+      {
+        title: "Mini Digital SAT Diagnostic",
+        badge: "Introductory",
+        href: "/sat-mini-diagnostic",
+        meta: "60 questions · Reading and Writing + Math",
+      },
+    ],
   },
   {
-    title: "SAT Full-Length Test 2",
-    badge: "Full-Length",
-    href: "/sat-practice-tests/tests/sat-full-length-2/index.html",
-    meta: "Reading & Writing + Math",
+    id: "math-diagnostics",
+    title: "Math diagnostics",
+    description: "Four complete Math diagnostics, arranged from an initial skills check to the most demanding paper.",
+    tests: [
+      {
+        title: "SAT Math Diagnostic Test 1",
+        badge: "Foundation → Standard",
+        href: "/sat-test-1",
+        meta: "44 questions · 70 minutes · Predicted score /800",
+      },
+      {
+        title: "SAT Math Diagnostic Test 2",
+        badge: "Standard",
+        href: "/sat-test-2",
+        meta: "44 questions · 70 minutes · Predicted score /800",
+      },
+      {
+        title: "SAT Math Diagnostic Test 3",
+        badge: "Standard → Challenging",
+        href: "/sat-test-3",
+        meta: "44 questions · 70 minutes · Predicted score /800",
+      },
+      {
+        title: "SAT Math Diagnostic Test 4",
+        badge: "Hard → Very hard",
+        href: "/sat-test-4",
+        meta: "44 questions · 70 minutes · Predicted score /800",
+      },
+    ],
   },
   {
-    title: "SAT Math Test 1",
-    badge: "Math",
-    href: "/sat-practice-tests/tests/sat-math-1/index.html",
-    meta: "Calculator-style SAT Math practice",
-  },
-  {
-    title: "SAT Math Test 2",
-    badge: "Math",
-    href: "/sat-practice-tests/tests/sat-math-2/index.html",
-    meta: "Advanced SAT Math practice",
-  },
-  {
-    title: "SAT Reading Test 1",
-    badge: "Reading",
-    href: "/sat-practice-tests/tests/sat-reading-1/index.html",
-    meta: "Reading and Writing practice",
-  },
-  {
-    title: "SAT Reading Test 2",
-    badge: "Reading",
-    href: "/sat-practice-tests/tests/sat-reading-2/index.html",
-    meta: "Reading and Writing practice",
+    id: "full-length",
+    title: "Full-length diagnostic",
+    description: "A four-module Digital SAT paper for students ready for an advanced timed test.",
+    tests: [
+      {
+        title: "SAT Diagnostic Test 6",
+        badge: "Hard → Harder",
+        href: "/sat-test-6",
+        meta: "98 questions · 134 minutes · Predicted score /1600",
+      },
+    ],
   },
 ];
 
@@ -99,7 +120,7 @@ export default function SATDashboardClient({
           </div>
 
           <div className={styles.sideSub}>
-            SAT question bank + 6 practice tests. Clean, focused, tracked.
+            SAT question bank + verified diagnostic tests. Clean, focused, tracked.
           </div>
 
           <ul className={styles.nav}>
@@ -197,36 +218,36 @@ export default function SATDashboardClient({
 
               <div className={styles.metaRow}>
                 <div className={styles.meta}>
-                  <span className={styles.dot} /> 6 Tests
+                  <span className={styles.dot} /> 6 Verified Tests
                 </div>
-                <div className={styles.meta}>2 Full-Length</div>
-                <div className={styles.meta}>2 Math · 2 Reading</div>
+                <div className={styles.meta}>1 Mini · 4 Math</div>
+                <div className={styles.meta}>1 Full-Length</div>
               </div>
 
-              <div className={styles.card}>
-                <div className={styles.cardTitle}>Practice test set</div>
-                <div className={styles.muted}>
-                  Includes 2 full-length SAT tests, 2 SAT Math tests and 2 SAT Reading and Writing tests.
-                </div>
-
-                <div className={styles.grid}>
-                  {TESTS.map((t) => (
-                    <div key={t.href} className={styles.test}>
-                      <div className={styles.testTitle}>{t.title}</div>
-                      <div className={styles.testMeta}>
-                        <span>{t.badge}</span>
-                        <span> · </span>
-                        <span>{t.meta}</span>
-                      </div>
-
-                      <div style={{ marginTop: 10 }}>
-                        <button className={styles.go} type="button" onClick={() => (window.location.href = t.href)}>
-                          Start →
-                        </button>
-                      </div>
+              <div className={styles.testLibrary}>
+                {TEST_GROUPS.map((group) => (
+                  <section id={group.id} key={group.id} className={styles.testSection}>
+                    <div className={styles.sectionIntro}>
+                      <h2 className={styles.sectionTitle}>{group.title}</h2>
+                      <p className={styles.sectionDescription}>{group.description}</p>
                     </div>
-                  ))}
-                </div>
+
+                    <div className={styles.testGrid}>
+                      {group.tests.map((test) => (
+                        <article key={test.href} className={styles.test}>
+                          <div className={styles.testTitle}>{test.title}</div>
+                          <div className={styles.tags}>
+                            <span className={styles.tag}>{test.badge}</span>
+                          </div>
+                          <div className={styles.testMeta}>{test.meta}</div>
+                          <a className={styles.go} href={test.href}>
+                            Start test →
+                          </a>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                ))}
               </div>
             </>
           )}
