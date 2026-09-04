@@ -60,13 +60,19 @@ const TEST_GROUPS = [
   },
   {
     id: "full-length",
-    title: "Full-length diagnostic",
-    description: "A four-module Digital SAT paper for students ready for an advanced timed test.",
+    title: "Full-length diagnostics",
+    description: "Choose a standard exam-level paper or a more demanding advanced paper.",
     tests: [
       {
         title: "SAT Diagnostic Test 6",
-        badge: "Hard → Harder",
+        badge: "Standard",
         href: "/sat-test-6",
+        meta: "98 questions · 134 minutes · Predicted score /1600",
+      },
+      {
+        title: "SAT Diagnostic Test 5 — Advanced",
+        badge: "Hard",
+        href: "/sat-test-5",
         meta: "98 questions · 134 minutes · Predicted score /1600",
       },
     ],
@@ -218,10 +224,10 @@ export default function SATDashboardClient({
 
               <div className={styles.metaRow}>
                 <div className={styles.meta}>
-                  <span className={styles.dot} /> 6 Verified Tests
+                  <span className={styles.dot} /> 7 Verified Tests
                 </div>
                 <div className={styles.meta}>1 Mini · 4 Math</div>
-                <div className={styles.meta}>1 Full-Length</div>
+                <div className={styles.meta}>2 Full-Length</div>
               </div>
 
               <div className={styles.testLibrary}>

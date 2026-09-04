@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SAT Diagnostic Test 6 — Hard</title>
+  <title>SAT Diagnostic Test 6 — Standard</title>
 
   <!-- Desmos (for calculator-allowed sections only) -->
   <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
@@ -877,17 +877,17 @@ textarea.frq-input {
   </div>
 
 <div id="start-screen">
-  <h1>Digital SAT Diagnostic Test 6 — Hard</h1>
-  <p>This hard SAT-style diagnostic contains 4 locked modules:</p>
+  <h1>Digital SAT Diagnostic Test 6 — Standard</h1>
+  <p>This standard SAT-style diagnostic contains 4 locked modules:</p>
   <ul>
-    <li><strong>Module 1:</strong> Reading &amp; Writing, 27 questions, 32 minutes — hard</li>
-    <li><strong>Module 2:</strong> Reading &amp; Writing, 27 questions, 32 minutes — harder</li>
+    <li><strong>Module 1:</strong> Reading &amp; Writing, 27 questions, 32 minutes</li>
+    <li><strong>Module 2:</strong> Reading &amp; Writing, 27 questions, 32 minutes</li>
     <li><strong>10-minute break</strong></li>
-    <li><strong>Module 3:</strong> Math, 22 questions, 35 minutes — hard</li>
-    <li><strong>Module 4:</strong> Math, 22 questions, 35 minutes — harder</li>
+    <li><strong>Module 3:</strong> Math, 22 questions, 35 minutes</li>
+    <li><strong>Module 4:</strong> Math, 22 questions, 35 minutes</li>
   </ul>
   <p><em>Once you advance to the next module, you cannot return to a completed module.</em></p>
-  <p><em>This is intentionally more challenging than a typical SAT first-stage module. The score report is a diagnostic estimate, not an official College Board conversion.</em></p>
+  <p><em>This test is designed around realistic SAT-level pacing and difficulty. The score report is a diagnostic estimate, not an official College Board conversion.</em></p>
     <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
       <div>
         <label>Full Name</label><br>
@@ -1025,7 +1025,7 @@ const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
 const sections = [
   {
     "id": "READING1",
-    "title": "SAT Diagnostic Test 6 — Hard — Reading & Writing Module 1",
+    "title": "SAT Diagnostic Test 6 — Reading & Writing Module 1",
     "durationSec": 1920,
     "calculatorAllowed": false,
     "items": [
@@ -1465,7 +1465,7 @@ const sections = [
   },
   {
     "id": "READING2",
-    "title": "SAT Diagnostic Test 6 — Harder — Reading & Writing Module 2",
+    "title": "SAT Diagnostic Test 6 — Reading & Writing Module 2",
     "durationSec": 1920,
     "calculatorAllowed": false,
     "items": [
@@ -1905,7 +1905,7 @@ const sections = [
   },
   {
     "id": "MATH1",
-    "title": "SAT Diagnostic Test 6 — Hard — Math Module 1",
+    "title": "SAT Diagnostic Test 6 — Math Module 1",
     "durationSec": 2100,
     "calculatorAllowed": true,
     "items": [
@@ -2250,7 +2250,7 @@ const sections = [
   },
   {
     "id": "MATH2",
-    "title": "SAT Diagnostic Test 6 — Harder — Math Module 2",
+    "title": "SAT Diagnostic Test 6 — Math Module 2",
     "durationSec": 2100,
     "calculatorAllowed": true,
     "items": [
@@ -2620,7 +2620,7 @@ let breakSeconds = 600;
  * INTEGRITY MONITORING STATE
  ***********************/
 const TEST_ID = "sat-diagnostic-test-6";
-const TEST_TITLE = "SAT Diagnostic Test 6 — Hard";
+const TEST_TITLE = "SAT Diagnostic Test 6 — Standard";
 const REPORT_ENDPOINT = "/api/sat-test-report";
 const MONITOR_BATCH_INTERVAL_MS = 30000;
 const MAX_INTEGRITY_EVENTS = 1200;
@@ -3573,7 +3573,7 @@ function showFinalReport() {
     <p><strong>Reading & Writing:</strong> ${readingCorrect} / ${readingTotal} correct → Diagnostic estimate: ${readingScore} / 800</p>
     <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Diagnostic estimate: ${mathScore} / 800</p>
     <p><strong>Total diagnostic estimate:</strong> ${satScore} / 1600</p>
-    <p style="font-size:13px; color:#666;">This test is intentionally hard. These scores use a simple raw-performance estimate and are not an official College Board conversion or equating table.</p>
+    <p style="font-size:13px; color:#666;">This standard diagnostic is designed around realistic SAT-level difficulty. These scores use a simple raw-performance estimate and are not an official College Board conversion or equating table.</p>
 
     <div class="score-container">
       <svg viewBox="0 0 230 230">
@@ -3724,7 +3724,7 @@ function showFinalReport() {
 
     emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
       name: studentName,
-      test_title: "SAT Diagnostic Test 6 — Hard Exam",
+      test_title: "SAT Diagnostic Test 6 — Standard Exam",
       to_email: studentEmail,
       solution_link: solutionPDF,
       session: testSession,
