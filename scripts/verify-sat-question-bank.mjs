@@ -53,6 +53,12 @@ assert.match(html, /<option>Math<\/option>/);
 assert.match(html, /class="question-stage"/);
 assert.match(html, /id="navigatorGrid"/);
 assert.match(html, /id="flagButton"/);
+assert.match(html, /inlineMath:\s*\[\['\\\\\(', '\\\\\)'\]\]/);
+assert.doesNotMatch(
+  html,
+  /inlineMath:[^\n]*\['\$', '\$'\]/,
+  "Currency values must not be interpreted as inline math delimiters"
+);
 assert.doesNotMatch(html, /EMAILJS_(PUBLIC_KEY|SERVICE_ID|TEMPLATE_ID)/);
 assert.match(pageRoute, /src="\/sat-question-bank-app\.html"/);
 assert.doesNotMatch(pageRoute, /src="\/sat-question-bank\/index\.html"/);
