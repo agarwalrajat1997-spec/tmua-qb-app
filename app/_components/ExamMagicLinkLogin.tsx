@@ -68,7 +68,7 @@ export default function ExamMagicLinkLogin({ exam, destination, uiMark }: Props)
       if (signInError) throw signInError;
 
       setMessage(
-        "Login link sent. Check your inbox and spam folder, then open only the newest link.",
+        "Login link sent. Check your inbox and spam folder, then open only the newest link in this same browser and device.",
       );
     } catch (caught: unknown) {
       setError(
