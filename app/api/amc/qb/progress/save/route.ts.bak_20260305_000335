@@ -1,0 +1,191 @@
+﻿import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
+
+type UpdateItem = {
+  paper?: string;
+  key?: string;
+  value?: any;
+  k?: string;
+  v?: any;
+  storage_key?: string;
+  storage_value?: any;
+};
+
+function jsonErr(status: number, msg: string, extra?: any) {
+  return NextResponse.json({ error: msg, ...(extra ? { extra } : {}) }, { status });
+}
+
+function pickKey(u: UpdateItem) {
+  return u.key ?? u.k ?? u.storage_key ?? null;
+}
+function pickValue(u: UpdateItem) {
+  return u.value ?? u.v ?? u.storage_value ?? null;
+}
+
+export async function POST(req: Request) {
+  try {
+    const cookieStore = await cookies();
+
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll();
+          },
+          setAll(cookiesToSet) {
+            for (const c of cookiesToSet) cookieStore.set(c.name, c.value, c.options);
+          },
+        },
+      }
+    );
+
+    // Auth
+    const { data: userRes, error: userErr } = await supabase.auth.getUser();
+    if (userErr) return jsonErr(401, userErr.message);
+    const user = userRes.user;
+    if (!user) return jsonErr(401, "Not signed in");
+
+    // Body
+    let body: any = null;
+    try {
+      body = await req.json();
+    } catch {
+      return jsonErr(400, "Invalid JSON body");
+    }
+
+    const updates = body?.updates;
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return jsonErr(400, "updates is required (array)");
+    }
+
+    // Allow a top-level paper default, but each update may override it
+    const defaultPaper = (body?.paper ?? "1").toString();
+
+    // Build a merged "state blob"
+    // Shape we store:
+    // { kv: { [key]: value }, updatedAt: ISO }
+    const kv: Record<string, any> = {};
+    let paper = defaultPaper;
+
+    for (const raw of updates as UpdateItem[]) {
+      const k = pickKey(raw);
+      const v = pickValue(raw);
+      paper = ((raw.paper ?? paper) ?? defaultPaper).toString();
+
+      if (!k) continue;
+      kv[String(k)] = v;
+    }
+
+    if (Object.keys(kv).length === 0) {
+      return jsonErr(400, "No valid update keys in updates[]");
+    }
+
+    const nowIso = new Date().toISOString();
+    const statePatch = { kv, updatedAt: nowIso };
+
+    // We need to upsert into the SAME table your LOAD route reads from.
+    const TABLE = "qb_progress";
+
+    // We don't know your exact column names, so we try common ones for the state blob.
+    // (LOAD already works, so at least one of these patterns should match your schema.)
+    const candidateStateCols = ["state", "progress", "data", "payload"];
+
+    // First, attempt to read existing row so we can merge KV (non-destructive)
+    // Try common identity keys:
+    // - user_id + paper
+    // - email + paper
+    const email = (user.email || "").toLowerCase();
+    const userId = user.id;
+
+    let existing: any = null;
+
+    // Try read by user_id+paper
+    {
+      const { data, error } = await supabase
+        .from(TABLE)
+        .select("*")
+        .eq("user_id", userId)
+        .eq("paper", paper)
+        .limit(1);
+
+      if (!error && data && data.length > 0) existing = data[0];
+    }
+
+    // If not found, try read by email+paper
+    if (!existing && email) {
+      const { data, error } = await supabase
+        .from(TABLE)
+        .select("*")
+        .eq("email", email)
+        .eq("paper", paper)
+        .limit(1);
+
+      if (!error && data && data.length > 0) existing = data[0];
+    }
+
+    // Determine which state column exists
+    let stateCol: string | null = null;
+    if (existing) {
+      for (const c of candidateStateCols) {
+        if (Object.prototype.hasOwnProperty.call(existing, c)) { stateCol = c; break; }
+      }
+    }
+    // If we couldn't infer from existing row, default to "state"
+    if (!stateCol) stateCol = "state";
+
+    // Merge existing state.kv with incoming kv
+    const prevState = existing?.[stateCol] ?? {};
+    const prevKv = (prevState && typeof prevState === "object" && prevState.kv && typeof prevState.kv === "object")
+      ? prevState.kv
+      : {};
+
+    const mergedState = {
+      ...(prevState && typeof prevState === "object" ? prevState : {}),
+      kv: { ...prevKv, ...kv },
+      updatedAt: nowIso,
+    };
+
+    // Upsert: prefer user_id+paper; fall back to email+paper
+    // Note: your table must have a unique constraint matching your LOAD logic.
+    let upsertPayload: any = null;
+
+    if (existing && Object.prototype.hasOwnProperty.call(existing, "user_id")) {
+      upsertPayload = {
+        user_id: userId,
+        email,
+        paper,
+        [stateCol]: mergedState,
+      };
+    } else if (existing && Object.prototype.hasOwnProperty.call(existing, "email")) {
+      upsertPayload = {
+        email,
+        paper,
+        [stateCol]: mergedState,
+      };
+    } else {
+      // If schema unknown, write both (harmless if extra cols ignored by PostgREST; otherwise it errors and we return it)
+      upsertPayload = {
+        user_id: userId,
+        email,
+        paper,
+        [stateCol]: mergedState,
+      };
+    }
+
+    const { error: upErr } = await supabase.from(TABLE).upsert(upsertPayload);
+    if (upErr) {
+      return jsonErr(500, "Supabase upsert failed", { message: upErr.message });
+    }
+
+    return NextResponse.json({ ok: true, paper, stateCol, keys: Object.keys(kv).length });
+  } catch (e: any) {
+    // Never return empty 500 again — surface the reason
+    return NextResponse.json(
+      { error: "Unhandled error in /api/qb/progress/save", message: String(e?.message || e), stack: String(e?.stack || "") },
+      { status: 500 }
+    );
+  }
+}

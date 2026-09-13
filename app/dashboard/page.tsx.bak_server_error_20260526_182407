@@ -1,0 +1,55 @@
+﻿import { redirect } from "next/navigation";
+import DashboardClient from "./DashboardClient";
+import AMCDashboardClient from "./AMCDashboardClient";
+import { supabaseServer } from "@/utils/supabase/server";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+type PageProps = {
+  searchParams?: Promise<{ view?: string }>;
+};
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const forceTmuaView = params?.view === "tmua";
+
+  const supabase = await supabaseServer();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user?.email) {
+    redirect("/login?next=/dashboard");
+  }
+
+  const { data } = await supabase
+    .from("student_access")
+    .select("product, approved")
+    .ilike("email", user.email)
+    .eq("approved", true);
+
+  const products = Array.from(
+    new Set((data || []).map((r: any) => String(r.product || "")))
+  );
+
+  const tmuaProducts = ["practice-tests", "tmua-question-bank", "tmua-classes"];
+
+  const hasAMC = products.includes("amc-question-bank");
+  const hasTMUA = products.some((p) => tmuaProducts.includes(p));
+
+  // AMC-only student: no TMUA portal, no greyed TMUA products.
+  if (hasAMC && !hasTMUA) {
+    return <AMCDashboardClient email={user.email} />;
+  }
+
+  // Student with both: default to AMC clean entry, but allow opening TMUA portal.
+  if (hasAMC && hasTMUA && !forceTmuaView) {
+    return <AMCDashboardClient email={user.email} hasTmua />;
+  }
+
+  // TMUA students keep the existing TMUA dashboard behaviour:
+  // practice-tests / question bank / classes can be greyed or active.
+  return <DashboardClient uiMark="TS_DASH_PORTAL_20260227142744" />;
+}

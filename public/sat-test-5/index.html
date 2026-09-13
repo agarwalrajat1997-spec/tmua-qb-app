@@ -1,0 +1,3187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SAT Diagnostic Test 5 — Advanced</title>
+
+  <!-- Desmos (for calculator-allowed sections only) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+/* =======================================
+   GLOBAL
+======================================= */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #000;
+}
+.hidden { display: none !important; }
+a { color: #2e53da; }
+
+/* =======================================
+   HEADER
+======================================= */
+.header {
+  background-color: #fafbff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+#timer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  display: none; /* hidden on initial screen */
+}
+.header-buttons { display: flex; align-items: center; gap: 20px; }
+
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius: 999px;
+  background:#e8edff;
+  color:#1e2a6f;
+  font-size:12px;
+  margin-left:6px;
+}
+
+/* Calculator icon */
+#calculator-icon {
+  display: none; /* hidden until exam start / allowed */
+  align-items: center;
+  gap: 6px;
+  color: #000;
+  font-size: 15px;
+  cursor: pointer;
+}
+#calculator-icon i {
+  font-size: 18px;
+}
+#calculator-icon:hover {
+  color: #444;
+}
+
+/* =======================================
+   START SCREEN  ✅ Thriving Scholars Branding
+======================================= */
+#start-screen {
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+
+  /* Thriving Scholars (orange/yellow) */
+  border: 2px solid #FEC94F;
+  box-shadow: 0 8px 24px rgba(254, 201, 79, 0.28);
+
+  text-align: left;
+  overflow-y: auto;                /* ✅ allows scrolling inside */
+  scrollbar-width: thin;           /* ✅ nice thin scrollbar (Firefox) */
+  scrollbar-color: #FEC94F #FFF1DF;
+}
+
+/* ✅ Optional: style scrollbar for Chrome/Safari */
+#start-screen::-webkit-scrollbar {
+  width: 8px;
+}
+#start-screen::-webkit-scrollbar-thumb {
+  background-color: #FEC94F;
+  border-radius: 4px;
+}
+#start-screen::-webkit-scrollbar-track {
+  background-color: #FFF1DF;
+}
+
+#start-screen h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  color: #670D04;                  /* deep TS accent */
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#start-screen p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+#start-screen label {
+  font-weight: 600;
+  color: #111;
+}
+
+#start-screen input,
+#start-screen select {
+  padding: 8px 10px;
+  width: 250px;
+  margin-top: 4px;
+  border: 1px solid #f0d6a0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#start-screen button {
+  background: #FEC94F;             /* TS yellow */
+  color: #670D04;                  /* readable on yellow */
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(254, 201, 79, 0.35);
+}
+
+#start-screen button:hover {
+  background: #F5B935;             /* slightly deeper yellow/orange */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(254, 201, 79, 0.45);
+}
+
+
+/* =======================================
+   MAIN CONTAINER (EXAM)
+======================================= */
+.container {
+  display: none;
+  flex-direction: row;
+  height: calc(100vh - 56px - 70px);
+  overflow: hidden;
+}
+.container.active {
+  display: flex;
+}
+
+/* =======================================
+   LEFT PANEL (Passage Area)
+======================================= */
+.left-panel {
+  flex: 1;
+  background-color: white;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   RIGHT PANEL (Question Area)
+======================================= */
+.right-panel {
+  flex: 1;
+  background-color: white;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   Optional: Nicer Scrollbars
+======================================= */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* =======================================
+   QUESTION HEADER
+======================================= */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbff; /* 🔹 updated color */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.mark-review {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  margin-left: 12px;
+  flex-grow: 1;
+}
+.mark-review input[type="checkbox"] { display: none; }
+.bookmark-icon {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mark-review input[type="checkbox"]:checked + .bookmark-icon {
+  color: #cf0000;
+}
+
+/* =======================================
+   OPTIONS
+======================================= */
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.option-label:hover { border-color: #2e53da; }
+.option-label.active { background: #f0f4ff; border-color: #2e53da; }
+.option-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e8f0;
+  color: #2e53da;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.option-label.active .option-circle {
+  background: #2e53da;
+  color: #fff;
+}
+.option-label input[type="radio"] { display: none; }
+
+/* =======================================
+   FOOTER
+======================================= */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+  background-color: #fafbff;
+  height: 70px;
+  position: relative;
+}
+.footer-left { width: 200px; display: flex; align-items: center; justify-content: flex-start; }
+.footer-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.footer-right { display: flex; align-items: center; gap: 10px; }
+.footer-center button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.footer-buttons button {
+  background-color: #2e53da;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.footer-buttons button:disabled {
+  background-color: #bbb;
+  cursor: default;
+}
+.student-response-cell { background-color: #fafafa; font-style: italic; white-space: pre-wrap; }
+
+/* =======================================
+   NAVIGATOR POPUP
+======================================= */
+#navigator-popup {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  z-index: 9999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+#navigator-popup .nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#navigator-popup .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+#navigator-popup .legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 16px 0;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border: 1px solid #999; display: inline-block; }
+.legend-current { background: #2e53da; color: #fff; }
+.legend-review { background: red; }
+.legend-unanswered { background: transparent; }
+#navigator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+#navigator-grid button {
+  border: 1px dashed #2e53da;
+  background: #fff;
+  color: #2e53da;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#navigator-grid button.current { background: #2e53da; color: #fff; }
+#navigator-grid button.answered { border: 1px solid #2e53da; }
+#navigator-grid button.review { border: 1px solid red; color: red; }
+
+/* =======================================
+   CALCULATOR POPUP
+======================================= */
+#calculator-popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+  z-index: 10000;
+  width: 640px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+#calculator-drag-handle {
+  cursor: move;
+  background: #fafbff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+#calculator {
+  width: 100%;
+  height: 420px;
+}
+#grading-overlay {
+  backdrop-filter: blur(3px);
+  color: #222;
+}
+.spinner {
+  border-color: #ddd;
+  border-top-color: #0078ff;
+}
+
+/* =======================================
+   FRQ
+======================================= */
+.grading-output {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+textarea.frq-input {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+/* =======================================
+   BREAK SCREEN (between I-B → II-A)
+======================================= */
+#break-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  flex-direction: column;
+}
+.break-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 24px;
+}
+#break-timer {
+  background: #222;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+#skip-break {
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+}
+#skip-break:hover {
+  background: #ccc;
+}
+
+/* =======================================
+   SECTION TRANSITION MODAL
+======================================= */
+#section-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+#section-modal .content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 420px;
+  text-align: center;
+}
+#section-modal button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* =======================================
+   REPORT
+======================================= */
+#report-container {
+  padding: 30px;
+  max-width: 950px;
+  margin: 20px auto 90px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow-y: auto;
+  height: calc(100vh - 56px - 40px);
+}
+#report-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+#report-container th, #report-container td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+#report-container thead { background: #f0f0f0; }
+/* =============================
+   SCORE WIDGET (AP SCORE GAUGE)
+============================= */
+.score-container {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  margin: 30px auto;
+}
+
+.score-container svg {
+  width: 230px;
+  height: 230px;
+}
+
+.score-container .arc {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.score-container .label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  fill: #555;
+}
+
+.score-container .score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  color: #000;
+}
+/* ===============================
+   ABC BUTTON
+================================= */
+.eliminate-mode-btn {
+  background-color: #ffffff;
+  color: #2836d1;
+  border: 2px solid #2836d1;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.eliminate-mode-btn:hover {
+  background-color: #f3f4ff;
+}
+.eliminate-mode-btn.active {
+  background-color: #2836d1;
+  color: #ffffff;
+  border-color: #2836d1;
+}
+#footer-bar {
+  position: relative;
+}
+/* replace the whole block with this */
+#color-bar-bottom {
+  /* position: static by default */
+  width: 100%;
+  height: 1px;      /* your dash bar height */
+  margin: 0;        /* optional: ensure it's flush */
+}
+
+
+/* ===============================
+   STRIKEOUT BUTTONS (Right-side A–D)
+================================= */
+.strike-toggle {
+  display: none; /* Hidden until ABC mode is active */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2e53da;
+  background: transparent;
+  border: 2px solid #2e53da;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elimination-active .strike-toggle {
+  display: flex;
+}
+
+/* Hover animation (subtle blue tint like SAT) */
+.strike-toggle:hover {
+  background-color: #f0f4ff;
+}
+
+/* Don’t change on press — visual effect only occurs on option */
+.strike-toggle.active {
+  background-color: transparent;
+  color: #2e53da;
+}
+
+/* ===============================
+   STRUCK OPTION STYLE
+================================= */
+.option-label.struck {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+  color: #666;
+  text-decoration: line-through;
+  position: relative;
+  opacity: 0.75;
+}
+
+.option-label.struck::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.option-label.struck .option-circle {
+  background: #e0e0e0;
+  color: #888;
+} 
+
+/* =======================================
+   COLOR DASH BAR (appears after exam start)
+======================================= */
+.color-bar {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #444 0 24px,        /* dark gray dash */
+    transparent 24px 26px,
+    #00AEEF 26px 50px,  /* blue dash */
+    transparent 50px 52px,
+    #FFD500 52px 76px,  /* yellow dash */
+    transparent 76px 78px
+  );
+  background-size: 78px 5px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hidden by default (like header on start screen) */
+.color-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#footer-student-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 520px 1fr; /* wider left panel so image can actually grow */
+  gap: 18px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+/* Center the image within the LEFT panel */
+.q-media-left{
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: flex-start;   /* keep at top; change to center if you want vertical centering */
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 240px 1fr; /* bigger left panel */
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+.q-media-left{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Bigger images + faint boundary */
+.q-img-sm{
+  width: 320px;              /* bigger */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+
+/* Mobile tweak */
+@media (max-width: 640px){
+  .q-media{
+    grid-template-columns: 1fr;  /* stack image above text */
+  }
+  .q-media-left{
+    justify-content: flex-start;
+  }
+  .q-img-sm{
+    width: min(360px, 100%);
+  }
+}
+/* ================================
+   OPTION IMAGES (MCQ choices)
+   Make images smaller + organized
+================================ */
+
+/* If your option HTML uses <div class="opt-img-wrap"><img class="opt-img" ...></div> */
+.opt-img-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center inside option */
+  align-items: center;
+  padding: 6px 0;
+}
+
+.opt-img{
+  width: 220px;                /* ✅ CHANGE THIS to control option image size */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);   /* faint boundary */
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+}
+
+ 
+/* =======================================
+   STUDENT-PRODUCED RESPONSE (SPR)
+======================================= */
+.spr-wrap {
+  margin-top: 16px;
+  padding: 16px;
+  border: 2px solid #d7dbe7;
+  border-radius: 10px;
+  background: #fafbff;
+}
+.spr-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.spr-input {
+  width: min(320px, 100%);
+  padding: 12px 14px;
+  font-size: 20px;
+  border: 2px solid #9da7c5;
+  border-radius: 8px;
+  outline: none;
+}
+.spr-input:focus {
+  border-color: #2e53da;
+  box-shadow: 0 0 0 3px rgba(46,83,218,.12);
+}
+.spr-note {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title" id="header-title">SAT Diagnostic Test 5</span>
+      <span id="calc-badge" class="badge hidden">Calculator Allowed</span>
+    </div>
+    <div class="header-buttons">
+      <div id="timer">00:00</div>
+      <div id="calculator-icon" onclick="openCalculator()">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Calculator</span>
+      </div>
+    </div>
+  </div>
+
+<div id="start-screen">
+  <h1>Digital SAT Diagnostic Test 5 — Advanced</h1>
+  <p>This advanced SAT-style diagnostic contains 4 locked modules:</p>
+  <ul>
+    <li><strong>Module 1:</strong> Reading &amp; Writing, 27 questions, 32 minutes — hard</li>
+    <li><strong>Module 2:</strong> Reading &amp; Writing, 27 questions, 32 minutes — harder</li>
+    <li><strong>10-minute break</strong></li>
+    <li><strong>Module 3:</strong> Math, 22 questions, 35 minutes — hard</li>
+    <li><strong>Module 4:</strong> Math, 22 questions, 35 minutes — harder</li>
+  </ul>
+  <p><em>Once you advance to the next module, you cannot return to a completed module.</em></p>
+  <p><em>This is intentionally more challenging than a typical SAT first-stage module. The score report is a diagnostic estimate, not an official College Board conversion.</em></p>
+    <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div>
+        <label>Full Name</label><br>
+        <input type="text" id="student-name">
+      </div>
+      <div>
+        <label>Email (to receive results)</label><br>
+        <input type="email" id="student-email">
+      </div>
+      <div>
+        <label>Exam Session</label><br>
+<select id="test-session">
+  <option value="" selected disabled>Select SAT Session</option>
+  <option value="SAT May 2, 2026">May, 2026</option>
+  <option value="SAT June 6, 2026">June, 2026</option>
+  <option value="SAT August 22, 2026">August, 2026</option>
+  <option value="SAT September 12, 2026">September, 2026</option>
+  <option value="SAT October 3, 2026">October, 2026</option>
+  <option value="SAT November 7, 2026">November, 2026</option>
+  <option value="SAT December 5, 2026">December, 2026</option>
+  <option value="SAT March 6, 2027">March, 2027</option>
+  <option value="SAT May 1, 2027">May, 2027</option>
+  <option value="SAT June 5, 2027">June, 2027</option>
+</select>
+      </div>
+    </div>
+    <button onclick="startExam()">Start Exam</button>
+  </div>
+
+  <div id="color-bar" class="color-bar hidden"></div>
+
+  <!-- Main Exam Container -->
+  <div id="main-container" class="container">
+    <div class="left-panel" id="passage"></div>
+
+    <div class="right-panel">
+      <div>
+        <div class="question-header">
+          <div class="q-number" id="q-number">1</div>
+
+          <label class="mark-review">
+            <input type="checkbox" id="mark-review" onchange="toggleBookmark(this)">
+            <i class="fa-regular fa-bookmark bookmark-icon"></i>
+            Mark for Review
+          </label>
+
+          <!-- ABC toggle -->
+          <button id="eliminateBtn" class="eliminate-mode-btn">𝖠̶𝖡̶𝖢̶</button>
+        </div>
+
+        <div class="question-box" id="question-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="color-bar-bottom" class="color-bar hidden"></div>
+
+  <!-- Footer -->
+  <div class="footer-buttons hidden" id="footer-bar">
+    <div class="footer-left">
+      <span id="footer-student-name" style="font-size: 16px; font-weight: 500; color: #000;"></span>
+    </div>
+
+    <div class="footer-center">
+      <button id="navigator-button" onclick="openNavigator()">Question 1 of 1</button>
+    </div>
+
+    <div class="footer-right">
+      <button id="back-btn" onclick="prevQuestion()">Back</button>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+      <button id="finish-section-btn" onclick="finishCurrentSection()">Finish Section</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div id="navigator-popup">
+    <div class="nav-header">
+      <span id="navigator-section-title">Section</span>
+      <button class="close-btn" onclick="closeNavigator()">×</button>
+    </div>
+    <div class="legend">
+      <span><div class="legend-box legend-current"></div> Current</span>
+      <span><div class="legend-box legend-unanswered"></div> Unanswered</span>
+      <span><div class="legend-box legend-review"></div> For Review</span>
+    </div>
+    <div id="navigator-grid"></div>
+  </div>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup">
+    <div id="calculator-drag-handle">
+      <span>Calculator</span>
+      <button onclick="closeCalculator()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="calculator"></div>
+  </div>
+
+  <!-- Section Transition Modal -->
+  <div id="section-modal">
+    <div class="content">
+      <h2 id="section-modal-title">Section complete</h2>
+      <p id="section-modal-text">The next section will begin now. You cannot return to the previous section.</p>
+      <div style="display:flex; justify-content:center; gap:14px; margin-top:18px;">
+        <button id="advance-section-btn" onclick="goToNextSection()" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Start Next Section
+        </button>
+        <button onclick="closeSectionModal()" style="background:#ccc; color:#000; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 10-minute break between Reading & Writing and Math -->
+  <div id="break-screen" class="hidden">
+    <div class="break-content">
+      <div id="break-timer">10:00</div>
+      <h2>Reading &amp; Writing Complete</h2>
+      <p>Your Reading &amp; Writing modules are locked. After the break, Math Module 1 will begin.</p>
+      <button id="skip-break" onclick="skipBreak()">Start Math Now</button>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-container" class="hidden"></div>
+
+  <script>
+/***********************
+ * DATA: Sections
+ ***********************/
+const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
+
+const sections = [
+  {
+    "id": "READING1",
+    "title": "SAT Diagnostic Test 5 — Advanced  — Reading & Writing Module 1",
+    "durationSec": 1920,
+    "calculatorAllowed": false,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p><strong>Text 1</strong></p> <p>Fossils of the hominin <em>Australopithecus africanus</em> have been found in the Sterkfontein Caves of South Africa, but <u>assigning an age to the fossils is challenging because of the unreliability of dating methods in this context</u>. The geology of Sterkfontein has caused soil layers from different periods to mix, impeding stratigraphic dating, and dates cannot be reliably imputed from those of nearby animal bones since the bones may have been relocated by flooding.</p><p><strong>Text 2</strong></p> <p>Archaeologists used new cosmogenic nuclide dating techniques to reevaluate the ages of <em>A. africanus</em> fossils found in the Sterkfontein Caves. This technique involves analyzing the cosmogenic nuclides in the breccia—the matrix of rock fragments immediately surrounding the fossils. The researchers assert that this approach avoids the potential for misdating associated with assigning ages based on Sterkfontein’s soil layers or animal bones.</p>",
+        "prompt": "<p>Based on the texts, how would the researchers in Text 2 most likely respond to the underlined portion in Text 1?</p>",
+        "options": [
+          "<p>They would agree that dating is difficult but maintain that combining soil-layer and animal-bone evidence would overcome the problem.</p>",
+          "<p>They would qualify the claim: the difficulties apply to the indirect methods described in Text 1, whereas dating the surrounding breccia can avoid those particular sources of error.</p>",
+          "<p>They would agree with the claim because flooding could relocate the breccia just as it can relocate nearby animal bones.</p>",
+          "<p>They would reject the claim on the grounds that cosmogenic nuclide dating determines the age of the fossils themselves rather than material around them.</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S1Q4 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>Researchers from many different fields have taken on the task of deciphering the Voynich Manuscript. Approaching it as an encrypted message to decode, cryptologists have examined the manuscript using every available decryption method, not one of which has been successful. Most cryptologists, ______ have concluded that the manuscript either is not written in code at all or is written in a code so complex that it is impervious to current decoding techniques.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "options": [
+          "<p>accordingly,</p>",
+          "<p>nevertheless,</p>",
+          "<p>for example,</p>",
+          "<p>similarly,</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S1Q23 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>The following text is adapted from Mark Twain’s 1872 book <em>Roughing It</em>.</p> <p>The small mail-pockets, strapped under the rider’s thighs, each held the volume of a child’s primer. These contained many important business documents and newspaper letters, but they were written on paper as light and thin as gold-leaf, nearly, and thus bulk and weight were economized.</p>",
+        "prompt": "<p>As used in the passage, what does the word ‘economized’ most closely mean?</p>",
+        "options": [
+          "<p>reduced</p>",
+          "<p>conserved</p>",
+          "<p>regulated</p>",
+          "<p>distributed</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q4 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>Urban wildlife that regularly consumes discarded human food may receive plenty of calories while missing nutrients found in its natural diet. Researchers have documented poorer body condition in some such populations. Thus, feeding wildlife can contribute to physiological ______ even when food appears abundant.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>deterioration</p>",
+          "<p>habituation</p>",
+          "<p>acclimation</p>",
+          "<p>diversification</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q24 revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>The examination of art and personal relationships in Zadie Smith's novel <i>Swing Time</i> reveals that the protagonist's relationship with her childhood best friend Tracey is ______ both her personal and artistic development. Although the protagonist admires Tracey's talent and drive, she ultimately recognizes that Tracey's behavior and beliefs are damaging to her own.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>formative of</p>",
+          "<p>inimical to</p>",
+          "<p>independent of</p>",
+          "<p>intertwined with</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S2Q26 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>Koalas (<em>Phascolarctos cinereus</em>) subsist almost entirely on eucalyptus leaves, which are fibrous, low in available energy, and rich in defensive chemicals. Specialized digestion enables koalas to ______ sufficient usable nutrients from a food source that many mammals cannot rely on.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>derive</p>",
+          "<p>retain</p>",
+          "<p>concentrate</p>",
+          "<p>synthesize</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S1Q7 strengthened revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>Child prodigies in classical music may possess unusual natural aptitude, but their achievements often follow years of deliberate practice, technical drills, and repeated performance under demanding conditions. The evidence therefore suggests that sustained ______ is a necessary complement to aptitude.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>discipline</p>",
+          "<p>precocity</p>",
+          "<p>spontaneity</p>",
+          "<p>virtuosity</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q3 strengthened revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>CRISPR-Cas9 enables researchers to edit DNA with remarkable precision. Because changes made to human embryos could be inherited and their long-term consequences remain uncertain, however, clinical use of embryo editing is tightly ______ by ethical and regulatory constraints.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>circumscribed</p>",
+          "<p>provisional</p>",
+          "<p>consequential</p>",
+          "<p>contested</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q21 strengthened revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>As a monthly newsletter formed in 1975 by a group of Hispanic students at the University of Texas, <em>El Sol</em> helped raise awareness about social and political issues concerning the Hispanic community on campus and at large. The newsletter had an expansive reach for a publication of its kind: around 5,000 copies were published each month. A student writing a history paper, however, hypothesizes that <em>El Sol</em>'s influence cannot be measured by the number of newsletters published monthly alone.</p>",
+        "prompt": "<p>Which finding, if true, would most directly support the student’s hypothesis?</p>",
+        "options": [
+          "<p>Some issues were distributed at several different locations on the university campus.</p>",
+          "<p>The newsletter occasionally printed more than 5,000 copies when a major campus event occurred.</p>",
+          "<p>Readers frequently passed an issue to another person after reading it, so a single printed copy could reach multiple people.</p>",
+          "<p>Copies of the newsletter were preserved in a university archive after publication.</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S1Q1 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>A coastal city’s flood-resilience report is formally addressed to the city council. Yet the report defines technical terms for nonspecialists, includes neighborhood-level evacuation maps, and organizes its cost projections according to categories required by a national infrastructure-grant program. It also summarizes trade-offs among several proposals instead of recommending only one. These features most strongly suggest that ______</p>",
+        "prompt": "<p>Which choice most logically completes the text?</p>",
+        "options": [
+          "<p>the report was written with several audiences in mind, including readers beyond the city council.</p>",
+          "<p>the report’s primary purpose was to persuade the council to choose the most expensive proposal.</p>",
+          "<p>the report’s authors assumed that city council members had no prior knowledge of flood planning.</p>",
+          "<p>the neighborhood evacuation maps were considered more important than the report’s cost projections.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "R&W M1 Q10 replaced v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>Theropod dinosaurs, such as the formidable Tyrannosaurus rex, were apex predators that reigned over the terrestrial ecosystems during the Mesozoic era. Many paleontologists have hypothesized that their massive body size was a product of an evolutionary \"arms race\" with their prey, driving them to become more efficient hunters. Despite this theory, there is no conclusive evidence showing that an increase in prey size or defensive adaptations occurred during key stages of theropod evolution. This includes the emergence of the first large theropods or when they reached their maximum size. Therefore, it can be reasonably inferred that ________.</p>",
+        "prompt": "<p>Which choice most logically completes the text?</p>",
+        "options": [
+          "<p>changes in prey size or defenses cannot by themselves account for all major increases in theropod body size.</p>",
+          "<p>the absence of documented prey changes proves that prey played no role in theropod evolution.</p>",
+          "<p>environmental conditions, rather than prey characteristics, were the primary cause of theropod size increases.</p>",
+          "<p>large theropods must have evolved their size before they became predators.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S1Q16 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>The following text is from Emily Dickinson's 1861 poem “Hope” is the thing with feathers.</p>\n    <p>“Hope” is the thing with feathers—<br>\n    That perches in the soul—<br>\n    And sings the tune without the words—<br>\n    And never stops—at all—<br>\n    And sweetest—in the Gale—is heard—<br>\n    And sore must be the storm—<br>\n    That could abash the little Bird<br>\n    That kept so many warm—</p>",
+        "prompt": "<p>Which choice best states the central idea of the text?</p>",
+        "options": [
+          "<p>Hope is a persistent inner presence whose sustaining power is especially evident under difficult conditions.</p>",
+          "<p>Hope becomes stronger only after hardship has begun to overwhelm a person.</p>",
+          "<p>Hope operates without conscious effort, which is why adversity cannot affect it at all.</p>",
+          "<p>Hope protects people from experiencing hardship by directing their attention away from it.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S1Q12 strengthened distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p><strong>Entrepreneurs' estimates of their start-up's probability of success</strong></p>\n    <table style=\"border-collapse:collapse;margin:12px 0;text-align:center;\">\n      <tr><th style=\"border:1px solid #888;padding:8px 12px;\">Estimate made before failure</th>\n          <th style=\"border:1px solid #888;padding:8px 12px;\">Retrospective estimate after failure</th></tr>\n      <tr><td style=\"border:1px solid #888;padding:8px 12px;\">77.3%</td>\n          <td style=\"border:1px solid #888;padding:8px 12px;\">58.8%</td></tr>\n    </table>\n    <p>Hindsight bias is the tendency to regard an outcome as having been more predictable after learning that it occurred. A researcher asked entrepreneurs to estimate their start-up's chance of success before the business failed and, after the failure, to estimate what they believed its chance of success had been at the outset.</p>",
+        "prompt": "<p>Which choice best uses the data to support the claim that the entrepreneurs exhibited hindsight bias?</p>",
+        "options": [
+          "<p>The entrepreneurs initially assigned a 77.3% probability to success, showing that they were optimistic before failure.</p>",
+          "<p>After the outcome was known, the entrepreneurs remembered the original chance of success as 58.8%, about 18.5 percentage points below the estimate they had actually made beforehand.</p>",
+          "<p>The post-failure estimate remained above 50%, indicating that the entrepreneurs still viewed success as more likely than failure.</p>",
+          "<p>The two estimates differed by less than 20 percentage points, suggesting that the entrepreneurs’ judgments were relatively stable.</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S1Q15 fixed/strengthened distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>American “Old West” towns such as Tombstone, Deadwood, Dodge City, and Abilene, are often portrayed as lawless in popular culture. However, they had stringent gun control laws that were rigorously enforced. Visitors were largely prohibited from carrying weapons within town borders and were expected to check their guns upon arrival. Additionally, these regulations were not contested by the Federal government, which largely refrained from intervening in gun law court battles in the 1800s. Thus, historians argue, _______</p>",
+        "prompt": "<p>Which choice most logically completes the text?</p>",
+        "options": [
+          "<p>strictly enforced local weapon restrictions complicate the popular image of these towns as uniformly lawless.</p>",
+          "<p>the federal government actively encouraged western towns to adopt local gun restrictions.</p>",
+          "<p>the existence of gun restrictions shows that western towns were safer than present-day towns.</p>",
+          "<p>popular depictions are accurate because the restrictions were necessary only in unusually violent communities.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q7 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>NASA’s Hubble Space Telescope repeatedly photographs Jupiter, Saturn, Uranus, and Neptune. By comparing images taken at different times, researchers can track the outer ______ weather systems and distinguish short-lived storms from longer-term atmospheric patterns.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>planets’ changing</p>",
+          "<p>planet’s changing</p>",
+          "<p>planets changing</p>",
+          "<p>planets’ changing’s</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q9 revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>From a distance, geologist Dr. Lorenzo Mendoza’s tectonic diagrams resemble abstract art. Viewed closely, however, each diagram is a dense composite of geological measurements ______ patterns that appear decorative at first glance encode changes in pressure, depth, and movement.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>, with</p>",
+          "<p>; with</p>",
+          "<p>, and with</p>",
+          "<p>. With</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "R&W M1 Q16 replaced v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>Mohawk visual artist Shelley Niro often returns to images of memory, community, and historical trauma. Among the recurring motifs in several of her installations ______ a circle representing unity and repeated references to family photographs.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>is</p>",
+          "<p>are</p>",
+          "<p>has been</p>",
+          "<p>was</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S2Q12 revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "18",
+        "passage": "<p>In the 1930s, the art world became fascinated with _______ that borrowed elements from the bizarre imagery of dreams and the unconscious to express the subconscious mind, Surrealism first started in Paris but quickly spread around the world, finding an audience in places as diverse as Mexico and Czechoslovakia.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>Surrealism, a movement</p>",
+          "<p>Surrealism a movement</p>",
+          "<p>Surrealism. A movement</p>",
+          "<p>Surrealism—a movement</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S2Q13 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "19",
+        "passage": "<p>Honey has been used for centuries as both a food and a treatment for wounds. Recent laboratory studies, however, ______ that its antimicrobial activity can vary substantially depending on floral source and processing.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>have shown</p>",
+          "<p>showed</p>",
+          "<p>showing</p>",
+          "<p>to show</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q14 revised",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "20",
+        "passage": "<p>Companies seeking flexible staffing arrangements have experimented with several ways to divide the duties of a traditional full-time role. One arrangement has become especially common ______ job sharing, a system in which two employees divide the responsibilities of one position.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>,</p>",
+          "<p>:</p>",
+          "<p>;</p>",
+          "<p>— and</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S1Q17 fixed/strengthened",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "21",
+        "passage": "<p>While researching a topic, a student has taken the following notes:</p> <ul> <li>Some powerful works of literature have so influenced readers that new legislation has been passed as a result.</li> <li><em>The Interesting Narrative of the Life of Olaudah Equiano</em> (1789) is the autobiography of a man who endured slavery on both sides of the Atlantic.</li> <li>Equiano’s book contributed to the passage of the Slave Trade Act of 1807.</li> <li><em>The Jungle</em> (1906) is a fictional work by Upton Sinclair that describes unsanitary conditions in US meatpacking plants.</li> <li>Sinclair’s book contributed to the passage of the Pure Food and Drug Act in 1906.</li> </ul> <p>The student wants to emphasize a difference between the two books. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>",
+        "prompt": "<p>The student wants to emphasize a difference between the two books. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>",
+        "options": [
+          "<p>Equiano and Sinclair both wrote books that helped influence legislation, although the laws addressed different problems.</p>",
+          "<p>Equiano’s book contributed to legislation in 1807, whereas Sinclair’s book contributed to legislation in 1906.</p>",
+          "<p>Both books contributed to legislation, but only Sinclair’s work describes conditions in the United States.</p>",
+          "<p>Although both books contributed to new legislation, Equiano’s work is an autobiography, whereas Sinclair’s is fictional.</p>"
+        ],
+        "correctIndex": "D",
+        "_source": "S1Q22 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "22",
+        "passage": "<p>While researching a topic, a student has taken the following notes:</p><ul><li>The Grand Canyon is about 277 miles long, up to 18 miles wide, and over a mile deep.</li><li>The Yellowstone Caldera measures about 34 by 45 miles.</li></ul>",
+        "prompt": "<p>The student wants to emphasize a contrast in the dimensions of the two features without making a claim about which is larger overall. Which choice most effectively uses relevant information from the notes?</p>",
+        "options": [
+          "<p>Although the Grand Canyon extends about 277 miles in length, the Yellowstone Caldera measures about 34 by 45 miles.</p>",
+          "<p>The Grand Canyon is larger than the Yellowstone Caldera because 277 miles is greater than 45 miles.</p>",
+          "<p>The Yellowstone Caldera is larger overall because both of its stated dimensions exceed the Grand Canyon’s maximum width.</p>",
+          "<p>Both features are enormous: the Grand Canyon is over a mile deep, and the Yellowstone Caldera is located in the western United States.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "R&W M1 Q22 replaced v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "23",
+        "passage": "<p>While researching a topic, a student has taken the following notes:</p> <ul> <li>The ‘Oumuamua object was first discovered by astronomers in 2017.</li> <li>It's the first known interstellar object to pass through our solar system.</li> <li>The object exhibited non-gravitational acceleration, which is unusual for an asteroid or a comet.</li> <li>Scientists believe that ‘Oumuamua's acceleration was caused by outgassing, a common phenomenon in comets.</li> </ul>",
+        "prompt": "<p>The student wants to specify the reason for an anomalous characteristic of ‘Oumuamua's. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>",
+        "options": [
+          "<p>Scientists attribute ‘Oumuamua’s status as an interstellar object to the non-gravitational acceleration observed after its discovery.</p>",
+          "<p>Because outgassing is common in comets, scientists classify ‘Oumuamua as a comet rather than an interstellar object.</p>",
+          "<p>Scientists propose that outgassing accounts for ‘Oumuamua’s unusual non-gravitational acceleration.</p>",
+          "<p>Scientists discovered ‘Oumuamua in 2017 after its unusual acceleration caused it to enter the solar system.</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S1Q26 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "24",
+        "passage": "<p>While researching a topic, a student has taken the following notes:</p> <ul> <li>The Inca Empire, also known as Tawantinsuyu, was the largest empire in pre-Columbian America.</li> <li>The administrative, political, and military center of the empire was located in Cusco, now in modern-day Peru.</li> <li>The empire developed a network of roads spanning over 25,000 miles, connecting various regions and facilitating trade and communication.</li> <li>Inca architecture, known for its precision and use of large stone blocks, is one of the most significant aspects of their cultural heritage.</li> <li>The Quechua language, originally the language of the Inca Empire, is still spoken today by millions of people in South America.</li> </ul>",
+        "prompt": "<p>The student wants to highlight the enduring influence of the Inca Empire on present-day South America. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>",
+        "options": [
+          "<p>The Inca Empire’s road network once linked distant regions, but the notes do not indicate whether those roads remain in use.</p>",
+          "<p>The continued use of Quechua by millions of people in South America demonstrates one enduring linguistic legacy of the Inca Empire.</p>",
+          "<p>Because Cusco was the Inca administrative center, the city remains the political center of present-day South America.</p>",
+          "<p>Inca architecture used large stone blocks, making it more influential today than the empire’s language.</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S2Q17 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "25",
+        "passage": "<p>While researching a topic, a student has taken the following notes:</p> <ul> <li>Batik Tulis is a traditional Indonesian fabric dyeing technique that involves applying wax to fabric in intricate patterns before dyeing.</li> <li>The patterns of Batik Tulis often have symbolic meanings, representing historical events, folklore, or aspects of nature.</li> <li>Batik Tulis, as an art form, has been passed down through generations, often within familial lines.</li> <li>In 2009, UNESCO recognized Batik Tulis as a Masterpiece of Oral and Intangible Heritage of Humanity.</li> <li>The art of Batik Tulis continues to evolve, with contemporary artists experimenting with new forms and motifs.</li> </ul>",
+        "prompt": "<p>The student wants to introduce the art of Batik Tulis and its cultural significance to an audience unfamiliar with the art form. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>",
+        "options": [
+          "<p>Batik Tulis is a traditional Indonesian wax-resist dyeing technique whose patterns often carry symbolic meanings and whose cultural significance was recognized by UNESCO in 2009.</p>",
+          "<p>Batik Tulis is an Indonesian technique in which wax is applied before dyeing, and contemporary artists continue to experiment with new motifs.</p>",
+          "<p>The symbolic patterns of Batik Tulis often refer to history, folklore, or nature and have been passed down through families.</p>",
+          "<p>UNESCO recognized Batik Tulis in 2009, and contemporary artists have continued to change the art form.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q19 distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "26",
+        "passage": "<p>The compound glycine betaine helps plants survive high-salinity and arid conditions by stabilizing interactions among water molecules within plant cells. Under osmotic stress, those interactions are less likely to break down. ______ the cells are better able to retain water and avoid damage.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "options": [
+          "<p>For example,</p>",
+          "<p>Consequently,</p>",
+          "<p>Nevertheless,</p>",
+          "<p>By comparison,</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S1Q2 strengthened distractors rebuilt",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "27",
+        "passage": "<p>Isamu Noguchi worked across sculpture, furniture, landscape architecture, and public-space design, often combining Eastern and Western aesthetic traditions. ______ his playgrounds and public parks extend this artistic philosophy by inviting visitors to interact physically with designed space rather than merely observe it.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "options": [
+          "<p>Conversely,</p>",
+          "<p>Moreover,</p>",
+          "<p>Nevertheless,</p>",
+          "<p>Instead,</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S2Q15 strengthened distractors rebuilt",
+        "_difficulty": 4
+      }
+    ]
+  },
+  {
+    "id": "READING2",
+    "title": "SAT Diagnostic Test 5 — Advanced — Reading & Writing Module 2",
+    "durationSec": 1920,
+    "calculatorAllowed": false,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>At high altitudes, the human body experiences decreased oxygen availability, which can impact physical performance. Acclimatization is the process our bodies undergo to adapt to these conditions, improving performance over time. <u>Mountaineers often ascend slowly, spending several days at intermediate elevations to allow their bodies to adapt.</u> Acclimatization involves physiological changes, such as increased breathing rate, higher red blood cell production, and enhanced oxygen utilization, helping the body function efficiently in low-oxygen environments.</p>",
+        "prompt": "<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>",
+        "options": [
+          "<p>It gives an example of a deliberate behavior that allows the physiological process described in the passage to occur more gradually.</p>",
+          "<p>It identifies the physiological changes that directly increase oxygen availability in the blood.</p>",
+          "<p>It distinguishes acclimatization from the immediate decline in performance caused by high altitude.</p>",
+          "<p>It explains why intermediate elevations contain more oxygen than either low or high elevations.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q8 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>While some inventors achieve success and fame solely for their innovations, others, like Thomas Edison, manage to transition from the realm of invention to the world of entrepreneurship. Edison’s ability to ______ his inventions into profitable business ventures was a key factor contributing to his long-lasting impact on various industries.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>parlay</p>",
+          "<p>disseminate</p>",
+          "<p>replicate</p>",
+          "<p>subordinate</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q27 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>Climate change is profoundly impacting the traditional lifestyle and practices of Inuit communities in the Arctic. Historically, the Inuit have relied on hunting animals like seals and caribou, which are becoming scarce due to climate change. Additionally, unpredictable weather patterns are making it increasingly difficult for the Inuit to safely travel and hunt. <u>In fact, a study by Inuit Circumpolar Council researcher Matt Suese found that 75% of Inuit hunters reported falling through ice that had previously been stable.</u> These changes threaten both the physical survival and cultural continuity of the Inuit.</p>",
+        "prompt": "<p><strong>Which choice best describes the function of the underlined sentence in the overall structure of the text?</strong></p>",
+        "options": [
+          "<p>It supplies quantitative evidence illustrating a specific travel hazard associated with the environmental changes described earlier.</p>",
+          "<p>It establishes that unstable ice is the primary reason traditional Inuit hunting practices have declined.</p>",
+          "<p>It shifts the discussion from effects on travel to a proposed strategy for adapting to climate change.</p>",
+          "<p>It qualifies the passage’s broader claim by showing that only a minority of hunters have experienced dangerous ice.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q10 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>Close analysis of a sculpture long attributed solely to Alexander Dupont has revealed tool marks and compositional choices characteristic of his workshop assistants. If those findings are confirmed, they would ______ the traditional account of Dupont as the work's sole maker without necessarily disproving his involvement in its design.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>complicate</p>",
+          "<p>entrench</p>",
+          "<p>vindicate</p>",
+          "<p>supplant</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S1Q27 strengthened distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>For a 2021 environmental-planning project, urban planner Amara Nwankwo revisited a set of charts created from 1980s “Green Index” data on urban sprawl. She gathered comparable contemporary measurements and ______ the older and newer data into a single set of “time-lapse urban portraits” designed to reveal change across decades.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical and precise word or phrase?</p>",
+        "options": [
+          "<p>synthesized</p>",
+          "<p>extrapolated</p>",
+          "<p>partitioned</p>",
+          "<p>authenticated</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S2Q22 strengthened distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>In some chimpanzee communities, adults use stones to crack hard-shelled nuts, and juveniles acquire the technique only after long observation and practice. Researchers compare communities because such variation may reveal the ______ capacity for socially transmitted tool traditions.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>chimpanzees’</p>",
+          "<p>chimpanzee’s</p>",
+          "<p>chimpanzees</p>",
+          "<p>chimpanzee</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "R&W M2 Q6 replaced v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>Art collector George Lester Winward long believed he owned an artwork that had been painted by famed Italian artist Raphael, the <em>de Brécy Tondo</em>. For 40 years, its authenticity was debated until facial recognition technology and AI, developed by experts at the University of Nottingham and the University of Bradford, confirmed it was indeed “highly likely to be a Raphael masterpiece.” The AI system, capable of analyzing faces in thousands of dimensions to pixel level, found 97% similarity between the Virgin Mary figures in the <em>Tondo</em> and those in Raphael’s <em>Sistine Madonna</em>, and 86% similarity in the paintings’ depictions of Jesus.</p>",
+        "prompt": "<p>Which choice best expresses the central idea of the passage?</p>",
+        "options": [
+          "<p>After decades of debate, an AI comparison of facial features provided evidence that the de Brécy Tondo is likely an authentic Raphael.</p>",
+          "<p>The de Brécy Tondo was impossible to evaluate until universities developed facial-recognition software specifically for Renaissance paintings.</p>",
+          "<p>The strongest evidence for the Tondo’s authenticity is that its figures resemble those in the <em>Sistine Madonna</em> to exactly the same degree.</p>",
+          "<p>AI analysis has resolved most longstanding disputes over the authorship of Renaissance paintings.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q7 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p><strong>Text 1</strong><br/>Ibn Khaldun, a 14th-century North African scholar, is considered a pioneer in the fields of sociology and historiography. His most famous work, the <i>Muqaddimah</i>, introduced groundbreaking concepts in the understanding of civilization's rise and fall, including the notion of \"asabiyyah,\" or social cohesion. Khaldun emphasized the critical role of social bonds in the rise of states and civilizations, challenging the dominant Eurocentric narratives of his time.</p> <p><strong>Text 2</strong><br/>In recent years, scholars have started recognizing Ibn Khaldun’s innovative theories on cyclical patterns in history, which many believe predate those of Western philosophers by centuries. His work is now seen as a precursor to modern disciplines of historiography, sociology, economics, and political science. However, there is an ongoing debate among scholars about whether Khaldun’s theories can be considered a form of ‘early sociology’ or if they should be classified differently.</p>",
+        "prompt": "<p><strong>Question:</strong> Based on the texts, how would the scholars in Text 2 likely respond to the characterization of Ibn Khaldun’s work in Text 1?</p>",
+        "options": [
+          "<p>They would agree that Khaldun was innovative but argue that his importance lies chiefly in economics rather than sociology or historiography.</p>",
+          "<p>They would reject the description of Khaldun as a pioneer because modern disciplinary labels cannot be applied to premodern scholars.</p>",
+          "<p>They would largely affirm the description while noting that scholars still debate how closely Khaldun’s work corresponds to what is now called sociology.</p>",
+          "<p>They would accept Khaldun’s role in historiography but deny that his work anticipated later thinking about social cohesion.</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S3Q11 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>Literary scholar Nick Gillespie argues that Jules Verne incorporated contemporary science into his novels partly to educate readers about the possible applications and implications of new discoveries.</p>",
+        "prompt": "<p>Which finding, if true, would most directly weaken Gillespie’s claim?</p>",
+        "options": [
+          "<p>Verne’s notebooks contain extensive summaries of scientific articles he read while drafting several novels.</p>",
+          "<p>In private correspondence, Verne repeatedly said that he altered scientific explanations whenever accuracy interfered with suspense and that he did not intend the novels to instruct readers.</p>",
+          "<p>Some readers criticized Verne for presenting speculative technologies as though they might eventually become practical.</p>",
+          "<p>Several editions of Verne’s novels included explanatory notes defining technical vocabulary.</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S3Q13 revised",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p><em>The Prairie Settler</em> is a 1914 novel by Clara Emerson. In the novel, Emerson portrays the protagonist, Evelyn Harper, as having a profound connection to the land she cultivates: _______</p>",
+        "prompt": "<p>Which quotation from <em>The Prairie Settler</em> most effectively illustrates this claim?</p>",
+        "options": [
+          "<p>“She knew every furrow by its shadow at dusk; when the first shoots broke the soil, she felt their arrival as keenly as news from a member of her own family.”</p>",
+          "<p>“Evelyn discussed seed prices with neighboring farmers and carefully compared their methods with her own.”</p>",
+          "<p>“From the wagon she watched the prairie darken, calculating how long remained before she reached the next settlement.”</p>",
+          "<p>“She kept precise records of rainfall and harvest weight, convinced that careful arithmetic would improve the farm.”</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q15 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>The migration of monarch butterflies across North America is one of nature’s most fascinating events. Each year, millions of these insects travel thousands of miles from Canada and the United States to overwintering sites in Mexico. Biologists believe that the butterflies use a combination of the sun’s position and the Earth’s magnetic field to navigate. However, Chip Taylor, a biologist from the University of Kansas, theorizes that the butterflies primarily use the sun’s position and rely on the Earth’s magnetic field only when the sun is obscured.</p>",
+        "prompt": "<p><b>Which finding, if true, would most directly support Taylor’s hypothesis?</b></p>",
+        "options": [
+          "<p>Disrupting the experimental magnetic field has little effect on orientation under clear skies but causes the butterflies to orient randomly under overcast skies.</p>",
+          "<p>Shifting the apparent position of the sun under clear skies causes the butterflies to change direction, but their behavior under overcast skies is not measured.</p>",
+          "<p>Under overcast skies, butterflies still reach the destination when the ambient magnetic field is left undisturbed.</p>",
+          "<p>Magnetic-field disruption causes comparable orientation errors under both clear and overcast conditions.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q12 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p><strong>Average annual growth rate of three bamboo species (cm/year)</strong></p>\n    <table style=\"border-collapse:collapse;margin:12px 0;text-align:center;\">\n      <tr><th style=\"border:1px solid #888;padding:7px 10px;\">Species</th>\n          <th style=\"border:1px solid #888;padding:7px 10px;\">Low altitude</th>\n          <th style=\"border:1px solid #888;padding:7px 10px;\">Mid altitude</th>\n          <th style=\"border:1px solid #888;padding:7px 10px;\">High altitude</th></tr>\n      <tr><td style=\"border:1px solid #888;padding:7px 10px;\"><em>Phyllostachys</em> (native: low)</td><td style=\"border:1px solid #888;padding:7px 10px;\">75</td><td style=\"border:1px solid #888;padding:7px 10px;\">95</td><td style=\"border:1px solid #888;padding:7px 10px;\">60</td></tr>\n      <tr><td style=\"border:1px solid #888;padding:7px 10px;\"><em>Bambusa</em> (native: mid)</td><td style=\"border:1px solid #888;padding:7px 10px;\">85</td><td style=\"border:1px solid #888;padding:7px 10px;\">80</td><td style=\"border:1px solid #888;padding:7px 10px;\">70</td></tr>\n      <tr><td style=\"border:1px solid #888;padding:7px 10px;\"><em>Chusquea</em> (native: high)</td><td style=\"border:1px solid #888;padding:7px 10px;\">90</td><td style=\"border:1px solid #888;padding:7px 10px;\">60</td><td style=\"border:1px solid #888;padding:7px 10px;\">90</td></tr>\n    </table>\n    <p>Researchers hypothesized that each bamboo species would grow fastest in its native altitudinal zone and that growth would decline outside that zone.</p>",
+        "prompt": "<p>Which choice identifies the strongest evidence against the researchers' hypothesis?</p>",
+        "options": [
+          "<p>Chusquea grows equally fast at low and high altitude, so its rate does not decline at every nonnative altitude.</p>",
+          "<p>Phyllostachys grows much more slowly at high altitude than at mid altitude, indicating sensitivity to altitude.</p>",
+          "<p>Bambusa grows more slowly at high altitude than at mid altitude, which is consistent with part of the hypothesis.</p>",
+          "<p>Phyllostachys and Bambusa each reach a higher growth rate outside their stated native zone than within it.</p>"
+        ],
+        "correctIndex": "D",
+        "_source": "S2Q6 graph reconstructed distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>The following text is from Emily Dickinson's poem \"Because I could not stop for Death\" published in 1890. This poem reflects on the speaker's journey with Death.</p> <p>The Carriage held but just Ourselves—<br/> And Immortality.<br/> We slowly drove—He knew no haste<br/> And I had put away<br/> My labor and my leisure too,<br/> For His Civility—<br/> We passed the School, where Children strove<br/> At Recess—in the Ring—<br/> We passed the Fields of Gazing Grain—<br/> We passed the Setting Sun—<br/> Or rather—He passed Us—<br/> The Dews drew quivering and chill—<br/> For only Gossamer, my Gown—<br/> My Tippet—only Tulle—</p>",
+        "prompt": "<p>Which choice best describes the overall structure of the text?</p>",
+        "options": [
+          "<p>The speaker introduces a calm journey with Death and then records a sequence of scenes passed as the journey continues.</p>",
+          "<p>The speaker first resists Death’s arrival and then gradually becomes reconciled to traveling with him.</p>",
+          "<p>The speaker explains the meaning of Immortality and then contrasts it with ordinary childhood and labor.</p>",
+          "<p>The speaker describes several memories from life and then reveals that the memories occurred after the journey ended.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q1 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>The following text is from Robert Frost's 1916 poem \"The Road Not Taken.\" This introspective poem contemplates the choices one makes in life and the subsequent impact on their journey.</p> <p>Two roads diverged in a yellow wood, <br/> And sorry I could not travel both <br/> And be one traveler, long I stood <br/> And looked down one as far as I could <br/> To where it bent in the undergrowth;</p>",
+        "prompt": "<p>What is the main idea of the text?</p>",
+        "options": [
+          "<p>The speaker confronts a choice between two paths and pauses to examine one before deciding how to proceed.</p>",
+          "<p>The speaker regrets a decision already made and imagines returning to choose the other path.</p>",
+          "<p>The speaker concludes that the two paths are identical and therefore chooses between them at random.</p>",
+          "<p>The speaker reflects on how a past choice permanently changed the course of life.</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q2 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>Pompeii was rapidly covered by volcanic material during the eruption of Mount Vesuvius in 79 CE. Archaeologist Dr. Maria Russo argues that this rapid burial—not merely the chemical composition of the ash—was a major reason buildings and everyday objects survived unusually well: the material quickly isolated them from weathering, disturbance, and looting.</p>",
+        "prompt": "<p>Which finding, if true, would most directly support Dr. Russo's argument?</p>",
+        "options": [
+          "<p>Some minerals in Vesuvian ash can slow decay, suggesting that composition may also have contributed to preservation.</p>",
+          "<p>Stone structures survive at some ancient sites that were never buried by volcanic material.</p>",
+          "<p>Comparable objects in areas buried sooner show less weathering and disturbance than objects that remained exposed longer before burial.</p>",
+          "<p>The eruption deposited different depths of material in different parts of Pompeii.</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S3Q14 fixed/strengthened distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>As wild bee populations decline, some farmers rent managed hives during flowering season ______ a costly strategy when shortages increase the price of hive rentals.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>,</p>",
+          "<p>;</p>",
+          "<p>:</p>",
+          "<p>and</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S1Q18 revised",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>Researchers found that the iridescent scales on peacock spiders act as tiny diffraction gratings, separating visible light into ______ component colors.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>its</p>",
+          "<p>it’s</p>",
+          "<p>their</p>",
+          "<p>they’re</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q18 revised",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "18",
+        "passage": "<p>The North Carolina Museum of Art’s <em>Bacchus</em> statue is receiving a 3-D-modeled arm based on Wyatt Walker, a local basketball ______ this modern addition to a torso assembled from components of different eras continues the statue’s long history of restoration and modification.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>player. This</p>",
+          "<p>player, this</p>",
+          "<p>player and this</p>",
+          "<p>player this</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "R&W M2 Q18 replaced v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "19",
+        "passage": "<p>Austrian architect Wolf D. Prix was inspired by crystals and clouds when he designed the exterior of the Musée des Confluences in Lyon, France. A signature example of the emerging “bionic” style in architecture, ________ a mammoth fossil and a replica of Soviet satellite Sputnik 2.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>the museum’s varied collection includes</p>",
+          "<p>the museum hosts a varied collection of artifacts, including</p>",
+          "<p>a varied collection of artifacts is hosted by the museum, including</p>",
+          "<p>there is a varied collection inside the museum, including</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S3Q22 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "20",
+        "passage": "<p>Dr. Alice Roberts contributed to several digital-history projects. Her team released an augmented-reality application, a location-based reconstruction, in 2019 ______ an immersive historical-site experience, built around archival photographs, in 2022; and an interactive virtual museum in 2024.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>;</p>",
+          "<p>,</p>",
+          "<p>:</p>",
+          "<p>—</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "R&W M2 Q20 replaced v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "21",
+        "passage": "<p>Fannie Lou Hamer initially hesitated after hearing about a voter-registration effort because participation could bring serious retaliation. By the time the organizers returned the next day, however, Hamer ______ that she would join them.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>had decided</p>",
+          "<p>decided</p>",
+          "<p>has decided</p>",
+          "<p>would decide</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q16 strengthened revised",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "22",
+        "passage": "<p>Researchers recorded neural activity while 15 participants listened to speech, instrumental music, and singing. The analysis compared the ______ responses across the different sound categories and identified a population of neurons especially responsive to singing.</p>",
+        "prompt": "<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>",
+        "options": [
+          "<p>participant’s</p>",
+          "<p>participants</p>",
+          "<p>participants’s</p>",
+          "<p>participants’</p>"
+        ],
+        "correctIndex": "D",
+        "_source": "S3Q27 strengthened distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "23",
+        "passage": "<p><em>Drosophila melanogaster</em> is widely used in genetics because of its short life cycle and visible mutations. Its value extends beyond genetics, however. ______ its relatively simple nervous system allows researchers to test principles that can later be investigated in more complex organisms.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "options": [
+          "<p>Indeed,</p>",
+          "<p>Nevertheless,</p>",
+          "<p>By contrast,</p>",
+          "<p>Consequently,</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S3Q24 revised",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "24",
+        "passage": "<p>While researching a topic, a student has taken the following notes:</p> <ul> <li>Cleaner fish are a group of fish that provide a cleaning service to other fish species.</li> <li>This cleaning service involves removing dead skin, scales, and parasites from the client fish.</li> <li>Cleaner fish, such as the cleaner wrasse, engage in mutualistic relationships with their clients.</li> <li>Mutualism is a type of interaction in which both species benefit; cleaner fish get food, and client fish get cleaned.</li> <li>Client fish will often visit cleaning stations where cleaner fish reside, signaling that they are ready for cleaning.</li> </ul>",
+        "prompt": "<p>The student wants to provide details about the mutualistic relationship between cleaner fish and client fish. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>",
+        "options": [
+          "<p>Cleaner fish and client fish participate in mutualism, an interaction in which both species benefit.</p>",
+          "<p>Client fish visit cleaning stations, where cleaner fish such as wrasses are available to interact with them.</p>",
+          "<p>Cleaner fish remove parasites and dead tissue from client fish; the clients are cleaned while the cleaners obtain food from the material they remove.</p>",
+          "<p>Cleaner wrasses are one type of fish that can remove dead skin, scales, and parasites from other species.</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S3Q26 distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "25",
+        "passage": "<p>While researching Mars and Venus, a student records the following notes:</p>\n    <ul><li>Mars is the fourth planet from the Sun and appears reddish because of iron oxides on its surface.</li>\n    <li>Venus is the second planet from the Sun and is similar to Earth in size.</li>\n    <li>Venus has the highest average surface temperature of any planet in the solar system.</li>\n    <li>Both Mars and Venus have been targets of extensive spacecraft exploration.</li></ul>",
+        "prompt": "<p>The student wants to emphasize a contrast in the planets' physical conditions rather than their locations or exploration histories. Which choice most effectively uses relevant information from the notes?</p>",
+        "options": [
+          "<p>Mars and Venus have both been explored extensively even though one is the fourth planet from the Sun and the other is the second.</p>",
+          "<p>Mars’s iron-oxide-rich surface gives it a reddish appearance, whereas Venus is distinguished by the highest average surface temperature of any planet.</p>",
+          "<p>Venus is similar to Earth in size, while Mars is farther from the Sun.</p>",
+          "<p>Mars and Venus differ physically and occupy different locations, but both have been targets of spacecraft exploration.</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S3Q3 strengthened distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "26",
+        "passage": "<p>While researching the Moai of Rapa Nui, a student records the following notes:</p>\n    <ul>\n      <li>The statues were carved by the Rapa Nui people between about 1250 and 1500.</li>\n      <li>Most were carved from single blocks of volcanic tuff.</li>\n      <li>The largest completed examples are about 33 feet tall and weigh roughly 82 tons.</li>\n      <li>Many statues were transported several miles from the quarry.</li>\n      <li>One leading hypothesis is that teams moved statues upright by alternately pulling ropes from opposite sides, effectively making the statues “walk.”</li>\n    </ul>",
+        "prompt": "<p>The student wants to emphasize why the statues' production <em>and</em> transportation are remarkable. Which choice most effectively uses relevant information from the notes?</p>",
+        "options": [
+          "<p>The Moai were carved from volcanic tuff between about 1250 and 1500, a period in which stone carving was common on Rapa Nui.</p>",
+          "<p>Some completed Moai reached roughly 82 tons, yet many were transported miles from their quarry, possibly upright through carefully coordinated rope pulling.</p>",
+          "<p>The largest Moai were about 33 feet tall, and most were made from a single block of volcanic tuff.</p>",
+          "<p>Teams may have alternately pulled ropes from opposite sides, a technique that could make upright statues appear to “walk.”</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S3Q4 fixed/strengthened distractors rebuilt",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "27",
+        "passage": "<p>The New York Central's <em>20th Century Limited</em>, which ran between New York and Chicago from 1902 to 1967, became famous for luxury service and for the crimson carpet rolled out for passengers. The original train no longer operates. ______ restored railcars from the period are used on occasional heritage excursions, allowing travelers to experience aspects of that earlier style of travel.</p>",
+        "prompt": "<p>Which choice completes the text with the most logical transition?</p>",
+        "options": [
+          "<p>Accordingly,</p>",
+          "<p>Nevertheless,</p>",
+          "<p>Specifically,</p>",
+          "<p>Similarly,</p>"
+        ],
+        "correctIndex": "B",
+        "_source": "S3Q23 strengthened distractors rebuilt",
+        "_difficulty": 5
+      }
+    ]
+  },
+  {
+    "id": "MATH1",
+    "title": "SAT Diagnostic Test 5 — Advanced — Math Module 1",
+    "durationSec": 2100,
+    "calculatorAllowed": true,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>The system</p><p>\\[2x+3y=7\\]</p><p>\\[(k-1)x+(2k+1)y=4k+1\\]</p><p>has a unique solution \\((x,y)\\). If \\(x+y=2\\),</p>",
+        "prompt": "<p>what is the value of \\(k\\)?</p>",
+        "options": [
+          "\\(-5\\)",
+          "\\(-3\\)",
+          "1",
+          "3"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>Two cones are similar. The ratio of the lateral surface area of the larger cone to that of the smaller cone is \\(49:16\\). The difference between their volumes is \\(837\\pi\\) cubic units.</p>",
+        "prompt": "<p>What is the volume of the smaller cone?</p>",
+        "options": [
+          "\\(192\\pi\\)",
+          "\\(279\\pi\\)",
+          "\\(576\\pi\\)",
+          "\\(1029\\pi\\)"
+        ],
+        "correctIndex": "A",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p>The polynomial \\(p(x)=2x^3+ax^2+bx-12\\), where \\(a\\) and \\(b\\) are constants, is divisible by both \\((x-2)\\) and \\((x+3)\\).</p>",
+        "prompt": "<p>What is the value of \\(a+b\\)?</p>",
+        "options": [
+          "\\(-14\\)",
+          "\\(-6\\)",
+          "6",
+          "14"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>For \\(x\ne -3\\) and \\(x\ne3\\), consider</p><p>\\[\\frac{\\frac{2x}{x-3}-\\frac{6}{x-3}}{\\frac{x^2-9}{x+3}}.\\]</p>",
+        "prompt": "<p>Which expression is equivalent to the given expression?</p>",
+        "options": [
+          "\\(\\frac{2}{x-3}\\)",
+          "\\(\\frac{2}{x+3}\\)",
+          "\\(\\frac{2x}{x^2-9}\\)",
+          "\\(2(x-3)\\)"
+        ],
+        "correctIndex": "A",
+        "_source": "M1 Q4 hardened v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>A plumber charges a fixed service fee plus \\($70\\) per hour for the first 5 hours of a job. For each hour beyond 5, the hourly charge is reduced by 20%. A 3-hour job costs \\($285\\).</p>",
+        "prompt": "<p>How much would a 12-hour job cost under the same pricing rule?</p>",
+        "options": [
+          "\\($789\\)",
+          "\\($803\\)",
+          "\\($817\\)",
+          "\\($845\\)"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>The function \\(f\\) is defined by \\[f(x)=7(0.96)^{5x}.\\] It can also be written as \\[f(x)=7\\left(1-\\frac{p}{100}\\right)^x,\\] where \\(p\\) is a constant.</p>",
+        "prompt": "<p>Which value is closest to \\(p\\)?</p>",
+        "options": [
+          "8.0",
+          "18.5",
+          "20.0",
+          "40.0"
+        ],
+        "correctIndex": "B",
+        "_source": "M1 Q6 hardened v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>A study records weekly practice time and points scored for 40 students.</p><table style=\"border-collapse:collapse;margin:12px 0;text-align:center;\"><tr><th style=\"border:1px solid #888;padding:7px;\">Weekly practice</th><th style=\"border:1px solid #888;padding:7px;\">6–13 points</th><th style=\"border:1px solid #888;padding:7px;\">14 or more points</th></tr><tr><td style=\"border:1px solid #888;padding:7px;\">3–5 hours</td><td style=\"border:1px solid #888;padding:7px;\">6</td><td style=\"border:1px solid #888;padding:7px;\">4</td></tr><tr><td style=\"border:1px solid #888;padding:7px;\">More than 5 hours</td><td style=\"border:1px solid #888;padding:7px;\">4</td><td style=\"border:1px solid #888;padding:7px;\">26</td></tr></table>",
+        "prompt": "<p>A student is selected at random from those who either practiced more than 5 hours or scored at least 14 points. What is the probability that the selected student satisfies both conditions?</p>",
+        "options": [
+          "\\(\\frac{13}{20}\\)",
+          "\\(\\frac{13}{17}\\)",
+          "\\(\\frac{3}{4}\\)",
+          "\\(\\frac{26}{40}\\)"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>The data set \\(4,7,9,11,t\\) has five values, where \\(t>11\\). The mean of the data set is 1 less than its range.</p>",
+        "prompt": "<p>What is the value of \\(t\\)?</p>",
+        "options": [
+          "13",
+          "14",
+          "16",
+          "19"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>A parking garage charges a constant amount for each pickup truck and a different constant amount for each passenger car. Eight pickup trucks and 12 passenger cars generate \\($102\\) in fees, while 14 pickup trucks and 6 passenger cars generate \\($111\\).</p>",
+        "prompt": "<p>If 20 vehicles, all of these two types, generate \\($105\\), how many of the vehicles are pickup trucks?</p>",
+        "options": [
+          "8",
+          "10",
+          "12",
+          "14"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>An exponential function \\(f\\) satisfies \\(f(2)=90\\) and \\(f(10)=57.6\\). The function can be written as \\(f(x)=a(b)^{x/4}\\), where \\(a>0\\) and \\(0<b<1\\).</p>",
+        "prompt": "<p>By what percent does \\(f(x)\\) decrease whenever \\(x\\) increases by 4?</p>",
+        "options": [
+          "10%",
+          "20%",
+          "36%",
+          "40%"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>The function \\(j\\) is defined by \\(j(x)=2(4)^x-10\\). A second function is defined by \\(g(x)=-2j(x-1)+6\\).</p>",
+        "prompt": "<p>What is the \\(y\\)-intercept of the graph of \\(y=g(x)\\)?</p>",
+        "options": [
+          "\\((0,19)\\)",
+          "\\((0,21)\\)",
+          "\\((0,25)\\)",
+          "\\((0,29)\\)"
+        ],
+        "correctIndex": "C",
+        "_source": "M1 Q11 hardened v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>A sphere with surface area \\(36\\pi\\) is inscribed in a cube. A second sphere circumscribes the cube, passing through all eight vertices of the cube.</p>",
+        "prompt": "<p>What is the volume of the second sphere?</p>",
+        "options": [
+          "\\(36\\pi\\sqrt3\\)",
+          "\\(72\\pi\\sqrt3\\)",
+          "\\(108\\pi\\sqrt3\\)",
+          "\\(216\\pi\\sqrt3\\)"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>For \\(x>0\\),</p><p>\\[\\frac{x^{3m/2}\\sqrt[4]{x^6}}{x^{m-1}}=x^5.\\]</p>",
+        "prompt": "<p>What is the value of \\(m\\)?</p>",
+        "options": [
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>The quadratic function \\(q\\) is defined by \\[q(x)=a(x-3)^2-20.\\] If \\(q(1)=12\\) and \\(r\\) and \\(s\\) are the \\(x\\)-intercepts of the graph of \\(y=q(x)\\),</p>",
+        "prompt": "<p>what is the value of \\(r^2+s^2\\)?</p>",
+        "options": [
+          "19",
+          "21",
+          "23",
+          "25"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>A random sample produced an estimate that 30% of a population has a certain characteristic, with a margin of error of 3 percentage points.</p>",
+        "prompt": "<p>Which statement is best supported by this information?</p>",
+        "options": [
+          "<p>The true population percentage must be between 27% and 33%.</p>",
+          "<p>A second random sample of the same size must produce an estimate between 27% and 33%.</p>",
+          "<p>A population value of 31% is more consistent with the sample estimate than a population value of 35%.</p>",
+          "<p>Exactly 3% of the sampled individuals were classified incorrectly.</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>For \\(k\ne0\\) and \\(k\ne-4\\),</p><p>\\[\\frac{2}{k}+\\frac{3}{k+4}-\\frac{8}{k(k+4)}\\]</p>",
+        "prompt": "<p>is equivalent to which expression?</p>",
+        "options": [
+          "\\(\\frac{5}{k}\\)",
+          "\\(\\frac{5}{k+4}\\)",
+          "\\(\\frac{5k}{k+4}\\)",
+          "\\(\\frac{5k+8}{k(k+4)}\\)"
+        ],
+        "correctIndex": "B",
+        "_source": "M1 Q16 hardened v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "MC",
+        "number": "17",
+        "passage": "<p>The value, in dollars, of a camera after \\(x\\) months is modeled by \\[j(x)=5000(0.9)^{x/3}.\\]</p>",
+        "prompt": "<p>After how many whole months does the model first predict a value less than \\($3{,}000\\)?</p>",
+        "options": [
+          "12",
+          "14",
+          "15",
+          "18"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "SPR",
+        "number": "18",
+        "passage": "<p>The height, in meters, of an object \\(t\\) seconds after launch is \\[h(t)=-5t^2+vt+10,\\] where \\(v\\) is a constant. The object reaches its maximum height at \\(t=1\\) second.</p>",
+        "prompt": "<p>To the nearest hundredth of a second, at what positive time does the object reach the ground?</p>",
+        "acceptedAnswers": [
+          "2.73"
+        ],
+        "tolerance": 0.005,
+        "_source": "M1 Q18 hardened v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "SPR",
+        "number": "19",
+        "passage": "<p>The equations</p><p>\\[2(x+y)-3(x-y)=11\\]</p><p>\\[5(x+y)+(x-y)=19\\]</p><p>have solution \\((x,y)\\).</p>",
+        "prompt": "<p>What is the value of \\(4xy\\)?</p>",
+        "acceptedAnswers": [
+          "15"
+        ],
+        "tolerance": 1e-09,
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "SPR",
+        "number": "20",
+        "passage": "<p>The equation</p><p>\\[|3x-4|+2|x+1|=14\\]</p><p>has two real solutions.</p>",
+        "prompt": "<p>What is the positive solution?</p>",
+        "acceptedAnswers": [
+          "16/5",
+          "3.2"
+        ],
+        "tolerance": 1e-09,
+        "_source": "M1 Q20 hardened v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "SPR",
+        "number": "21",
+        "passage": "<p>The data set \\(3,5,8,12,14,t\\) has six values, where \\(t\\) is a positive integer less than 15. The mean of the data set is equal to its median.</p>",
+        "prompt": "<p>What is the value of \\(t\\)?</p>",
+        "acceptedAnswers": [
+          "9"
+        ],
+        "tolerance": 1e-09,
+        "_source": "New high-end M1 v2",
+        "_difficulty": 4
+      },
+      {
+        "type": "SPR",
+        "number": "22",
+        "passage": "<p>An artist has \\($3{,}000\\) to spend on acrylic and oil paint. Acrylic costs \\($8.70\\) per tube and oil paint costs \\($12.30\\) per tube. The artist must buy at least 250 tubes in total, and at least 40% of all tubes purchased must be acrylic.</p>",
+        "prompt": "<p>What is the greatest possible number of oil-paint tubes the artist can buy?</p>",
+        "acceptedAnswers": [
+          "165"
+        ],
+        "tolerance": 1e-09,
+        "_source": "M1 Q22 hardened v2",
+        "_difficulty": 4
+      }
+    ]
+  },
+  {
+    "id": "MATH2",
+    "title": "SAT Diagnostic Test 5 — Advanced— Math Module 2",
+    "durationSec": 2100,
+    "calculatorAllowed": true,
+    "items": [
+      {
+        "type": "MC",
+        "number": "1",
+        "passage": "<p>The polynomial \\(r(x)=(x+3)(x-5)(x+8)\\). A function \\(s\\) is defined by \\(s(x)=r(2x-1)\\). If \\(a,b,c\\) are the three zeros of \\(s\\),</p>",
+        "prompt": "<p>what is the value of \\(abc\\)?</p>",
+        "options": [
+          "\\(\\frac72\\)",
+          "\\(\\frac{21}{2}\\)",
+          "21",
+          "42"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "2",
+        "passage": "<p>An exponential function \\(h(x)=ab^x\\), where \\(a>0\\) and \\(b>0\\), satisfies \\(h(2)=48\\) and \\(h(5)=1296\\).</p>",
+        "prompt": "<p>What is the value of \\(h(-1)\\)?</p>",
+        "options": [
+          "\\(\\frac49\\)",
+          "\\(\\frac{16}{9}\\)",
+          "\\(\\frac{16}{3}\\)",
+          "16"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "3",
+        "passage": "<p> <math xmlns=\"http://www.w3.org/1998/Math/MathML\"> <mn>7</mn><mi>x</mi><mo>−</mo><mn>2</mn><mi>y</mi> <mo>=</mo><mn>4</mn><mi>y</mi><mo>−</mo><mn>3</mn> </math> </p> <p> <math xmlns=\"http://www.w3.org/1998/Math/MathML\"> <mi>a</mi><mi>y</mi><mo>=</mo><mi>b</mi><mi>x</mi><mo>+</mo><mn>9</mn> </math> </p>",
+        "prompt": "<p>In the given system of equations, <em>a</em> and <em>b</em> are constants. If the system has infinitely many solutions, what is the value of <em>a + b</em>?</p>",
+        "options": [
+          "<p>-13</p>",
+          "<p>-3</p>",
+          "<p>13</p>",
+          "<p>39</p>"
+        ],
+        "correctIndex": "D",
+        "_source": "S5Q12",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "4",
+        "passage": "<p>For \\(k\ne2\\), the equation</p><p>\\[(k-2)x^2+4x+(k+1)=0\\]</p><p>has exactly one real solution.</p>",
+        "prompt": "<p>What is the sum of all possible values of \\(k\\)?</p>",
+        "options": [
+          "\\(-6\\)",
+          "1",
+          "5",
+          "6"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "5",
+        "passage": "<p>\\[x(2x+15)+c=0\\]</p><p>In the equation, \\(c\\) is an integer constant. The equation has two distinct real solutions.</p>",
+        "prompt": "<p>What is the greatest possible value of \\(c\\)?</p>",
+        "options": [
+          "27",
+          "28",
+          "29",
+          "30"
+        ],
+        "correctIndex": "B",
+        "_source": "S5Q17 converted/hardened",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "6",
+        "passage": "<p>The polynomial \\(p(x)=x^3+ax^2+bx+24\\) has zeros \\(-2\\), \\(3\\), and a third positive zero.</p>",
+        "prompt": "<p>What is the value of \\(a-b\\)?</p>",
+        "options": [
+          "\\(-7\\)",
+          "\\(-3\\)",
+          "3",
+          "7"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "7",
+        "passage": "<p>For a positive integer \\(k\\), add the values of \\(|2n-1|\\) for every integer \\(n\\) from \\(-k\\) through \\(k\\). The sum is 221.</p>",
+        "prompt": "<p>What is the value of \\(k\\)?</p>",
+        "options": [
+          "9",
+          "10",
+          "11",
+          "12"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "8",
+        "passage": "<p>For \\(x>0\\),</p><p>\\[\\frac{\\sqrt[3]{x^{2m+1}}\\sqrt{x^5}}{x^{m/2}}=x^{10/3}.\\]</p>",
+        "prompt": "<p>What is the value of \\(m\\)?</p>",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "5"
+        ],
+        "correctIndex": "C",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "9",
+        "passage": "<p>A 125-liter mixture is 45% juice by volume. It is made by combining solution A, which is 24% juice, and solution B, which is 64% juice. Let \\(a\\) be the liters of pure juice contributed by solution A and \\(b\\) the liters of pure juice contributed by solution B.</p>",
+        "prompt": "<p>If \\(a\\) is \\(p\\%\\) less than \\(b\\), what is \\(p\\), to the nearest hundredth?</p>",
+        "options": [
+          "33.93",
+          "57.75",
+          "66.07",
+          "75.75"
+        ],
+        "correctIndex": "C",
+        "_source": "S4Q18 corrected",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "10",
+        "passage": "<p>In a right triangle, the altitude from the right angle to the hypotenuse divides the hypotenuse into segments of lengths 9 and 16. Let \\(\\theta\\) be the smaller acute angle of the triangle.</p>",
+        "prompt": "<p>What is \\(\\tan\\theta\\)?</p>",
+        "options": [
+          "\\(\\frac35\\)",
+          "\\(\\frac34\\)",
+          "\\(\\frac45\\)",
+          "\\(\\frac43\\)"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "11",
+        "passage": "<p>For a positive integer \\(n\\), the inequality \\[|2x-5|<n\\] has exactly six integer solutions for \\(x\\).</p>",
+        "prompt": "<p>What is the smallest possible value of \\(n\\)?</p>",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "12",
+        "passage": "<p>In triangles <em>ABC</em> and <em>JKL</em>, angles <em>B</em> and <em>K</em> each have a measure of 44°. The length of side <em>BC</em> and the length of side <em>KL</em> are both equal to 25. Which additional piece of information is sufficient to prove that triangle <em>ABC</em> is congruent to triangle <em>JKL</em>?</p>",
+        "prompt": "<p>Which choice is correct?</p>",
+        "options": [
+          "<p>The length of side <em>AC</em> is 13 and the length of side <em>JL</em> is 13</p>",
+          "<p>The measure of angle <em>A</em> is 58° and the measure of angle <em>L</em> is 58°</p>",
+          "<p>The measure of angle <em>A</em> is 37° and the measure of angle <em>J</em> is 37°</p>",
+          "<p>No additional information is necessary</p>"
+        ],
+        "correctIndex": "C",
+        "_source": "S6Q7",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "13",
+        "passage": "<p>In the <em>xy</em>-plane, a parabola has vertex \\((-5, -12)\\) and has no <em>x</em>-intercepts. If the equation of the parabola is written in the form \\( y = ax^2 + bx + c \\), where \\( a \\), \\( b \\), and \\( c \\) are constants, which of the following could be the value of \\( a + b + c \\)?</p>",
+        "prompt": "<p>Which choice is correct?</p>",
+        "options": [
+          "<p>-19</p>",
+          "<p>-12</p>",
+          "<p>-10</p>",
+          "<p>-5</p>"
+        ],
+        "correctIndex": "A",
+        "_source": "S6Q9",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "14",
+        "passage": "<p>The quantities \\(K,R,T,M,H\\) satisfy</p><p>\\[K=\\frac{RT^2M}{1000H}.\\]</p><p>Suppose \\(K\\), \\(R\\), and \\(H\\) remain constant while \\(M\\) decreases by 36%.</p>",
+        "prompt": "<p>By what percent must \\(T\\) increase so that the equation remains true?</p>",
+        "options": [
+          "20%",
+          "25%",
+          "36%",
+          "56.25%"
+        ],
+        "correctIndex": "B",
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "15",
+        "passage": "<p>The function \\(f(x)=ax^2+bx+c\\) satisfies \\(f(-11)=f(-1)\\). The coefficient \\(b\\) is an integer less than \\(-3\\).</p>",
+        "prompt": "<p>What is the greatest possible value of \\(a+b\\)?</p>",
+        "options": [
+          "\\(-\\frac{13}{3}\\)",
+          "\\(-\\frac{14}{3}\\)",
+          "\\(-5\\)",
+          "\\(-\\frac{11}{3}\\)"
+        ],
+        "correctIndex": "A",
+        "_source": "S6Q12 converted to MC",
+        "_difficulty": 5
+      },
+      {
+        "type": "MC",
+        "number": "16",
+        "passage": "<p>The table gives the distribution of heights, in inches, in two groups of 56 students.</p>\n    <table style=\"border-collapse:collapse;margin:12px 0;text-align:center;\">\n    <tr><th style=\"border:1px solid #888;padding:6px 9px;\">Height</th><th style=\"border:1px solid #888;padding:6px 9px;\">Male</th><th style=\"border:1px solid #888;padding:6px 9px;\">Female</th></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">65</td><td style=\"border:1px solid #888;padding:6px 9px;\">2</td><td style=\"border:1px solid #888;padding:6px 9px;\">7</td></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">68</td><td style=\"border:1px solid #888;padding:6px 9px;\">5</td><td style=\"border:1px solid #888;padding:6px 9px;\">9</td></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">70</td><td style=\"border:1px solid #888;padding:6px 9px;\">10</td><td style=\"border:1px solid #888;padding:6px 9px;\">12</td></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">73</td><td style=\"border:1px solid #888;padding:6px 9px;\">10</td><td style=\"border:1px solid #888;padding:6px 9px;\">12</td></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">76</td><td style=\"border:1px solid #888;padding:6px 9px;\">19</td><td style=\"border:1px solid #888;padding:6px 9px;\">11</td></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">78</td><td style=\"border:1px solid #888;padding:6px 9px;\">8</td><td style=\"border:1px solid #888;padding:6px 9px;\">4</td></tr>\n    <tr><td style=\"border:1px solid #888;padding:6px 9px;\">81</td><td style=\"border:1px solid #888;padding:6px 9px;\">2</td><td style=\"border:1px solid #888;padding:6px 9px;\">1</td></tr>\n    </table>",
+        "prompt": "<p>What is the positive difference between the median height of the male group and the median height of the female group?</p>",
+        "options": [
+          "3",
+          "4",
+          "4.5",
+          "5.5"
+        ],
+        "correctIndex": "C",
+        "_source": "S6Q16 converted to MC",
+        "_difficulty": 5
+      },
+      {
+        "type": "SPR",
+        "number": "17",
+        "passage": "<p>\\[(3x-7p)(5x^2+8x-4p)(x^3+3x^2-16x-48)=0\\]</p><p>Here \\(p\\) is a positive constant. The product of all six solutions of the equation is \\(-\\frac{560}{9}\\).</p>",
+        "prompt": "<p>What is the value of \\(p\\)?</p>",
+        "acceptedAnswers": [
+          "5/6"
+        ],
+        "tolerance": 1e-09,
+        "_source": "S6Q5 SPR",
+        "_difficulty": 5
+      },
+      {
+        "type": "SPR",
+        "number": "18",
+        "passage": "<p>Positive constants \\(a,b,c,p,w\\) satisfy \\(b>c\\), \\(a=2(b-c)\\), and \\(c=60\\%\\) of \\(b\\). If \\(a\\) is \\(p\\%\\) greater than \\(c\\), and \\(c\\) is \\(w\\%\\) of \\(a\\),</p>",
+        "prompt": "<p>what is the value of \\(pw\\)?</p>",
+        "acceptedAnswers": [
+          "2500"
+        ],
+        "tolerance": 1e-09,
+        "_source": "M2 Q18 rebuilt v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "SPR",
+        "number": "19",
+        "passage": "<p>\\[\\frac{3a}{8}x=\\frac32+\\frac{15}{8}y\\]</p><p>\\[\\frac{18}{7}y-4=\\frac{4b}{7}x-9\\]</p><p>The positive constants \\(a\\) and \\(b\\) make the system have no solution. If \\(b\\) is \\(p\\%\\) less than \\(a\\),</p>",
+        "prompt": "<p>what is the value of \\(p\\)?</p>",
+        "acceptedAnswers": [
+          "10"
+        ],
+        "tolerance": 1e-09,
+        "_source": "S6Q14 SPR",
+        "_difficulty": 5
+      },
+      {
+        "type": "SPR",
+        "number": "20",
+        "passage": "<p>The line</p><p>\\[\\frac{5x}{8}=-\\frac{3y}{2}-\\frac{11}{6}\\]</p><p>is shifted 4 units left and 5 units up.</p>",
+        "prompt": "<p>What is the \\(x\\)-coordinate of the \\(x\\)-intercept of the shifted line?</p>",
+        "acceptedAnswers": [
+          "76/15"
+        ],
+        "tolerance": 1e-09,
+        "_source": "S6Q15 SPR",
+        "_difficulty": 5
+      },
+      {
+        "type": "SPR",
+        "number": "21",
+        "passage": "<p>The equation</p><p>\\[x^2+y^2+ax-8y+4=0\\]</p><p>represents a circle of radius 5, where \\(a>0\\). A square is circumscribed about the circle so that each side of the square is tangent to the circle.</p>",
+        "prompt": "<p>What is the value of \\(a^2\\) plus the area of the square?</p>",
+        "acceptedAnswers": [
+          "152"
+        ],
+        "tolerance": 1e-09,
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      },
+      {
+        "type": "SPR",
+        "number": "22",
+        "passage": "<p>The function \\(f\\) is defined by \\(f(x)=|8-5x|\\). The equation \\(f(k)=3k+7\\) has two real solutions.</p>",
+        "prompt": "<p>What is the product of the two solutions?</p>",
+        "acceptedAnswers": [
+          "15/16",
+          "0.9375"
+        ],
+        "tolerance": 1e-09,
+        "_source": "New high-end M2 v2",
+        "_difficulty": 5
+      }
+    ]
+  }
+];
+
+/***********************
+ * STATE
+ ***********************/
+let currentSectionIndex = 0;
+let currentIndex = 0;
+let reviewFlags = [];
+let studentAnswers = {};
+let timer = null;
+let seconds = 0;
+let desmosCalculator = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let examStarted = false;
+let eliminateMode = false;
+let eliminateState = {};
+let emailSent = false;
+let breakTimer = null;
+let breakSeconds = 600;
+
+/***********************
+ * START EXAM
+ ***********************/
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("student-email").value.trim();
+  const sessionInput = document.getElementById("test-session").value;
+
+  if (!nameInput || !emailInput) {
+    alert("Please enter your name and email to begin.");
+    return;
+  }
+
+  if (!sections.length || sections.some(sec => !Array.isArray(sec.items) || sec.items.length === 0)) {
+    alert("Question data could not be loaded. Please check the test file.");
+    return;
+  }
+
+  studentName = nameInput;
+  studentEmail = emailInput;
+  testSession = sessionInput;
+  examStarted = true;
+
+  const header = document.querySelector(".header");
+  const footerBar = document.getElementById("footer-bar");
+  const mainContainer = document.getElementById("main-container");
+  const startScreen = document.getElementById("start-screen");
+  const timerEl = document.getElementById("timer");
+  const colorBarTop = document.getElementById("color-bar");
+  const colorBarBottom = document.getElementById("color-bar-bottom");
+
+  document.getElementById("footer-student-name").textContent = studentName;
+
+  if (startScreen) startScreen.classList.add("hidden");
+
+  if (header) header.classList.remove("hidden");
+  if (footerBar) footerBar.classList.remove("hidden");
+  if (colorBarTop) colorBarTop.classList.remove("hidden");
+  if (colorBarBottom) colorBarBottom.classList.remove("hidden");
+  if (mainContainer) mainContainer.classList.add("active");
+  if (timerEl) timerEl.style.display = "block";
+
+  startSection(0);
+}
+
+/***********************
+ * SECTION LOGIC
+ ***********************/
+function startSection(secIdx) {
+  currentSectionIndex = secIdx;
+  currentIndex = 0;
+
+  document.getElementById("break-screen")?.classList.add("hidden");
+  document.getElementById("main-container")?.classList.add("active");
+  document.getElementById("footer-bar")?.classList.remove("hidden");
+  document.getElementById("timer").style.display = "block";
+
+  const sec = sections[secIdx];
+  reviewFlags = new Array(sec.items.length).fill(false);
+
+  document.getElementById("header-title").textContent = sec.title;
+  document.getElementById("calc-badge").classList.toggle("hidden", !sec.calculatorAllowed);
+
+  if (sec.calculatorAllowed) {
+    document.getElementById("calculator-icon").style.display = "flex";
+  } else {
+    document.getElementById("calculator-icon").style.display = "none";
+    closeCalculator();
+  }
+
+  const finishBtn = document.getElementById("finish-section-btn");
+  finishBtn.textContent = (secIdx === sections.length - 1) ? "Finish Exam" : "Finish Section";
+
+  buildNavigator();
+  loadQuestion(0);
+
+  if (timer) clearInterval(timer);
+  seconds = sec.durationSec;
+  updateTimerDisplay();
+
+  timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay();
+    if (seconds < 0) {
+      clearInterval(timer);
+      finishCurrentSection();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(Math.max(0, seconds) / 60);
+  const sec = Math.max(0, seconds) % 60;
+  document.getElementById("timer").textContent =
+    `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/***********************
+ * QUESTION RENDERING
+ ***********************/
+document.getElementById("eliminateBtn").addEventListener("click", function () {
+  eliminateMode = !eliminateMode;
+  this.classList.toggle("active", eliminateMode);
+  const rightPanel = document.querySelector(".right-panel");
+  rightPanel.classList.toggle("elimination-active", eliminateMode);
+});
+
+function loadQuestion(i) {
+  const section = sections[currentSectionIndex];
+  const item = section.items[i];
+  currentIndex = i;
+
+  document.getElementById("passage").innerHTML = item.passage || "";
+  const box = document.getElementById("question-box");
+  box.innerHTML = "";
+  document.getElementById("q-number").textContent = i + 1;
+  document.getElementById("mark-review").checked = reviewFlags[i];
+
+  const bookmarkIcon = document.querySelector(".bookmark-icon");
+  const markBox = document.getElementById("mark-review");
+  if (markBox.checked) {
+    bookmarkIcon.classList.remove("fa-regular");
+    bookmarkIcon.classList.add("fa-solid");
+    bookmarkIcon.style.color = "#CF0000";
+  } else {
+    bookmarkIcon.classList.remove("fa-solid");
+    bookmarkIcon.classList.add("fa-regular");
+    bookmarkIcon.style.color = "#000";
+  }
+
+  if (item.type === "SPR") {
+    renderSPR(item, box, section, i);
+  } else {
+    renderMC(item, box, section, i);
+  }
+
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+
+  updateNavigator();
+  updateNavButtons();
+  updateNavigatorButton();
+}
+
+function renderMC(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name];
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const optionsContainer = document.createElement("div");
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  item.options.forEach((opt, k) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letters[k]);
+    if (saved === k) label.classList.add("active");
+
+    const circle = document.createElement("div");
+    circle.className = "option-circle";
+    circle.textContent = letters[k];
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = k;
+    if (saved === k) input.checked = true;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "option-text";
+    textSpan.innerHTML = opt;
+
+    const strikeBtn = document.createElement("button");
+    strikeBtn.className = "strike-toggle";
+    strikeBtn.textContent = "⊘";
+    strikeBtn.title = "Eliminate Option";
+
+    label.addEventListener("click", (event) => {
+      if (event.target.classList.contains("strike-toggle")) return;
+      optionsContainer.querySelectorAll(".option-label").forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      input.checked = true;
+      studentAnswers[name] = k;
+      updateNavigator();
+    });
+
+    strikeBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const sec = sections[currentSectionIndex];
+      const qKey = `s${sec.id}-q${idx}`;
+      if (!eliminateState[qKey]) eliminateState[qKey] = {};
+
+      const now = !label.classList.contains("struck");
+      label.classList.toggle("struck", now);
+      strikeBtn.classList.toggle("active", now);
+      eliminateState[qKey][letters[k]] = now;
+    });
+
+    label.appendChild(circle);
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    label.appendChild(strikeBtn);
+    optionsContainer.appendChild(label);
+  });
+
+  promptHTML.appendChild(optionsContainer);
+  container.appendChild(promptHTML);
+
+  const sec = sections[currentSectionIndex];
+  const qKey = `s${sec.id}-q${idx}`;
+  const state = eliminateState[qKey] || {};
+  Object.keys(state).forEach(letter => {
+    const opt = optionsContainer.querySelector(`.option-label[data-choice="${letter}"]`);
+    if (opt && state[letter]) {
+      opt.classList.add("struck");
+      const btn = opt.querySelector(".strike-toggle");
+      btn.classList.add("active");
+    }
+  });
+}
+
+
+function renderSPR(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name] ?? "";
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const wrap = document.createElement("div");
+  wrap.className = "spr-wrap";
+
+  const label = document.createElement("label");
+  label.className = "spr-label";
+  label.textContent = "Student-produced response";
+
+  const input = document.createElement("input");
+  input.className = "spr-input";
+  input.type = "text";
+  input.inputMode = "decimal";
+  input.autocomplete = "off";
+  input.placeholder = "Enter answer";
+  input.value = saved;
+
+  input.addEventListener("input", () => {
+    studentAnswers[name] = input.value;
+    updateNavigator();
+  });
+
+  const note = document.createElement("div");
+  note.className = "spr-note";
+  note.textContent = "Enter an integer, decimal, or fraction as appropriate.";
+
+  wrap.appendChild(label);
+  wrap.appendChild(input);
+  wrap.appendChild(note);
+  promptHTML.appendChild(wrap);
+  container.appendChild(promptHTML);
+}
+
+/***********************
+ * NAVIGATION WITHIN SECTION
+ ***********************/
+function prevQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex > 0) loadQuestion(currentIndex - 1);
+}
+
+function nextQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex < section.items.length - 1) loadQuestion(currentIndex + 1);
+}
+
+function updateNavButtons() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("back-btn").disabled = currentIndex === 0;
+  document.getElementById("next-btn").disabled = currentIndex === section.items.length - 1;
+}
+
+function updateNavigatorButton() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-button").textContent = `Question ${currentIndex + 1} of ${section.items.length}`;
+}
+
+function openNavigator() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-section-title").textContent = section.title;
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function buildNavigator() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  const section = sections[currentSectionIndex];
+
+  section.items.forEach((_, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = idx + 1;
+    btn.onclick = () => {
+      loadQuestion(idx);
+      closeNavigator();
+    };
+    grid.appendChild(btn);
+  });
+
+  updateNavigator();
+}
+
+function updateNavigator() {
+  const section = sections[currentSectionIndex];
+  const buttons = document.querySelectorAll("#navigator-grid button");
+
+  buttons.forEach((btn, idx) => {
+    const baseKey = `s${section.id}-q${idx}`;
+    const answered = studentAnswers[baseKey] !== undefined && String(studentAnswers[baseKey]).trim() !== "";
+    btn.classList.toggle("current", idx === currentIndex);
+    btn.classList.toggle("answered", answered && idx !== currentIndex);
+    btn.classList.toggle("review", reviewFlags[idx]);
+  });
+}
+
+function toggleBookmark(checkbox) {
+  const icon = checkbox.nextElementSibling;
+  icon.classList.toggle("fa-regular", !checkbox.checked);
+  icon.classList.toggle("fa-solid", checkbox.checked);
+  icon.style.color = checkbox.checked ? "#CF0000" : "#000";
+  reviewFlags[currentIndex] = checkbox.checked;
+  updateNavigator();
+}
+
+/***********************
+ * FINISH SECTION & NEXT
+ ***********************/
+function finishCurrentSection() {
+  if (timer) clearInterval(timer);
+
+  if (currentSectionIndex < sections.length - 1) {
+    const title = document.getElementById("section-modal-title");
+    const text = document.getElementById("section-modal-text");
+    const advance = document.getElementById("advance-section-btn");
+
+    if (currentSectionIndex === 1) {
+      title.textContent = "Reading & Writing complete";
+      text.textContent = "Your Reading & Writing modules will be locked. A 10-minute break begins next.";
+      advance.textContent = "Begin Break";
+    } else {
+      title.textContent = "Module complete";
+      text.textContent = "The next module will begin now. You cannot return to this module.";
+      advance.textContent = "Start Next Module";
+    }
+    document.getElementById("section-modal").style.display = "flex";
+  } else {
+    showFinalReport();
+  }
+}
+
+function closeSectionModal() {
+  document.getElementById("section-modal").style.display = "none";
+
+  if (!timer) {
+    timer = setInterval(() => {
+      seconds--;
+      updateTimerDisplay();
+      if (seconds < 0) {
+        clearInterval(timer);
+        finishCurrentSection();
+      }
+    }, 1000);
+  }
+}
+
+function goToNextSection() {
+  document.getElementById("section-modal").style.display = "none";
+  const nextIdx = currentSectionIndex + 1;
+
+  if (nextIdx === 2) {
+    startBreak();
+    return;
+  }
+
+  if (nextIdx < sections.length) {
+    startSection(nextIdx);
+  }
+}
+
+function startBreak() {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  closeCalculator();
+  document.getElementById("timer").style.display = "none";
+
+  const screen = document.getElementById("break-screen");
+  screen.classList.remove("hidden");
+  breakSeconds = 600;
+  updateBreakTimer();
+
+  if (breakTimer) clearInterval(breakTimer);
+  breakTimer = setInterval(() => {
+    breakSeconds--;
+    updateBreakTimer();
+    if (breakSeconds <= 0) {
+      clearInterval(breakTimer);
+      breakTimer = null;
+      startSection(2);
+    }
+  }, 1000);
+}
+
+function updateBreakTimer() {
+  const m = Math.floor(Math.max(0, breakSeconds) / 60);
+  const s = Math.max(0, breakSeconds) % 60;
+  document.getElementById("break-timer").textContent =
+    `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function skipBreak() {
+  if (breakTimer) {
+    clearInterval(breakTimer);
+    breakTimer = null;
+  }
+  startSection(2);
+}
+
+/***********************
+ * CALCULATOR POPUP
+ ***********************/
+function openCalculator() {
+  const section = sections[currentSectionIndex];
+  if (!section || !section.calculatorAllowed) return;
+
+  document.getElementById("calculator-popup").style.display = "block";
+
+  if (!desmosCalculator) {
+    const elt = document.getElementById("calculator");
+    desmosCalculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      keypad: true,
+      settingsMenu: false,
+      zoomButtons: true,
+      expressionsTopbar: false,
+      border: false
+    });
+  }
+}
+
+function closeCalculator() {
+  document.getElementById("calculator-popup").style.display = "none";
+}
+
+(function makeDraggable() {
+  const popup = document.getElementById("calculator-popup");
+  const handle = document.getElementById("calculator-drag-handle");
+  let offsetX = 0, offsetY = 0, isDown = false;
+
+  handle.addEventListener("mousedown", (e) => {
+    isDown = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDown = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    popup.style.left = `${e.clientX - offsetX}px`;
+    popup.style.top = `${e.clientY - offsetY}px`;
+  });
+})();
+
+/***********************
+ * SCORE HELPERS
+ ***********************/
+function roundToNearest10(n) {
+  return Math.round(n / 10) * 10;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function predictSectionScore(correct, total) {
+  if (!total) return 200;
+  const rawScore = 200 + (correct / total) * 600;
+  return clamp(roundToNearest10(rawScore), 200, 800);
+}
+
+
+function parseNumericResponse(value) {
+  if (value === undefined || value === null) return NaN;
+  let s = String(value).trim().replace(/−/g, "-").replace(/,/g, "");
+  if (!s) return NaN;
+  if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(s)) {
+    const [a,b] = s.split("/").map(Number);
+    if (b === 0) return NaN;
+    return a / b;
+  }
+  return Number(s);
+}
+
+function isSPRCorrect(userValue, item) {
+  const u = parseNumericResponse(userValue);
+  if (!Number.isFinite(u)) return false;
+  const tol = Number(item.tolerance ?? 1e-9);
+  return (item.acceptedAnswers || []).some(ans => {
+    const a = parseNumericResponse(ans);
+    return Number.isFinite(a) && Math.abs(u - a) <= tol;
+  });
+}
+
+/***********************
+ * FINAL REPORT
+ ***********************/
+function showFinalReport() {
+  if (timer) clearInterval(timer);
+  if (breakTimer) clearInterval(breakTimer);
+
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("break-screen").classList.add("hidden");
+  document.getElementById("report-container").classList.remove("hidden");
+  document.getElementById("header-title").textContent = "SAT Diagnostic Test 5 — Score Report";
+  document.getElementById("calc-badge").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  const letters = ["A","B","C","D","E","F","G","H"];
+
+  let readingCorrect = 0;
+  let readingTotal = 0;
+  let mathCorrect = 0;
+  let mathTotal = 0;
+  const rows = [];
+
+  sections.forEach(sec => {
+    sec.items.forEach((item, idx) => {
+      const key = `s${sec.id}-q${idx}`;
+      const userAns = studentAnswers[key];
+
+      let isCorrect = false;
+      let your = "–";
+      let corr = "–";
+
+      if (item.type === "SPR") {
+        your = (userAns !== undefined && String(userAns).trim() !== "") ? String(userAns).trim() : "–";
+        corr = (item.acceptedAnswers || []).join(" or ");
+        isCorrect = isSPRCorrect(userAns, item);
+      } else {
+        let correctIdx = item.correctIndex;
+        if (typeof correctIdx === "string") correctIdx = letters.indexOf(correctIdx);
+        your = (userAns !== undefined) ? letters[userAns] : "–";
+        corr = letters[correctIdx];
+        isCorrect = userAns === correctIdx;
+      }
+
+      if (sec.id.startsWith("READING")) {
+        readingTotal++;
+        if (isCorrect) readingCorrect++;
+      } else if (sec.id.startsWith("MATH")) {
+        mathTotal++;
+        if (isCorrect) mathCorrect++;
+      }
+
+      rows.push({
+        section: sec.id,
+        q: item.number || idx + 1,
+        your,
+        correct: corr,
+        status: isCorrect ? "✅" : "❌"
+      });
+    });
+  });
+
+  const readingScore = predictSectionScore(readingCorrect, readingTotal);
+  const mathScore = predictSectionScore(mathCorrect, mathTotal);
+  const satScore = readingScore + mathScore;
+
+  const report = document.getElementById("report-container");
+  report.innerHTML = `
+    <h1>SAT Diagnostic Test 5 — Completed</h1>
+    <p><strong>Name:</strong> ${studentName} &nbsp; | &nbsp; <strong>Email:</strong> ${studentEmail} &nbsp; | &nbsp; <strong>Session:</strong> ${testSession}</p>
+    <p><strong>Reading & Writing:</strong> ${readingCorrect} / ${readingTotal} correct → Diagnostic estimate: ${readingScore} / 800</p>
+    <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Diagnostic estimate: ${mathScore} / 800</p>
+    <p><strong>Total diagnostic estimate:</strong> ${satScore} / 1600</p>
+    <p style="font-size:13px; color:#666;">This test is intentionally hard. These scores use a simple raw-performance estimate and are not an official College Board conversion or equating table.</p>
+
+    <div class="score-container">
+      <svg viewBox="0 0 230 230">
+        <path class="arc" d="M 65 50 A 85 85 0 0 0 65 180" />
+        <path class="arc" d="M 165 50 A 85 85 0 0 1 165 180" />
+        <defs><path id="curveTop" d="M 70 50 A 80 80 0 0 1 160 50" /></defs>
+        <text class="label"><textPath href="#curveTop" startOffset="50%" text-anchor="middle">TOTAL</textPath></text>
+      </svg>
+      <div class="score" style="font-size:58px;">${satScore}</div>
+    </div>
+
+    <h2>Question Detail</h2>
+    <table>
+      <thead>
+        <tr><th>Module</th><th>Q#</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.section}</td>
+            <td>${r.q}</td>
+            <td>${r.your}</td>
+            <td>${r.correct}</td>
+            <td>${r.status}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+
+  if (!emailSent && typeof emailjs !== "undefined" && studentEmail) {
+    emailSent = true;
+    const timestamp = new Date().toLocaleString();
+
+    const readingAnalysisText = rows
+      .filter(r => r.section.startsWith("READING"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const mathAnalysisText = rows
+      .filter(r => r.section.startsWith("MATH"))
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+      name: studentName,
+      test_title: "SAT Diagnostic Test 5 — Advanced Exam",
+      to_email: studentEmail,
+      solution_link: solutionPDF,
+      session: testSession,
+      score: `RW ${readingScore}/800 | Math ${mathScore}/800 | Total ${satScore}/1600`,
+      timestamp: timestamp,
+      paper1: readingAnalysisText,
+      paper2: mathAnalysisText
+    }).then(() => {
+      console.log("✅ Email report sent successfully.");
+    }).catch(err => {
+      console.error("❌ Email send failed:", err);
+    });
+  }
+}
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("9jjn3yBHl6S88hITy");
+    })();
+  </script>
+
+</body>
+</html>

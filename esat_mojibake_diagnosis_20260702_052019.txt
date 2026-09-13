@@ -1,0 +1,146 @@
+
+============================================================
+1. Bug report button replacement status
+============================================================
+Button matches before replacement found: 1
+File patched: public\esat-question-bank\index.html
+Backup: public\esat-question-bank\index.html.backup_bug_icon_mojibake_20260702_052019
+
+============================================================
+2. Bug report area after patch
+============================================================
+
+  public\esat-question-bank\index.html:1706:
+  public\esat-question-bank\index.html:1707:<!-- TS_ESAT_BUG_REPORT_ASCII_FIX -->
+  public\esat-question-bank\index.html:1708:<style id="ts-esat-bug-report-ascii-fix">
+> public\esat-question-bank\index.html:1709:  .ts-bug-report-ascii {
+  public\esat-question-bank\index.html:1710:    display: inline-flex !important;
+  public\esat-question-bank\index.html:1711:    align-items: center !important;
+  public\esat-question-bank\index.html:1712:    justify-content: center !important;
+  public\esat-question-bank\index.html:1713:    gap: 7px !important;
+  public\esat-question-bank\index.html:1714:    min-width: 118px !important;
+  public\esat-question-bank\index.html:1726:    font-family: Arial, Helvetica, sans-serif !important;
+  public\esat-question-bank\index.html:1727:  }
+  public\esat-question-bank\index.html:1728:
+> public\esat-question-bank\index.html:1729:  .ts-bug-report-ascii:hover {
+  public\esat-question-bank\index.html:1730:    background: #ffefc2 !important;
+  public\esat-question-bank\index.html:1731:  }
+  public\esat-question-bank\index.html:1732:
+  public\esat-question-bank\index.html:1733:  .ts-bug-report-mark {
+  public\esat-question-bank\index.html:1734:    width: 18px !important;
+  public\esat-question-bank\index.html:3226:
+  public\esat-question-bank\index.html:3227:<!-- TS_BUG_REPORT_MODAL_V1 -->
+  public\esat-question-bank\index.html:3228:<button
+> public\esat-question-bank\index.html:3229:  class="bug-report-fab ts-bug-report-ascii"
+  public\esat-question-bank\index.html:3230:  type="button"
+> public\esat-question-bank\index.html:3231:  title="Report error"
+> public\esat-question-bank\index.html:3232:  aria-label="Report a problem in this question"
+> public\esat-question-bank\index.html:3233:  onclick="BUG_REPORT.open()"
+  public\esat-question-bank\index.html:3234:>
+  public\esat-question-bank\index.html:3235:  <span class="ts-bug-report-mark" aria-hidden="true">!</span>
+> public\esat-question-bank\index.html:3236:  <span class="ts-bug-report-label">Report error</span>
+  public\esat-question-bank\index.html:3237:</button>
+  public\esat-question-bank\index.html:3238:
+> public\esat-question-bank\index.html:3239:<div class="overlay" id="bugOverlay" onclick="BUG_REPORT.overlayClick(event)">
+  public\esat-question-bank\index.html:3240:  <div class="modal" onclick="event.stopPropagation()">
+  public\esat-question-bank\index.html:3241:    <div class="modal-header">
+> public\esat-question-bank\index.html:3242:      <h3>Report a problem</h3>
+  public\esat-question-bank\index.html:3243:      <button class="modal-close" type="button" onclick="BUG_REPORT.close()">Close</button>
+  public\esat-question-bank\index.html:3244:    </div>
+  public\esat-question-bank\index.html:3245:
+  public\esat-question-bank\index.html:3246:    <div class="modal-body">
+  public\esat-question-bank\index.html:3247:      <div class="bug-report-note">
+  public\esat-question-bank\index.html:3249:        Use this to report a typo, wrong answer, broken diagram, or unclear solution.
+  public\esat-question-bank\index.html:3250:      </div>
+  public\esat-question-bank\index.html:3251:
+> public\esat-question-bank\index.html:3252:      <label for="bugComment" style="display:block;font-weight:900;margin-bottom:8px;">
+  public\esat-question-bank\index.html:3253:        Comment
+  public\esat-question-bank\index.html:3254:      </label>
+  public\esat-question-bank\index.html:3255:
+  public\esat-question-bank\index.html:3256:      <textarea
+> public\esat-question-bank\index.html:3257:        id="bugComment"
+  public\esat-question-bank\index.html:3258:        class="bug-report-textarea"
+> public\esat-question-bank\index.html:3259:      >Report a problem in this question.</textarea>
+  public\esat-question-bank\index.html:3260:
+  public\esat-question-bank\index.html:3261:      <div id="bugReportThanks" class="bug-report-thanks" style="display:none;"></div>
+  public\esat-question-bank\index.html:3262:      <div id="bugReportError" class="bug-report-error" style="display:none;"></div>
+  public\esat-question-bank\index.html:3263:    </div>
+  public\esat-question-bank\index.html:3264:
+  public\esat-question-bank\index.html:3265:    <div class="modal-footer">
+  public\esat-question-bank\index.html:3266:      <button class="btn light" type="button" onclick="BUG_REPORT.close()">Cancel</button>
+> public\esat-question-bank\index.html:3267:      <button class="btn" id="bugSubmitBtn" type="button" onclick="BUG_REPORT.submit()">Submit</button>
+  public\esat-question-bank\index.html:3268:    </div>
+  public\esat-question-bank\index.html:3269:  </div>
+  public\esat-question-bank\index.html:3270:</div>
+  public\esat-question-bank\index.html:3271:<!-- /TS_BUG_REPORT_MODAL_V1 -->
+  public\esat-question-bank\index.html:3272:
+  public\esat-question-bank\index.html:4523:    return {
+  public\esat-question-bank\index.html:4524:      to_email: BUG_REPORT_TO_EMAIL,
+  public\esat-question-bank\index.html:4525:      email_subject: "ESAT bug report  -  " + qTitle,
+> public\esat-question-bank\index.html:4526:      report_message: "Report a problem in this question.",
+  public\esat-question-bank\index.html:4527:      comment: "",
+  public\esat-question-bank\index.html:4528:      question_label: qTitle,
+  public\esat-question-bank\index.html:4529:      question_number: pos,
+  public\esat-question-bank\index.html:4530:      display_order: pos,
+  public\esat-question-bank\index.html:4531:      qid: qTitle + " / " + pos + " of " + total,
+  public\esat-question-bank\index.html:4552:        label.textContent = payload.question_label + " · " + payload.paper + " · " + payload.topic;
+  public\esat-question-bank\index.html:4553:      }
+  public\esat-question-bank\index.html:4554:
+> public\esat-question-bank\index.html:4555:      const ta = el("bugComment");
+> public\esat-question-bank\index.html:4556:      if (ta) ta.value = "Report a problem in this question.\n\n";
+  public\esat-question-bank\index.html:4557:
+  public\esat-question-bank\index.html:4558:      const thanks = el("bugReportThanks");
+  public\esat-question-bank\index.html:4559:      const err = el("bugReportError");
+  public\esat-question-bank\index.html:4560:
+  public\esat-question-bank\index.html:4561:      if (thanks) {
+  public\esat-question-bank\index.html:4568:        err.textContent = "";
+  public\esat-question-bank\index.html:4569:      }
+  public\esat-question-bank\index.html:4570:
+> public\esat-question-bank\index.html:4571:      const overlay = el("bugOverlay");
+  public\esat-question-bank\index.html:4572:      if (overlay) overlay.style.display = "block";
+  public\esat-question-bank\index.html:4573:
+  public\esat-question-bank\index.html:4574:      setTimeout(function() {
+  public\esat-question-bank\index.html:4575:        if (ta) ta.focus();
+  public\esat-question-bank\index.html:4576:      }, 50);
+  public\esat-question-bank\index.html:4577:    },
+  public\esat-question-bank\index.html:4578:
+  public\esat-question-bank\index.html:4579:    close: function() {
+> public\esat-question-bank\index.html:4580:      const overlay = el("bugOverlay");
+  public\esat-question-bank\index.html:4581:      if (overlay) overlay.style.display = "none";
+  public\esat-question-bank\index.html:4582:    },
+  public\esat-question-bank\index.html:4583:
+  public\esat-question-bank\index.html:4584:    overlayClick: function(evt) {
+> public\esat-question-bank\index.html:4585:      if (evt && evt.target && evt.target.id === "bugOverlay") {
+  public\esat-question-bank\index.html:4586:        BUG_REPORT.close();
+  public\esat-question-bank\index.html:4587:      }
+  public\esat-question-bank\index.html:4588:    },
+  public\esat-question-bank\index.html:4589:
+  public\esat-question-bank\index.html:4590:    submit: async function() {
+> public\esat-question-bank\index.html:4591:      const btn = el("bugSubmitBtn");
+  public\esat-question-bank\index.html:4592:      const thanks = el("bugReportThanks");
+  public\esat-question-bank\index.html:4593:      const err = el("bugReportError");
+> public\esat-question-bank\index.html:4594:      const ta = el("bugComment");
+  public\esat-question-bank\index.html:4595:
+  public\esat-question-bank\index.html:4596:      if (thanks) {
+  public\esat-question-bank\index.html:4597:        thanks.style.display = "none";
+  public\esat-question-bank\index.html:4598:        thanks.textContent = "";
+  public\esat-question-bank\index.html:4599:      }
+
+
+
+
+============================================================
+3. Likely mojibake markers in ESAT question bank page
+============================================================
+Note: Some mojibake-looking strings may be inside the intentional cleaner function. Focus on visible UI blocks.
+
+============================================================
+4. Non-ASCII characters in ESAT question bank page
+============================================================
+This catches all non-ASCII. Some may be valid maths/symbols, so paste output for judgement.
+4207: btn.title = "Question " + n + " · " + chapterLabel + (q.subtopic ? " · " + q.subtopic : "");
+4552: label.textContent = payload.question_label + " · " + payload.paper + " · " + payload.topic;
+
+============================================================
+5. Mojibake markers in ESAT API server cleaner
+============================================================

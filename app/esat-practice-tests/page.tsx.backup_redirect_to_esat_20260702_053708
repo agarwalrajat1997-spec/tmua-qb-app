@@ -1,0 +1,299 @@
+﻿"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { supabaseBrowser } from "@/utils/supabase/browser";
+import styles from "../dashboard/dashboard.module.css";
+
+type TrackKey = "engineering" | "physical" | "life";
+
+type MockTile = {
+  title: string;
+  href: string;
+};
+
+type Track = {
+  key: TrackKey;
+  label: string;
+  subjects: string;
+  mocks: MockTile[];
+};
+
+const TRACKS: Track[] = [
+  {
+    key: "engineering",
+    label: "Engineering",
+    subjects: "Math 1 + Physics + Math 2",
+    mocks: [
+      { title: "ESAT Mock Test 1", href: "/esat-practice-tests/tests/esat-mock-01/index.html" },
+      { title: "ESAT Mock Test 2", href: "/esat-practice-tests/tests/esat-mock-02/index.html" },
+      { title: "ESAT Mock Test 3", href: "/esat-practice-tests/tests/esat-mock-03/index.html" },
+      { title: "ESAT Mock Test 4", href: "/esat-practice-tests/tests/esat-mock-04/index.html" },
+    ],
+  },
+  {
+    key: "physical",
+    label: "Physical Sciences",
+    subjects: "Math 1 + Physics + Chemistry",
+    mocks: [
+      { title: "ESAT Mock Test 5", href: "/esat-practice-tests/tests/esat-mock-05/index.html" },
+      { title: "ESAT Mock Test 6", href: "/esat-practice-tests/tests/esat-mock-06/index.html" },
+      { title: "ESAT Mock Test 7", href: "/esat-practice-tests/tests/esat-mock-07/index.html" },
+      { title: "ESAT Mock Test 8", href: "/esat-practice-tests/tests/esat-mock-08/index.html" },
+    ],
+  },
+  {
+    key: "life",
+    label: "Life Sciences",
+    subjects: "Math 1 + Chemistry + Biology",
+    mocks: [
+      { title: "ESAT Mock Test 9", href: "/esat-practice-tests/tests/esat-mock-09/index.html" },
+      { title: "ESAT Mock Test 10", href: "/esat-practice-tests/tests/esat-mock-10/index.html" },
+      { title: "ESAT Mock Test 11", href: "/esat-practice-tests/tests/esat-mock-11/index.html" },
+      { title: "ESAT Mock Test 12", href: "/esat-practice-tests/tests/esat-mock-12/index.html" },
+    ],
+  },
+];
+
+export const dynamic = "force-dynamic";
+
+export default function ESATPracticeTestsPage() {
+  const supabase = useMemo(() => supabaseBrowser(), []);
+  const [email, setEmail] = useState("");
+  const [allowed, setAllowed] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [activeTrack, setActiveTrack] = useState<TrackKey>("engineering");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadAccess() {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user?.email) {
+          window.location.href = "/login?next=/esat-practice-tests";
+          return;
+        }
+
+        setEmail(user.email);
+
+        const { data, error } = await supabase
+          .from("student_access")
+          .select("product, approved, expires_at")
+          .ilike("email", user.email)
+          .eq("product", "esat-practice-tests")
+          .eq("approved", true);
+
+        if (cancelled) return;
+
+        if (error) {
+          setAllowed(false);
+          setLoading(false);
+          return;
+        }
+
+        const now = Date.now();
+
+        const hasActive = (data || []).some((row: any) => {
+          if (!row?.approved) return false;
+          if (!row?.expires_at) return true;
+          return new Date(row.expires_at).getTime() > now;
+        });
+
+        setAllowed(hasActive);
+        setLoading(false);
+      } catch {
+        if (!cancelled) {
+          setAllowed(false);
+          setLoading(false);
+        }
+      }
+    }
+
+    loadAccess();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [supabase]);
+
+  const active = TRACKS.find((t) => t.key === activeTrack) || TRACKS[0];
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.topbar}>
+          <div className={styles.brand}>
+            <div className={styles.brandName}>Thriving Scholars</div>
+            <div className={styles.brandTag}>ESAT Practice Tests</div>
+          </div>
+          <div className={styles.right}>
+            <div className={styles.pill}>Loading...</div>
+          </div>
+        </div>
+
+        <main className={styles.main}>
+          <div className={styles.card}>
+            <div className={styles.cardTitle}>Loading ESAT Practice Tests...</div>
+            <div className={styles.muted}>Checking your access.</div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!allowed) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.topbar}>
+          <div className={styles.brand}>
+            <div className={styles.brandName}>Thriving Scholars</div>
+            <div className={styles.brandTag}>ESAT Practice Tests</div>
+          </div>
+          <div className={styles.right}>
+            <a className={styles.btn} href="/api/logout">Logout</a>
+          </div>
+        </div>
+
+        <main className={styles.main}>
+          <div className={styles.card}>
+            <div className={styles.cardTitle}>No ESAT Practice Tests access</div>
+            <div className={styles.muted}>
+              Signed in as <b>{email}</b>, but ESAT Practice Tests are not enabled.
+            </div>
+            <div style={{ marginTop: 14 }}>
+              <a className={`${styles.btn} ${styles.btnPrimary}`} href="/esat">
+                Back to ESAT Dashboard
+              </a>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.page} data-ui="TS_ESAT_PRACTICE_PATHWAY_UI_20260702">
+      <div className={styles.topbar}>
+        <div className={styles.brand}>
+          <div className={styles.brandName}>Thriving Scholars</div>
+          <div className={styles.brandTag}>ESAT Practice Tests</div>
+        </div>
+
+        <div className={styles.right}>
+          <div className={styles.pill}>{email}</div>
+          <a className={styles.btn} href="/esat">ESAT Dashboard</a>
+        </div>
+      </div>
+
+      <div className={styles.shell}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sideTitle}>
+            Choose
+            <br />
+            Pathway
+          </div>
+
+          <div className={styles.sideSub}>
+            3 pathways. 4 full mocks each.
+          </div>
+
+          <ul className={styles.nav}>
+            {TRACKS.map((track, index) => (
+              <li key={track.key}>
+                <button
+                  className={`${styles.navBtn} ${activeTrack === track.key ? styles.navBtnOn : ""}`}
+                  type="button"
+                  onClick={() => setActiveTrack(track.key)}
+                >
+                  <span className={styles.step}>{index + 1}</span>
+                  <span className={styles.navLabel}>{track.label}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        <main className={styles.main}>
+          <div className={styles.h1}>{active.label}</div>
+
+          <div className={styles.metaRow}>
+            <div className={styles.meta}>
+              <span className={styles.dot} /> {active.subjects}
+            </div>
+            <div className={styles.meta}>4 full mock tests</div>
+          </div>
+
+          <section
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
+              gap: 16,
+              maxWidth: 980,
+            }}
+          >
+            {active.mocks.map((mock, index) => (
+              <a
+                key={mock.title}
+                href={mock.href}
+                style={{
+                  display: "block",
+                  background: "#ffffff",
+                  border: "2px solid #E7E7E7",
+                  borderRadius: 18,
+                  padding: 22,
+                  textDecoration: "none",
+                  color: "#141414",
+                  boxShadow: "0 1px 0 rgba(0,0,0,.04)",
+                  minHeight: 145,
+                }}
+              >
+                <div
+                  style={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: 999,
+                    display: "grid",
+                    placeItems: "center",
+                    background: "#FEC94F",
+                    color: "#141414",
+                    fontWeight: 950,
+                    marginBottom: 18,
+                    border: "1px solid rgba(0,0,0,.18)",
+                  }}
+                >
+                  {index + 1}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: 22,
+                    fontWeight: 950,
+                    letterSpacing: "-.02em",
+                    marginBottom: 8,
+                  }}
+                >
+                  {mock.title}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 900,
+                    color: "#7A1F24",
+                    textTransform: "uppercase",
+                    letterSpacing: ".08em",
+                  }}
+                >
+                  Open mock →
+                </div>
+              </a>
+            ))}
+          </section>
+        </main>
+      </div>
+    </div>
+  );
+}

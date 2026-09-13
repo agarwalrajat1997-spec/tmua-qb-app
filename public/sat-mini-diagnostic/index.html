@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SAT Diagnostic Test — Full Exam Flow</title>
+
+  <!-- Desmos (for calculator-allowed sections only) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=eaf76dd8323d47fbb6b9c88d6da1aae1"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+/* =======================================
+   GLOBAL
+======================================= */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #000;
+}
+.hidden { display: none !important; }
+a { color: #2e53da; }
+
+/* =======================================
+   HEADER
+======================================= */
+.header {
+  background-color: #fafbff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+#timer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  display: none; /* hidden on initial screen */
+}
+.header-buttons { display: flex; align-items: center; gap: 20px; }
+
+.badge {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius: 999px;
+  background:#e8edff;
+  color:#1e2a6f;
+  font-size:12px;
+  margin-left:6px;
+}
+
+/* Calculator icon */
+#calculator-icon {
+  display: none; /* hidden until exam start / allowed */
+  align-items: center;
+  gap: 6px;
+  color: #000;
+  font-size: 15px;
+  cursor: pointer;
+}
+#calculator-icon i {
+  font-size: 18px;
+}
+#calculator-icon:hover {
+  color: #444;
+}
+
+/* =======================================
+   START SCREEN  ✅ Staffs Prep Branding
+======================================= */
+#start-screen {
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+
+  /* Thriving Scholars (orange/yellow) */
+  border: 2px solid #FEC94F;
+  box-shadow: 0 8px 24px rgba(254, 201, 79, 0.28);
+
+  text-align: left;
+  overflow-y: auto;                /* ✅ allows scrolling inside */
+  scrollbar-width: thin;           /* ✅ nice thin scrollbar (Firefox) */
+  scrollbar-color: #FEC94F #FFF1DF;
+}
+
+/* ✅ Optional: style scrollbar for Chrome/Safari */
+#start-screen::-webkit-scrollbar {
+  width: 8px;
+}
+#start-screen::-webkit-scrollbar-thumb {
+  background-color: #FEC94F;
+  border-radius: 4px;
+}
+#start-screen::-webkit-scrollbar-track {
+  background-color: #FFF1DF;
+}
+
+#start-screen h1 {
+  margin-top: 0;
+  font-size: 2rem;
+  color: #670D04;                  /* deep TS accent */
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#start-screen p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+#start-screen label {
+  font-weight: 600;
+  color: #111;
+}
+
+#start-screen input,
+#start-screen select {
+  padding: 8px 10px;
+  width: 250px;
+  margin-top: 4px;
+  border: 1px solid #f0d6a0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#start-screen button {
+  background: #FEC94F;             /* TS yellow */
+  color: #670D04;                  /* readable on yellow */
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(254, 201, 79, 0.35);
+}
+
+#start-screen button:hover {
+  background: #F5B935;             /* slightly deeper yellow/orange */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(254, 201, 79, 0.45);
+}
+
+
+/* =======================================
+   MAIN CONTAINER (EXAM)
+======================================= */
+.container {
+  display: none;
+  flex-direction: row;
+  height: calc(100vh - 56px - 70px);
+  overflow: hidden;
+}
+.container.active {
+  display: flex;
+}
+
+/* =======================================
+   LEFT PANEL (Passage Area)
+======================================= */
+.left-panel {
+  flex: 1;
+  background-color: white;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 18px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   RIGHT PANEL (Question Area)
+======================================= */
+.right-panel {
+  flex: 1;
+  background-color: white;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 2px solid #ccc;
+  min-width: 0;
+}
+
+/* =======================================
+   Optional: Nicer Scrollbars
+======================================= */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar { width: 8px; }
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* =======================================
+   QUESTION HEADER
+======================================= */
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbff; /* 🔹 updated color */
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.q-number {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.mark-review {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  margin-left: 12px;
+  flex-grow: 1;
+}
+.mark-review input[type="checkbox"] { display: none; }
+.bookmark-icon {
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mark-review input[type="checkbox"]:checked + .bookmark-icon {
+  color: #cf0000;
+}
+
+/* =======================================
+   OPTIONS
+======================================= */
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.option-label:hover { border-color: #2e53da; }
+.option-label.active { background: #f0f4ff; border-color: #2e53da; }
+.option-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e8f0;
+  color: #2e53da;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.option-label.active .option-circle {
+  background: #2e53da;
+  color: #fff;
+}
+.option-label input[type="radio"] { display: none; }
+
+/* =======================================
+   FOOTER
+======================================= */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid #ccc;
+  background-color: #fafbff;
+  height: 70px;
+  position: relative;
+}
+.footer-left { width: 200px; display: flex; align-items: center; justify-content: flex-start; }
+.footer-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.footer-right { display: flex; align-items: center; gap: 10px; }
+.footer-center button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.footer-buttons button {
+  background-color: #2e53da;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.footer-buttons button:disabled {
+  background-color: #bbb;
+  cursor: default;
+}
+.student-response-cell { background-color: #fafafa; font-style: italic; white-space: pre-wrap; }
+
+/* =======================================
+   NAVIGATOR POPUP
+======================================= */
+#navigator-popup {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  z-index: 9999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+#navigator-popup .nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#navigator-popup .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+#navigator-popup .legend {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 16px 0;
+  font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border: 1px solid #999; display: inline-block; }
+.legend-current { background: #2e53da; color: #fff; }
+.legend-review { background: red; }
+.legend-unanswered { background: transparent; }
+#navigator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+#navigator-grid button {
+  border: 1px dashed #2e53da;
+  background: #fff;
+  color: #2e53da;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#navigator-grid button.current { background: #2e53da; color: #fff; }
+#navigator-grid button.answered { border: 1px solid #2e53da; }
+#navigator-grid button.review { border: 1px solid red; color: red; }
+
+/* =======================================
+   CALCULATOR POPUP
+======================================= */
+#calculator-popup {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0;
+  z-index: 10000;
+  width: 640px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+#calculator-drag-handle {
+  cursor: move;
+  background: #fafbff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+#calculator {
+  width: 100%;
+  height: 420px;
+}
+#grading-overlay {
+  backdrop-filter: blur(3px);
+  color: #222;
+}
+.spinner {
+  border-color: #ddd;
+  border-top-color: #0078ff;
+}
+
+/* =======================================
+   FRQ
+======================================= */
+.grading-output {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+textarea.frq-input {
+  width: 100%;
+  min-height: 120px;
+  font-size: 16px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+/* =======================================
+   BREAK SCREEN (between I-B → II-A)
+======================================= */
+#break-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  flex-direction: column;
+}
+.break-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 24px;
+}
+#break-timer {
+  background: #222;
+  padding: 12px 20px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+#skip-break {
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+}
+#skip-break:hover {
+  background: #ccc;
+}
+
+/* =======================================
+   SECTION TRANSITION MODAL
+======================================= */
+#section-modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+#section-modal .content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 420px;
+  text-align: center;
+}
+#section-modal button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* =======================================
+   REPORT
+======================================= */
+#report-container {
+  padding: 30px;
+  max-width: 950px;
+  margin: 20px auto 90px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow-y: auto;
+  height: calc(100vh - 56px - 40px);
+}
+#report-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+#report-container th, #report-container td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+#report-container thead { background: #f0f0f0; }
+/* =============================
+   SCORE WIDGET (AP SCORE GAUGE)
+============================= */
+.score-container {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  margin: 30px auto;
+}
+
+.score-container svg {
+  width: 230px;
+  height: 230px;
+}
+
+.score-container .arc {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.score-container .label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  fill: #555;
+}
+
+.score-container .score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -47%);
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  color: #000;
+}
+/* ===============================
+   ABC BUTTON
+================================= */
+.eliminate-mode-btn {
+  background-color: #ffffff;
+  color: #2836d1;
+  border: 2px solid #2836d1;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.eliminate-mode-btn:hover {
+  background-color: #f3f4ff;
+}
+.eliminate-mode-btn.active {
+  background-color: #2836d1;
+  color: #ffffff;
+  border-color: #2836d1;
+}
+#footer-bar {
+  position: relative;
+}
+/* replace the whole block with this */
+#color-bar-bottom {
+  /* position: static by default */
+  width: 100%;
+  height: 1px;      /* your dash bar height */
+  margin: 0;        /* optional: ensure it's flush */
+}
+
+
+/* ===============================
+   STRIKEOUT BUTTONS (Right-side A–D)
+================================= */
+.strike-toggle {
+  display: none; /* Hidden until ABC mode is active */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2e53da;
+  background: transparent;
+  border: 2px solid #2e53da;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.elimination-active .strike-toggle {
+  display: flex;
+}
+
+/* Hover animation (subtle blue tint like SAT) */
+.strike-toggle:hover {
+  background-color: #f0f4ff;
+}
+
+/* Don’t change on press — visual effect only occurs on option */
+.strike-toggle.active {
+  background-color: transparent;
+  color: #2e53da;
+}
+
+/* ===============================
+   STRUCK OPTION STYLE
+================================= */
+.option-label.struck {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+  color: #666;
+  text-decoration: line-through;
+  position: relative;
+  opacity: 0.75;
+}
+
+.option-label.struck::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: calc(100% - 24px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.option-label.struck .option-circle {
+  background: #e0e0e0;
+  color: #888;
+} 
+
+/* =======================================
+   COLOR DASH BAR (appears after exam start)
+======================================= */
+.color-bar {
+  height: 2px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    #444 0 24px,        /* dark gray dash */
+    transparent 24px 26px,
+    #00AEEF 26px 50px,  /* blue dash */
+    transparent 50px 52px,
+    #FFD500 52px 76px,  /* yellow dash */
+    transparent 76px 78px
+  );
+  background-size: 78px 5px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hidden by default (like header on start screen) */
+.color-bar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#footer-student-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 520px 1fr; /* wider left panel so image can actually grow */
+  gap: 18px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+/* Center the image within the LEFT panel */
+.q-media-left{
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: flex-start;   /* keep at top; change to center if you want vertical centering */
+}
+
+/* Image panel (left) */
+.q-media{
+  display: grid;
+  grid-template-columns: 240px 1fr; /* bigger left panel */
+  gap: 16px;
+  align-items: start;
+  margin: 12px 0 14px;
+}
+
+.q-media-left{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Bigger images + faint boundary */
+.q-img-sm{
+  width: 320px;              /* bigger */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+
+/* Mobile tweak */
+@media (max-width: 640px){
+  .q-media{
+    grid-template-columns: 1fr;  /* stack image above text */
+  }
+  .q-media-left{
+    justify-content: flex-start;
+  }
+  .q-img-sm{
+    width: min(360px, 100%);
+  }
+}
+/* ================================
+   OPTION IMAGES (MCQ choices)
+   Make images smaller + organized
+================================ */
+
+/* If your option HTML uses <div class="opt-img-wrap"><img class="opt-img" ...></div> */
+.opt-img-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;     /* center inside option */
+  align-items: center;
+  padding: 6px 0;
+}
+
+.opt-img{
+  width: 220px;                /* ✅ CHANGE THIS to control option image size */
+  max-width: 100%;
+  height: auto;
+  display: block;
+
+  border: 1px solid rgba(0,0,0,0.12);   /* faint boundary */
+  border-radius: 10px;
+  padding: 6px;
+  background: rgba(255,255,255,0.92);
+}
+
+ </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-title" id="header-title">SAT Diagnostic Test</span>
+      <span id="calc-badge" class="badge hidden">Calculator Allowed</span>
+    </div>
+    <div class="header-buttons">
+      <div id="timer">00:00</div>
+      <div id="calculator-icon" onclick="openCalculator()">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Calculator</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <h1>Mini SAT Diagnostic Test</h1>
+<p>This test will run in 2 sections continuously:</p>
+<ul>
+  <li><strong>Section 1:</strong> Reading and Writing, 33 questions</li>
+  <li><strong>Section 2:</strong> Math, 27 questions</li>
+</ul>
+    <p><em>Once you advance to the next section, you cannot return.</em></p>
+<p><em>This is a mini SAT-style diagnostic with 33 Reading and Writing questions and 27 Math questions. The final score shown is a predicted SAT score out of 1600 based on raw performance.</em></p>
+    <div style="margin-top:18px; display:flex; gap:20px; flex-wrap:wrap;">
+      <div>
+        <label>Full Name</label><br>
+        <input type="text" id="student-name">
+      </div>
+      <div>
+        <label>Email (to receive results)</label><br>
+        <input type="email" id="student-email">
+      </div>
+      <div>
+        <label>Exam Session</label><br>
+<select id="test-session">
+  <option value="" selected disabled>Select SAT Session</option>
+  <option value="SAT May 2, 2026">May, 2026</option>
+  <option value="SAT June 6, 2026">June, 2026</option>
+  <option value="SAT August 22, 2026">August, 2026</option>
+  <option value="SAT September 12, 2026">September, 2026</option>
+  <option value="SAT October 3, 2026">October, 2026</option>
+  <option value="SAT November 7, 2026">November, 2026</option>
+  <option value="SAT December 5, 2026">December, 2026</option>
+  <option value="SAT March 6, 2027">March, 2027</option>
+  <option value="SAT May 1, 2027">May, 2027</option>
+  <option value="SAT June 5, 2027">June, 2027</option>
+</select>
+      </div>
+    </div>
+    <button onclick="startExam()">Start Exam</button>
+  </div>
+
+  <div id="color-bar" class="color-bar hidden"></div>
+
+  <!-- Main Exam Container -->
+  <div id="main-container" class="container">
+    <div class="left-panel" id="passage"></div>
+
+    <div class="right-panel">
+      <div>
+        <div class="question-header">
+          <div class="q-number" id="q-number">1</div>
+
+          <label class="mark-review">
+            <input type="checkbox" id="mark-review" onchange="toggleBookmark(this)">
+            <i class="fa-regular fa-bookmark bookmark-icon"></i>
+            Mark for Review
+          </label>
+
+          <!-- ABC toggle -->
+          <button id="eliminateBtn" class="eliminate-mode-btn">𝖠̶𝖡̶𝖢̶</button>
+        </div>
+
+        <div class="question-box" id="question-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="color-bar-bottom" class="color-bar hidden"></div>
+
+  <!-- Footer -->
+  <div class="footer-buttons hidden" id="footer-bar">
+    <div class="footer-left">
+      <span id="footer-student-name" style="font-size: 16px; font-weight: 500; color: #000;"></span>
+    </div>
+
+    <div class="footer-center">
+      <button id="navigator-button" onclick="openNavigator()">Question 1 of 1</button>
+    </div>
+
+    <div class="footer-right">
+      <button id="back-btn" onclick="prevQuestion()">Back</button>
+      <button id="next-btn" onclick="nextQuestion()">Next</button>
+      <button id="finish-section-btn" onclick="finishCurrentSection()">Finish Section</button>
+    </div>
+  </div>
+
+  <!-- Navigator -->
+  <div id="navigator-popup">
+    <div class="nav-header">
+      <span id="navigator-section-title">Section</span>
+      <button class="close-btn" onclick="closeNavigator()">×</button>
+    </div>
+    <div class="legend">
+      <span><div class="legend-box legend-current"></div> Current</span>
+      <span><div class="legend-box legend-unanswered"></div> Unanswered</span>
+      <span><div class="legend-box legend-review"></div> For Review</span>
+    </div>
+    <div id="navigator-grid"></div>
+  </div>
+
+  <!-- Calculator Popup -->
+  <div id="calculator-popup">
+    <div id="calculator-drag-handle">
+      <span>Calculator</span>
+      <button onclick="closeCalculator()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="calculator"></div>
+  </div>
+
+  <!-- Section Transition Modal -->
+  <div id="section-modal">
+    <div class="content">
+      <h2 id="section-modal-title">Section complete</h2>
+      <p id="section-modal-text">The next section will begin now. You cannot return to the previous section.</p>
+      <div style="display:flex; justify-content:center; gap:14px; margin-top:18px;">
+        <button onclick="goToNextSection()" style="background:#000; color:#fff; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Start Next Section
+        </button>
+        <button onclick="closeSectionModal()" style="background:#ccc; color:#000; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="report-container" class="hidden"></div>
+
+  <script>
+/***********************
+ * DATA: Sections
+ ***********************/
+const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_441aa76bc9c9438cbab5269e37ce7d2d.pdf"; // optional: paste a solutions PDF link here if you want
+
+const sections = [
+  {
+    id: "READING",
+    title: "Reading and Writing",
+    subtitle: "33 Questions",
+    durationSec: 64 * 60,
+    calculatorAllowed: false,
+    items: [
+      {
+        type: "MC",
+        number: "1",
+        passage: `<p>Archaeologists studying an ancient amphitheater in Switzerland believe that it dates back to the fourth century CE. Their discoveries of a coin made between 337 and 341 CE and era-appropriate building materials ______ evidence for this theory.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical and precise word or phrase?</p>`,
+        options: ["dismiss", "provide", "regulate", "refuse"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "2",
+        passage: `<p><em>The following text is adapted from Lewis Carroll’s 1865 novel <i>Alice’s Adventures in Wonderland</i>.</em></p><p>“The second thing is to find my way into that lovely garden. I think that will be the best plan.” It sounded like an excellent plan, no doubt, and very neatly and simply arranged; the only difficulty was, that Alice had not the smallest idea how to set about it.</p>`,
+        prompt: `<p>As used in the text, what does the word <strong>“simply”</strong> most nearly mean?</p>`,
+        options: ["Faintly", "Hastily", "Easily", "Foolishly"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "3",
+        passage: `<p>Cucurbits, a group of plants that includes squash and melons, relied on mastodons to spread their seeds in the Ice Age. When these animals died out, cucurbits faced extinction in turn, having lost their means of seed dispersal. Around this time, however, the ancestors of Indigenous peoples in North America began raising cucurbits as crops, thus ______ the plants’ survival.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical and precise word or phrase?</p>`,
+        options: ["verifying", "multiplying", "comforting", "ensuring"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "4",
+        passage: `<p>The recent discovery of a carved wooden figure dating to around 2,000 years ago in a ditch in England was truly surprising. Wooden objects ______ survive for so long due to their high susceptibility to rot, but archaeologists suspect layers of sediment in the ditch preserved the figure by creating an oxygen-free environment.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical and precise word or phrase?</p>`,
+        options: ["sturdily", "carelessly", "rarely", "simply"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "5",
+        passage: `<p>Bicycle sharing systems allow users to rent a bicycle at one location within a city and return it to any other designated location in that city, which can cause serious problems of bicycle supply and user demand within the city’s system. Tohru Ikeguchi uses open-source data and statistical modeling to identify when a high number of users making one-way trips is likely to leave some locations within the system ______ bicycles and other areas with insufficient supply.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical and precise word or phrase?</p>`,
+        options: ["susceptible to", "contingent on", "saturated with", "depleted of"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "6",
+        passage: `<p>When ancient oak planks were unearthed during subway construction in Rome, Mauro Bernabei and his team examined the growth rings in the wood to determine where these planks came from. By comparing the growth rings on the planks to records of similar rings in oaks from Europe, the team could trace the wood to the Jura region of France, hundreds of kilometers from Rome.</p><p><strong>Underlined sentence:</strong> Because timber could only have been transported from distant Jura to Rome by boat, the team’s findings suggest the complexity of Roman trade routes.</p>`,
+        prompt: `<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>`,
+        options: [
+          "It presents a conclusion about Roman trade routes based on the team’s findings.",
+          "It questions how the team was able to conclude that the planks were used to build a boat.",
+          "It explains why the planks were made from oak rather than a different kind of wood.",
+          "It describes common methods used in Roman subway construction."
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "7",
+        passage: `<p>For his 1986 album <i>Keyboard Fantasies</i>, Beverly Glenn-Copeland wrote songs grounded in traditional soul and folk music, then accompanied them with futuristic synthesizer arrangements featuring ambient sounds and complex rhythms. The result was so strange, so unprecedented, that the album attracted little attention when first released. In recent years, however, a younger generation of musicians has embraced the stylistic experimentation of <i>Keyboard Fantasies</i>.</p><p><strong>Underlined sentence:</strong> Alternative R&amp;B musicians Blood Orange and Moses Sumney, among other contemporary recording artists, cite the album as an influence.</p>`,
+        prompt: `<p>Which choice best describes the function of the underlined sentence in the text as a whole?</p>`,
+        options: [
+          "It urges contemporary musicians to adopt the unique sound of Keyboard Fantasies.",
+          "It responds to criticism of Keyboard Fantasies by some younger musicians.",
+          "It offers examples of younger musicians whose work has been impacted by Keyboard Fantasies.",
+          "It contrasts Keyboard Fantasies with the recordings of two younger musicians."
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "8",
+        passage: `<p>A number of Indigenous politicians have been elected to the United States Congress since 2000 as members of the country’s two established political parties. In Canada and several Latin American countries, on the other hand, Indigenous people have formed their own political parties to advance candidates who will advocate for the interests of their communities. This movement has been particularly successful in Ecuador, where Guadalupe Llori, a member of the Indigenous party known as Pachakutik, was elected president of the National Assembly in 2021.</p>`,
+        prompt: `<p>Which choice best states the main purpose of the text?</p>`,
+        options: [
+          "To trace the history of an Indigenous political movement and speculate about its future development",
+          "To argue that Indigenous politicians in the United States should form their own political party",
+          "To highlight two approaches to achieving political representation for Indigenous people",
+          "To consider how Indigenous politicians in the United States have influenced Indigenous politicians in Canada and Latin America"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "9",
+        passage: `<p><strong>Text 1</strong></p><p>In a study of the benefits of having free time, Marissa Sharif found that the reported sense of life satisfaction tended to plateau when participants had two hours of free time per day and actually began to fall when they had five hours of free time per day. After further research, Sharif concluded that this dip in life satisfaction mainly occurred when individuals spent all their free time unproductively, such as by watching TV or playing games.</p><p><strong>Text 2</strong></p><p>Psychologist James Maddux cautions against suggesting an ideal amount of free time. The human desire for both free time and productivity is universal, but Maddux asserts that individuals have unique needs for life satisfaction. Furthermore, he points out that there is no objective definition for what constitutes productivity; reading a book might be considered a productive activity by some, but idleness by others.</p>`,
+        prompt: `<p>Based on the texts, how would Maddux (Text 2) most likely respond to the conclusion Sharif (Text 1) reached after further research?</p>`,
+        options: [
+          "By acknowledging that free time is more likely to enhance life satisfaction when it is spent productively than when it is spent unproductively",
+          "By challenging the reasoning in Text 1, as it has not been proved that productivity commonly contributes to individuals’ life satisfaction",
+          "By warning against making an overly broad assumption, as there is no clear consensus in distinguishing between productive and unproductive activities",
+          "By claiming that the specific activities named in Text 1 are actually examples of productive activities rather than unproductive ones"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "10",
+        passage: `<p>Xin Wang and colleagues have discovered the earliest known example of a flower bud in a 164-million-year-old plant fossil in China. The researchers have named the new species <i>Florigerminis jurassica</i>. They believe that the discovery pushes the emergence of flowering plants, or angiosperms, back to the Jurassic period, which occurred between 145 million and 201 million years ago.</p>`,
+        prompt: `<p>According to the text, how old was the fossil that Wang and colleagues discovered?</p>`,
+        options: [
+          "150 million years old",
+          "145 million years old",
+          "164 million years old",
+          "201 million years old"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "11",
+        passage: `<p>Modern dog breeds are largely the result of 160 years of owners crossbreeding certain dogs in order to select for particular physical appearances. Owners often say that some breeds are also more likely than others to have particular personality traits—basset hounds are affectionate; boxers are easy to train—but Kathleen Morrill and colleagues found through a combination of owner surveys and DNA sequencing of 2,000 dogs that while physical traits are predictably heritable among purebred dogs, behavior varies widely among dogs of the same breed.</p>`,
+        prompt: `<p>Which choice best states the main idea of the text?</p>`,
+        options: [
+          "Dog breeds would not exist without many years of human intervention in dogs’ reproduction.",
+          "Research fails to confirm a commonly held belief about dog breeds and behavior.",
+          "The dog breeds most popular among owners have often changed over the past 160 years.",
+          "A study of dog breeds is notable for its usage of both opinion surveys and DNA sequencing."
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "12",
+        passage: `<p>Paleontologist Lucas E. Fiorelli and colleagues have reported the discovery at a mine in Brazil of several egg clutches, partially preserved single eggs, and egg shells from the Late Cretaceous period. The researchers have concluded that the area was once a nesting and breeding site for titanosaurs, a group of sauropod dinosaurs. The finding is significant given the previous lack of known nesting sites in northern regions of South America, which led many paleontologists to assume that titanosaurs migrated south to lay eggs.</p>`,
+        prompt: `<p>What does the text most strongly suggest about the site discovered by the researchers?</p>`,
+        options: [
+          "It is the earliest known example of a titanosaur nesting and breeding site.",
+          "It was very difficult to excavate given that it was discovered in a mine.",
+          "It may have been occupied by other sauropods in addition to titanosaurs.",
+          "It is farther north than any other nesting site discovered in South America."
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "13",
+        passage: `<p><strong>Attendance and Cost of Hosting for Past Four US World's Fairs</strong></p>
+        <table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">World's fair</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Cost</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Visitors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Century 21 Exposition (1962)</td><td style="border:1px solid #ccc; padding:8px;">$47 million</td><td style="border:1px solid #ccc; padding:8px;">9.60 million</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">HemisFair '68</td><td style="border:1px solid #ccc; padding:8px;">$156 million</td><td style="border:1px solid #ccc; padding:8px;">6.40 million</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">1984 World's Fair</td><td style="border:1px solid #ccc; padding:8px;">$350 million</td><td style="border:1px solid #ccc; padding:8px;">7.35 million</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Expo '74</td><td style="border:1px solid #ccc; padding:8px;">$78 million</td><td style="border:1px solid #ccc; padding:8px;">5.60 million</td></tr>
+          </tbody>
+        </table>
+        <p>Huge international exhibitions known as world's fairs have been held since 1851, but the United States hasn't hosted one since 1984. Architecture expert Mina Chow argues that this is because some people think the events are too expensive and not popular enough. For example, the 1984 World's Fair cost $350 million and had only ______.</p>`,
+        prompt: `<p>Which choice most effectively uses data from the table to complete the example?</p>`,
+        options: [
+          "7.35 million visitors",
+          "9.60 million visitors",
+          "6.40 million visitors",
+          "5.60 million visitors"
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "14",
+        passage: `<p><strong>Sample of Food Items from Gemini Mission Menus</strong></p>
+        <table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Food item</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Day</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Meal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Sugar cookie cubes</td><td style="border:1px solid #ccc; padding:8px;">1</td><td style="border:1px solid #ccc; padding:8px;">B</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Chicken and vegetables</td><td style="border:1px solid #ccc; padding:8px;">2</td><td style="border:1px solid #ccc; padding:8px;">B</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Shrimp cocktail</td><td style="border:1px solid #ccc; padding:8px;">4</td><td style="border:1px solid #ccc; padding:8px;">C</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Hot cocoa</td><td style="border:1px solid #ccc; padding:8px;">3</td><td style="border:1px solid #ccc; padding:8px;">A</td></tr>
+          </tbody>
+        </table>
+        <p>To make sure they got the nutrition they needed while in space, the astronauts of NASA’s Gemini missions were given menus for three meals a day (meals A, B, and C) on a four-day rotating schedule. Looking at the sample of food items from these menus, a student notes that on day 1, the menu included ______.</p>`,
+        prompt: `<p>Which choice most effectively uses data from the table to complete the statement?</p>`,
+        options: [
+          "shrimp cocktail for meal B",
+          "hot cocoa for meal C",
+          "sugar cookie cubes for meal B",
+          "chicken and vegetables for meal A"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "15",
+        passage: `<p><i>An Ideal Husband</i> is an 1895 play by Oscar Wilde. In the play, which is a satire, Wilde suggests that a character named Lady Gertrude Chiltern is perceived as both extremely virtuous and unforgiving, as is evident when another character says _____</p>`,
+        prompt: `<p>Which quotation from <i>An Ideal Husband</i> most effectively illustrates the claim?</p>`,
+        options: [
+          "“Lady Chiltern is a woman of the very highest principles, I am glad to say. I am a little too old now, myself, to trouble about setting a good example, but I always admire people who do.”",
+          "“Do you know, [Lady Chiltern], I don’t mind your talking morality a bit. Morality is simply the attitude we adopt towards people whom we personally dislike.”",
+          "“[Lady Chiltern] does not know what weakness or temptation is. I am of clay like other men. She stands apart as good women do—pitiless in her perfection—cold and stern and without mercy.”",
+          "“Lady Chiltern, you are a sensible woman, the most sensible woman in London, the most sensible woman I know.”"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "16",
+        passage: `<p><strong>Percentage of Available Eggs Eaten by Cane Toad Tadpoles</strong></p>
+        <table style="border-collapse:collapse; width:100%; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Species</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">% eaten</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Native to Australia</th>
+              <th style="border:1px solid #ccc; padding:8px; text-align:left;">Produces bufadienolide</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Little red tree frog</td><td style="border:1px solid #ccc; padding:8px;">1%</td><td style="border:1px solid #ccc; padding:8px;">yes</td><td style="border:1px solid #ccc; padding:8px;">no</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Cane toad</td><td style="border:1px solid #ccc; padding:8px;">90%</td><td style="border:1px solid #ccc; padding:8px;">no</td><td style="border:1px solid #ccc; padding:8px;">yes</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Short-footed frog</td><td style="border:1px solid #ccc; padding:8px;">7%</td><td style="border:1px solid #ccc; padding:8px;">yes</td><td style="border:1px solid #ccc; padding:8px;">no</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Striped burrowing frog</td><td style="border:1px solid #ccc; padding:8px;">10%</td><td style="border:1px solid #ccc; padding:8px;">yes</td><td style="border:1px solid #ccc; padding:8px;">no</td></tr>
+            <tr><td style="border:1px solid #ccc; padding:8px;">Dainty green tree frog</td><td style="border:1px solid #ccc; padding:8px;">1%</td><td style="border:1px solid #ccc; padding:8px;">yes</td><td style="border:1px solid #ccc; padding:8px;">no</td></tr>
+          </tbody>
+        </table>
+        <p>Native to Latin America, the cane toad was introduced to Australia in the 1930s. In recent decades, tadpoles in the Australian population have been shown to consume eggs of their own species. A 2022 study showed that when presented with cane toad eggs as well as eggs of native Australian amphibians, cane toad tadpoles disproportionately consumed eggs of their own species. This behavior results from their attraction to bufadienolide, a chemical produced by the eggs of cane toads but not by the eggs of native amphibians. However, using data from this study, a student wishes to argue that the presence of bufadienolide doesn’t entirely explain the cane toad tadpoles’ preference for certain eggs over others.</p>`,
+        prompt: `<p>Which choice best describes data from the table that support the student’s argument?</p>`,
+        options: [
+          "The tadpoles consumed a higher percentage of the striped burrowing frog eggs than they did of the eggs of the dainty green tree frog.",
+          "The tadpoles left a certain percentage of the eggs of each of the five species unharmed, thus ultimately allowing them to hatch.",
+          "The tadpoles consumed a lower percentage of the short-footed frog eggs than they did of the eggs of their own species.",
+          "The tadpoles consumed the same percentage of the dainty green tree frog eggs as they did of the little red tree frog eggs."
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "17",
+        passage: `<p>The Intertropical Convergence Zone (ITCZ), a band of clouds that encircles Earth in the tropics and is a major rainfall source, shifts position in response to temperature variations across Earth’s hemispheres. Data from Huagapo Cave in Peru suggest the ITCZ shifted south during the Little Ice Age (circa 1300–1850), but a shift as far into South America as Huagapo should have led to dry conditions in Central America, which is inconsistent with climate models. To resolve the issue, geologist Yemane Asmerom and colleagues collected data from Yok Balum Cave in Central America and compared them with the Huagapo data. They concluded that during the Little Ice Age, the ITCZ may have expanded northward and southward rather than simply shifted.</p>`,
+        prompt: `<p>Which finding from Asmerom and colleagues’ study, if true, would most directly support their conclusion?</p>`,
+        options: [
+          "Neither the Yok Balum data nor the Huagapo data show significant local variations in temperature during the Little Ice Age.",
+          "Both the Yok Balum data and the Huagapo data show increased temperatures and prolonged dry conditions during the Little Ice Age.",
+          "The Yok Balum data show prolonged dry conditions during the same portions of the Little Ice Age in which the Huagapo data show heightened levels of rainfall.",
+          "The Yok Balum data and the Huagapo data show strongly correlated patterns of high rainfall during the Little Ice Age."
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "18",
+        passage: `<p>Some businesses believe that when employees are interrupted while doing their work, they experience a decrease in energy and productivity. However, a team led by Harshad Puranik, who studies management, has found that interruptions by colleagues can have a social component that increases employees’ sense of belonging, resulting in greater job satisfaction that benefits employees and employers.</p>`,
+        prompt: `<p>Which choice most logically completes the text?</p>`,
+        options: [
+          "the interpersonal benefits of some interruptions in the workplace may offset the perceived negative effects.",
+          "in order to maximize productivity, employers should be willing to interrupt employees frequently throughout the day.",
+          "most employees avoid interrupting colleagues because they don’t appreciate being interrupted themselves.",
+          "in order to cultivate an ideal workplace environment, interruptions of work should be discouraged."
+        ],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "19",
+        passage: `<p>The US Geological Survey wants to map every human-made structure in the United States, and it is asking volunteers to help. Cassie Tammy Wang and Ashish D’Souza are just two of the many volunteer map editors who ______ to the project since it began in 2012.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["contribute", "will contribute", "have contributed", "will be contributing"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "20",
+        passage: `<p>Smaller than poppy seeds, tardigrades are tiny, but they are tough. These minuscule animals can survive for thirty years without food or water, and ______ can withstand extreme temperatures as low as minus 328 degrees and as high as 304 degrees Fahrenheit.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["that", "it", "they", "he"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "21",
+        passage: `<p>Emperor penguins don’t waddle out of the ocean. They launch themselves at such a high speed that they travel up to two meters before landing. How ______ A layer of microbubbles on their plumage reduces friction as the penguins speed to the surface.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: [
+          "they are able to move so fast!",
+          "are they able to move so fast.",
+          "they are able to move so fast.",
+          "are they able to move so fast?"
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "22",
+        passage: `<p>Before the Erie Canal was completed in 1825, transporting goods by wagon between New York City and the Midwest took up to forty-five days and cost one hundred dollars per ton. By linking the Hudson River to Lake ______ canal reduced transport time to nine days and cut costs to six dollars per ton.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["Erie; the", "Erie (the", "Erie, the", "Erie: the"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "23",
+        passage: `<p>Generations of mystery and horror ______ have been influenced by the dark, gothic stories of celebrated American author Edgar Allan Poe (1809–1849).</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["writers", "writers,", "writers—", "writers;"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "24",
+        passage: `<p>Midway through her 1968 jazz album <i>A Monastic Trio</i>, Alice Coltrane switches instruments, swapping the piano for the harp. With the same fluid style that Coltrane was famous for on piano, she ________ her fingers across the harp strings and creates a radiant sound.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["sweep", "are sweeping", "were sweeping", "sweeps"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "25",
+        passage: `<p>Mathematician and meteorologist Edward Lorenz used the metaphor of the "butterfly effect" to explain how seemingly minor events can have major impacts on future weather. According to Lorenz's metaphor, the wind from a butterfly flapping ________ in Brazil might eventually grow into a storm elsewhere across the globe.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["its wings", "its wings’", "it’s wing’s", "it’s wings’"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "26",
+        passage: `<p>On sunny days, dark rooftops absorb solar energy and convert it to unwanted heat, raising the surrounding air ________ a light-colored covering to an existing dark roof, either by attaching prefabricated reflective sheets or spraying on a paint-like coating, helps combat this effect.</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: [
+          "temperature; by adding",
+          "temperature, adding",
+          "temperature. Adding",
+          "temperature by adding"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "27",
+        passage: `<p>The haiku-like poems of Tomas Tranströmer, which present nature- and dream-influenced images in crisp, spare language, have earned the Swedish poet praise from leading contemporary ________ them Nigerian American essayist and novelist Teju Cole, who has written that Tranströmer’s works “contain a luminous simplicity.”</p>`,
+        prompt: `<p>Which choice completes the text so that it conforms to the conventions of Standard English?</p>`,
+        options: ["writers. Among", "writers among", "writers; among", "writers, among"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "28",
+        passage: `<p>In studying whether jellyfish sleep, researchers Michael Abrams, Claire Bedbrook, and Ravi Nath attempted to answer three questions. ______ is there a period each day when the pulse rates of jellyfish decline? Second, do jellyfish respond more slowly to stimuli during that period? Finally, if prevented from sleeping, are jellyfish adversely affected?</p>`,
+        prompt: `<p>Which choice completes the text with the most logical transition?</p>`,
+        options: ["As a result,", "First,", "Additionally,", "However,"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "29",
+        passage: `<p>With her room-sized installation <i>The Interstitium</i>, Iranian American artist Laleh Mehran succeeded in creating a space that felt, as intended, both “familiar and distant.” ______ with a video screen placed at the far end of the coal slag-encrusted room, her installation was reminiscent of a typical movie theater—albeit one found in a subterranean coal mine.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical transition?</p>`,
+        options: ["Next,", "Nevertheless,", "Indeed,", "Instead,"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "30",
+        passage: `<p>In response to adverse environmental conditions, many plants produce abscisic acid (ABA), a stress hormone. ABA triggers a slowdown in the biological processes of most plants. ______ when the mustard plant <i>Schrenkiella parvula</i> produces ABA in response to an environmental stressor, the hormone triggers accelerated growth.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical transition?</p>`,
+        options: ["Moreover,", "In contrast,", "For example,", "Thus,"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "31",
+        passage: `<p>Historically, most conductors of major orchestras and opera companies have been European men, but a new, more diverse generation of artists is stepping up to the podium. Mexico’s Alondra de la Parra took over as conductor for the Queensland Symphony Orchestra in 2017, ______ and Colombia’s Lina Gonzalez-Granados did the same for the Los Angeles Opera in 2022.</p>`,
+        prompt: `<p>Which choice completes the text with the most logical transition?</p>`,
+        options: ["in addition,", "lastly,", "granted,", "for instance,"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "32",
+        passage: `<p><strong>Research Notes</strong></p><ul><li>Planetary scientists classify asteroids based on their composition.</li><li>C-type asteroids are composed primarily of carbon.</li><li>They account for roughly 75 percent of known asteroids.</li><li>S-type asteroids are primarily made up of silicate minerals.</li><li>They account for roughly 17 percent of known asteroids.</li></ul>`,
+        prompt: `<p>The student wants to emphasize a difference between C-type and S-type asteroids. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>`,
+        options: [
+          "Planetary scientists classify asteroids into types, two of which are the C-type and the S-type.",
+          "Planetary scientists consider an asteroid’s composition (such as whether the asteroid is composed mainly of silicate minerals or carbon) when classifying it.",
+          "Roughly 17 percent of known asteroids are classified as S-type asteroids; another percentage is classified as C-type asteroids.",
+          "C-type asteroids are mainly composed of carbon, whereas S-type asteroids are primarily made up of silicate minerals."
+        ],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "33",
+        passage: `<p><strong>Research Notes</strong></p><ul><li>A commodity chain is the series of links connecting the production and purchase of a commodity on the world market.</li><li>Chinese American anthropologist Anna Tsing studies the contemporary commodity chain of matsutake mushrooms.</li><li>At one end of the matsutake chain are mushroom pickers in Oregon.</li><li>At the other end are wealthy consumers who buy the costly matsutake in Japan.</li><li>According to Tsing, “Japanese traders began importing matsutake in the 1980s, when the scarcity of matsutake in Japan first became clear.”</li></ul>`,
+        prompt: `<p>The student wants to provide an overview of the matsutake commodity chain. Which choice most effectively uses relevant information from the notes to accomplish this goal?</p>`,
+        options: [
+          "The contemporary matsutake commodity chain has its origins in the 1980s when, according to Tsing, “the scarcity of matsutake in Japan first became clear.”",
+          "Commodity chains include the linked production and purchase of commodities, such as the matsutake mushroom, on the world market.",
+          "Decades after the Japanese import of matsutake began, a commodity chain now links matsutake pickers in Oregon with wealthy consumers of the costly mushrooms in Japan.",
+          "Wealthy consumers who buy the costly mushrooms in Japan are at one end of the matsutake commodity chain."
+        ],
+        correctIndex: "C"
+      }
+    ]
+  },
+  {
+    id: "MATH",
+    title: "Math",
+    subtitle: "27 Questions",
+    durationSec: 70 * 60,
+    calculatorAllowed: true,
+    items: [
+      {
+        type: "MC",
+        number: "1",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/4e22a5fc-5fce-419d-ba36-06f5abcf27d7.png" alt="Box plot"></div><p>The box plot summarizes 15 data values.</p>`,
+        prompt: `<p>What is the median of this data set?</p>`,
+        options: ["2", "3", "5", "8"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "2",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/b03c06fd-8e1c-4db2-9716-83440ab8740c.png" alt="Graph"></div>`,
+        prompt: `<p>What is the x-intercept of the graph shown?</p>`,
+        options: ["\\((-5, 0)\\)", "\\((5, 0)\\)", "\\((-4, 0)\\)", "\\((4, 0)\\)"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "3",
+        passage: `<p>Henry receives a $60.00 gift card to pay for movies online.</p><ul><li>He buys 3 movies for $7.50 each.</li><li>He then spends the rest on rentals costing $1.50 each.</li></ul>`,
+        prompt: `<p>How many movies can Henry rent?</p>`,
+        options: ["10", "25", "35", "40"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "4",
+        passage: `<p>\\(x = 49\\)</p><p>\\(y = \\sqrt{x} + 9\\)</p>`,
+        prompt: `<p>The graphs of the given equations intersect at the point \\((x, y)\\) in the \\(xy\\)-plane. What is the value of \\(y\\)?</p>`,
+        options: ["16", "40", "81", "130"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "5",
+        passage: `<p>A cherry pitting machine pits 12 pounds of cherries in 3 minutes.</p>`,
+        prompt: `<p>At this rate, how many minutes does it take the machine to pit 96 pounds of cherries?</p>`,
+        options: ["8", "15", "24", "36"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "6",
+        passage: `<p>\\(2x = 12\\)</p>`,
+        prompt: `<p>What is the value of \\(9x\\)?</p>`,
+        options: ["27", "36", "54", "108"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "7",
+        passage: `<p>Line \\(k\\) is defined by \\(y = \\tfrac{1}{4}x + 1\\).</p><p>Line \\(j\\) is parallel to line \\(k\\).</p>`,
+        prompt: `<p>What is the slope of line \\(j\\)?</p>`,
+        options: ["\\(-\\tfrac{1}{4}\\)", "\\(\\tfrac{1}{4}\\)", "1", "4"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "8",
+        passage: `<p><strong>Given data set:</strong> 6, 6, 8, 8, 10, 21</p>`,
+        prompt: `<p>Which of the following data sets has the same median as the data set shown?</p>`,
+        options: [
+          "4, 6, 6, 6, 8, 8",
+          "6, 6, 8, 8, 10, 10",
+          "6, 8, 10, 10, 10, 12",
+          "8, 8, 10, 10, 21, 21"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "9",
+        passage: `<p>The length of the base of a certain parallelogram is 89% of the height of the parallelogram.</p>`,
+        prompt: `<p>Which expression represents the length of the base, where \\(h\\) is the height?</p>`,
+        options: ["\\(89h\\)", "\\(0.089h\\)", "\\(8.9h\\)", "\\(0.89h\\)"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "10",
+        passage: `<p>For a camping trip a group bought:</p><ul><li>\\(x\\) one-liter bottles of water</li><li>\\(y\\) three-liter bottles of water</li><li>Total water: 240 liters</li></ul>`,
+        prompt: `<p>Which equation represents this situation?</p>`,
+        options: ["\\(x + 3y = 240\\)", "\\(x + y = 240\\)", "\\(3x + 3y = 240\\)", "\\(3x + y = 240\\)"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "11",
+        passage: `<p>\\(y = -4x + 40\\)</p>`,
+        prompt: `<p>Which table gives three values of \\(x\\) and their corresponding values of \\(y\\)?</p>`,
+        options: [
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">y</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">-4</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">-8</td></tr></table>`,
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">y</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">40</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">44</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">48</td></tr></table>`,
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">y</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">40</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">36</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">32</td></tr></table>`,
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">y</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">4</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">8</td></tr></table>`
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "12",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/835e7e4c-e6e0-45a0-b232-875a7a468762.png" alt="Inequality graph"></div><p>The shaded region shown represents solutions to an inequality.</p>`,
+        prompt: `<p>Which ordered pair \\((x, y)\\) is a solution to this inequality?</p>`,
+        options: ["(0, -4)", "(0, 4)", "(-4, 0)", "(4, 0)"],
+        correctIndex: "D"
+      },
+      {
+        type: "MC",
+        number: "13",
+        passage: `<p>In triangle \\(JKL\\), the measures of \\(\\angle K\\) and \\(\\angle L\\) are each \\(48^\\circ\\).</p>`,
+        prompt: `<p>What is the measure of \\(\\angle J\\), in degrees?</p>`,
+        options: ["84", "86", "96", "132"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "14",
+        passage: `<p>System of equations:</p><p>\\(y = x^2 + 14x + 48\\)</p><p>\\(x + 8 = 11\\)</p>`,
+        prompt: `<p>The solution to the system is \\((x, y)\\). What is the value of \\(y\\)?</p>`,
+        options: ["81", "95", "99", "105"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "15",
+        passage: `<p>A cleaning service that cleans both offices and homes can clean at most 14 places per day.</p><p>Let \\(f\\) be the number of offices and \\(h\\) be the number of homes.</p>`,
+        prompt: `<p>Which inequality represents this situation?</p>`,
+        options: ["\\(f + h \\le 14\\)", "\\(f + h \\ge 14\\)", "\\(f - h \\le 14\\)", "\\(f - h \\ge 14\\)"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "16",
+        passage: `<p>Expression: \\(2x^2 + 38x + 10\\)</p>`,
+        prompt: `<p>Which expression is a factor of this polynomial?</p>`,
+        options: ["2", "5x", "38x", "2x^2"],
+        correctIndex: "A"
+      },
+      {
+        type: "MC",
+        number: "17",
+        passage: `<p>\\(40x + 20y = 160\\)</p><p>Here, \\(x\\) is the number of sweaters and \\(y\\) is the number of shirts that Yesenia purchased for $160.</p><p>Suppose Yesenia purchased 2 sweaters.</p>`,
+        prompt: `<p>How many shirts did she purchase?</p>`,
+        options: ["3", "4", "8", "40"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "18",
+        passage: `<p>\\(y = 0.25x^2 - 7.5x + 90.25\\)</p><p>The equation gives the estimated stock price \\(y\\), in dollars, for a certain company \\(x\\) days after a new product launched, where \\(0 \\le x \\le 20\\).</p>`,
+        prompt: `<p>Which statement is the best interpretation of \\((x, y) = (1, 83)\\) in this context?</p>`,
+        options: [
+          "The company’s estimated stock price increased $83 every day after the new product launched.",
+          "The company’s estimated stock price increased $1 every 83 days after the new product launched.",
+          "1 day after the new product launched, the company’s estimated stock price is $83.",
+          "83 days after the new product launched, the company’s estimated stock price is $1."
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "19",
+        passage: `<p>\\(f(x) = 39\\)</p>`,
+        prompt: `<p>For the given linear function \\(f\\), which table gives three values of \\(x\\) and their corresponding values of \\(f(x)\\)?</p>`,
+        options: [
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">f(x)</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr></table>`,
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">f(x)</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">39</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">39</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">39</td></tr></table>`,
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">f(x)</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">39</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">78</td></tr></table>`,
+          `<table style="border-collapse:collapse; width:100%;"><tr><th style="border:1px solid #ccc; padding:6px;">x</th><th style="border:1px solid #ccc; padding:6px;">f(x)</th></tr><tr><td style="border:1px solid #ccc; padding:6px;">0</td><td style="border:1px solid #ccc; padding:6px;">39</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">1</td><td style="border:1px solid #ccc; padding:6px;">0</td></tr><tr><td style="border:1px solid #ccc; padding:6px;">2</td><td style="border:1px solid #ccc; padding:6px;">-39</td></tr></table>`
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "20",
+        passage: `<p>A triangular prism has:</p><ul><li>height = 8 cm</li><li>volume = 216 \\(\\text{cm}^3\\)</li></ul><p>The volume of a triangular prism is \\(Bh\\), where \\(B\\) is the area of the base and \\(h\\) is the height.</p>`,
+        prompt: `<p>What is the area of the base, in \\(\\text{cm}^2\\)?</p>`,
+        options: ["24", "27", "32", "54"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "21",
+        passage: `<div class="q-media-left"><img class="q-img-sm" src="https://assets.thrivingscholars.com/images/tmua/cff0864b-2689-4cf2-bc90-fccc85aee821.png" alt="Momentum graph"></div><p>The graph shows the momentum \\(y\\), in newton-seconds, of an object \\(x\\) seconds after the object started moving, for \\(0 \\le x \\le 8\\).</p>`,
+        prompt: `<p>What is the average rate of change, in newton-seconds per second, in the momentum of the object from \\(x = 2\\) to \\(x = 6\\)?</p>`,
+        options: ["\\(-\\tfrac{1}{2}\\)", "0", "\\(\\tfrac{1}{2}\\)", "2"],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "22",
+        passage: `<p>One equation in a system is:</p><p>\\(-15x + 25y = 65\\)</p><p>The system has infinitely many solutions.</p>`,
+        prompt: `<p>Which of the following could be the second equation in the system?</p>`,
+        options: [
+          "\\(12x + 20y = 52\\)",
+          "\\(12x + 20y = -52\\)",
+          "\\(-12x + 20y = 52\\)",
+          "\\(-12x + 20y = -52\\)"
+        ],
+        correctIndex: "C"
+      },
+      {
+        type: "MC",
+        number: "23",
+        passage: `<p>A bus completed a 160-mile trip in 4 hours.</p><ul><li>Highway speed: 55 mph</li><li>Local-road speed: 25 mph</li><li>\\(x\\) = time on highway</li><li>\\(y\\) = time on local roads</li></ul>`,
+        prompt: `<p>Which system of equations represents this situation?</p>`,
+        options: [
+          "\\(55x + 25y = 4\\)<br>\\(x + y = 160\\)",
+          "\\(55x + 25y = 160\\)<br>\\(x + y = 4\\)",
+          "\\(25x + 55y = 4\\)<br>\\(x + y = 160\\)",
+          "\\(25x + 55y = 160\\)<br>\\(x + y = 4\\)"
+        ],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "24",
+        passage: `<p>Quadrilateral P'Q'R'S' is similar to quadrilateral PQRS, where P, Q, R, and S correspond to P', Q', R', and S', respectively.</p><ul><li>\\(\\angle P = 30^\\circ\\)</li><li>\\(\\angle Q = 50^\\circ\\)</li><li>\\(\\angle R = 70^\\circ\\)</li><li>Each side of P'Q'R'S' is 3 times the corresponding side of PQRS.</li></ul>`,
+        prompt: `<p>What is the measure of angle \\(P'\\)?</p>`,
+        options: ["\\(10^\\circ\\)", "\\(30^\\circ\\)", "\\(40^\\circ\\)", "\\(90^\\circ\\)"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "25",
+        passage: `<p>\\(f(x) = 2x + 244\\)</p><p>The function \\(f\\) represents the perimeter, in centimeters, of a rectangle with length \\(x\\) cm and a fixed width.</p>`,
+        prompt: `<p>What is the width of the rectangle, in centimeters?</p>`,
+        options: ["2", "122", "244", "488"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "26",
+        passage: `<p>The functions \\(f\\) and \\(g\\) are defined for \\(x \\ge 0\\):</p><p>I. \\(f(x)=33(0.4)^{x+3}\\)</p><p>II. \\(g(x)=33(0.16)(0.4)^{x-2}\\)</p>`,
+        prompt: `<p>Which of the following equations displays, as a constant or coefficient, the maximum value of the function it defines, where \\(x \\ge 0\\)?</p>`,
+        options: ["I only", "II only", "I and II", "Neither I nor II"],
+        correctIndex: "B"
+      },
+      {
+        type: "MC",
+        number: "27",
+        passage: `<p>\\(64x^2-(16a+4b)x+ab=0\\)</p><p>In the equation above, \\(a\\) and \\(b\\) are positive constants. The sum of the solutions is \\(k(4a+b)\\), where \\(k\\) is a constant.</p>`,
+        prompt: `<p>What is the value of \\(k\\)?</p>`,
+        options: ["\\(\\tfrac{1}{64}\\)", "\\(\\tfrac{1}{32}\\)", "\\(\\tfrac{1}{16}\\)", "\\(\\tfrac{1}{8}\\)"],
+        correctIndex: "C"
+      }
+    ]
+  }
+];
+
+/***********************
+ * STATE
+ ***********************/
+let currentSectionIndex = 0;
+let currentIndex = 0;
+let reviewFlags = [];
+let studentAnswers = {};
+let timer = null;
+let seconds = 0;
+let desmosCalculator = null;
+let studentName = "";
+let studentEmail = "";
+let testSession = "";
+let examStarted = false;
+let eliminateMode = false;
+let eliminateState = {};
+let emailSent = false;
+
+/***********************
+ * START EXAM
+ ***********************/
+function startExam() {
+  const nameInput = document.getElementById("student-name").value.trim();
+  const emailInput = document.getElementById("student-email").value.trim();
+  const sessionInput = document.getElementById("test-session").value;
+
+  if (!nameInput || !emailInput) {
+    alert("Please enter your name and email to begin.");
+    return;
+  }
+
+  if (!sections.length || sections.some(sec => !Array.isArray(sec.items) || sec.items.length === 0)) {
+    alert("Please paste your Reading and Math MCQ arrays into the code before starting the test.");
+    return;
+  }
+
+  studentName = nameInput;
+  studentEmail = emailInput;
+  testSession = sessionInput;
+  examStarted = true;
+
+  const header = document.querySelector(".header");
+  const footerBar = document.getElementById("footer-bar");
+  const mainContainer = document.getElementById("main-container");
+  const startScreen = document.getElementById("start-screen");
+  const timerEl = document.getElementById("timer");
+  const colorBarTop = document.getElementById("color-bar");
+  const colorBarBottom = document.getElementById("color-bar-bottom");
+
+  document.getElementById("footer-student-name").textContent = studentName;
+
+  if (startScreen) startScreen.classList.add("hidden");
+
+  if (header) header.classList.remove("hidden");
+  if (footerBar) footerBar.classList.remove("hidden");
+  if (colorBarTop) colorBarTop.classList.remove("hidden");
+  if (colorBarBottom) colorBarBottom.classList.remove("hidden");
+  if (mainContainer) mainContainer.classList.add("active");
+  if (timerEl) timerEl.style.display = "block";
+
+  startSection(0);
+}
+
+/***********************
+ * SECTION LOGIC
+ ***********************/
+function startSection(secIdx) {
+  currentSectionIndex = secIdx;
+  currentIndex = 0;
+
+  const sec = sections[secIdx];
+  reviewFlags = new Array(sec.items.length).fill(false);
+
+  document.getElementById("header-title").textContent = sec.title;
+  document.getElementById("calc-badge").classList.toggle("hidden", !sec.calculatorAllowed);
+
+  if (sec.calculatorAllowed) {
+    document.getElementById("calculator-icon").style.display = "flex";
+  } else {
+    document.getElementById("calculator-icon").style.display = "none";
+    closeCalculator();
+  }
+
+  const finishBtn = document.getElementById("finish-section-btn");
+  finishBtn.textContent = (secIdx === sections.length - 1) ? "Finish Exam" : "Finish Section";
+
+  buildNavigator();
+  loadQuestion(0);
+
+  if (timer) clearInterval(timer);
+  seconds = sec.durationSec;
+  updateTimerDisplay();
+
+  timer = setInterval(() => {
+    seconds--;
+    updateTimerDisplay();
+    if (seconds < 0) {
+      clearInterval(timer);
+      finishCurrentSection();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const min = Math.floor(Math.max(0, seconds) / 60);
+  const sec = Math.max(0, seconds) % 60;
+  document.getElementById("timer").textContent =
+    `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+/***********************
+ * QUESTION RENDERING
+ ***********************/
+document.getElementById("eliminateBtn").addEventListener("click", function () {
+  eliminateMode = !eliminateMode;
+  this.classList.toggle("active", eliminateMode);
+  const rightPanel = document.querySelector(".right-panel");
+  rightPanel.classList.toggle("elimination-active", eliminateMode);
+});
+
+function loadQuestion(i) {
+  const section = sections[currentSectionIndex];
+  const item = section.items[i];
+  currentIndex = i;
+
+  document.getElementById("passage").innerHTML = item.passage || "";
+  const box = document.getElementById("question-box");
+  box.innerHTML = "";
+  document.getElementById("q-number").textContent = i + 1;
+  document.getElementById("mark-review").checked = reviewFlags[i];
+
+  const bookmarkIcon = document.querySelector(".bookmark-icon");
+  const markBox = document.getElementById("mark-review");
+  if (markBox.checked) {
+    bookmarkIcon.classList.remove("fa-regular");
+    bookmarkIcon.classList.add("fa-solid");
+    bookmarkIcon.style.color = "#CF0000";
+  } else {
+    bookmarkIcon.classList.remove("fa-solid");
+    bookmarkIcon.classList.add("fa-regular");
+    bookmarkIcon.style.color = "#000";
+  }
+
+  renderMC(item, box, section, i);
+
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+
+  updateNavigator();
+  updateNavButtons();
+  updateNavigatorButton();
+}
+
+function renderMC(item, container, section, idx) {
+  const name = `s${section.id}-q${idx}`;
+  const saved = studentAnswers[name];
+
+  const promptHTML = document.createElement("div");
+  promptHTML.innerHTML = item.prompt || "";
+
+  const optionsContainer = document.createElement("div");
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  item.options.forEach((opt, k) => {
+    const label = document.createElement("label");
+    label.className = "option-label";
+    label.setAttribute("data-choice", letters[k]);
+    if (saved === k) label.classList.add("active");
+
+    const circle = document.createElement("div");
+    circle.className = "option-circle";
+    circle.textContent = letters[k];
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = k;
+    if (saved === k) input.checked = true;
+
+    const textSpan = document.createElement("span");
+    textSpan.className = "option-text";
+    textSpan.innerHTML = opt;
+
+    const strikeBtn = document.createElement("button");
+    strikeBtn.className = "strike-toggle";
+    strikeBtn.textContent = "⊘";
+    strikeBtn.title = "Eliminate Option";
+
+    label.addEventListener("click", (event) => {
+      if (event.target.classList.contains("strike-toggle")) return;
+      optionsContainer.querySelectorAll(".option-label").forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      input.checked = true;
+      studentAnswers[name] = k;
+      updateNavigator();
+    });
+
+    strikeBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const sec = sections[currentSectionIndex];
+      const qKey = `s${sec.id}-q${idx}`;
+      if (!eliminateState[qKey]) eliminateState[qKey] = {};
+
+      const now = !label.classList.contains("struck");
+      label.classList.toggle("struck", now);
+      strikeBtn.classList.toggle("active", now);
+      eliminateState[qKey][letters[k]] = now;
+    });
+
+    label.appendChild(circle);
+    label.appendChild(input);
+    label.appendChild(textSpan);
+    label.appendChild(strikeBtn);
+    optionsContainer.appendChild(label);
+  });
+
+  promptHTML.appendChild(optionsContainer);
+  container.appendChild(promptHTML);
+
+  const sec = sections[currentSectionIndex];
+  const qKey = `s${sec.id}-q${idx}`;
+  const state = eliminateState[qKey] || {};
+  Object.keys(state).forEach(letter => {
+    const opt = optionsContainer.querySelector(`.option-label[data-choice="${letter}"]`);
+    if (opt && state[letter]) {
+      opt.classList.add("struck");
+      const btn = opt.querySelector(".strike-toggle");
+      btn.classList.add("active");
+    }
+  });
+}
+
+/***********************
+ * NAVIGATION WITHIN SECTION
+ ***********************/
+function prevQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex > 0) loadQuestion(currentIndex - 1);
+}
+
+function nextQuestion() {
+  const section = sections[currentSectionIndex];
+  if (currentIndex < section.items.length - 1) loadQuestion(currentIndex + 1);
+}
+
+function updateNavButtons() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("back-btn").disabled = currentIndex === 0;
+  document.getElementById("next-btn").disabled = currentIndex === section.items.length - 1;
+}
+
+function updateNavigatorButton() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-button").textContent = `Question ${currentIndex + 1} of ${section.items.length}`;
+}
+
+function openNavigator() {
+  const section = sections[currentSectionIndex];
+  document.getElementById("navigator-section-title").textContent = section.title;
+  document.getElementById("navigator-popup").style.display = "block";
+}
+
+function closeNavigator() {
+  document.getElementById("navigator-popup").style.display = "none";
+}
+
+function buildNavigator() {
+  const grid = document.getElementById("navigator-grid");
+  grid.innerHTML = "";
+  const section = sections[currentSectionIndex];
+
+  section.items.forEach((_, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = idx + 1;
+    btn.onclick = () => {
+      loadQuestion(idx);
+      closeNavigator();
+    };
+    grid.appendChild(btn);
+  });
+
+  updateNavigator();
+}
+
+function updateNavigator() {
+  const section = sections[currentSectionIndex];
+  const buttons = document.querySelectorAll("#navigator-grid button");
+
+  buttons.forEach((btn, idx) => {
+    const baseKey = `s${section.id}-q${idx}`;
+    const answered = studentAnswers[baseKey] !== undefined;
+    btn.classList.toggle("current", idx === currentIndex);
+    btn.classList.toggle("answered", answered && idx !== currentIndex);
+    btn.classList.toggle("review", reviewFlags[idx]);
+  });
+}
+
+function toggleBookmark(checkbox) {
+  const icon = checkbox.nextElementSibling;
+  icon.classList.toggle("fa-regular", !checkbox.checked);
+  icon.classList.toggle("fa-solid", checkbox.checked);
+  icon.style.color = checkbox.checked ? "#CF0000" : "#000";
+  reviewFlags[currentIndex] = checkbox.checked;
+  updateNavigator();
+}
+
+/***********************
+ * FINISH SECTION & NEXT
+ ***********************/
+function finishCurrentSection() {
+  if (timer) clearInterval(timer);
+
+  if (currentSectionIndex < sections.length - 1) {
+    document.getElementById("section-modal-title").textContent = "Section complete";
+    document.getElementById("section-modal-text").textContent =
+      "The next section will begin now. You cannot return to this section.";
+    document.getElementById("section-modal").style.display = "flex";
+  } else {
+    showFinalReport();
+  }
+}
+
+function closeSectionModal() {
+  document.getElementById("section-modal").style.display = "none";
+
+  if (!timer) {
+    timer = setInterval(() => {
+      seconds--;
+      updateTimerDisplay();
+      if (seconds < 0) {
+        clearInterval(timer);
+        finishCurrentSection();
+      }
+    }, 1000);
+  }
+}
+
+function goToNextSection() {
+  document.getElementById("section-modal").style.display = "none";
+  const nextIdx = currentSectionIndex + 1;
+  if (nextIdx < sections.length) {
+    startSection(nextIdx);
+  }
+}
+
+/***********************
+ * CALCULATOR POPUP
+ ***********************/
+function openCalculator() {
+  const section = sections[currentSectionIndex];
+  if (!section || !section.calculatorAllowed) return;
+
+  document.getElementById("calculator-popup").style.display = "block";
+
+  if (!desmosCalculator) {
+    const elt = document.getElementById("calculator");
+    desmosCalculator = Desmos.GraphingCalculator(elt, {
+      expressions: true,
+      keypad: true,
+      settingsMenu: false,
+      zoomButtons: true,
+      expressionsTopbar: false,
+      border: false
+    });
+  }
+}
+
+function closeCalculator() {
+  document.getElementById("calculator-popup").style.display = "none";
+}
+
+(function makeDraggable() {
+  const popup = document.getElementById("calculator-popup");
+  const handle = document.getElementById("calculator-drag-handle");
+  let offsetX = 0, offsetY = 0, isDown = false;
+
+  handle.addEventListener("mousedown", (e) => {
+    isDown = true;
+    offsetX = e.clientX - popup.offsetLeft;
+    offsetY = e.clientY - popup.offsetTop;
+    document.body.style.userSelect = "none";
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDown = false;
+    document.body.style.userSelect = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    popup.style.left = `${e.clientX - offsetX}px`;
+    popup.style.top = `${e.clientY - offsetY}px`;
+  });
+})();
+
+/***********************
+ * SCORE HELPERS
+ ***********************/
+function roundToNearest10(n) {
+  return Math.round(n / 10) * 10;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function predictSectionScore(correct, total) {
+  if (!total) return 200;
+  const rawScore = 200 + (correct / total) * 600;
+  return clamp(roundToNearest10(rawScore), 200, 800);
+}
+
+/***********************
+ * FINAL REPORT
+ ***********************/
+function showFinalReport() {
+  if (timer) clearInterval(timer);
+
+  document.getElementById("main-container").classList.remove("active");
+  document.getElementById("footer-bar").classList.add("hidden");
+  document.getElementById("report-container").classList.remove("hidden");
+  document.getElementById("header-title").textContent = "SAT Diagnostic Test — Score Report";
+  document.getElementById("calc-badge").classList.add("hidden");
+  document.getElementById("calculator-icon").style.display = "none";
+  document.getElementById("timer").style.display = "none";
+
+  const letters = ["A","B","C","D","E","F","G","H"];
+
+  let readingCorrect = 0;
+  let readingTotal = 0;
+  let mathCorrect = 0;
+  let mathTotal = 0;
+  const rows = [];
+
+  sections.forEach(sec => {
+    sec.items.forEach((item, idx) => {
+      if (item.type !== "MC") return;
+
+      const key = `s${sec.id}-q${idx}`;
+      const userAns = studentAnswers[key];
+
+      let correctIdx = item.correctIndex;
+      if (typeof correctIdx === "string") {
+        correctIdx = letters.indexOf(correctIdx);
+      }
+
+      const your = (userAns !== undefined) ? letters[userAns] : "–";
+      const corr = letters[correctIdx];
+      const isCorrect = userAns === correctIdx;
+
+      if (sec.id === "READING") {
+        readingTotal++;
+        if (isCorrect) readingCorrect++;
+      } else if (sec.id === "MATH") {
+        mathTotal++;
+        if (isCorrect) mathCorrect++;
+      }
+
+      rows.push({
+        section: sec.id,
+        q: idx + 1,
+        your,
+        correct: corr,
+        status: isCorrect ? "✅" : "❌"
+      });
+    });
+  });
+
+  const readingScore = predictSectionScore(readingCorrect, readingTotal);
+  const mathScore = predictSectionScore(mathCorrect, mathTotal);
+  const satScore = clamp(readingScore + mathScore, 400, 1600);
+
+  const report = document.getElementById("report-container");
+  report.innerHTML = `
+    <h1>SAT Diagnostic Test — Completed</h1>
+    <p><strong>Name:</strong> ${studentName} &nbsp; | &nbsp; <strong>Email:</strong> ${studentEmail} &nbsp; | &nbsp; <strong>Session:</strong> ${testSession}</p>
+    <p><strong>Reading:</strong> ${readingCorrect} / ${readingTotal} correct → Predicted section score: ${readingScore} / 800</p>
+    <p><strong>Math:</strong> ${mathCorrect} / ${mathTotal} correct → Predicted section score: ${mathScore} / 800</p>
+    <p><strong>Predicted SAT Score:</strong> ${satScore} / 1600</p>
+    <p style="font-size:13px; color:#666;">This is a simple diagnostic estimate based on raw performance in this test, not an official College Board conversion.</p>
+
+    <div class="score-container">
+      <svg viewBox="0 0 230 230">
+        <path class="arc" d="M 65 50 A 85 85 0 0 0 65 180" />
+        <path class="arc" d="M 165 50 A 85 85 0 0 1 165 180" />
+        <defs>
+          <path id="curveTop" d="M 70 50 A 80 80 0 0 1 160 50" />
+        </defs>
+        <text class="label">
+          <textPath href="#curveTop" startOffset="50%" text-anchor="middle">SCORE</textPath>
+        </text>
+      </svg>
+      <div class="score" style="font-size:68px;">${satScore}</div>
+    </div>
+
+    <h2>Question Detail</h2>
+    <table>
+      <thead>
+        <tr><th>Section</th><th>Q#</th><th>Your Ans</th><th>Correct</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td>${r.section}</td>
+            <td>${r.q}</td>
+            <td>${r.your}</td>
+            <td>${r.correct}</td>
+            <td>${r.status}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+
+    ${solutionPDF ? `
+      <h3>📄 View Full Solutions</h3>
+      <iframe src="${solutionPDF}" width="100%" height="480px" style="border:1px solid #ccc;"></iframe>
+    ` : ""}
+  `;
+
+  if (!emailSent && typeof emailjs !== "undefined" && studentEmail) {
+    emailSent = true;
+
+    const timestamp = new Date().toLocaleString();
+    const readingAnalysisText = rows
+      .filter(r => r.section === "READING")
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    const mathAnalysisText = rows
+      .filter(r => r.section === "MATH")
+      .map(r => `Sec ${r.section} Q${r.q} Correct: ${r.correct} Yours: ${r.your} Status: ${r.status}`)
+      .join("\n");
+
+    emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
+      name: studentName,
+      test_title: "SAT Diagnostic Test",
+      to_email: studentEmail,
+      solution_link: solutionPDF,
+      session: testSession,
+      score: `SAT ${satScore}/1600 | Reading ${readingScore}/800 | Math ${mathScore}/800`,
+      timestamp: timestamp,
+      paper1: readingAnalysisText,
+      paper2: mathAnalysisText
+    }).then(() => {
+      console.log("✅ Email report sent successfully.");
+    }).catch(err => {
+      console.error("❌ Email send failed:", err);
+    });
+  }
+}
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("9jjn3yBHl6S88hITy");
+    })();
+  </script>
+
+</body>
+</html>

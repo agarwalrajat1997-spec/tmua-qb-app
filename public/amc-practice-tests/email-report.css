@@ -1,0 +1,53 @@
+.student-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 22px 0 10px;
+}
+
+.student-field {
+  display: grid;
+  gap: 7px;
+  color: #4f5159;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.student-field input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid #d9c6ad;
+  border-radius: 12px;
+  background: #fff;
+  color: #1b1c20;
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: 650;
+}
+
+.student-field input:focus {
+  border-color: #f28a12;
+  outline: 3px solid rgba(242, 138, 18, 0.18);
+}
+
+.report-note,
+.email-status {
+  color: #6b6d76;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.email-status {
+  border: 1px solid #eadfce;
+  border-radius: 12px;
+  background: #fffaf2;
+  padding: 10px 12px;
+}
+
+@media (max-width: 620px) {
+  .student-fields {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,53 @@
+﻿import { NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+
+function supabaseServer() {
+  const cookieStore = cookies();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  return createServerClient(url, key, {
+    cookies: {
+      get(name: string) { return cookieStore.get(name)?.value; },
+      set(name: string, value: string, options: any) { cookieStore.set({ name, value, ...options }); },
+      remove(name: string, options: any) { cookieStore.set({ name, value: "", ...options }); },
+    },
+  });
+}
+
+export async function GET(req: Request) {
+  try {
+    const supabase = supabaseServer();
+
+    const { data: auth, error: authErr } = await supabase.auth.getUser();
+    if (authErr || !auth?.user) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const url = new URL(req.url);
+    const paper = String(url.searchParams.get("paper") || "").trim() || "1";
+
+    const { data, error } = await supabase
+      .from("qb_progress")
+      .select("paper,storage_key,storage_value,updated_at")
+      .eq("user_id", auth.user.id)
+      .eq("product", "tmua-question-bank")
+      .eq("paper", paper);
+
+    if (error) {
+      return NextResponse.json(
+        { error: "Supabase load failed", extra: { message: error.message } },
+        { status: 500 }
+      );
+    }
+
+    const progress: Record<string, any> = {};
+    for (const row of data || []) {
+      progress[row.storage_key] = row.storage_value;
+    }
+
+    return NextResponse.json({ ok: true, product: "tmua-question-bank", paper, progress });
+  } catch (e: any) {
+    return NextResponse.json({ error: e?.message || "Server error" }, { status: 500 });
+  }
+}

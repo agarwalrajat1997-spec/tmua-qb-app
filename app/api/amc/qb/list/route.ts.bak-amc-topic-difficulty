@@ -1,0 +1,130 @@
+﻿import { adminClient, json, requireAMCAccess } from "../_server";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+function norm(v: unknown) {
+  return String(v || "")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "");
+}
+
+function examFromPaper(raw: string | null) {
+  const s = norm(raw || "AMC 8");
+
+  if (s.includes("AMC12") || s.includes("12")) {
+    return { paper: "AMC 12", column: "amc_12" };
+  }
+
+  if (s.includes("AMC10") || s.includes("10")) {
+    return { paper: "AMC 10", column: "amc_10" };
+  }
+
+  return { paper: "AMC 8", column: "amc_8" };
+}
+
+
+function tsSortKey(value: unknown) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/^\d+[_\-\s]*/, "")
+    .trim();
+}
+
+function tsDifficultyValue(value: unknown) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 999;
+}
+
+function tsDefaultSort(a: any, b: any) {
+  const topicA = tsSortKey(a.topic);
+  const topicB = tsSortKey(b.topic);
+
+  if (topicA !== topicB) {
+    return topicA.localeCompare(topicB);
+  }
+
+  const diffA = tsDifficultyValue(a.difficulty);
+  const diffB = tsDifficultyValue(b.difficulty);
+
+  if (diffA !== diffB) {
+    return diffA - diffB;
+  }
+
+  const orderA = Number(a.display_order ?? a.original_index ?? 999999);
+  const orderB = Number(b.display_order ?? b.original_index ?? 999999);
+
+  return orderA - orderB;
+}
+
+export async function GET(req: Request) {
+  const access = await requireAMCAccess();
+  if (!access.ok) return access.response;
+
+  const { searchParams } = new URL(req.url);
+  const exam = examFromPaper(searchParams.get("paper") || searchParams.get("exam"));
+
+  const supabase = adminClient();
+
+  const { data, error } = await supabase
+    .from("amc_questions")
+    .select(`
+      qid,
+      display_order,
+      original_index,
+      kind,
+      topic,
+      subtopic,
+      difficulty,
+      tags,
+      amc_exams,
+      amc_categories,
+      amc_primary,
+      amc_8,
+      amc_10,
+      amc_12
+    `)
+    .eq("is_active", true)
+    .eq(exam.column, true)
+    .order("display_order", { ascending: true });
+
+  if (error) {
+    console.error("AMC list load failed:", error);
+    return json({ ok: false, error: error.message }, 500);
+  }
+
+  const sortedRows = [...(data || [])].sort(tsDefaultSort);
+
+  const cleaned = sortedRows.map((row: any, index: number) => ({
+    qid: row.qid,
+
+    // Sequential number inside the current AMC view.
+    // This is what the Navigator should show.
+    display_order: index + 1,
+    original_index: index + 1,
+    view_order: index + 1,
+
+    // Preserve original DB numbers for debugging if needed.
+    db_display_order: row.display_order,
+    db_original_index: row.original_index,
+
+    kind: row.kind,
+    paper: exam.paper,
+    topic: row.topic,
+    subtopic: row.subtopic,
+    difficulty: row.difficulty,
+    tags: row.tags,
+    amc_exams: row.amc_exams,
+    amc_categories: row.amc_categories,
+    amc_primary: row.amc_primary,
+  }));
+
+  return json({
+    ok: true,
+    paper: exam.paper,
+    total: cleaned.length,
+    questions: cleaned,
+    items: cleaned,
+  });
+}
+

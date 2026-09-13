@@ -1,0 +1,143 @@
+{
+  "model": "TMUA Preparation Rank V1",
+  "model_version": "tmua-preparation-rank-v1-20260810",
+  "status": "locked",
+  "purpose": "Rank a student's preparation progress among the current active TMUA cohort without changing or relabelling the TMUA Predictor V1 score.",
+  "separation": {
+    "predictor_is_separate": true,
+    "preparation_rank_is_not_tmua_score": true,
+    "preparation_rank_is_not_candidate_percentile": true,
+    "preparation_rank_must_not_be_called_tmua_rank": true,
+    "predictor_v1_must_not_be_modified_by_rank_model": true
+  },
+  "score": {
+    "scale_min": 0,
+    "scale_max": 100,
+    "rank_uses_unrounded_score": true,
+    "weights": {
+      "predicted_tmua_performance": 0.70,
+      "syllabus_breadth": 0.10,
+      "evidence_depth": 0.08,
+      "recent_activity": 0.06,
+      "consistency": 0.03,
+      "recovery": 0.03
+    },
+    "performance": {
+      "formula": "clamp((predicted_tmua_score9 - 1) / 8, 0, 1)",
+      "missing_prediction_value": 0,
+      "fake_baseline_forbidden": true
+    },
+    "breadth": {
+      "test_formula": "min(1, broad_or_full_independent_test_families / 2)",
+      "qb_formula": "clamp(trusted_canonical_topic_coverage, 0, 1)",
+      "combined_formula": "1 - (1 - test_breadth) * (1 - qb_breadth)",
+      "test_families_must_be_predictor_eligible": true,
+      "qb_topics_are_server_canonical": true,
+      "qb_topic_denominator_matches_predictor_active_topic_definition": true
+    },
+    "evidence_depth": {
+      "test_formula": "min(1, predictor_test_family_weight / 2)",
+      "qb_formula": "min(1, trusted_unique_first_exposures / 150)",
+      "combined_formula": "1 - (1 - test_depth) * (1 - qb_depth)",
+      "retakes_do_not_create_independent_depth": true
+    },
+    "recent_activity": {
+      "window_days": 30,
+      "qb_formula": "min(1, distinct_canonical_qb_interactions_30d / 60)",
+      "test_formula": "min(1, independent_recognised_test_families_30d / 2)",
+      "combined_formula": "0.70 * qb_activity + 0.30 * test_activity",
+      "activity_is_separate_from_predictor_eligibility": true,
+      "predictor_ineligible_activity_may_count_as_activity": true,
+      "activity_alone_cannot_create_a_preparation_score": true
+    },
+    "consistency": {
+      "two_or_more_family_formula": "max(0, 1 - weighted_population_test_family_sd / 1.5)",
+      "fewer_than_two_with_genuine_evidence": 0.5,
+      "no_genuine_evidence": 0,
+      "sd_uses_predictor_v1_family_signals": true
+    },
+    "recovery": {
+      "uses_predictor_v1_trusted_recovery_definition": true,
+      "genuine_qb_evidence_required": true,
+      "no_wrong_first_opportunity_value": 0.5,
+      "no_genuine_qb_evidence_value": 0,
+      "minimum_recovery_delay_hours": 24
+    },
+    "genuine_preparation_evidence": {
+      "definition": "At least one predictor-eligible recognised test family OR at least one trusted predictor-eligible canonical QB first exposure.",
+      "zero_evidence_internal_score": 0,
+      "public_score_without_genuine_evidence": null,
+      "public_rank_without_genuine_evidence": null
+    },
+    "formula": "100 * (0.70 * P + 0.10 * B + 0.08 * D + 0.06 * A + 0.03 * C + 0.03 * R)"
+  },
+  "cohort": {
+    "window_days": 30,
+    "tmua_entitlement_required": true,
+    "active_if_any": [
+      "signed_in_within_30_days",
+      "recognised_tmua_test_activity_within_30_days",
+      "tmua_qb_interaction_within_30_days"
+    ],
+    "activity_window_definition": "event_time > as_of_time_minus_30_days AND event_time <= as_of_time",
+    "activity_does_not_require_predictor_eligibility": true,
+    "under_10_second_qb_interaction_can_count_as_active": true,
+    "under_10_second_qb_interaction_cannot_become_predictor_evidence": true,
+    "explicit_staff_internal_exclusion_required": true,
+    "email_heuristic_exclusion_forbidden": true,
+    "entitlement_and_staff_sources_resolved_in_phase_3c1": true
+  },
+  "ranking": {
+    "rank_eligibility": "active cohort member AND genuine preparation evidence",
+    "active_login_only_user_counts_in_cohort_denominator": true,
+    "active_login_only_user_receives_rank": false,
+    "ordering": "actual_preparation_score descending using unrounded score",
+    "tie_method": "competition",
+    "tie_example": [
+      1,
+      2,
+      2,
+      4
+    ],
+    "display_rounding_must_not_affect_rank": true,
+    "actual_active_cohort_size_is_factual": true,
+    "actual_preparation_rank_is_factual": true
+  },
+  "privacy": {
+    "student_default_read": [
+      "own_preparation_score",
+      "own_preparation_rank",
+      "active_cohort_size",
+      "own_component_summary"
+    ],
+    "other_student_uuid_exposure_forbidden": true,
+    "other_student_score_exposure_forbidden": true,
+    "named_leaderboard_requires_explicit_opt_in": true,
+    "public_population_percentile_claims_forbidden": true
+  },
+  "integrity": {
+    "actual_score_field": "actualPreparationScore",
+    "actual_rank_field": "actualPreparationRank",
+    "actual_cohort_field": "actualActiveCohortSize",
+    "display_multiplier_default": 1,
+    "non_unit_display_scaling_must_be_explicitly_labelled_scaled_or_indexed": true,
+    "scaled_values_must_not_replace_actual_values": true,
+    "fake_rank_forbidden": true,
+    "fake_cohort_size_forbidden": true,
+    "fake_preparation_score_forbidden": true
+  },
+  "future_persistence": {
+    "append_only": true,
+    "versioned_model_required": true,
+    "run_table_proposed_name": "tmua_preparation_rank_runs",
+    "snapshot_table_proposed_name": "tmua_preparation_rank_snapshots",
+    "no_schema_created_in_phase_3c0": true
+  },
+  "phase_3c0": {
+    "specification_only": true,
+    "database_changes": false,
+    "runtime_changes": false,
+    "dashboard_changes": false,
+    "production_deployment": false
+  }
+}

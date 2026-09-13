@@ -1,0 +1,2374 @@
+const questions = [
+  `
+<div class="question-number">Question 1</div>
+<p>
+  If
+  \\[
+  \\left|\\begin{matrix} a &amp; b \\\\ c &amp; d \\end{matrix}\\right|
+  = a\\cdot d - b\\cdot c,
+  \\]
+  what is the value of
+  \\[
+  \\left|\\begin{matrix} 3 &amp; 4 \\\\ 6 &amp; 8 \\end{matrix}\\right|\\,?
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q1" type="radio" value="A"/> \\(-2\\)
+  </label><br/>
+<label class="option">
+<input name="q1" type="radio" value="B"/> \\(-1\\)
+  </label><br/>
+<label class="option">
+<input name="q1" type="radio" value="C"/> \\(0\\)
+  </label><br/>
+<label class="option">
+<input name="q1" type="radio" value="D"/> \\(1\\)
+  </label><br/>
+<label class="option">
+<input name="q1" type="radio" value="E"/> \\(2\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 2</div>
+<p>
+  The stock price of a company was \\(\\$100\\) in \\(2005\\). It went up by \\(20\\%\\) in \\(2006\\).
+  However, due to the financial crisis, the stock price went down by \\(20\\%\\) in \\(2007\\).
+  What was the stock price at the end of \\(2007\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q2" type="radio" value="A"/> \\(\\$80\\)
+  </label><br/>
+<label class="option">
+<input name="q2" type="radio" value="B"/> \\(\\$96\\)
+  </label><br/>
+<label class="option">
+<input name="q2" type="radio" value="C"/> \\(\\$98\\)
+  </label><br/>
+<label class="option">
+<input name="q2" type="radio" value="D"/> \\(\\$100\\)
+  </label><br/>
+<label class="option">
+<input name="q2" type="radio" value="E"/> \\(\\$120\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 3</div>
+<p>
+  Irvine (CA) and Santa Barbara are approximately \\(120\\) miles apart. Austin drove from Irvine to visit his brother
+  Benjamin in Santa Barbara, averaging \\(60\\) miles per hour. On his return trip along the same route, due to some heavy
+  traffic on I-5, he averaged only \\(40\\) miles per hour. What was the average speed for the round trip, in miles per hour?
+</p>
+<p>
+  Recall that
+  \\[
+  \\text{Average speed} = \\frac{\\text{Total travel distance}}{\\text{Total amount of time}}.
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q3" type="radio" value="A"/> \\(45\\)
+  </label><br/>
+<label class="option">
+<input name="q3" type="radio" value="B"/> \\(46\\)
+  </label><br/>
+<label class="option">
+<input name="q3" type="radio" value="C"/> \\(48\\)
+  </label><br/>
+<label class="option">
+<input name="q3" type="radio" value="D"/> \\(50\\)
+  </label><br/>
+<label class="option">
+<input name="q3" type="radio" value="E"/> \\(54\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 4</div>
+<p>Find the number \\(a\\) such that</p>
+<p>
+  \\[
+  \\frac{7}{8}=\\frac{1}{1+\\frac{1}{a}}
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q4" type="radio" value="A"/> \\(-7\\)
+  </label><br/>
+<label class="option">
+<input name="q4" type="radio" value="B"/> \\(1\\)
+  </label><br/>
+<label class="option">
+<input name="q4" type="radio" value="C"/> \\(7\\)
+  </label><br/>
+<label class="option">
+<input name="q4" type="radio" value="D"/> \\(8\\)
+  </label><br/>
+<label class="option">
+<input name="q4" type="radio" value="E"/> \\(56\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 5</div>
+<p>
+  Bridget, Cassie, and Hannah are discussing the results of their last math test. Hannah shows Bridget and Cassie her test.
+  Hannah's score is between Bridget's and Cassie's scores, but Bridget and Cassie do not show theirs to anyone. Cassie says, "I didn't get the lowest score among the three of us,"
+  and Bridget adds, "I didn't get the highest score among the three of us." What is the ranking of the three girls from highest to lowest?
+</p>
+<div class="options">
+<label class="option">
+<input name="q5" type="radio" value="A"/> Hannah, Cassie, Bridget
+  </label><br/>
+<label class="option">
+<input name="q5" type="radio" value="B"/> Hannah, Bridget, Cassie
+  </label><br/>
+<label class="option">
+<input name="q5" type="radio" value="C"/> Cassie, Bridget, Hannah
+  </label><br/>
+<label class="option">
+<input name="q5" type="radio" value="D"/> Cassie, Hannah, Bridget
+  </label><br/>
+<label class="option">
+<input name="q5" type="radio" value="E"/> Bridget, Cassie, Hannah
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 6</div>
+<p>
+  The following is an arithmetic sequence that has 10 numbers:
+</p>
+<p>
+  \\[
+  1,\\ a_2,\\ a_3,\\ a_4,\\ \\ldots,\\ a_{10}.
+  \\]
+</p>
+<p>
+  If these 10 numbers add up to \\(100\\), what is the second number \\(a_2\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q6" type="radio" value="A"/> \\(2\\)
+  </label><br/>
+<label class="option">
+<input name="q6" type="radio" value="B"/> \\(3\\)
+  </label><br/>
+<label class="option">
+<input name="q6" type="radio" value="C"/> \\(4\\)
+  </label><br/>
+<label class="option">
+<input name="q6" type="radio" value="D"/> \\(5\\)
+  </label><br/>
+<label class="option">
+<input name="q6" type="radio" value="E"/> \\(6\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 7</div>
+<p>
+  Seven small circles with radius \\(1\\) are circumscribed by a large circle. Adjacent circles are tangent
+  (i.e. they touch at only one point). Six small circles are externally tangent to the center one and internally
+  tangent to the big one. What fraction of the large circle's area is shaded?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_b87b3950ef9f4d96a11e4e7ac188898e~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q7" type="radio" value="A"/> \\(\\frac{2}{9}\\)
+  </label><br/>
+<label class="option">
+<input name="q7" type="radio" value="B"/> \\(\\frac{1}{4}\\)
+  </label><br/>
+<label class="option">
+<input name="q7" type="radio" value="C"/> \\(\\frac{1}{3}\\)
+  </label><br/>
+<label class="option">
+<input name="q7" type="radio" value="D"/> \\(\\frac{1}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q7" type="radio" value="E"/> \\(\\frac{5}{9}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 8</div>
+<p>
+  \\(x, y\\) and \\(z\\) are three numbers satisfying that
+</p>
+<p>
+  \\[
+  \\begin{cases}
+  x + 2y + 3z = 25 \\\\
+  3x + 2y + z = 35
+  \\end{cases}
+  \\]
+</p>
+<p>What is \\(x+y+z\\)?</p>
+<div class="options">
+<label class="option">
+<input name="q8" type="radio" value="A"/> \\(10\\)
+  </label><br/>
+<label class="option">
+<input name="q8" type="radio" value="B"/> \\(12\\)
+  </label><br/>
+<label class="option">
+<input name="q8" type="radio" value="C"/> \\(15\\)
+  </label><br/>
+<label class="option">
+<input name="q8" type="radio" value="D"/> \\(16\\)
+  </label><br/>
+<label class="option">
+<input name="q8" type="radio" value="E"/> There are more than one possible values
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 9</div>
+<p>
+  A bag contains \\(5\\) balls (three red and \\(2\\) blue). Leo picks two balls at random.
+  What is the probability that he gets two balls of the same color?
+</p>
+<p>
+  Recall that
+  \\[
+  \\text{Probability} = \\frac{\\text{Number of valid cases}}{\\text{Number of all possible cases}}.
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q9" type="radio" value="A"/> \\(\\frac{1}{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q9" type="radio" value="B"/> \\(\\frac{3}{10}\\)
+  </label><br/>
+<label class="option">
+<input name="q9" type="radio" value="C"/> \\(\\frac{2}{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q9" type="radio" value="D"/> \\(\\frac{1}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q9" type="radio" value="E"/> \\(\\frac{3}{5}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 10</div>
+<p>
+  In \\(\\triangle ABC\\), \\(D\\) is the midpoint on \\(BC\\).
+  If \\(AD = BD = CD\\) and \\(\\angle B = 30^\\circ\\), what is \\(\\angle BAC\\)?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_08482a4265d04849a168bbc2b257c3bb~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q10" type="radio" value="A"/> \\(60^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q10" type="radio" value="B"/> \\(80^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q10" type="radio" value="C"/> \\(86^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q10" type="radio" value="D"/> \\(90^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q10" type="radio" value="E"/> \\(95^\\circ\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 11</div>
+<p>
+  How many 2-digit positive integers are divisible by \\(3\\) or \\(5\\) or both?
+</p>
+<div class="options">
+<label class="option">
+<input name="q11" type="radio" value="A"/> \\(18\\)
+  </label><br/>
+<label class="option">
+<input name="q11" type="radio" value="B"/> \\(30\\)
+  </label><br/>
+<label class="option">
+<input name="q11" type="radio" value="C"/> \\(42\\)
+  </label><br/>
+<label class="option">
+<input name="q11" type="radio" value="D"/> \\(48\\)
+  </label><br/>
+<label class="option">
+<input name="q11" type="radio" value="E"/> \\(50\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 12</div>
+<p>
+  If \\(a\\) is the smallest two-digit number such that
+  \\[
+  \\mathrm{lcm}(a,12)=60,
+  \\]
+  how many different divisors does \\(a\\) have?
+  Recall that "lcm" stands for the <em>least common multiple</em>.
+</p>
+<div class="options">
+<label class="option">
+<input name="q12" type="radio" value="A"/> \\(4\\)
+  </label><br/>
+<label class="option">
+<input name="q12" type="radio" value="B"/> \\(6\\)
+  </label><br/>
+<label class="option">
+<input name="q12" type="radio" value="C"/> \\(8\\)
+  </label><br/>
+<label class="option">
+<input name="q12" type="radio" value="D"/> \\(10\\)
+  </label><br/>
+<label class="option">
+<input name="q12" type="radio" value="E"/> \\(12\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 13</div>
+<p>
+  \\(ABCD\\) is an isosceles trapezoid. \\(AB\\) is parallel with \\(CD\\).
+  If \\(AB=4\\), \\(BC=AD=13\\) and \\(CD=14\\), what is the area of the trapezoid?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_8bcae600dd38478496a23e2045261158~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q13" type="radio" value="A"/> \\(48\\)
+  </label><br/>
+<label class="option">
+<input name="q13" type="radio" value="B"/> \\(78\\)
+  </label><br/>
+<label class="option">
+<input name="q13" type="radio" value="C"/> \\(90\\)
+  </label><br/>
+<label class="option">
+<input name="q13" type="radio" value="D"/> \\(108\\)
+  </label><br/>
+<label class="option">
+<input name="q13" type="radio" value="E"/> \\(110\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 14</div>
+<p>
+  A water tank weighs \\(190\\text{ kg}\\) when it is full of water and \\(120\\text{ kg}\\) when half full.
+  How much does it weigh, in kilograms, when empty?
+</p>
+<div class="options">
+<label class="option">
+<input name="q14" type="radio" value="A"/> \\(30\\)
+  </label><br/>
+<label class="option">
+<input name="q14" type="radio" value="B"/> \\(40\\)
+  </label><br/>
+<label class="option">
+<input name="q14" type="radio" value="C"/> \\(50\\)
+  </label><br/>
+<label class="option">
+<input name="q14" type="radio" value="D"/> \\(60\\)
+  </label><br/>
+<label class="option">
+<input name="q14" type="radio" value="E"/> \\(70\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 15</div>
+<p>
+  If it is \\(8\\text{ am}\\) now, what time will it be \\(2020\\) hours later?
+</p>
+<div class="options">
+<label class="option">
+<input name="q15" type="radio" value="A"/> \\(7\\text{ am}\\)
+  </label><br/>
+<label class="option">
+<input name="q15" type="radio" value="B"/> \\(8\\text{ am}\\)
+  </label><br/>
+<label class="option">
+<input name="q15" type="radio" value="C"/> \\(11\\text{ am}\\)
+  </label><br/>
+<label class="option">
+<input name="q15" type="radio" value="D"/> \\(12\\text{ pm}\\)
+  </label><br/>
+<label class="option">
+<input name="q15" type="radio" value="E"/> \\(7\\text{ pm}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 16</div>
+<p>
+  Two cubes with numbers on their faces are put next to each other as follows.
+  For each cube, the sum of numbers on every two opposite faces is \\(15\\).
+  What is the sum of numbers on those \\(7\\) faces that are hidden in the picture?
+  
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 5" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_88d070a74c9b4f74ba4f253b9f1866a5~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q16" type="radio" value="A"/> \\(60\\)
+  </label><br/>
+<label class="option">
+<input name="q16" type="radio" value="B"/> \\(65\\)
+  </label><br/>
+<label class="option">
+<input name="q16" type="radio" value="C"/> \\(75\\)
+  </label><br/>
+<label class="option">
+<input name="q16" type="radio" value="D"/> \\(76\\)
+  </label><br/>
+<label class="option">
+<input name="q16" type="radio" value="E"/> \\(80\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 17</div>
+<p>
+  A positive integer is called \\(13\\)-special if the quotient and remainder are the same when this integer is divided by \\(13\\).
+  How many positive \\(13\\)-special integers are between \\(1\\) and \\(100\\) (inclusive)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q17" type="radio" value="A"/> \\(5\\)
+  </label><br/>
+<label class="option">
+<input name="q17" type="radio" value="B"/> \\(6\\)
+  </label><br/>
+<label class="option">
+<input name="q17" type="radio" value="C"/> \\(7\\)
+  </label><br/>
+<label class="option">
+<input name="q17" type="radio" value="D"/> \\(10\\)
+  </label><br/>
+<label class="option">
+<input name="q17" type="radio" value="E"/> \\(12\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 18</div>
+<p>
+  The following three-dimensional figure is made of small cubes with equal side length.
+  How many small cubes are there?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_1a25cee6dd1a4d9f817f8612f184360f~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q18" type="radio" value="A"/> \\(48\\)
+  </label><br/>
+<label class="option">
+<input name="q18" type="radio" value="B"/> \\(49\\)
+  </label><br/>
+<label class="option">
+<input name="q18" type="radio" value="C"/> \\(50\\)
+  </label><br/>
+<label class="option">
+<input name="q18" type="radio" value="D"/> \\(51\\)
+  </label><br/>
+<label class="option">
+<input name="q18" type="radio" value="E"/> \\(52\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 19</div>
+<p>
+  There are \\(7\\) cards with seven different numbers \\(1\\)-\\(7\\) written on them.
+  Austen, Sam and Stephanie each takes \\(2\\) cards. 
+</p>
+<p>
+  Austen said: "Numbers on my two cards add up to \\(7\\)."
+</p>
+<p>
+  Sam said: "The difference between my two numbers is \\(1\\)."
+</p>
+<p>
+  Stephanie said: "The product of my two numbers is \\(12\\)."
+</p>
+<p>
+  What is the number on the card that is left?
+</p>
+<div class="options">
+<label class="option">
+<input name="q19" type="radio" value="A"/> \\(1\\)
+  </label><br/>
+<label class="option">
+<input name="q19" type="radio" value="B"/> \\(2\\)
+  </label><br/>
+<label class="option">
+<input name="q19" type="radio" value="C"/> \\(3\\)
+  </label><br/>
+<label class="option">
+<input name="q19" type="radio" value="D"/> \\(4\\)
+  </label><br/>
+<label class="option">
+<input name="q19" type="radio" value="E"/> \\(7\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 20</div>
+<p>
+  A solid pyramid has a square base of side length \\(12\\text{ cm}\\) and a vertical height of \\(h\\text{ cm}\\).
+  The volume of the pyramid, in \\(\\text{cm}^3\\), is equal to the total surface area of the pyramid, in \\(\\text{cm}^2\\).
+  What is the value of \\(h\\)?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_1a7149ed6d3145fbb8254a3e8c1db788~mv2.png"/>
+</div>
+<p>
+  \\[
+  \\text{Volume of pyramid} = \\frac{1}{3} \\times \\text{area of base} \\times \\text{vertical height}.
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q20" type="radio" value="A"/> \\(\\frac{72}{35}\\)
+  </label><br/>
+<label class="option">
+<input name="q20" type="radio" value="B"/> \\(2\\sqrt{3}\\)
+  </label><br/>
+<label class="option">
+<input name="q20" type="radio" value="C"/> \\(6\\)
+  </label><br/>
+<label class="option">
+<input name="q20" type="radio" value="D"/> \\(\\frac{144}{23}\\)
+  </label><br/>
+<label class="option">
+<input name="q20" type="radio" value="E"/> \\(8\\)
+  </label><br/>
+<label class="option">
+<input name="q20" type="radio" value="F"/> \\(2\\sqrt{21}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 21</div>
+<p>
+  The average score of students in team A and team B altogether is \\(18\\) in an AMC 8 contest.
+  Team A has \\(20\\) students with an average score of \\(14\\).
+  If the average score of students in class B is \\(23\\), how many students are in team B?
+</p>
+<div class="options">
+<label class="option">
+<input name="q21" type="radio" value="A"/> \\(12\\)
+  </label><br/>
+<label class="option">
+<input name="q21" type="radio" value="B"/> \\(14\\)
+  </label><br/>
+<label class="option">
+<input name="q21" type="radio" value="C"/> \\(15\\)
+  </label><br/>
+<label class="option">
+<input name="q21" type="radio" value="D"/> \\(16\\)
+  </label><br/>
+<label class="option">
+<input name="q21" type="radio" value="E"/> \\(18\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 22</div>
+<p>
+  The diagram shows \\(5\\) identical squares of side length \\(2\\) arranged symmetrically.
+  What fraction of the diagram's area is shaded?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_1b92d3f38b0f47f0ba43df4e7e99788e~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q22" type="radio" value="A"/> \\(\\frac{3}{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q22" type="radio" value="B"/> \\(\\frac{7}{20}\\)
+  </label><br/>
+<label class="option">
+<input name="q22" type="radio" value="C"/> \\(\\frac{7}{10}\\)
+  </label><br/>
+<label class="option">
+<input name="q22" type="radio" value="D"/> \\(\\frac{3}{4}\\)
+  </label><br/>
+<label class="option">
+<input name="q22" type="radio" value="E"/> \\(\\frac{4}{5}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 23</div>
+<p>
+  How many \\(7\\)-digit palindromes (numbers that read the same backward as forward) can be formed using the digits
+  \\(2, 2, 3, 3, 5, 5, 5\\)? For example, one such number is \\(2355532\\). 
+</p>
+<div class="options">
+<label class="option">
+<input name="q23" type="radio" value="A"/> \\(6\\)
+  </label><br/>
+<label class="option">
+<input name="q23" type="radio" value="B"/> \\(12\\)
+  </label><br/>
+<label class="option">
+<input name="q23" type="radio" value="C"/> \\(24\\)
+  </label><br/>
+<label class="option">
+<input name="q23" type="radio" value="D"/> \\(36\\)
+  </label><br/>
+<label class="option">
+<input name="q23" type="radio" value="E"/> \\(48\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 24</div>
+<p>
+  A standard, six-sided die is rolled three times. What is the probability that the three rolls are either all the same or all different?
+</p>
+<div class="options">
+<label class="option">
+<input name="q24" type="radio" value="A"/> \\(\\frac{1}{6}\\)
+  </label><br/>
+<label class="option">
+<input name="q24" type="radio" value="B"/> \\(\\frac{3}{8}\\)
+  </label><br/>
+<label class="option">
+<input name="q24" type="radio" value="C"/> \\(\\frac{5}{12}\\)
+  </label><br/>
+<label class="option">
+<input name="q24" type="radio" value="D"/> \\(\\frac{7}{12}\\)
+  </label><br/>
+<label class="option">
+<input name="q24" type="radio" value="E"/> \\(\\frac{11}{36}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 25</div>
+<p>
+  What is the sum of the first digit and last digit of the smallest positive integer whose digits add to \\(2019\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q25" type="radio" value="A"/> \\(4\\)
+  </label><br/>
+<label class="option">
+<input name="q25" type="radio" value="B"/> \\(6\\)
+  </label><br/>
+<label class="option">
+<input name="q25" type="radio" value="C"/> \\(8\\)
+  </label><br/>
+<label class="option">
+<input name="q25" type="radio" value="D"/> \\(9\\)
+  </label><br/>
+<label class="option">
+<input name="q25" type="radio" value="E"/> \\(12\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 26</div>
+<p>
+  What is the minimum positive integer \\(n\\) such that the following statement is correct?
+</p>
+<p>
+  "Randomly choose \\(n\\) people. We can ALWAYS find at least three of them who were born in the same month."
+</p>
+<div class="options">
+<label class="option">
+<input name="q26" type="radio" value="A"/> \\(13\\)
+  </label><br/>
+<label class="option">
+<input name="q26" type="radio" value="B"/> \\(20\\)
+  </label><br/>
+<label class="option">
+<input name="q26" type="radio" value="C"/> \\(24\\)
+  </label><br/>
+<label class="option">
+<input name="q26" type="radio" value="D"/> \\(25\\)
+  </label><br/>
+<label class="option">
+<input name="q26" type="radio" value="E"/> \\(36\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 27</div>
+<p>
+  \\(2020\\) beads (black and white) are put on a string as follows. The first bead on the left is white.
+  How many black beads are on the string?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_5b6a2570e1d34f25880db96c73e3122d~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q27" type="radio" value="A"/> \\(1340\\)
+  </label><br/>
+<label class="option">
+<input name="q27" type="radio" value="B"/> \\(1344\\)
+  </label><br/>
+<label class="option">
+<input name="q27" type="radio" value="C"/> \\(1346\\)
+  </label><br/>
+<label class="option">
+<input name="q27" type="radio" value="D"/> \\(1350\\)
+  </label><br/>
+<label class="option">
+<input name="q27" type="radio" value="E"/> \\(1352\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 1</div>
+<p>
+  A \\(1000\\,\\text{kg}\\) car accelerates from rest at \\(5\\,\\text{m s}^{-2}\\) for \\(10\\,\\text{s}\\).
+  Then, a braking force is applied to bring it to rest within \\(20\\,\\text{s}\\).
+  What distance has the car travelled?
+</p>
+<div class="options">
+<label class="option">
+<input name="q28" type="radio" value="A"/> \\(125\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q28" type="radio" value="B"/> \\(250\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q28" type="radio" value="C"/> \\(650\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q28" type="radio" value="D"/> \\(750\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q28" type="radio" value="E"/> \\(1200\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q28" type="radio" value="F"/> More information needed
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 2</div>
+<p>
+  An electric heater is connected to \\(120\\,\\text{V}\\) mains by a copper wire that has a resistance of
+  \\(8\\,\\Omega\\). What is the power of the heater?
+</p>
+<div class="options">
+<label class="option">
+<input name="q29" type="radio" value="A"/> \\(90\\,\\text{W}\\)
+  </label><br/>
+<label class="option">
+<input name="q29" type="radio" value="B"/> \\(180\\,\\text{W}\\)
+  </label><br/>
+<label class="option">
+<input name="q29" type="radio" value="C"/> \\(900\\,\\text{W}\\)
+  </label><br/>
+<label class="option">
+<input name="q29" type="radio" value="D"/> \\(1800\\,\\text{W}\\)
+  </label><br/>
+<label class="option">
+<input name="q29" type="radio" value="E"/> \\(9000\\,\\text{W}\\)
+  </label><br/>
+<label class="option">
+<input name="q29" type="radio" value="F"/> \\(18000\\,\\text{W}\\)
+  </label><br/>
+<label class="option">
+<input name="q29" type="radio" value="G"/> More information needed
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 3</div>
+<p>
+  In a particle accelerator, electrons are accelerated through a potential difference of \\(40\\,\\text{MV}\\)
+  and emerge with an energy of \\(40\\,\\text{MeV}\\)
+  \\(\\left(1\\,\\text{MeV}=1.60\\times10^{-13}\\,\\text{J}\\right)\\).
+  Each pulse contains \\(5000\\) electrons. The current is zero between pulses.
+  Assuming that the electrons have zero energy prior to being accelerated, what is the power delivered by the
+  electron beam?
+</p>
+<div class="options">
+<label class="option">
+<input name="q30" type="radio" value="A"/> \\(1\\,\\text{kW}\\)
+  </label><br/>
+<label class="option">
+<input name="q30" type="radio" value="B"/> \\(10\\,\\text{kW}\\)
+  </label><br/>
+<label class="option">
+<input name="q30" type="radio" value="C"/> \\(100\\,\\text{kW}\\)
+  </label><br/>
+<label class="option">
+<input name="q30" type="radio" value="D"/> \\(1000\\,\\text{kW}\\)
+  </label><br/>
+<label class="option">
+<input name="q30" type="radio" value="E"/> \\(10000\\,\\text{kW}\\)
+  </label><br/>
+<label class="option">
+<input name="q30" type="radio" value="F"/> More information needed
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 4</div>
+<p>Which of the following statements is true?</p>
+<div class="options">
+<label class="option">
+<input name="q31" type="radio" value="A"/> When an object is in equilibrium with its surroundings, there is no energy transferred to or from the object and so its temperature remains constant.
+  </label><br/>
+<label class="option">
+<input name="q31" type="radio" value="B"/> When an object is in equilibrium with its surroundings, it radiates and absorbs energy at the same rate and so its temperature remains constant.
+  </label><br/>
+<label class="option">
+<input name="q31" type="radio" value="C"/> Radiation is faster than convection but slower than conduction.
+  </label><br/>
+<label class="option">
+<input name="q31" type="radio" value="D"/> Radiation is faster than conduction but slower than convection.
+  </label><br/>
+<label class="option">
+<input name="q31" type="radio" value="E"/> None of the above.
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 5</div>
+<p>
+  A \\(6\\,\\text{kg}\\) block is pulled from rest along a horizontal frictionless surface by a constant horizontal
+  force of \\(12\\,\\text{N}\\). Calculate the speed of the block after it has moved \\(300\\,\\text{cm}\\).
+</p>
+<div class="options">
+<label class="option">
+<input name="q32" type="radio" value="A"/> \\(2\\sqrt{3}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q32" type="radio" value="B"/> \\(4\\sqrt{3}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q32" type="radio" value="C"/> \\(3\\sqrt{2}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q32" type="radio" value="D"/> \\(12\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q32" type="radio" value="E"/> \\(\\sqrt{\\frac{3}{2}}\\,\\text{m s}^{-1}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 6</div>
+<p>
+  A \\(100\\,\\text{V}\\) heater heats \\(1.5\\) litres of pure water from \\(10^\\circ\\text{C}\\) to \\(50^\\circ\\text{C}\\)
+  in \\(50\\) minutes. Given that \\(1\\,\\text{kg}\\) of pure water requires \\(4000\\,\\text{J}\\) to raise its temperature by
+  \\(1^\\circ\\text{C}\\), calculate the resistance of the heater.
+</p>
+<div class="options">
+<label class="option">
+<input name="q33" type="radio" value="A"/> \\(12.5\\,\\Omega\\)
+  </label><br/>
+<label class="option">
+<input name="q33" type="radio" value="B"/> \\(25\\,\\Omega\\)
+  </label><br/>
+<label class="option">
+<input name="q33" type="radio" value="C"/> \\(125\\,\\Omega\\)
+  </label><br/>
+<label class="option">
+<input name="q33" type="radio" value="D"/> \\(250\\,\\Omega\\)
+  </label><br/>
+<label class="option">
+<input name="q33" type="radio" value="E"/> \\(500\\,\\Omega\\)
+  </label><br/>
+<label class="option">
+<input name="q33" type="radio" value="F"/> \\(850\\,\\Omega\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 7</div>
+<p>Which of the following statements are true?</p>
+<p>
+  1. Nuclear fission is the basis of nuclear energy. 
+  2. Following fission, the resulting atoms are a different element to the original one. 
+  3. Nuclear fission often results in the production of free neutrons and photons.
+</p>
+<div class="options">
+<label class="option">
+<input name="q34" type="radio" value="A"/> Only 1
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="B"/> Only 2
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="C"/> Only 3
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="D"/> 1 and 2
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="E"/> 2 and 3
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="F"/> 1 and 3
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="G"/> 1, 2 and 3
+  </label><br/>
+<label class="option">
+<input name="q34" type="radio" value="H"/> None of the statements are true
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 8</div>
+<p>Which of the following statements are true? Assume \\(g = 10\\,\\text{m s}^{-2}\\).</p>
+<p>
+  1. Gravitational potential energy is defined as \\(\\Delta E_p = m \\times g \\times \\Delta h\\). 
+  2. Gravitational potential energy is a measure of the work done against gravity. 
+  3. A reservoir situated \\(1\\,\\text{km}\\) above ground level with \\(10^6\\) litres of water has a potential energy of \\(1\\) Giga Joule.
+</p>
+<div class="options">
+<label class="option">
+<input name="q35" type="radio" value="A"/> Only 1
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="B"/> Only 2
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="C"/> Only 3
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="D"/> 1 and 2
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="E"/> 2 and 3
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="F"/> 1 and 3
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="G"/> 1, 2 and 3
+  </label><br/>
+<label class="option">
+<input name="q35" type="radio" value="H"/> None of the statements are true
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 9</div>
+<p>
+  A stone is thrown horizontally from the top of a cliff at \\(10\\,\\text{m s}^{-1}\\). The stone falls \\(50\\,\\text{m}\\) before it hits the ground.
+  Take \\(g\\) as \\(10\\,\\text{N kg}^{-1}\\) and neglect air resistance. What is the speed of the stone when it hits the ground?
+</p>
+<div class="options">
+<label class="option">
+<input name="q36" type="radio" value="A"/> \\(10\\sqrt{11}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="B"/> \\(11\\sqrt{10}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="C"/> \\(50\\sqrt{10}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="D"/> \\(10\\sqrt{5}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="E"/> \\(15\\sqrt{11}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="F"/> \\(50\\sqrt{5}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="G"/> \\(5\\sqrt{10}\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q36" type="radio" value="H"/> \\(11\\sqrt{5}\\,\\text{m s}^{-1}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 10</div>
+<p>
+  A sailing boat has a mass of \\(200\\,\\text{kg}\\). When the boat travels at \\(30\\,\\text{m s}^{-1}\\) the resistive force exerted on the hull by the water is \\(300\\,\\text{N}\\).
+  If the pressure exerted on the sail by the wind is \\(40\\,\\text{N m}^{-2}\\), and the boat is still accelerating at \\(1\\,\\text{m s}^{-2}\\) when it travels at \\(30\\,\\text{m s}^{-1}\\), how big is the sail?
+</p>
+<div class="options">
+<label class="option">
+<input name="q37" type="radio" value="A"/> \\(10\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="B"/> \\(\\frac{25}{2}\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="C"/> \\(\\frac{10}{4}\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="D"/> \\(12\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="E"/> \\(24\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="F"/> \\(\\frac{25}{4}\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="G"/> \\(\\frac{15}{2}\\,\\text{m}^2\\)
+  </label><br/>
+<label class="option">
+<input name="q37" type="radio" value="H"/> \\(\\frac{16}{3}\\,\\text{m}^2\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 11</div>
+<p>
+  A watch, when submerged in water, can withstand an average force of \\(10\\,\\text{kN}\\) on its surface. The total surface area of the watch is \\(50\\,\\text{cm}^2\\).
+  Given that atmospheric pressure is \\(1\\,\\text{bar} = 10^5\\,\\text{Pa}\\), the density of water is \\(1000\\,\\text{kg m}^{-3}\\), and \\(g\\) is \\(10\\,\\text{N kg}^{-1}\\), what is the deepest the watch can be taken underwater?
+</p>
+<div class="options">
+<label class="option">
+<input name="q38" type="radio" value="A"/> \\(120\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="B"/> \\(30\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="C"/> \\(470\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="D"/> \\(200\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="E"/> \\(530\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="F"/> \\(500\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="G"/> \\(50\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q38" type="radio" value="H"/> \\(190\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 12</div>
+<p>
+  A plane of mass \\(10{,}000\\,\\text{kg}\\) coming into land hits the runway travelling at \\(100\\,\\text{m s}^{-1}\\).
+  It decelerates uniformly over a distance of \\(500\\,\\text{m}\\), until it reaches a taxi velocity of \\(10\\,\\text{m s}^{-1}\\).
+  What is the resultant force on the aircraft?
+</p>
+<div class="options">
+<label class="option">
+<input name="q39" type="radio" value="A"/> \\(1.00\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="B"/> \\(1.80\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="C"/> \\(9.09\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="D"/> \\(10.0\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="E"/> \\(99.0\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="F"/> \\(100\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="G"/> \\(101\\,\\text{kN}\\)
+  </label><br/>
+<label class="option">
+<input name="q39" type="radio" value="H"/> \\(200\\,\\text{kN}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 13</div>
+<p>
+  Two cups in different buildings are connected by a wire, which is \\(1000\\,\\text{m}\\) long.
+  If one person sings a note with a frequency of \\(250\\,\\text{Hz}\\) into the cup, a \\(0.2\\,\\text{s}\\) delay is recorded until it is first heard in the other cup.
+  What is the wavelength of the sound wave travelling through the wire?
+</p>
+<div class="options">
+<label class="option">
+<input name="q40" type="radio" value="A"/> \\(0.20\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="B"/> \\(0.80\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="C"/> \\(1.0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="D"/> \\(4.0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="E"/> \\(5.0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="F"/> \\(10\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="G"/> \\(20\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q40" type="radio" value="H"/> \\(200\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 14</div>
+<p>
+  Two identical snooker balls (X and Y) of mass \\(4\\,\\text{kg}\\), with velocities \\(u_1\\) and \\(u_2\\) respectively (in the positive \\(x\\) direction, \\(u_1 &gt; u_2\\)) collide elastically.
+  After the collision, ball X comes to rest, while ball Y moves off with velocity \\(v\\).
+  If \\(u_1 = 1\\,\\text{m s}^{-1}\\), what is the value of \\(u_2\\)?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_41a1e7312bf3427c9c36667c48850412~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q41" type="radio" value="A"/> \\(0.000\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="B"/> \\(0.100\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="C"/> \\(0.125\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="D"/> \\(0.250\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="E"/> \\(0.375\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="F"/> \\(0.500\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="G"/> \\(1.00\\,\\text{m s}^{-1}\\)
+  </label><br/>
+<label class="option">
+<input name="q41" type="radio" value="H"/> \\(2.00\\,\\text{m s}^{-1}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 15</div>
+<p>
+  A car of mass \\(500\\,\\text{kg}\\) is climbing a slope inclined at \\(30^\\circ\\) to the horizontal.
+  The car is travelling at a speed of \\(20\\,\\text{m s}^{-1}\\), when the engine breaks down, so that the only forces acting on the car are gravity and a constant friction force of \\(7500\\,\\text{N}\\).
+  The car travels a distance \\(x\\) parallel to the slope before coming to rest instantaneously.
+  How far is \\(x\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q42" type="radio" value="A"/> \\(1.0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="B"/> \\(2.0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="C"/> \\(5.0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="D"/> \\(10\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="E"/> \\(13\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="F"/> \\(100\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="G"/> \\(130\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q42" type="radio" value="H"/> \\(200\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 16</div>
+<p>
+  A hydroelectric dam stores energy by pumping water from a lower reservoir to a higher reservoir using an electric pump (supplied with \\(100\\,\\text{V}\\) and \\(10\\,\\text{A}\\)).
+  This power can then be harnessed again by allowing the water to fall down to the lower reservoir, driving a turbine, generating electricity.
+  It takes \\(1000\\,\\text{s}\\) for the pump to lift \\(1000\\,\\text{kg}\\) of water to a height of \\(75\\,\\text{m}\\) above the reservoir.
+  This mass of water is then used to drive a turbine, which converts the gravitational potential energy of the water into electrical energy with a \\(33.3\\%\\) efficiency.
+  What percentage of the original electrical input energy is lost over the full storage-and-generation cycle?
+</p>
+<div class="options">
+<label class="option">
+<input name="q43" type="radio" value="A"/> \\(0\\%\\)
+  </label><br/>
+<label class="option">
+<input name="q43" type="radio" value="B"/> \\(25\\%\\)
+  </label><br/>
+<label class="option">
+<input name="q43" type="radio" value="C"/> \\(33.3\\%\\)
+  </label><br/>
+<label class="option">
+<input name="q43" type="radio" value="D"/> \\(50\\%\\)
+  </label><br/>
+<label class="option">
+<input name="q43" type="radio" value="E"/> \\(66.7\\%\\)
+  </label><br/>
+<label class="option">
+<input name="q43" type="radio" value="F"/> \\(75\\%\\)
+  </label><br/>
+<label class="option">
+<input name="q43" type="radio" value="G"/> \\(80\\%\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 17</div>
+<p>
+  An object falling through the air in a straight-line experiences quadratic air resistance, such that the acceleration, \\(a\\), of the object as a function of its velocity, \\(v\\), is given by:
+</p>
+<p>\\[ a(v) = g - bv^2 \\]</p>
+<p>
+  Where \\(b\\) is a positive constant and \\(g\\) is acceleration due to gravity.
+  Which of the following is an expression for the terminal velocity, \\(v_0\\), of the object?
+</p>
+<div class="options">
+<label class="option">
+<input name="q44" type="radio" value="A"/> \\(g-b\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="B"/> \\(\\sqrt{\\frac{g}{b}}\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="C"/> \\(\\frac{g}{b}\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="D"/> \\(g-\\sqrt{b}\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="E"/> \\(b-\\sqrt{g}\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="F"/> \\(\\sqrt{\\frac{b}{g}}\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="G"/> \\(-2bv\\)
+  </label><br/>
+<label class="option">
+<input name="q44" type="radio" value="H"/> \\(gv-\\frac{1}{3}bv^3\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 18</div>
+<p>
+  Two objects, of masses \\(6\\text{ kg}\\) and \\(8\\text{ kg}\\), are hung from the ends of a stick that is \\(70\\text{ cm}\\) long and has marks every \\(10\\text{ cm}\\), as shown in the diagram.
+  If the mass of the stick is negligible, at which of the indicated points should a cord be attached if the stick is to remain horizontal when suspended from the cord?
+</p>
+<div class="question-image">
+<img alt="Isosceles triangle ABC with BC = 8" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_c4e15f9af1c04def9dd655b3e6176e3f~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q45" type="radio" value="A"/> \\(A\\)
+  </label><br/>
+<label class="option">
+<input name="q45" type="radio" value="B"/> \\(B\\)
+  </label><br/>
+<label class="option">
+<input name="q45" type="radio" value="C"/> \\(C\\)
+  </label><br/>
+<label class="option">
+<input name="q45" type="radio" value="D"/> \\(D\\)
+  </label><br/>
+<label class="option">
+<input name="q45" type="radio" value="E"/> \\(E\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 19</div>
+<p>
+  In the below circuit, a cell with an e.m.f of \\(V = 1\\,\\text{V}\\) drives a current through three identical resistors \\(R\\).
+  What is the potential difference across the voltmeter marked \\(V_{out}\\)?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_de11d3711ccc469695411e8b9fe2e48d~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q46" type="radio" value="A"/> \\(\\frac{1}{6}V\\)
+  </label><br/>
+<label class="option">
+<input name="q46" type="radio" value="B"/> \\(\\frac{1}{4}V\\)
+  </label><br/>
+<label class="option">
+<input name="q46" type="radio" value="C"/> \\(\\frac{1}{3}V\\)
+  </label><br/>
+<label class="option">
+<input name="q46" type="radio" value="D"/> \\(\\frac{1}{2}V\\)
+  </label><br/>
+<label class="option">
+<input name="q46" type="radio" value="E"/> \\(\\frac{2}{3}V\\)
+  </label><br/>
+<label class="option">
+<input name="q46" type="radio" value="F"/> \\(\\frac{3}{4}V\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 20</div>
+<p>
+  A particle's velocity, \\(v\\), as a function of time, \\(t\\), is given by the function:
+</p>
+<p>\\[ v(t) = t^5 - 5t^3 + 4t \\]</p>
+<p>
+  In the entire range of \\(t\\) \\(\\left(-\\infty &lt; t &lt; \\infty\\right)\\), how many times does the particle instantaneously come to rest?
+</p>
+<div class="options">
+<label class="option">
+<input name="q47" type="radio" value="A"/> \\(0\\)
+  </label><br/>
+<label class="option">
+<input name="q47" type="radio" value="B"/> \\(1\\)
+  </label><br/>
+<label class="option">
+<input name="q47" type="radio" value="C"/> \\(2\\)
+  </label><br/>
+<label class="option">
+<input name="q47" type="radio" value="D"/> \\(3\\)
+  </label><br/>
+<label class="option">
+<input name="q47" type="radio" value="E"/> \\(4\\)
+  </label><br/>
+<label class="option">
+<input name="q47" type="radio" value="F"/> \\(5\\)
+  </label><br/>
+<label class="option">
+<input name="q47" type="radio" value="G"/> \\(6\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 21</div>
+<p>
+  Velocity, \\(v\\), is the rate of change of displacement, \\(s\\). For the same particle as in Question 20 (with the same velocity function), what is the distance travelled by the particle between \\(t=-1\\,\\text{s}\\) and \\(t=1\\,\\text{s}\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q48" type="radio" value="A"/> \\(0\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q48" type="radio" value="B"/> \\(\\frac{1}{12}\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q48" type="radio" value="C"/> \\(\\frac{1}{8}\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q48" type="radio" value="D"/> \\(\\frac{11}{12}\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q48" type="radio" value="E"/> \\(\\frac{11}{6}\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q48" type="radio" value="F"/> \\(\\frac{13}{6}\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q48" type="radio" value="G"/> \\(4\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 22</div>
+<p>
+  An oscilloscope measures an electrical signal from an alternating current power supply. The voltage, \\(V\\), measured by the oscilloscope has the form
+  \\(V = V_0\\sin\\!\\left(\\omega t + \\phi\\right)\\), where \\(V_0\\), \\(\\omega\\) and \\(\\phi\\) are all positive constants.
+</p>
+<p>
+  If the blue curve is the original signal, which of the following operations would give rise to the signal shown by the green curve?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_4445233bfc154a4c85b59fcb55037d81~mv2.png"/>
+</div>
+<div class="options">
+<label class="option">
+<input name="q49" type="radio" value="A"/> Halve \\(\\phi\\)
+  </label><br/>
+<label class="option">
+<input name="q49" type="radio" value="B"/> Double \\(\\phi\\)
+  </label><br/>
+<label class="option">
+<input name="q49" type="radio" value="C"/> Halve \\(\\omega\\)
+  </label><br/>
+<label class="option">
+<input name="q49" type="radio" value="D"/> Double \\(\\omega\\)
+  </label><br/>
+<label class="option">
+<input name="q49" type="radio" value="E"/> Halve \\(V_0\\)
+  </label><br/>
+<label class="option">
+<input name="q49" type="radio" value="F"/> Double \\(V_0\\)
+  </label><br/>
+<label class="option">
+<input name="q49" type="radio" value="G"/> Increase \\(\\phi\\) by \\(180^\\circ\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 23</div>
+<p>
+  An object of mass \\(0.1\\,\\text{kg}\\) sits on a rough plane, inclined at \\(\\theta\\) to the horizontal. If the coefficient of friction of the plane is
+  \\(\\dfrac{1}{\\sqrt{3}}\\), what is the maximum value of \\(\\theta\\) (in degrees) without the object slipping?
+</p>
+<div class="options">
+<label class="option">
+<input name="q50" type="radio" value="A"/> \\(0^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q50" type="radio" value="B"/> \\(15^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q50" type="radio" value="C"/> \\(30^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q50" type="radio" value="D"/> \\(45^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q50" type="radio" value="E"/> \\(60^\\circ\\)
+  </label><br/>
+<label class="option">
+<input name="q50" type="radio" value="F"/> \\(75^\\circ\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 24</div>
+<p>
+  The Tsiolkovsky rocket equation (below) is used to calculate the change in velocity, \\(\\Delta v\\), experienced by a spacecraft during a manoeuvre in terms of its exhaust
+  velocity, \\(u\\), and the ratio of its initial mass, \\(m_0\\), and final mass, \\(m_f\\).
+</p>
+<p>
+  \\[ \\Delta v = u\\,\\log_e\\!\\left(\\frac{m_0}{m_f}\\right) \\]
+</p>
+<p>
+  In order to place a payload of mass \\(1\\,\\text{kg}\\) in a circular orbit, a \\(\\Delta v\\) of \\(5000\\,\\text{m s}^{-1}\\) must be achieved. If using a rocket with an exhaust velocity of
+  \\(2500\\,\\text{m s}^{-1}\\), what is the minimum mass of fuel that can be used in order to place the payload in circular orbit?
+</p>
+<div class="options">
+<label class="option">
+<input name="q51" type="radio" value="A"/> \\(e^2\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="B"/> \\(e^{\\tfrac{1}{2}}\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="C"/> \\(e^2 - 1\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="D"/> \\(e^{\\tfrac{1}{2}} - 1\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="E"/> \\(e^2 + 1\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="F"/> \\(\\log_e 2\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="G"/> \\(\\log_e 2 - 1\\,\\text{kg}\\)
+  </label><br/>
+<label class="option">
+<input name="q51" type="radio" value="H"/> \\(\\log_e 2 + 1\\,\\text{kg}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 25</div>
+<p>
+  Stationary waves can be set up in tube with one closed end and one open end, such that there is a node at the closed end and an antinode at the open end. What is the
+  second lowest frequency note that can be produced by a tube which is \\(0.6\\,\\text{m}\\) long, given that the speed of sound is \\(340\\,\\text{m s}^{-1}\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q52" type="radio" value="A"/> \\(283\\,\\text{Hz}\\)
+  </label><br/>
+<label class="option">
+<input name="q52" type="radio" value="B"/> \\(378\\,\\text{Hz}\\)
+  </label><br/>
+<label class="option">
+<input name="q52" type="radio" value="C"/> \\(425\\,\\text{Hz}\\)
+  </label><br/>
+<label class="option">
+<input name="q52" type="radio" value="D"/> \\(567\\,\\text{Hz}\\)
+  </label><br/>
+<label class="option">
+<input name="q52" type="radio" value="E"/> \\(850\\,\\text{Hz}\\)
+  </label><br/>
+<label class="option">
+<input name="q52" type="radio" value="F"/> \\(1700\\,\\text{Hz}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 26</div>
+<p>
+  A cylindrical jet of water, with a radius \\(r\\) and velocity \\(v\\), strikes a wall and spreads out into a plane. The velocity and density of the water remain constant.
+  Which of the following is an expression for the thickness of the plane, \\(\\tau\\), as a function of the distance from the point of impact of the jet, \\(d\\)?
+</p>
+<div class="question-image">
+<img alt="ESAT Practice Test Series Thriving Scholars image 2" class="diagram-img" loading="lazy" src="https://static.wixstatic.com/media/98f2c5_783adf86c4424c29b02fff3b94406efd~mv2.png"/>
+</div>
+<p>
+<em></em> Mass is conserved. Consider the mass coming in and out in a certain amount of time.
+</p>
+<div class="options">
+<label class="option">
+<input name="q53" type="radio" value="A"/> \\(\\dfrac{r^2}{2d}\\)
+  </label><br/>
+<label class="option">
+<input name="q53" type="radio" value="B"/> \\(\\dfrac{v^2}{rd}\\)
+  </label><br/>
+<label class="option">
+<input name="q53" type="radio" value="C"/> \\(dr^2\\)
+  </label><br/>
+<label class="option">
+<input name="q53" type="radio" value="D"/> \\(\\dfrac{d}{r^2}\\)
+  </label><br/>
+<label class="option">
+<input name="q53" type="radio" value="E"/> \\(\\dfrac{2d}{v}\\)
+  </label><br/>
+<label class="option">
+<input name="q53" type="radio" value="F"/> \\(\\dfrac{2r}{dv}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 27</div>
+<p>
+  A cannon on top of a \\(20\\,\\text{m}\\) castle wall is fired horizontally at \\(100\\,\\text{m s}^{-1}\\).
+  How far away from the foot of the castle wall does the cannon ball land (you may ignore the effect of air resistance)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q54" type="radio" value="A"/> \\(100\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="B"/> \\(200\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="C"/> \\(300\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="D"/> \\(400\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="E"/> \\(500\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="F"/> \\(600\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="G"/> \\(700\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q54" type="radio" value="H"/> \\(800\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 1</div>
+<p>
+  Which of the following graphs do not intersect?
+   1. \\(y=x\\)
+   2. \\(y=x^2\\)
+   3. \\(y=1-x^2\\)
+   4. \\(y=2\\)
+</p>
+<div class="options">
+<label class="option">
+<input name="q55" type="radio" value="A"/> 1 and 2
+  </label><br/>
+<label class="option">
+<input name="q55" type="radio" value="B"/> 2 and 3
+  </label><br/>
+<label class="option">
+<input name="q55" type="radio" value="C"/> 3 and 4
+  </label><br/>
+<label class="option">
+<input name="q55" type="radio" value="D"/> 1 and 3
+  </label><br/>
+<label class="option">
+<input name="q55" type="radio" value="E"/> 1 and 4
+  </label><br/>
+<label class="option">
+<input name="q55" type="radio" value="F"/> 2 and 4
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 2</div>
+<p>
+  Calculate the product of 897,653 and 0.009764, correct to 2 decimal places.
+</p>
+<div class="options">
+<label class="option">
+<input name="q56" type="radio" value="A"/> 87646.8
+  </label><br/>
+<label class="option">
+<input name="q56" type="radio" value="B"/> 8764.68
+  </label><br/>
+<label class="option">
+<input name="q56" type="radio" value="C"/> 876.468
+  </label><br/>
+<label class="option">
+<input name="q56" type="radio" value="D"/> 87.6468
+  </label><br/>
+<label class="option">
+<input name="q56" type="radio" value="E"/> 8.76468
+  </label><br/>
+<label class="option">
+<input name="q56" type="radio" value="F"/> 0.876468
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 3</div>
+<p>
+  Solve for \\(x\\):
+</p>
+<p>
+  \\[
+    \\frac{7x+3}{10} + \\frac{3x+1}{7} = 14
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q57" type="radio" value="A"/> \\(\\frac{929}{51}\\)
+  </label><br/>
+<label class="option">
+<input name="q57" type="radio" value="B"/> \\(\\frac{949}{47}\\)
+  </label><br/>
+<label class="option">
+<input name="q57" type="radio" value="C"/> \\(\\frac{949}{79}\\)
+  </label><br/>
+<label class="option">
+<input name="q57" type="radio" value="D"/> \\(\\frac{980}{79}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 4</div>
+<p>
+  What is the area of an equilateral triangle with side length \\(x\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q58" type="radio" value="A"/> \\(\\frac{x^2\\sqrt{3}}{4}\\)
+  </label><br/>
+<label class="option">
+<input name="q58" type="radio" value="B"/> \\(\\frac{x\\sqrt{3}}{4}\\)
+  </label><br/>
+<label class="option">
+<input name="q58" type="radio" value="C"/> \\(\\frac{x^2}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q58" type="radio" value="D"/> \\(\\frac{x}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q58" type="radio" value="E"/> \\(x^2\\)
+  </label><br/>
+<label class="option">
+<input name="q58" type="radio" value="F"/> \\(x\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 5</div>
+<p>
+  Simplify
+  \\[
+    3 - \\frac{7x\\left(25x^2 - 1\\right)}{49x^2\\left(5x+1\\right)}
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q59" type="radio" value="A"/> \\(3 - \\frac{5x-1}{7x}\\)
+  </label><br/>
+<label class="option">
+<input name="q59" type="radio" value="B"/> \\(3 - \\frac{5x+1}{7x}\\)
+  </label><br/>
+<label class="option">
+<input name="q59" type="radio" value="C"/> \\(3 + \\frac{5x-1}{7x}\\)
+  </label><br/>
+<label class="option">
+<input name="q59" type="radio" value="D"/> \\(3 + \\frac{5x+1}{7x}\\)
+  </label><br/>
+<label class="option">
+<input name="q59" type="radio" value="E"/> \\(3 - \\frac{5x^2}{49}\\)
+  </label><br/>
+<label class="option">
+<input name="q59" type="radio" value="F"/> \\(3 + \\frac{5x^2}{49}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 6</div>
+<p>
+  Solve the equation \\(x^2 - 10x - 100 = 0\\).
+</p>
+<div class="options">
+<label class="option">
+<input name="q60" type="radio" value="A"/> \\(-5 \\pm 5\\sqrt{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q60" type="radio" value="B"/> \\(-5 \\pm \\sqrt{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q60" type="radio" value="C"/> \\(5 \\pm 5\\sqrt{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q60" type="radio" value="D"/> \\(5 \\pm \\sqrt{5}\\)
+  </label><br/>
+<label class="option">
+<input name="q60" type="radio" value="E"/> \\(5 \\pm 5\\sqrt{125}\\)
+  </label><br/>
+<label class="option">
+<input name="q60" type="radio" value="F"/> \\(-5 \\pm \\sqrt{125}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 7</div>
+<p>
+  Rearrange \\(x^2 - 4x + 7 = y^3 + 2\\) to make \\(x\\) the subject.
+</p>
+<div class="options">
+<label class="option">
+<input name="q61" type="radio" value="A"/> \\(x = 2 \\pm \\sqrt{y^3 + 1}\\)
+  </label><br/>
+<label class="option">
+<input name="q61" type="radio" value="B"/> \\(x = 2 \\pm \\sqrt{y^3 - 1}\\)
+  </label><br/>
+<label class="option">
+<input name="q61" type="radio" value="C"/> \\(x = -2 \\pm \\sqrt{y^3 - 1}\\)
+  </label><br/>
+<label class="option">
+<input name="q61" type="radio" value="D"/> \\(x = -2 \\pm \\sqrt{y^3 + 1}\\)
+  </label><br/>
+<label class="option">
+<input name="q61" type="radio" value="E"/> \\(x\\) cannot be made the subject for this equation.
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 8</div>
+<p>
+  Rearrange \\(3x + 2 = \\sqrt{7x^2 + 2x + y}\\) to make \\(y\\) the subject.
+</p>
+<div class="options">
+<label class="option">
+<input name="q62" type="radio" value="A"/> \\(y = 4x^2 + 8x + 2\\)
+  </label><br/>
+<label class="option">
+<input name="q62" type="radio" value="B"/> \\(y = 4x^2 + 8x + 4\\)
+  </label><br/>
+<label class="option">
+<input name="q62" type="radio" value="C"/> \\(y = 2x^2 + 10x + 2\\)
+  </label><br/>
+<label class="option">
+<input name="q62" type="radio" value="D"/> \\(y = 2x^2 + 10x + 4\\)
+  </label><br/>
+<label class="option">
+<input name="q62" type="radio" value="E"/> \\(y = x^2 + 10x + 2\\)
+  </label><br/>
+<label class="option">
+<input name="q62" type="radio" value="F"/> \\(y = x^2 + 10x + 4\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 9</div>
+<p>
+  Evaluate:
+</p>
+<p>
+  \\[
+  5\\left[5\\left(6^2 - 5\\times 3\\right) + 400^{1/2}\\right]^{1/3} + 7
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q63" type="radio" value="A"/> \\(0\\)
+  </label><br/>
+<label class="option">
+<input name="q63" type="radio" value="B"/> \\(25\\)
+  </label><br/>
+<label class="option">
+<input name="q63" type="radio" value="C"/> \\(32\\)
+  </label><br/>
+<label class="option">
+<input name="q63" type="radio" value="D"/> \\(49\\)
+  </label><br/>
+<label class="option">
+<input name="q63" type="radio" value="E"/> \\(56\\)
+  </label><br/>
+<label class="option">
+<input name="q63" type="radio" value="F"/> \\(200\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 10</div>
+<p>
+  What is the area of a regular hexagon with side length \\(1\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q64" type="radio" value="A"/> \\(3\\sqrt{3}\\)
+  </label><br/>
+<label class="option">
+<input name="q64" type="radio" value="B"/> \\(\\frac{3\\sqrt{3}}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q64" type="radio" value="C"/> \\(\\sqrt{3}\\)
+  </label><br/>
+<label class="option">
+<input name="q64" type="radio" value="D"/> \\(\\frac{\\sqrt{3}}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q64" type="radio" value="E"/> \\(6\\)
+  </label><br/>
+<label class="option">
+<input name="q64" type="radio" value="F"/> More information needed
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 11</div>
+<p>
+  Dexter moves into a new rectangular room that is \\(19\\) metres longer than it is wide, and its total area is \\(780\\) square metres.
+  What are the room's dimensions?
+</p>
+<div class="options">
+<label class="option">
+<input name="q65" type="radio" value="A"/> Width = \\(20\\,\\text{m}\\); Length = \\(-39\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q65" type="radio" value="B"/> Width = \\(20\\,\\text{m}\\); Length = \\(39\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q65" type="radio" value="C"/> Width = \\(39\\,\\text{m}\\); Length = \\(20\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q65" type="radio" value="D"/> Width = \\(-39\\,\\text{m}\\); Length = \\(20\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q65" type="radio" value="E"/> Width = \\(-20\\,\\text{m}\\); Length = \\(39\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 12</div>
+<p>
+  Tom uses \\(34\\) meters of fencing to enclose his rectangular lot. He measured the diagonals to be \\(13\\) metres long.
+  What is the length and width of the lot?
+</p>
+<div class="options">
+<label class="option">
+<input name="q66" type="radio" value="A"/> \\(3\\,\\text{m}\\) by \\(4\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q66" type="radio" value="B"/> \\(5\\,\\text{m}\\) by \\(12\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q66" type="radio" value="C"/> \\(6\\,\\text{m}\\) by \\(12\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q66" type="radio" value="D"/> \\(8\\,\\text{m}\\) by \\(15\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q66" type="radio" value="E"/> \\(9\\,\\text{m}\\) by \\(15\\,\\text{m}\\)
+  </label><br/>
+<label class="option">
+<input name="q66" type="radio" value="F"/> \\(10\\,\\text{m}\\) by \\(10\\,\\text{m}\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 13</div>
+<p>
+  Solve
+  \\[
+    \\frac{3x-5}{2} + \\frac{x+5}{4} = x + 1.
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q67" type="radio" value="A"/> \\(1\\)
+  </label><br/>
+<label class="option">
+<input name="q67" type="radio" value="B"/> \\(1.5\\)
+  </label><br/>
+<label class="option">
+<input name="q67" type="radio" value="C"/> \\(3.5\\)
+  </label><br/>
+<label class="option">
+<input name="q67" type="radio" value="D"/> \\(4.5\\)
+  </label><br/>
+<label class="option">
+<input name="q67" type="radio" value="E"/> None of the above
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 14</div>
+<p>
+  Differentiate:
+  \\[
+    y = x^2\\ln x.
+  \\]
+</p>
+<div class="options">
+<label class="option">
+<input name="q68" type="radio" value="A"/> \\(2x\\ln x\\)
+  </label><br/>
+<label class="option">
+<input name="q68" type="radio" value="B"/> \\(2x\\ln x + x\\)
+  </label><br/>
+<label class="option">
+<input name="q68" type="radio" value="C"/> \\(x\\ln x + 2x\\)
+  </label><br/>
+<label class="option">
+<input name="q68" type="radio" value="D"/> \\(x^2\\cdot \\frac{1}{x}\\)
+  </label><br/>
+<label class="option">
+<input name="q68" type="radio" value="E"/> \\(2x^2\\ln x\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 15</div>
+<p>
+  Find the range of \\(y = \\sin x + 2\\).
+</p>
+<div class="options">
+<label class="option">
+<input name="q69" type="radio" value="A"/> \\([ -1, 1 ]\\)
+  </label><br/>
+<label class="option">
+<input name="q69" type="radio" value="B"/> \\([ 0, 2 ]\\)
+  </label><br/>
+<label class="option">
+<input name="q69" type="radio" value="C"/> \\([ 1, 3 ]\\)
+  </label><br/>
+<label class="option">
+<input name="q69" type="radio" value="D"/> \\([ 2, 4 ]\\)
+  </label><br/>
+<label class="option">
+<input name="q69" type="radio" value="E"/> \\(( -\\infty, \\infty )\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 16</div>
+<p>
+  On the interval \\(1 \\le x \\le e\\), what is the area of the region between the curves
+  \\(y = \\ln x\\) and \\(y = 1 - x\\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q70" type="radio" value="A"/> \\(\\frac{e^2 - 1}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q70" type="radio" value="B"/> \\(\\frac{e^2 - 2e + 1}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q70" type="radio" value="C"/> \\(\\frac{e^2 - 2e + 3}{2}\\)
+  </label><br/>
+<label class="option">
+<input name="q70" type="radio" value="D"/> \\(e - \\frac{1}{e}\\)
+  </label><br/>
+<label class="option">
+<input name="q70" type="radio" value="E"/> \\(e^2 - e + 1\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 17</div>
+<p>
+  For \\(x &gt; 0\\), define \\(f(x) = x + \\frac{1}{x} + \\ln x\\). The minimum value of \\(f(x)\\) is
+</p>
+<div class="options">
+<label class="option">
+<input name="q71" type="radio" value="A"/> \\(2 + \\ln\\left(\\frac{1}{2}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q71" type="radio" value="B"/> \\(\\sqrt{5} + \\ln\\left(\\frac{\\sqrt{5}-1}{2}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q71" type="radio" value="C"/> \\(\\sqrt{5} + \\ln\\left(\\frac{\\sqrt{5}+1}{2}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q71" type="radio" value="D"/> \\(2\\sqrt{5} + \\ln\\left(\\frac{\\sqrt{5}-1}{2}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q71" type="radio" value="E"/> \\(\\sqrt{5} - \\ln\\left(\\frac{\\sqrt{5}-1}{2}\\right)\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 18</div>
+<p>
+  For \\(0 &lt; x &lt; \\frac{\\pi}{2}\\), the maximum value of
+</p>
+<p>
+  \\[ \\ln(\\sin x) + 2\\ln(\\cos x) \\]
+</p>
+<p>is</p>
+<div class="options">
+<label class="option">
+<input name="q72" type="radio" value="A"/> \\(\\ln\\left(\\frac{2}{3}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q72" type="radio" value="B"/> \\(\\ln\\left(\\frac{2}{3\\sqrt{3}}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q72" type="radio" value="C"/> \\(\\ln\\left(\\frac{1}{3}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q72" type="radio" value="D"/> \\(\\ln\\left(\\frac{4}{9}\\right)\\)
+  </label><br/>
+<label class="option">
+<input name="q72" type="radio" value="E"/> \\(\\ln\\left(\\frac{1}{3\\sqrt{3}}\\right)\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 19</div>
+<p>
+  Given that \\( y = (2 + 3x)^6 \\), what is the coefficient of \\( x^3 \\) in \\( \\frac{dy}{dx} \\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q73" type="radio" value="A"/> \\(240\\)
+  </label><br/>
+<label class="option">
+<input name="q73" type="radio" value="B"/> \\(4320\\)
+  </label><br/>
+<label class="option">
+<input name="q73" type="radio" value="C"/> \\(4860\\)
+  </label><br/>
+<label class="option">
+<input name="q73" type="radio" value="D"/> \\(12960\\)
+  </label><br/>
+<label class="option">
+<input name="q73" type="radio" value="E"/> \\(19440\\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 20</div>
+<p>
+  Given that
+</p>
+<p>
+  \\[
+    \\int_{0}^{2} x^{m}\\,dx = \\frac{16\\sqrt{2}}{7}
+  \\]
+</p>
+<p>
+  and
+</p>
+<p>
+  \\[
+    \\int_{0}^{2} x^{m+1}\\,dx = \\frac{32\\sqrt{2}}{9},
+  \\]
+</p>
+<p>
+  what is the value of \\( m \\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q74" type="radio" value="A"/> \\( -\\frac{11}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q74" type="radio" value="B"/> \\( -\\frac{9}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q74" type="radio" value="C"/> \\( -\\frac{22}{29} \\)
+  </label><br/>
+<label class="option">
+<input name="q74" type="radio" value="D"/> \\( \\frac{7}{22} \\)
+  </label><br/>
+<label class="option">
+<input name="q74" type="radio" value="E"/> \\( \\frac{5}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q74" type="radio" value="F"/> \\( \\frac{7}{2} \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 21</div>
+<p>
+  The complete set of values of \\( a \\) for which the equation
+  \\( 3x^2 = (a+2)x - 3 \\) has two real distinct roots is
+</p>
+<div class="options">
+<label class="option">
+<input name="q75" type="radio" value="A"/> no values of \\( a \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="B"/> \\( -4\\sqrt{2} &lt; a &lt; 4\\sqrt{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="C"/> \\( a &lt; -4\\sqrt{2} \\) or \\( a &gt; 4\\sqrt{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="D"/> \\( -4 &lt; a &lt; 8 \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="E"/> \\( a &lt; -4 \\) or \\( a &gt; 8 \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="F"/> \\( -8 &lt; a &lt; 4 \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="G"/> \\( a &lt; -8 \\) or \\( a &gt; 4 \\)
+  </label><br/>
+<label class="option">
+<input name="q75" type="radio" value="H"/> all values of \\( a \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 22</div>
+<p>
+  \\( f(x) = x^3 - a^2x \\) where \\( a \\) is a positive constant.
+</p>
+<p>
+  Find the complete set of values of \\( x \\) for which \\( f(x) \\) is an increasing function.
+</p>
+<div class="options">
+<label class="option">
+<input name="q76" type="radio" value="A"/> \\( x \\le -a \\), \\( x \\ge a \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="B"/> \\( -a \\le x \\le a \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="C"/> \\( x \\le -a \\), \\( 0 \\le x \\le a \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="D"/> \\( -a \\le x \\le 0 \\), \\( x \\ge a \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="E"/> \\( x \\le -\\frac{a}{3} \\), \\( x \\ge \\frac{a}{3} \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="F"/> \\( -\\frac{a}{3} \\le x \\le \\frac{a}{3} \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="G"/> \\( x \\le -\\frac{a}{\\sqrt{3}} \\), \\( x \\ge \\frac{a}{\\sqrt{3}} \\)
+  </label><br/>
+<label class="option">
+<input name="q76" type="radio" value="H"/> \\( -\\frac{a}{\\sqrt{3}} \\le x \\le \\frac{a}{\\sqrt{3}} \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 23</div>
+<p>
+  What is the coefficient of \\( x^3 \\) in the expansion of
+  \\( (1 - 2x)^5(1 + 2x)^5 \\)?
+</p>
+<div class="options">
+<label class="option">
+<input name="q77" type="radio" value="A"/> \\( -6400 \\)
+  </label><br/>
+<label class="option">
+<input name="q77" type="radio" value="B"/> \\( -640 \\)
+  </label><br/>
+<label class="option">
+<input name="q77" type="radio" value="C"/> \\( -80 \\)
+  </label><br/>
+<label class="option">
+<input name="q77" type="radio" value="D"/> \\( 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q77" type="radio" value="E"/> \\( 80 \\)
+  </label><br/>
+<label class="option">
+<input name="q77" type="radio" value="F"/> \\( 800 \\)
+  </label><br/>
+<label class="option">
+<input name="q77" type="radio" value="G"/> \\( 960 \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 24</div>
+<p>What is the equation of the line that is normal to the following function at \\( x = 4 \\)?</p>
+<p>\\[ y = f(x) = x^3 - 3x^{\\frac{3}{2}} + 5x - 2 \\]</p>
+<div class="options">
+<label class="option">
+<input name="q78" type="radio" value="A"/> \\( y = -\\frac{1}{44}x + \\frac{639}{11} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="B"/> \\( y = -\\frac{1}{8}x + \\frac{21}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="C"/> \\( y = -\\frac{1}{8}x + \\frac{7}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="D"/> \\( y = 8x + \\frac{2}{3} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="E"/> \\( y = 8x - \\frac{16}{3} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="F"/> \\( y = -\\frac{1}{5}x + \\frac{3}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="G"/> \\( y = -\\frac{1}{5}x + \\frac{7}{2} \\)
+  </label><br/>
+<label class="option">
+<input name="q78" type="radio" value="H"/> \\( y = 5x - \\frac{16}{3} \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 25</div>
+<p>
+  The curve \\( y = x^2 \\) is translated by the vector \\( \\begin{pmatrix} 4 \\\\ 3 \\end{pmatrix} \\) and then reflected in the line \\( y = -1 \\).
+</p>
+<p>Which one of the following is an equation of the resulting curve?</p>
+<div class="options">
+<label class="option">
+<input name="q79" type="radio" value="A"/> \\( y = -3 - (x - 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="B"/> \\( y = -3 + (x + 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="C"/> \\( y = 3 - (x + 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="D"/> \\( y = 3 + (x - 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="E"/> \\( y = -5 - (x - 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="F"/> \\( y = -5 + (x + 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="G"/> \\( y = 5 - (x + 4)^2 \\)
+  </label><br/>
+<label class="option">
+<input name="q79" type="radio" value="H"/> \\( y = 5 + (x - 4)^2 \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 26</div>
+<p>
+  The graph of the function \\( y = x^3 + px^2 + qx + 6 \\), where \\( p \\) and \\( q \\) are real constants, has a local maximum when \\( x = 2 \\) and a local minimum when \\( x = 4 \\).
+</p>
+<p>What are the values of \\( p \\) and \\( q \\)?</p>
+<div class="options">
+<label class="option">
+<input name="q80" type="radio" value="A"/> \\( p = -3 \\) and \\( q = -8 \\)
+  </label><br/>
+<label class="option">
+<input name="q80" type="radio" value="B"/> \\( p = -3 \\) and \\( q = 8 \\)
+  </label><br/>
+<label class="option">
+<input name="q80" type="radio" value="C"/> \\( p = 3 \\) and \\( q = -8 \\)
+  </label><br/>
+<label class="option">
+<input name="q80" type="radio" value="D"/> \\( p = -9 \\) and \\( q = 24 \\)
+  </label><br/>
+<label class="option">
+<input name="q80" type="radio" value="E"/> \\( p = 9 \\) and \\( q = 24 \\)
+  </label><br/>
+<label class="option">
+<input name="q80" type="radio" value="F"/> \\( p = 9 \\) and \\( q = -24 \\)
+  </label>
+</div>
+  `,
+  `
+<div class="question-number">Question 27</div>
+<p>
+  A square \\(PQRS\\) is drawn above the \\(x\\)-axis with the side \\(PQ\\) on the \\(x\\)-axis.
+</p>
+<p>
+  \\(P\\) is the point \\((-5, 0)\\) and \\(Q\\) is the point \\((1, 0)\\).
+</p>
+<p>
+  A circle is drawn inside the square with diameter equal in length to the side of the square.
+</p>
+<p>Which one of the following is an equation of the circle?</p>
+<div class="options">
+<label class="option">
+<input name="q81" type="radio" value="A"/> \\( x^2 + y^2 - 4x + 6y + 4 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="B"/> \\( x^2 + y^2 - 4x + 6y + 9 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="C"/> \\( x^2 + y^2 + 4x - 6y + 4 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="D"/> \\( x^2 + y^2 + 4x - 6y + 9 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="E"/> \\( x^2 + y^2 - 6x - 4y + 9 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="F"/> \\( x^2 + y^2 - 6x + 4y + 4 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="G"/> \\( x^2 + y^2 + 6x - 4y + 4 = 0 \\)
+  </label><br/>
+<label class="option">
+<input name="q81" type="radio" value="H"/> \\( x^2 + y^2 + 6x + 4y + 9 = 0 \\)
+  </label>
+</div>
+  `
+];
+
+const totalQuestions = questions.length;
+
+const correctAnswers = [
+  // Mathematics 1 (Q1-Q27)
+  "C","B","C","C","D","B","A","C","C",
+  "D","C","A","D","C","D","C","C","C",
+  "A","E","D","B","A","D","E","D","C",
+  // Physics (Q28-Q54)
+  "D","G","F","B","A","C","G","D","A",
+  "B","H","E","G","A","D","F","B","D",
+  "E","F","E","D","C","C","C","A","B",
+  // Mathematics 2 (Q55-Q81)
+  "C","B","C","A","A","C","B","D","C",
+  "B","B","B","E","B","C","C","B","B",
+  "E","E","G","G","D","A","E","D","C"
+];

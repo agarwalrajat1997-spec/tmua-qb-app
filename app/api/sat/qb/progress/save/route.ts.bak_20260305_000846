@@ -1,0 +1,62 @@
+﻿import { NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+
+type Update = { key: string; value: any };
+
+function supabaseServer() {
+  const cookieStore = cookies();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  return createServerClient(url, key, {
+    cookies: {
+      get(name: string) { return cookieStore.get(name)?.value; },
+      set(name: string, value: string, options: any) { cookieStore.set({ name, value, ...options }); },
+      remove(name: string, options: any) { cookieStore.set({ name, value: "", ...options }); },
+    },
+  });
+}
+
+export async function POST(req: Request) {
+  try {
+    const supabase = supabaseServer();
+
+    const { data: auth, error: authErr } = await supabase.auth.getUser();
+    if (authErr || !auth?.user) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const body = await req.json().catch(() => null);
+    const paper = String(body?.paper || "").trim() || "1";
+    const updates = body?.updates as Update[] | undefined;
+
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return NextResponse.json({ error: "updates is required" }, { status: 400 });
+    }
+
+    // Build rows for upsert
+    const rows = updates.map((u) => ({
+      user_id: auth.user.id,
+      product: "tmua-question-bank",
+      paper,
+      storage_key: String(u.key),
+      storage_value: u.value, // jsonb
+      updated_at: new Date().toISOString(),
+    }));
+
+    const { error } = await supabase
+      .from("qb_progress")
+      .upsert(rows, { onConflict: "user_id,paper,storage_key" });
+
+    if (error) {
+      return NextResponse.json(
+        { error: "Supabase upsert failed", extra: { message: error.message } },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ ok: true, count: rows.length });
+  } catch (e: any) {
+    return NextResponse.json({ error: e?.message || "Server error" }, { status: 500 });
+  }
+}

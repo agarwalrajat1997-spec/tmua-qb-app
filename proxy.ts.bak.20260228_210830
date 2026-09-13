@@ -1,0 +1,85 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+
+function isPublicPath(pathname: string) {
+  return (
+    pathname === "/login" ||
+    pathname.startsWith("/auth/callback") ||
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/favicon") ||
+    pathname.startsWith("/robots") ||
+    pathname.startsWith("/sitemap")
+  );
+}
+
+async function hasApproval(supabase: any, email: string, product: string) {
+  const { data, error } = await supabase
+    .from("student_access")
+    .select("approved")
+    .eq("email", email)
+    .eq("product", product)
+    .maybeSingle();
+
+  if (error) return false;
+  return !!data?.approved;
+}
+
+export async function proxy(req: NextRequest) {
+  const res = NextResponse.next();
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+  if (!url || !key) {
+    // If env is missing, fail fast with a helpful redirect
+    const u = req.nextUrl.clone();
+    u.pathname = "/login";
+    u.searchParams.set("err", "missing_env");
+    return NextResponse.redirect(u);
+  }
+
+  const pathname = req.nextUrl.pathname;
+
+  if (isPublicPath(pathname)) return res;
+
+  const supabase = createServerClient(url, key, {
+    cookies: {
+      getAll: () => req.cookies.getAll(),
+      setAll: (cookiesToSet) => {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          res.cookies.set(name, value, options);
+        });
+      },
+    },
+  });
+
+  // 1) Must be signed in
+  const { data: { user } } = await supabase.auth.getUser();
+  const email = user?.email || "";
+
+  if (!user || !email) {
+    const u = req.nextUrl.clone();
+    u.pathname = "/login";
+    u.searchParams.set("next", pathname);
+    return NextResponse.redirect(u);
+  }
+
+  // 2) Must be approved for product
+  // Protect these product areas (also blocks /tmua-question-bank/index.html even if in /public)
+  const needsTMUA = pathname.startsWith("/tmua-question-bank") || pathname.startsWith("/question-bank-tmua");
+
+  if (needsTMUA) {
+    const ok = await hasApproval(supabase, email, "tmua-question-bank");
+    if (!ok) {
+      const u = req.nextUrl.clone();
+      u.pathname = "/pending";
+      return NextResponse.redirect(u);
+    }
+  }
+
+  return res;
+}
+
+export const config = {
+  matcher: ["/tmua-question-bank/:path*", "/question-bank-tmua/:path*"],
+};

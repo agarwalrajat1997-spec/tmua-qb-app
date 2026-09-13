@@ -1,0 +1,17 @@
+import type { ReactNode } from "react";
+import styles from "./layout.module.css";
+import NoRightClick from "./NoRightClick";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <NoRightClick />
+      <div className={styles.shell} data-qb-fit="TS_QB_FIT20260227020549">
+        <div className={styles.inner}>{children}</div>
+      </div>
+    </>
+  );
+}

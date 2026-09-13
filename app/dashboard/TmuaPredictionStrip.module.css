@@ -1,0 +1,265 @@
+.strip {
+  width: 100%;
+  min-height: 72px;
+  margin: 0 0 24px;
+  padding: 16px 22px;
+  border: 1px solid var(--ts-border);
+  border-left: 5px solid var(--ts-maroon);
+  border-radius: 14px;
+  background: var(--ts-saffron-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.copy {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.label {
+  color: rgba(20, 20, 20, 0.76);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.score {
+  color: var(--ts-maroon);
+  font-size: 34px;
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.building {
+  color: var(--ts-maroon);
+  font-size: 21px;
+  font-weight: 950;
+  letter-spacing: -0.025em;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: rgba(20, 20, 20, 0.66);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.detail {
+  color: rgba(20, 20, 20, 0.66);
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.35;
+  text-align: right;
+}
+
+
+.infoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-left: 2px;
+}
+
+.infoButton {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid rgba(122, 31, 36, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ts-maroon);
+  display: inline-grid;
+  place-items: center;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1;
+  cursor: help;
+}
+
+.infoButton:hover {
+  background: #ffffff;
+  border-color: rgba(122, 31, 36, 0.58);
+}
+
+.infoButton:focus-visible {
+  outline: 3px solid rgba(122, 31, 36, 0.22);
+  outline-offset: 2px;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 9px);
+  width: min(360px, calc(100vw - 32px));
+  padding: 13px 14px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.14);
+  color: #334155;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease,
+    visibility 120ms ease;
+}
+
+.copy .tooltip {
+  left: 0;
+  right: auto;
+  transform: translateY(3px);
+}
+
+.meta .tooltip {
+  right: 0;
+  left: auto;
+  transform: translateY(3px);
+}
+
+.infoWrap:hover .tooltip,
+.infoWrap:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tooltipTitle {
+  display: block;
+  margin-bottom: 5px;
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.tooltipText {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+}
+@media (max-width: 760px) {
+  .strip {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 17px;
+  }
+
+  .meta {
+    justify-content: flex-start;
+    white-space: normal;
+  }
+
+  .detail {
+    text-align: left;
+  }
+
+  .score {
+    font-size: 30px;
+  }
+}
+
+/* 3C6 responsive TMUA overview */
+
+.strip {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+
+  align-items: center;
+
+  column-gap: 24px;
+  row-gap: 12px;
+
+  overflow: visible;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.meta {
+  min-width: 0;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex-wrap: wrap;
+  gap: 8px;
+
+  white-space: normal;
+}
+
+.meta > span {
+  display: inline-flex;
+  align-items: center;
+
+  min-width: 0;
+  min-height: 34px;
+
+  box-sizing: border-box;
+
+  padding: 7px 11px;
+
+  border: 1px solid rgba(132, 32, 38, 0.16);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.46);
+
+  line-height: 1.25;
+
+  white-space: nowrap;
+}
+
+.meta > span strong {
+  margin-left: 4px;
+}
+
+@media (max-width: 1180px) {
+  .strip {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .meta {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .strip {
+    padding: 15px 17px;
+  }
+
+  .meta {
+    width: 100%;
+  }
+
+  .meta > span {
+    white-space: normal;
+  }
+}

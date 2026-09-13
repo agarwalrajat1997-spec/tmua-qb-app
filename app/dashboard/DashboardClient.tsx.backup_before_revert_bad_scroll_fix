@@ -1,0 +1,1000 @@
+﻿"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabaseBrowser } from "@/utils/supabase/browser";
+import styles from "./dashboard.module.css";
+
+type PracticeTest = {
+  id: string;
+  test_id: string;
+  title: string;
+  section: "topic" | "full";
+  badge: "PAPER 1" | "PAPER 2" | "FULL" | "OFFICIAL";
+  duration_minutes: number;
+  topics: string[];
+  file: string;
+};
+
+type Product = "practice-tests" | "tmua-question-bank" | "tmua-classes";
+
+type LatestAttemptSummary = {
+  id: string;
+  test_id: string;
+  test_title?: string | null;
+  paper?: string | null;
+  total_questions: number;
+  score: number;
+  tmua_score9?: number | null;
+  submitted_at: string;
+  attempt_no?: number | null;
+  total_attempts?: number;
+  incorrect?: any[];
+};
+
+type AttemptRow = {
+  id: string;
+  test_id: string;
+  test_title?: string | null;
+  paper?: string | null;
+  total_questions: number;
+  score: number;
+  tmua_score9?: number | null;
+  submitted_at: string;
+  incorrect: any[];
+  time_spent: any[];
+  answers: any[];
+  correct_answers: any[];
+  flags: any[];
+  attempt_no: number;
+};
+
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return supabaseBrowser();
+}
+
+function parseHash(hash: string) {
+  const h = (hash || "").startsWith("#") ? (hash || "").slice(1) : hash || "";
+  try {
+    return new URLSearchParams(h);
+  } catch {
+    return new URLSearchParams();
+  }
+}
+
+function fmtDate(iso: string) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+  } catch {
+    return iso;
+  }
+}
+
+function uniqNums(x: any): number[] {
+  if (!Array.isArray(x)) return [];
+  const out: number[] = [];
+  for (const v of x) {
+    const n = typeof v === "number" ? v : parseInt(String(v), 10);
+    if (Number.isFinite(n) && n > 0) out.push(n);
+  }
+  return Array.from(new Set(out)).sort((a, b) => a - b);
+}
+
+/**
+ * Extract solutionPDF from test HTML.
+ * Supports: const/let/var solutionPDF = "https://...pdf" [; optional]
+ * Also works if whitespace varies.
+ */
+async function fetchSolutionPdfForFile(file: string): Promise<string | null> {
+  try {
+    const res = await fetch(`/practice-tests/tests/${file}`, { method: "GET" });
+    if (!res.ok) return null;
+    const html = await res.text();
+
+    const re = /\b(?:const|let|var)\s+solutionPDF\s*=\s*["']([^"']+)["']\s*;?/i;
+    const m = html.match(re);
+
+    const url = m?.[1]?.trim();
+    if (!url) return null;
+    if (!/^https?:\/\//i.test(url)) return null;
+    return url;
+  } catch {
+    return null;
+  }
+}
+
+export default function DashboardClient({ uiMark }: { uiMark: string }) {
+  const router = useRouter();
+  const supabase = useMemo(() => getSupabase(), []);
+
+  const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState<"practice" | "bank" | "classes">("practice");
+  const [err, setErr] = useState<string | null>(null);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [accessLoading, setAccessLoading] = useState(true);
+  const [accessErr, setAccessErr] = useState<string | null>(null);
+
+  const [attemptsLoading, setAttemptsLoading] = useState(false);
+  const [attemptsErr, setAttemptsErr] = useState<string | null>(null);
+  const [latestByTestId, setLatestByTestId] = useState<Record<string, LatestAttemptSummary>>({});
+
+  const [solutionByTestId, setSolutionByTestId] = useState<Record<string, string>>({});
+  const [solutionsLoading, setSolutionsLoading] = useState(false);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTest, setModalTest] = useState<PracticeTest | null>(null);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalErr, setModalErr] = useState<string | null>(null);
+  const [modalAttempts, setModalAttempts] = useState<AttemptRow[]>([]);
+
+  const [solOpen, setSolOpen] = useState(false);
+  const [solTitle, setSolTitle] = useState<string>("");
+  const [solUrl, setSolUrl] = useState<string>("");
+
+  const ARROW = "\u2192";
+
+  const TESTS: PracticeTest[] = useMemo(
+    () => [
+      {
+        id: "p1-mock-01",
+        test_id: "p1-mock-01-algebra-sequences-functions-geometry",
+        title: "TMUA Mock Test 1 (Paper 1)",
+        section: "topic",
+        badge: "PAPER 1",
+        duration_minutes: 75,
+        topics: ["Algebra", "Sequences", "Functions", "Geometry"],
+        file: "p1-mock-01-algebra-sequences-functions-geometry.html",
+      },
+      {
+        id: "p1-mock-02",
+        test_id: "p1-mock-02-graphs-trig-logs",
+        title: "TMUA Mock Test 2 (Paper 1)",
+        section: "topic",
+        badge: "PAPER 1",
+        duration_minutes: 75,
+        topics: ["Graphs", "Trigonometry", "Logarithms"],
+        file: "p1-mock-02-graphs-trig-logs.html",
+      },
+      {
+        id: "p1-mock-03",
+        test_id: "p1-mock-03-calculus",
+        title: "TMUA Mock Test 3 (Paper 1)",
+        section: "topic",
+        badge: "PAPER 1",
+        duration_minutes: 75,
+        topics: ["Calculus"],
+        file: "p1-mock-03-calculus.html",
+      },
+      {
+        id: "p1-mock-05",
+        test_id: "p1-mock-05-all-topics",
+        title: "TMUA Mock Test 5 (Paper 1 · All Topics)",
+        section: "topic",
+        badge: "PAPER 1",
+        duration_minutes: 75,
+        topics: ["All Topics"],
+        file: "p1-mock-05-all-topics.html",
+      },
+      {
+        id: "p2-mock-04",
+        test_id: "p2-mock-04-logic-proofs",
+        title: "TMUA Mock Test 4 (Paper 2 · Logic & Proofs)",
+        section: "topic",
+        badge: "PAPER 2",
+        duration_minutes: 75,
+        topics: ["Logic", "Proofs"],
+        file: "p2-mock-04-logic-proofs.html",
+      },
+      {
+        id: "p2-mock-06",
+        test_id: "p2-mock-06-all-topics",
+        title: "TMUA Mock Test 6 (Paper 2 · All Topics)",
+        section: "topic",
+        badge: "PAPER 2",
+        duration_minutes: 75,
+        topics: ["All Topics"],
+        file: "p2-mock-06-all-topics.html",
+      },
+      {
+        id: "full-mock-01",
+        test_id: "full-mock-01-all-topics",
+        title: "TMUA Mock Full Test 1 (P1 + P2)",
+        section: "full",
+        badge: "FULL",
+        duration_minutes: 150,
+        topics: ["All Topics"],
+        file: "full-mock-01-all-topics.html",
+      },
+      {
+        id: "full-mock-02",
+        test_id: "full-mock-02-all-topics",
+        title: "TMUA Mock Full Test 2 (P1 + P2)",
+        section: "full",
+        badge: "FULL",
+        duration_minutes: 150,
+        topics: ["All Topics"],
+        file: "full-mock-02-all-topics.html",
+      },
+      {
+        id: "full-official-2022",
+        test_id: "full-official-2022",
+        title: "TMUA Official 2022 (P1 + P2)",
+        section: "full",
+        badge: "OFFICIAL",
+        duration_minutes: 150,
+        topics: ["All Topics"],
+        file: "full-official-2022.html",
+      },
+      {
+        id: "full-official-2023",
+        test_id: "full-official-2023",
+        title: "TMUA Official 2023 (P1 + P2)",
+        section: "full",
+        badge: "OFFICIAL",
+        duration_minutes: 150,
+        topics: ["All Topics"],
+        file: "full-official-2023.html",
+      },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    (async () => {
+      setErr(null);
+
+      if (!supabase) {
+        setErr("Supabase env vars missing: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const url = new URL(window.location.href);
+        const q = url.searchParams;
+        const hp = parseHash(url.hash);
+
+        const e = q.get("error") || hp.get("error");
+        const ed = q.get("error_description") || hp.get("error_description");
+        if (e) {
+          router.replace(`/login?e=${encodeURIComponent(ed || e)}`);
+          return;
+        }
+
+        const code = q.get("code");
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) {
+            router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+            return;
+          }
+          try {
+            window.history.replaceState({}, "", "/dashboard");
+          } catch {}
+        } else {
+          const access_token = hp.get("access_token");
+          const refresh_token = hp.get("refresh_token");
+          if (access_token && refresh_token) {
+            const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+            if (error) {
+              router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+              return;
+            }
+            try {
+              window.history.replaceState({}, "", "/dashboard");
+            } catch {}
+          }
+        }
+      } catch {}
+
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) {
+        router.replace("/login");
+        return;
+      }
+
+      const userEmail = (data.session.user.email || "").toLowerCase();
+      setEmail(userEmail);
+
+      setAccessLoading(true);
+      setAccessErr(null);
+
+      try {
+        const { data: rows, error } = await supabase
+          .from("student_access")
+          .select("product,approved")
+          .eq("email", userEmail)
+          .eq("approved", true);
+
+        if (error) {
+          setProducts([]);
+          setAccessErr(error.message);
+        } else {
+          const ps = (rows || [])
+            .map((r: any) => r.product as Product)
+            .filter(
+              (p) =>
+                p === "practice-tests" ||
+                p === "tmua-question-bank" ||
+                p === "tmua-classes"
+            );
+          setProducts(Array.from(new Set(ps)));
+        }
+      } catch (e: any) {
+        setProducts([]);
+        setAccessErr(e?.message || "Failed to load access.");
+      } finally {
+        setAccessLoading(false);
+      }
+
+      setLoading(false);
+    })();
+  }, [router, supabase]);
+
+  const hasPractice = products.includes("practice-tests");
+  const hasBank = products.includes("tmua-question-bank");
+  const hasClasses = products.includes("tmua-classes");
+
+  useEffect(() => {
+    if (accessLoading) return;
+    if (hasPractice) setActive("practice");
+    else if (hasBank) setActive("bank");
+    else if (hasClasses) setActive("classes");
+    else setActive("practice");
+  }, [accessLoading, hasPractice, hasBank, hasClasses]);
+
+  useEffect(() => {
+    if (loading || accessLoading) return;
+    if (!hasPractice) return;
+
+    (async () => {
+      setAttemptsLoading(true);
+      setAttemptsErr(null);
+      try {
+        const res = await fetch("/api/practice-tests/attempts", { method: "GET", credentials: "include" });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
+
+        const map: Record<string, LatestAttemptSummary> = {};
+        for (const row of json?.latest || []) {
+          if (row?.test_id) map[row.test_id] = row;
+        }
+        setLatestByTestId(map);
+      } catch (e: any) {
+        setLatestByTestId({});
+        setAttemptsErr(e?.message || "Failed to load attempts.");
+      } finally {
+        setAttemptsLoading(false);
+      }
+    })();
+  }, [loading, accessLoading, hasPractice]);
+
+  useEffect(() => {
+    if (loading || accessLoading) return;
+    if (!hasPractice) return;
+    if (solutionsLoading) return;
+
+    (async () => {
+      setSolutionsLoading(true);
+      try {
+        const entries = await Promise.all(
+          TESTS.map(async (t) => {
+            const url = await fetchSolutionPdfForFile(t.file);
+            return [t.test_id, url] as const;
+          })
+        );
+        const map: Record<string, string> = {};
+        for (const [tid, url] of entries) {
+          if (url) map[tid] = url;
+        }
+        setSolutionByTestId(map);
+      } finally {
+        setSolutionsLoading(false);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, accessLoading, hasPractice]);
+
+  const topicTests = useMemo(() => TESTS.filter((t) => t.section === "topic"), [TESTS]);
+  const fullTests = useMemo(() => TESTS.filter((t) => t.section === "full"), [TESTS]);
+
+  const doneCount = useMemo(() => TESTS.filter((t) => !!latestByTestId[t.test_id]).length, [TESTS, latestByTestId]);
+  const leftCount = useMemo(() => Math.max(0, TESTS.length - doneCount), [TESTS.length, doneCount]);
+
+  const nextRecommended = useMemo(() => {
+    const next = TESTS.find((t) => !latestByTestId[t.test_id]);
+    return next ? `Next recommended: ${next.title}` : "All tests completed.";
+  }, [TESTS, latestByTestId]);
+
+  function openTest(t: PracticeTest) {
+    window.location.href = `/practice-tests/tests/${t.file}`;
+  }
+
+  function openSolutionEmbed(t: PracticeTest) {
+    const url = solutionByTestId[t.test_id];
+    if (!url) return;
+    setSolTitle(`${t.title} — Solutions`);
+    setSolUrl(url);
+    setSolOpen(true);
+  }
+
+  async function openAttemptsModal(t: PracticeTest) {
+    setModalOpen(true);
+    setModalTest(t);
+    setModalLoading(true);
+    setModalErr(null);
+    setModalAttempts([]);
+
+    try {
+      const res = await fetch(`/api/practice-tests/attempts?test_id=${encodeURIComponent(t.test_id)}`, {
+        credentials: "include",
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Failed to load attempts.");
+      setModalAttempts((json?.attempts || []) as AttemptRow[]);
+    } catch (e: any) {
+      setModalErr(e?.message || "Failed to load attempts.");
+      setModalAttempts([]);
+    } finally {
+      setModalLoading(false);
+    }
+  }
+
+  async function logout() {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+    router.replace("/login");
+  }
+
+  if (loading) {
+    return (
+      <div id="ts-dashboard-page" className={styles.page} data-ui={uiMark}>
+        <div id="ts-dashboard-page" className={styles.topbar}>
+          <div id="ts-dashboard-page" className={styles.brand}>
+            <div id="ts-dashboard-page" className={styles.brandName}>Thriving Scholars</div>
+            <div id="ts-dashboard-page" className={styles.brandTag}>TMUA Student Portal</div>
+          </div>
+          <div id="ts-dashboard-page" className={styles.right}>
+            <div id="ts-dashboard-page" className={styles.pill}>Loading...</div>
+          </div>
+        </div>
+        <div id="ts-dashboard-page" className={styles.main}>
+          <div id="ts-dashboard-page" className={styles.card}>
+            <div id="ts-dashboard-page" className={styles.cardTitle}>Loading TMUA Student Portal...</div>
+            <div id="ts-dashboard-page" className={styles.muted}>If this takes longer than usual, refresh the page and try again.</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const showNoAccess = !accessLoading && !hasPractice && !hasBank && !hasClasses;
+
+  const lockStyle: React.CSSProperties = { opacity: 0.45, cursor: "not-allowed" };
+
+  return (
+    <div id="ts-dashboard-page" className={styles.page} data-ui={uiMark}>
+      <div id="ts-dashboard-page" className={styles.topbar}>
+        <div id="ts-dashboard-page" className={styles.brand}>
+          <div id="ts-dashboard-page" className={styles.brandName}>Thriving Scholars</div>
+          <div id="ts-dashboard-page" className={styles.brandTag}>TMUA Student Portal</div>
+        </div>
+        <div id="ts-dashboard-page" className={styles.right}>
+          <div id="ts-dashboard-page" className={styles.pill}>
+            <b>Signed in:</b> {email || "—"}
+          </div>
+          <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={logout}>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div id="ts-dashboard-page" className={styles.shell}>
+        <aside className={styles.sidebar}>
+          <div id="ts-dashboard-page" className={styles.sideTitle}>
+            Your TMUA
+            <br />
+            Workspace
+          </div>
+          <div id="ts-dashboard-page" className={styles.sideSub}>Practice tests + question bank + live classes. Clean, focused, tracked.</div>
+
+          <ul className={styles.nav}>
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`}
+                onClick={() => hasPractice && setActive("practice")}
+                type="button"
+                aria-disabled={!hasPractice}
+                disabled={!hasPractice}
+                style={!hasPractice ? lockStyle : undefined}
+                title={!hasPractice ? "Locked: practice-tests not enabled" : "Practice Tests"}
+              >
+                <span className={styles.step}>1</span>
+                <span className={styles.navLabel}>Practice Tests</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "bank" ? styles.navBtnOn : ""}`}
+                onClick={() => hasBank && setActive("bank")}
+                type="button"
+                aria-disabled={!hasBank}
+                disabled={!hasBank}
+                style={!hasBank ? lockStyle : undefined}
+                title={!hasBank ? "Locked: tmua-question-bank not enabled" : "Question Bank"}
+              >
+                <span className={styles.step}>2</span>
+                <span className={styles.navLabel}>Question Bank</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                className={`${styles.navBtn} ${active === "classes" ? styles.navBtnOn : ""}`}
+                onClick={() => hasClasses && setActive("classes")}
+                type="button"
+                aria-disabled={!hasClasses}
+                disabled={!hasClasses}
+                style={!hasClasses ? lockStyle : undefined}
+                title={!hasClasses ? "Locked: tmua-classes not enabled" : "Classes"}
+              >
+                <span className={styles.step}>3</span>
+                <span className={styles.navLabel}>Classes</span>
+              </button>
+            </li>
+          </ul>
+
+          <div id="ts-dashboard-page" className={styles.card} style={{ margin: "16px 18px 0" }}>
+            <div id="ts-dashboard-page" className={styles.muted}>
+              Support: <b>outreach@thrivingscholars.com</b>
+              <br />
+              WhatsApp: <b>+44 7459 070019</b>
+            </div>
+          </div>
+
+          {!accessLoading && accessErr && (
+            <div id="ts-dashboard-page" className={styles.card} style={{ margin: "12px 18px 0" }}>
+              <div id="ts-dashboard-page" className={styles.cardTitle}>Access status</div>
+              <div id="ts-dashboard-page" className={styles.muted}>
+                Could not load product access.
+                <br />
+                <span style={{ opacity: 0.9 }}>{accessErr}</span>
+              </div>
+            </div>
+          )}
+        </aside>
+
+        <main className={styles.main}>
+          {accessLoading ? (
+            <div id="ts-dashboard-page" className={styles.card}>
+              <div id="ts-dashboard-page" className={styles.cardTitle}>Loading access...</div>
+              <div id="ts-dashboard-page" className={styles.muted}>Checking your purchased products.</div>
+            </div>
+          ) : showNoAccess ? (
+            <div id="ts-dashboard-page" className={styles.card}>
+              <div id="ts-dashboard-page" className={styles.cardTitle}>No products enabled</div>
+              <div id="ts-dashboard-page" className={styles.muted}>
+                Your account is signed in, but no TMUA products are enabled yet.
+                <br />
+                Please contact <b>outreach@thrivingscholars.com</b> (WhatsApp <b>+44 7459 070019</b>).
+              </div>
+            </div>
+          ) : active === "practice" ? (
+            <>
+              <div id="ts-dashboard-page" className={styles.h1}>Practice Tests</div>
+
+              <div id="ts-dashboard-page" className={styles.metaRow}>
+                <div id="ts-dashboard-page" className={styles.meta}>
+                  <span className={styles.dot} /> Done {doneCount}/{TESTS.length}
+                </div>
+                <div id="ts-dashboard-page" className={styles.meta}>Left {leftCount}</div>
+                <div id="ts-dashboard-page" className={styles.meta}>TMUA 2026</div>
+              </div>
+
+              <div id="ts-dashboard-page" className={styles.card}>
+                <div id="ts-dashboard-page" className={styles.cardTitle}>Roadmap</div>
+                <div id="ts-dashboard-page" className={styles.muted}>
+                  Topic Tests {ARROW} Full-Length Tests {ARROW} Official (2022/2023) last
+                  <div style={{ marginTop: 8 }}>
+                    <b>{nextRecommended}</b>
+                  </div>
+
+                  {attemptsLoading && <div style={{ marginTop: 10, opacity: 0.85 }}>Loading your attempt history…</div>}
+                  {!attemptsLoading && attemptsErr && (
+                    <div style={{ marginTop: 10, opacity: 0.9 }}>
+                      Could not load attempts: <b>{attemptsErr}</b>
+                    </div>
+                  )}
+
+                  {solutionsLoading && <div style={{ marginTop: 10, opacity: 0.85 }}>Loading solution links…</div>}
+                </div>
+              </div>
+
+              {err && (
+                <div id="ts-dashboard-page" className={styles.card}>
+                  <div id="ts-dashboard-page" className={styles.cardTitle}>Supabase status</div>
+                  <div id="ts-dashboard-page" className={styles.muted}>{err}</div>
+                </div>
+              )}
+
+              <div id="ts-dashboard-page" className={styles.card}>
+                <div id="ts-dashboard-page" className={styles.cardTitle}>Topic tests</div>
+                <div id="ts-dashboard-page" className={styles.grid}>
+                  {topicTests.map((t) => {
+                    const latest = latestByTestId[t.test_id];
+                    const attempted = !!latest;
+                    const wrong = uniqNums((latest as any)?.incorrect);
+
+                    const status = attempted
+                      ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
+                          latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+                        } · ${fmtDate(latest.submitted_at)}`
+                      : "No attempts yet";
+
+                    const sol = solutionByTestId[t.test_id];
+
+                    return (
+                      <div key={t.id} className={styles.test}>
+                        <div id="ts-dashboard-page" className={styles.testTitle}>{t.title}</div>
+
+                        <div id="ts-dashboard-page" className={styles.testMeta}>
+                          <span>{t.badge}</span>
+                          <span> · </span>
+                          <span>{t.duration_minutes} min</span>
+                        </div>
+
+                        <div id="ts-dashboard-page" className={styles.tags}>
+                          {(t.topics || []).slice(0, 6).map((x) => (
+                            <span className={styles.tag} key={x}>
+                              {x}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div id="ts-dashboard-page" className={styles.muted}>{status}</div>
+
+                        {attempted && wrong.length > 0 && (
+                          <div id="ts-dashboard-page" className={styles.muted} style={{ marginTop: 6 }}>
+                            <b>Questions wrong:</b> {wrong.join(", ")}
+                          </div>
+                        )}
+
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+                          <button className={styles.go} onClick={() => openTest(t)}>
+                            {attempted ? "Retake" : "Start"} {ARROW}
+                          </button>
+
+                          {attempted && (
+                            <button className={styles.btn} type="button" onClick={() => openAttemptsModal(t)}>
+                              View attempts
+                            </button>
+                          )}
+
+                          {attempted && sol && (
+                            <button className={styles.btn} type="button" onClick={() => openSolutionEmbed(t)}>
+                              Solutions
+                            </button>
+                          )}
+
+                          {attempted && !sol && (
+                            <button className={styles.btn} type="button" disabled style={{ opacity: 0.5 }}>
+                              Solutions (missing)
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div id="ts-dashboard-page" className={styles.card}>
+                <div id="ts-dashboard-page" className={styles.cardTitle}>Full-length tests</div>
+                <div id="ts-dashboard-page" className={styles.grid}>
+                  {fullTests.map((t) => {
+                    const latest = latestByTestId[t.test_id];
+                    const attempted = !!latest;
+                    const wrong = uniqNums((latest as any)?.incorrect);
+
+                    const status = attempted
+                      ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
+                          latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+                        } · ${fmtDate(latest.submitted_at)}`
+                      : "No attempts yet";
+
+                    const sol = solutionByTestId[t.test_id];
+
+                    return (
+                      <div key={t.id} className={styles.test}>
+                        <div id="ts-dashboard-page" className={styles.testTitle}>{t.title}</div>
+
+                        <div id="ts-dashboard-page" className={styles.testMeta}>
+                          <span>{t.badge}</span>
+                          <span> · </span>
+                          <span>{t.duration_minutes} min</span>
+                        </div>
+
+                        <div id="ts-dashboard-page" className={styles.tags}>
+                          {(t.topics || []).slice(0, 6).map((x) => (
+                            <span className={styles.tag} key={x}>
+                              {x}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div id="ts-dashboard-page" className={styles.muted}>{status}</div>
+
+                        {attempted && wrong.length > 0 && (
+                          <div id="ts-dashboard-page" className={styles.muted} style={{ marginTop: 6 }}>
+                            <b>Questions wrong:</b> {wrong.join(", ")}
+                          </div>
+                        )}
+
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+                          <button className={styles.go} onClick={() => openTest(t)}>
+                            {attempted ? "Retake" : "Start"} {ARROW}
+                          </button>
+
+                          {attempted && (
+                            <button className={styles.btn} type="button" onClick={() => openAttemptsModal(t)}>
+                              View attempts
+                            </button>
+                          )}
+
+                          {attempted && sol && (
+                            <button className={styles.btn} type="button" onClick={() => openSolutionEmbed(t)}>
+                              Solutions
+                            </button>
+                          )}
+
+                          {attempted && !sol && (
+                            <button className={styles.btn} type="button" disabled style={{ opacity: 0.5 }}>
+                              Solutions (missing)
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          ) : active === "bank" ? (
+            <>
+              <div id="ts-dashboard-page" className={styles.h1}>Question Bank</div>
+
+              <div id="ts-dashboard-page" className={styles.metaRow}>
+                <div id="ts-dashboard-page" className={styles.meta}>
+                  <span className={styles.dot} /> TMUA Question Bank
+                </div>
+                <div id="ts-dashboard-page" className={styles.meta}>Filter · Bookmark · Solutions</div>
+              </div>
+
+              <div id="ts-dashboard-page" className={styles.card}>
+                <div id="ts-dashboard-page" className={styles.cardTitle}>Open the Question Bank</div>
+                <div id="ts-dashboard-page" className={styles.muted}>Your access is enabled. Click below to open the TMUA Question Bank.</div>
+
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12 }}>
+                  <button
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                    onClick={() => (window.location.href = "/tmua-question-bank")}
+                  >
+                    Open TMUA Question Bank
+                  </button>
+                </div>
+              </div>
+            </>
+                  ) : (
+            <>
+              <div id="ts-dashboard-page" className={styles.h1}>Classes</div>
+
+              <div id="ts-dashboard-page" className={styles.metaRow}>
+                <div id="ts-dashboard-page" className={styles.meta}>
+                  <span className={styles.dot} /> TMUA Live Classes
+                </div>
+                <div id="ts-dashboard-page" className={styles.meta}>Batches · Schedule · Join Zoom</div>
+              </div>
+
+              <div id="ts-dashboard-page" className={styles.card}>
+                <div id="ts-dashboard-page" className={styles.cardTitle}>TMUA Group Sessions</div>
+                <div id="ts-dashboard-page" className={styles.muted} style={{ marginBottom: 14 }}>
+                  View the upcoming schedule below. The nearest class can be highlighted inside the classes page, with join links shown against each session.
+                </div>
+
+                <div
+                  style={{
+                    width: "100%",
+                    height: "78vh",
+                    minHeight: 720,
+                    border: "1px solid rgba(15,23,42,0.10)",
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    background: "#fff",
+                  }}
+                >
+                  <iframe
+src="/tmua-classes/index.html"
+                    title="TMUA Classes Schedule"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      border: "none",
+                      display: "block",
+                      background: "#fff",
+                    }}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </main>
+      </div>
+
+      {modalOpen && modalTest && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.45)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+            zIndex: 9999,
+          }}
+          onClick={() => {
+            setModalOpen(false);
+            setModalTest(null);
+            setModalAttempts([]);
+            setModalErr(null);
+          }}
+        >
+          <div
+            id="ts-dashboard-page" className={styles.card}
+            style={{ width: "min(900px, 96vw)", maxHeight: "85vh", overflow: "auto" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div id="ts-dashboard-page" className={styles.cardTitle}>Attempts — {modalTest.title}</div>
+            <div id="ts-dashboard-page" className={styles.muted} style={{ marginBottom: 12 }}>
+              Test ID: <b>{modalTest.test_id}</b>
+            </div>
+
+            {modalLoading ? (
+              <div id="ts-dashboard-page" className={styles.muted}>Loading attempts…</div>
+            ) : modalErr ? (
+              <div id="ts-dashboard-page" className={styles.muted}>
+                Could not load attempts: <b>{modalErr}</b>
+              </div>
+            ) : modalAttempts.length === 0 ? (
+              <div id="ts-dashboard-page" className={styles.muted}>No attempts found.</div>
+            ) : (
+              <div style={{ display: "grid", gap: 10 }}>
+                {modalAttempts
+                  .slice()
+                  .sort((a, b) => a.attempt_no - b.attempt_no)
+                  .map((a) => {
+                    const wrong = uniqNums(a.incorrect);
+
+                    return (
+                      <div
+                        key={a.id}
+                        style={{
+                          border: "1px solid rgba(15,23,42,0.12)",
+                          borderRadius: 12,
+                          padding: 12,
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+                          <div>
+                            <b>Attempt {a.attempt_no}</b>
+                            <div id="ts-dashboard-page" className={styles.muted} style={{ marginTop: 4 }}>
+                              Score: <b>{a.score}</b> / {a.total_questions}
+                              {a.tmua_score9 != null ? (
+                                <>
+                                  {" "}
+                                  · <b>TMUA {Number(a.tmua_score9).toFixed(1)}/9.0</b>
+                                </>
+                              ) : null}{" "}
+                              · {fmtDate(a.submitted_at)}
+                            </div>
+
+                            {wrong.length > 0 && (
+                              <div id="ts-dashboard-page" className={styles.muted} style={{ marginTop: 6 }}>
+                                <b>Questions wrong:</b> {wrong.join(", ")}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
+              <button
+                className={`${styles.btn} ${styles.btnPrimary}`}
+                type="button"
+                onClick={() => {
+                  setModalOpen(false);
+                  setModalTest(null);
+                  setModalAttempts([]);
+                  setModalErr(null);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {solOpen && solUrl && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 16,
+            zIndex: 10000,
+          }}
+          onClick={() => {
+            setSolOpen(false);
+            setSolTitle("");
+            setSolUrl("");
+          }}
+        >
+          <div
+            id="ts-dashboard-page" className={styles.card}
+            style={{ width: "min(1100px, 98vw)", height: "min(86vh, 900px)", overflow: "hidden", padding: 0 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              style={{
+                height: 56,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0 14px",
+                borderBottom: "1px solid rgba(15,23,42,0.12)",
+              }}
+            >
+              <div style={{ fontWeight: 900 }}>{solTitle || "Solutions"}</div>
+              <button
+                className={`${styles.btn} ${styles.btnPrimary}`}
+                type="button"
+                onClick={() => {
+                  setSolOpen(false);
+                  setSolTitle("");
+                  setSolUrl("");
+                }}
+              >
+                Close
+              </button>
+            </div>
+
+            <iframe
+              src={solUrl}
+              title={solTitle || "Solutions"}
+              style={{ width: "100%", height: "calc(100% - 56px)", border: "none" }}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

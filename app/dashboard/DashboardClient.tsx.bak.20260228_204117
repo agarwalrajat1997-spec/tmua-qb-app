@@ -1,0 +1,393 @@
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
+import styles from "./dashboard.module.css";
+
+type TestRow = {
+  slug: string;
+  title: string;
+  kind: "topic" | "mock" | "official_sample" | "official_past_paper" | "full_mock";
+  paper: "paper1" | "paper2" | "paper1+paper2";
+  duration_minutes: number;
+  topics: string[];
+  test_url?: string | null;
+  sort_order: number;
+  is_free: boolean;
+};
+
+type AttemptRow = {
+  id: string;
+  test_slug: string;
+  test_title: string;
+  score: number;
+  max_score: number;
+  flags: any;
+  incorrect_questions: number[];
+  submitted_at: string;
+};
+
+function fmtDate(iso: string) {
+  try { return new Date(iso).toLocaleString(); } catch { return iso; }
+}
+
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
+
+function parseHash(hash: string) {
+  const h = (hash || "").startsWith("#") ? (hash || "").slice(1) : (hash || "");
+  try { return new URLSearchParams(h); } catch { return new URLSearchParams(); }
+}
+
+export default function DashboardClient({ uiMark }: { uiMark: string }) {
+  const router = useRouter();
+  const supabase = useMemo(() => getSupabase(), []);
+
+  const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState<"practice" | "bank">("practice");
+
+  const [tests, setTests] = useState<TestRow[]>([]);
+  const [attempts, setAttempts] = useState<AttemptRow[]>([]);
+  const [err, setErr] = useState<string | null>(null);
+
+  const ARROW = "\u2192";
+
+  useEffect(() => {
+    (async () => {
+      setErr(null);
+
+      if (!supabase) {
+        setErr("Supabase env vars missing: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
+        setLoading(false);
+        return;
+      }
+
+      // 1) If magic link landed here with tokens in hash, set session
+      try {
+        const url = new URL(window.location.href);
+        const q = url.searchParams;
+        const hp = parseHash(url.hash);
+
+        const e = q.get("error") || hp.get("error");
+        const ed = q.get("error_description") || hp.get("error_description");
+        if (e) {
+          router.replace(`/login?e=${encodeURIComponent(ed || e)}`);
+          return;
+        }
+
+        const code = q.get("code");
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) { router.replace(`/login?e=${encodeURIComponent(error.message)}`); return; }
+          try { window.history.replaceState({}, "", "/dashboard"); } catch {}
+        } else {
+          const access_token = hp.get("access_token");
+          const refresh_token = hp.get("refresh_token");
+          if (access_token && refresh_token) {
+            const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+            if (error) { router.replace(`/login?e=${encodeURIComponent(error.message)}`); return; }
+            try { window.history.replaceState({}, "", "/dashboard"); } catch {}
+          }
+        }
+      } catch {}
+
+      // 2) Require session
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) {
+        router.replace("/login");
+        return;
+      }
+
+      setEmail(data.session.user.email || "");
+
+      // 3) Load catalog + attempts
+      const t = await supabase
+        .from("tests")
+        .select("slug,title,kind,paper,duration_minutes,topics,test_url,sort_order,is_free")
+        .order("sort_order", { ascending: true });
+
+      const a = await supabase
+        .from("attempts")
+        .select("id,test_slug,test_title,score,max_score,flags,incorrect_questions,submitted_at")
+        .order("submitted_at", { ascending: false })
+        .limit(250);
+
+      if (t.error) setErr(`tests: ${t.error.message}`);
+      if (a.error) setErr((x) => x ? (x + " | " + `attempts: ${a.error?.message}`) : `attempts: ${a.error?.message}`);
+
+      setTests((t.data || []) as any);
+      setAttempts((a.data || []) as any);
+      setLoading(false);
+    })();
+  }, [router, supabase]);
+
+  const latestBySlug = useMemo(() => {
+    const m = new Map<string, AttemptRow>();
+    for (const a of attempts) if (!m.has(a.test_slug)) m.set(a.test_slug, a);
+    return m;
+  }, [attempts]);
+
+  const doneSet = useMemo(() => {
+    const s = new Set<string>();
+    for (const a of attempts) s.add(a.test_slug);
+    return s;
+  }, [attempts]);
+
+  const doneCount = doneSet.size;
+  const leftCount = Math.max(0, tests.length - doneCount);
+
+  const reviewDue = useMemo(() => {
+    const items: { t: TestRow; a: AttemptRow; dueISO: string }[] = [];
+    for (const t of tests) {
+      const a = latestBySlug.get(t.slug);
+      if (!a) continue;
+
+      const incorrect = (a.incorrect_questions || []).length > 0;
+      const flagged = Array.isArray(a.flags) ? a.flags.some(Boolean) : false;
+      if (!incorrect && !flagged) continue;
+
+      const submitted = new Date(a.submitted_at);
+      const due = new Date(submitted.getTime() + 48 * 3600 * 1000);
+      if (due.getTime() > Date.now()) items.push({ t, a, dueISO: due.toISOString() });
+    }
+    items.sort((x, y) => new Date(x.dueISO).getTime() - new Date(y.dueISO).getTime());
+    return items;
+  }, [tests, latestBySlug]);
+
+  const nextRecommended = useMemo(() => {
+    if (reviewDue.length > 0) {
+      const r = reviewDue[0];
+      return `Review due: ${r.t.title} (by ${fmtDate(r.dueISO)})`;
+    }
+    const firstUndone = tests.find(t => !doneSet.has(t.slug));
+    return firstUndone ? `Next recommended: ${firstUndone.title}` : "All tests completed.";
+  }, [reviewDue, tests, doneSet]);
+
+  const groups = useMemo(() => {
+    const topic = tests.filter(t => t.kind === "topic");
+    const p1mock = tests.filter(t => t.kind === "mock" && t.paper === "paper1");
+    const p2mock = tests.filter(t => t.kind === "mock" && t.paper === "paper2");
+    const samples = tests.filter(t => t.kind === "official_sample");
+    const full = tests.filter(t => t.kind === "full_mock");
+    const past = tests.filter(t => t.kind === "official_past_paper");
+
+    return [
+      { id: "topic", title: "Topic tests", items: topic },
+      { id: "p1", title: "Paper 1 mocks", items: p1mock },
+      { id: "p2", title: "Paper 2 mocks", items: p2mock },
+      { id: "samples", title: "Official samples", items: samples },
+      { id: "full", title: "Full mock tests (P1+P2)", items: full },
+      { id: "past", title: "Official past papers (save for last)", items: past },
+    ].filter(g => g.items.length > 0);
+  }, [tests]);
+
+  function openTest(t: TestRow) {
+    const url = t.test_url || `/tmua/practice-tests/${t.slug}.html`;
+    window.location.href = url;
+  }
+
+  async function logout() {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+    router.replace("/login");
+  }
+
+  if (loading) {
+    return (
+      <div className={styles.page} data-ui={uiMark}>
+        <div className={styles.topbar}>
+          <div className={styles.brand}>
+            <div className={styles.brandName}>Thriving Scholars</div>
+            <div className={styles.brandTag}>TMUA Student Portal</div>
+          </div>
+          <div className={styles.right}><div className={styles.pill}>Loadingâ€¦</div></div>
+        </div>
+        <div className={styles.main}>
+          <div className={styles.card}>
+            <div className={styles.cardTitle}>Preparing your portalâ€¦</div>
+            <div className={styles.muted}>If this hangs, check Supabase env vars in Vercel.</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.page} data-ui={uiMark}>
+      <div className={styles.topbar}>
+        <div className={styles.brand}>
+          <div className={styles.brandName}>Thriving Scholars</div>
+          <div className={styles.brandTag}>TMUA Student Portal</div>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.pill}><b>Signed in:</b> {email || "â€”"}</div>
+          <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={logout}>Logout</button>
+        </div>
+      </div>
+
+      <div className={styles.shell}>
+        <aside className={styles.sidebar}>
+          <div className={styles.sideTitle}>Your TMUA<br/>Workspace</div>
+          <div className={styles.sideSub}>Practice tests + question bank. Clean, focused, tracked.</div>
+
+          <ul className={styles.nav}>
+            <li>
+              <button className={`${styles.navBtn} ${active === "practice" ? styles.navBtnOn : ""}`} onClick={() => setActive("practice")} type="button">
+                <span className={styles.step}>1</span>
+                <span className={styles.navLabel}>Practice Tests</span>
+              </button>
+            </li>
+            <li>
+              <button className={`${styles.navBtn} ${active === "bank" ? styles.navBtnOn : ""}`} onClick={() => setActive("bank")} type="button">
+                <span className={styles.step}>2</span>
+                <span className={styles.navLabel}>Question Bank</span>
+              </button>
+            </li>
+          </ul>
+
+          <div className={styles.card} style={{ margin: "16px 18px 0" }}>
+            <div className={styles.muted}>
+              Support: <b>outreach@thrivingscholars.com</b><br/>
+              WhatsApp: <b>+44 7459 070019</b>
+            </div>
+          </div>
+        </aside>
+
+        <main className={styles.main}>
+          {active === "practice" ? (
+            <>
+              <div className={styles.h1}>Practice Tests</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}><span className={styles.dot} /> Done {doneCount}/{tests.length}</div>
+                <div className={styles.meta}>Left {leftCount}</div>
+                <div className={styles.meta}>TMUA 2026</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Roadmap</div>
+                <div className={styles.muted}>
+                  Topic Test {ARROW} Paper mocks {ARROW} Full mocks {ARROW} Official 2022/2023 last
+                  <div style={{ marginTop: 8 }}><b>{nextRecommended}</b></div>
+                </div>
+              </div>
+
+              {err && (
+                <div className={styles.card}>
+                  <div className={styles.cardTitle}>Supabase status</div>
+                  <div className={styles.muted}>{err}</div>
+                </div>
+              )}
+
+              {reviewDue.length > 0 && (
+                <div className={styles.card}>
+                  <div className={styles.cardTitle}>Review due (within 48 hours)</div>
+                  <div className={styles.muted}>
+                    {reviewDue.slice(0, 4).map(r => (
+                      <div key={r.t.slug} style={{ marginTop: 8 }}>
+                        <b>{r.t.title}</b> â€” due by {fmtDate(r.dueISO)} (last {r.a.score}/{r.a.max_score})
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {groups.map(g => (
+                <div className={styles.card} key={g.id}>
+                  <div className={styles.cardTitle}>{g.title}</div>
+                  <div className={styles.grid}>
+                    {g.items.map(t => {
+                      const last = latestBySlug.get(t.slug);
+                      const status = last ? `Last: ${last.score}/${last.max_score} â€¢ ${fmtDate(last.submitted_at)}` : "Not attempted yet";
+                      return (
+                        <div key={t.slug} className={styles.test}>
+                          <div className={styles.testTitle}>{t.title}</div>
+                          <div className={styles.testMeta}>
+                            <span>{t.paper.toUpperCase()}</span><span>â€¢</span><span>{t.duration_minutes} min</span>
+                            {t.is_free && (<><span>â€¢</span><span>Free</span></>)}
+                          </div>
+                          <div className={styles.tags}>
+                            {(t.topics || []).slice(0, 4).map(x => <span className={styles.tag} key={x}>{x}</span>)}
+                          </div>
+                          <div className={styles.muted}>{status}</div>
+                          <button className={styles.go} onClick={() => openTest(t)}>
+                            {last ? "Retake / Review" : "Start"} {ARROW}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Past attempts & performance</div>
+                <div className={styles.tableWrap}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Submitted</th>
+                        <th>Test</th>
+                        <th>Score</th>
+                        <th>Incorrect</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {attempts.slice(0, 20).map(a => (
+                        <tr key={a.id}>
+                          <td>{fmtDate(a.submitted_at)}</td>
+                          <td>{a.test_title}</td>
+                          <td><b>{a.score}/{a.max_score}</b></td>
+                          <td>{(a.incorrect_questions || []).length ? a.incorrect_questions.join(", ") : "â€”"}</td>
+                        </tr>
+                      ))}
+                      {attempts.length === 0 && (
+                        <tr><td colSpan={4} className={styles.muted}>No attempts yet.</td></tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+                <div className={styles.support}>
+                  Need help? email <b>outreach@thrivingscholars.com</b> (WhatsApp <b>+44 7459 070019</b>)
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.h1}>Question Bank</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}><span className={styles.dot} /> TMUA Question Bank</div>
+                <div className={styles.meta}>Filter â€¢ Bookmark â€¢ Solutions</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Open the Question Bank</div>
+                <div className={styles.muted}></div>
+
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12 }}>
+                  <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => window.location.href = "/tmua-question-bank"}>
+                    Open TMUA Question Bank \u2192
+                  </button>
+                  <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => window.location.href = "/tmua-question-bank?paper=2"}>
+                    Paper 2 \u2192
+                  </button>
+                </div>
+
+                <div className={styles.support} style={{ marginTop: 14 }}>
+                  Support: <b>outreach@thrivingscholars.com</b> â€¢ WhatsApp <b>+44 7459 070019</b>
+                </div>
+              </div>
+            </>
+          )}
+        </main>
+      </div>
+    </div>
+  );
+}
