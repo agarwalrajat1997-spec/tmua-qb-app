@@ -208,8 +208,19 @@ export async function POST(req: Request) {
       ? requestedProduct
       : "tmua-question-bank";
 
+    if (product === "tmua-question-bank" && body?.identity_version !== "tmua-display-order-v1") {
+      return jsonErr(409, "Please reload the TMUA question bank before saving progress.", { code: "TMUA_IDENTITY_VERSION_REQUIRED" });
+    }
+
     if (!Array.isArray(updates) || updates.length === 0) {
       return jsonErr(400, "updates is required");
+    }
+
+    if (product === "tmua-question-bank" && updates.some((u: any) => {
+      const id = String(u?.question_id ?? u?.key ?? "");
+      return !/^[1-9][0-9]*$/.test(id) || !Number.isSafeInteger(Number(id)) || Number(id) > 2147483647;
+    })) {
+      return jsonErr(400, "A stable TMUA database question identifier is required.");
     }
 
     // Build upsert rows

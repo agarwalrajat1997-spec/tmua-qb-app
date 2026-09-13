@@ -1937,17 +1937,17 @@ window.MathJax = {
     return new Date().toISOString();
   }
 
-  function newSubmissionId() {
+  function newSubmissionId(questionId) {
     try {
       if (
         window.crypto &&
         typeof window.crypto.randomUUID === "function"
       ) {
-        return window.crypto.randomUUID();
+        return "tmua-stable-v1|" + questionId + "|" + window.crypto.randomUUID();
       }
     } catch (e) {}
 
-    return [
+    return "tmua-stable-v1|" + questionId + "|" + [
       Date.now().toString(36),
       Math.random().toString(36).slice(2),
       Math.random().toString(36).slice(2)
@@ -1992,71 +1992,12 @@ window.MathJax = {
   }
 
   function getMeta() {
-    var meta = null;
-
-    try {
-      if (typeof window.currentMeta === "function") meta = window.currentMeta();
-    } catch (e) {}
-
-    if (meta && typeof meta === "object") return meta;
-
-    try {
-      if (typeof currentMeta === "function") meta = currentMeta();
-    } catch (e) {}
-
-    if (meta && typeof meta === "object") return meta;
-
-    return null;
-  }
-
-  function getDisplayNumberFromDom() {
-    var selectors = [
-      "#posCounter",
-      "#currentQuestion",
-      ".current-question",
-      ".question-number",
-      "[data-current-question]"
-    ];
-
-    for (var i = 0; i < selectors.length; i++) {
-      var el = document.querySelector(selectors[i]);
-      if (!el) continue;
-
-      var txt = safeString(el.getAttribute("data-current-question") || el.textContent || "");
-      var m = txt.match(/\d+/);
-
-      if (m) return String(Number(m[0]));
-    }
-
-    var bodyText = document.body ? safeString(document.body.textContent || "") : "";
-    var m2 = bodyText.match(/\b(\d+)\s*\/\s*\d+\b/);
-
-    if (m2) return String(Number(m2[1]));
-
-    return "";
+    return window.TS_TMUA_QB ? window.TS_TMUA_QB.getCurrentMeta() : null;
   }
 
   function getQuestionKeys() {
-    var keys = [];
-    var meta = getMeta();
-
-    if (meta) {
-      [
-        meta.display_order,
-        meta.original_index,
-        meta.qid,
-        meta.id,
-        meta.question_id
-      ].forEach(function (x) {
-        var s = safeString(x);
-        if (s && keys.indexOf(s) === -1) keys.push(s);
-      });
-    }
-
-    var domKey = getDisplayNumberFromDom();
-    if (domKey && keys.indexOf(domKey) === -1) keys.push(domKey);
-
-    return keys;
+    var key = window.TS_TMUA_QB ? window.TS_TMUA_QB.currentQuestionId() : "";
+    return key ? [key] : [];
   }
 
   function primaryQuestionId() {
@@ -2088,124 +2029,28 @@ window.MathJax = {
   }
 
   function selectedAnswer() {
-    try {
-      if (typeof window.selectedAnswer === "function") {
-        var v1 = window.selectedAnswer();
-        if (v1) return safeString(v1);
-      }
-    } catch (e) {}
-
-    try {
-      if (typeof selectedAnswer === "function") {
-        var v2 = selectedAnswer();
-        if (v2) return safeString(v2);
-      }
-    } catch (e) {}
-
-    var selectors = [
-      "input[type='radio']:checked",
-      "#options .selected",
-      ".options .selected",
-      ".choice.selected",
-      ".option.selected",
-      ".answer-option.selected",
-      "[data-option].selected",
-      "[data-choice].selected"
-    ];
-
-    for (var i = 0; i < selectors.length; i++) {
-      var el = document.querySelector(selectors[i]);
-      if (!el) continue;
-
-      var raw =
-        el.value ||
-        el.getAttribute("data-option") ||
-        el.getAttribute("data-choice") ||
-        el.getAttribute("data-answer") ||
-        el.textContent ||
-        "";
-
-      raw = safeString(raw);
-
-      var m = raw.match(/^[A-E]/i);
-      if (m) return m[0].toUpperCase();
-
-      if (raw) return raw.slice(0, 25);
-    }
-
-    return "";
+    return window.TS_TMUA_QB ? window.TS_TMUA_QB.selectedAnswer() : "";
   }
 
-  function visibleText(selectors) {
-    var out = "";
-
-    selectors.forEach(function (selector) {
-      document.querySelectorAll(selector).forEach(function (el) {
-        var hidden =
-          el.hidden ||
-          el.style.display === "none" ||
-          el.getAttribute("aria-hidden") === "true";
-
-        if (!hidden) out += " " + safeString(el.textContent || "");
-      });
-    });
-
-    return out;
-  }
-
-  function detectStatus() {
-    var text = visibleText([
-      "#feedback",
-      "#answerFeedback",
-      "#result",
-      "#solution",
-      "#solutionBox",
-      ".feedback",
-      ".answer-feedback",
-      ".result",
-      ".solution",
-      ".solution-box"
-    ]).toLowerCase();
-
-    if (
-      document.querySelector(".selected.correct, .correct.selected, .is-correct, .answer-correct") ||
-      /\bcorrect\b/.test(text)
-    ) {
-      if (!/\bincorrect\b|\bwrong\b/.test(text)) return "correct";
-    }
-
-    if (
-      document.querySelector(".selected.wrong, .wrong.selected, .incorrect.selected, .selected.incorrect, .is-wrong, .answer-wrong") ||
-      /\bincorrect\b|\bwrong\b/.test(text)
-    ) {
-      return "wrong";
-    }
-
-    return selectedAnswer() ? "attempted" : "seen";
-  }
-
-  function isFlagged() {
-    var btn = document.querySelector("#btnFlag");
-
-    if (btn) {
-      var txt = safeString(btn.textContent || "").toLowerCase();
-      if (btn.classList.contains("active") || txt.indexOf("flagged") !== -1) return true;
-    }
-
-    return !!document.querySelector(".flagged, .nav-icons");
+  function detectStatus(answer) {
+    if (answer.checked === true) return answer.isCorrect === true ? "correct" : "wrong";
+    return answer.selected ? "attempted" : "seen";
   }
 
   function findProgressForCurrent() {
-    var keys = getQuestionKeys();
-
-    for (var i = 0; i < keys.length; i++) {
-      if (progressMap[keys[i]]) return progressMap[keys[i]];
-    }
-
-    return null;
+    var qid = primaryQuestionId();
+    var answer = qid && window.TS_TMUA_QB.getAnswer(qid);
+    // An unversioned legacy progress row may have been saved using a UI position.
+    // Only the app's stable-key answer state may control reattempt feedback.
+    if (!answer || answer.checked !== true) return null;
+    return {status: detectStatus(answer)};
   }
 
+  var progressRevision = 0;
+  var pendingSaves = 0;
+
   async function loadProgress() {
+    var revision = progressRevision;
     try {
       var res = await fetch(LOAD_URL, {
         method: "GET",
@@ -2217,6 +2062,7 @@ window.MathJax = {
 
       if (!res.ok || !payload.ok) return;
 
+      if (pendingSaves || revision !== progressRevision) return;
       progressMap = payload.progress || {};
       updateVisitQuestion();
 
@@ -2229,74 +2075,46 @@ window.MathJax = {
 
   function buildMergedUpdate(questionId, incomingStatus, incomingSelected, incomingFlagged, eventName) {
     var existing = progressMap[questionId] || {};
-    var oldStatus = normaliseStatus(existing.status);
-    var newStatus = normaliseStatus(incomingStatus);
-
-    var oldPriority = statusPriority(oldStatus);
-    var newPriority = statusPriority(newStatus);
-
-    var finalStatus = oldStatus || "seen";
-    var finalSelected = existing.selected_answer || null;
-
-    // Never downgrade wrong/correct to seen just because the student revisited.
-    if (newPriority >= oldPriority) {
-      finalStatus = newStatus;
-      finalSelected = incomingSelected || finalSelected || null;
-    }
-
-    // But if this was an actual check, allow wrong -> correct or correct -> wrong based on latest check.
-    if (checkedThisVisit[questionId] && (newStatus === "correct" || newStatus === "wrong")) {
-      finalStatus = newStatus;
-      finalSelected = incomingSelected || finalSelected || null;
-    }
+    var finalStatus = normaliseStatus(incomingStatus);
+    var finalSelected = incomingSelected || null;
 
     var isAnswerSubmission = eventName === "check";
-    var visitStartedAtMs = Number(
-      questionVisitStartedAtMs[questionId] || 0
-    );
-
-    var hasValidVisitTimer =
-      Number.isFinite(visitStartedAtMs) &&
-      visitStartedAtMs > 0;
-
     var answerElapsedSeconds =
-      isAnswerSubmission && hasValidVisitTimer
-        ? Math.max(
-            0,
-            Math.floor((Date.now() - visitStartedAtMs) / 1000)
-          )
+      isAnswerSubmission && window.TS_TMUA_TIMER
+        ? window.TS_TMUA_TIMER.submissionSeconds(questionId)
         : null;
 
     return {
       question_id: questionId,
       status: finalStatus || "seen",
       selected_answer: finalSelected,
-      flagged: !!existing.flagged || !!incomingFlagged,
+      flagged: !!incomingFlagged,
       time_spent: answerElapsedSeconds,
       last_seen_at: nowIso(),
-      answer_elapsed_seconds: answerElapsedSeconds,
-      answer_submitted_at: isAnswerSubmission ? nowIso() : null,
-      submission_id: isAnswerSubmission ? newSubmissionId() : null
+      answer_elapsed_seconds: isAnswerSubmission ? answerElapsedSeconds : (existing.answer_elapsed_seconds ?? null),
+      answer_submitted_at: isAnswerSubmission ? nowIso() : (existing.answer_submitted_at || null),
+      submission_id: isAnswerSubmission ? newSubmissionId(questionId) :
+        (existing.submission_id || (finalStatus === "seen" ? "tmua-stable-v1|" + questionId + "|seen" : null))
     };
   }
 
-  function saveProgress(eventName) {
-    var questionId = updateVisitQuestion();
-    if (!questionId) return;
+  function saveProgress(eventName, snapshot) {
+    var bridge = window.TS_TMUA_QB;
+    if (!bridge) return;
+    var questionId = snapshot ? String(snapshot.questionId || "") : updateVisitQuestion();
+    if (!questionId || !bridge.isKnownQuestionId(questionId)) return;
+    var answer = snapshot ? snapshot.answer : bridge.getAnswer(questionId);
+    if (!answer) return;
+    var status = detectStatus(answer);
+    var selected = answer.selected || "";
+    var flagged = !!answer.flagged;
+    if (eventName === "check" && (!selected || answer.checked !== true)) return;
+    if (eventName === "check") checkedThisVisit[questionId] = true;
 
-    var status = detectStatus();
-    var selected = selectedAnswer();
-    var flagged = isFlagged();
-
-    // For normal revisit/navigation, do not overwrite a wrong/correct question with seen.
     if (eventName !== "check") {
       var existing = progressMap[questionId] || {};
-      var oldPriority = statusPriority(existing.status);
-      var newPriority = statusPriority(status);
-
-      if (oldPriority >= 3 && newPriority <= 1 && !flagged) {
-        return;
-      }
+      if (existing.status && !String(existing.submission_id || "").startsWith("tmua-stable-v1|" + questionId + "|")) return;
+      if (statusPriority(existing.status) >= 3 && statusPriority(status) < 3) return;
     }
 
     var update = buildMergedUpdate(
@@ -2311,6 +2129,10 @@ window.MathJax = {
     if (hash === lastSavedHash && eventName !== "check") return;
 
     lastSavedHash = hash;
+    progressRevision++;
+    pendingSaves++;
+    // Subsequent flag/visit saves retain this submission's identity while it is in flight.
+    progressMap[questionId] = update;
 
     fetch(SAVE_URL, {
       method: "POST",
@@ -2320,6 +2142,8 @@ window.MathJax = {
       },
       body: JSON.stringify({
         product: PRODUCT,
+        identity_version: "tmua-display-order-v1",
+        event_name: eventName,
         updates: [update]
       })
     })
@@ -2329,20 +2153,15 @@ window.MathJax = {
           console.warn("Per-question progress save returned non-ok:", payload);
         }
 
-        progressMap[questionId] = {
-          status: update.status,
-          selected_answer: update.selected_answer || null,
-          flagged: update.flagged,
-          updated_at: nowIso()
-        };
-
+        if (!payload || payload.ok !== true) return;
         if (eventName === "check") {
           questionVisitStartedAtMs[questionId] = Date.now();
         }
       })
       .catch(function (e) {
         console.warn("Per-question progress save failed:", e);
-      });
+      })
+      .finally(function () { pendingSaves--; });
   }
 
   function isNavigatorElement(el) {
@@ -2431,7 +2250,7 @@ window.MathJax = {
         var onclick = el.getAttribute("onclick") || "";
 
         if (
-          txt.match(/^[a-e]\b/) ||
+          txt.match(/^[a-h]\b/) ||
           el.classList.contains("option") ||
           el.classList.contains("choice") ||
           onclick.toLowerCase().indexOf("select") !== -1
@@ -2484,53 +2303,15 @@ window.MathJax = {
   }
 
   function bindClickHooks() {
-    document.addEventListener("click", function (ev) {
-      var target = ev.target;
-      var button = target && target.closest ? target.closest("button") : null;
-      if (!button) return;
-
-      var txt = safeString(button.textContent || "").toLowerCase();
-      var onclick = button.getAttribute("onclick") || "";
-      var qid = updateVisitQuestion();
-
-      if (txt === "check" || txt.indexOf("check answer") !== -1 || onclick.indexOf("checkAnswer") !== -1) {
-        if (qid) checkedThisVisit[qid] = true;
-
-        setTimeout(function () {
-          saveProgress("check");
-          loadProgress();
-        }, 900);
-
-        return;
-      }
-
-      if (txt.indexOf("flag") !== -1 || onclick.indexOf("toggleFlag") !== -1) {
-        setTimeout(function () {
-          saveProgress("flag");
-        }, 500);
-
-        return;
-      }
-
-      if (
-        txt === "next" ||
-        txt === "previous" ||
-        txt.indexOf("navigator") !== -1 ||
-        onclick.indexOf("NAV.") !== -1 ||
-        onclick.indexOf("loadQuestion") !== -1
-      ) {
-        setTimeout(function () {
-          updateVisitQuestion();
-          saveProgress("seen");
-          applyReattemptMode();
-        }, 600);
-
-        setTimeout(function () {
-          updateVisitQuestion();
-          applyReattemptMode();
-        }, 1300);
-      }
-    }, true);
+    // Successful Check/flag/render events carry an immutable question snapshot.
+    // Never inspect whichever question happens to be visible after a timeout.
+    window.addEventListener("ts-tmua-progress", function (event) {
+      var snapshot = event.detail;
+      if (!snapshot) return;
+      updateVisitQuestion();
+      saveProgress(snapshot.eventName, snapshot);
+      if (snapshot.eventName === "seen") applyReattemptMode();
+    });
   }
 
   function bindNavigationHooks() {
@@ -2654,7 +2435,7 @@ window.MathJax = {
 
     if (!raw) return "";
 
-    var m = raw.match(/^[A-E]/i);
+    var m = raw.match(/^[A-H]/i);
     if (m) return m[0].toUpperCase();
 
     return raw.slice(0, 50);
@@ -2672,26 +2453,9 @@ window.MathJax = {
   }
 
   function getQuestionId(key, value) {
-    if (value && typeof value === "object") {
-      var direct =
-        value.question_id ??
-        value.questionId ??
-        value.qid ??
-        value.id ??
-        value.display_order ??
-        value.displayOrder ??
-        value.original_index ??
-        value.originalIndex;
-
-      var s = safeString(direct);
-      if (s) return s;
-    }
-
-    if (isLikelyQuestionKey(key)) {
-      return safeString(key).replace(/^q[-_ ]?/i, "");
-    }
-
-    return "";
+    var bridge = window.TS_TMUA_QB;
+    var id = safeString(key);
+    return bridge && bridge.isKnownQuestionId(id) ? id : "";
   }
 
   function extractSignal(value) {
@@ -2747,128 +2511,22 @@ window.MathJax = {
   }
 
   function collectLocalProgress(parsed) {
-    var rowsByQuestion = {};
-
-    function addRow(questionId, signal) {
-      questionId = safeString(questionId);
-      if (!questionId || !signal) return;
-
-      var existing = rowsByQuestion[questionId];
-
-      if (!existing) {
-        rowsByQuestion[questionId] = {
-          question_id: questionId,
-          status: signal.status || "seen",
-          selected_answer: signal.selected_answer || null,
-          flagged: !!signal.flagged,
-          time_spent: null,
-          last_seen_at: new Date().toISOString()
-        };
-        return;
-      }
-
-      var existingPriority = statusPriority(existing.status);
-      var incomingPriority = statusPriority(signal.status);
-
-      if (incomingPriority > existingPriority) {
-        existing.status = signal.status;
-        existing.selected_answer = signal.selected_answer || existing.selected_answer || null;
-      }
-
-      existing.flagged = !!existing.flagged || !!signal.flagged;
-    }
-
-    function walk(value, key, depth) {
-      if (!value || typeof value !== "object" || depth > 8) return;
-
-      if (Array.isArray(value)) {
-        for (var i = 0; i < value.length; i++) {
-          walk(value[i], String(i + 1), depth + 1);
-        }
-        return;
-      }
-
-      var questionId = getQuestionId(key, value);
-      var signal = extractSignal(value);
-
-      if (questionId && signal) {
-        addRow(questionId, signal);
-      }
-
-      Object.keys(value).forEach(function (childKey) {
-        var childValue = value[childKey];
-
-        if (!childValue || typeof childValue !== "object") return;
-
-        var childQuestionId = getQuestionId(childKey, childValue);
-        var childSignal = extractSignal(childValue);
-
-        if (childQuestionId && childSignal) {
-          addRow(childQuestionId, childSignal);
-        }
-
-        walk(childValue, childKey, depth + 1);
-      });
-    }
-
-    walk(parsed, "", 0);
-
-    return Object.keys(rowsByQuestion).map(function (qid) {
-      return rowsByQuestion[qid];
+    var answers = parsed && parsed.answers;
+    if (!answers || typeof answers !== "object" || Array.isArray(answers)) return [];
+    return Object.keys(answers).flatMap(function (key) {
+      var questionId = getQuestionId(key, answers[key]);
+      var signal = extractSignal(answers[key]);
+      return questionId && signal ? [{question_id: questionId, ...signal,
+        time_spent: null, last_seen_at: new Date().toISOString()}] : [];
     });
   }
 
   function mergeWithServer(localRows, serverProgress) {
-    var outgoing = [];
-
-    localRows.forEach(function (local) {
-      var qid = safeString(local.question_id);
-      if (!qid) return;
-
-      var server = serverProgress && serverProgress[qid] ? serverProgress[qid] : null;
-
-      if (!server) {
-        outgoing.push(local);
-        return;
-      }
-
-      var serverStatus = safeString(server.status).toLowerCase();
-      var localStatus = safeString(local.status).toLowerCase();
-
-      var serverPriority = statusPriority(serverStatus);
-      var localPriority = statusPriority(localStatus);
-
-      var merged = {
-        question_id: qid,
-        status: serverStatus || localStatus || "seen",
-        selected_answer: server.selected_answer || local.selected_answer || null,
-        flagged: !!server.flagged || !!local.flagged,
-        time_spent: server.time_spent || local.time_spent || null,
-        last_seen_at: new Date().toISOString()
-      };
-
-      var shouldSend = false;
-
-      if (localPriority > serverPriority) {
-        merged.status = localStatus;
-        merged.selected_answer = local.selected_answer || server.selected_answer || null;
-        shouldSend = true;
-      }
-
-      if (!!local.flagged && !server.flagged) {
-        shouldSend = true;
-      }
-
-      if (!server.selected_answer && local.selected_answer) {
-        shouldSend = true;
-      }
-
-      if (shouldSend) {
-        outgoing.push(merged);
-      }
+    // Only fill absent keys. Existing legacy rows may have positional identities;
+    // migrating saved app state must not rewrite them or create new attempt events.
+    return localRows.filter(function (local) {
+      return !serverProgress || !serverProgress[local.question_id];
     });
-
-    return outgoing;
   }
 
   async function loadServerProgress() {
@@ -2905,6 +2563,7 @@ window.MathJax = {
       },
       body: JSON.stringify({
         product: PRODUCT,
+        identity_version: "tmua-display-order-v1",
         updates: rows
       })
     });
@@ -3581,6 +3240,9 @@ window.MathJax = {
   let visibleList = [];
   let currentIndex = 0;
   let currentQuestion = null;
+  let renderedMeta = null;
+  let renderSequence = 0;
+  const pendingChecks = new Set();
   let questionCache = new Map();
 
   let state = {
@@ -3713,8 +3375,43 @@ window.MathJax = {
   }
 
   function questionKey(meta) {
-    return String(meta.display_order);
+    const value = Number(meta && meta.display_order);
+    return Number.isSafeInteger(value) && value > 0 ? String(value) : "";
   }
+
+  // TS_TMUA_STABLE_PROGRESS_IDENTITY_V1
+  // UI numbering and filter position must never become persistence keys.
+  function questionIsReady() {
+    return !!renderedMeta && !!currentQuestion &&
+      questionKey(renderedMeta) === questionKey(currentMeta()) &&
+      questionKey(renderedMeta) === questionKey(currentQuestion);
+  }
+
+  function selectedForRenderedQuestion() {
+    if (!questionIsReady()) return "";
+    const input = el("qOptions") && el("qOptions").querySelector("input[type='radio']:checked");
+    const selected = input ? String(input.value || "").trim().toUpperCase() : "";
+    return (currentQuestion.options || []).some(o => o.label === selected) ? selected : "";
+  }
+
+  function publishQuestionProgress(eventName, meta) {
+    const questionId = questionKey(meta);
+    if (!questionId) return;
+    window.dispatchEvent(new CustomEvent("ts-tmua-progress", {
+      detail: {eventName, questionId, answer: {...(state.answers[questionId] || {})}}
+    }));
+  }
+
+  window.TS_TMUA_QB = Object.freeze({
+    identityVersion: "tmua-display-order-v1",
+    getCurrentMeta: () => questionIsReady() ? {...renderedMeta} : null,
+    currentQuestionId: () => questionIsReady() ? questionKey(renderedMeta) : "",
+    getAnswer: id => ({...(state.answers[String(id)] || {})}),
+    getCurrentAnswer: () => questionIsReady() ? {...(state.answers[questionKey(renderedMeta)] || {})} : null,
+    selectedAnswer: selectedForRenderedQuestion,
+    isChecking: id => pendingChecks.has(String(id)),
+    isKnownQuestionId: id => allMeta.some(q => questionKey(q) === String(id))
+  });
 
   function currentMeta() {
     return visibleList[currentIndex] || null;
@@ -4043,6 +3740,8 @@ function applyFilters() {
   }
 
   async function render() {
+    const sequence = ++renderSequence;
+    window.dispatchEvent(new Event("ts-tmua-question-change"));
     updateCounts();
     updateHeaderStats();
 
@@ -4052,6 +3751,9 @@ function applyFilters() {
     if (!visibleList.length) {
       if (empty) empty.style.display = "block";
       if (card) card.style.display = "none";
+      renderedMeta = null;
+      currentQuestion = null;
+      window.dispatchEvent(new Event("ts-tmua-question-change"));
       return;
     }
 
@@ -4059,7 +3761,12 @@ function applyFilters() {
     if (card) card.style.display = "block";
 
     const meta = currentMeta();
-    currentQuestion = await loadQuestion(meta.display_order);
+    const loaded = await loadQuestion(meta.display_order);
+    if (sequence !== renderSequence || questionKey(meta) !== questionKey(currentMeta())) return;
+    if (questionKey(loaded) !== questionKey(meta)) throw new Error("Question identity mismatch");
+    const changedQuestion = questionKey(renderedMeta) !== questionKey(meta);
+    currentQuestion = loaded;
+    renderedMeta = meta;
 
     setText("qTitle", "Question " + (meta.global_number || meta.paper_question_number || meta.display_order));
     setText("metaPaper", meta.paper || "");
@@ -4081,6 +3788,8 @@ function applyFilters() {
     }
 
     typeset();
+    window.dispatchEvent(new Event("ts-tmua-question-change"));
+    if (changedQuestion) publishQuestionProgress("seen", meta);
   }
 
   async function go(delta) {
@@ -4320,7 +4029,7 @@ function applyFilters() {
     // TS_TMUA_WRONG_REATTEMPT_V2
     setSelected: function(label) {
   const meta = currentMeta();
-  if (!meta) return;
+  if (!meta || !questionIsReady() || pendingChecks.has(questionKey(meta))) return;
 
   const key = questionKey(meta);
   if (!state.answers[key]) state.answers[key] = {};
@@ -4342,22 +4051,31 @@ function applyFilters() {
 },
     checkAnswer: async function() {
       const meta = currentMeta();
-      if (!meta) return;
+      if (!meta || !questionIsReady()) return;
 
       const key = questionKey(meta);
+      if (pendingChecks.has(key)) return;
       const a = state.answers[key] || {};
+      if (a.checked === true && a.isCorrect === true) return;
 
-      if (!a.selected) {
+      if (!a.selected || selectedForRenderedQuestion() !== a.selected) {
         alert("Please select an answer first.");
         return;
       }
 
-      const result = await rpc("tmua_qb_public_check", {
-        p_display_order: meta.display_order,
-        p_selected: a.selected
-      });
+      pendingChecks.add(key);
+      let result;
+      try {
+        result = await rpc("tmua_qb_public_check", {
+          p_display_order: meta.display_order,
+          p_selected: a.selected
+        });
+      } finally {
+        pendingChecks.delete(key);
+      }
 
       const checked = Array.isArray(result) ? result[0] : result;
+      if (!checked || String(checked.display_order) !== key) throw new Error("Answer identity mismatch");
 
       state.answers[key] = {
         ...a,
@@ -4369,7 +4087,10 @@ function applyFilters() {
       };
 
       saveState();
+      // Capture the checked question now, before any asynchronous navigation/render.
+      publishQuestionProgress("check", meta);
       await render();
+      return checked;
     },
     showHint: function() {
       const hintBox = el("hintBox");
@@ -4387,11 +4108,12 @@ function applyFilters() {
     },
     toggleFlag: function() {
       const meta = currentMeta();
-      if (!meta) return;
+      if (!meta || !questionIsReady()) return;
 
       const key = questionKey(meta);
       if (!state.answers[key]) state.answers[key] = {};
       state.answers[key].flagged = !state.answers[key].flagged;
+      publishQuestionProgress("flag", meta);
 
       saveState();
       render();
@@ -4906,7 +4628,7 @@ function applyFilters() {
   var SAVE_URL = "/api/qb/progress/save";
 
   var STATE_KEY =
-    "ts_qb_question_timer_state_v1:" +
+    "ts_qb_question_timer_state_v2_stable:" +
     PRODUCT;
 
   var VISIBILITY_KEY =
@@ -4918,6 +4640,9 @@ function applyFilters() {
   var entries = {};
   var activeQid = "";
   var pendingSubmissionSeconds = {};
+  window.TS_TMUA_TIMER = Object.freeze({
+    submissionSeconds: function (qid) { return safeNumber(pendingSubmissionSeconds[qid]); }
+  });
   var actionHooksInstalled = false;
   var lastLocalCheckpointAt = 0;
   var tickHandle = null;
@@ -4962,6 +4687,7 @@ function applyFilters() {
   }
 
   function safeNumber(value) {
+    if (value == null || value === "") return null;
     var n = Number(value);
     return Number.isFinite(n) && n >= 0 ? n : null;
   }
@@ -5193,117 +4919,18 @@ function applyFilters() {
     );
   }
 
-  function currentMetaSafe() {
-    try {
-      if (
-        typeof currentMeta ===
-        "function"
-      ) {
-        return currentMeta();
-      }
-    } catch (e) {}
-
-    return null;
-  }
-
-  function questionIdFromMeta(meta) {
-    if (!meta) return "";
-
-    var candidates = [
-      meta.qid,
-      meta.id,
-      meta.question_id
-    ];
-
-    for (
-      var i = 0;
-      i < candidates.length;
-      i++
-    ) {
-      var value =
-        String(
-          candidates[i] == null
-            ? ""
-            : candidates[i]
-        ).trim();
-
-      if (value) return value;
-    }
-
-    try {
-      if (
-        typeof questionKey ===
-        "function"
-      ) {
-        var key =
-          String(
-            questionKey(meta) || ""
-          ).trim();
-
-        if (key) return key;
-      }
-    } catch (e) {}
-
-    return "";
-  }
-
   function currentQuestionId() {
-    var meta =
-      currentMetaSafe();
-
-    var fromMeta =
-      questionIdFromMeta(meta);
-
-    if (fromMeta) return fromMeta;
-
-    var title =
-      document.getElementById(
-        "qTitle"
-      );
-
-    if (title) {
-      var match =
-        String(
-          title.textContent || ""
-        ).match(/\d+/);
-
-      if (match) {
-        return String(
-          Number(match[0])
-        );
-      }
-    }
-
-    return "";
+    return window.TS_TMUA_QB ? window.TS_TMUA_QB.currentQuestionId() : "";
   }
 
   function currentAppAnswer() {
-    try {
-      var meta =
-        currentMetaSafe();
+    return window.TS_TMUA_QB ? window.TS_TMUA_QB.getCurrentAnswer() : null;
+  }
 
-      if (
-        !meta ||
-        typeof questionKey !==
-          "function" ||
-        typeof state ===
-          "undefined" ||
-        !state ||
-        !state.answers
-      ) {
-        return null;
-      }
-
-      var key =
-        questionKey(meta);
-
-      return (
-        state.answers[key] ||
-        null
-      );
-    } catch (e) {
-      return null;
-    }
+  function appStatusForQuestion(qid) {
+    var answer = window.TS_TMUA_QB && window.TS_TMUA_QB.getAnswer(qid);
+    if (!answer || answer.checked !== true) return "";
+    return answer.isCorrect === true ? "correct" : "wrong";
   }
 
   function currentAppStatus() {
@@ -5323,67 +4950,20 @@ function applyFilters() {
   }
 
   function hasCurrentSelection() {
-    var answer =
-      currentAppAnswer();
-
-    if (
-      answer &&
-      String(
-        answer.selected || ""
-      ).trim()
-    ) {
-      return true;
-    }
-
-    var selectors = [
-      "#qCard input[type='radio']:checked",
-      "#qCard input[type='checkbox']:checked",
-      "#qCard .option.selected",
-      "#qCard .choice.selected",
-      "#qCard .answer.selected",
-      "#qCard label.selected"
-    ];
-
-    for (
-      var i = 0;
-      i < selectors.length;
-      i++
-    ) {
-      try {
-        if (
-          document.querySelector(
-            selectors[i]
-          )
-        ) {
-          return true;
-        }
-      } catch (e) {}
-    }
-
-    return false;
+    return !!(window.TS_TMUA_QB && window.TS_TMUA_QB.selectedAnswer());
   }
 
   function serverRow(qid) {
-    return (
-      serverProgress[qid] ||
-      null
-    );
+    var row = serverProgress[qid];
+    // Preserve legacy records, but never attach an ambiguous old timer to a question.
+    return row && String(row.submission_id || "").startsWith("tmua-stable-v1|" + qid + "|") ? row : null;
   }
 
   function effectiveStatus(qid) {
-    if (qid === activeQid) {
-      var app =
-        currentAppStatus();
-
-      if (app) return app;
-    }
-
-    var row =
-      serverRow(qid);
-
-    return normaliseStatus(
-      row && row.status
-    );
+    var app = appStatusForQuestion(qid);
+    if (app) return app;
+    var row = serverRow(qid);
+    return normaliseStatus(row && row.status);
   }
 
   function currentElapsedMs(entry) {
@@ -5654,10 +5234,9 @@ function applyFilters() {
     var row =
       serverRow(qid);
 
-    var status =
-      normaliseStatus(
-        row && row.status
-      );
+    var status = effectiveStatus(qid);
+    var legacy = serverProgress[qid];
+    if (!row && legacy && ["correct", "wrong"].includes(normaliseStatus(legacy.status))) return;
 
     if (
       status === "correct" ||
@@ -5677,6 +5256,7 @@ function applyFilters() {
 
     var update = {
       question_id: qid,
+      submission_id: "tmua-stable-v1|" + qid + "|seen",
       status:
         status || "seen",
       selected_answer:
@@ -5694,7 +5274,7 @@ function applyFilters() {
         new Date().toISOString()
     };
 
-    baseFetch(
+    window.fetch(
       SAVE_URL,
       {
         method: "POST",
@@ -5706,6 +5286,7 @@ function applyFilters() {
         },
         body: JSON.stringify({
           product: PRODUCT,
+          identity_version: "tmua-display-order-v1",
           updates: [update]
         })
       }
@@ -5717,6 +5298,7 @@ function applyFilters() {
           serverProgress[qid] = {};
         }
 
+        serverProgress[qid].submission_id = update.submission_id;
         serverProgress[qid].status =
           update.status;
 
@@ -5866,6 +5448,10 @@ function applyFilters() {
 
     if (qid) {
       switchQuestion(qid);
+    } else if (activeQid) {
+      pauseQuestion(activeQid, "navigate");
+      activeQid = "";
+      renderTimer();
     }
   }
 
@@ -5920,7 +5506,7 @@ function applyFilters() {
     entry.frozen = false;
     entry.submittedWrong = false;
 
-    resumeQuestion(qid);
+    if (qid === currentQuestionId()) resumeQuestion(qid);
     renderTimer();
   }
 
@@ -5931,15 +5517,14 @@ function applyFilters() {
   ) {
     if (!qid) return;
 
-    var status =
-      currentAppStatus();
+    var status = appStatusForQuestion(qid);
 
     if (
       status !== "correct" &&
       status !== "wrong"
     ) {
       var remote =
-        serverProgress[qid];
+        serverRow(qid);
 
       status =
         normaliseStatus(
@@ -6135,9 +5720,9 @@ function applyFilters() {
           var qid =
             currentQuestionId();
 
-          var shouldFreeze =
-            !!qid &&
-            hasCurrentSelection();
+          var shouldFreeze = !!qid && hasCurrentSelection() &&
+            !window.TS_TMUA_QB.isChecking(qid) && appStatusForQuestion(qid) !== "correct";
+          if (!shouldFreeze) return originalCheck.apply(this, arguments);
 
           if (shouldFreeze) {
             freezeForSubmission(qid);
@@ -6151,8 +5736,7 @@ function applyFilters() {
               );
 
             if (shouldFreeze) {
-              var status =
-                currentAppStatus();
+              var status = appStatusForQuestion(qid);
 
               if (
                 status === "correct" ||
@@ -6212,93 +5796,14 @@ function applyFilters() {
     }
   }
 
-  function installFallbackCheckClick() {
-    document.addEventListener(
-      "click",
-      function (event) {
-        if (actionHooksInstalled) return;
-
-        var target =
-          event.target &&
-          event.target.closest
-            ? event.target.closest(
-                "button"
-              )
-            : null;
-
-        if (!target) return;
-
-        var text =
-          String(
-            target.textContent || ""
-          )
-            .trim()
-            .toLowerCase();
-
-        var onclick =
-          String(
-            target.getAttribute(
-              "onclick"
-            ) || ""
-          );
-
-        var isCheck =
-          text === "check" ||
-          text.indexOf(
-            "check answer"
-          ) !== -1 ||
-          onclick.indexOf(
-            "checkAnswer"
-          ) !== -1;
-
-        if (
-          !isCheck ||
-          !hasCurrentSelection()
-        ) {
-          return;
-        }
-
-        var qid =
-          currentQuestionId();
-
-        if (!qid) return;
-
-        freezeForSubmission(qid);
-
-        window.setTimeout(
-          function () {
-            var status =
-              currentAppStatus();
-
-            if (
-              status === "correct" ||
-              status === "wrong"
-            ) {
-              finalizeSubmission(
-                qid,
-                status
-              );
-            }
-            else {
-              settleSubmissionOutcome(
-                qid,
-                20
-              );
-            }
-          },
-          900
-        );
-      },
-      true
-    );
-  }
-
   function patchProgressSaveFetch() {
     if (!baseFetch) return;
+    var saveQueue = Promise.resolve();
 
     window.fetch =
       function (input, init) {
         var nextInit = init;
+        var stableSave = false;
 
         try {
           var url =
@@ -6320,11 +5825,13 @@ function applyFilters() {
               JSON.parse(init.body);
 
             if (
-              body &&
+              body && body.product === PRODUCT &&
+              body.identity_version === "tmua-display-order-v1" &&
               Array.isArray(
                 body.updates
               )
             ) {
+              stableSave = true;
               body.updates.forEach(
                 function (update) {
                   if (!update) return;
@@ -6335,16 +5842,15 @@ function applyFilters() {
                         ""
                     ).trim();
 
-                  if (!qid) return;
+                  if (!/^[1-9][0-9]*$/.test(qid)) return;
 
                   var status =
                     normaliseStatus(
                       update.status
                     );
 
-                  var isSubmission =
-                    !!update.submission_id ||
-                    !!update.answer_submitted_at;
+                  var isSubmission = body.event_name === "check" &&
+                    (status === "correct" || status === "wrong");
 
                   if (isSubmission) {
                     var seconds =
@@ -6439,6 +5945,15 @@ function applyFilters() {
                     update.time_spent =
                       null;
                   }
+                  else {
+                    // A visit or flag must retain an unfinished question's accumulated time.
+                    update.time_spent = Math.floor(Math.max(
+                      Number(update.time_spent || 0),
+                      serverSeconds(qid) || 0,
+                      localPendingMs(qid) / 1000,
+                      currentElapsedMs(entries[qid]) / 1000
+                    ));
+                  }
                 }
               );
 
@@ -6461,10 +5976,13 @@ function applyFilters() {
           );
         }
 
-        return baseFetch(
-          input,
-          nextInit
-        );
+        if (stableSave) {
+          var run = function () { return baseFetch(input, nextInit); };
+          var result = saveQueue.then(run, run);
+          saveQueue = result.catch(function () {});
+          return result;
+        }
+        return baseFetch(input, nextInit);
       };
   }
 
@@ -6746,7 +6264,7 @@ function applyFilters() {
   );
 
   patchProgressSaveFetch();
-  installFallbackCheckClick();
+  window.addEventListener("ts-tmua-question-change", syncCurrentQuestion);
   ensureUi();
   installActionHooks();
   loadServerProgress();
@@ -6763,8 +6281,6 @@ function applyFilters() {
 })();
 </script>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
-
-
 
 
 

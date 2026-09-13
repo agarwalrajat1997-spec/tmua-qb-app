@@ -49,7 +49,7 @@ export async function GET(req: Request) {
 
     const { data, error } = await supabase
       .from("qb_progress")
-      .select("question_id,status,selected_answer,flagged,time_spent,last_seen_at,updated_at,email")
+      .select("question_id,status,selected_answer,flagged,time_spent,last_seen_at,updated_at,email,submission_id,answer_elapsed_seconds,answer_submitted_at")
       .eq("user_id", auth.user.id)
       .eq("product", product);
 
@@ -66,6 +66,9 @@ export async function GET(req: Request) {
         time_spent: row.time_spent,
         last_seen_at: row.last_seen_at,
         updated_at: row.updated_at,
+        submission_id: row.submission_id,
+        answer_elapsed_seconds: row.answer_elapsed_seconds,
+        answer_submitted_at: row.answer_submitted_at,
       };
     }
 
