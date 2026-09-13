@@ -2225,6 +2225,65 @@ async function calculateAndPersistPreparationRankV1(
 }
 
 export async function GET() {
+  // Emergency load shedding, 13 Sep 2026. Keep the verified predictor and
+  // preparation-rank integration below intact, but do not enter it while the
+  // Supabase connection pool recovers. This response contains no private data.
+  if (
+    process.env
+      .TMUA_OVERVIEW_FULL_MODE !==
+    "enabled"
+  ) {
+    const calculatedAt =
+      new Date();
+
+    return NextResponse.json(
+      {
+        ok: true,
+        predictor: {
+          modelVersion:
+            "tmua-overview-emergency-lite-20260913",
+          status:
+            "insufficient_evidence",
+          score: null,
+          lowerBound: null,
+          upperBound: null,
+          confidence: null,
+          testEvidenceCount: 0,
+          independentTestCount: 0,
+          qbUniqueQuestions: 0,
+          qbTopicCoverage: 0,
+          calculatedAt:
+            calculatedAt.toISOString(),
+        },
+        preparationRank: {
+          modelVersion:
+            "tmua-preparation-rank-emergency-lite-20260913",
+          hasGenuinePreparationEvidence:
+            false,
+          score: null,
+          rank: null,
+          cohortSize: 0,
+          components: null,
+          calculatedAt:
+            calculatedAt.toISOString(),
+        },
+        countdown:
+          preparationCountdown(
+            calculatedAt,
+          ),
+      },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control":
+            "private, max-age=30",
+          "X-TS-Emergency-Load-Shed":
+            "20260913",
+        },
+      },
+    );
+  }
+
   try {
     // Authentication uses the existing user session.
     const supabase =
