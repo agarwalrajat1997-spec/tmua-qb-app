@@ -4381,10 +4381,9 @@ function uniqueSorted(arr) {
   }
 
 
-  // TS_SUBJECT_TOPIC_FILTER_V2
-  // The database stores subject-specific topics.  Keep the Maths, Biology and
-  // Chemistry chapter names, but use the seven official UAT-UK Physics headings
-  // rather than the old internal 12-20 chapter numbering.
+  // TS_SUBJECT_TOPIC_FILTER_V3
+  // Store and display the official UAT-UK headings for every ESAT science
+  // module. Subject-prefixed filter keys keep identically named topics apart.
   const TS_PHYSICS_TOPIC_ORDER = [
     "P1. Electricity",
     "P2. Magnetism",
@@ -4393,6 +4392,40 @@ function uniqueSorted(arr) {
     "P5. Matter",
     "P6. Waves",
     "P7. Radioactivity"
+  ];
+
+  const TS_BIOLOGY_TOPIC_ORDER = [
+    "B1. Cells",
+    "B2. Movement across membranes",
+    "B3. Cell division and sex determination",
+    "B4. Inheritance",
+    "B5. DNA",
+    "B6. Gene technologies",
+    "B7. Variation",
+    "B8. Enzymes",
+    "B9. Animal physiology",
+    "B10. Ecosystems",
+    "B11. Plant physiology"
+  ];
+
+  const TS_CHEMISTRY_TOPIC_ORDER = [
+    "C1. Atomic structure",
+    "C2. The Periodic Table",
+    "C3. Chemical reactions, formulae and equations",
+    "C4. Quantitative chemistry",
+    "C5. Oxidation, reduction and redox",
+    "C6. Chemical bonding, structure and properties",
+    "C7. Group chemistry",
+    "C8. Separation techniques",
+    "C9. Acids, bases and salts",
+    "C10. Rates of reaction",
+    "C11. Energetics",
+    "C12. Electrolysis",
+    "C13. Carbon/Organic chemistry",
+    "C14. Metals",
+    "C15. Kinetic/Particle theory",
+    "C16. Chemical tests",
+    "C17. Air and water"
   ];
 
   const TS_CHAPTER_ORDER = [
@@ -4408,27 +4441,8 @@ function uniqueSorted(arr) {
     "10_Miscellaneous",
     "11_Proofs",
     ...TS_PHYSICS_TOPIC_ORDER,
-    "21_Cell Biology and Organisation",
-    "22_Biological Molecules and Enzymes",
-    "23_Membranes, Exchange and Transport",
-    "24_Photosynthesis and Respiration",
-    "25_Genetics, Inheritance and Cell Division",
-    "26_Evolution, Variation and Classification",
-    "27_Ecology and Ecosystems",
-    "28_Plant Biology and Physiology",
-    "29_Animal and Human Physiology",
-    "30_Biotechnology and Genetic Engineering",
-    "31_Practical Skills",
-    "32_Atomic Structure and Periodicity",
-    "33_Bonding, Structure and States of Matter",
-    "34_Stoichiometry and Formulae",
-    "35_Energetics and Thermochemistry",
-    "36_Kinetics and Rates of Reaction",
-    "37_Equilibria, Acids and Bases",
-    "38_Redox and Electrochemistry",
-    "39_Inorganic Chemistry and Metals",
-    "40_Organic Chemistry",
-    "41_Analytical Chemistry and Separation"
+    ...TS_BIOLOGY_TOPIC_ORDER,
+    ...TS_CHEMISTRY_TOPIC_ORDER
   ];
 
   const TS_PAPER_ORDER = [
@@ -4465,12 +4479,46 @@ function uniqueSorted(arr) {
     "14_Electricity and Magnetism": ["P1. Electricity", "P2. Magnetism"]
   };
 
+  const TS_LEGACY_BIOLOGY_TOPIC_EXPANSIONS = {
+    "21_Cell Biology and Organisation": ["B1. Cells", "B2. Movement across membranes", "B3. Cell division and sex determination", "B6. Gene technologies", "B9. Animal physiology"],
+    "22_Biological Molecules and Enzymes": ["B5. DNA", "B8. Enzymes"],
+    "23_Membranes, Exchange and Transport": ["B2. Movement across membranes", "B9. Animal physiology"],
+    "24_Photosynthesis and Respiration": ["B8. Enzymes", "B9. Animal physiology", "B11. Plant physiology"],
+    "25_Genetics, Inheritance and Cell Division": ["B3. Cell division and sex determination", "B4. Inheritance", "B5. DNA", "B6. Gene technologies"],
+    "26_Evolution, Variation and Classification": ["B7. Variation"],
+    "27_Ecology and Ecosystems": ["B10. Ecosystems"],
+    "28_Plant Biology and Physiology": ["B11. Plant physiology"],
+    "29_Animal and Human Physiology": ["B9. Animal physiology"],
+    "30_Biotechnology and Genetic Engineering": ["B6. Gene technologies"],
+    "31_Practical Skills": ["B2. Movement across membranes", "B7. Variation"]
+  };
+
+  const TS_LEGACY_CHEMISTRY_TOPIC_EXPANSIONS = {
+    "32_Atomic Structure and Periodicity": ["C1. Atomic structure", "C2. The Periodic Table", "C7. Group chemistry"],
+    "33_Bonding, Structure and States of Matter": ["C6. Chemical bonding, structure and properties", "C8. Separation techniques", "C15. Kinetic/Particle theory", "C17. Air and water"],
+    "34_Stoichiometry and Formulae": ["C3. Chemical reactions, formulae and equations", "C4. Quantitative chemistry", "C6. Chemical bonding, structure and properties"],
+    "35_Energetics and Thermochemistry": ["C10. Rates of reaction", "C11. Energetics"],
+    "36_Kinetics and Rates of Reaction": ["C10. Rates of reaction"],
+    "37_Equilibria, Acids and Bases": ["C3. Chemical reactions, formulae and equations", "C4. Quantitative chemistry", "C9. Acids, bases and salts"],
+    "38_Redox and Electrochemistry": ["C5. Oxidation, reduction and redox", "C12. Electrolysis"],
+    "39_Inorganic Chemistry and Metals": ["C6. Chemical bonding, structure and properties", "C7. Group chemistry", "C14. Metals", "C16. Chemical tests"],
+    "40_Organic Chemistry": ["C13. Carbon/Organic chemistry"],
+    "41_Analytical Chemistry and Separation": ["C6. Chemical bonding, structure and properties", "C8. Separation techniques", "C15. Kinetic/Particle theory", "C16. Chemical tests"]
+  };
+
+  const TS_LEGACY_TOPIC_EXPANSIONS = Object.assign(
+    {},
+    TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS,
+    TS_LEGACY_BIOLOGY_TOPIC_EXPANSIONS,
+    TS_LEGACY_CHEMISTRY_TOPIC_EXPANSIONS
+  );
+
   const TS_TOPIC_ORDERS_BY_PAPER = {
     "ESAT Mathematics 1": TS_CHAPTER_ORDER.slice(0, 11),
     "ESAT Mathematics 2": TS_CHAPTER_ORDER.slice(0, 11),
     "ESAT Physics": TS_PHYSICS_TOPIC_ORDER,
-    "ESAT Biology": TS_CHAPTER_ORDER.slice(18, 29),
-    "ESAT Chemistry": TS_CHAPTER_ORDER.slice(29, 39)
+    "ESAT Biology": TS_BIOLOGY_TOPIC_ORDER,
+    "ESAT Chemistry": TS_CHEMISTRY_TOPIC_ORDER
   };
 
   function tsCanonicalPhysicsTopic(topic) {
@@ -4485,6 +4533,11 @@ function uniqueSorted(arr) {
   function tsCanonicalPhysicsTopics(topic) {
     const raw = String(topic || "").trim();
     return TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS[raw] || [tsCanonicalPhysicsTopic(raw)];
+  }
+
+  function tsLegacyTopicExpansion(topic) {
+    const raw = String(topic || "").trim();
+    return TS_LEGACY_TOPIC_EXPANSIONS[raw] || [raw];
   }
 
   function tsChapterNumber(topic) {
@@ -4513,6 +4566,8 @@ function uniqueSorted(arr) {
 
   function tsCanonicalTopic(topic) {
     const raw = String(topic || "").trim();
+    const legacyExpansion = TS_LEGACY_TOPIC_EXPANSIONS[raw];
+    if (legacyExpansion && legacyExpansion.length) return legacyExpansion[0];
     if (/^P\s*[1-7]\s*[.\-:]/i.test(raw) || TS_LEGACY_PHYSICS_TOPIC_MAP[raw]) {
       return tsCanonicalPhysicsTopic(raw);
     }
@@ -4910,7 +4965,7 @@ function applyFilters() {
       const raw = String(value || "");
       if (validTopicValues.has(raw)) return [raw];
 
-      const legacyTopics = tsCanonicalPhysicsTopics(raw).map(function(topic) {
+      const legacyTopics = tsLegacyTopicExpansion(raw).map(function(topic) {
         return tsCanonicalTopic(topic);
       });
       return topicOptions
