@@ -8,6 +8,8 @@ import {
   adminClient,
 } from "@/app/api/esat/qb/_server";
 
+const ESAT_PROGRESS_IDENTITY_VERSION = "esat-qid-v1";
+
 type QBUpdate =
   | {
       question_id: string;
@@ -212,6 +214,10 @@ export async function POST(req: Request) {
       return jsonErr(409, "Please reload the TMUA question bank before saving progress.", { code: "TMUA_IDENTITY_VERSION_REQUIRED" });
     }
 
+    if (product === "esat-question-bank" && body?.identity_version !== ESAT_PROGRESS_IDENTITY_VERSION) {
+      return jsonErr(409, "Please reload the ESAT question bank before saving progress.", { code: "ESAT_IDENTITY_VERSION_REQUIRED" });
+    }
+
     if (!Array.isArray(updates) || updates.length === 0) {
       return jsonErr(400, "updates is required");
     }
@@ -280,6 +286,48 @@ export async function POST(req: Request) {
 
     if (rows.length === 0) {
       return jsonErr(400, "No valid updates (missing question_id or value object)");
+    }
+
+    if (product === "esat-question-bank") {
+      const requestedQids = [
+        ...new Set(rows.map((row) => String(row.question_id))),
+      ];
+      let canonicalQids: Set<string> | null = null;
+      let lookupError: any = null;
+
+      for (const table of ESAT_TABLE_CANDIDATES) {
+        const result = await adminClient()
+          .from(table)
+          .select("qid")
+          .in("qid", requestedQids);
+
+        if (result.error) {
+          lookupError = result.error;
+          continue;
+        }
+
+        canonicalQids = new Set(
+          (result.data || []).map((row: any) => String(row.qid)),
+        );
+        break;
+      }
+
+      if (canonicalQids == null) {
+        return jsonErr(500, "Could not validate ESAT question identities.", {
+          message: lookupError?.message || String(lookupError || ""),
+        });
+      }
+
+      const invalidQids = requestedQids.filter(
+        (qid) => !canonicalQids!.has(qid),
+      );
+
+      if (invalidQids.length > 0) {
+        return jsonErr(400, "A canonical ESAT qid is required.", {
+          code: "ESAT_CANONICAL_QID_REQUIRED",
+          invalid_question_ids: invalidQids,
+        });
+      }
     }
 
     const { error } = await supabase
