@@ -4381,7 +4381,20 @@ function uniqueSorted(arr) {
   }
 
 
-  // TS_FINAL_CHAPTER_ORDER_FIX_V1
+  // TS_SUBJECT_TOPIC_FILTER_V2
+  // The database stores subject-specific topics.  Keep the Maths, Biology and
+  // Chemistry chapter names, but use the seven official UAT-UK Physics headings
+  // rather than the old internal 12-20 chapter numbering.
+  const TS_PHYSICS_TOPIC_ORDER = [
+    "P1. Electricity",
+    "P2. Magnetism",
+    "P3. Mechanics",
+    "P4. Thermal physics",
+    "P5. Matter",
+    "P6. Waves",
+    "P7. Radioactivity"
+  ];
+
   const TS_CHAPTER_ORDER = [
     "1_Algebra & Functions",
     "2_Sequences",
@@ -4394,15 +4407,7 @@ function uniqueSorted(arr) {
     "9_Statistics & Probability",
     "10_Miscellaneous",
     "11_Proofs",
-    "12_Mechanics",
-    "13_Energy and Power",
-    "14_Electricity and Magnetism",
-    "15_Waves and Optics",
-    "16_Materials and Fluids",
-    "17_Thermal Physics",
-    "18_Atomic and Nuclear Physics",
-    "19_Astrophysics",
-    "20_Physics Skills & Miscellaneous",
+    ...TS_PHYSICS_TOPIC_ORDER,
     "21_Cell Biology and Organisation",
     "22_Biological Molecules and Enzymes",
     "23_Membranes, Exchange and Transport",
@@ -4426,8 +4431,66 @@ function uniqueSorted(arr) {
     "41_Analytical Chemistry and Separation"
   ];
 
+  const TS_PAPER_ORDER = [
+    "ESAT Mathematics 1",
+    "ESAT Mathematics 2",
+    "ESAT Physics",
+    "ESAT Chemistry",
+    "ESAT Biology"
+  ];
+
+  const TS_SUBJECT_LABELS = {
+    "ESAT Mathematics 1": "Maths 1",
+    "ESAT Mathematics 2": "Maths 2",
+    "ESAT Physics": "Physics",
+    "ESAT Chemistry": "Chemistry",
+    "ESAT Biology": "Biology"
+  };
+
+  const TS_LEGACY_PHYSICS_TOPIC_MAP = {
+    "12_Mechanics": "P3. Mechanics",
+    "13_Energy and Power": "P3. Mechanics",
+    "14_Electricity and Magnetism": "P1. Electricity",
+    "15_Waves and Optics": "P6. Waves",
+    "16_Materials and Fluids": "P5. Matter",
+    "17_Thermal Physics": "P4. Thermal physics",
+    "18_Atomic and Nuclear Physics": "P7. Radioactivity",
+    "19_Astrophysics": "P6. Waves",
+    "20_Physics Skills & Miscellaneous": "P3. Mechanics"
+  };
+
+  // The former Electricity and Magnetism bucket covered two official
+  // headings. Keep old saved filter state useful by expanding it to both.
+  const TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS = {
+    "14_Electricity and Magnetism": ["P1. Electricity", "P2. Magnetism"]
+  };
+
+  const TS_TOPIC_ORDERS_BY_PAPER = {
+    "ESAT Mathematics 1": TS_CHAPTER_ORDER.slice(0, 11),
+    "ESAT Mathematics 2": TS_CHAPTER_ORDER.slice(0, 11),
+    "ESAT Physics": TS_PHYSICS_TOPIC_ORDER,
+    "ESAT Biology": TS_CHAPTER_ORDER.slice(18, 29),
+    "ESAT Chemistry": TS_CHAPTER_ORDER.slice(29, 39)
+  };
+
+  function tsCanonicalPhysicsTopic(topic) {
+    const raw = String(topic || "").trim();
+    const match = raw.match(/^P\s*([1-7])\s*[.\-:]?\s*(.*)$/i);
+    if (!match) return TS_LEGACY_PHYSICS_TOPIC_MAP[raw] || raw;
+
+    const number = Number(match[1]);
+    return TS_PHYSICS_TOPIC_ORDER[number - 1] || raw;
+  }
+
+  function tsCanonicalPhysicsTopics(topic) {
+    const raw = String(topic || "").trim();
+    return TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS[raw] || [tsCanonicalPhysicsTopic(raw)];
+  }
+
   function tsChapterNumber(topic) {
     const raw = String(topic || "").trim();
+    if (/^P\s*[1-7]\s*[.\-:]/i.test(raw)) return 11 + Number(raw.match(/^P\s*([1-7])/i)[1]);
+    if (TS_LEGACY_PHYSICS_TOPIC_MAP[raw]) return 11 + Number(TS_PHYSICS_TOPIC_ORDER.indexOf(TS_LEGACY_PHYSICS_TOPIC_MAP[raw])) + 1;
     const m = raw.match(/^\s*(\d+)/);
     if (m) return Number(m[1]);
 
@@ -4449,16 +4512,78 @@ function uniqueSorted(arr) {
   }
 
   function tsCanonicalTopic(topic) {
+    const raw = String(topic || "").trim();
+    if (/^P\s*[1-7]\s*[.\-:]/i.test(raw) || TS_LEGACY_PHYSICS_TOPIC_MAP[raw]) {
+      return tsCanonicalPhysicsTopic(raw);
+    }
     const n = tsChapterNumber(topic);
-    if (n >= 1 && n <= TS_CHAPTER_ORDER.length) {
+    if (n >= 1 && n <= 11) {
       return TS_CHAPTER_ORDER[n - 1];
     }
-    return String(topic || "General").trim() || "General";
+    return raw || "General";
+  }
+
+  function tsPaperRank(paper) {
+    const index = TS_PAPER_ORDER.indexOf(String(paper || ""));
+    return index >= 0 ? index : 999;
+  }
+
+  function tsTopicRank(paper, topic) {
+    const canonical = tsCanonicalTopic(topic);
+    const order = TS_TOPIC_ORDERS_BY_PAPER[String(paper || "")] || [];
+    const index = order.indexOf(canonical);
+    return index >= 0 ? index : tsChapterNumber(canonical);
+  }
+
+  function tsSubjectLabel(paper) {
+    return TS_SUBJECT_LABELS[String(paper || "")] || String(paper || "Subject");
+  }
+
+  function tsTopicKey(paper, topic) {
+    return String(paper || "") + "::" + tsCanonicalTopic(topic);
+  }
+
+  function tsTopicDisplayLabel(paper, topic) {
+    const canonical = tsCanonicalTopic(topic);
+    const displayTopic = canonical.replace(/^\d+_/, "");
+    return tsSubjectLabel(paper) + " — " + displayTopic;
+  }
+
+  function tsTopicOptions() {
+    const papers = Array.from(new Set(allMeta.map(q => String(q.paper || ""))))
+      .filter(Boolean)
+      .sort((a, b) => tsPaperRank(a) - tsPaperRank(b) || a.localeCompare(b));
+
+    const options = [];
+    papers.forEach(function(paper) {
+      const present = new Set(allMeta
+        .filter(q => String(q.paper || "") === paper)
+        .map(q => tsCanonicalTopic(q.topic)));
+      const preferred = TS_TOPIC_ORDERS_BY_PAPER[paper] || [];
+      const topics = preferred.filter(topic => present.has(topic));
+      Array.from(present)
+        .filter(topic => !topics.includes(topic))
+        .sort((a, b) => tsChapterNumber(a) - tsChapterNumber(b) || a.localeCompare(b))
+        .forEach(topic => topics.push(topic));
+      topics.forEach(function(topic) {
+        options.push({
+          value: tsTopicKey(paper, topic),
+          label: tsTopicDisplayLabel(paper, topic),
+          paper: paper,
+          topic: topic
+        });
+      });
+    });
+    return options;
   }
 
   function tsCanonicalSortQuestions(a, b) {
-    const ca = tsChapterNumber(a.topic);
-    const cb = tsChapterNumber(b.topic);
+    const pa = tsPaperRank(a.paper);
+    const pb = tsPaperRank(b.paper);
+    if (pa !== pb) return pa - pb;
+
+    const ca = tsTopicRank(a.paper, a.topic);
+    const cb = tsTopicRank(b.paper, b.topic);
 
     if (ca !== cb) return ca - cb;
 
@@ -4478,7 +4603,7 @@ function uniqueSorted(arr) {
       .slice()
       .sort(tsCanonicalSortQuestions)
       .map(function(q, idx) {
-        q.topic_rank = tsChapterNumber(q.topic);
+        q.topic_rank = tsTopicRank(q.paper, q.topic);
         q.topic_canonical = tsCanonicalTopic(q.topic);
         q.global_number = idx + 1;
         q.number = String(idx + 1);
@@ -4492,7 +4617,7 @@ function applyFilters() {
       const a = answerFor(q);
 
       if (state.filters.papers.length && !state.filters.papers.includes(q.paper)) return false;
-      if (state.filters.topics.length && !state.filters.topics.includes(tsCanonicalTopic(q.topic))) return false;
+      if (state.filters.topics.length && !state.filters.topics.includes(tsTopicKey(q.paper, q.topic))) return false;
       if (state.filters.difficulties.length && !state.filters.difficulties.includes(String(q.difficulty))) return false;
 
       if (state.filters.status === "unseen" && a.selected) return false;
@@ -4766,27 +4891,38 @@ function applyFilters() {
     if (!box) return;
 
     box.innerHTML = values.map(function(v, i) {
-      const checked = currentValues.includes(String(v)) ? "checked" : "";
+      const option = typeof v === "string" ? { value: v, label: v } : v;
+      const checked = currentValues.includes(String(option.value)) ? "checked" : "";
       return '<label class="chk">' +
-        '<input type="checkbox" value="' + escapeHtml(v) + '" ' + checked + ' data-filter-kind="' + prefix + '">' +
-        escapeHtml(v) +
+        '<input type="checkbox" value="' + escapeHtml(option.value) + '" ' + checked + ' data-filter-kind="' + prefix + '">' +
+        '<span>' + escapeHtml(option.label) + '</span>' +
         '</label>';
     }).join("");
   }
 
   function buildFilters() {
-    // TS_ALL_41_TOPICS_FILTER_V1
-    state.filters.topics = Array.isArray(
-      state.filters.topics
-    )
-      ? state.filters.topics.filter(function(topic) {
-          return TS_CHAPTER_ORDER.includes(topic);
-        })
-      : [];
+    // Subject-prefixed values prevent identical topic names in Maths 1/2 and
+    // make the active subject clear to students.
+    const topicOptions = tsTopicOptions();
+    const validTopicValues = new Set(topicOptions.map(option => option.value));
+    const legacyTopicValues = Array.isArray(state.filters.topics) ? state.filters.topics : [];
+    state.filters.topics = legacyTopicValues.flatMap(function(value) {
+      const raw = String(value || "");
+      if (validTopicValues.has(raw)) return [raw];
+
+      const legacyTopics = tsCanonicalPhysicsTopics(raw).map(function(topic) {
+        return tsCanonicalTopic(topic);
+      });
+      return topicOptions
+        .filter(option => legacyTopics.includes(option.topic))
+        .map(option => option.value);
+    }).filter(function(value, index, values) {
+      return values.indexOf(value) === index;
+    });
 
     buildFilterCheckbox(
       "fTopics",
-      TS_CHAPTER_ORDER,
+      topicOptions,
       state.filters.topics,
       "topic"
     );
@@ -4906,26 +5042,18 @@ function applyFilters() {
 
       const groups = new Map();
 
-      TS_CHAPTER_ORDER.forEach(function(topic, idx) {
-        groups.set(topic, {
-          topic: topic,
-          rank: idx + 1,
-          questions: []
-        });
-      });
-
       sorted.forEach(function(q) {
-        const topic = tsCanonicalTopic(q.topic);
+        const key = tsTopicKey(q.paper, q.topic);
 
-        if (!groups.has(topic)) {
-          groups.set(topic, {
-            topic: topic,
-            rank: tsChapterNumber(topic),
+        if (!groups.has(key)) {
+          groups.set(key, {
+            topic: tsTopicDisplayLabel(q.paper, q.topic),
+            rank: tsPaperRank(q.paper) * 1000 + tsTopicRank(q.paper, q.topic),
             questions: []
           });
         }
 
-        groups.get(topic).questions.push(q);
+        groups.get(key).questions.push(q);
       });
 
       Array.from(groups.values())
@@ -4961,7 +5089,7 @@ function applyFilters() {
               btn.className = "nav-btn";
 
               const n = q.global_number || q.display_order;
-              const chapterLabel = tsCanonicalTopic(q.topic);
+              const chapterLabel = tsTopicDisplayLabel(q.paper, q.topic);
 
               btn.title = "Question " + n + " \u00B7 " + chapterLabel + (q.subtopic ? " \u00B7 " + q.subtopic : "");
 
@@ -5179,14 +5307,15 @@ function applyFilters() {
       if (topicBreakdown) {
         const byTopic = new Map();
         allMeta.forEach(q => {
-          if (!byTopic.has(q.topic)) byTopic.set(q.topic, { total:0, done:0 });
-          const row = byTopic.get(q.topic);
+          const key = tsTopicKey(q.paper, q.topic);
+          if (!byTopic.has(key)) byTopic.set(key, { label: tsTopicDisplayLabel(q.paper, q.topic), total:0, done:0 });
+          const row = byTopic.get(key);
           row.total++;
           if (state.answers[questionKey(q)]?.checked) row.done++;
         });
 
-        topicBreakdown.innerHTML = Array.from(byTopic.entries()).map(([topic, row]) =>
-          '<div class="stat-row"><span>' + escapeHtml(topic) + '</span><strong>' + row.done + ' / ' + row.total + '</strong></div>'
+        topicBreakdown.innerHTML = Array.from(byTopic.values()).map(row =>
+          '<div class="stat-row"><span>' + escapeHtml(row.label) + '</span><strong>' + row.done + ' / ' + row.total + '</strong></div>'
         ).join("");
       }
 
@@ -7588,10 +7717,4 @@ function applyFilters() {
 
 
 
-
-
-
-
-
-
-
+\n\n\n\n
