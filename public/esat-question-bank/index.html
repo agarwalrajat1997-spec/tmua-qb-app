@@ -2207,6 +2207,7 @@ window.MathJax = {
   "use strict";
 
   var PRODUCT = "esat-question-bank";
+  var PROGRESS_IDENTITY_VERSION = "esat-qid-v1";
   var LOAD_URL = "/api/qb/progress/load?product=esat-question-bank";
   var SAVE_URL = "/api/qb/progress/save";
 
@@ -2261,7 +2262,16 @@ window.MathJax = {
     var meta = null;
 
     try {
-      if (typeof window.currentMeta === "function") meta = window.currentMeta();
+      if (
+        window.TS_ESAT_PROGRESS_BRIDGE_V1 &&
+        typeof window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta === "function"
+      ) {
+        meta = window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta();
+      }
+    } catch (e) {}
+
+    try {
+      if (!meta && typeof window.currentMeta === "function") meta = window.currentMeta();
     } catch (e) {}
 
     if (meta && typeof meta === "object") return meta;
@@ -2308,11 +2318,11 @@ window.MathJax = {
 
     if (meta) {
       [
-        meta.display_order,
-        meta.original_index,
         meta.qid,
         meta.id,
-        meta.question_id
+        meta.question_id,
+        meta.display_order,
+        meta.original_index
       ].forEach(function (x) {
         var s = safeString(x);
         if (s && keys.indexOf(s) === -1) keys.push(s);
@@ -2559,6 +2569,7 @@ window.MathJax = {
       },
       body: JSON.stringify({
         product: PRODUCT,
+        identity_version: PROGRESS_IDENTITY_VERSION,
         updates: [update]
       })
     })
@@ -3154,6 +3165,11 @@ window.MathJax = {
   }
 
   async function runMigration() {
+    // TS_ESAT_LEGACY_NUMERIC_UPLOAD_DISABLED_V1
+    // The main application resolves legacy numeric keys only after
+    // the canonical question metadata has loaded.
+    if (PRODUCT === "esat-question-bank") return;
+
     var localRaw = "";
 
     try {
@@ -4246,12 +4262,89 @@ window.MathJax = {
     return q;
   }
 
+  // TS_ESAT_PROGRESS_QID_V1
   function questionKey(meta) {
-    return String(meta.display_order);
+    return String((meta && (meta.qid || meta.id)) || "");
   }
 
   function currentMeta() {
     return visibleList[currentIndex] || null;
+  }
+
+  window.TS_ESAT_PROGRESS_BRIDGE_V1 = {
+    currentMeta: currentMeta,
+    questionKey: questionKey,
+    currentAnswer: function () {
+      const meta = currentMeta();
+      if (!meta) return null;
+      return state.answers[questionKey(meta)] || null;
+    }
+  };
+
+  async function hydrateCanonicalProgress() {
+    const oldAnswers =
+      state.answers && typeof state.answers === "object"
+        ? state.answers
+        : {};
+    const nextAnswers = {};
+    const knownQids = new Set();
+
+    allMeta.forEach(function(meta) {
+      const stableKey = questionKey(meta);
+      if (!stableKey) return;
+
+      knownQids.add(stableKey);
+
+      const canonicalLocal = oldAnswers[stableKey];
+      const legacyLocal =
+        oldAnswers[String(meta.display_order)] ||
+        oldAnswers[String(meta.original_index)];
+
+      if (canonicalLocal) nextAnswers[stableKey] = canonicalLocal;
+      else if (legacyLocal) nextAnswers[stableKey] = legacyLocal;
+    });
+
+    Object.keys(oldAnswers).forEach(function(key) {
+      if (!/^\d+$/.test(key) && !nextAnswers[key]) {
+        nextAnswers[key] = oldAnswers[key];
+      }
+    });
+
+    try {
+      const response = await fetch(
+        "/api/qb/progress/load?product=esat-question-bank",
+        {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store"
+        }
+      );
+      const payload = await response.json();
+
+      if (response.ok && payload && payload.ok && payload.progress) {
+        Object.entries(payload.progress).forEach(function(entry) {
+          const qid = String(entry[0] || "");
+          const row = entry[1] || {};
+          if (!knownQids.has(qid)) return;
+
+          const status = String(row.status || "").toLowerCase();
+          nextAnswers[qid] = {
+            selected: row.selected_answer || "",
+            checked:
+              status === "correct" ||
+              status === "wrong" ||
+              status === "incorrect",
+            isCorrect: status === "correct",
+            flagged: !!row.flagged
+          };
+        });
+      }
+    } catch (error) {
+      console.warn("Canonical ESAT progress hydration failed:", error);
+    }
+
+    state.answers = nextAnswers;
+    saveState();
   }
 
   function renderDifficultyLabel(difficulty) {
@@ -5131,6 +5224,7 @@ function applyFilters() {
 
       allMeta = await loadAllMeta();
       tsApplyFinalChapterOrder();
+      await hydrateCanonicalProgress();
       applyFilters();
       buildFilters();
 
@@ -5864,6 +5958,15 @@ function applyFilters() {
   function currentMetaSafe() {
     try {
       if (
+        window.TS_ESAT_PROGRESS_BRIDGE_V1 &&
+        typeof window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta === "function"
+      ) {
+        return window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta();
+      }
+    } catch (e) {}
+
+    try {
+      if (
         typeof currentMeta ===
         "function"
       ) {
@@ -5947,6 +6050,13 @@ function applyFilters() {
 
   function currentAppAnswer() {
     try {
+      if (
+        window.TS_ESAT_PROGRESS_BRIDGE_V1 &&
+        typeof window.TS_ESAT_PROGRESS_BRIDGE_V1.currentAnswer === "function"
+      ) {
+        return window.TS_ESAT_PROGRESS_BRIDGE_V1.currentAnswer();
+      }
+
       var meta =
         currentMetaSafe();
 
@@ -6374,6 +6484,10 @@ function applyFilters() {
         },
         body: JSON.stringify({
           product: PRODUCT,
+          identity_version:
+            PRODUCT === "esat-question-bank"
+              ? "esat-qid-v1"
+              : undefined,
           updates: [update]
         })
       }
