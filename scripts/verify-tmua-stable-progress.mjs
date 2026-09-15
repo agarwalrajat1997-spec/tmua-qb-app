@@ -233,11 +233,12 @@ const js=ts.transpileModule(route,{compilerOptions:{module:ts.ModuleKind.CommonJ
 const written=[];
 const db={auth:{getUser:async()=>({data:{user:{id:'student-test',email:'student@example.test'}},error:null})},
   from:table=>({upsert:async rows=>{written.push({table,rows});return {error:null};}})};
+const adminDb={from:()=>({select:()=>({in:async(_column,values)=>({data:values.filter(qid=>String(qid).startsWith('ESAT-')).map(qid=>({qid})),error:null})})})};
 const api=vm.createContext({exports:{},process:{env:{}},console,Date,
   require:name=>name==='next/server'?{NextResponse:{json:(body,options)=>({body,status:options?.status||200})}}:
     name==='@supabase/ssr'?{createServerClient:()=>db}:
     name==='next/headers'?{cookies:async()=>({get(){},set(){}})}:
-    {ESAT_TABLE_CANDIDATES:[],adminClient:()=>{throw new Error('Unexpected admin access');}}});
+    {ESAT_TABLE_CANDIDATES:['esat_qb_questions'],adminClient:()=>adminDb}});
 vm.runInContext(js,api);
 const post=body=>api.exports.POST({json:async()=>body});
 assert.equal((await post({product:'tmua-question-bank',updates:[{question_id:'1'}]})).status,409);
@@ -247,5 +248,7 @@ assert.equal((await post({product:'tmua-question-bank',identity_version:'tmua-di
 assert.equal(written[0].rows[0].user_id,'student-test');
 assert.equal(written[0].rows[0].question_id,'1824');
 assert.equal(written[0].rows[0].selected_answer,'H');
-assert.equal((await post({product:'esat-question-bank',updates:[{question_id:'ESAT-001',status:'seen'}]})).status,200);
+assert.equal((await post({product:'esat-question-bank',updates:[{question_id:'ESAT-001',status:'seen'}]})).status,409);
+assert.equal((await post({product:'esat-question-bank',identity_version:'esat-qid-v1',updates:[{question_id:'1530',status:'seen'}]})).status,400);
+assert.equal((await post({product:'esat-question-bank',identity_version:'esat-qid-v1',updates:[{question_id:'ESAT-001',status:'seen'}]})).status,200);
 console.log('PASS: Actual TMUA scripts preserve stable IDs across renumbering, filters, delayed fetch/check, duplicate clicks, F–H answers, wrong retry, failed submission, legacy storage and API version guards.');

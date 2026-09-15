@@ -30,12 +30,26 @@ const listRoutePath = path.join(
   "route.ts"
 );
 
+const progressSaveRoutePath = path.join(
+  root,
+  "app",
+  "api",
+  "qb",
+  "progress",
+  "save",
+  "route.ts"
+);
+
 const html = fs.readFileSync(htmlPath, "utf8");
 const questionRoute = fs.readFileSync(
   questionRoutePath,
   "utf8"
 );
 const listRoute = fs.readFileSync(listRoutePath, "utf8");
+const progressSaveRoute = fs.readFileSync(
+  progressSaveRoutePath,
+  "utf8"
+);
 
 function fail(message) {
   throw new Error(`[ESAT identity guard] ${message}`);
@@ -216,6 +230,78 @@ rejectText(
   "synthetic positional qid"
 );
 
+/*
+ * Progress identity lock:
+ * Question content and student progress must use the same canonical qid.
+ * Numeric display positions are allowed only as read-only legacy aliases
+ * during hydration and must never be used for a new save.
+ */
+requireText(
+  html,
+  "TS_ESAT_PROGRESS_QID_V1",
+  "canonical progress marker"
+);
+
+requireText(
+  html,
+  "TS_ESAT_PROGRESS_BRIDGE_V1",
+  "cross-script metadata bridge"
+);
+
+requireMatch(
+  html,
+  /function questionKey\(meta\)\s*\{[\s\S]{0,180}?meta\.qid\s*\|\|\s*meta\.id/,
+  "canonical main-state key"
+);
+
+rejectText(
+  html,
+  "return String(meta.display_order);",
+  "positional main-state key"
+);
+
+requireMatch(
+  html,
+  /function getQuestionKeys\(\)[\s\S]{0,500}?meta\.qid[\s\S]{0,160}?meta\.display_order/,
+  "qid-first progress lookup"
+);
+
+requireText(
+  html,
+  'identity_version: PROGRESS_IDENTITY_VERSION',
+  "canonical progress save version"
+);
+
+requireText(
+  html,
+  "await hydrateCanonicalProgress();",
+  "server-authoritative canonical hydration"
+);
+
+requireText(
+  html,
+  "TS_ESAT_LEGACY_NUMERIC_UPLOAD_DISABLED_V1",
+  "legacy numeric upload block"
+);
+
+requireText(
+  progressSaveRoute,
+  'const ESAT_PROGRESS_IDENTITY_VERSION = "esat-qid-v1";',
+  "server ESAT progress identity version"
+);
+
+requireText(
+  progressSaveRoute,
+  'code: "ESAT_IDENTITY_VERSION_REQUIRED"',
+  "stale-client rejection"
+);
+
+requireText(
+  progressSaveRoute,
+  'code: "ESAT_CANONICAL_QID_REQUIRED"',
+  "noncanonical progress rejection"
+);
+
 console.log(
-  "ESAT identity verification passed: qid/id loading is enforced without positional fallback."
+  "ESAT identity verification passed: question loading and progress persistence both use canonical qids."
 );
