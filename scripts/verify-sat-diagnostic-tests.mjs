@@ -24,6 +24,9 @@ const standardFullLengthHtml = await readFile(
   new URL("../public/sat-test-6/index.html", import.meta.url),
   "utf8",
 );
+const standardFullLengthSolutionPdf = await readFile(
+  new URL("../public/sat-test-6/sat-diagnostic-test-6-solution-book.pdf", import.meta.url),
+);
 const standardFullLengthRoute = await readFile(
   new URL("../app/sat-test-6/route.ts", import.meta.url),
   "utf8",
@@ -55,6 +58,11 @@ assert.match(standardFullLengthHtml, /Math, 22 questions, 35 minutes<\/li>/);
 assert.doesNotMatch(standardFullLengthHtml, /32 minutes — (?:hard|harder|standard|challenging)/i);
 assert.doesNotMatch(standardFullLengthHtml, /35 minutes — (?:hard|harder|standard|challenging)/i);
 assert.match(standardFullLengthHtml, /emailjs\.send\(/);
+assert.match(standardFullLengthHtml, /const solutionPDF = "https:\/\/apps\.thrivingscholars\.com\/sat-test-6\/sat-diagnostic-test-6-solution-book\.pdf"/);
+assert.match(standardFullLengthHtml, /<section class="solution-booklet"/);
+assert.match(standardFullLengthHtml, /solution_link: solutionPDF/);
+assert.match(standardFullLengthHtml, /SAT Diagnostic Test 6 solution book: \$\{solutionPDF\}/);
+assert.equal(standardFullLengthSolutionPdf.subarray(0, 5).toString(), "%PDF-");
 assert.match(standardFullLengthRoute, /\/sat-test-6\/index\.html/);
 
 assert.match(hardFullLengthHtml, /SAT Diagnostic Test 5 — Advanced/);
