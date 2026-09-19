@@ -16,6 +16,7 @@ type PracticeTest = {
   topics: string[];
   file: string;
   solution_url?: string;
+  isNew?: boolean;
 };
 
 type Product = "practice-tests" | "tmua-question-bank" | "tmua-classes";
@@ -227,6 +228,18 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         topics: ["All Topics"],
         file: "p2-mock-06-all-topics.html",
         solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf",
+      },
+      {
+        id: "tmua-2026-predictive-paper",
+        test_id: "tmua-2026-predictive-paper",
+        title: "TMUA 2026 Predictive Practice Test (P1 + P2)",
+        section: "thriving",
+        badge: "FULL",
+        duration_minutes: 150,
+        topics: ["All Topics", "2026 Predictive", "Paper 1 + Paper 2"],
+        file: "tmua-2026-predictive-paper/index.html",
+        solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf",
+        isNew: true,
       },
       {
         id: "full-mock-01",
@@ -493,7 +506,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
       try {
         const entries = await Promise.all(
           TESTS.map(async (t) => {
-            const url = await fetchSolutionPdfForFile(t.file);
+            const url = t.solution_url || (await fetchSolutionPdfForFile(t.file));
             return [t.test_id, url] as const;
           })
         );
@@ -799,7 +812,14 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     return (
                       <div key={t.id} className={styles.test}>
-                        <div className={styles.testTitle}>{t.title}</div>
+                        <div className={styles.testTitleRow}>
+                          <div className={styles.testTitle}>{t.title}</div>
+                          {t.isNew && (
+                            <span className={styles.newBadge} aria-label="New test">
+                              New
+                            </span>
+                          )}
+                        </div>
 
                         <div className={styles.testMeta}>
                           <span>{t.badge}</span>
@@ -870,7 +890,14 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     return (
                       <div key={t.id} className={styles.test}>
-                        <div className={styles.testTitle}>{t.title}</div>
+                        <div className={styles.testTitleRow}>
+                          <div className={styles.testTitle}>{t.title}</div>
+                          {t.isNew && (
+                            <span className={styles.newBadge} aria-label="New test">
+                              New
+                            </span>
+                          )}
+                        </div>
 
                         <div className={styles.testMeta}>
                           <span>{t.badge}</span>
