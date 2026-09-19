@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "verify:supabase-public-config": "node --experimental-strip-types scripts/verify-supabase-public-config.mjs",
+    "postbuild": "npm run verify:supabase-public-config && node scripts/verify-browser-supabase-keys.mjs",
     "verify:login-routing": "node --experimental-strip-types scripts/verify-login-routing.mjs",
     "verify:sat-diagnostic-tests": "node scripts/verify-sat-diagnostic-tests.mjs",
     "verify:platform-neutral": "node scripts/verify-platform-neutral-public-content.mjs",

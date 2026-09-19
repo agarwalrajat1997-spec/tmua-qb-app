@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { safeLoginDestination } from "@/lib/auth/login-destination";
+import { loginErrorMessage } from "@/lib/auth/login-error";
 import styles from "./login.module.css";
 
 type Props = { uiMark: string };
@@ -159,8 +160,8 @@ export default function LoginClient({ uiMark }: Props) {
       setMsg(
         "Login link sent. Check inbox + spam. Open ONLY the newest email link in this same browser and device.",
       );
-    } catch (ex: any) {
-      setErr(ex?.message || "Could not send login link.");
+    } catch (ex: unknown) {
+      setErr(loginErrorMessage(ex));
     } finally {
       setBusy(false);
     }
