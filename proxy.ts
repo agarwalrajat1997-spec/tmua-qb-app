@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_ANON_KEY =
@@ -76,6 +77,17 @@ function pendingRedirect(req: NextRequest, product: string) {
   return NextResponse.redirect(url);
 }
 
+function unavailableResponse(req: NextRequest) {
+  const url = req.nextUrl.clone();
+  url.pathname = "/service-unavailable";
+  url.search = "";
+  url.searchParams.set("next", req.nextUrl.pathname + req.nextUrl.search);
+  return NextResponse.rewrite(url, {
+    status: 503,
+    headers: { "Cache-Control": "no-store", "Retry-After": "30" },
+  });
+}
+
 export async function proxy(req: NextRequest) {
   // TS_PUBLIC_SAT_TEST_4
   // This standalone test must remain accessible without authentication.
@@ -107,6 +119,7 @@ export async function proxy(req: NextRequest) {
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
     {
+      global: { fetch: serviceFetch },
       cookies: {
         getAll() {
           return req.cookies.getAll();
@@ -126,49 +139,53 @@ export async function proxy(req: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const { data: { user }, error: authError } = await withServiceTimeout(supabase.auth.getUser());
+    if (authError && !isMissingSession(authError)) return unavailableResponse(req);
 
-  if (!user || !user.email) {
-    return loginRedirect(req);
-  }
+    if (!user || !user.email) {
+      return loginRedirect(req);
+    }
 
-  const pathname = req.nextUrl.pathname;
-  const gate = matchProductGate(pathname);
+    const pathname = req.nextUrl.pathname;
+    const gate = matchProductGate(pathname);
 
-  // Dashboard is signed-in only. Product tiles/access should be controlled by the dashboard UI/API.
-  if (!gate) {
+    // Dashboard is signed-in only. Product tiles/access should be controlled by the dashboard UI/API.
+    if (!gate) {
+      return res;
+    }
+
+    const email = user.email.toLowerCase();
+    const nowIso = new Date().toISOString();
+
+    const { data: accessRows, error } = await supabase
+      .from("student_access")
+      .select("email, product, approved, expires_at")
+      .ilike("email", email)
+      .eq("product", gate.product)
+      .eq("approved", true)
+      .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
+      .limit(1);
+
+    if (error) {
+      console.error("Access check failed:", {
+        email,
+        product: gate.product,
+        error,
+      });
+
+      return unavailableResponse(req);
+    }
+
+    if (!accessRows || accessRows.length === 0) {
+      return pendingRedirect(req, gate.product);
+    }
+
     return res;
+  } catch (error) {
+    console.error("Portal access service unavailable", error);
+    return unavailableResponse(req);
   }
-
-  const email = user.email.toLowerCase();
-  const nowIso = new Date().toISOString();
-
-  const { data: accessRows, error } = await supabase
-    .from("student_access")
-    .select("email, product, approved, expires_at")
-    .ilike("email", email)
-    .eq("product", gate.product)
-    .eq("approved", true)
-    .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
-    .limit(1);
-
-  if (error) {
-    console.error("Access check failed:", {
-      email,
-      product: gate.product,
-      error,
-    });
-
-    return pendingRedirect(req, gate.product);
-  }
-
-  if (!accessRows || accessRows.length === 0) {
-    return pendingRedirect(req, gate.product);
-  }
-
-  return res;
 }
 
 export const config = {

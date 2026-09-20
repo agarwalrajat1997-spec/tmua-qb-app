@@ -2,6 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { supabaseBrowser } from "@/utils/supabase/browser";
+import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
+import ServiceRetry from "../components/ServiceRetry";
 import styles from "../dashboard/dashboard.module.css";
 import EsatPredictionStrip from "./EsatPredictionStrip";
 
@@ -194,6 +196,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
   const [activeTrack, setActiveTrack] = useState<TrackKey>("engineering");
   const [products, setProducts] = useState<EsatProduct[]>([]);
   const [err, setErr] = useState<string | null>(null);
+  const [retryAttempt, setRetryAttempt] = useState(0);
 
   const [latestByTestId, setLatestByTestId] = useState<Record<string, AttemptSummary>>({});
   const [attemptsLoading, setAttemptsLoading] = useState(false);
@@ -217,7 +220,9 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
         const {
           data: { user },
           error: userErr,
-        } = await supabase.auth.getUser();
+        } = await withServiceTimeout(supabase.auth.getUser());
+        if (cancelled) return;
+        if (userErr && !isMissingSession(userErr)) throw userErr;
 
         if (userErr || !user?.email) {
           window.location.href = "/login?next=/esat";
@@ -235,8 +240,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
         if (cancelled) return;
 
         if (error) {
-          setErr(error.message || "Could not load ESAT access.");
-          setProducts([]);
+          setErr(SERVICE_RETRY_MESSAGE);
           setLoading(false);
           return;
         }
@@ -268,7 +272,9 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
 
         setLoading(false);
       } catch (e: unknown) {
-        setErr(errorMessage(e, "Could not load ESAT access."));
+        if (cancelled) return;
+        console.error("ESAT access service unavailable", e);
+        setErr(SERVICE_RETRY_MESSAGE);
         setLoading(false);
       }
     }
@@ -278,7 +284,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
     return () => {
       cancelled = true;
     };
-  }, [supabase]);
+  }, [supabase, retryAttempt]);
 
   const hasPractice = products.includes("esat-practice-tests");
   const hasBank = products.includes("esat-question-bank");
@@ -371,6 +377,10 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
     setSolTitle(`${t.title} Solutions`);
     setSolUrl(t.solutionUrl || null);
     setSolOpen(true);
+  }
+
+  if (err && !loading) {
+    return <ServiceRetry onRetry={() => { setErr(null); setLoading(true); setRetryAttempt(n => n + 1); }} />;
   }
 
   if (loading) {
@@ -1113,5 +1123,4 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
     </div>
   );
 }
-
 

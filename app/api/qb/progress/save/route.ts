@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 import {
   ESAT_TABLE_CANDIDATES,
   adminClient,
@@ -31,6 +32,7 @@ async function supabaseServer() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
   return createServerClient(url, key, {
+    global: { fetch: serviceFetch },
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;
@@ -46,7 +48,7 @@ async function supabaseServer() {
 }
 
 function jsonErr(status: number, error: string, extra?: any) {
-  return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status });
+  return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status, headers: { "Cache-Control": "no-store", ...(status === 503 ? { "Retry-After": "30" } : {}) } });
 }
 
 function toIsoOrNull(x: any): string | null {
@@ -192,7 +194,8 @@ export async function POST(req: Request) {
   try {
     const supabase = await supabaseServer();
 
-    const { data: auth, error: authErr } = await supabase.auth.getUser();
+    const { data: auth, error: authErr } = await withServiceTimeout(supabase.auth.getUser());
+    if (authErr && !isMissingSession(authErr)) return jsonErr(503, "Progress service temporarily unavailable");
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
     const body = await req.json().catch(() => null);
@@ -335,7 +338,7 @@ export async function POST(req: Request) {
       .upsert(rows, { onConflict: "user_id,product,question_id" });
 
     if (error) {
-      return jsonErr(500, "Supabase upsert failed", { message: error.message });
+      return jsonErr(503, "Progress service temporarily unavailable");
     }
 
     if (product === "esat-question-bank") {

@@ -2202,6 +2202,8 @@ window.MathJax = {
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
+<script src="/qb-progress-transport.js?v=2"></script>
+<script src="/qb-compact-sync.js?v=2"></script>
 <script id="ts-per-question-progress-sync-v1">
 (function () {
   "use strict";
@@ -3246,191 +3248,7 @@ window.MathJax = {
 </script>
 
 <script id="ts-user-progress-sync-v1">
-(function () {
-  "use strict";
-
-  var PRODUCT = "esat-question-bank";
-  var STORAGE_KEY = "ts_esat_supabase_exact_ui_v1";
-  var REMOTE_KEY = "app_state";
-  var LAST_SERVER_UPDATED_KEY = STORAGE_KEY + "__server_updated_at";
-  var LAST_PUSH_HASH_KEY = STORAGE_KEY + "__last_push_hash";
-  var RELOAD_FLAG = STORAGE_KEY + "__remote_reload_done";
-
-  function endpoint() {
-    return "/api/qb/user-progress?product=" +
-      encodeURIComponent(PRODUCT) +
-      "&key=" +
-      encodeURIComponent(REMOTE_KEY);
-  }
-
-  function safeParse(raw) {
-    try {
-      return JSON.parse(raw);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function simpleHash(str) {
-    var h = 0;
-    str = String(str || "");
-
-    for (var i = 0; i < str.length; i++) {
-      h = ((h << 5) - h) + str.charCodeAt(i);
-      h |= 0;
-    }
-
-    return String(h) + ":" + String(str.length);
-  }
-
-  function getRaw() {
-    try {
-      return localStorage.getItem(STORAGE_KEY) || "";
-    } catch (e) {
-      return "";
-    }
-  }
-
-  function setRaw(raw) {
-    try {
-      localStorage.setItem(STORAGE_KEY, raw);
-    } catch (e) {}
-  }
-
-  async function pullFromServer() {
-    try {
-      var res = await fetch(endpoint(), {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store"
-      });
-
-      var payload = await res.json();
-
-      if (!res.ok || !payload.ok || !payload.data) {
-        return;
-      }
-
-      var remote = payload.data;
-      var remoteRaw = String(remote.raw || "");
-      var remoteUpdatedAt = String(payload.updated_at || "");
-
-      if (!remoteRaw) return;
-
-      var localRaw = getRaw();
-      var lastServerUpdated = localStorage.getItem(LAST_SERVER_UPDATED_KEY) || "";
-
-      // If this device has not already loaded this server version, load Supabase version.
-      if (remoteUpdatedAt && remoteUpdatedAt !== lastServerUpdated && remoteRaw !== localRaw) {
-        setRaw(remoteRaw);
-        localStorage.setItem(LAST_SERVER_UPDATED_KEY, remoteUpdatedAt);
-        localStorage.setItem(LAST_PUSH_HASH_KEY, simpleHash(remoteRaw));
-
-        // Reload once so the existing question-bank app boots from Supabase state.
-        if (!sessionStorage.getItem(RELOAD_FLAG)) {
-          sessionStorage.setItem(RELOAD_FLAG, "1");
-          location.reload();
-        }
-      }
-    } catch (e) {
-      console.warn("Progress pull failed:", e);
-    }
-  }
-
-  var pushTimer = null;
-
-  function schedulePush() {
-    clearTimeout(pushTimer);
-    pushTimer = setTimeout(pushToServer, 900);
-  }
-
-  async function pushToServer() {
-    try {
-      var raw = getRaw();
-      if (!raw) return;
-
-      var hash = simpleHash(raw);
-      var lastHash = localStorage.getItem(LAST_PUSH_HASH_KEY) || "";
-
-      if (hash === lastHash) return;
-
-      var parsed = safeParse(raw);
-
-      var body = {
-        product: PRODUCT,
-        key: REMOTE_KEY,
-        data: {
-          storage_key: STORAGE_KEY,
-          raw: raw,
-          parsed: parsed,
-          page_url: String(window.location.href || ""),
-          saved_at: new Date().toISOString()
-        }
-      };
-
-      var res = await fetch("/api/qb/user-progress", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      });
-
-      var payload = await res.json();
-
-      if (res.ok && payload.ok) {
-        localStorage.setItem(LAST_PUSH_HASH_KEY, hash);
-
-        if (payload.saved && payload.saved.updated_at) {
-          localStorage.setItem(LAST_SERVER_UPDATED_KEY, payload.saved.updated_at);
-        }
-      }
-    } catch (e) {
-      console.warn("Progress push failed:", e);
-    }
-  }
-
-  // Wrap localStorage writes so progress changes are pushed to Supabase.
-  try {
-    var originalSetItem = Storage.prototype.setItem;
-
-    if (!Storage.prototype.__tsUserProgressSyncPatched) {
-      Storage.prototype.setItem = function (key, value) {
-        var result = originalSetItem.apply(this, arguments);
-
-        try {
-          if (this === localStorage && String(key) === STORAGE_KEY) {
-            schedulePush();
-          }
-        } catch (e) {}
-
-        return result;
-      };
-
-      Storage.prototype.__tsUserProgressSyncPatched = true;
-    }
-  } catch (e) {}
-
-  // Pull server state early, then keep syncing.
-  pullFromServer();
-
-  window.addEventListener("load", function () {
-    setTimeout(pullFromServer, 300);
-    setTimeout(pushToServer, 1800);
-  });
-
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-      pushToServer();
-    } else {
-      pullFromServer();
-    }
-  });
-
-  setInterval(pushToServer, 5000);
-  setInterval(pullFromServer, 30000);
-})();
+window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_supabase_exact_ui_v1");
 </script>
 
 <script id="ts-esat-rpc-bridge-v1">
@@ -4909,6 +4727,10 @@ function applyFilters() {
 
     const meta = currentMeta();
     currentQuestion = await loadQuestion(meta);
+    const restoredAnswer = answerFor(meta);
+    if (restoredAnswer.checked) {
+      restoredAnswer.answer = currentQuestion.answer || currentQuestion.correct_answer || restoredAnswer.answer;
+    }
 
     setText("qTitle", "Question " + (meta.global_number || meta.paper_question_number || meta.display_order));
     setText("metaPaper", meta.paper || "");
@@ -5397,6 +5219,19 @@ function applyFilters() {
   window.ACTIONS = ACTIONS;
   window.STATE = STATE;
   window.DASH = DASH;
+
+  window.addEventListener("ts-qb-state-restored", function(event) {
+    if (!event.detail || event.detail.product !== "esat-question-bank") return;
+    const activeKey = questionKey(currentMeta());
+    state = Object.assign({}, state, event.detail.state);
+    state.filters = Object.assign({ status: "all", papers: [], topics: [], difficulties: [] }, state.filters);
+    if (allMeta.length) {
+      applyFilters();
+      buildFilters();
+      currentIndex = Math.max(0, visibleList.findIndex(meta => questionKey(meta) === activeKey));
+      render().catch(console.warn);
+    }
+  });
 
   async function boot() {
     try {

@@ -1,5 +1,6 @@
 ﻿import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
+import { serviceFetch } from "@/lib/auth/service-recovery";
 
 export async function supabaseServer() {
   const cookieStore = await cookies();
@@ -11,6 +12,7 @@ export async function supabaseServer() {
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
 
   return createServerClient(url, key, {
+    global: { fetch: serviceFetch },
     cookies: {
       getAll() {
         return cookieStore.getAll();

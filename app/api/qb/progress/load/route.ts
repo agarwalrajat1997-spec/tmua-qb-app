@@ -1,7 +1,8 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 async function supabaseServer() {
   const cookieStore = await cookies();
@@ -10,6 +11,7 @@ async function supabaseServer() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
   return createServerClient(url, key, {
+    global: { fetch: serviceFetch },
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;
@@ -25,14 +27,15 @@ async function supabaseServer() {
 }
 
 function jsonErr(status: number, error: string, extra?: any) {
-  return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status });
+  return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status, headers: { "Cache-Control": "no-store", ...(status === 503 ? { "Retry-After": "30" } : {}) } });
 }
 
 export async function GET(req: Request) {
   try {
     const supabase = await supabaseServer();
 
-    const { data: auth, error: authErr } = await supabase.auth.getUser();
+    const { data: auth, error: authErr } = await withServiceTimeout(supabase.auth.getUser());
+    if (authErr && !isMissingSession(authErr)) return jsonErr(503, "Progress service temporarily unavailable");
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
     const url = new URL(req.url);
@@ -54,7 +57,7 @@ export async function GET(req: Request) {
       .eq("product", product);
 
     if (error) {
-      return jsonErr(500, "Supabase load failed", { message: error.message });
+      return jsonErr(503, "Progress service temporarily unavailable");
     }
 
     const progress: Record<string, any> = {};

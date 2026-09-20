@@ -238,6 +238,7 @@ const api=vm.createContext({exports:{},process:{env:{}},console,Date,
   require:name=>name==='next/server'?{NextResponse:{json:(body,options)=>({body,status:options?.status||200})}}:
     name==='@supabase/ssr'?{createServerClient:()=>db}:
     name==='next/headers'?{cookies:async()=>({get(){},set(){}})}:
+    name==='@/lib/auth/service-recovery'?{withServiceTimeout:p=>p,isMissingSession:e=>e?.name==='AuthSessionMissingError',serviceFetch:()=>{throw new Error('Unexpected network')}}:
     {ESAT_TABLE_CANDIDATES:['esat_qb_questions'],adminClient:()=>adminDb}});
 vm.runInContext(js,api);
 const post=body=>api.exports.POST({json:async()=>body});

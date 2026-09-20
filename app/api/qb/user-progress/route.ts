@@ -1,5 +1,7 @@
 ﻿import { NextRequest } from "next/server";
 import { supabaseServer } from "@/utils/supabase/server";
+import { compactProgressState, progressStateFromEnvelope } from "@/lib/qb/compact-progress";
+import { isMissingSession, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -24,8 +26,9 @@ async function getAuthedUser() {
   const supabase = await supabaseServer();
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { user }, error,
+  } = await withServiceTimeout(supabase.auth.getUser());
+  if (error && !isMissingSession(error)) throw new Error("Authentication service unavailable");
 
   if (!user || !user.email) {
     return { supabase, user: null, email: null };
@@ -56,13 +59,13 @@ async function hasProductAccess(
 
   if (error) {
     console.error("Progress access check failed:", { email, product, error });
-    return false;
+    throw new Error("Access service unavailable");
   }
 
   return !!data && data.length > 0;
 }
 
-export async function GET(req: NextRequest) {
+async function getProgress(req: NextRequest) {
   const { supabase, user, email } = await getAuthedUser();
 
   if (!user || !email) {
@@ -96,18 +99,25 @@ export async function GET(req: NextRequest) {
     return json({ ok: false, error: error.message }, 500);
   }
 
+  let envelope = data?.data || null;
+  if (envelope && ["tmua-question-bank", "esat-question-bank"].includes(product) && key === "app_state") {
+    const parsed = progressStateFromEnvelope(envelope);
+    envelope = { version: 2, storage_key: envelope.storage_key, parsed };
+    // Older open tabs still expect raw; v2 clients receive only one compact copy.
+    if (searchParams.get("format") !== "compact-v2") envelope.raw = JSON.stringify(parsed);
+  }
   return json({
     ok: true,
     user_id: user.id,
     email,
     product,
     key,
-    data: data?.data || null,
+    data: envelope,
     updated_at: data?.updated_at || null,
   });
 }
 
-export async function POST(req: NextRequest) {
+async function postProgress(req: NextRequest) {
   const { supabase, user, email } = await getAuthedUser();
 
   if (!user || !email) {
@@ -128,6 +138,22 @@ export async function POST(req: NextRequest) {
 
   if (!allowed) {
     return json({ ok: false, error: "No access for this product" }, 403);
+  }
+
+  if (["tmua-question-bank", "esat-question-bank"].includes(product) && key === "app_state") {
+    let patch;
+    try {
+      patch = body?.version === 2 ? compactProgressState(body.patch) : progressStateFromEnvelope(data);
+      if (JSON.stringify(patch).length > 1_000_000) return json({ ok: false, error: "Progress update too large" }, 413);
+    } catch {
+      return json({ ok: false, error: "Invalid progress state" }, 400);
+    }
+    const storageKey = product === "tmua-question-bank" ? "ts_tmua_supabase_exact_ui_v4" : "ts_esat_supabase_exact_ui_v1";
+    const { data: updated, error } = await supabase.rpc("save_qb_app_state_v2", {
+      p_product: product, p_patch: patch, p_storage_key: storageKey,
+    });
+    if (error) throw new Error("Progress save temporarily unavailable");
+    return json({ ok: true, saved: { user_id: user.id, product, key, updated_at: updated } });
   }
 
   if (data === null || typeof data !== "object") {
@@ -160,4 +186,19 @@ export async function POST(req: NextRequest) {
     ok: true,
     saved,
   });
+}
+
+export async function GET(req: NextRequest) {
+  try { return await getProgress(req); }
+  catch (error) { console.error("Progress service unavailable", error); return unavailable(); }
+}
+
+export async function POST(req: NextRequest) {
+  try { return await postProgress(req); }
+  catch (error) { console.error("Progress service unavailable", error); return unavailable(); }
+}
+
+function unavailable() {
+  return Response.json({ ok: false, error: "Progress is temporarily unavailable. Your local work is retained; please retry." },
+    { status: 503, headers: { "Cache-Control": "no-store", "Retry-After": "30" } });
 }
