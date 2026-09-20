@@ -2199,9 +2199,59 @@ window.MathJax = {
   }
 }
 </style>
+
+<style id="ts-qb-startup-style">
+/* The practice workspace appears only when the first question is ready. */
+#qbStartup { display: none; }
+body[data-qb-phase="loading"] #qbStartup,
+body[data-qb-phase="error"] #qbStartup { display: block; }
+body[data-qb-phase="loading"] :is(#qCard, #emptyState, .topbar),
+body[data-qb-phase="error"] :is(#qCard, #emptyState, .topbar) { display: none !important; }
+body[data-qb-phase="loading"] :is(.header-right, #tsQuestionTimerShell, .footer, .bug-floating-btn),
+body[data-qb-phase="error"] :is(.header-right, #tsQuestionTimerShell, .footer, .bug-floating-btn) { visibility: hidden; }
+.qb-startup {
+  box-sizing: border-box;
+  max-width: 540px;
+  margin: clamp(36px, 9vh, 100px) auto 32px;
+  padding: 40px 28px 36px;
+  border: 1px solid #dce8f1;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #f7fbff 0%, #fff 48%);
+  box-shadow: 0 12px 36px rgba(25, 63, 95, .06);
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #17344c;
+}
+.qb-startup-mark {
+  position: relative; display: grid; place-items: center;
+  width: 62px; height: 62px; margin: 0 auto 22px;
+  border-radius: 50%; background: #edf6fc; color: #0074c1;
+}
+.qb-startup-mark::after {
+  content: ""; position: absolute; inset: -5px;
+  border: 2px solid #e0edf6; border-top-color: #0074c1; border-right-color: #f4c65c;
+  border-radius: 50%; animation: qb-startup-turn 1.5s linear infinite;
+}
+.qb-startup-label { margin: 0 0 12px; font-size: 11px; line-height: 1.6; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #537086; }
+.qb-startup h2 { margin: 0 0 12px; font-family: Georgia, serif; font-size: clamp(24px, 4vw, 30px); line-height: 1.25; font-weight: 600; letter-spacing: -.5px; }
+.qb-startup-copy { max-width: 330px; margin: 0 auto; font-size: 15px; line-height: 1.7; color: #617385; }
+.qb-startup-track { width: 160px; height: 3px; margin: 26px auto 0; border-radius: 4px; background: #e8f1f7; overflow: hidden; }
+.qb-startup-track::after { content: ""; display: block; width: 45%; height: 100%; border-radius: inherit; background: #0074c1; animation: qb-startup-progress 1.8s ease-in-out infinite alternate; }
+.qb-startup-retry { margin-top: 24px; padding: 12px 24px; border: 0; border-radius: 10px; color: #fff; background: #0074c1; font: 600 14px Arial, sans-serif; cursor: pointer; }
+.qb-startup-retry:focus-visible { outline: 3px solid #f4c65c; outline-offset: 4px; }
+.qb-startup-retry[hidden] { display: none; }
+body[data-qb-phase="error"] .qb-startup-track { display: none; }
+body[data-qb-phase="error"] .qb-startup-mark::after { animation: none; border-color: #e0edf6; }
+@keyframes qb-startup-turn { to { transform: rotate(360deg); } }
+@keyframes qb-startup-progress { to { transform: translateX(122%); } }
+@media (prefers-reduced-motion: reduce) {
+  .qb-startup-mark::after, .qb-startup-track::after { animation: none; }
+}
+@media (max-width: 480px) { .qb-startup { padding: 32px 20px; border-radius: 16px; } }
+</style>
 </head>
 
-<body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
+<body data-qb-phase="loading" data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
 <script src="/qb-progress-transport.js?v=3"></script>
 <script src="/qb-compact-sync.js?v=3"></script>
 <script id="ts-per-question-progress-sync-v1">
@@ -3543,6 +3593,18 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
 
 <div class="container">
 
+  <section id="qbStartup" class="qb-startup" role="status" aria-live="polite" aria-busy="true" aria-labelledby="qbStartupTitle">
+    <div class="qb-startup-mark" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1v-14c-3-1-6-1-9 1Z"/><path d="M12 5.5v14M6 8l3 1M15 9l3-1"/></svg>
+    </div>
+    <p class="qb-startup-label">Thriving Scholars · ESAT</p>
+    <h2 id="qbStartupTitle">Preparing your practice</h2>
+    <p id="qbStartupCopy" class="qb-startup-copy">Your questions and progress will be ready shortly.</p>
+    <div class="qb-startup-track" aria-hidden="true"></div>
+    <button id="qbStartupRetry" class="qb-startup-retry" type="button" hidden>Try again</button>
+  </section>
+
+
   <div class="topbar">
     <div class="chips" id="activeChips"></div>
     <div class="chips">
@@ -3559,19 +3621,19 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
     <div class="qhead">
       <h2 class="qtitle">
         <span class="calc"></span>
-        <span id="qTitle">Loading...</span>
+        <span id="qTitle"></span>
       </h2>
 
       <div class="qmeta">
         <span class="meta-pill" id="metaPaper">Paper</span>
         <span class="meta-pill" id="metaTopic">Topic</span>
         <span class="meta-pill" id="metaDiff">Difficulty</span>
-        <span class="meta-pill" id="metaStatus">Loading</span>
+        <span class="meta-pill" id="metaStatus"></span>
       </div>
     </div>
 
     <div class="qbody">
-      <div id="qPrompt"><p>Loading question from Supabase...</p></div>
+      <div id="qPrompt"></div>
       <div id="qMedia"></div>
 
       <div class="options" id="qOptions"></div>
@@ -3948,11 +4010,37 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
     } catch(e) {}
   }
 
+  // Compact sync starts with an empty filter object while cloud state loads.
+  // Normalize every incoming state without discarding valid saved selections.
+  function normalizeState(value, previous) {
+    const record = item => item && typeof item === "object" && !Array.isArray(item);
+    const base = record(previous) ? previous : {};
+    const incoming = record(value) ? value : {};
+    const priorFilters = record(base.filters) ? base.filters : {};
+    const incomingFilters = record(incoming.filters) ? incoming.filters : {};
+    const filters = { ...priorFilters, ...incomingFilters };
+    for (const key of ["papers", "topics", "difficulties"]) {
+      filters[key] = Array.isArray(filters[key]) ? filters[key].slice()
+        : Array.isArray(priorFilters[key]) ? priorFilters[key].slice() : [];
+    }
+    const statuses = ["all", "unseen", "attempted", "correct", "incorrect", "flagged"];
+    filters.status = statuses.includes(filters.status) ? filters.status
+      : statuses.includes(priorFilters.status) ? priorFilters.status : "all";
+    return {
+      ...base,
+      ...incoming,
+      answers: record(incoming.answers) ? incoming.answers : record(base.answers) ? base.answers : {},
+      filters
+    };
+  }
+
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) state = Object.assign(state, JSON.parse(raw));
-    } catch(e) {}
+      state = normalizeState(raw ? JSON.parse(raw) : {}, state);
+    } catch(e) {
+      state = normalizeState({}, state);
+    }
   }
 
   function typeset() {
@@ -4734,6 +4822,7 @@ function applyFilters() {
     if (!visibleList.length) {
       if (empty) empty.style.display = "block";
       if (card) card.style.display = "none";
+      setStartupPhase("ready");
       return;
     }
 
@@ -4770,6 +4859,7 @@ function applyFilters() {
     }
 
     typeset();
+    setStartupPhase("ready");
   }
 
   async function go(delta) {
@@ -5172,7 +5262,9 @@ function applyFilters() {
       const t = el("importText");
       if (!t || !t.value.trim()) return;
       try {
-        state = JSON.parse(t.value);
+        const imported = JSON.parse(t.value);
+        if (!imported || typeof imported !== "object" || Array.isArray(imported)) throw new Error("Invalid state");
+        state = normalizeState(imported);
         saveState();
         render();
       } catch(e) {
@@ -5238,8 +5330,7 @@ function applyFilters() {
   window.addEventListener("ts-qb-state-restored", function(event) {
     if (!event.detail || event.detail.product !== "esat-question-bank") return;
     const activeKey = questionKey(currentMeta());
-    state = Object.assign({}, state, event.detail.state);
-    state.filters = Object.assign({ status: "all", papers: [], topics: [], difficulties: [] }, state.filters);
+    state = normalizeState(event.detail.state, state);
     if (allMeta.length) {
       applyFilters();
       buildFilters();
@@ -5248,12 +5339,25 @@ function applyFilters() {
     }
   });
 
+  function setStartupPhase(phase) {
+    const panel = el("qbStartup");
+    if (!panel) return;
+    document.body.setAttribute("data-qb-phase", phase);
+    panel.setAttribute("aria-busy", phase === "loading" ? "true" : "false");
+    panel.setAttribute("role", phase === "error" ? "alert" : "status");
+    const retry = el("qbStartupRetry");
+    if (retry) retry.hidden = phase !== "error";
+    setText("qbStartupTitle", phase === "error" ? "Let’s try that again" : "Preparing your practice");
+    setText("qbStartupCopy", phase === "error"
+      ? "We couldn’t load your questions just now. Please try again."
+      : "Your questions and progress will be ready shortly.");
+  }
+
   async function boot() {
     try {
       loadState();
 
-      setText("qTitle", "Loading Questions...");
-      setHtml("qPrompt", "<p>Loading Questions...</p>");
+      setStartupPhase("loading");
       setHtml("qOptions", "");
 
       allMeta = await loadAllMeta();
@@ -5267,13 +5371,12 @@ function applyFilters() {
       await render();
     } catch(e) {
       console.error(e);
-      setHtml("qPrompt",
-        '<p style="color:#b91c1c;"><strong>Could not load Supabase bank.</strong></p>' +
-        '<pre style="white-space:pre-wrap;">' + escapeHtml(e && e.stack ? e.stack : e) + '</pre>'
-      );
+      setStartupPhase("error");
     }
   }
 
+  const startupRetry = el("qbStartupRetry");
+  if (startupRetry) startupRetry.addEventListener("click", boot);
   document.addEventListener("DOMContentLoaded", boot);
 })();
 </script>
@@ -7651,16 +7754,3 @@ function applyFilters() {
 })();
 </script>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
-
-
-
-
-
-
-
-
-
-
-
-
-\n\n\n\n
