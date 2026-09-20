@@ -3,6 +3,7 @@ import { getCanonicalEsatTest } from "@/lib/server/esat-canonical-tests";
 import { estimateEsatTestScores } from "@/lib/server/esat-score-estimates";
 import { estimateOctober2026EsatScores } from "@/lib/server/esat-october-2026-tests";
 import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
+import { TMUA_PREDICTIVE_2026_ID, TMUA_PREDICTIVE_2026_CATALOG, evaluateTmuaPredictive2026Attempt } from "@/lib/server/tmua-predictive-2026";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
@@ -315,7 +316,7 @@ export async function POST(req: Request) {
   }
 
   const catalog =
-    catalogData as CatalogRow | null;
+    (testId === TMUA_PREDICTIVE_2026_ID ? TMUA_PREDICTIVE_2026_CATALOG : catalogData) as CatalogRow | null;
 
   const canonicalTmuaTest =
     getCanonicalTmuaTest(testId);
@@ -638,6 +639,12 @@ export async function POST(req: Request) {
   const submittedAt =
     new Date().toISOString();
 
+  const predictive2026Evaluation = evaluateTmuaPredictive2026Attempt({
+    id: "pending-submission", user_id: user.id, test_id: testId, submitted_at: submittedAt,
+    answers, time_spent: timeSpent,
+    predictor_metadata: { tmua_predictive_2026_complete: body?.complete !== false },
+  });
+
   const payload = {
     user_id: user.id,
     email: user.email ?? null,
@@ -664,17 +671,30 @@ export async function POST(req: Request) {
 
     attempt_number: null,
     started_at:
-      safeIsoDate(body?.started_at),
+      safeIsoDate(body?.started_at ?? (testId === TMUA_PREDICTIVE_2026_ID ? body?.startedAt : null)),
 
     paper_1_score: paper1Score,
     paper_2_score: paper2Score,
 
     is_full_timed_attempt: false,
 
+    // Historical tests retain DB finalisation. This code-owned practice
+    // scale has no DB catalogue row and is scored only from canonical keys.
+    ...(testId === TMUA_PREDICTIVE_2026_ID ? {
+      tmua_score9: predictive2026Evaluation?.authoritative_tmua_score9 ?? null,
+      is_full_timed_attempt: predictive2026Evaluation?.combined_score_eligible ?? false,
+    } : {}),
+
     score_conversion_profile:
       scoreConversionProfile,
 
     predictor_metadata: {
+      ...(testId === TMUA_PREDICTIVE_2026_ID ? {
+        tmua_predictive_2026_complete: body?.complete !== false,
+        tmua_predictive_2026_scale: TMUA_PREDICTIVE_2026_CATALOG.score_conversion_profile,
+        tmua_predictive_2026_scale_calibrated: false,
+        tmua_predictive_2026_predictor_eligible: predictive2026Evaluation?.predictor_eligible ?? false,
+      } : {}),
       recognised_tmua_test:
         recognisedTmuaTest,
 
@@ -752,7 +772,8 @@ export async function POST(req: Request) {
         esat_score_status: esatScoreEstimate.status,
         esat_score_label: esatScoreEstimate.scoreLabel,
         esat_score_note: esatScoreEstimate.note,
-        esat_predictor_eligible: false,
+        esat_predictor_eligible: esatScoreEstimate.predictorEligible,
+        esat_predictor_family_id: esatScoreEstimate.predictorFamilyId,
       } : {}),
 
 

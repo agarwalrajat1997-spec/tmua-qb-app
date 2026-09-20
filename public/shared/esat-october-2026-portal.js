@@ -2,6 +2,9 @@
   'use strict';
   if (window.TS_ESAT_PORTAL) return;
 
+  const SAVED_MESSAGE = 'Your result is saved in your ESAT portal attempt history and contributes to your dashboard prediction using the three module estimates.';
+  const PREDICTION_NOTE = 'Completed attempts saved to the portal contribute to your dashboard prediction using the three module estimates.';
+  const INCOMPLETE_NOTE = 'Incomplete attempts do not contribute to your dashboard prediction.';
   const entries = new Map();
   let activeKey = '';
   const secondsText = value => {
@@ -37,7 +40,9 @@
       const url = new URL(cfg.solutionPdfUrl, window.location.origin);
       if (url.protocol === 'https:' || url.protocol === 'http:') solutionLink = url.href;
     }
-    const note = r.scoreNote || 'These practice estimates have not been calibrated against live ESAT results. Each module is converted separately; there is no overall ESAT scaled score.';
+    const baseNote = r.scoreNote || 'These practice estimates have not been calibrated against live ESAT results. Each module is converted separately; there is no overall ESAT scaled score.';
+    const predictionNote = r.incomplete ? INCOMPLETE_NOTE : PREDICTION_NOTE;
+    const note = baseNote.includes(predictionNote) ? baseNote : baseNote + ' ' + predictionNote;
     const moduleSummary = [
       'MODULE SCORE SUMMARY',
       ...r.modules.map(m => `${m.name}: ${m.rawScore} / ${m.questionCount} | Provisional TS practice score: ` +
@@ -101,7 +106,9 @@
   function readRecord(key) {
     try {
       const value = JSON.parse(localStorage.getItem(key) || 'null');
-      return value && ['sent', 'sending', 'failed'].includes(value.status) ? value : null;
+      if (!value || !['sent', 'sending', 'failed'].includes(value.status)) return null;
+      if (value.status === 'sent') value.message = SAVED_MESSAGE;
+      return value;
     } catch (_) { return null; }
   }
 
@@ -180,7 +187,7 @@
         let existing;
         if (reconcile) existing = await findSaved(entry, payload);
         if (existing) {
-          remember(entry, {status: 'sent', serverAttemptId: existing.id, message: 'Your result is saved in your ESAT portal attempt history.'});
+          remember(entry, {status: 'sent', serverAttemptId: existing.id, message: SAVED_MESSAGE});
           return entry.record;
         }
         remember(entry, {status: 'sending', message: 'Saving your result to the ESAT portal…'});
@@ -188,7 +195,7 @@
           method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
         });
         if (!body.attempt || !body.attempt.id) throw new Error('The portal did not return a saved attempt. Retry checks your attempt history before sending again.');
-        remember(entry, {status: 'sent', serverAttemptId: body.attempt.id, message: 'Your result is saved in your ESAT portal attempt history.'});
+        remember(entry, {status: 'sent', serverAttemptId: body.attempt.id, message: SAVED_MESSAGE});
       } catch (error) {
         const message = error && error.name === 'AbortError'
           ? 'Saving timed out; the portal may still have received your result. Retry checks your attempt history before sending again.'
@@ -211,7 +218,7 @@
         key,
         report: r,
         pending: null,
-        record: {status: 'incomplete', message: 'Incomplete attempt kept in this browser. Download your report; it will not be added to portal attempt history.'}
+        record: {status: 'incomplete', message: 'Incomplete attempt kept in this browser. Download your report; it will not be added to portal attempt history or contribute to your dashboard prediction.'}
       };
       entries.set(key, entry);
       render(entry);

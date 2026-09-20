@@ -1,10 +1,12 @@
 /** October 2026 source keys and the owner's provisional, uncalibrated anchors.
- * These papers are deliberately separate from the legacy calibrated predictor.
+ * Module conversions remain provisional. Their mean is an input to the TS
+ * dashboard prediction, never an official combined ESAT score.
  */
 import type { EsatModuleName } from "./esat-score-estimates";
 
 export const ESAT_OCTOBER_2026_KEY_VERSION = "esat-october-2026-keys-20260920-v1";
-export const ESAT_OCTOBER_2026_SCORE_VERSION = "TS_ESAT_OCTOBER_2026_PROVISIONAL_V1";
+export const ESAT_OCTOBER_2026_SCORE_VERSION = "TS_ESAT_OCTOBER_2026_PROVISIONAL_V2";
+export const ESAT_OCTOBER_2026_PREDICTOR_FAMILY = "esat-october-2026-shared";
 
 type OctoberSeed = {
   sourceDirectory: string;
@@ -31,6 +33,15 @@ const ANCHORS: Readonly<Record<EsatModuleName, readonly (readonly [number, numbe
   Biology: [[0,1],[18,4.5],[19,5],[22,6],[24,7],[26,8],[27,9]],
 };
 
+/** The six pathways reuse the same five papers, so they are one evidence
+ * family rather than six independent full tests. Legacy families are unchanged.
+ */
+export function getEsatPredictorFamilyId(testId: string): string {
+  return Object.hasOwn(ESAT_OCTOBER_2026_SEEDS, testId)
+    ? ESAT_OCTOBER_2026_PREDICTOR_FAMILY
+    : testId;
+}
+
 function provisionalScore(module: EsatModuleName, raw: number) {
   const anchors = ANCHORS[module];
   for (let i = 1; i < anchors.length; i += 1) {
@@ -56,6 +67,9 @@ export function estimateOctober2026EsatScores(testId: string, rawScores: readonl
     }
     return { module, raw, total: 27 as const, estimatedScore: provisionalScore(module, raw), calibrationId: null };
   });
+  const predictedCombinedPracticeScore = Math.round(
+    modules.reduce((sum, item) => sum + item.estimatedScore, 0) / modules.length * 10,
+  ) / 10;
   return {
     version: ESAT_OCTOBER_2026_SCORE_VERSION,
     status: "provisional_uncalibrated" as const,
@@ -65,10 +79,11 @@ export function estimateOctober2026EsatScores(testId: string, rawScores: readonl
     rawTotal: modules.reduce((sum, item) => sum + item.raw, 0),
     rawTotalPossible: 81 as const,
     modules,
-    predictorEligible: false as const,
-    predictedCombinedPracticeScore: null,
-    averageModuleEstimate: null,
+    predictorEligible: true as const,
+    predictorFamilyId: getEsatPredictorFamilyId(testId),
+    predictedCombinedPracticeScore,
+    averageModuleEstimate: predictedCombinedPracticeScore,
     combinedScoreOfficial: false as const,
-    note: "These practice estimates have not been calibrated against live ESAT results. Each module is converted separately. Interpolation, including below 4.5, is a display convention; there is no overall ESAT scaled score.",
+    note: "These practice estimates have not been calibrated against live ESAT results. Each module is converted separately. Interpolation, including below 4.5, is a display convention; there is no overall ESAT scaled score. The mean of the three module estimates contributes to your TS dashboard prediction using the existing full-test weighting and retake rules.",
   };
 }

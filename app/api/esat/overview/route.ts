@@ -7,14 +7,14 @@ import {
 } from "@/app/api/esat/qb/_server";
 import {
   ESAT_CANONICAL_TESTS,
-  getCanonicalEsatTest,
 } from "@/lib/server/esat-canonical-tests";
 import {
   calculateEsatPredictorV1,
   type EsatPredictorQbEvent,
   type EsatPredictorTestAttempt,
 } from "@/lib/server/esat-predictor-v1-engine";
-import { estimateEsatTestScores, getEsatTestProfile } from "@/lib/server/esat-score-estimates";
+import { buildEsatTestEvidence } from "@/lib/server/esat-predictor-evidence";
+import { getEsatPredictorFamilyId } from "@/lib/server/esat-october-2026-tests";
 import {
   calculatePreparationScore,
   rankPreparationCohort,
@@ -98,11 +98,6 @@ async function readAuthUsers(
   throw new Error("ESAT active cohort auth-user pagination exceeded safety limit");
 }
 
-function normaliseAnswer(value: unknown): string | null {
-  const answer = String(value ?? "").trim().toUpperCase();
-  return answer || null;
-}
-
 function canonicalQid(metadata: unknown, fallback: unknown): string | null {
   if (metadata && typeof metadata === "object" && !Array.isArray(metadata)) {
     const value = (metadata as Record<string, unknown>).canonical_qid;
@@ -182,58 +177,6 @@ function pushByUser(
   else {
     map.set(userId, [row]);
   }
-}
-
-function buildTestEvidence(rows: any[]): EsatPredictorTestAttempt[] {
-  return rows.flatMap((row) => {
-    const testId = String(row.test_id ?? "").trim();
-    const canonical = getCanonicalEsatTest(testId);
-    const submitted = Array.isArray(row.answers) ? row.answers : [];
-
-    // Canonical keys protect raw marks. Only calibrated legacy profiles
-    // contribute to this predictor; October 2026 practice anchors do not.
-    if (!canonical || !getEsatTestProfile(testId) || submitted.length !== canonical.expectedQuestions) {
-      return [];
-    }
-
-    const answers = submitted.map(normaliseAnswer);
-    const sectionScores = canonical.sectionRanges.map(([start, end]) => {
-      let correct = 0;
-
-      for (let index = start; index < end; index += 1) {
-        if (
-          answers[index] !== null &&
-          answers[index] === canonical.answers[index]
-        ) {
-          correct += 1;
-        }
-      }
-
-      return correct;
-    });
-
-    const estimate = estimateEsatTestScores(testId, sectionScores);
-    const evaluatedAt = new Date(String(row.submitted_at ?? ""));
-
-    if (!Number.isFinite(evaluatedAt.valueOf())) {
-      return [];
-    }
-
-    return [{
-      testId,
-      attemptId: String(row.id),
-      attemptNumber:
-        Number.isInteger(Number(row.attempt_number)) &&
-        Number(row.attempt_number) > 0
-          ? Number(row.attempt_number)
-          : null,
-      evaluatedAt: evaluatedAt.toISOString(),
-      predictorEligible: true,
-      predictedCombinedPracticeScore:
-        estimate.predictedCombinedPracticeScore,
-      effectiveWeight: 1.5,
-    }];
-  });
 }
 
 function buildQbEvents(
@@ -457,7 +400,7 @@ export async function GET() {
       const userId = String(authUser.id);
       const userAttemptRows = attemptsByUser.get(userId) ?? [];
       const userQbRows = qbRowsByUser.get(userId) ?? [];
-      const testEvidence = buildTestEvidence(userAttemptRows);
+      const testEvidence = buildEsatTestEvidence(userAttemptRows);
       const userQbEvents = buildQbEvents(userQbRows, questionByQid);
       const predictor = calculateEsatPredictorV1({
         testAttempts: testEvidence,
@@ -474,7 +417,7 @@ export async function GET() {
         if (withinWindow(row.submitted_at, windowStartMs, asOfMs)) {
           const testId = String(row.test_id ?? "").trim();
           if (recognisedIds.includes(testId)) {
-            recentTests.add(testId);
+            recentTests.add(getEsatPredictorFamilyId(testId));
           }
         }
       }
@@ -525,7 +468,7 @@ export async function GET() {
       const currentAttemptRows = attemptsByUser.get(user.id) ?? [];
       const currentQbRows = qbRowsByUser.get(user.id) ?? [];
       currentPredictorResult = calculateEsatPredictorV1({
-        testAttempts: buildTestEvidence(currentAttemptRows),
+        testAttempts: buildEsatTestEvidence(currentAttemptRows),
         qbEvents: buildQbEvents(currentQbRows, questionByQid),
         activeTopics,
       });

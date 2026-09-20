@@ -8,6 +8,8 @@
  * Do not import this module from client components.
  */
 
+import { TMUA_PREDICTIVE_2026_CANONICAL } from "./tmua-predictive-2026.ts";
+
 export const TMUA_CANONICAL_KEY_VERSION =
   "tmua-canonical-keys-20260809-v1" as const;
 
@@ -966,5 +968,5 @@ export function getCanonicalTmuaTest(
     TMUA_CANONICAL_TESTS as unknown as
       Readonly<Record<string, TmuaCanonicalTest>>;
 
-  return registry[key] ?? null;
+  return registry[key] ?? (key === TMUA_PREDICTIVE_2026_CANONICAL.testId ? TMUA_PREDICTIVE_2026_CANONICAL : null);
 }

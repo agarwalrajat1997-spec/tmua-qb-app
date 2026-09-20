@@ -76,7 +76,7 @@ const thresholds = {
 };
 for (const [testId, seed] of Object.entries(ESAT_OCTOBER_2026_SEEDS)) {
   assert.equal(ESAT_CANONICAL_TESTS[testId].keyVersion, ESAT_OCTOBER_2026_KEY_VERSION);
-  assert.equal(ESAT_TEST_PROFILES[testId], undefined, "Provisional papers must not enter the calibrated predictor.");
+  assert.equal(ESAT_TEST_PROFILES[testId], undefined, "Provisional papers must retain their separate conversion tables.");
   for (const [index, module] of seed.modules.entries()) {
     for (const [raw, expected] of thresholds[module]) {
       const marks = [0, 0, 0]; marks[index] = raw;
@@ -84,9 +84,10 @@ for (const [testId, seed] of Object.entries(ESAT_OCTOBER_2026_SEEDS)) {
       assert.equal(estimate.modules[index].estimatedScore, expected, `${testId} ${module} ${raw}/27`);
       assert.equal(estimate.rawTotal, raw);
       assert.equal(estimate.status, "provisional_uncalibrated");
-      assert.equal(estimate.predictorEligible, false);
-      assert.equal(estimate.predictedCombinedPracticeScore, null);
-      assert.equal(estimate.averageModuleEstimate, null);
+      assert.equal(estimate.predictorEligible, true);
+      assert.equal(estimate.predictedCombinedPracticeScore, Math.round((expected + 2) / 3 * 10) / 10);
+      assert.equal(estimate.averageModuleEstimate, estimate.predictedCombinedPracticeScore);
+      assert.equal(estimate.combinedScoreOfficial, false);
     }
   }
   assert.throws(() => estimateOctober2026EsatScores(testId, [1, 2]));
@@ -96,5 +97,5 @@ for (const [testId, seed] of Object.entries(ESAT_OCTOBER_2026_SEEDS)) {
 assert.equal(estimateOctober2026EsatScores("esat-mock-01", [1,2,3]), null);
 
 console.log(
-  "ESAT canonical-key verification passed: 32 full papers and 2,592 source answers match; the six October papers retain separate provisional module scores and are excluded from legacy calibration.",
+  "ESAT canonical-key verification passed: 32 full papers and 2,592 source answers match; the six October papers retain separate provisional module scores and contribute their mean to the dashboard without changing legacy calibration.",
 );

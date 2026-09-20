@@ -6,6 +6,11 @@ import {
 import { ESAT_CANONICAL_KEY_VERSION } from "./esat-canonical-tests.ts";
 import { ESAT_SCORE_ESTIMATE_VERSION } from "./esat-score-estimates.ts";
 import {
+  ESAT_OCTOBER_2026_KEY_VERSION,
+  ESAT_OCTOBER_2026_SCORE_VERSION,
+  ESAT_OCTOBER_2026_PREDICTOR_FAMILY,
+} from "./esat-october-2026-tests.ts";
+import {
   calculateTmuaPredictorV1,
   type TmuaPredictorQbEvent,
   type TmuaPredictorResult,
@@ -13,7 +18,7 @@ import {
 } from "./tmua-predictor-v1-engine.ts";
 
 export const ESAT_PREDICTOR_V1_MODEL_VERSION =
-  "esat-predictor-v1.0.0" as const;
+  "esat-predictor-v1.1.0" as const;
 
 export type EsatPredictorTestAttempt = {
   testId: string;
@@ -75,7 +80,9 @@ function esatHash(value: string): string {
 
 const CALIBRATION_SET_HASH = createHash("sha256")
   .update(
-    `${ESAT_SCORE_ESTIMATE_VERSION}\n${ESAT_CANONICAL_KEY_VERSION}`,
+    [ESAT_SCORE_ESTIMATE_VERSION, ESAT_CANONICAL_KEY_VERSION,
+      ESAT_OCTOBER_2026_KEY_VERSION, ESAT_OCTOBER_2026_SCORE_VERSION,
+      ESAT_OCTOBER_2026_PREDICTOR_FAMILY].join("\n"),
     "utf8",
   )
   .digest("hex");

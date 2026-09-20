@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { estimateEsatTestScores } from "@/lib/server/esat-score-estimates";
+import { estimateOctober2026EsatScores } from "@/lib/server/esat-october-2026-tests";
 
 export const runtime = "nodejs";
 
@@ -29,12 +30,9 @@ export async function POST(request: Request) {
   }
 
   try {
-    const estimate = estimateEsatTestScores(
-      testId,
-      Array.isArray(payload?.raw_scores)
-        ? payload.raw_scores
-        : [],
-    );
+    const rawScores = Array.isArray(payload?.raw_scores) ? payload.raw_scores : [];
+    const estimate = estimateOctober2026EsatScores(testId, rawScores) ??
+      estimateEsatTestScores(testId, rawScores);
 
     return NextResponse.json({
       ok: true,
@@ -52,4 +50,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

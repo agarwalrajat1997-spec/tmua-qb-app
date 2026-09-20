@@ -26,6 +26,9 @@ function reportFormats(report, data) {
   return {html:context.reportHTML(report), csv:context.csv(report)};
 }
 let largestEmailPacket=0;
+const predictionNote='Completed attempts saved to the portal contribute to your dashboard prediction using the three module estimates.';
+const runtimeNoteExpression=runtimeSource.match(/scoreNote:(.*?),modules:DATA\.modules/)[1];
+const runtimeNote=incomplete=>vm.runInNewContext('('+runtimeNoteExpression+')',{state:{incomplete}});
 
 const fixtures = pathways.map(slug => {
   const html = fs.readFileSync(path.join(root, 'public/esat-practice-tests/tests', 'esat-october-2026-' + slug, 'index.html'), 'utf8');
@@ -129,6 +132,10 @@ for (const fixture of fixtures) {
   assert.equal((summary.match(/Provisional TS practice score:/g) || []).length, 3);
   assert.ok(summary.includes('There is no overall ESAT scaled score.'));
   assert.ok(summary.includes(r.scoreNote));
+  assert.ok(summary.includes(predictionNote));
+  const completedNote=runtimeNote(false);
+  assert.ok(completedNote.includes(predictionNote));
+  assert.ok(reportFormats({...r,scoreNote:completedNote},fixture.data).html.includes(predictionNote));
   for (const m of r.modules) assert.ok(summary.includes(`${m.name}: ${m.rawScore} / 27 | Provisional TS practice score: ${m.provisionalScore.toFixed(1)} / 9.0`));
   const formats=reportFormats(r, fixture.data);
   assert.equal((formats.html.match(/Provisional TS practice score: <strong>4\.5 \/ 9\.0<\/strong>/g)||[]).length,3);
@@ -171,6 +178,12 @@ for (const fixture of fixtures) {
   const incomplete = h.api.emailParams({...r, incomplete: true}, fixture.data.config);
   assert.ok(!/Provisional TS practice score: \d/.test(incomplete.paper1 + incomplete.paper2));
   assert.ok(!/\d+\.\d+ \/ 9\.0/.test(incomplete.paper1 + incomplete.paper2));
+  assert.ok(incomplete.paper1.includes('Incomplete attempts do not contribute to your dashboard prediction.'));
+  assert.ok(!incomplete.paper1.includes(predictionNote));
+  const incompleteNote=runtimeNote(true);
+  assert.ok(incompleteNote.includes('Incomplete attempts do not contribute'));
+  assert.ok(!incompleteNote.includes(predictionNote));
+  assert.ok(reportFormats({...r,incomplete:true,scoreNote:incompleteNote},fixture.data).html.includes('Incomplete attempts do not contribute'));
   const incompleteFormats=reportFormats({...r,incomplete:true},fixture.data);
   assert.ok(!incompleteFormats.html.includes('4.5 / 9.0'));
   assert.equal(incompleteFormats.csv.split('\r\n').slice(1).filter(line=>line.endsWith(',"9",""')).length,81);
@@ -189,6 +202,7 @@ assert.ok(first.text().includes('Saving'));
 releaseFirst();
 await Promise.all([a, b]);
 assert.ok(first.text().includes('saved in your ESAT portal'));
+assert.ok(first.text().includes('and contributes to your dashboard prediction using the three module estimates.'));
 const sentPayload = first.calls[0].payload;
 assert.equal(first.calls[0].url, '/api/practice-tests/submit');
 assert.equal(first.calls[0].options.credentials, 'include');
@@ -206,10 +220,13 @@ assert.ok(sentPayload.incorrect.includes(2) && sentPayload.incorrect.includes(3)
 assert.ok(!sentPayload.incorrect.includes(1) && !sentPayload.incorrect.includes(28));
 await first.api.onComplete(firstReport);
 assert.equal(first.calls.length, 1);
+// A record saved before this messaging update must also show current contribution status.
+for(const [key,value] of first.storage){const record=JSON.parse(value);record.message='Your result is saved in your ESAT portal attempt history.';first.storage.set(key,JSON.stringify(record));}
 const reloaded = harness([], first.storage);
 await reloaded.api.onComplete(firstReport);
 assert.equal(reloaded.calls.length, 0, 'a confirmed save survives reloading');
 assert.ok(reloaded.text().includes('saved'));
+assert.ok(reloaded.text().includes('and contributes to your dashboard prediction using the three module estimates.'));
 
 // A network failure may happen after a committed insert. Manual retry must
 // discover that row and must not repeat POST, including after a page reload.
@@ -261,6 +278,7 @@ for (const failure of [response({error: 'Server failed'}, 500), response({ok: tr
   await h.api.onComplete(firstReport);
   assert.ok(h.text().includes('Retry saving'));
   assert.ok(!h.text().includes('saved in your ESAT portal attempt history'));
+  assert.ok(!h.text().includes('and contributes to your dashboard prediction'));
 }
 
 // If a page reload interrupted an in-flight POST, demand reconciliation instead
@@ -285,7 +303,7 @@ const incompleteReport = {...firstReport, incomplete: true};
 await incompleteSave.api.onComplete(incompleteReport);
 await incompleteSave.api.onComplete(incompleteReport);
 assert.equal(incompleteSave.calls.length, 0);
-assert.ok(incompleteSave.text().includes('will not be added to portal attempt history'));
+assert.ok(incompleteSave.text().includes('will not be added to portal attempt history or contribute to your dashboard prediction'));
 assert.ok(!incompleteSave.status.children.some(child => child.dataset.tsEsatSaveRetry));
 assert.equal(incompleteSave.storage.size, 0, 'local report persistence belongs to the runtime; do not mark an incomplete attempt as sent');
 

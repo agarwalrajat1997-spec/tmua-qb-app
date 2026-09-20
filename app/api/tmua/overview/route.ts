@@ -24,6 +24,11 @@ import {
   calculateTmuaPredictorV1,
 } from "@/lib/server/tmua-predictor-v1-engine";
 import { applyTmuaHighScoreEvidenceGate } from "@/lib/server/tmua-predictor-v1_1-policy";
+import {
+  TMUA_PREDICTIVE_2026_ID,
+  TMUA_PREDICTIVE_2026_CATALOG,
+  buildTmuaPredictive2026Evaluations,
+} from "@/lib/server/tmua-predictive-2026";
 
 import {
   buildTmuaPredictionSnapshotInsert,
@@ -619,6 +624,7 @@ async function calculateAndPersistPreparationRankV1(
     recentAttemptRows,
     exclusionRows,
     authUsers,
+    predictiveAttemptRows,
   ] =
     await Promise.all([
       preparationFetchRows(
@@ -796,7 +802,21 @@ async function calculateAndPersistPreparationRankV1(
       preparationFetchAuthUsers(
         admin,
       ),
+      preparationFetchRows(
+        "Preparation Rank 2026 predictive attempts",
+        (from, to) => admin.from("practice_test_attempts")
+          .select("id,user_id,test_id,submitted_at,answers,time_spent,predictor_metadata")
+          .eq("test_id", TMUA_PREDICTIVE_2026_ID)
+          .order("submitted_at", { ascending: true }).range(from, to),
+      ),
     ]);
+
+  // Code-owned custom scale; the twelve historical priors remain unchanged.
+  catalogRows.push(TMUA_PREDICTIVE_2026_CATALOG);
+  const predictiveEvaluations = buildTmuaPredictive2026Evaluations(predictiveAttemptRows);
+  evaluationRows.splice(0, evaluationRows.length,
+    ...evaluationRows.filter(row => row.test_id !== TMUA_PREDICTIVE_2026_ID),
+    ...predictiveEvaluations);
 
   const entitledEmails =
     new Set<string>();
@@ -2225,64 +2245,10 @@ async function calculateAndPersistPreparationRankV1(
 }
 
 export async function GET() {
-  // Emergency load shedding, 13 Sep 2026. Keep the verified predictor and
-  // preparation-rank integration below intact, but do not enter it while the
-  // Supabase connection pool recovers. This response contains no private data.
-  if (
-    process.env
-      .TMUA_OVERVIEW_FULL_MODE !==
-    "enabled"
-  ) {
-    const calculatedAt =
-      new Date();
-
-    return NextResponse.json(
-      {
-        ok: true,
-        predictor: {
-          modelVersion:
-            "tmua-overview-emergency-lite-20260913",
-          status:
-            "insufficient_evidence",
-          score: null,
-          lowerBound: null,
-          upperBound: null,
-          confidence: null,
-          testEvidenceCount: 0,
-          independentTestCount: 0,
-          qbUniqueQuestions: 0,
-          qbTopicCoverage: 0,
-          calculatedAt:
-            calculatedAt.toISOString(),
-        },
-        preparationRank: {
-          modelVersion:
-            "tmua-preparation-rank-emergency-lite-20260913",
-          hasGenuinePreparationEvidence:
-            false,
-          score: null,
-          rank: null,
-          cohortSize: 0,
-          components: null,
-          calculatedAt:
-            calculatedAt.toISOString(),
-        },
-        countdown:
-          preparationCountdown(
-            calculatedAt,
-          ),
-      },
-      {
-        status: 200,
-        headers: {
-          "Cache-Control":
-            "private, max-age=30",
-          "X-TS-Emergency-Load-Shed":
-            "20260913",
-        },
-      },
-    );
-  }
+  // The September 2026 load-shedding mode avoids the expensive all-user
+  // preparation-rank scan. The authenticated current-user predictor must
+  // still run, so new and historical practice results affect the dashboard.
+  const fullOverviewMode = process.env.TMUA_OVERVIEW_FULL_MODE === "enabled";
 
   try {
     // Authentication uses the existing user session.
@@ -2323,6 +2289,7 @@ export async function GET() {
       evaluationRows,
       questionRows,
       qbRows,
+      predictiveAttemptRows,
     ] =
       await Promise.all([
         readAll(
@@ -2481,7 +2448,17 @@ export async function GET() {
                 to,
               ),
         ),
+        readAll((from, to) => admin.from("practice_test_attempts")
+          .select("id,user_id,test_id,submitted_at,answers,time_spent,predictor_metadata")
+          .eq("user_id", user.id)
+          .eq("test_id", TMUA_PREDICTIVE_2026_ID)
+          .order("submitted_at", { ascending: true }).range(from, to)),
       ]);
+
+    catalogRows.push(TMUA_PREDICTIVE_2026_CATALOG);
+    evaluationRows.splice(0, evaluationRows.length,
+      ...evaluationRows.filter(row => row.test_id !== TMUA_PREDICTIVE_2026_ID),
+      ...buildTmuaPredictive2026Evaluations(predictiveAttemptRows));
 
     if (
       conversionRows.length !==
@@ -2851,8 +2828,8 @@ export async function GET() {
       );
     }
 
-    const preparationOverview =
-      await calculateAndPersistPreparationRankV1({
+    const preparationOverview = fullOverviewMode
+      ? await calculateAndPersistPreparationRankV1({
         admin,
 
         currentUserId:
@@ -2863,7 +2840,16 @@ export async function GET() {
 
         currentPredictorSnapshot:
           snapshot,
-      });
+      })
+      : {
+          preparationRank: {
+            modelVersion: "tmua-preparation-rank-lightweight-20260920",
+            hasGenuinePreparationEvidence: false,
+            score: null, rank: null, cohortSize: 0, components: null,
+            calculatedAt: snapshot.calculatedAt,
+          },
+          countdown: preparationCountdown(new Date()),
+        };
 
     return json({
       ok: true,
