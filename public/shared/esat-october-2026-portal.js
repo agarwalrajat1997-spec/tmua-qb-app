@@ -14,7 +14,7 @@
   function emailParams(r, cfg) {
     const analyses = r.modules.map(m => {
       const estimate = !r.incomplete && m.provisionalScore != null && Number.isFinite(Number(m.provisionalScore))
-        ? 'Provisional TS practice score: ' + Number(m.provisionalScore).toFixed(1)
+        ? 'Provisional TS practice score: ' + Number(m.provisionalScore).toFixed(1) + ' / 9.0'
         : 'Provisional TS practice score: unavailable for this incomplete attempt.';
       return [
         `${m.name} Score: ${m.rawScore} / ${m.questionCount}`,
@@ -38,6 +38,15 @@
       if (url.protocol === 'https:' || url.protocol === 'http:') solutionLink = url.href;
     }
     const note = r.scoreNote || 'These practice estimates have not been calibrated against live ESAT results. Each module is converted separately; there is no overall ESAT scaled score.';
+    const moduleSummary = [
+      'MODULE SCORE SUMMARY',
+      ...r.modules.map(m => `${m.name}: ${m.rawScore} / ${m.questionCount} | Provisional TS practice score: ` +
+        (!r.incomplete && m.provisionalScore != null && Number.isFinite(Number(m.provisionalScore))
+          ? Number(m.provisionalScore).toFixed(1) + ' / 9.0'
+          : 'unavailable for this incomplete attempt.')),
+      note,
+      /no overall ESAT scaled score/i.test(note) ? '' : 'There is no overall ESAT scaled score.'
+    ].filter(Boolean).join('\n');
     const params = {
       name: r.student.name,
       to_email: r.student.email,
@@ -51,7 +60,7 @@
       solution_link: solutionLink,
       // The existing production template displays two analysis blocks.
       // Put modules 2 AND 3 in paper2; paper3 is retained for compatibility.
-      paper1: analyses[0],
+      paper1: `${moduleSummary}\n\nQUESTION-BY-QUESTION REVIEW\n${analyses[0]}`,
       paper2: `${analyses[1]}\n\n${analyses[2]}\n\n${note}\nQuestion times are active viewing time across all visits, rounded to the nearest second. Review and away time are tracked separately and count against the module clock.`,
       paper3: analyses[2],
       estimate_note: note

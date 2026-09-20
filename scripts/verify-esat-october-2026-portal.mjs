@@ -6,6 +6,27 @@ import vm from 'node:vm';
 const root = process.cwd();
 const source = fs.readFileSync(path.join(root, 'public/shared/esat-october-2026-portal.js'), 'utf8');
 const pathways = ['engineering', 'physics-chemistry', 'physics-biology', 'maths-2-chemistry', 'maths-2-biology', 'chemistry-biology'];
+const runtimeSource = fs.readFileSync(path.join(root, 'public/shared/esat-october-2026-runtime.js'), 'utf8');
+const scoringContext = {module: {exports: {}}};
+vm.runInNewContext(runtimeSource, scoringContext);
+const {scoreFor} = scoringContext.module.exports;
+const expectedBoundaries = {
+  maths1: [13,14,17,20,23,26], maths2: [11,12,15,18,22,25],
+  physics: [15,16,19,22,24,27], chemistry: [16,17,20,23,25,27], biology: [18,19,22,24,26,27]
+};
+for (const [moduleId, rawMarks] of Object.entries(expectedBoundaries)) {
+  rawMarks.forEach((raw, i) => assert.equal(scoreFor(moduleId, raw), [4.5,5,6,7,8,9][i], moduleId + ': exact supplied boundary ' + raw));
+  assert.equal(scoreFor(moduleId, 27), 9);
+}
+const reportFunctions = runtimeSource.slice(runtimeSource.indexOf('  function reportHTML('), runtimeSource.indexOf('  function download('));
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function reportFormats(report, data) {
+  const context = {CFG:data.config, DATA:data, esc:escapeHtml, secondsText:value=>String(value), report:()=>report};
+  vm.runInNewContext(reportFunctions, context);
+  return {html:context.reportHTML(report), csv:context.csv(report)};
+}
+let largestEmailPacket=0;
+
 const fixtures = pathways.map(slug => {
   const html = fs.readFileSync(path.join(root, 'public/esat-practice-tests/tests', 'esat-october-2026-' + slug, 'index.html'), 'utf8');
   const match = html.match(/<script id="test-data" type="application\/json">([\s\S]*?)<\/script>/);
@@ -103,6 +124,27 @@ for (const fixture of fixtures) {
   assert.equal((params.paper1.match(/^Q\./gm) || []).length, 27);
   assert.equal((params.paper2.match(/^Q\./gm) || []).length, 54);
   assert.ok(params.paper2.includes(params.paper3));
+  const summary = params.paper1.split('\n\nQUESTION-BY-QUESTION REVIEW\n')[0];
+  assert.ok(summary.startsWith('MODULE SCORE SUMMARY\n'));
+  assert.equal((summary.match(/Provisional TS practice score:/g) || []).length, 3);
+  assert.ok(summary.includes('There is no overall ESAT scaled score.'));
+  assert.ok(summary.includes(r.scoreNote));
+  for (const m of r.modules) assert.ok(summary.includes(`${m.name}: ${m.rawScore} / 27 | Provisional TS practice score: ${m.provisionalScore.toFixed(1)} / 9.0`));
+  const formats=reportFormats(r, fixture.data);
+  assert.equal((formats.html.match(/Provisional TS practice score: <strong>4\.5 \/ 9\.0<\/strong>/g)||[]).length,3);
+  assert.equal((formats.html.match(/<tr><td style=/g)||[]).length,81);
+  assert.ok(formats.csv.includes('"Module raw mark (out of 27)","Provisional TS practice score (out of 9)"'));
+  assert.equal(formats.csv.split('\r\n').slice(1).filter(line=>line.endsWith(',"9","4.5"')).length,81);
+  const longestAnswers=canonical(r);
+  longestAnswers.student.name='N'.repeat(120);longestAnswers.student.email='x'.repeat(241)+'@example.test';
+  longestAnswers.modules.forEach((m,mi)=>m.questions.forEach((q,qi)=>{
+    const option=fixture.data.modules[mi].questions[qi].options.reduce((a,b)=>Buffer.byteLength(a.text||'')>Buffer.byteLength(b.text||'')?a:b);
+    q.selectedAnswer=option.label;q.selectedAnswerText=option.text||'';q.lastAnswerChangeAt='2026-09-20T08:01:00.000Z';
+  }));
+  const packetBytes=Buffer.byteLength(JSON.stringify(h.api.emailParams(longestAnswers,fixture.data.config)),'utf8');
+  largestEmailPacket=Math.max(largestEmailPacket,packetBytes);
+  assert.ok(packetBytes<48000,fixture.slug+': longest-answer packet remains below EmailJS guard');
+
   assert.equal(params.solution_link, fixture.data.config.solutionPdfUrl);
   assert.equal(params.score, `${r.totalScore} / 81`);
   assert.equal(params.to_email, r.student.email);
@@ -128,6 +170,11 @@ for (const fixture of fixtures) {
   assert.ok(h.api.emailParams(nullScores, fixture.data.config).paper1.includes('unavailable'));
   const incomplete = h.api.emailParams({...r, incomplete: true}, fixture.data.config);
   assert.ok(!/Provisional TS practice score: \d/.test(incomplete.paper1 + incomplete.paper2));
+  assert.ok(!/\d+\.\d+ \/ 9\.0/.test(incomplete.paper1 + incomplete.paper2));
+  const incompleteFormats=reportFormats({...r,incomplete:true},fixture.data);
+  assert.ok(!incompleteFormats.html.includes('4.5 / 9.0'));
+  assert.equal(incompleteFormats.csv.split('\r\n').slice(1).filter(line=>line.endsWith(',"9",""')).length,81);
+
   assert.equal(h.calls.length, 0);
 }
 
@@ -243,3 +290,5 @@ assert.ok(!incompleteSave.status.children.some(child => child.dataset.tsEsatSave
 assert.equal(incompleteSave.storage.size, 0, 'local report persistence belongs to the runtime; do not mark an incomplete attempt as sent');
 
 console.log('October 2026 portal verification passed: all six 81-row email payloads; raw marks, answers and times; authenticated persistence; render/reload deduplication; ambiguous-save reconciliation; safe manual retries; incomplete-score handling. All API responses were mocked; no emails or database writes were sent.');
+
+console.log('Exact per-module scoring anchors and three-module out-of-9 summaries verified; largest longest-answer email packet: '+largestEmailPacket+' bytes (limit 48000).');
