@@ -7,6 +7,7 @@ import styles from "./dashboard.module.css";
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
 import ServiceRetry from "../components/ServiceRetry";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
+import { formatTmuaPastPaperSettings, type TmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
 type PracticeTest = {
   id: string;
@@ -59,6 +60,7 @@ type LatestAttemptSummary = {
   attempt_no?: number | null;
   total_attempts?: number;
   incorrect?: any[];
+  attempt_settings?: TmuaPastPaperSettings | null;
 };
 
 type AttemptRow = {
@@ -76,6 +78,7 @@ type AttemptRow = {
   correct_answers: any[];
   flags: any[];
   attempt_no: number;
+  attempt_settings?: TmuaPastPaperSettings | null;
 };
 
 function getSupabase() {
@@ -980,6 +983,11 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         </div>
 
                         <div className={styles.muted}>{status}</div>
+                        {latest?.attempt_settings && (
+                          <div className={styles.muted} style={{ marginTop: 4 }}>
+                            {formatTmuaPastPaperSettings(latest.attempt_settings)}
+                          </div>
+                        )}
 
                         {attempted && wrong.length > 0 && (
                           <div className={styles.muted} style={{ marginTop: 6 }}>
@@ -1467,9 +1475,17 @@ src="/tmua-classes/index.html"
                               · {fmtDate(a.submitted_at)}
                             </div>
 
+                            {a.attempt_settings && (
+                              <div className={styles.muted} style={{ marginTop: 6 }}>
+                                {formatTmuaPastPaperSettings(a.attempt_settings)}
+                              </div>
+                            )}
                             {wrong.length > 0 && (
                               <div className={styles.muted} style={{ marginTop: 6 }}>
-                                <b>Questions wrong:</b> {wrong.join(", ")}
+                                <b>{a.attempt_settings?.order === "randomised" ? "Original questions wrong:" : "Questions wrong:"}</b>{" "}
+                                {a.attempt_settings?.order === "randomised"
+                                  ? wrong.map(q => `P${q <= 20 ? 1 : 2} Q${((q - 1) % 20) + 1}`).join(", ")
+                                  : wrong.join(", ")}
                               </div>
                             )}
                           </div>
@@ -1557,8 +1573,6 @@ src="/tmua-classes/index.html"
     </div>
   );
 }
-
-
 
 
 

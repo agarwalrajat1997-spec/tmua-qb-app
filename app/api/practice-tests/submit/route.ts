@@ -5,6 +5,7 @@ import { estimateOctober2026EsatScores } from "@/lib/server/esat-october-2026-te
 import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
 import { TMUA_PREDICTIVE_2026_ID, TMUA_PREDICTIVE_2026_CATALOG, evaluateTmuaPredictive2026Attempt } from "@/lib/server/tmua-predictive-2026";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { validateTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
 export const runtime = "nodejs";
 
@@ -294,6 +295,15 @@ export async function POST(req: Request) {
 
   if (!testId) {
     return badRequest("test_id is required");
+  }
+
+  // Presentation metadata must never change canonical answer identity or scoring.
+  // Validate it before any database write, and keep older test clients compatible.
+  let pastPaperSettings;
+  try {
+    pastPaperSettings = validateTmuaPastPaperSettings(testId, body?.attempt_settings);
+  } catch (error) {
+    return badRequest(error instanceof Error ? error.message : "Invalid past-paper settings.");
   }
 
   const {
@@ -689,6 +699,7 @@ export async function POST(req: Request) {
       scoreConversionProfile,
 
     predictor_metadata: {
+      ...(pastPaperSettings ? { tmua_past_paper_settings: pastPaperSettings } : {}),
       ...(testId === TMUA_PREDICTIVE_2026_ID ? {
         tmua_predictive_2026_complete: body?.complete !== false,
         tmua_predictive_2026_scale: TMUA_PREDICTIVE_2026_CATALOG.score_conversion_profile,

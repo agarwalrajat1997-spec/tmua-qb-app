@@ -22,6 +22,7 @@ function moduleAt(file, imports = {}, overrides = {}) {
 const next = { NextResponse: { json: (body, opts) => Response.json(body, opts) } };
 const recovery = moduleAt('lib/auth/service-recovery.ts');
 const compact = moduleAt('lib/qb/compact-progress.ts');
+const pastPaperSettings = moduleAt('lib/tmua/past-paper-settings.ts');
 const user = { id: 'owner-one', email: 'owner@example.test' };
 let authError = null, authThrows = false, tableError = null, eventFailOnce = false;
 let writeCount = 0, rpcCount = 0, canonicalLookups = 0;
@@ -300,7 +301,8 @@ async function dashboardScenario(failure, accessRows = []) {
     'next/navigation': { useRouter: () => ({ replace: value => redirects.push(value) }) },
     '@/utils/supabase/browser': { supabaseBrowser: () => dashboardDb },
     './dashboard.module.css': { default: {} }, './TmuaPredictionStrip': { default() {} },
-    '../components/ServiceRetry': { default: RetryComponent }, '@/lib/auth/service-recovery': recovery
+    '../components/ServiceRetry': { default: RetryComponent }, '@/lib/auth/service-recovery': recovery,
+    '@/lib/tmua/past-paper-settings': pastPaperSettings
   }, { window: { location: { href: 'https://portal.test/dashboard' }, history: { replaceState() {} } } });
   function render() { stateIndex = 0; effectIndex = 0; return component.default({ uiMark: 'test' }); }
   render(); effects[0]();

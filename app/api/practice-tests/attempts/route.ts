@@ -1,5 +1,6 @@
 ﻿import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { readTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
 export const runtime = "nodejs";
 
@@ -19,7 +20,7 @@ export async function GET(req: Request) {
   if (testId) {
     const { data, error } = await supabase
       .from("practice_test_attempts")
-      .select("id, test_id, test_title, paper, total_questions, score, tmua_score9, submitted_at, incorrect, time_spent, answers, correct_answers, flags")
+      .select("id, test_id, test_title, paper, total_questions, score, tmua_score9, submitted_at, incorrect, time_spent, answers, correct_answers, flags, predictor_metadata")
       .eq("user_id", user.id)
       .eq("test_id", testId)
       .order("submitted_at", { ascending: true })
@@ -29,8 +30,9 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: error.message, fingerprint: FINGERPRINT }, { status: 500 });
     }
 
-    const attempts = (data ?? []).map((row, idx) => ({
+    const attempts = (data ?? []).map(({ predictor_metadata, ...row }, idx) => ({
       ...row,
+      attempt_settings: readTmuaPastPaperSettings(row.test_id, predictor_metadata),
       attempt_no: idx + 1,
     }));
 
@@ -45,7 +47,7 @@ export async function GET(req: Request) {
 
   const { data, error } = await supabase
     .from("practice_test_attempts")
-    .select("id, test_id, test_title, paper, total_questions, score, tmua_score9, submitted_at")
+    .select("id, test_id, test_title, paper, total_questions, score, tmua_score9, submitted_at, predictor_metadata")
     .eq("user_id", user.id)
     .order("submitted_at", { ascending: false })
     .limit(500);
@@ -62,8 +64,9 @@ export async function GET(req: Request) {
     if (!latestByTest[row.test_id]) latestByTest[row.test_id] = row;
   }
 
-  const latest = Object.values(latestByTest).map((row: any) => ({
+  const latest = Object.values(latestByTest).map(({ predictor_metadata, ...row }: any) => ({
     ...row,
+    attempt_settings: readTmuaPastPaperSettings(row.test_id, predictor_metadata),
     attempt_no: counts[row.test_id] ?? null,
     total_attempts: counts[row.test_id] ?? 0,
   }));
