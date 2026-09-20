@@ -14,7 +14,7 @@ import {
   type EsatPredictorQbEvent,
   type EsatPredictorTestAttempt,
 } from "@/lib/server/esat-predictor-v1-engine";
-import { estimateEsatTestScores } from "@/lib/server/esat-score-estimates";
+import { estimateEsatTestScores, getEsatTestProfile } from "@/lib/server/esat-score-estimates";
 import {
   calculatePreparationScore,
   rankPreparationCohort,
@@ -190,7 +190,9 @@ function buildTestEvidence(rows: any[]): EsatPredictorTestAttempt[] {
     const canonical = getCanonicalEsatTest(testId);
     const submitted = Array.isArray(row.answers) ? row.answers : [];
 
-    if (!canonical || submitted.length !== canonical.expectedQuestions) {
+    // Canonical keys protect raw marks. Only calibrated legacy profiles
+    // contribute to this predictor; October 2026 practice anchors do not.
+    if (!canonical || !getEsatTestProfile(testId) || submitted.length !== canonical.expectedQuestions) {
       return [];
     }
 

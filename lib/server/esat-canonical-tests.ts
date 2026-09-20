@@ -9,11 +9,13 @@
 import type {
   EsatModuleName,
 } from "./esat-score-estimates";
+import { ESAT_OCTOBER_2026_SEEDS } from "./esat-october-2026-tests.ts";
 
 export const ESAT_CANONICAL_KEY_VERSION =
   "esat-canonical-keys-20260819-v1" as const;
 
 type CanonicalSeed = {
+  keyVersion?: string;
   sourceDirectory: string;
   modules: readonly [
     EsatModuleName,
@@ -46,6 +48,7 @@ const ENGINEERING_MODULES = [
 ] as const;
 
 const SEEDS: Readonly<Record<string, CanonicalSeed>> = Object.freeze({
+  ...ESAT_OCTOBER_2026_SEEDS,
   "esat-mock-01": { sourceDirectory: "esat-mock-01", modules: ENGINEERING_MODULES, answerKey: "GCBBEGDCBCADBADCBDCEECEDECCFADEGCDEDDFBCGDEBCGDEGHCDCBAFDADDFBDDBEEBCADACBAACCDCD", canonicalSha256: "3f86a78f78379fee6ed3e4623ca80e88aa5112971afd608355c6894c11009368" },
   "esat-mock-02": { sourceDirectory: "esat-mock-02", modules: ENGINEERING_MODULES, answerKey: "CBCCDBACCDCADCDCCCAEDBADEDCDGFBACGDABHEGADFBDEFEDCCCABCBCAACBDCBBBEBCCBBEEGGDAEDC", canonicalSha256: "20ce00800f966b42edbf11c45f95b434413bb51bdc9f85004cd633792482ac96" },
   "esat-mock-03": { sourceDirectory: "esat-mock-03", modules: ENGINEERING_MODULES, answerKey: "CBECDDEAADDCBABEEEDEDDCDDACDEBAEDFEACDFEHCFAHDADFEBHGCCACCCBDEDFDBADEGDGCCCGEDABA", canonicalSha256: "811507dcb76b8a306817572dc4777eaf019c0864da667e6e4359dbf843698074" },
@@ -100,7 +103,7 @@ function expandTest(
 
   return Object.freeze({
     testId,
-    keyVersion: ESAT_CANONICAL_KEY_VERSION,
+    keyVersion: seed.keyVersion ?? ESAT_CANONICAL_KEY_VERSION,
     sourceFile:
       `public/esat-practice-tests/tests/${seed.sourceDirectory}/index.html`,
     expectedQuestions: 81,

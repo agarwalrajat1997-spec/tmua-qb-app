@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCanonicalEsatTest } from "@/lib/server/esat-canonical-tests";
 import { estimateEsatTestScores } from "@/lib/server/esat-score-estimates";
+import { estimateOctober2026EsatScores } from "@/lib/server/esat-october-2026-tests";
 import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -418,7 +419,8 @@ export async function POST(req: Request) {
     boolean | null = null;
 
   let esatScoreEstimate:
-    ReturnType<typeof estimateEsatTestScores> | null = null;
+    ReturnType<typeof estimateEsatTestScores> |
+    ReturnType<typeof estimateOctober2026EsatScores> = null;
 
   if (catalog && canonicalTmuaTest) {
     const canonicalPaper =
@@ -613,7 +615,10 @@ export async function POST(req: Request) {
     paper1Score = sectionScores[0];
     paper2Score = sectionScores[1];
 
-    esatScoreEstimate = estimateEsatTestScores(
+    esatScoreEstimate = estimateOctober2026EsatScores(
+      testId,
+      sectionScores,
+    ) ?? estimateEsatTestScores(
       testId,
       sectionScores,
     );
@@ -742,6 +747,13 @@ export async function POST(req: Request) {
 
       esat_combined_score_official:
         esatScoreEstimate?.combinedScoreOfficial ?? null,
+
+      ...(esatScoreEstimate?.status === "provisional_uncalibrated" ? {
+        esat_score_status: esatScoreEstimate.status,
+        esat_score_label: esatScoreEstimate.scoreLabel,
+        esat_score_note: esatScoreEstimate.note,
+        esat_predictor_eligible: false,
+      } : {}),
 
 
 
