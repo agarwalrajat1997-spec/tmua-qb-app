@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./dashboard.module.css";
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
+import ServiceRetry from "../components/ServiceRetry";
+import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
 
 type PracticeTest = {
   id: string;
@@ -146,6 +148,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [accessLoading, setAccessLoading] = useState(true);
   const [accessErr, setAccessErr] = useState<string | null>(null);
+  const [accessRetry, setAccessRetry] = useState(0);
 
   const [attemptsLoading, setAttemptsLoading] = useState(false);
   const [attemptsErr, setAttemptsErr] = useState<string | null>(null);
@@ -367,96 +370,84 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   );
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       setErr(null);
-
-      if (!supabase) {
-        setErr("Supabase env vars missing: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
-        setLoading(false);
-        return;
-      }
-
+      setAccessErr(null);
+      setAccessLoading(true);
+      setLoading(true);
       try {
+        if (!supabase) throw new Error("Portal configuration unavailable");
         const url = new URL(window.location.href);
         const q = url.searchParams;
         const hp = parseHash(url.hash);
-
         const e = q.get("error") || hp.get("error");
         const ed = q.get("error_description") || hp.get("error_description");
         if (e) {
           router.replace(`/login?e=${encodeURIComponent(ed || e)}`);
           return;
         }
-
         const code = q.get("code");
         if (code) {
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          const { error } = await withServiceTimeout(supabase.auth.exchangeCodeForSession(code));
           if (error) {
-            router.replace(`/login?e=${encodeURIComponent(error.message)}`);
-            return;
+            if ([400, 401, 403, 422].includes(error.status || 0) && error.name !== "AuthRetryableFetchError") {
+              router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+              return;
+            }
+            throw error;
           }
-          try {
-            window.history.replaceState({}, "", "/dashboard");
-          } catch {}
+          try { window.history.replaceState({}, "", "/dashboard"); } catch {}
         } else {
           const access_token = hp.get("access_token");
           const refresh_token = hp.get("refresh_token");
           if (access_token && refresh_token) {
-            const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+            const { error } = await withServiceTimeout(supabase.auth.setSession({ access_token, refresh_token }));
             if (error) {
-              router.replace(`/login?e=${encodeURIComponent(error.message)}`);
-              return;
+              if ([400, 401, 403, 422].includes(error.status || 0) && error.name !== "AuthRetryableFetchError") {
+                router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+                return;
+              }
+              throw error;
             }
-            try {
-              window.history.replaceState({}, "", "/dashboard");
-            } catch {}
+            try { window.history.replaceState({}, "", "/dashboard"); } catch {}
           }
         }
-      } catch {}
 
-      const { data } = await supabase.auth.getSession();
-      if (!data.session) {
-        router.replace("/login");
-        return;
-      }
-
-      const userEmail = (data.session.user.email || "").toLowerCase();
-      setEmail(userEmail);
-
-      setAccessLoading(true);
-      setAccessErr(null);
-
-      try {
+        const { data, error: sessionError } = await withServiceTimeout(supabase.auth.getSession());
+        if (cancelled) return;
+        if (sessionError && !isMissingSession(sessionError)) throw sessionError;
+        if (!data.session) {
+          router.replace("/login");
+          return;
+        }
+        const userEmail = (data.session.user.email || "").toLowerCase();
+        setEmail(userEmail);
         const { data: rows, error } = await supabase
           .from("student_access")
-          .select("product,approved")
-          .eq("email", userEmail)
-          .eq("approved", true);
-
-        if (error) {
-          setProducts([]);
-          setAccessErr(error.message);
-        } else {
-          const ps = (rows || [])
-            .map((r: any) => r.product as Product)
-            .filter(
-              (p) =>
-                p === "practice-tests" ||
-                p === "tmua-question-bank" ||
-                p === "tmua-classes"
-            );
-          setProducts(Array.from(new Set(ps)));
-        }
-      } catch (e: any) {
-        setProducts([]);
-        setAccessErr(e?.message || "Failed to load access.");
+          .select("product,approved,expires_at")
+          .ilike("email", userEmail)
+          .eq("approved", true)
+          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+          .retry(false);
+        if (cancelled) return;
+        if (error) throw error;
+        const ps = (rows || [])
+          .map((r: any) => r.product as Product)
+          .filter((p) => p === "practice-tests" || p === "tmua-question-bank" || p === "tmua-classes");
+        setProducts(Array.from(new Set(ps)));
+      } catch (error) {
+        console.error("TMUA dashboard access temporarily unavailable", error);
+        if (!cancelled) setAccessErr(SERVICE_RETRY_MESSAGE);
       } finally {
-        setAccessLoading(false);
+        if (!cancelled) {
+          setAccessLoading(false);
+          setLoading(false);
+        }
       }
-
-      setLoading(false);
     })();
-  }, [router, supabase]);
+    return () => { cancelled = true; };
+  }, [router, supabase, accessRetry]);
 
   const hasPractice = products.includes("practice-tests");
   const hasBank = products.includes("tmua-question-bank");
@@ -471,7 +462,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   }, [accessLoading, hasPractice, hasBank, hasClasses]);
 
   useEffect(() => {
-    if (loading || accessLoading) return;
+    if (loading || accessLoading || accessErr) return;
     if (!hasPractice) return;
 
     (async () => {
@@ -494,10 +485,10 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         setAttemptsLoading(false);
       }
     })();
-  }, [loading, accessLoading, hasPractice]);
+  }, [loading, accessLoading, accessErr, hasPractice]);
 
   useEffect(() => {
-    if (loading || accessLoading) return;
+    if (loading || accessLoading || accessErr) return;
     if (!hasPractice) return;
     if (solutionsLoading) return;
 
@@ -520,7 +511,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, accessLoading, hasPractice]);
+  }, [loading, accessLoading, accessErr, hasPractice]);
 
   const topicTests = useMemo(() => TESTS.filter((t) => t.section === "topic"), [TESTS]);
   const thrivingFullTests = useMemo(() => TESTS.filter((t) => t.section === "thriving"), [TESTS]);
@@ -594,6 +585,10 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         </div>
       </div>
     );
+  }
+
+  if (accessErr || err) {
+    return <ServiceRetry onRetry={() => { setAccessErr(null); setErr(null); setLoading(true); setAccessRetry(n => n + 1); }} />;
   }
 
   const showNoAccess = !accessLoading && !hasPractice && !hasBank && !hasClasses;

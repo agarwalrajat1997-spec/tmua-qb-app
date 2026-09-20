@@ -94,14 +94,18 @@ export async function GET(req: Request) {
       .select(ESAT_QUESTION_COLUMNS)
       .eq("qid", identity)
       .eq("is_active", true)
-      .maybeSingle();
+      .maybeSingle()
+      .retry(false);
 
     if (byQid.error) {
       lastError = byQid.error;
+      if (["42P01", "PGRST205"].includes(String(byQid.error.code))) continue;
+      return json({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
     } else if (byQid.data) {
       return success(table, byQid.data, identity);
     }
 
+    lastError = null;
     // The list endpoint also supplies the UUID primary key.
     // Accepting it provides a second stable identity without
     // ever falling back to a list position.
@@ -111,16 +115,25 @@ export async function GET(req: Request) {
         .select(ESAT_QUESTION_COLUMNS)
         .eq("id", identity)
         .eq("is_active", true)
-        .maybeSingle();
+        .maybeSingle()
+        .retry(false);
 
       if (byId.error) {
         lastError = byId.error;
+        if (["42P01", "PGRST205"].includes(String(byId.error.code))) continue;
+        return json({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
       } else if (byId.data) {
         return success(table, byId.data, identity);
       }
     }
+    // A successful lookup in the canonical table is authoritative. Other table
+    // names are fallbacks for a missing schema, never for an outage or empty row.
+    break;
   }
 
+  if (lastError) {
+    return json({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
+  }
   return json(
     {
       ok: false,

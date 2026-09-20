@@ -71,7 +71,8 @@ export default function DashboardAccessRouterClient() {
           .select("product, approved, expires_at")
           .ilike("email", user.email)
           .eq("approved", true)
-          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`);
+          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+          .retry(false);
 
         if (cancelled) return;
 

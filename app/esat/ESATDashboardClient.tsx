@@ -235,7 +235,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
           .from("student_access")
           .select("product, approved, expires_at")
           .ilike("email", user.email)
-          .eq("approved", true);
+          .eq("approved", true)
+          .retry(false);
 
         if (cancelled) return;
 

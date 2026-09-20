@@ -13,6 +13,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 import {
   adaptTmuaConversionProfiles,
@@ -50,8 +51,7 @@ function json(
     data,
     {
       status,
-      headers:
-        NO_STORE_HEADERS,
+      headers: { ...NO_STORE_HEADERS, ...(status === 503 ? { "Retry-After": "30" } : {}) },
     },
   );
 }
@@ -92,6 +92,7 @@ function adminClient() {
     url,
     key,
     {
+      global: { fetch: serviceFetch },
       auth: {
         persistSession: false,
         autoRefreshToken: false,
@@ -105,7 +106,7 @@ async function readAll(
     (
       from: number,
       to: number,
-    ) => PromiseLike<any>,
+    ) => PromiseLike<any> & { retry?: (enabled: boolean) => PromiseLike<any> },
 ): Promise<any[]> {
   const pageSize =
     1000;
@@ -122,14 +123,11 @@ async function readAll(
       pageSize -
       1;
 
+    const query = fetchPage(from, to);
     const {
       data,
       error,
-    } =
-      await fetchPage(
-        from,
-        to,
-      );
+    } = await withServiceTimeout(typeof query.retry === "function" ? query.retry(false) : query);
 
     if (error) {
       throw new Error(
@@ -2262,7 +2260,10 @@ export async function GET() {
       error:
         userError,
     } =
-      await supabase.auth.getUser();
+      await withServiceTimeout(supabase.auth.getUser());
+    if (userError && !isMissingSession(userError)) {
+      return json({ ok: false, error: "Authentication service temporarily unavailable" }, 503);
+    }
 
     if (
       userError ||

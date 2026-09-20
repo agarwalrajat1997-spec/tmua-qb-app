@@ -93,11 +93,16 @@ async function captureEsatPredictorEvents(
       .from(table)
       .select("qid,topic,difficulty,answer,is_active")
       .in("qid", qids)
-      .eq("is_active", true);
+      .eq("is_active", true)
+      .retry(false);
 
     if (!result.error) {
       canonicalRows = result.data ?? [];
       break;
+    }
+    // Alternate names are compatibility fallbacks, not outage retries.
+    if (!["42P01", "PGRST205"].includes(String(result.error.code))) {
+      throw new Error("Canonical ESAT question lookup temporarily unavailable");
     }
   }
 
@@ -199,6 +204,10 @@ export async function POST(req: Request) {
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
     const body = await req.json().catch(() => null);
+    if (body?.expected_user_id !== undefined && body.expected_user_id !== auth.user.id) {
+      return NextResponse.json({ ok: false, error: "ACCOUNT_CHANGED", code: "ACCOUNT_CHANGED" },
+        { status: 409, headers: { "Cache-Control": "no-store" } });
+    }
     const updates = body?.updates as QBUpdate[] | undefined;
 
     const email = String(auth.user.email || "").toLowerCase();
@@ -302,10 +311,14 @@ export async function POST(req: Request) {
         const result = await adminClient()
           .from(table)
           .select("qid")
-          .in("qid", requestedQids);
+          .in("qid", requestedQids)
+          .retry(false);
 
         if (result.error) {
           lookupError = result.error;
+          if (!["42P01", "PGRST205"].includes(String(result.error.code))) {
+            return jsonErr(503, "Question validation temporarily unavailable");
+          }
           continue;
         }
 
@@ -347,10 +360,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true, saved: rows.length });
   } catch (e: any) {
-    return NextResponse.json(
-      { error: "Unhandled error in /api/qb/progress/save", message: String(e?.message || e), stack: String(e?.stack || "") },
-      { status: 500 }
-    );
+    console.error("Question-bank progress save unavailable", e);
+    return jsonErr(503, "Progress service temporarily unavailable");
   }
 }
 

@@ -2202,8 +2202,8 @@ window.MathJax = {
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
-<script src="/qb-progress-transport.js?v=2"></script>
-<script src="/qb-compact-sync.js?v=2"></script>
+<script src="/qb-progress-transport.js?v=3"></script>
+<script src="/qb-compact-sync.js?v=3"></script>
 <script id="ts-per-question-progress-sync-v1">
 (function () {
   "use strict";
@@ -4100,67 +4100,82 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
   };
 
   async function hydrateCanonicalProgress() {
-    const oldAnswers =
-      state.answers && typeof state.answers === "object"
-        ? state.answers
-        : {};
+    // Canonical progress can be older than an unsent answer on this device.
+    // Snapshot before awaiting, then preserve changes restored or made while the
+    // request was in flight. Only account-bound journals may override the server.
+    const snapshot = value => JSON.parse(JSON.stringify(value || {}));
+    const beforeAnswers = snapshot(state.answers);
+    const knownQids = new Set(allMeta.map(questionKey).filter(Boolean));
     const nextAnswers = {};
-    const knownQids = new Set();
 
-    allMeta.forEach(function(meta) {
-      const stableKey = questionKey(meta);
-      if (!stableKey) return;
+    function canonicalAnswers(answers) {
+      const result = {};
+      allMeta.forEach(function(meta) {
+        const stableKey = questionKey(meta);
+        if (!stableKey) return;
+        const answer = answers[stableKey] ||
+          answers[String(meta.display_order)] || answers[String(meta.original_index)];
+        if (answer) result[stableKey] = answer;
+      });
+      Object.keys(answers).forEach(function(qid) {
+        if (!/^\d+$/.test(qid) && !result[qid]) result[qid] = answers[qid];
+      });
+      return result;
+    }
 
-      knownQids.add(stableKey);
+    function answerFromProgress(row) {
+      const status = String(row.status || "").toLowerCase();
+      return {
+        selected: row.selected_answer || "",
+        checked: status === "correct" || status === "wrong" || status === "incorrect",
+        isCorrect: status === "correct",
+        flagged: !!row.flagged
+      };
+    }
 
-      const canonicalLocal = oldAnswers[stableKey];
-      const legacyLocal =
-        oldAnswers[String(meta.display_order)] ||
-        oldAnswers[String(meta.original_index)];
-
-      if (canonicalLocal) nextAnswers[stableKey] = canonicalLocal;
-      else if (legacyLocal) nextAnswers[stableKey] = legacyLocal;
-    });
-
-    Object.keys(oldAnswers).forEach(function(key) {
-      if (!/^\d+$/.test(key) && !nextAnswers[key]) {
-        nextAnswers[key] = oldAnswers[key];
+    function pendingAnswers() {
+      const answers = {};
+      const transport = window.TS_QB_TRANSPORT;
+      if (transport && typeof transport.pendingUpdates === "function") {
+        transport.pendingUpdates("esat-question-bank").forEach(function(row) {
+          const qid = String(row.question_id || row.key || "");
+          if (knownQids.has(qid)) answers[qid] = answerFromProgress(row.value || row);
+        });
       }
-    });
+      const sync = window.TS_QB_SYNC;
+      if (sync && typeof sync.pendingAnswers === "function") {
+        Object.assign(answers, sync.pendingAnswers());
+      }
+      return snapshot(answers);
+    }
+
+    const beforeCanonical = canonicalAnswers(beforeAnswers);
+    const beforePending = pendingAnswers();
+    Object.assign(nextAnswers, beforeCanonical);
 
     try {
       const response = await fetch(
         "/api/qb/progress/load?product=esat-question-bank",
-        {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store"
-        }
+        { method: "GET", credentials: "include", cache: "no-store" }
       );
       const payload = await response.json();
-
       if (response.ok && payload && payload.ok && payload.progress) {
         Object.entries(payload.progress).forEach(function(entry) {
           const qid = String(entry[0] || "");
-          const row = entry[1] || {};
-          if (!knownQids.has(qid)) return;
-
-          const status = String(row.status || "").toLowerCase();
-          nextAnswers[qid] = {
-            selected: row.selected_answer || "",
-            checked:
-              status === "correct" ||
-              status === "wrong" ||
-              status === "incorrect",
-            isCorrect: status === "correct",
-            flagged: !!row.flagged
-          };
+          if (knownQids.has(qid)) nextAnswers[qid] = answerFromProgress(entry[1] || {});
         });
       }
     } catch (error) {
       console.warn("Canonical ESAT progress hydration failed:", error);
     }
 
+    Object.assign(nextAnswers, beforePending, pendingAnswers());
+    const currentAnswers = canonicalAnswers(snapshot(state.answers));
+    Object.keys(currentAnswers).forEach(function(qid) {
+      if (JSON.stringify(currentAnswers[qid]) !== JSON.stringify(beforeCanonical[qid])) {
+        nextAnswers[qid] = currentAnswers[qid];
+      }
+    });
     state.answers = nextAnswers;
     saveState();
   }
@@ -5747,12 +5762,19 @@ function applyFilters() {
     ].join("|");
   }
 
+  // TS_QB_TIMER_ACCOUNT_SCOPE_V3: the old unowned key stays intact for recovery.
+  var timerOwner = window.TS_QB_TRANSPORT && window.TS_QB_TRANSPORT.account() || null;
+  var timerStopped = false;
+  var unassignedTimerKey = STATE_KEY + ":unassigned-v3:" + (
+    window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2)
+  );
+  function timerStorageKey() {
+    return timerOwner ? STATE_KEY + ":account-v3:" + timerOwner : unassignedTimerKey;
+  }
+
   function loadLocalState() {
     try {
-      var raw =
-        window.localStorage.getItem(
-          STATE_KEY
-        );
+      var raw = timerOwner ? window.localStorage.getItem(timerStorageKey()) : null;
 
       if (!raw) {
         return {
@@ -5789,18 +5811,52 @@ function applyFilters() {
     loadLocalState();
 
   function saveLocalState() {
+    if (timerStopped) return false;
     try {
       window.localStorage.setItem(
-        STATE_KEY,
-        JSON.stringify({
-          pendingMs:
-            localState.pendingMs,
-          finalSeconds:
-            localState.finalSeconds
-        })
+        timerStorageKey(),
+        JSON.stringify({ pendingMs: localState.pendingMs, finalSeconds: localState.finalSeconds })
       );
-    } catch (e) {}
+      return true;
+    } catch (e) {
+      window.TS_QB_LOCAL_STORAGE_UNAVAILABLE = true;
+      window.dispatchEvent(new CustomEvent("ts-qb-sync-status", { detail: "Browser storage is full. Keep this page open until your progress syncs." }));
+      return false;
+    }
   }
+
+  function bindTimerAccount(event) {
+    var id = event && event.detail && event.detail.user_id;
+    if (!id || timerStopped || timerOwner === id) return;
+    if (timerOwner && timerOwner !== id) { timerStopped = true; return; }
+    var fresh = localState;
+    timerOwner = id;
+    localState = loadLocalState();
+    // Add time accumulated in this fresh page to this account's unfinished time.
+    Object.keys(fresh.pendingMs).forEach(function (qid) {
+      if (!entries[qid]) localState.pendingMs[qid] = Math.max(0, Number(localState.pendingMs[qid]) || 0) + Math.max(0, Number(fresh.pendingMs[qid]) || 0);
+    });
+    Object.keys(entries).forEach(function (qid) {
+      var entry = entries[qid];
+      if (entry.frozen || entry.submittedWrong) return;
+      var elapsed = currentElapsedMs(entry);
+      entry.accumulatedMs = Math.max(0, Number(localState.pendingMs[qid]) || 0) + elapsed;
+      entry.startedAtMs = entry.running ? nowMs() : 0;
+      localState.pendingMs[qid] = entry.accumulatedMs;
+    });
+    Object.assign(localState.finalSeconds, fresh.finalSeconds);
+    if (saveLocalState()) {
+      try { window.localStorage.removeItem(unassignedTimerKey); } catch (e) {}
+    }
+  }
+  window.addEventListener("ts-qb-account", bindTimerAccount);
+  window.addEventListener("ts-qb-account-changed", function () {
+    timerStopped = true;
+    Object.keys(entries).forEach(function (qid) {
+      entries[qid].accumulatedMs = currentElapsedMs(entries[qid]);
+      entries[qid].running = false;
+    });
+  });
 
   function timerIsVisible() {
     try {

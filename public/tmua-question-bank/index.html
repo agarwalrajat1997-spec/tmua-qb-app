@@ -1918,8 +1918,8 @@ window.MathJax = {
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
-<script src="/qb-progress-transport.js?v=2"></script>
-<script src="/qb-compact-sync.js?v=2"></script>
+<script src="/qb-progress-transport.js?v=3"></script>
+<script src="/qb-compact-sync.js?v=3"></script>
 <script id="ts-per-question-progress-sync-v1">
 (function () {
   "use strict";
@@ -4547,12 +4547,19 @@ function applyFilters() {
     return Number.isFinite(n) && n >= 0 ? n : null;
   }
 
+  // TS_QB_TIMER_ACCOUNT_SCOPE_V3: the old unowned key stays intact for recovery.
+  var timerOwner = window.TS_QB_TRANSPORT && window.TS_QB_TRANSPORT.account() || null;
+  var timerStopped = false;
+  var unassignedTimerKey = STATE_KEY + ":unassigned-v3:" + (
+    window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2)
+  );
+  function timerStorageKey() {
+    return timerOwner ? STATE_KEY + ":account-v3:" + timerOwner : unassignedTimerKey;
+  }
+
   function loadLocalState() {
     try {
-      var raw =
-        window.localStorage.getItem(
-          STATE_KEY
-        );
+      var raw = timerOwner ? window.localStorage.getItem(timerStorageKey()) : null;
 
       if (!raw) {
         return {
@@ -4589,18 +4596,52 @@ function applyFilters() {
     loadLocalState();
 
   function saveLocalState() {
+    if (timerStopped) return false;
     try {
       window.localStorage.setItem(
-        STATE_KEY,
-        JSON.stringify({
-          pendingMs:
-            localState.pendingMs,
-          finalSeconds:
-            localState.finalSeconds
-        })
+        timerStorageKey(),
+        JSON.stringify({ pendingMs: localState.pendingMs, finalSeconds: localState.finalSeconds })
       );
-    } catch (e) {}
+      return true;
+    } catch (e) {
+      window.TS_QB_LOCAL_STORAGE_UNAVAILABLE = true;
+      window.dispatchEvent(new CustomEvent("ts-qb-sync-status", { detail: "Browser storage is full. Keep this page open until your progress syncs." }));
+      return false;
+    }
   }
+
+  function bindTimerAccount(event) {
+    var id = event && event.detail && event.detail.user_id;
+    if (!id || timerStopped || timerOwner === id) return;
+    if (timerOwner && timerOwner !== id) { timerStopped = true; return; }
+    var fresh = localState;
+    timerOwner = id;
+    localState = loadLocalState();
+    // Add time accumulated in this fresh page to this account's unfinished time.
+    Object.keys(fresh.pendingMs).forEach(function (qid) {
+      if (!entries[qid]) localState.pendingMs[qid] = Math.max(0, Number(localState.pendingMs[qid]) || 0) + Math.max(0, Number(fresh.pendingMs[qid]) || 0);
+    });
+    Object.keys(entries).forEach(function (qid) {
+      var entry = entries[qid];
+      if (entry.frozen || entry.submittedWrong) return;
+      var elapsed = currentElapsedMs(entry);
+      entry.accumulatedMs = Math.max(0, Number(localState.pendingMs[qid]) || 0) + elapsed;
+      entry.startedAtMs = entry.running ? nowMs() : 0;
+      localState.pendingMs[qid] = entry.accumulatedMs;
+    });
+    Object.assign(localState.finalSeconds, fresh.finalSeconds);
+    if (saveLocalState()) {
+      try { window.localStorage.removeItem(unassignedTimerKey); } catch (e) {}
+    }
+  }
+  window.addEventListener("ts-qb-account", bindTimerAccount);
+  window.addEventListener("ts-qb-account-changed", function () {
+    timerStopped = true;
+    Object.keys(entries).forEach(function (qid) {
+      entries[qid].accumulatedMs = currentElapsedMs(entries[qid]);
+      entries[qid].running = false;
+    });
+  });
 
   function timerIsVisible() {
     try {
@@ -5653,12 +5694,10 @@ function applyFilters() {
 
   function patchProgressSaveFetch() {
     if (!baseFetch) return;
-    var saveQueue = Promise.resolve();
 
     window.fetch =
       function (input, init) {
         var nextInit = init;
-        var stableSave = false;
 
         try {
           var url =
@@ -5686,7 +5725,6 @@ function applyFilters() {
                 body.updates
               )
             ) {
-              stableSave = true;
               body.updates.forEach(
                 function (update) {
                   if (!update) return;
@@ -5831,12 +5869,9 @@ function applyFilters() {
           );
         }
 
-        if (stableSave) {
-          var run = function () { return baseFetch(input, nextInit); };
-          var result = saveQueue.then(run, run);
-          saveQueue = result.catch(function () {});
-          return result;
-        }
+        // The shared transport persists the immutable payload immediately and
+        // serializes network delivery; an outer memory-only queue would lose
+        // later submissions if this page closes during an outage.
         return baseFetch(input, nextInit);
       };
   }

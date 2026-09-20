@@ -55,7 +55,8 @@ async function hasProductAccess(
     .eq("product", product)
     .eq("approved", true)
     .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
-    .limit(1);
+    .limit(1)
+    .retry(false);
 
   if (error) {
     console.error("Progress access check failed:", { email, product, error });
@@ -92,7 +93,8 @@ async function getProgress(req: NextRequest) {
     .eq("user_id", user.id)
     .eq("product", product)
     .eq("key", key)
-    .maybeSingle();
+    .maybeSingle()
+    .retry(false);
 
   if (error) {
     console.error("Load user progress failed:", error);
@@ -125,6 +127,12 @@ async function postProgress(req: NextRequest) {
   }
 
   const body = await req.json().catch(() => null);
+
+  // An offline write belongs to the account that created it, even if another
+  // person has since signed in on this browser. Legacy clients omit this field.
+  if (body?.expected_user_id !== undefined && body.expected_user_id !== user.id) {
+    return json({ ok: false, error: "ACCOUNT_CHANGED", code: "ACCOUNT_CHANGED" }, 409);
+  }
 
   const product = String(body?.product || "");
   const key = String(body?.key || "app_state");

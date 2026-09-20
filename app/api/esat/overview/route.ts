@@ -17,9 +17,9 @@ import { buildEsatTestEvidence } from "@/lib/server/esat-predictor-evidence";
 import { getEsatPredictorFamilyId } from "@/lib/server/esat-october-2026-tests";
 import {
   calculatePreparationScore,
-  rankPreparationCohort,
 } from "@/lib/server/tmua-preparation-rank-v1-engine";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isMissingSession, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -59,43 +59,12 @@ async function readAll(
     rows.push(...page);
 
     if (page.length < PAGE_SIZE) {
-      break;
+      return rows;
     }
   }
 
-  return rows;
-}
-
-async function readAuthUsers(
-  admin: ReturnType<typeof adminClient>,
-): Promise<any[]> {
-  const users: any[] = [];
-  const maxPages = Math.ceil(MAX_ROWS / PAGE_SIZE);
-
-  for (let page = 1; page <= maxPages; page += 1) {
-    const response = await admin.auth.admin.listUsers({
-      page,
-      perPage: PAGE_SIZE,
-    });
-
-    if (response.error) {
-      throw new Error(
-        `ESAT active cohort auth users: ${response.error.message ?? "query failed"}`,
-      );
-    }
-
-    const pageUsers = Array.isArray(response.data?.users)
-      ? response.data.users
-      : [];
-
-    users.push(...pageUsers);
-
-    if (pageUsers.length < PAGE_SIZE) {
-      return users;
-    }
-  }
-
-  throw new Error("ESAT active cohort auth-user pagination exceeded safety limit");
+  // Never silently calculate a prediction from truncated historical evidence.
+  throw new Error("ESAT evidence exceeded the per-user pagination safety limit");
 }
 
 function canonicalQid(metadata: unknown, fallback: unknown): string | null {
@@ -162,21 +131,6 @@ function esatCountdown(asOf: Date) {
     examDate: ESAT_EXAM_DATE,
     examDateLabel: ESAT_EXAM_DATE_LABEL,
   };
-}
-
-function pushByUser(
-  map: Map<string, any[]>,
-  userId: string,
-  row: any,
-): void {
-  const rows = map.get(userId);
-
-  if (rows) {
-    rows.push(row);
-  }
-  else {
-    map.set(userId, [row]);
-  }
 }
 
 function buildQbEvents(
@@ -253,314 +207,251 @@ function buildTestFamilySignals(
   });
 }
 
+// Canonical metadata contains no student data. Coalesce cold concurrent reads,
+// and refresh within one minute so answer/topic corrections reach predictions.
+let questionCache: { rows: any[]; expiresAt: number } | null = null;
+let questionsInFlight: Promise<any[]> | null = null;
+
 async function readActiveQuestions(admin: ReturnType<typeof adminClient>) {
-  let lastError: any = null;
+  if (questionCache && questionCache.expiresAt > Date.now()) return questionCache.rows;
+  if (questionsInFlight) return questionsInFlight;
 
-  for (const table of ESAT_TABLE_CANDIDATES) {
-    try {
-      const rows = await readAll((from, to) =>
-        admin
-          .from(table)
-          .select("qid,topic,answer,is_active")
-          .eq("is_active", true)
-          .order("qid", { ascending: true })
-          .range(from, to),
-      );
-
-      return rows;
+  questionsInFlight = (async () => {
+    let lastError: any = null;
+    for (const table of ESAT_TABLE_CANDIDATES) {
+      try {
+        const rows = await readAll(async (from, to) => {
+          const response = await admin.from(table)
+            .select("qid,topic,answer,is_active")
+            .eq("is_active", true)
+            .order("qid", { ascending: true }).range(from, to).retry(false);
+          // Preserve the error code: a service outage must not trigger a scan
+          // of every historical table alias in turn.
+          if (response.error) throw response.error;
+          return response;
+        });
+        questionCache = { rows, expiresAt: Date.now() + 60_000 };
+        return rows;
+      } catch (error) {
+        lastError = error;
+        const code = (error as { code?: string })?.code;
+        if (code !== "42P01" && code !== "PGRST205") throw error;
+      }
     }
-    catch (error) {
-      lastError = error;
+    throw lastError ?? new Error("No ESAT question table is available.");
+  })();
+  try {
+    return await questionsInFlight;
+  } finally {
+    questionsInFlight = null;
+  }
+}
+
+// This is a small process-local optimization, not a cohort cache or an access
+// cache. Every request must authenticate and recheck its own entitlement first.
+// Concurrent tabs share one calculation; successful results live for 30 seconds.
+// A cold server still reads only that student's evidence, never all users.
+const overviewCache = new Map<string, { body: any; expiresAt: number }>();
+const overviewInFlight = new Map<string, Promise<any>>();
+const MAX_CACHED_USERS = 128;
+
+async function currentUserOverview(admin: ReturnType<typeof adminClient>, userId: string) {
+  const cached = overviewCache.get(userId);
+  if (cached && cached.expiresAt > Date.now()) return cached.body;
+  const pending = overviewInFlight.get(userId);
+  if (pending) return pending;
+  if (overviewInFlight.size >= MAX_CACHED_USERS) {
+    throw new Error("ESAT overview temporarily busy");
+  }
+  const calculation = calculateCurrentUserOverview(admin, userId).then((body) => {
+    if (overviewCache.size >= MAX_CACHED_USERS) {
+      overviewCache.delete(overviewCache.keys().next().value!);
+    }
+    overviewCache.set(userId, { body, expiresAt: Date.now() + 30_000 });
+    return body;
+  });
+  overviewInFlight.set(userId, calculation);
+  try {
+    return await calculation;
+  } finally {
+    overviewInFlight.delete(userId);
+  }
+}
+
+async function calculateCurrentUserOverview(admin: ReturnType<typeof adminClient>, userId: string) {
+  const recognisedIds = Object.keys(ESAT_CANONICAL_TESTS);
+  const asOf = new Date();
+  const asOfMs = asOf.getTime();
+  const windowStartMs = asOfMs - ESAT_ACTIVE_WINDOW_MS;
+
+  const [attemptRows, questionRows, qbRows] = await Promise.all([
+    readAll((from, to) => admin.from("practice_test_attempts")
+      .select("id,user_id,test_id,answers,attempt_number,submitted_at")
+      .eq("user_id", userId)
+      .in("test_id", recognisedIds)
+      .order("submitted_at", { ascending: true })
+      .order("id", { ascending: true }).range(from, to).retry(false)),
+    readActiveQuestions(admin),
+    readAll((from, to) => admin.from("tmua_qb_attempt_events")
+      .select("id,user_id,question_id,source,history_quality,predictor_eligible,metadata,selected_answer,attempted_at")
+      .eq("user_id", userId)
+      .eq("product", "esat-question-bank")
+      .eq("source", "qb-progress-trigger-v2")
+      .eq("history_quality", "observed")
+      .order("attempted_at", { ascending: true })
+      .order("id", { ascending: true }).range(from, to).retry(false)),
+  ]);
+
+  const questionByQid = new Map<string, any>();
+  const activeTopicSet = new Set<string>();
+  for (const row of questionRows) {
+    const qid = String(row.qid ?? "").trim();
+    const topic = String(row.topic ?? "").trim();
+    if (qid) questionByQid.set(qid, row);
+    if (topic) activeTopicSet.add(topic);
+  }
+  const activeTopics = [...activeTopicSet].sort((a, b) => a.localeCompare(b));
+  const testEvidence = buildEsatTestEvidence(attemptRows);
+  const result = calculateEsatPredictorV1({
+    testAttempts: testEvidence,
+    qbEvents: buildQbEvents(qbRows, questionByQid),
+    activeTopics,
+  });
+
+  const recentTests = new Set<string>();
+  for (const row of attemptRows) {
+    if (withinWindow(row.submitted_at, windowStartMs, asOfMs)) {
+      const testId = String(row.test_id ?? "").trim();
+      if (recognisedIds.includes(testId)) recentTests.add(getEsatPredictorFamilyId(testId));
     }
   }
+  const recentQb = new Set<string>();
+  for (const row of qbRows) {
+    if (!withinWindow(row.attempted_at, windowStartMs, asOfMs)) continue;
+    const qid = canonicalQid(row.metadata, row.question_id);
+    if (qid && questionByQid.has(qid)) recentQb.add(qid);
+  }
+  const currentPreparation = calculatePreparationScore({
+    predictedTmuaScore9: result.predictedEsatPracticeScore,
+    broadOrFullIndependentTestFamilies: result.independentTestCount,
+    predictorTestWeight: result.testWeight,
+    trustedUniqueFirstExposures: result.qbUniqueQuestions,
+    trustedCanonicalTopicCoverage: result.qbTopicCoverage,
+    distinctCanonicalQbInteractions30d: recentQb.size,
+    independentRecognisedTestFamilies30d: recentTests.size,
+    testFamilySignals: buildTestFamilySignals(testEvidence),
+    hasGenuineTestEvidence: testEvidence.length > 0,
+    hasGenuineQbEvidence: result.qbUniqueQuestions > 0,
+    recovery: null,
+  });
+  const calculatedAt = asOf.toISOString();
 
-  throw lastError ?? new Error("No ESAT question table is available.");
+  const snapshotRow = {
+    user_id: userId,
+    model_version: result.modelVersion,
+    input_hash: result.inputHash,
+    prediction_status: result.predictionStatus,
+    predicted_tmua_score9: result.predictedEsatPracticeScore,
+    lower_bound: result.lowerBound,
+    upper_bound: result.upperBound,
+    confidence: result.confidence,
+    test_signal_score9: result.testSignalPracticeScore,
+    test_weight: result.testWeight,
+    test_evidence_count: result.testEvidenceCount,
+    independent_test_count: result.independentTestCount,
+    combined_full_count: result.combinedFullCount,
+    qb_signal_score9: result.qbSignalScore9,
+    qb_weight: result.qbWeight,
+    qb_unique_questions: result.qbUniqueQuestions,
+    qb_topic_coverage: result.qbTopicCoverage,
+    conversion_set_hash: result.calibrationSetHash,
+    active_topic_set_hash: result.activeTopicSetHash,
+    evidence_details: {
+      product: "esat",
+      combined_score_official: false,
+      predictor_model_version: result.modelVersion,
+      active_cohort_window_days: 30,
+    },
+    calculated_at: calculatedAt,
+  };
+
+  const { error: snapshotError } = await admin
+    .from("tmua_prediction_snapshots")
+    .upsert(snapshotRow, {
+      onConflict: "user_id,model_version,input_hash",
+      ignoreDuplicates: true,
+    }).retry(false);
+
+  if (snapshotError && snapshotError.code !== "23505") {
+    throw new Error(`Snapshot insert failed: ${snapshotError.message}`);
+  }
+
+  return {
+    ok: true,
+    predictor: {
+      modelVersion: result.modelVersion,
+      status: result.predictionStatus,
+      score: result.predictedEsatPracticeScore,
+      lowerBound: result.lowerBound,
+      upperBound: result.upperBound,
+      confidence: result.confidence,
+      testEvidenceCount: result.testEvidenceCount,
+      independentTestCount: result.independentTestCount,
+      qbUniqueQuestions: result.qbUniqueQuestions,
+      qbTopicCoverage: result.qbTopicCoverage,
+      calculatedAt,
+      combinedScoreOfficial: false,
+    },
+    preparationRank: {
+      modelVersion: ESAT_PREPARATION_RANK_MODEL_VERSION,
+      hasGenuinePreparationEvidence:
+        currentPreparation?.hasGenuinePreparationEvidence ?? false,
+      score: currentPreparation.actualPreparationScore,
+      // Rank needs a separately maintained cohort snapshot. Never run a
+      // cohort scan (or claim rank 1 of 1) on a student's dashboard request.
+      status: "temporarily_unavailable",
+      rank: null,
+      cohortSize: 0,
+      components: currentPreparation?.components ?? null,
+      calculatedAt,
+    },
+    countdown: esatCountdown(asOf),
+  };
 }
 
 export async function GET() {
   try {
     const session = await createSupabaseServerClient();
-    const {
-      data: { user },
-      error: userError,
-    } = await session.auth.getUser();
-
-    if (userError || !user) {
-      return json({ ok: false, error: "Unauthorized" }, 401);
+    const { data: { user }, error: userError } = await withServiceTimeout(session.auth.getUser());
+    if (userError) {
+      if (isMissingSession(userError)) return json({ ok: false, error: "Unauthorized" }, 401);
+      throw userError;
     }
+    if (!user?.id || !user.email) return json({ ok: false, error: "Unauthorized" }, 401);
 
     const admin = adminClient();
-    const recognisedIds = Object.keys(ESAT_CANONICAL_TESTS);
-    const asOf = new Date();
-    const asOfMs = asOf.getTime();
-    const windowStartMs = asOfMs - ESAT_ACTIVE_WINDOW_MS;
+    // The verified session is the only source of identity. Escape LIKE tokens
+    // so an email containing '_' or '%' cannot match someone else's access.
+    const email = user.email.trim().toLowerCase().replace(/[\\%_]/g, "\\$&");
+    const { data: accessRows, error: accessError } = await admin.from("student_access")
+      .select("product,approved,expires_at")
+      .ilike("email", email)
+      .in("product", [...ESAT_ACCESS_PRODUCTS])
+      .eq("approved", true)
+      .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+      .limit(1).retry(false);
+    if (accessError) throw accessError;
+    if (!accessRows?.length) return json({ ok: false, error: "No ESAT access" }, 403);
 
-    const [attemptRows, questionRows, qbRows, accessRows, authUsers] =
-      await Promise.all([
-        readAll((from, to) =>
-          admin
-            .from("practice_test_attempts")
-            .select("id,user_id,test_id,answers,attempt_number,submitted_at")
-            .in("test_id", recognisedIds)
-            .order("submitted_at", { ascending: true })
-            .range(from, to),
-        ),
-        readActiveQuestions(admin),
-        readAll((from, to) =>
-          admin
-            .from("tmua_qb_attempt_events")
-            .select(
-              "id,user_id,question_id,source,history_quality,predictor_eligible,metadata,selected_answer,attempted_at",
-            )
-            .eq("product", "esat-question-bank")
-            .eq("source", "qb-progress-trigger-v2")
-            .eq("history_quality", "observed")
-            .order("attempted_at", { ascending: true })
-            .range(from, to),
-        ),
-        readAll((from, to) =>
-          admin
-            .from("student_access")
-            .select("email,product,approved,expires_at")
-            .in("product", [...ESAT_ACCESS_PRODUCTS])
-            .eq("approved", true)
-            .range(from, to),
-        ),
-        readAuthUsers(admin),
-      ]);
-
-    const questionByQid = new Map<string, any>();
-    const activeTopicSet = new Set<string>();
-
-    for (const row of questionRows) {
-      const qid = String(row.qid ?? "").trim();
-      const topic = String(row.topic ?? "").trim();
-
-      if (qid) {
-        questionByQid.set(qid, row);
-      }
-
-      if (topic) {
-        activeTopicSet.add(topic);
-      }
-    }
-
-    const activeTopics = [...activeTopicSet].sort((a, b) => a.localeCompare(b));
-    const attemptsByUser = new Map<string, any[]>();
-    const qbRowsByUser = new Map<string, any[]>();
-
-    for (const row of attemptRows) {
-      const userId = String(row.user_id ?? "").trim();
-      if (userId) {
-        pushByUser(attemptsByUser, userId, row);
-      }
-    }
-
-    for (const row of qbRows) {
-      const userId = String(row.user_id ?? "").trim();
-      if (userId) {
-        pushByUser(qbRowsByUser, userId, row);
-      }
-    }
-
-    const entitledEmails = new Set<string>();
-
-    for (const row of accessRows) {
-      if (row.approved !== true) {
-        continue;
-      }
-
-      if (row.expires_at != null) {
-        const expires = Date.parse(String(row.expires_at));
-        if (!Number.isFinite(expires) || expires <= asOfMs) {
-          continue;
-        }
-      }
-
-      const email = String(row.email ?? "").trim().toLowerCase();
-      if (email) {
-        entitledEmails.add(email);
-      }
-    }
-
-    const entitledUsers = authUsers.filter((authUser) => {
-      const email = String(authUser.email ?? "").trim().toLowerCase();
-      return email.length > 0 && entitledEmails.has(email);
-    });
-
-    const preparationRecords: Array<{
-      userId: string;
-      active: boolean;
-      preparation: ReturnType<typeof calculatePreparationScore>;
-    }> = [];
-
-    let currentPredictorResult: ReturnType<typeof calculateEsatPredictorV1> | null = null;
-
-    for (const authUser of entitledUsers) {
-      const userId = String(authUser.id);
-      const userAttemptRows = attemptsByUser.get(userId) ?? [];
-      const userQbRows = qbRowsByUser.get(userId) ?? [];
-      const testEvidence = buildEsatTestEvidence(userAttemptRows);
-      const userQbEvents = buildQbEvents(userQbRows, questionByQid);
-      const predictor = calculateEsatPredictorV1({
-        testAttempts: testEvidence,
-        qbEvents: userQbEvents,
-        activeTopics,
-      });
-
-      if (userId === user.id) {
-        currentPredictorResult = predictor;
-      }
-
-      const recentTests = new Set<string>();
-      for (const row of userAttemptRows) {
-        if (withinWindow(row.submitted_at, windowStartMs, asOfMs)) {
-          const testId = String(row.test_id ?? "").trim();
-          if (recognisedIds.includes(testId)) {
-            recentTests.add(getEsatPredictorFamilyId(testId));
-          }
-        }
-      }
-
-      const recentQb = new Set<string>();
-      for (const row of userQbRows) {
-        if (!withinWindow(row.attempted_at, windowStartMs, asOfMs)) {
-          continue;
-        }
-
-        const qid = canonicalQid(row.metadata, row.question_id);
-        if (qid && questionByQid.has(qid)) {
-          recentQb.add(qid);
-        }
-      }
-
-      const loginActive = withinWindow(
-        authUser.last_sign_in_at,
-        windowStartMs,
-        asOfMs,
-      );
-      const testActive = recentTests.size > 0;
-      const qbActive = recentQb.size > 0;
-      const active = loginActive || testActive || qbActive;
-
-      const preparation = calculatePreparationScore({
-        predictedTmuaScore9: predictor.predictedEsatPracticeScore,
-        broadOrFullIndependentTestFamilies: predictor.independentTestCount,
-        predictorTestWeight: predictor.testWeight,
-        trustedUniqueFirstExposures: predictor.qbUniqueQuestions,
-        trustedCanonicalTopicCoverage: predictor.qbTopicCoverage,
-        distinctCanonicalQbInteractions30d: recentQb.size,
-        independentRecognisedTestFamilies30d: recentTests.size,
-        testFamilySignals: buildTestFamilySignals(testEvidence),
-        hasGenuineTestEvidence: testEvidence.length > 0,
-        hasGenuineQbEvidence: predictor.qbUniqueQuestions > 0,
-        recovery: null,
-      });
-
-      preparationRecords.push({
-        userId,
-        active,
-        preparation,
-      });
-    }
-
-    if (!currentPredictorResult) {
-      const currentAttemptRows = attemptsByUser.get(user.id) ?? [];
-      const currentQbRows = qbRowsByUser.get(user.id) ?? [];
-      currentPredictorResult = calculateEsatPredictorV1({
-        testAttempts: buildEsatTestEvidence(currentAttemptRows),
-        qbEvents: buildQbEvents(currentQbRows, questionByQid),
-        activeTopics,
-      });
-    }
-
-    const ranked = rankPreparationCohort(
-      preparationRecords.map((record) => ({
-        userId: record.userId,
-        active: record.active,
-        score: record.preparation,
-      })),
-    );
-
-    const currentRank = ranked.find((row) => row.userId === user.id) ?? null;
-    const currentPreparation =
-      preparationRecords.find((row) => row.userId === user.id)?.preparation ?? null;
-    const activeCohortSize = preparationRecords.filter((row) => row.active).length;
-    const result = currentPredictorResult;
-    const calculatedAt = asOf.toISOString();
-
-    const snapshotRow = {
-      user_id: user.id,
-      model_version: result.modelVersion,
-      input_hash: result.inputHash,
-      prediction_status: result.predictionStatus,
-      predicted_tmua_score9: result.predictedEsatPracticeScore,
-      lower_bound: result.lowerBound,
-      upper_bound: result.upperBound,
-      confidence: result.confidence,
-      test_signal_score9: result.testSignalPracticeScore,
-      test_weight: result.testWeight,
-      test_evidence_count: result.testEvidenceCount,
-      independent_test_count: result.independentTestCount,
-      combined_full_count: result.combinedFullCount,
-      qb_signal_score9: result.qbSignalScore9,
-      qb_weight: result.qbWeight,
-      qb_unique_questions: result.qbUniqueQuestions,
-      qb_topic_coverage: result.qbTopicCoverage,
-      conversion_set_hash: result.calibrationSetHash,
-      active_topic_set_hash: result.activeTopicSetHash,
-      evidence_details: {
-        product: "esat",
-        combined_score_official: false,
-        predictor_model_version: result.modelVersion,
-        active_cohort_window_days: 30,
-      },
-      calculated_at: calculatedAt,
-    };
-
-    const { error: snapshotError } = await admin
-      .from("tmua_prediction_snapshots")
-      .insert(snapshotRow);
-
-    if (snapshotError && snapshotError.code !== "23505") {
-      throw new Error(`Snapshot insert failed: ${snapshotError.message}`);
-    }
-
-    return json({
-      ok: true,
-      predictor: {
-        modelVersion: result.modelVersion,
-        status: result.predictionStatus,
-        score: result.predictedEsatPracticeScore,
-        lowerBound: result.lowerBound,
-        upperBound: result.upperBound,
-        confidence: result.confidence,
-        testEvidenceCount: result.testEvidenceCount,
-        independentTestCount: result.independentTestCount,
-        qbUniqueQuestions: result.qbUniqueQuestions,
-        qbTopicCoverage: result.qbTopicCoverage,
-        calculatedAt,
-        combinedScoreOfficial: false,
-      },
-      preparationRank: {
-        modelVersion: ESAT_PREPARATION_RANK_MODEL_VERSION,
-        hasGenuinePreparationEvidence:
-          currentPreparation?.hasGenuinePreparationEvidence ?? false,
-        score: currentRank?.actualPreparationScore ?? null,
-        rank: currentRank?.actualPreparationRank ?? null,
-        cohortSize: activeCohortSize,
-        components: currentPreparation?.components ?? null,
-        calculatedAt,
-      },
-      countdown: esatCountdown(asOf),
-    });
-  }
-  catch (error) {
+    return json(await currentUserOverview(admin, user.id));
+  } catch (error) {
     console.error("ESAT overview failed", error);
-
-    return json(
-      { ok: false, error: "Unable to calculate ESAT overview" },
-      500,
-    );
+    const response = json({
+      ok: false,
+      error: "Your ESAT overview is temporarily unavailable. Please try again shortly.",
+      retryable: true,
+    }, 503);
+    response.headers.set("Retry-After", "30");
+    return response;
   }
 }

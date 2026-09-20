@@ -88,6 +88,13 @@ function unavailableResponse(req: NextRequest) {
   });
 }
 
+function withSessionCookies(response: NextResponse, sessionResponse: NextResponse) {
+  // A refresh can succeed before an entitlement lookup fails. Keep its cookies
+  // on redirects and 503 rewrites so the browser retains the refreshed session.
+  for (const cookie of sessionResponse.cookies.getAll()) response.cookies.set(cookie);
+  return response;
+}
+
 export async function proxy(req: NextRequest) {
   // TS_PUBLIC_SAT_TEST_4
   // This standalone test must remain accessible without authentication.
@@ -141,10 +148,10 @@ export async function proxy(req: NextRequest) {
 
   try {
     const { data: { user }, error: authError } = await withServiceTimeout(supabase.auth.getUser());
-    if (authError && !isMissingSession(authError)) return unavailableResponse(req);
+    if (authError && !isMissingSession(authError)) return withSessionCookies(unavailableResponse(req), res);
 
     if (!user || !user.email) {
-      return loginRedirect(req);
+      return withSessionCookies(loginRedirect(req), res);
     }
 
     const pathname = req.nextUrl.pathname;
@@ -165,7 +172,8 @@ export async function proxy(req: NextRequest) {
       .eq("product", gate.product)
       .eq("approved", true)
       .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
-      .limit(1);
+      .limit(1)
+      .retry(false);
 
     if (error) {
       console.error("Access check failed:", {
@@ -174,17 +182,17 @@ export async function proxy(req: NextRequest) {
         error,
       });
 
-      return unavailableResponse(req);
+      return withSessionCookies(unavailableResponse(req), res);
     }
 
     if (!accessRows || accessRows.length === 0) {
-      return pendingRedirect(req, gate.product);
+      return withSessionCookies(pendingRedirect(req, gate.product), res);
     }
 
     return res;
   } catch (error) {
     console.error("Portal access service unavailable", error);
-    return unavailableResponse(req);
+    return withSessionCookies(unavailableResponse(req), res);
   }
 }
 

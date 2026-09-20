@@ -36,10 +36,14 @@ export async function GET(req: Request) {
     `)
     .eq("qid", qid)
     .eq("is_active", true)
-    .single();
+    .maybeSingle()
+    .retry(false);
 
-  if (error || !data) {
-    console.error("TMUA single question load failed:", error);
+  if (error) {
+    console.error("TMUA question load temporarily unavailable:", error);
+    return json({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
+  }
+  if (!data) {
     return json({ ok: false, error: "Question not found" }, 404);
   }
 

@@ -199,7 +199,8 @@ assert.equal(migrated.length,1);assert.equal(migrated[0].question_id,'2074');
 assert.equal(migrated[0].selected_answer,'H');
 assert.equal(c.migrationTest.mergeWithServer(migrated,{'2074':{status:'wrong'}}).length,0);
 
-// Delayed saves remain ordered, and flags retain the checked submission and exact duration.
+// Timer hooks hand every save immediately to the shared durable transport.
+// Shared transport ordering/reload behavior is exercised by verify-qb-durable-sync.
 const queued=harness();await flush();
 queued.ctx.mainTest.configure([meta(2074,1)]);await queued.ctx.mainTest.render();await flush();
 queued.advance(13000);queued.ctx.ACTIONS.setSelected('G');await flush();
@@ -208,7 +209,7 @@ await queued.ctx.ACTIONS.checkAnswer();await flush();
 const countBeforeFlags=queued.saves.length;
 queued.ctx.ACTIONS.toggleFlag();await flush();
 queued.ctx.ACTIONS.toggleFlag();await flush();
-assert.equal(queued.saves.length,countBeforeFlags);
+assert.equal(queued.saves.length,countBeforeFlags+2);
 hold.resolve();await flush();
 const savedCheck=queued.saves.find(s=>s.event_name==='check').updates[0];
 const savedFlags=queued.saves.filter(s=>s.event_name==='flag');
@@ -233,7 +234,7 @@ const js=ts.transpileModule(route,{compilerOptions:{module:ts.ModuleKind.CommonJ
 const written=[];
 const db={auth:{getUser:async()=>({data:{user:{id:'student-test',email:'student@example.test'}},error:null})},
   from:table=>({upsert:async rows=>{written.push({table,rows});return {error:null};}})};
-const adminDb={from:()=>({select:()=>({in:async(_column,values)=>({data:values.filter(qid=>String(qid).startsWith('ESAT-')).map(qid=>({qid})),error:null})})})};
+const adminDb={from:()=>({select:()=>({in:(_column,values)=>({retry:async enabled=>{assert.equal(enabled,false);return {data:values.filter(qid=>String(qid).startsWith('ESAT-')).map(qid=>({qid})),error:null};}})})})};
 const api=vm.createContext({exports:{},process:{env:{}},console,Date,
   require:name=>name==='next/server'?{NextResponse:{json:(body,options)=>({body,status:options?.status||200})}}:
     name==='@supabase/ssr'?{createServerClient:()=>db}:
