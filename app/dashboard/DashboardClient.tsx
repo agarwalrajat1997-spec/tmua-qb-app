@@ -45,6 +45,11 @@ const TMUA_RESOURCE_PDFS: ResourcePdf[] = [
     description: "Thriving Scholars guide to the most common TMUA mistakes and traps.",
     href: "/tmua-resources/tmua-top-80-mistakes-thriving-scholars.pdf",
   },
+  {
+    title: "TMUA Shortcut Notebook: 10 Tricks",
+    description: "10 shortcut methods with 22 annotated worked examples, clear explanations and official source links.",
+    href: "/tmua-resources/tmua-shortcut-notebook-10-tricks.pdf",
+  },
 ];
 
 
@@ -1271,7 +1276,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 <div className={styles.meta}>
                   <span className={styles.dot} /> Downloadable TMUA PDFs
                 </div>
-                <div className={styles.meta}>Formula sheet · Specification · Mistakes guide</div>
+                <div className={styles.meta}>Formula sheet · Specification · Mistakes guide · Shortcut notebook</div>
               </div>
 
               <section
