@@ -809,17 +809,108 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
               </div>
 
               <div className={styles.card}>
-                <div className={styles.cardTitle}>ESAT Digital Question Bank</div>
-                <div className={styles.muted} style={{ marginBottom: 14 }}>
-                  Practise ESAT-style Maths questions with filters, navigator, checking, and worked solutions.
+                <div className={styles.cardTitle}>Your ESAT Question Bank roadmap</div>
+                <div className={styles.muted} style={{ marginTop: 6, marginBottom: 14, lineHeight: 1.55 }}>
+                  The bank works across every ESAT pathway. Choose only the modules required for your application,
+                  focus on one skill at a time, then use your saved results to decide what to practise next.
                 </div>
 
-                <button
-                  className={`${styles.btn} ${styles.btnPrimary}`}
-                  onClick={() => (window.location.href = "/esat-question-bank")}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+                  {[
+                    ["1", "Choose your modules", "Use the Paper filter to select Mathematics 1, Mathematics 2, Physics, Chemistry or Biology for your ESAT pathway."],
+                    ["2", "Focus the practice", "Narrow the pool by topic, difficulty and status so each session targets a clear weakness rather than a random mix."],
+                    ["3", "Set your pace", "Show the per-question timer for paced work, or hide it while you learn a method without pressure."],
+                    ["4", "Check and review", "Use hints, worked solutions, Flagged and the Navigator to revisit questions that were slow, uncertain or incorrect."],
+                    ["5", "Follow your progress", "Your answered, correct and accuracy totals are saved. As practice evidence grows, your predicted ESAT practice score updates."],
+                  ].map(([n, title, text]) => (
+                    <div key={n} style={{ border: "1px solid rgba(122,31,36,.16)", borderRadius: 14, padding: 14, background: "#FFFDF7" }}>
+                      <div style={{ width: 30, height: 30, display: "grid", placeItems: "center", borderRadius: 999, background: "#FEC94F", color: "#7A1F24", fontWeight: 950, marginBottom: 9 }}>
+                        {n}
+                      </div>
+                      <div style={{ color: "#141414", fontWeight: 900, fontSize: 14, marginBottom: 5 }}>{title}</div>
+                      <div style={{ color: "#667085", fontSize: 12, lineHeight: 1.5, fontWeight: 650 }}>{text}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <details className={styles.card} open>
+                <summary
+                  style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 14,
+                    listStyle: "none",
+                  }}
                 >
-                  Open ESAT Question Bank
-                </button>
+                  <div>
+                    <div className={styles.cardTitle}>How to use the ESAT Question Bank</div>
+                    <div className={styles.muted} style={{ marginTop: 5, lineHeight: 1.5 }}>
+                      A quick guide to modules, filters, timing, navigation, review and your progress picture.
+                    </div>
+                  </div>
+
+                  <span
+                    style={{
+                      flex: "0 0 auto",
+                      padding: "8px 11px",
+                      borderRadius: 999,
+                      border: "1px solid rgba(122,31,36,.18)",
+                      background: "#FFFDF7",
+                      color: "#7A1F24",
+                      fontSize: 12,
+                      fontWeight: 900,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Guide
+                  </span>
+                </summary>
+
+                <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid #ECECEC" }}>
+                  <div className={styles.muted} style={{ marginBottom: 14, maxWidth: 920, lineHeight: 1.55 }}>
+                    You do not need to practise every science module. Select the papers required by your chosen course,
+                    then combine focused learning sessions with timed work and regular review.
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10 }}>
+                    {[
+                      { title: "Paper, topic & difficulty filters", text: "Build a pool from the exact ESAT modules, topics and difficulty levels you want to practise." },
+                      { title: "Compatible with every pathway", text: "The bank includes Mathematics 1, Mathematics 2, Physics, Chemistry and Biology, so you can match the combination required for your application." },
+                      { title: "Question timer", text: "Toggle the timer on for pace awareness or off for untimed learning. Each fresh re-attempt starts its own question time." },
+                      { title: "Navigator & Flagged", text: "Jump to a question, flag uncertain work and return to it without moving through the whole bank in order." },
+                      { title: "Hints, checks & solutions", text: "Use a hint when needed, check your response, then compare your method with the worked solution." },
+                      { title: "Saved progress", text: "Answered, correct and accuracy totals sync to your login, so filters can also isolate unseen, incorrect or flagged questions." },
+                      { title: "Predicted practice score", text: "As your saved Question Bank and test evidence grows, the dashboard refreshes your predicted ESAT practice score." },
+                      { title: "Sort for the session you need", text: "Order the pool by difficulty or use saved status to create a focused correction and re-attempt session." },
+                    ].map((item) => (
+                      <div key={item.title} style={{ border: "1px solid #E7E7E7", borderRadius: 12, padding: 14, background: "#FFFFFF" }}>
+                        <div style={{ color: "#7A1F24", fontWeight: 900, fontSize: 13, marginBottom: 5 }}>{item.title}</div>
+                        <div style={{ color: "#667085", fontWeight: 650, fontSize: 12, lineHeight: 1.5 }}>{item.text}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ marginTop: 14, borderLeft: "4px solid #FEC94F", borderRadius: 10, padding: "11px 13px", background: "#FFF8E5", color: "#5E5E5E", fontSize: 12, fontWeight: 750, lineHeight: 1.5 }}>
+                    Your predicted ESAT practice score is a preparation estimate based on the evidence available in your account. It is not an official ESAT score.
+                  </div>
+                </div>
+              </details>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Open the ESAT Question Bank</div>
+                <div className={styles.muted}>Your access is enabled. Open the bank to choose your modules and start a focused practice session.</div>
+
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12 }}>
+                  <button
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                    onClick={() => (window.location.href = "/esat-question-bank")}
+                  >
+                    Open ESAT Question Bank
+                  </button>
+                </div>
               </div>
             </>
           ) : active === "resources" ? (
@@ -1084,5 +1175,6 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
     </div>
   );
 }
+
 
 
