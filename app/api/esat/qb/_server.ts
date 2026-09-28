@@ -1,5 +1,6 @@
 ﻿import { createClient } from "@supabase/supabase-js";
 import { supabaseServer } from "@/utils/supabase/server";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -9,12 +10,14 @@ export function json(data: unknown, status = 200) {
     status,
     headers: {
       "Cache-Control": "no-store, no-cache, must-revalidate",
+      ...(status === 503 ? { "Retry-After": "30" } : {}),
     },
   });
 }
 
 export function adminClient() {
   return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    global: { fetch: serviceFetch },
     auth: {
       persistSession: false,
       autoRefreshToken: false,
@@ -23,11 +26,26 @@ export function adminClient() {
 }
 
 export async function requireESATAccess() {
+  try {
+    return await checkESATAccess();
+  } catch (error) {
+    console.error("ESAT access service unavailable", error);
+    return {
+      ok: false as const,
+      response: json({ ok: false, error: "Access service temporarily unavailable" }, 503),
+    };
+  }
+}
+
+async function checkESATAccess() {
   const supabase = await supabaseServer();
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { user }, error: authError,
+  } = await withServiceTimeout(supabase.auth.getUser());
+  if (authError && !isMissingSession(authError)) {
+    throw new Error("Authentication service temporarily unavailable");
+  }
 
   if (!user || !user.email) {
     return {
@@ -46,13 +64,14 @@ export async function requireESATAccess() {
     .eq("product", "esat-question-bank")
     .eq("approved", true)
     .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
-    .limit(1);
+    .limit(1)
+    .retry(false);
 
   if (error) {
     console.error("ESAT access check failed:", { email, error });
     return {
       ok: false as const,
-      response: json({ ok: false, error: "Access check failed" }, 500),
+      response: json({ ok: false, error: "Access service temporarily unavailable" }, 503),
     };
   }
 

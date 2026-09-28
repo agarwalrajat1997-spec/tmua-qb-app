@@ -3,10 +3,13 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 import {
   ESAT_TABLE_CANDIDATES,
   adminClient,
 } from "@/app/api/esat/qb/_server";
+
+const ESAT_PROGRESS_IDENTITY_VERSION = "esat-qid-v1";
 
 type QBUpdate =
   | {
@@ -29,6 +32,7 @@ async function supabaseServer() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
   return createServerClient(url, key, {
+    global: { fetch: serviceFetch },
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;
@@ -44,7 +48,7 @@ async function supabaseServer() {
 }
 
 function jsonErr(status: number, error: string, extra?: any) {
-  return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status });
+  return NextResponse.json({ error, ...(extra ? { extra } : {}) }, { status, headers: { "Cache-Control": "no-store", ...(status === 503 ? { "Retry-After": "30" } : {}) } });
 }
 
 function toIsoOrNull(x: any): string | null {
@@ -89,11 +93,16 @@ async function captureEsatPredictorEvents(
       .from(table)
       .select("qid,topic,difficulty,answer,is_active")
       .in("qid", qids)
-      .eq("is_active", true);
+      .eq("is_active", true)
+      .retry(false);
 
     if (!result.error) {
       canonicalRows = result.data ?? [];
       break;
+    }
+    // Alternate names are compatibility fallbacks, not outage retries.
+    if (!["42P01", "PGRST205"].includes(String(result.error.code))) {
+      throw new Error("Canonical ESAT question lookup temporarily unavailable");
     }
   }
 
@@ -190,10 +199,15 @@ export async function POST(req: Request) {
   try {
     const supabase = await supabaseServer();
 
-    const { data: auth, error: authErr } = await supabase.auth.getUser();
+    const { data: auth, error: authErr } = await withServiceTimeout(supabase.auth.getUser());
+    if (authErr && !isMissingSession(authErr)) return jsonErr(503, "Progress service temporarily unavailable");
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
     const body = await req.json().catch(() => null);
+    if (body?.expected_user_id !== undefined && body.expected_user_id !== auth.user.id) {
+      return NextResponse.json({ ok: false, error: "ACCOUNT_CHANGED", code: "ACCOUNT_CHANGED" },
+        { status: 409, headers: { "Cache-Control": "no-store" } });
+    }
     const updates = body?.updates as QBUpdate[] | undefined;
 
     const email = String(auth.user.email || "").toLowerCase();
@@ -208,8 +222,23 @@ export async function POST(req: Request) {
       ? requestedProduct
       : "tmua-question-bank";
 
+    if (product === "tmua-question-bank" && body?.identity_version !== "tmua-display-order-v1") {
+      return jsonErr(409, "Please reload the TMUA question bank before saving progress.", { code: "TMUA_IDENTITY_VERSION_REQUIRED" });
+    }
+
+    if (product === "esat-question-bank" && body?.identity_version !== ESAT_PROGRESS_IDENTITY_VERSION) {
+      return jsonErr(409, "Please reload the ESAT question bank before saving progress.", { code: "ESAT_IDENTITY_VERSION_REQUIRED" });
+    }
+
     if (!Array.isArray(updates) || updates.length === 0) {
       return jsonErr(400, "updates is required");
+    }
+
+    if (product === "tmua-question-bank" && updates.some((u: any) => {
+      const id = String(u?.question_id ?? u?.key ?? "");
+      return !/^[1-9][0-9]*$/.test(id) || !Number.isSafeInteger(Number(id)) || Number(id) > 2147483647;
+    })) {
+      return jsonErr(400, "A stable TMUA database question identifier is required.");
     }
 
     // Build upsert rows
@@ -271,12 +300,58 @@ export async function POST(req: Request) {
       return jsonErr(400, "No valid updates (missing question_id or value object)");
     }
 
+    if (product === "esat-question-bank") {
+      const requestedQids = [
+        ...new Set(rows.map((row) => String(row.question_id))),
+      ];
+      let canonicalQids: Set<string> | null = null;
+      let lookupError: any = null;
+
+      for (const table of ESAT_TABLE_CANDIDATES) {
+        const result = await adminClient()
+          .from(table)
+          .select("qid")
+          .in("qid", requestedQids)
+          .retry(false);
+
+        if (result.error) {
+          lookupError = result.error;
+          if (!["42P01", "PGRST205"].includes(String(result.error.code))) {
+            return jsonErr(503, "Question validation temporarily unavailable");
+          }
+          continue;
+        }
+
+        canonicalQids = new Set(
+          (result.data || []).map((row: any) => String(row.qid)),
+        );
+        break;
+      }
+
+      if (canonicalQids == null) {
+        return jsonErr(500, "Could not validate ESAT question identities.", {
+          message: lookupError?.message || String(lookupError || ""),
+        });
+      }
+
+      const invalidQids = requestedQids.filter(
+        (qid) => !canonicalQids!.has(qid),
+      );
+
+      if (invalidQids.length > 0) {
+        return jsonErr(400, "A canonical ESAT qid is required.", {
+          code: "ESAT_CANONICAL_QID_REQUIRED",
+          invalid_question_ids: invalidQids,
+        });
+      }
+    }
+
     const { error } = await supabase
       .from("qb_progress")
       .upsert(rows, { onConflict: "user_id,product,question_id" });
 
     if (error) {
-      return jsonErr(500, "Supabase upsert failed", { message: error.message });
+      return jsonErr(503, "Progress service temporarily unavailable");
     }
 
     if (product === "esat-question-bank") {
@@ -285,10 +360,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true, saved: rows.length });
   } catch (e: any) {
-    return NextResponse.json(
-      { error: "Unhandled error in /api/qb/progress/save", message: String(e?.message || e), stack: String(e?.stack || "") },
-      { status: 500 }
-    );
+    console.error("Question-bank progress save unavailable", e);
+    return jsonErr(503, "Progress service temporarily unavailable");
   }
 }
 

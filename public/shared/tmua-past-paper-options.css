@@ -1,0 +1,82 @@
+#instructions .ts-past-settings {
+  margin: 26px 0 30px;
+  padding: 26px;
+  border: 1px solid #d9e5ee;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #f4f9fc, #fffdf6);
+  color: #173c55;
+  text-align: left;
+}
+.ts-past-settings .ts-past-eyebrow {
+  display: block;
+  color: #8b6117;
+  font: 700 10px/1.5 Arial, sans-serif;
+  letter-spacing: .13em;
+}
+#instructions .ts-past-settings h3 {
+  margin: 6px 0;
+  color: #173c55;
+  font: 750 22px/1.3 Arial, sans-serif;
+}
+#instructions .ts-past-settings p {
+  margin: 0;
+  font: 14px/1.5 Arial, sans-serif;
+  color: #556776;
+}
+.ts-past-settings-grid { display: grid; gap: 22px; margin-top: 23px; }
+.ts-past-settings fieldset { min-width: 0; border: 0; margin: 0; padding: 0; }
+.ts-past-settings legend { padding: 0; margin: 0 0 10px; font: 700 14px/1.4 Arial, sans-serif; }
+.ts-past-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ts-past-time-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#instructions .ts-past-settings .ts-past-setting-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 15px;
+  margin: 0;
+  border: 1px solid #d4e0e8;
+  border-radius: 11px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s, box-shadow .15s;
+}
+#instructions .ts-past-setting-choice:has(input:checked) {
+  border-color: #21628b;
+  background: #f2f8fc;
+  box-shadow: 0 0 0 1px #21628b;
+}
+#instructions .ts-past-setting-choice:has(input:focus-visible) { outline: 3px solid #edb74d; outline-offset: 3px; }
+#instructions .ts-past-setting-choice input[type="radio"] {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  padding: 0;
+  transform: none;
+  accent-color: #21628b;
+}
+.ts-past-setting-choice strong { display: block; color: #173c55; font: 700 14px/1.4 Arial, sans-serif; }
+.ts-past-setting-choice small { display: block; margin-top: 4px; color: #5d6f7c; font: 12px/1.5 Arial, sans-serif; }
+#instructions .ts-past-settings .ts-past-settings-note { margin-top: 18px; font-size: 12px; }
+.ts-past-choice-letter {
+  display: inline-block;
+  min-width: 1.25em;
+  margin-right: .55em;
+  color: #174965;
+  font-weight: 750;
+}
+.ts-past-original-reference {
+  display: block;
+  margin-top: 6px;
+  color: #657583;
+  font: 400 12px/1.5 Arial, sans-serif;
+}
+@media (max-width: 620px) {
+  #instructions .ts-past-settings { padding: 19px 15px; }
+  .ts-past-choice-grid, .ts-past-time-grid { grid-template-columns: 1fr; }
+  #instructions .ts-past-settings .ts-past-setting-choice { padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #instructions .ts-past-settings .ts-past-setting-choice { transition: none; }
+}

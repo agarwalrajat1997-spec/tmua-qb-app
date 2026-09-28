@@ -92,7 +92,12 @@ if (
   );
 }
 
-if (!questionBank.includes("var hasValidVisitTimer")) {
+// The progress writer now shares the timer frozen at Check; a missing clock must
+// remain null rather than being invented from the save response or current tile.
+if (
+  !/isAnswerSubmission && window\.TS_TMUA_TIMER\s*\? window\.TS_TMUA_TIMER\.submissionSeconds\(questionId\)\s*: null/.test(questionBank) ||
+  !questionBank.includes('if (value == null || value === "") return null;')
+) {
   throw new Error(
     "Missing-response-time protection is not present.",
   );

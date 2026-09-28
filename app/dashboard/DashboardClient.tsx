@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./dashboard.module.css";
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
+import ServiceRetry from "../components/ServiceRetry";
+import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
+import { formatTmuaPastPaperSettings, type TmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
 type PracticeTest = {
   id: string;
@@ -16,6 +19,7 @@ type PracticeTest = {
   topics: string[];
   file: string;
   solution_url?: string;
+  isNew?: boolean;
 };
 
 type Product = "practice-tests" | "tmua-question-bank" | "tmua-classes";
@@ -41,6 +45,11 @@ const TMUA_RESOURCE_PDFS: ResourcePdf[] = [
     description: "Thriving Scholars guide to the most common TMUA mistakes and traps.",
     href: "/tmua-resources/tmua-top-80-mistakes-thriving-scholars.pdf",
   },
+  {
+    title: "TMUA Shortcut Notebook: 10 Tricks",
+    description: "10 shortcut methods with 22 annotated worked examples, clear explanations and official source links.",
+    href: "/tmua-resources/tmua-shortcut-notebook-10-tricks.pdf",
+  },
 ];
 
 
@@ -56,6 +65,7 @@ type LatestAttemptSummary = {
   attempt_no?: number | null;
   total_attempts?: number;
   incorrect?: any[];
+  attempt_settings?: TmuaPastPaperSettings | null;
 };
 
 type AttemptRow = {
@@ -73,6 +83,7 @@ type AttemptRow = {
   correct_answers: any[];
   flags: any[];
   attempt_no: number;
+  attempt_settings?: TmuaPastPaperSettings | null;
 };
 
 function getSupabase() {
@@ -145,6 +156,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [accessLoading, setAccessLoading] = useState(true);
   const [accessErr, setAccessErr] = useState<string | null>(null);
+  const [accessRetry, setAccessRetry] = useState(0);
 
   const [attemptsLoading, setAttemptsLoading] = useState(false);
   const [attemptsErr, setAttemptsErr] = useState<string | null>(null);
@@ -227,6 +239,18 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         topics: ["All Topics"],
         file: "p2-mock-06-all-topics.html",
         solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-mock-test-6-paper-2-solutions.pdf",
+      },
+      {
+        id: "tmua-2026-predictive-paper",
+        test_id: "tmua-2026-predictive-paper",
+        title: "TMUA 2026 Predictive Practice Test (P1 + P2)",
+        section: "thriving",
+        badge: "FULL",
+        duration_minutes: 150,
+        topics: ["All Topics", "2026 Predictive", "Paper 1 + Paper 2"],
+        file: "tmua-2026-predictive-paper/index.html",
+        solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf",
+        isNew: true,
       },
       {
         id: "full-mock-01",
@@ -354,96 +378,84 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   );
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       setErr(null);
-
-      if (!supabase) {
-        setErr("Supabase env vars missing: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
-        setLoading(false);
-        return;
-      }
-
+      setAccessErr(null);
+      setAccessLoading(true);
+      setLoading(true);
       try {
+        if (!supabase) throw new Error("Portal configuration unavailable");
         const url = new URL(window.location.href);
         const q = url.searchParams;
         const hp = parseHash(url.hash);
-
         const e = q.get("error") || hp.get("error");
         const ed = q.get("error_description") || hp.get("error_description");
         if (e) {
           router.replace(`/login?e=${encodeURIComponent(ed || e)}`);
           return;
         }
-
         const code = q.get("code");
         if (code) {
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          const { error } = await withServiceTimeout(supabase.auth.exchangeCodeForSession(code));
           if (error) {
-            router.replace(`/login?e=${encodeURIComponent(error.message)}`);
-            return;
+            if ([400, 401, 403, 422].includes(error.status || 0) && error.name !== "AuthRetryableFetchError") {
+              router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+              return;
+            }
+            throw error;
           }
-          try {
-            window.history.replaceState({}, "", "/dashboard");
-          } catch {}
+          try { window.history.replaceState({}, "", "/dashboard"); } catch {}
         } else {
           const access_token = hp.get("access_token");
           const refresh_token = hp.get("refresh_token");
           if (access_token && refresh_token) {
-            const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+            const { error } = await withServiceTimeout(supabase.auth.setSession({ access_token, refresh_token }));
             if (error) {
-              router.replace(`/login?e=${encodeURIComponent(error.message)}`);
-              return;
+              if ([400, 401, 403, 422].includes(error.status || 0) && error.name !== "AuthRetryableFetchError") {
+                router.replace(`/login?e=${encodeURIComponent(error.message)}`);
+                return;
+              }
+              throw error;
             }
-            try {
-              window.history.replaceState({}, "", "/dashboard");
-            } catch {}
+            try { window.history.replaceState({}, "", "/dashboard"); } catch {}
           }
         }
-      } catch {}
 
-      const { data } = await supabase.auth.getSession();
-      if (!data.session) {
-        router.replace("/login");
-        return;
-      }
-
-      const userEmail = (data.session.user.email || "").toLowerCase();
-      setEmail(userEmail);
-
-      setAccessLoading(true);
-      setAccessErr(null);
-
-      try {
+        const { data, error: sessionError } = await withServiceTimeout(supabase.auth.getSession());
+        if (cancelled) return;
+        if (sessionError && !isMissingSession(sessionError)) throw sessionError;
+        if (!data.session) {
+          router.replace("/login");
+          return;
+        }
+        const userEmail = (data.session.user.email || "").toLowerCase();
+        setEmail(userEmail);
         const { data: rows, error } = await supabase
           .from("student_access")
-          .select("product,approved")
-          .eq("email", userEmail)
-          .eq("approved", true);
-
-        if (error) {
-          setProducts([]);
-          setAccessErr(error.message);
-        } else {
-          const ps = (rows || [])
-            .map((r: any) => r.product as Product)
-            .filter(
-              (p) =>
-                p === "practice-tests" ||
-                p === "tmua-question-bank" ||
-                p === "tmua-classes"
-            );
-          setProducts(Array.from(new Set(ps)));
-        }
-      } catch (e: any) {
-        setProducts([]);
-        setAccessErr(e?.message || "Failed to load access.");
+          .select("product,approved,expires_at")
+          .ilike("email", userEmail)
+          .eq("approved", true)
+          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+          .retry(false);
+        if (cancelled) return;
+        if (error) throw error;
+        const ps = (rows || [])
+          .map((r: any) => r.product as Product)
+          .filter((p) => p === "practice-tests" || p === "tmua-question-bank" || p === "tmua-classes");
+        setProducts(Array.from(new Set(ps)));
+      } catch (error) {
+        console.error("TMUA dashboard access temporarily unavailable", error);
+        if (!cancelled) setAccessErr(SERVICE_RETRY_MESSAGE);
       } finally {
-        setAccessLoading(false);
+        if (!cancelled) {
+          setAccessLoading(false);
+          setLoading(false);
+        }
       }
-
-      setLoading(false);
     })();
-  }, [router, supabase]);
+    return () => { cancelled = true; };
+  }, [router, supabase, accessRetry]);
 
   const hasPractice = products.includes("practice-tests");
   const hasBank = products.includes("tmua-question-bank");
@@ -458,7 +470,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
   }, [accessLoading, hasPractice, hasBank, hasClasses]);
 
   useEffect(() => {
-    if (loading || accessLoading) return;
+    if (loading || accessLoading || accessErr) return;
     if (!hasPractice) return;
 
     (async () => {
@@ -481,10 +493,10 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         setAttemptsLoading(false);
       }
     })();
-  }, [loading, accessLoading, hasPractice]);
+  }, [loading, accessLoading, accessErr, hasPractice]);
 
   useEffect(() => {
-    if (loading || accessLoading) return;
+    if (loading || accessLoading || accessErr) return;
     if (!hasPractice) return;
     if (solutionsLoading) return;
 
@@ -493,7 +505,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
       try {
         const entries = await Promise.all(
           TESTS.map(async (t) => {
-            const url = await fetchSolutionPdfForFile(t.file);
+            const url = t.solution_url || (await fetchSolutionPdfForFile(t.file));
             return [t.test_id, url] as const;
           })
         );
@@ -507,7 +519,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, accessLoading, hasPractice]);
+  }, [loading, accessLoading, accessErr, hasPractice]);
 
   const topicTests = useMemo(() => TESTS.filter((t) => t.section === "topic"), [TESTS]);
   const thrivingFullTests = useMemo(() => TESTS.filter((t) => t.section === "thriving"), [TESTS]);
@@ -581,6 +593,10 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         </div>
       </div>
     );
+  }
+
+  if (accessErr || err) {
+    return <ServiceRetry onRetry={() => { setAccessErr(null); setErr(null); setLoading(true); setAccessRetry(n => n + 1); }} />;
   }
 
   const showNoAccess = !accessLoading && !hasPractice && !hasBank && !hasClasses;
@@ -799,7 +815,14 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     return (
                       <div key={t.id} className={styles.test}>
-                        <div className={styles.testTitle}>{t.title}</div>
+                        <div className={styles.testTitleRow}>
+                          <div className={styles.testTitle}>{t.title}</div>
+                          {t.isNew && (
+                            <span className={styles.newBadge} aria-label="New test">
+                              New
+                            </span>
+                          )}
+                        </div>
 
                         <div className={styles.testMeta}>
                           <span>{t.badge}</span>
@@ -870,7 +893,14 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     return (
                       <div key={t.id} className={styles.test}>
-                        <div className={styles.testTitle}>{t.title}</div>
+                        <div className={styles.testTitleRow}>
+                          <div className={styles.testTitle}>{t.title}</div>
+                          {t.isNew && (
+                            <span className={styles.newBadge} aria-label="New test">
+                              New
+                            </span>
+                          )}
+                        </div>
 
                         <div className={styles.testMeta}>
                           <span>{t.badge}</span>
@@ -958,6 +988,11 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         </div>
 
                         <div className={styles.muted}>{status}</div>
+                        {latest?.attempt_settings && (
+                          <div className={styles.muted} style={{ marginTop: 4 }}>
+                            {formatTmuaPastPaperSettings(latest.attempt_settings)}
+                          </div>
+                        )}
 
                         {attempted && wrong.length > 0 && (
                           <div className={styles.muted} style={{ marginTop: 6 }}>
@@ -1241,7 +1276,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                 <div className={styles.meta}>
                   <span className={styles.dot} /> Downloadable TMUA PDFs
                 </div>
-                <div className={styles.meta}>Formula sheet · Specification · Mistakes guide</div>
+                <div className={styles.meta}>Formula sheet · Specification · Mistakes guide · Shortcut notebook</div>
               </div>
 
               <section
@@ -1445,9 +1480,17 @@ src="/tmua-classes/index.html"
                               · {fmtDate(a.submitted_at)}
                             </div>
 
+                            {a.attempt_settings && (
+                              <div className={styles.muted} style={{ marginTop: 6 }}>
+                                {formatTmuaPastPaperSettings(a.attempt_settings)}
+                              </div>
+                            )}
                             {wrong.length > 0 && (
                               <div className={styles.muted} style={{ marginTop: 6 }}>
-                                <b>Questions wrong:</b> {wrong.join(", ")}
+                                <b>{a.attempt_settings?.order === "randomised" ? "Original questions wrong:" : "Questions wrong:"}</b>{" "}
+                                {a.attempt_settings?.order === "randomised"
+                                  ? wrong.map(q => `P${q <= 20 ? 1 : 2} Q${((q - 1) % 20) + 1}`).join(", ")
+                                  : wrong.join(", ")}
                               </div>
                             )}
                           </div>
@@ -1535,8 +1578,6 @@ src="/tmua-classes/index.html"
     </div>
   );
 }
-
-
 
 
 

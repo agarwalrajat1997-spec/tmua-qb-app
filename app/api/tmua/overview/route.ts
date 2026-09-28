@@ -13,6 +13,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 import {
   adaptTmuaConversionProfiles,
@@ -24,6 +25,11 @@ import {
   calculateTmuaPredictorV1,
 } from "@/lib/server/tmua-predictor-v1-engine";
 import { applyTmuaHighScoreEvidenceGate } from "@/lib/server/tmua-predictor-v1_1-policy";
+import {
+  TMUA_PREDICTIVE_2026_ID,
+  TMUA_PREDICTIVE_2026_CATALOG,
+  buildTmuaPredictive2026Evaluations,
+} from "@/lib/server/tmua-predictive-2026";
 
 import {
   buildTmuaPredictionSnapshotInsert,
@@ -45,8 +51,7 @@ function json(
     data,
     {
       status,
-      headers:
-        NO_STORE_HEADERS,
+      headers: { ...NO_STORE_HEADERS, ...(status === 503 ? { "Retry-After": "30" } : {}) },
     },
   );
 }
@@ -87,6 +92,7 @@ function adminClient() {
     url,
     key,
     {
+      global: { fetch: serviceFetch },
       auth: {
         persistSession: false,
         autoRefreshToken: false,
@@ -100,7 +106,7 @@ async function readAll(
     (
       from: number,
       to: number,
-    ) => PromiseLike<any>,
+    ) => PromiseLike<any> & { retry?: (enabled: boolean) => PromiseLike<any> },
 ): Promise<any[]> {
   const pageSize =
     1000;
@@ -117,14 +123,11 @@ async function readAll(
       pageSize -
       1;
 
+    const query = fetchPage(from, to);
     const {
       data,
       error,
-    } =
-      await fetchPage(
-        from,
-        to,
-      );
+    } = await withServiceTimeout(typeof query.retry === "function" ? query.retry(false) : query);
 
     if (error) {
       throw new Error(
@@ -619,6 +622,7 @@ async function calculateAndPersistPreparationRankV1(
     recentAttemptRows,
     exclusionRows,
     authUsers,
+    predictiveAttemptRows,
   ] =
     await Promise.all([
       preparationFetchRows(
@@ -796,7 +800,21 @@ async function calculateAndPersistPreparationRankV1(
       preparationFetchAuthUsers(
         admin,
       ),
+      preparationFetchRows(
+        "Preparation Rank 2026 predictive attempts",
+        (from, to) => admin.from("practice_test_attempts")
+          .select("id,user_id,test_id,submitted_at,answers,time_spent,predictor_metadata")
+          .eq("test_id", TMUA_PREDICTIVE_2026_ID)
+          .order("submitted_at", { ascending: true }).range(from, to),
+      ),
     ]);
+
+  // Code-owned custom scale; the twelve historical priors remain unchanged.
+  catalogRows.push(TMUA_PREDICTIVE_2026_CATALOG);
+  const predictiveEvaluations = buildTmuaPredictive2026Evaluations(predictiveAttemptRows);
+  evaluationRows.splice(0, evaluationRows.length,
+    ...evaluationRows.filter(row => row.test_id !== TMUA_PREDICTIVE_2026_ID),
+    ...predictiveEvaluations);
 
   const entitledEmails =
     new Set<string>();
@@ -2225,6 +2243,11 @@ async function calculateAndPersistPreparationRankV1(
 }
 
 export async function GET() {
+  // The September 2026 load-shedding mode avoids the expensive all-user
+  // preparation-rank scan. The authenticated current-user predictor must
+  // still run, so new and historical practice results affect the dashboard.
+  const fullOverviewMode = process.env.TMUA_OVERVIEW_FULL_MODE === "enabled";
+
   try {
     // Authentication uses the existing user session.
     const supabase =
@@ -2237,7 +2260,10 @@ export async function GET() {
       error:
         userError,
     } =
-      await supabase.auth.getUser();
+      await withServiceTimeout(supabase.auth.getUser());
+    if (userError && !isMissingSession(userError)) {
+      return json({ ok: false, error: "Authentication service temporarily unavailable" }, 503);
+    }
 
     if (
       userError ||
@@ -2264,6 +2290,7 @@ export async function GET() {
       evaluationRows,
       questionRows,
       qbRows,
+      predictiveAttemptRows,
     ] =
       await Promise.all([
         readAll(
@@ -2422,7 +2449,17 @@ export async function GET() {
                 to,
               ),
         ),
+        readAll((from, to) => admin.from("practice_test_attempts")
+          .select("id,user_id,test_id,submitted_at,answers,time_spent,predictor_metadata")
+          .eq("user_id", user.id)
+          .eq("test_id", TMUA_PREDICTIVE_2026_ID)
+          .order("submitted_at", { ascending: true }).range(from, to)),
       ]);
+
+    catalogRows.push(TMUA_PREDICTIVE_2026_CATALOG);
+    evaluationRows.splice(0, evaluationRows.length,
+      ...evaluationRows.filter(row => row.test_id !== TMUA_PREDICTIVE_2026_ID),
+      ...buildTmuaPredictive2026Evaluations(predictiveAttemptRows));
 
     if (
       conversionRows.length !==
@@ -2792,8 +2829,8 @@ export async function GET() {
       );
     }
 
-    const preparationOverview =
-      await calculateAndPersistPreparationRankV1({
+    const preparationOverview = fullOverviewMode
+      ? await calculateAndPersistPreparationRankV1({
         admin,
 
         currentUserId:
@@ -2804,7 +2841,16 @@ export async function GET() {
 
         currentPredictorSnapshot:
           snapshot,
-      });
+      })
+      : {
+          preparationRank: {
+            modelVersion: "tmua-preparation-rank-lightweight-20260920",
+            hasGenuinePreparationEvidence: false,
+            score: null, rank: null, cohortSize: 0, components: null,
+            calculatedAt: snapshot.calculatedAt,
+          },
+          countdown: preparationCountdown(new Date()),
+        };
 
     return json({
       ok: true,

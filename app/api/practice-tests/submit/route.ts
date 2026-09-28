@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { getCanonicalEsatTest } from "@/lib/server/esat-canonical-tests";
 import { estimateEsatTestScores } from "@/lib/server/esat-score-estimates";
+import { estimateOctober2026EsatScores } from "@/lib/server/esat-october-2026-tests";
 import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
+import { TMUA_PREDICTIVE_2026_ID, TMUA_PREDICTIVE_2026_CATALOG, evaluateTmuaPredictive2026Attempt } from "@/lib/server/tmua-predictive-2026";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { validateTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
 export const runtime = "nodejs";
 
@@ -294,6 +297,15 @@ export async function POST(req: Request) {
     return badRequest("test_id is required");
   }
 
+  // Presentation metadata must never change canonical answer identity or scoring.
+  // Validate it before any database write, and keep older test clients compatible.
+  let pastPaperSettings;
+  try {
+    pastPaperSettings = validateTmuaPastPaperSettings(testId, body?.attempt_settings);
+  } catch (error) {
+    return badRequest(error instanceof Error ? error.message : "Invalid past-paper settings.");
+  }
+
   const {
     data: catalogData,
     error: catalogError,
@@ -314,7 +326,7 @@ export async function POST(req: Request) {
   }
 
   const catalog =
-    catalogData as CatalogRow | null;
+    (testId === TMUA_PREDICTIVE_2026_ID ? TMUA_PREDICTIVE_2026_CATALOG : catalogData) as CatalogRow | null;
 
   const canonicalTmuaTest =
     getCanonicalTmuaTest(testId);
@@ -418,7 +430,8 @@ export async function POST(req: Request) {
     boolean | null = null;
 
   let esatScoreEstimate:
-    ReturnType<typeof estimateEsatTestScores> | null = null;
+    ReturnType<typeof estimateEsatTestScores> |
+    ReturnType<typeof estimateOctober2026EsatScores> = null;
 
   if (catalog && canonicalTmuaTest) {
     const canonicalPaper =
@@ -613,7 +626,10 @@ export async function POST(req: Request) {
     paper1Score = sectionScores[0];
     paper2Score = sectionScores[1];
 
-    esatScoreEstimate = estimateEsatTestScores(
+    esatScoreEstimate = estimateOctober2026EsatScores(
+      testId,
+      sectionScores,
+    ) ?? estimateEsatTestScores(
       testId,
       sectionScores,
     );
@@ -632,6 +648,12 @@ export async function POST(req: Request) {
 
   const submittedAt =
     new Date().toISOString();
+
+  const predictive2026Evaluation = evaluateTmuaPredictive2026Attempt({
+    id: "pending-submission", user_id: user.id, test_id: testId, submitted_at: submittedAt,
+    answers, time_spent: timeSpent,
+    predictor_metadata: { tmua_predictive_2026_complete: body?.complete !== false },
+  });
 
   const payload = {
     user_id: user.id,
@@ -659,17 +681,31 @@ export async function POST(req: Request) {
 
     attempt_number: null,
     started_at:
-      safeIsoDate(body?.started_at),
+      safeIsoDate(body?.started_at ?? (testId === TMUA_PREDICTIVE_2026_ID ? body?.startedAt : null)),
 
     paper_1_score: paper1Score,
     paper_2_score: paper2Score,
 
     is_full_timed_attempt: false,
 
+    // Historical tests retain DB finalisation. This code-owned practice
+    // scale has no DB catalogue row and is scored only from canonical keys.
+    ...(testId === TMUA_PREDICTIVE_2026_ID ? {
+      tmua_score9: predictive2026Evaluation?.authoritative_tmua_score9 ?? null,
+      is_full_timed_attempt: predictive2026Evaluation?.combined_score_eligible ?? false,
+    } : {}),
+
     score_conversion_profile:
       scoreConversionProfile,
 
     predictor_metadata: {
+      ...(pastPaperSettings ? { tmua_past_paper_settings: pastPaperSettings } : {}),
+      ...(testId === TMUA_PREDICTIVE_2026_ID ? {
+        tmua_predictive_2026_complete: body?.complete !== false,
+        tmua_predictive_2026_scale: TMUA_PREDICTIVE_2026_CATALOG.score_conversion_profile,
+        tmua_predictive_2026_scale_calibrated: false,
+        tmua_predictive_2026_predictor_eligible: predictive2026Evaluation?.predictor_eligible ?? false,
+      } : {}),
       recognised_tmua_test:
         recognisedTmuaTest,
 
@@ -742,6 +778,14 @@ export async function POST(req: Request) {
 
       esat_combined_score_official:
         esatScoreEstimate?.combinedScoreOfficial ?? null,
+
+      ...(esatScoreEstimate?.status === "provisional_uncalibrated" ? {
+        esat_score_status: esatScoreEstimate.status,
+        esat_score_label: esatScoreEstimate.scoreLabel,
+        esat_score_note: esatScoreEstimate.note,
+        esat_predictor_eligible: esatScoreEstimate.predictorEligible,
+        esat_predictor_family_id: esatScoreEstimate.predictorFamilyId,
+      } : {}),
 
 
 

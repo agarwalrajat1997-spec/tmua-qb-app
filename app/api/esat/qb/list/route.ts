@@ -33,6 +33,7 @@ function noStoreJson(payload: any, status = 200) {
       "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
       "Pragma": "no-cache",
       "Expires": "0",
+      ...(status === 503 ? { "Retry-After": "30" } : {}),
     },
   });
 }
@@ -49,7 +50,8 @@ async function loadAllActiveRows(supabase: any, table: string) {
       .eq("is_active", true)
       .order("display_order", { ascending: true })
       .order("qid", { ascending: true })
-      .range(from, to);
+      .range(from, to)
+      .retry(false);
 
     if (error) {
       return { rows: null, error };
@@ -76,6 +78,9 @@ export async function GET() {
 
     if (error) {
       lastError = error;
+      if (!["42P01", "PGRST205"].includes(String(error.code))) {
+        return noStoreJson({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
+      }
       continue;
     }
 
@@ -107,13 +112,6 @@ export async function GET() {
     });
   }
 
-  return noStoreJson(
-    {
-      ok: false,
-      error: "Could not load ESAT questions. Check ESAT table name.",
-      tried_tables: ESAT_TABLE_CANDIDATES,
-      details: lastError?.message || String(lastError || ""),
-    },
-    500
-  );
+  console.error("ESAT question catalogue unavailable", lastError);
+  return noStoreJson({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
 }

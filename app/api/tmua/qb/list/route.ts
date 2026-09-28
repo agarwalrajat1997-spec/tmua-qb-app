@@ -65,11 +65,12 @@ export async function GET() {
       `)
       .eq("is_active", true)
       .order("display_order", { ascending: true })
-      .range(from, to);
+      .range(from, to)
+      .retry(false);
 
     if (error) {
       console.error("TMUA list load failed:", error);
-      return json({ ok: false, error: error.message }, 500);
+      return json({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
     }
 
     const rows = data ?? [];

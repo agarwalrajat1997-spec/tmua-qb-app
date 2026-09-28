@@ -23,10 +23,14 @@ export async function POST(req: Request) {
     .select("qid, answer, solution_html")
     .eq("qid", qid)
     .eq("is_active", true)
-    .single();
+    .maybeSingle()
+    .retry(false);
 
-  if (error || !data) {
-    console.error("TMUA answer check failed:", error);
+  if (error) {
+    console.error("TMUA answer check temporarily unavailable:", error);
+    return json({ ok: false, error: "Question service temporarily unavailable. Please retry." }, 503);
+  }
+  if (!data) {
     return json({ ok: false, error: "Question not found" }, 404);
   }
 

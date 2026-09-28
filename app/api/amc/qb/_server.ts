@@ -11,7 +11,9 @@ const NO_STORE_HEADERS = {
 };
 
 function requiredEnv(name: string) {
-  const value = process.env[name];
+  const value = name === "NEXT_PUBLIC_SUPABASE_URL"
+    ? process.env.NEXT_PUBLIC_SUPABASE_URL
+    : process.env[name];
   if (!value) throw new Error(`Missing environment variable: ${name}`);
   return value;
 }
@@ -119,4 +121,3 @@ export async function requireAMCAccess() {
     user,
   };
 }
-

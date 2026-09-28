@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/shared/tmua-past-paper-options.css?v=20260920-1">
+  <script src="/shared/tmua-past-paper-options.js?v=20260920-1" defer></script>
   <title>TMUA Official 2019 - Paper 1 and Paper 2</title>
   <script type="text/javascript" async 
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -419,10 +422,11 @@
 
 <div id="instructions">
 <h2 id="test-title">TMUA Official 2019 Test</h2>
+<div id="ts-past-paper-settings"></div>
 
 
 
-  <p><strong>Time allowed:</strong> 2 hour and 30 minutes</p>
+  <p><strong>Total test time:</strong> <span data-ts-past-duration="total">150 minutes</span></p>
   <p><strong>Calculators are not permitted.</strong></p>
 
 
@@ -469,7 +473,7 @@
         </ul>
       </td>
       <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">20 on each Paper</td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes on each Paper </td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-ts-past-duration="paper">75 minutes</span> on each paper</td>
     </tr>
   </tbody>
 </table>
@@ -480,7 +484,7 @@
   You should attempt <strong>all 20 questions</strong> on each Paper.
 </p>
 
-<p style="font-size: 16px;">
+<p style="font-size: 16px;" data-ts-past-timing-description>
   A countdown timer will begin once the test starts. You may navigate between questions at any time. The test will automatically submit when the time expires. Attempt each paper for 75 minutes. After Paper 1, you’ll get an optional 5-minute break, then move to Paper 2 for another 75 minutes.
 </p>
 <p style="font-size: 16px;">
@@ -544,7 +548,30 @@ let breakInterval;
 let studentName = "";
 let testSession = "";
 let flags = new Array(40).fill(false);
+// Canonical question indexes remain stable; only their displayed order changes.
+let examStage = "instructions";
+let paperDeadline = 0;
+let breakDeadline = 0;
+let studentEmail = "";
+function recordQuestionTime() {
+  if (examStage !== "paper") return;
+  const now = Math.min(Date.now(), paperDeadline);
+  timeSpent[current] += Math.max(0, (now - lastTimestamp) / 1000);
+  lastTimestamp = now;
+}
+function resetPaperTimer() {
+  clearInterval(timerInterval);
+  const allowed = window.TS_TMUA_PAST_PAPER.durationSeconds();
+  lastTimestamp = Date.now();
+  paperDeadline = lastTimestamp + allowed * 1000;
+  minutes = Math.floor(allowed / 60);
+  seconds = allowed % 60;
+  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
 function toggleFlag() {
+  if (examStage !== "paper") return;
   flags[current] = !flags[current];
   updateFlagButton();
   updateNavigatorButton(current);
@@ -559,64 +586,26 @@ function updateFlagButton() {
   }
 }
 
-function startBreak() {
-  document.getElementById("exam-interface").style.display = "none";
-  document.getElementById("break-screen").style.display = "block";
-  breakInterval = setInterval(updateBreakTimer, 1000);
-}
+function startBreak() { showBreakScreen(); }
 
 function updateBreakTimer() {
-  if (breakMinutes === 0 && breakSeconds === 0) {
-    clearInterval(breakInterval);
-    skipBreak(); // ✅ acts like "Skip Break" button
-    return;
-  }
-
-  if (breakSeconds === 0) {
-    breakMinutes--;
-    breakSeconds = 59;
-  } else {
-    breakSeconds--;
-  }
-
-  const mm = breakMinutes.toString().padStart(2, '0');
-  const ss = breakSeconds.toString().padStart(2, '0');
-  document.getElementById("break-timer").textContent = `${mm}:${ss}`;
+  if (examStage !== "break") return;
+  const remaining = Math.max(0, Math.ceil((breakDeadline - Date.now()) / 1000));
+  breakMinutes = Math.floor(remaining / 60);
+  breakSeconds = remaining % 60;
+  document.getElementById("break-timer").textContent = `${String(breakMinutes).padStart(2, "0")}:${String(breakSeconds).padStart(2, "0")}`;
+  if (remaining === 0) skipBreak();
 }
 
-
-function skipBreak() {
-  clearInterval(breakInterval);
-
-  // ✅ Reset timer values for Paper 2
-  minutes = 75;
-  seconds = 0;
-
-  // ✅ Start new timer
-  timerInterval = setInterval(updateTimer, 1000);
-
-  paper = 2;
-  current = 20; // Question 21
-  renderQuestion();
-
-  document.getElementById("break-screen").style.display = "none";
-  document.getElementById("exam-interface").style.display = "block";
-}
 
 function nextQuestion() {
-  // ⏱️ Record time spent on current question
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-
-  if (current === 19 && paper === 1) {
-    showBreakScreen(); // go to break after Paper 1
-    return; // ✅ stop further execution
-  }
-
-  if (current < questions.length - 1) {
-    current++;
-    lastTimestamp = Date.now(); // ⏱️ Start timing next question
-    renderQuestion();
-  }
+  if (examStage !== "paper") return;
+  if (Date.now() >= paperDeadline) { updateTimer(); return; }
+  const position = window.TS_TMUA_PAST_PAPER.positionOf(current);
+  if (position >= 19) return;
+  recordQuestionTime();
+  current = window.TS_TMUA_PAST_PAPER.questionAt(paper, position + 1);
+  renderQuestion();
 }
 
 
@@ -634,13 +623,13 @@ function closeNavigator() {
 }
 
 function jumpTo(index) {
-timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-current = index;
-lastTimestamp = Date.now();
-renderQuestion();
-closeNavigator();
-updateFlagButton();
-
+  if (examStage !== "paper" || !Number.isInteger(index) ||
+      index < (paper - 1) * 20 || index >= paper * 20) return;
+  if (Date.now() >= paperDeadline) { updateTimer(); return; }
+  recordQuestionTime();
+  current = index;
+  renderQuestion();
+  closeNavigator();
 }
 const nextBtn = document.getElementById("next-btn");
 const prevBtn = document.getElementById("prev-btn");
@@ -648,48 +637,38 @@ const prevBtn = document.getElementById("prev-btn");
 
 function renderQuestion() {
   container.innerHTML = questions[current];
-  counter.textContent = `Q${paper === 1 ? current + 1 : current - 19} of 20 (Paper ${paper})`;
-
-  MathJax.typesetPromise();
+  window.TS_TMUA_PAST_PAPER.decorateQuestion(container, current);
+  const position = window.TS_TMUA_PAST_PAPER.positionOf(current);
+  counter.textContent = `Q${position + 1} of 20 (Paper ${paper})`;
+  if (window.MathJax && typeof MathJax.typesetPromise === "function") {
+    MathJax.typesetPromise([container]).catch(() => {});
+  }
   updateFlagButton();
-
-  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
-  inputs.forEach(input => {
-    if (userAnswers[current] === input.value) {
-      input.checked = true;
-    }
-    input.addEventListener('change', () => {
-      userAnswers[current] = input.value;
+  const questionIndex = current;
+  container.querySelectorAll(`input[name='q${questionIndex + 1}']`).forEach(input => {
+    input.checked = userAnswers[questionIndex] === input.value;
+    input.addEventListener("change", () => {
+      if (examStage !== "paper") return;
+      if (Date.now() >= paperDeadline) { updateTimer(); return; }
+      userAnswers[questionIndex] = input.value;
+      updateNavigatorButton(questionIndex);
     });
   });
-
-  if (nextBtn) {
-    nextBtn.disabled = (current === 19 && paper === 1) || current === questions.length - 1;
-  }
-  if (prevBtn) {
-    prevBtn.disabled = (current === 0);
-  }
+  if (nextBtn) nextBtn.disabled = position === 19;
+  if (prevBtn) prevBtn.disabled = position === 0;
 }
 
 
 
 
 function confirmSubmit() {
+  if (examStage !== "paper") return;
   if (paper === 1) {
-    const confirmBox = confirm("You're about to submit Paper 1 and move to Paper 2. Do you want to continue?");
-    if (confirmBox) {
-      // ✅ Save time for last Paper 1 question only if user confirms
-      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-      lastTimestamp = Date.now(); // ✅ Reset for Paper 2
+    if (confirm("You're about to submit Paper 1 and move to Paper 2. Do you want to continue?")) {
       showBreakScreen();
     }
-  } else {
-    const confirmBox = confirm("Are you sure you want to submit the entire test?");
-    if (confirmBox) {
-      // ✅ Save time for last Paper 2 question
-      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-      submitExam();
-    }
+  } else if (confirm("Are you sure you want to submit the entire test?")) {
+    return submitExam();
   }
 }
 
@@ -1378,80 +1357,63 @@ Which one of the following conditions on \\(y = \\text{f}(x)\\) is <strong>neces
 ];
 
   function startExam() {
+  if (examStage !== "instructions") return;
   const nameInput = document.getElementById("student-name").value.trim();
-  const testSelect = document.getElementById("test-date").value;	
-const emailInput = document.getElementById("student-email").value.trim();
-if (!emailInput) {
-  alert("Please enter your email address.");
-  return;
-}
-studentEmail = emailInput; // define this globally
-
-  if (!nameInput) {
-    alert("Please enter your full name before starting the exam.");
+  const emailInput = document.getElementById("student-email").value.trim();
+  if (!emailInput) { alert("Please enter your email address."); return; }
+  if (!nameInput) { alert("Please enter your full name before starting the exam."); return; }
+  try {
+    window.TS_TMUA_PAST_PAPER.prepare(questions, { testId: "full-official-2019" });
+  } catch (error) {
+    alert("The paper could not be prepared. Please reload and try again. Your test has not started.");
+    console.error("TMUA paper preparation failed:", error);
     return;
   }
-
+  studentEmail = emailInput;
   studentName = nameInput;
-  testSession = testSelect;
-
+  testSession = document.getElementById("test-date").value;
+  paper = 1;
+  current = window.TS_TMUA_PAST_PAPER.questionAt(1, 0);
+  examStage = "paper";
   document.getElementById("instructions").style.display = "none";
   document.getElementById("exam-interface").style.display = "block";
-  timerInterval = setInterval(updateTimer, 1000);
+  resetPaperTimer();
   renderQuestion();
+  generateNavigatorButtons();
 }
 
 
   function updateTimer() {
-  if (minutes === 0 && seconds === 0) {
-    clearInterval(timerInterval);
-
-    // ⏱️ record time spent on the current question before leaving the paper
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-    lastTimestamp = Date.now();
-
-    if (paper === 1) {
-      // ⛔️ Don't submit here — go to the break screen
-      showBreakScreen();
-    } else {
-      // ✅ Paper 2 end: now submit the entire test
-      submitExam();
-    }
-    return;
+  if (examStage !== "paper") return;
+  const remaining = Math.max(0, Math.ceil((paperDeadline - Date.now()) / 1000));
+  minutes = Math.floor(remaining / 60);
+  seconds = remaining % 60;
+  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  if (remaining === 0) {
+    if (paper === 1) showBreakScreen();
+    else return submitExam();
   }
-
-  if (seconds === 0) {
-    minutes--;
-    seconds = 59;
-  } else {
-    seconds--;
-  }
-
-  const mm = minutes.toString().padStart(2, '0');
-  const ss = seconds.toString().padStart(2, '0');
-  timerDisplay.textContent = `${mm}:${ss}`;
 }
 
 
   
 function prevQuestion() {
-  // Prevent moving back from Paper 2 Question 1 to Paper 1
-  if (paper === 2 && current === 20) {
-    return; // Do nothing
-  }
-
-  if (current > 0) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // ⏱️ record time on current
-    current--;
-    lastTimestamp = Date.now(); // ⏱️ reset for previous question
-    renderQuestion();
-  }
+  if (examStage !== "paper") return;
+  if (Date.now() >= paperDeadline) { updateTimer(); return; }
+  const position = window.TS_TMUA_PAST_PAPER.positionOf(current);
+  if (position <= 0) return;
+  recordQuestionTime();
+  current = window.TS_TMUA_PAST_PAPER.questionAt(paper, position - 1);
+  renderQuestion();
 }
 
 
 
 async function submitExam() {
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  if (examStage !== "paper" || paper !== 2) return;
+  recordQuestionTime();
+  examStage = "complete";
+  closeNavigator();
   clearInterval(timerInterval);
 
   let paper1Score = 0;
@@ -1472,9 +1434,9 @@ async function submitExam() {
 
     const row = `
       <tr>
-        <td style="border: 1px solid #ccc; padding: 6px;">${(i % 20) + 1}</td>
-        <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
-        <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${window.TS_TMUA_PAST_PAPER.formatQuestion(i)}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${window.TS_TMUA_PAST_PAPER.formatAnswer(i, yourAns)}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${window.TS_TMUA_PAST_PAPER.formatAnswer(i, correctAns)}</td>
         <td style="border: 1px solid #ccc; padding: 6px;">${mins}m ${secs}s</td>
         <td style="border: 1px solid #ccc; padding: 6px;">${isCorrect ? "✅" : "❌"}</td>
       </tr>`;
@@ -1487,8 +1449,8 @@ async function submitExam() {
       if (isCorrect) paper2Score++;
     }
   }
-let paper1Analysis = "Paper 1 Analysis\n";
-let paper2Analysis = "Paper 2 Analysis\n";
+let paper1Analysis = "Paper 1 Analysis\n" + window.TS_TMUA_PAST_PAPER.summary() + "\n";
+let paper2Analysis = "Paper 2 Analysis\n" + window.TS_TMUA_PAST_PAPER.summary() + "\n";
 
 for (let i = 0; i < 20; i++) {
   const secs = Math.round(timeSpent[i]);
@@ -1496,7 +1458,7 @@ for (let i = 0; i < 20; i++) {
   const ss = String(secs % 60).padStart(2, '0');
   const yourAns = userAnswers[i] ?? "-";
   const correctAns = correctAnswers[i];
-  paper1Analysis += `Q.${i + 1} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}\n`;
+  paper1Analysis += `${window.TS_TMUA_PAST_PAPER.formatQuestion(i)} Correct: ${window.TS_TMUA_PAST_PAPER.formatAnswer(i, correctAns)} Yours: ${window.TS_TMUA_PAST_PAPER.formatAnswer(i, yourAns)} Time: ${mm}:${ss}\n`;
 }
 
 for (let i = 20; i < 40; i++) {
@@ -1505,7 +1467,7 @@ for (let i = 20; i < 40; i++) {
   const ss = String(secs % 60).padStart(2, '0');
   const yourAns = userAnswers[i] ?? "-";
   const correctAns = correctAnswers[i];
-  paper2Analysis += `Q.${i - 19} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}\n`;
+  paper2Analysis += `${window.TS_TMUA_PAST_PAPER.formatQuestion(i)} Correct: ${window.TS_TMUA_PAST_PAPER.formatAnswer(i, correctAns)} Yours: ${window.TS_TMUA_PAST_PAPER.formatAnswer(i, yourAns)} Time: ${mm}:${ss}\n`;
 }
 
   const totalScore = paper1Score + paper2Score;
@@ -1537,6 +1499,7 @@ try {
     correct_answers: correctAnswers,
     time_spent: timeSpent,
     flags: flags,
+    attempt_settings: window.TS_TMUA_PAST_PAPER.metadata(),
     incorrect: window.TS_BUILD_INCORRECT_LIST(userAnswers, correctAnswers)
   });
   console.log("TS_ATTEMPT_SAVE_40Q:", __tsSaveRes);
@@ -1596,6 +1559,8 @@ paper1: paper1Analysis.trim(),
       <div style="text-align: center;">
         <div style="font-size: 160px;">${emoji}</div>
         <h1>Exam Completed</h1>
+        <p>${window.TS_TMUA_PAST_PAPER.summary()}</p>
+        <p>Question references and answer letters below match the original solution booklet. Randomised attempts also show their displayed numbers and letters.</p>
 
       ${score9Block}
         <table style="border-collapse: collapse; margin: 20px auto; font-size: 18px;">
@@ -1637,72 +1602,51 @@ document.getElementById("solution-frame").src = solutionPDF;
 
 
 function generateNavigatorButtons() {
+  if (examStage === "instructions") return;
   const grid = document.getElementById("navigator-grid");
-  grid.innerHTML = ""; // Clear previous buttons
-
-  // ✅ Set heading to Paper 1 or Paper 2
-  document.getElementById("navigator-heading").textContent = (paper === 1) ? "Paper 1" : "Paper 2";
-
-  const offset = (paper === 1) ? 0 : 20;
-
-  for (let i = 0; i < 20; i++) {
-    const actualIndex = offset + i;
-
+  grid.innerHTML = "";
+  document.getElementById("navigator-heading").textContent = "Paper " + paper;
+  for (let position = 0; position < 20; position++) {
+    const originalIndex = window.TS_TMUA_PAST_PAPER.questionAt(paper, position);
     const btn = document.createElement("button");
-    btn.textContent = i + 1;
-    btn.dataset.index = actualIndex;
-    btn.id = `nav-btn-${actualIndex}`;
+    btn.textContent = position + 1;
+    btn.dataset.index = originalIndex;
+    btn.id = `nav-btn-${originalIndex}`;
     btn.style.padding = "10px";
-
-    btn.onclick = function () {
-      jumpTo(actualIndex);
-    };
-
+    btn.onclick = () => jumpTo(originalIndex);
     grid.appendChild(btn);
-  }
-
-  // Update buttons’ flag styling
-  for (let i = 0; i < 20; i++) {
-    updateNavigatorButton(offset + i);
+    updateNavigatorButton(originalIndex);
   }
 }
 
 
 function showBreakScreen() {
+  if (examStage !== "paper" || paper !== 1) return;
+  recordQuestionTime();
+  examStage = "break";
   clearInterval(timerInterval);
-
+  closeNavigator();
   document.getElementById("exam-interface").style.display = "none";
   document.getElementById("break-screen").style.display = "block";
-
   breakMinutes = 5;
   breakSeconds = 0;
-
+  breakDeadline = Date.now() + 300000;
+  document.getElementById("break-timer").textContent = "05:00";
+  clearInterval(breakInterval);
   breakInterval = setInterval(updateBreakTimer, 1000);
 }
 
 
 
 function skipBreak() {
+  if (examStage !== "break") return;
   clearInterval(breakInterval);
-  clearInterval(timerInterval); // stop any previous timer
-
-  // ✅ Reset timer to 75:00
-  minutes = 75;
-  seconds = 0;
-
-  // ✅ Start new 75-minute timer
-  timerInterval = setInterval(updateTimer, 1000);
-
-  // ✅ Switch to Paper 2
   paper = 2;
-  current = 20;
-  lastTimestamp = Date.now(); // ✅ Start time tracking for Paper 2
-
+  current = window.TS_TMUA_PAST_PAPER.questionAt(2, 0);
+  examStage = "paper";
+  resetPaperTimer();
   renderQuestion();
-
-  // ✅ Regenerate navigator buttons for Paper 2
   generateNavigatorButtons();
-
   document.getElementById("break-screen").style.display = "none";
   document.getElementById("exam-interface").style.display = "block";
 }
@@ -1712,17 +1656,11 @@ function skipBreak() {
 
 function updateNavigatorButton(index) {
   const btn = document.getElementById(`nav-btn-${index}`);
-  if (!btn) return;
-
-  if (flags[index]) {
-    btn.style.backgroundColor = "gold";
-    btn.style.fontWeight = "bold";
-    btn.textContent = `⚑ ${parseInt(btn.textContent)}`; // retain 1–20 display
-  } else {
-    btn.style.backgroundColor = "";
-    btn.style.fontWeight = "normal";
-    btn.textContent = btn.textContent.replace("⚑", "").trim();
-  }
+  if (!btn || examStage === "instructions") return;
+  const displayedNumber = window.TS_TMUA_PAST_PAPER.positionOf(index) + 1;
+  btn.textContent = (flags[index] ? "⚑ " : "") + displayedNumber;
+  btn.style.backgroundColor = flags[index] ? "gold" : "";
+  btn.style.fontWeight = flags[index] ? "bold" : "normal";
 }
 
 window.onload = function () {
@@ -2042,6 +1980,7 @@ body.ts-exam-done .ts-workspace-btn{
         correct_answers: correctAnswers,
         time_spent: timeSpent,
         flags: flags,
+        attempt_settings: opts.attempt_settings,
         incorrect: incorrect,
         estimated_tmua_score: score9(score, totalQuestions, 6)
       };

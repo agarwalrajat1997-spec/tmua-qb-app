@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import DashboardClient from "./DashboardClient";
 import AMCDashboardClient from "./AMCDashboardClient";
 import SATDashboardClient from "./SATDashboardClient";
+import ErasableNotepadPopup from "../_components/ErasableNotepadPopup";
 import styles from "./dashboard.module.css";
 import { supabaseBrowser } from "@/utils/supabase/browser";
+import { isMissingSession, withServiceTimeout } from "@/lib/auth/service-recovery";
+import ServiceRetry from "../components/ServiceRetry";
 
 type RouteState =
+  | { mode: "error" }
   | {
       mode: "loading";
       email?: string | null;
@@ -37,6 +41,7 @@ type RouteState =
 
 export default function DashboardAccessRouterClient() {
   const [state, setState] = useState<RouteState>({ mode: "loading" });
+  const [retryAttempt, setRetryAttempt] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,7 +58,9 @@ export default function DashboardAccessRouterClient() {
         const {
           data: { user },
           error: userErr,
-        } = await supabase.auth.getUser();
+        } = await withServiceTimeout(supabase.auth.getUser());
+        if (cancelled) return;
+        if (userErr && !isMissingSession(userErr)) throw userErr;
 
         if (userErr || !user?.email) {
           window.location.href = "/login?next=/dashboard";
@@ -62,19 +69,17 @@ export default function DashboardAccessRouterClient() {
 
         const { data, error } = await supabase
           .from("student_access")
-          .select("product, approved")
+          .select("product, approved, expires_at")
           .ilike("email", user.email)
-          .eq("approved", true);
+          .eq("approved", true)
+          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
+          .retry(false);
 
         if (cancelled) return;
 
         if (error) {
           console.error("Dashboard access load failed:", error);
-          setState({
-            mode: "none",
-            email: user.email,
-            error: error.message || "Could not load product access.",
-          });
+          setState({ mode: "error" });
           return;
         }
 
@@ -154,10 +159,7 @@ export default function DashboardAccessRouterClient() {
         setState({ mode: "none", email: user.email });
       } catch (e: any) {
         console.error("Dashboard router crashed:", e);
-        setState({
-          mode: "none",
-          error: String(e?.message || e),
-        });
+        if (!cancelled) setState({ mode: "error" });
       }
     }
 
@@ -166,7 +168,11 @@ export default function DashboardAccessRouterClient() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [retryAttempt]);
+
+  if (state.mode === "error") {
+    return <ServiceRetry onRetry={() => { setState({ mode: "loading" }); setRetryAttempt(n => n + 1); }} />;
+  }
 
   if (state.mode === "loading") {
     return (
@@ -208,7 +214,12 @@ export default function DashboardAccessRouterClient() {
   }
 
   if (state.mode === "tmua") {
-    return <DashboardClient uiMark="TS_DASH_PORTAL_20260227142744" />;
+    return (
+      <>
+        <DashboardClient uiMark="TS_DASH_PORTAL_20260227142744" />
+        <ErasableNotepadPopup forcePortal />
+      </>
+    );
   }
 
   return (
@@ -240,4 +251,3 @@ export default function DashboardAccessRouterClient() {
     </div>
   );
 }
-

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
+import { loginErrorMessage } from "@/lib/auth/login-error";
 import styles from "./exam-login.module.css";
 
 type Props = {
@@ -68,12 +69,10 @@ export default function ExamMagicLinkLogin({ exam, destination, uiMark }: Props)
       if (signInError) throw signInError;
 
       setMessage(
-        "Login link sent. Check your inbox and spam folder, then open only the newest link.",
+        "Login link sent. Check your inbox and spam folder, then open only the newest link in this same browser and device.",
       );
     } catch (caught: unknown) {
-      setError(
-        caught instanceof Error ? caught.message : "Could not send the login link.",
-      );
+      setError(loginErrorMessage(caught));
     } finally {
       setBusy(false);
     }

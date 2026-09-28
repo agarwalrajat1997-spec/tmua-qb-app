@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { safeLoginDestination } from "@/lib/auth/login-destination";
+import { loginErrorMessage } from "@/lib/auth/login-error";
 import styles from "./login.module.css";
 
 type Props = { uiMark: string };
@@ -28,6 +29,17 @@ const PRICE = {
 };
 
 const ESAT_PRICE = 89;
+
+const LOGIN_ERROR_MESSAGES: Record<string, string> = {
+  invalid_or_consumed_link:
+    "That sign-in link is invalid, expired, or was already opened. Request a fresh link below and open only the newest email. Until the cross-device update is completed, open it in this same browser and device.",
+  missing_code:
+    "That sign-in link did not contain a valid login token. Request a fresh link below and open only the newest email in this same browser and device.",
+  callback_exchange_failed:
+    "That sign-in link could not create a session. Request a fresh link below and open only the newest email in this same browser and device.",
+  missing_env:
+    "Login is temporarily unavailable. Please contact Thriving Scholars support.",
+};
 
 export default function LoginClient({ uiMark }: Props) {
   const router = useRouter();
@@ -91,7 +103,13 @@ export default function LoginClient({ uiMark }: Props) {
 
   useEffect(() => {
     const e = search?.get("e");
-    if (e) setErr(decodeURIComponent(e));
+    if (e) {
+      const code = decodeURIComponent(e);
+      setErr(
+        LOGIN_ERROR_MESSAGES[code] ??
+          "The sign-in link could not be completed. Request a fresh link below.",
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -140,10 +158,10 @@ export default function LoginClient({ uiMark }: Props) {
       if (error) throw error;
 
       setMsg(
-        "Login link sent. Check inbox + spam. Click ONLY the newest email link.",
+        "Login link sent. Check inbox + spam. Open ONLY the newest email link in this same browser and device.",
       );
-    } catch (ex: any) {
-      setErr(ex?.message || "Could not send login link.");
+    } catch (ex: unknown) {
+      setErr(loginErrorMessage(ex));
     } finally {
       setBusy(false);
     }

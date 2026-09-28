@@ -72,7 +72,7 @@ const engineeringTests = [
     testId: "esat-mock-05",
     level: 2,
     difficulty: "hard",
-    solutionUrl: "https://www.thrivingscholars.com/_files/ugd/98f2c5_b1abc3e8fdd54180b56d226cfa280892.pdf",
+    solutionUrl: "/esat-practice-tests/solutions/esat-mock-05-solutions.pdf?v=20260924",
   },
 ];
 

@@ -1,0 +1,182 @@
+[
+  {
+    "cmd": "DELETE",
+    "qual": "((auth.uid())::text = (user_id)::text)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qb_progress_delete_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "INSERT",
+    "qual": null,
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qb_progress_insert_own",
+    "schemaname": "public",
+    "with_check": "((auth.uid())::text = (user_id)::text)"
+  },
+  {
+    "cmd": "SELECT",
+    "qual": "((auth.uid())::text = (user_id)::text)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qb_progress_select_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "UPDATE",
+    "qual": "((auth.uid())::text = (user_id)::text)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qb_progress_update_own",
+    "schemaname": "public",
+    "with_check": "((auth.uid())::text = (user_id)::text)"
+  },
+  {
+    "cmd": "DELETE",
+    "qual": "(auth.uid() = user_id)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qbp_delete_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "INSERT",
+    "qual": null,
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qbp_insert_own",
+    "schemaname": "public",
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qbp_select_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "UPDATE",
+    "qual": "(auth.uid() = user_id)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "qb_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "qbp_update_own",
+    "schemaname": "public",
+    "with_check": "(auth.uid() = user_id)"
+  },
+  {
+    "cmd": "SELECT",
+    "qual": "(lower(email) = lower((auth.jwt() ->> 'email'::text)))",
+    "roles": [
+      "authenticated"
+    ],
+    "tablename": "student_access",
+    "permissive": "PERMISSIVE",
+    "policyname": "student_access_select_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "SELECT",
+    "qual": "(lower(email) = lower((auth.jwt() ->> 'email'::text)))",
+    "roles": [
+      "authenticated"
+    ],
+    "tablename": "student_access",
+    "permissive": "PERMISSIVE",
+    "policyname": "students can read own access",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "DELETE",
+    "qual": "((auth.uid())::text = (user_id)::text)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "user_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "user_progress_delete_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "INSERT",
+    "qual": null,
+    "roles": [
+      "public"
+    ],
+    "tablename": "user_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "user_progress_insert_own",
+    "schemaname": "public",
+    "with_check": "((auth.uid())::text = (user_id)::text)"
+  },
+  {
+    "cmd": "SELECT",
+    "qual": "(auth.uid() = user_id)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "user_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "user_progress_read_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "SELECT",
+    "qual": "((auth.uid())::text = (user_id)::text)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "user_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "user_progress_select_own",
+    "schemaname": "public",
+    "with_check": null
+  },
+  {
+    "cmd": "UPDATE",
+    "qual": "((auth.uid())::text = (user_id)::text)",
+    "roles": [
+      "public"
+    ],
+    "tablename": "user_progress",
+    "permissive": "PERMISSIVE",
+    "policyname": "user_progress_update_own",
+    "schemaname": "public",
+    "with_check": "((auth.uid())::text = (user_id)::text)"
+  }
+]

@@ -571,6 +571,34 @@ textarea.frq-input {
   font-size: 14px;
 }
 #report-container thead { background: #f0f0f0; }
+.solution-booklet {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid #f0d6a0;
+  border-radius: 12px;
+  background: #fffaf0;
+}
+.solution-booklet h2 { margin-top: 0; color: #670D04; }
+.solution-booklet a {
+  display: inline-block;
+  margin: 4px 0 16px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #FEC94F;
+  color: #401006;
+  font-weight: 700;
+  text-decoration: none;
+}
+.solution-booklet a:hover, .solution-booklet a:focus-visible { background: #F5B935; }
+.solution-booklet iframe {
+  display: block;
+  width: 100%;
+  height: min(70vh, 680px);
+  min-height: 420px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
 /* =============================
    SCORE WIDGET (AP SCORE GAUGE)
 ============================= */
@@ -1020,7 +1048,7 @@ textarea.frq-input {
 /***********************
  * DATA: Sections
  ***********************/
-const solutionPDF = ""; // optional: paste a solutions PDF link here if you want
+const solutionPDF = "https://apps.thrivingscholars.com/sat-test-6/sat-diagnostic-test-6-solution-book.pdf";
 
 const sections = [
   {
@@ -3585,6 +3613,13 @@ function showFinalReport() {
       <div class="score" style="font-size:58px;">${satScore}</div>
     </div>
 
+    <section class="solution-booklet" aria-labelledby="solution-booklet-title">
+      <h2 id="solution-booklet-title">SAT Diagnostic Test 6 Solution Book</h2>
+      <p>Review all 98 questions, the answer key and worked solutions.</p>
+      <a href="${solutionPDF}" target="_blank" rel="noopener">Open or download the solution book (PDF)</a>
+      <iframe src="${solutionPDF}" title="SAT Diagnostic Test 6 solution book" loading="lazy"></iframe>
+    </section>
+
     <h2>Question Detail</h2>
     <table>
       <thead>
@@ -3720,7 +3755,7 @@ function showFinalReport() {
       integrityTimelineText || "No reportable integrity events recorded."
     ].join("\n");
 
-    const paper2WithIntegrity = `${mathAnalysisText}\n\n---\n\n${integrityEmailText}`;
+    const paper2WithIntegrity = `${mathAnalysisText}\n\nSAT Diagnostic Test 6 solution book: ${solutionPDF}\n\n---\n\n${integrityEmailText}`;
 
     emailjs.send("service_5l4w8x2", "template_j1jrs4o", {
       name: studentName,

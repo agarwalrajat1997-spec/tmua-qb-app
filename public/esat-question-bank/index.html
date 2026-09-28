@@ -2199,14 +2199,67 @@ window.MathJax = {
   }
 }
 </style>
+
+<style id="ts-qb-startup-style">
+/* The practice workspace appears only when the first question is ready. */
+#qbStartup { display: none; }
+body[data-qb-phase="loading"] #qbStartup,
+body[data-qb-phase="error"] #qbStartup { display: block; }
+body[data-qb-phase="loading"] :is(#qCard, #emptyState, .topbar),
+body[data-qb-phase="error"] :is(#qCard, #emptyState, .topbar) { display: none !important; }
+body[data-qb-phase="loading"] :is(.header-right, #tsQuestionTimerShell, .footer, .bug-floating-btn),
+body[data-qb-phase="error"] :is(.header-right, #tsQuestionTimerShell, .footer, .bug-floating-btn) { visibility: hidden; }
+.qb-startup {
+  box-sizing: border-box;
+  max-width: 540px;
+  margin: clamp(36px, 9vh, 100px) auto 32px;
+  padding: 40px 28px 36px;
+  border: 1px solid #dce8f1;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #f7fbff 0%, #fff 48%);
+  box-shadow: 0 12px 36px rgba(25, 63, 95, .06);
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #17344c;
+}
+.qb-startup-mark {
+  position: relative; display: grid; place-items: center;
+  width: 62px; height: 62px; margin: 0 auto 22px;
+  border-radius: 50%; background: #edf6fc; color: #0074c1;
+}
+.qb-startup-mark::after {
+  content: ""; position: absolute; inset: -5px;
+  border: 2px solid #e0edf6; border-top-color: #0074c1; border-right-color: #f4c65c;
+  border-radius: 50%; animation: qb-startup-turn 1.5s linear infinite;
+}
+.qb-startup-label { margin: 0 0 12px; font-size: 11px; line-height: 1.6; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #537086; }
+.qb-startup h2 { margin: 0 0 12px; font-family: Georgia, serif; font-size: clamp(24px, 4vw, 30px); line-height: 1.25; font-weight: 600; letter-spacing: -.5px; }
+.qb-startup-copy { max-width: 330px; margin: 0 auto; font-size: 15px; line-height: 1.7; color: #617385; }
+.qb-startup-track { width: 160px; height: 3px; margin: 26px auto 0; border-radius: 4px; background: #e8f1f7; overflow: hidden; }
+.qb-startup-track::after { content: ""; display: block; width: 45%; height: 100%; border-radius: inherit; background: #0074c1; animation: qb-startup-progress 1.8s ease-in-out infinite alternate; }
+.qb-startup-retry { margin-top: 24px; padding: 12px 24px; border: 0; border-radius: 10px; color: #fff; background: #0074c1; font: 600 14px Arial, sans-serif; cursor: pointer; }
+.qb-startup-retry:focus-visible { outline: 3px solid #f4c65c; outline-offset: 4px; }
+.qb-startup-retry[hidden] { display: none; }
+body[data-qb-phase="error"] .qb-startup-track { display: none; }
+body[data-qb-phase="error"] .qb-startup-mark::after { animation: none; border-color: #e0edf6; }
+@keyframes qb-startup-turn { to { transform: rotate(360deg); } }
+@keyframes qb-startup-progress { to { transform: translateX(122%); } }
+@media (prefers-reduced-motion: reduce) {
+  .qb-startup-mark::after, .qb-startup-track::after { animation: none; }
+}
+@media (max-width: 480px) { .qb-startup { padding: 32px 20px; border-radius: 16px; } }
+</style>
 </head>
 
-<body data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
+<body data-qb-phase="loading" data-new-gr-c-s-check-loaded="14.1136.0" data-gr-ext-installed="">
+<script src="/qb-progress-transport.js?v=3"></script>
+<script src="/qb-compact-sync.js?v=3"></script>
 <script id="ts-per-question-progress-sync-v1">
 (function () {
   "use strict";
 
   var PRODUCT = "esat-question-bank";
+  var PROGRESS_IDENTITY_VERSION = "esat-qid-v1";
   var LOAD_URL = "/api/qb/progress/load?product=esat-question-bank";
   var SAVE_URL = "/api/qb/progress/save";
 
@@ -2261,7 +2314,16 @@ window.MathJax = {
     var meta = null;
 
     try {
-      if (typeof window.currentMeta === "function") meta = window.currentMeta();
+      if (
+        window.TS_ESAT_PROGRESS_BRIDGE_V1 &&
+        typeof window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta === "function"
+      ) {
+        meta = window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta();
+      }
+    } catch (e) {}
+
+    try {
+      if (!meta && typeof window.currentMeta === "function") meta = window.currentMeta();
     } catch (e) {}
 
     if (meta && typeof meta === "object") return meta;
@@ -2308,11 +2370,11 @@ window.MathJax = {
 
     if (meta) {
       [
-        meta.display_order,
-        meta.original_index,
         meta.qid,
         meta.id,
-        meta.question_id
+        meta.question_id,
+        meta.display_order,
+        meta.original_index
       ].forEach(function (x) {
         var s = safeString(x);
         if (s && keys.indexOf(s) === -1) keys.push(s);
@@ -2559,6 +2621,7 @@ window.MathJax = {
       },
       body: JSON.stringify({
         product: PRODUCT,
+        identity_version: PROGRESS_IDENTITY_VERSION,
         updates: [update]
       })
     })
@@ -3154,6 +3217,11 @@ window.MathJax = {
   }
 
   async function runMigration() {
+    // TS_ESAT_LEGACY_NUMERIC_UPLOAD_DISABLED_V1
+    // The main application resolves legacy numeric keys only after
+    // the canonical question metadata has loaded.
+    if (PRODUCT === "esat-question-bank") return;
+
     var localRaw = "";
 
     try {
@@ -3230,191 +3298,7 @@ window.MathJax = {
 </script>
 
 <script id="ts-user-progress-sync-v1">
-(function () {
-  "use strict";
-
-  var PRODUCT = "esat-question-bank";
-  var STORAGE_KEY = "ts_esat_supabase_exact_ui_v1";
-  var REMOTE_KEY = "app_state";
-  var LAST_SERVER_UPDATED_KEY = STORAGE_KEY + "__server_updated_at";
-  var LAST_PUSH_HASH_KEY = STORAGE_KEY + "__last_push_hash";
-  var RELOAD_FLAG = STORAGE_KEY + "__remote_reload_done";
-
-  function endpoint() {
-    return "/api/qb/user-progress?product=" +
-      encodeURIComponent(PRODUCT) +
-      "&key=" +
-      encodeURIComponent(REMOTE_KEY);
-  }
-
-  function safeParse(raw) {
-    try {
-      return JSON.parse(raw);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function simpleHash(str) {
-    var h = 0;
-    str = String(str || "");
-
-    for (var i = 0; i < str.length; i++) {
-      h = ((h << 5) - h) + str.charCodeAt(i);
-      h |= 0;
-    }
-
-    return String(h) + ":" + String(str.length);
-  }
-
-  function getRaw() {
-    try {
-      return localStorage.getItem(STORAGE_KEY) || "";
-    } catch (e) {
-      return "";
-    }
-  }
-
-  function setRaw(raw) {
-    try {
-      localStorage.setItem(STORAGE_KEY, raw);
-    } catch (e) {}
-  }
-
-  async function pullFromServer() {
-    try {
-      var res = await fetch(endpoint(), {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store"
-      });
-
-      var payload = await res.json();
-
-      if (!res.ok || !payload.ok || !payload.data) {
-        return;
-      }
-
-      var remote = payload.data;
-      var remoteRaw = String(remote.raw || "");
-      var remoteUpdatedAt = String(payload.updated_at || "");
-
-      if (!remoteRaw) return;
-
-      var localRaw = getRaw();
-      var lastServerUpdated = localStorage.getItem(LAST_SERVER_UPDATED_KEY) || "";
-
-      // If this device has not already loaded this server version, load Supabase version.
-      if (remoteUpdatedAt && remoteUpdatedAt !== lastServerUpdated && remoteRaw !== localRaw) {
-        setRaw(remoteRaw);
-        localStorage.setItem(LAST_SERVER_UPDATED_KEY, remoteUpdatedAt);
-        localStorage.setItem(LAST_PUSH_HASH_KEY, simpleHash(remoteRaw));
-
-        // Reload once so the existing question-bank app boots from Supabase state.
-        if (!sessionStorage.getItem(RELOAD_FLAG)) {
-          sessionStorage.setItem(RELOAD_FLAG, "1");
-          location.reload();
-        }
-      }
-    } catch (e) {
-      console.warn("Progress pull failed:", e);
-    }
-  }
-
-  var pushTimer = null;
-
-  function schedulePush() {
-    clearTimeout(pushTimer);
-    pushTimer = setTimeout(pushToServer, 900);
-  }
-
-  async function pushToServer() {
-    try {
-      var raw = getRaw();
-      if (!raw) return;
-
-      var hash = simpleHash(raw);
-      var lastHash = localStorage.getItem(LAST_PUSH_HASH_KEY) || "";
-
-      if (hash === lastHash) return;
-
-      var parsed = safeParse(raw);
-
-      var body = {
-        product: PRODUCT,
-        key: REMOTE_KEY,
-        data: {
-          storage_key: STORAGE_KEY,
-          raw: raw,
-          parsed: parsed,
-          page_url: String(window.location.href || ""),
-          saved_at: new Date().toISOString()
-        }
-      };
-
-      var res = await fetch("/api/qb/user-progress", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      });
-
-      var payload = await res.json();
-
-      if (res.ok && payload.ok) {
-        localStorage.setItem(LAST_PUSH_HASH_KEY, hash);
-
-        if (payload.saved && payload.saved.updated_at) {
-          localStorage.setItem(LAST_SERVER_UPDATED_KEY, payload.saved.updated_at);
-        }
-      }
-    } catch (e) {
-      console.warn("Progress push failed:", e);
-    }
-  }
-
-  // Wrap localStorage writes so progress changes are pushed to Supabase.
-  try {
-    var originalSetItem = Storage.prototype.setItem;
-
-    if (!Storage.prototype.__tsUserProgressSyncPatched) {
-      Storage.prototype.setItem = function (key, value) {
-        var result = originalSetItem.apply(this, arguments);
-
-        try {
-          if (this === localStorage && String(key) === STORAGE_KEY) {
-            schedulePush();
-          }
-        } catch (e) {}
-
-        return result;
-      };
-
-      Storage.prototype.__tsUserProgressSyncPatched = true;
-    }
-  } catch (e) {}
-
-  // Pull server state early, then keep syncing.
-  pullFromServer();
-
-  window.addEventListener("load", function () {
-    setTimeout(pullFromServer, 300);
-    setTimeout(pushToServer, 1800);
-  });
-
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-      pushToServer();
-    } else {
-      pullFromServer();
-    }
-  });
-
-  setInterval(pushToServer, 5000);
-  setInterval(pullFromServer, 30000);
-})();
+window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_supabase_exact_ui_v1");
 </script>
 
 <script id="ts-esat-rpc-bridge-v1">
@@ -3709,6 +3593,18 @@ window.MathJax = {
 
 <div class="container">
 
+  <section id="qbStartup" class="qb-startup" role="status" aria-live="polite" aria-busy="true" aria-labelledby="qbStartupTitle">
+    <div class="qb-startup-mark" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1v-14c-3-1-6-1-9 1Z"/><path d="M12 5.5v14M6 8l3 1M15 9l3-1"/></svg>
+    </div>
+    <p class="qb-startup-label">Thriving Scholars · ESAT</p>
+    <h2 id="qbStartupTitle">Preparing your practice</h2>
+    <p id="qbStartupCopy" class="qb-startup-copy">Your questions and progress will be ready shortly.</p>
+    <div class="qb-startup-track" aria-hidden="true"></div>
+    <button id="qbStartupRetry" class="qb-startup-retry" type="button" hidden>Try again</button>
+  </section>
+
+
   <div class="topbar">
     <div class="chips" id="activeChips"></div>
     <div class="chips">
@@ -3725,19 +3621,19 @@ window.MathJax = {
     <div class="qhead">
       <h2 class="qtitle">
         <span class="calc"></span>
-        <span id="qTitle">Loading...</span>
+        <span id="qTitle"></span>
       </h2>
 
       <div class="qmeta">
         <span class="meta-pill" id="metaPaper">Paper</span>
         <span class="meta-pill" id="metaTopic">Topic</span>
         <span class="meta-pill" id="metaDiff">Difficulty</span>
-        <span class="meta-pill" id="metaStatus">Loading</span>
+        <span class="meta-pill" id="metaStatus"></span>
       </div>
     </div>
 
     <div class="qbody">
-      <div id="qPrompt"><p>Loading question from Supabase...</p></div>
+      <div id="qPrompt"></div>
       <div id="qMedia"></div>
 
       <div class="options" id="qOptions"></div>
@@ -4114,11 +4010,37 @@ window.MathJax = {
     } catch(e) {}
   }
 
+  // Compact sync starts with an empty filter object while cloud state loads.
+  // Normalize every incoming state without discarding valid saved selections.
+  function normalizeState(value, previous) {
+    const record = item => item && typeof item === "object" && !Array.isArray(item);
+    const base = record(previous) ? previous : {};
+    const incoming = record(value) ? value : {};
+    const priorFilters = record(base.filters) ? base.filters : {};
+    const incomingFilters = record(incoming.filters) ? incoming.filters : {};
+    const filters = { ...priorFilters, ...incomingFilters };
+    for (const key of ["papers", "topics", "difficulties"]) {
+      filters[key] = Array.isArray(filters[key]) ? filters[key].slice()
+        : Array.isArray(priorFilters[key]) ? priorFilters[key].slice() : [];
+    }
+    const statuses = ["all", "unseen", "attempted", "correct", "incorrect", "flagged"];
+    filters.status = statuses.includes(filters.status) ? filters.status
+      : statuses.includes(priorFilters.status) ? priorFilters.status : "all";
+    return {
+      ...base,
+      ...incoming,
+      answers: record(incoming.answers) ? incoming.answers : record(base.answers) ? base.answers : {},
+      filters
+    };
+  }
+
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) state = Object.assign(state, JSON.parse(raw));
-    } catch(e) {}
+      state = normalizeState(raw ? JSON.parse(raw) : {}, state);
+    } catch(e) {
+      state = normalizeState({}, state);
+    }
   }
 
   function typeset() {
@@ -4246,12 +4168,104 @@ window.MathJax = {
     return q;
   }
 
+  // TS_ESAT_PROGRESS_QID_V1
   function questionKey(meta) {
-    return String(meta.display_order);
+    return String((meta && (meta.qid || meta.id)) || "");
   }
 
   function currentMeta() {
     return visibleList[currentIndex] || null;
+  }
+
+  window.TS_ESAT_PROGRESS_BRIDGE_V1 = {
+    currentMeta: currentMeta,
+    questionKey: questionKey,
+    currentAnswer: function () {
+      const meta = currentMeta();
+      if (!meta) return null;
+      return state.answers[questionKey(meta)] || null;
+    }
+  };
+
+  async function hydrateCanonicalProgress() {
+    // Canonical progress can be older than an unsent answer on this device.
+    // Snapshot before awaiting, then preserve changes restored or made while the
+    // request was in flight. Only account-bound journals may override the server.
+    const snapshot = value => JSON.parse(JSON.stringify(value || {}));
+    const beforeAnswers = snapshot(state.answers);
+    const knownQids = new Set(allMeta.map(questionKey).filter(Boolean));
+    const nextAnswers = {};
+
+    function canonicalAnswers(answers) {
+      const result = {};
+      allMeta.forEach(function(meta) {
+        const stableKey = questionKey(meta);
+        if (!stableKey) return;
+        const answer = answers[stableKey] ||
+          answers[String(meta.display_order)] || answers[String(meta.original_index)];
+        if (answer) result[stableKey] = answer;
+      });
+      Object.keys(answers).forEach(function(qid) {
+        if (!/^\d+$/.test(qid) && !result[qid]) result[qid] = answers[qid];
+      });
+      return result;
+    }
+
+    function answerFromProgress(row) {
+      const status = String(row.status || "").toLowerCase();
+      return {
+        selected: row.selected_answer || "",
+        checked: status === "correct" || status === "wrong" || status === "incorrect",
+        isCorrect: status === "correct",
+        flagged: !!row.flagged
+      };
+    }
+
+    function pendingAnswers() {
+      const answers = {};
+      const transport = window.TS_QB_TRANSPORT;
+      if (transport && typeof transport.pendingUpdates === "function") {
+        transport.pendingUpdates("esat-question-bank").forEach(function(row) {
+          const qid = String(row.question_id || row.key || "");
+          if (knownQids.has(qid)) answers[qid] = answerFromProgress(row.value || row);
+        });
+      }
+      const sync = window.TS_QB_SYNC;
+      if (sync && typeof sync.pendingAnswers === "function") {
+        Object.assign(answers, sync.pendingAnswers());
+      }
+      return snapshot(answers);
+    }
+
+    const beforeCanonical = canonicalAnswers(beforeAnswers);
+    const beforePending = pendingAnswers();
+    Object.assign(nextAnswers, beforeCanonical);
+
+    try {
+      const response = await fetch(
+        "/api/qb/progress/load?product=esat-question-bank",
+        { method: "GET", credentials: "include", cache: "no-store" }
+      );
+      const payload = await response.json();
+      if (response.ok && payload && payload.ok && payload.progress) {
+        Object.entries(payload.progress).forEach(function(entry) {
+          const qid = String(entry[0] || "");
+          if (knownQids.has(qid)) nextAnswers[qid] = answerFromProgress(entry[1] || {});
+        });
+      }
+    } catch (error) {
+      console.warn("Canonical ESAT progress hydration failed:", error);
+    }
+
+    Object.assign(nextAnswers, beforePending, pendingAnswers());
+    const currentAnswers = canonicalAnswers(snapshot(state.answers));
+    Object.keys(currentAnswers).forEach(function(qid) {
+      if (JSON.stringify(currentAnswers[qid]) !== JSON.stringify(beforeCanonical[qid])) {
+        nextAnswers[qid] = currentAnswers[qid];
+      }
+    });
+    state.answers = nextAnswers;
+    saveState();
   }
 
   function renderDifficultyLabel(difficulty) {
@@ -4288,7 +4302,53 @@ function uniqueSorted(arr) {
   }
 
 
-  // TS_FINAL_CHAPTER_ORDER_FIX_V1
+  // TS_SUBJECT_TOPIC_FILTER_V3
+  // Store and display the official UAT-UK headings for every ESAT science
+  // module. Subject-prefixed filter keys keep identically named topics apart.
+  const TS_PHYSICS_TOPIC_ORDER = [
+    "P1. Electricity",
+    "P2. Magnetism",
+    "P3. Mechanics",
+    "P4. Thermal physics",
+    "P5. Matter",
+    "P6. Waves",
+    "P7. Radioactivity"
+  ];
+
+  const TS_BIOLOGY_TOPIC_ORDER = [
+    "B1. Cells",
+    "B2. Movement across membranes",
+    "B3. Cell division and sex determination",
+    "B4. Inheritance",
+    "B5. DNA",
+    "B6. Gene technologies",
+    "B7. Variation",
+    "B8. Enzymes",
+    "B9. Animal physiology",
+    "B10. Ecosystems",
+    "B11. Plant physiology"
+  ];
+
+  const TS_CHEMISTRY_TOPIC_ORDER = [
+    "C1. Atomic structure",
+    "C2. The Periodic Table",
+    "C3. Chemical reactions, formulae and equations",
+    "C4. Quantitative chemistry",
+    "C5. Oxidation, reduction and redox",
+    "C6. Chemical bonding, structure and properties",
+    "C7. Group chemistry",
+    "C8. Separation techniques",
+    "C9. Acids, bases and salts",
+    "C10. Rates of reaction",
+    "C11. Energetics",
+    "C12. Electrolysis",
+    "C13. Carbon/Organic chemistry",
+    "C14. Metals",
+    "C15. Kinetic/Particle theory",
+    "C16. Chemical tests",
+    "C17. Air and water"
+  ];
+
   const TS_CHAPTER_ORDER = [
     "1_Algebra & Functions",
     "2_Sequences",
@@ -4301,40 +4361,110 @@ function uniqueSorted(arr) {
     "9_Statistics & Probability",
     "10_Miscellaneous",
     "11_Proofs",
-    "12_Mechanics",
-    "13_Energy and Power",
-    "14_Electricity and Magnetism",
-    "15_Waves and Optics",
-    "16_Materials and Fluids",
-    "17_Thermal Physics",
-    "18_Atomic and Nuclear Physics",
-    "19_Astrophysics",
-    "20_Physics Skills & Miscellaneous",
-    "21_Cell Biology and Organisation",
-    "22_Biological Molecules and Enzymes",
-    "23_Membranes, Exchange and Transport",
-    "24_Photosynthesis and Respiration",
-    "25_Genetics, Inheritance and Cell Division",
-    "26_Evolution, Variation and Classification",
-    "27_Ecology and Ecosystems",
-    "28_Plant Biology and Physiology",
-    "29_Animal and Human Physiology",
-    "30_Biotechnology and Genetic Engineering",
-    "31_Practical Skills",
-    "32_Atomic Structure and Periodicity",
-    "33_Bonding, Structure and States of Matter",
-    "34_Stoichiometry and Formulae",
-    "35_Energetics and Thermochemistry",
-    "36_Kinetics and Rates of Reaction",
-    "37_Equilibria, Acids and Bases",
-    "38_Redox and Electrochemistry",
-    "39_Inorganic Chemistry and Metals",
-    "40_Organic Chemistry",
-    "41_Analytical Chemistry and Separation"
+    ...TS_PHYSICS_TOPIC_ORDER,
+    ...TS_BIOLOGY_TOPIC_ORDER,
+    ...TS_CHEMISTRY_TOPIC_ORDER
   ];
+
+  const TS_PAPER_ORDER = [
+    "ESAT Mathematics 1",
+    "ESAT Mathematics 2",
+    "ESAT Physics",
+    "ESAT Chemistry",
+    "ESAT Biology"
+  ];
+
+  const TS_SUBJECT_LABELS = {
+    "ESAT Mathematics 1": "Maths 1",
+    "ESAT Mathematics 2": "Maths 2",
+    "ESAT Physics": "Physics",
+    "ESAT Chemistry": "Chemistry",
+    "ESAT Biology": "Biology"
+  };
+
+  const TS_LEGACY_PHYSICS_TOPIC_MAP = {
+    "12_Mechanics": "P3. Mechanics",
+    "13_Energy and Power": "P3. Mechanics",
+    "14_Electricity and Magnetism": "P1. Electricity",
+    "15_Waves and Optics": "P6. Waves",
+    "16_Materials and Fluids": "P5. Matter",
+    "17_Thermal Physics": "P4. Thermal physics",
+    "18_Atomic and Nuclear Physics": "P7. Radioactivity",
+    "19_Astrophysics": "P6. Waves",
+    "20_Physics Skills & Miscellaneous": "P3. Mechanics"
+  };
+
+  // The former Electricity and Magnetism bucket covered two official
+  // headings. Keep old saved filter state useful by expanding it to both.
+  const TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS = {
+    "14_Electricity and Magnetism": ["P1. Electricity", "P2. Magnetism"]
+  };
+
+  const TS_LEGACY_BIOLOGY_TOPIC_EXPANSIONS = {
+    "21_Cell Biology and Organisation": ["B1. Cells", "B2. Movement across membranes", "B3. Cell division and sex determination", "B6. Gene technologies", "B9. Animal physiology"],
+    "22_Biological Molecules and Enzymes": ["B5. DNA", "B8. Enzymes"],
+    "23_Membranes, Exchange and Transport": ["B2. Movement across membranes", "B9. Animal physiology"],
+    "24_Photosynthesis and Respiration": ["B8. Enzymes", "B9. Animal physiology", "B11. Plant physiology"],
+    "25_Genetics, Inheritance and Cell Division": ["B3. Cell division and sex determination", "B4. Inheritance", "B5. DNA", "B6. Gene technologies"],
+    "26_Evolution, Variation and Classification": ["B7. Variation"],
+    "27_Ecology and Ecosystems": ["B10. Ecosystems"],
+    "28_Plant Biology and Physiology": ["B11. Plant physiology"],
+    "29_Animal and Human Physiology": ["B9. Animal physiology"],
+    "30_Biotechnology and Genetic Engineering": ["B6. Gene technologies"],
+    "31_Practical Skills": ["B2. Movement across membranes", "B7. Variation"]
+  };
+
+  const TS_LEGACY_CHEMISTRY_TOPIC_EXPANSIONS = {
+    "32_Atomic Structure and Periodicity": ["C1. Atomic structure", "C2. The Periodic Table", "C7. Group chemistry"],
+    "33_Bonding, Structure and States of Matter": ["C6. Chemical bonding, structure and properties", "C8. Separation techniques", "C15. Kinetic/Particle theory", "C17. Air and water"],
+    "34_Stoichiometry and Formulae": ["C3. Chemical reactions, formulae and equations", "C4. Quantitative chemistry", "C6. Chemical bonding, structure and properties"],
+    "35_Energetics and Thermochemistry": ["C10. Rates of reaction", "C11. Energetics"],
+    "36_Kinetics and Rates of Reaction": ["C10. Rates of reaction"],
+    "37_Equilibria, Acids and Bases": ["C3. Chemical reactions, formulae and equations", "C4. Quantitative chemistry", "C9. Acids, bases and salts"],
+    "38_Redox and Electrochemistry": ["C5. Oxidation, reduction and redox", "C12. Electrolysis"],
+    "39_Inorganic Chemistry and Metals": ["C6. Chemical bonding, structure and properties", "C7. Group chemistry", "C14. Metals", "C16. Chemical tests"],
+    "40_Organic Chemistry": ["C13. Carbon/Organic chemistry"],
+    "41_Analytical Chemistry and Separation": ["C6. Chemical bonding, structure and properties", "C8. Separation techniques", "C15. Kinetic/Particle theory", "C16. Chemical tests"]
+  };
+
+  const TS_LEGACY_TOPIC_EXPANSIONS = Object.assign(
+    {},
+    TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS,
+    TS_LEGACY_BIOLOGY_TOPIC_EXPANSIONS,
+    TS_LEGACY_CHEMISTRY_TOPIC_EXPANSIONS
+  );
+
+  const TS_TOPIC_ORDERS_BY_PAPER = {
+    "ESAT Mathematics 1": TS_CHAPTER_ORDER.slice(0, 11),
+    "ESAT Mathematics 2": TS_CHAPTER_ORDER.slice(0, 11),
+    "ESAT Physics": TS_PHYSICS_TOPIC_ORDER,
+    "ESAT Biology": TS_BIOLOGY_TOPIC_ORDER,
+    "ESAT Chemistry": TS_CHEMISTRY_TOPIC_ORDER
+  };
+
+  function tsCanonicalPhysicsTopic(topic) {
+    const raw = String(topic || "").trim();
+    const match = raw.match(/^P\s*([1-7])\s*[.\-:]?\s*(.*)$/i);
+    if (!match) return TS_LEGACY_PHYSICS_TOPIC_MAP[raw] || raw;
+
+    const number = Number(match[1]);
+    return TS_PHYSICS_TOPIC_ORDER[number - 1] || raw;
+  }
+
+  function tsCanonicalPhysicsTopics(topic) {
+    const raw = String(topic || "").trim();
+    return TS_LEGACY_PHYSICS_TOPIC_EXPANSIONS[raw] || [tsCanonicalPhysicsTopic(raw)];
+  }
+
+  function tsLegacyTopicExpansion(topic) {
+    const raw = String(topic || "").trim();
+    return TS_LEGACY_TOPIC_EXPANSIONS[raw] || [raw];
+  }
 
   function tsChapterNumber(topic) {
     const raw = String(topic || "").trim();
+    if (/^P\s*[1-7]\s*[.\-:]/i.test(raw)) return 11 + Number(raw.match(/^P\s*([1-7])/i)[1]);
+    if (TS_LEGACY_PHYSICS_TOPIC_MAP[raw]) return 11 + Number(TS_PHYSICS_TOPIC_ORDER.indexOf(TS_LEGACY_PHYSICS_TOPIC_MAP[raw])) + 1;
     const m = raw.match(/^\s*(\d+)/);
     if (m) return Number(m[1]);
 
@@ -4356,16 +4486,80 @@ function uniqueSorted(arr) {
   }
 
   function tsCanonicalTopic(topic) {
+    const raw = String(topic || "").trim();
+    const legacyExpansion = TS_LEGACY_TOPIC_EXPANSIONS[raw];
+    if (legacyExpansion && legacyExpansion.length) return legacyExpansion[0];
+    if (/^P\s*[1-7]\s*[.\-:]/i.test(raw) || TS_LEGACY_PHYSICS_TOPIC_MAP[raw]) {
+      return tsCanonicalPhysicsTopic(raw);
+    }
     const n = tsChapterNumber(topic);
-    if (n >= 1 && n <= TS_CHAPTER_ORDER.length) {
+    if (n >= 1 && n <= 11) {
       return TS_CHAPTER_ORDER[n - 1];
     }
-    return String(topic || "General").trim() || "General";
+    return raw || "General";
+  }
+
+  function tsPaperRank(paper) {
+    const index = TS_PAPER_ORDER.indexOf(String(paper || ""));
+    return index >= 0 ? index : 999;
+  }
+
+  function tsTopicRank(paper, topic) {
+    const canonical = tsCanonicalTopic(topic);
+    const order = TS_TOPIC_ORDERS_BY_PAPER[String(paper || "")] || [];
+    const index = order.indexOf(canonical);
+    return index >= 0 ? index : tsChapterNumber(canonical);
+  }
+
+  function tsSubjectLabel(paper) {
+    return TS_SUBJECT_LABELS[String(paper || "")] || String(paper || "Subject");
+  }
+
+  function tsTopicKey(paper, topic) {
+    return String(paper || "") + "::" + tsCanonicalTopic(topic);
+  }
+
+  function tsTopicDisplayLabel(paper, topic) {
+    const canonical = tsCanonicalTopic(topic);
+    const displayTopic = canonical.replace(/^\d+_/, "");
+    return tsSubjectLabel(paper) + " — " + displayTopic;
+  }
+
+  function tsTopicOptions() {
+    const papers = Array.from(new Set(allMeta.map(q => String(q.paper || ""))))
+      .filter(Boolean)
+      .sort((a, b) => tsPaperRank(a) - tsPaperRank(b) || a.localeCompare(b));
+
+    const options = [];
+    papers.forEach(function(paper) {
+      const present = new Set(allMeta
+        .filter(q => String(q.paper || "") === paper)
+        .map(q => tsCanonicalTopic(q.topic)));
+      const preferred = TS_TOPIC_ORDERS_BY_PAPER[paper] || [];
+      const topics = preferred.filter(topic => present.has(topic));
+      Array.from(present)
+        .filter(topic => !topics.includes(topic))
+        .sort((a, b) => tsChapterNumber(a) - tsChapterNumber(b) || a.localeCompare(b))
+        .forEach(topic => topics.push(topic));
+      topics.forEach(function(topic) {
+        options.push({
+          value: tsTopicKey(paper, topic),
+          label: tsTopicDisplayLabel(paper, topic),
+          paper: paper,
+          topic: topic
+        });
+      });
+    });
+    return options;
   }
 
   function tsCanonicalSortQuestions(a, b) {
-    const ca = tsChapterNumber(a.topic);
-    const cb = tsChapterNumber(b.topic);
+    const pa = tsPaperRank(a.paper);
+    const pb = tsPaperRank(b.paper);
+    if (pa !== pb) return pa - pb;
+
+    const ca = tsTopicRank(a.paper, a.topic);
+    const cb = tsTopicRank(b.paper, b.topic);
 
     if (ca !== cb) return ca - cb;
 
@@ -4385,7 +4579,7 @@ function uniqueSorted(arr) {
       .slice()
       .sort(tsCanonicalSortQuestions)
       .map(function(q, idx) {
-        q.topic_rank = tsChapterNumber(q.topic);
+        q.topic_rank = tsTopicRank(q.paper, q.topic);
         q.topic_canonical = tsCanonicalTopic(q.topic);
         q.global_number = idx + 1;
         q.number = String(idx + 1);
@@ -4399,7 +4593,7 @@ function applyFilters() {
       const a = answerFor(q);
 
       if (state.filters.papers.length && !state.filters.papers.includes(q.paper)) return false;
-      if (state.filters.topics.length && !state.filters.topics.includes(tsCanonicalTopic(q.topic))) return false;
+      if (state.filters.topics.length && !state.filters.topics.includes(tsTopicKey(q.paper, q.topic))) return false;
       if (state.filters.difficulties.length && !state.filters.difficulties.includes(String(q.difficulty))) return false;
 
       if (state.filters.status === "unseen" && a.selected) return false;
@@ -4628,6 +4822,7 @@ function applyFilters() {
     if (!visibleList.length) {
       if (empty) empty.style.display = "block";
       if (card) card.style.display = "none";
+      setStartupPhase("ready");
       return;
     }
 
@@ -4636,6 +4831,10 @@ function applyFilters() {
 
     const meta = currentMeta();
     currentQuestion = await loadQuestion(meta);
+    const restoredAnswer = answerFor(meta);
+    if (restoredAnswer.checked) {
+      restoredAnswer.answer = currentQuestion.answer || currentQuestion.correct_answer || restoredAnswer.answer;
+    }
 
     setText("qTitle", "Question " + (meta.global_number || meta.paper_question_number || meta.display_order));
     setText("metaPaper", meta.paper || "");
@@ -4660,6 +4859,7 @@ function applyFilters() {
     }
 
     typeset();
+    setStartupPhase("ready");
   }
 
   async function go(delta) {
@@ -4673,27 +4873,38 @@ function applyFilters() {
     if (!box) return;
 
     box.innerHTML = values.map(function(v, i) {
-      const checked = currentValues.includes(String(v)) ? "checked" : "";
+      const option = typeof v === "string" ? { value: v, label: v } : v;
+      const checked = currentValues.includes(String(option.value)) ? "checked" : "";
       return '<label class="chk">' +
-        '<input type="checkbox" value="' + escapeHtml(v) + '" ' + checked + ' data-filter-kind="' + prefix + '">' +
-        escapeHtml(v) +
+        '<input type="checkbox" value="' + escapeHtml(option.value) + '" ' + checked + ' data-filter-kind="' + prefix + '">' +
+        '<span>' + escapeHtml(option.label) + '</span>' +
         '</label>';
     }).join("");
   }
 
   function buildFilters() {
-    // TS_ALL_41_TOPICS_FILTER_V1
-    state.filters.topics = Array.isArray(
-      state.filters.topics
-    )
-      ? state.filters.topics.filter(function(topic) {
-          return TS_CHAPTER_ORDER.includes(topic);
-        })
-      : [];
+    // Subject-prefixed values prevent identical topic names in Maths 1/2 and
+    // make the active subject clear to students.
+    const topicOptions = tsTopicOptions();
+    const validTopicValues = new Set(topicOptions.map(option => option.value));
+    const legacyTopicValues = Array.isArray(state.filters.topics) ? state.filters.topics : [];
+    state.filters.topics = legacyTopicValues.flatMap(function(value) {
+      const raw = String(value || "");
+      if (validTopicValues.has(raw)) return [raw];
+
+      const legacyTopics = tsLegacyTopicExpansion(raw).map(function(topic) {
+        return tsCanonicalTopic(topic);
+      });
+      return topicOptions
+        .filter(option => legacyTopics.includes(option.topic))
+        .map(option => option.value);
+    }).filter(function(value, index, values) {
+      return values.indexOf(value) === index;
+    });
 
     buildFilterCheckbox(
       "fTopics",
-      TS_CHAPTER_ORDER,
+      topicOptions,
       state.filters.topics,
       "topic"
     );
@@ -4813,26 +5024,18 @@ function applyFilters() {
 
       const groups = new Map();
 
-      TS_CHAPTER_ORDER.forEach(function(topic, idx) {
-        groups.set(topic, {
-          topic: topic,
-          rank: idx + 1,
-          questions: []
-        });
-      });
-
       sorted.forEach(function(q) {
-        const topic = tsCanonicalTopic(q.topic);
+        const key = tsTopicKey(q.paper, q.topic);
 
-        if (!groups.has(topic)) {
-          groups.set(topic, {
-            topic: topic,
-            rank: tsChapterNumber(topic),
+        if (!groups.has(key)) {
+          groups.set(key, {
+            topic: tsTopicDisplayLabel(q.paper, q.topic),
+            rank: tsPaperRank(q.paper) * 1000 + tsTopicRank(q.paper, q.topic),
             questions: []
           });
         }
 
-        groups.get(topic).questions.push(q);
+        groups.get(key).questions.push(q);
       });
 
       Array.from(groups.values())
@@ -4868,7 +5071,7 @@ function applyFilters() {
               btn.className = "nav-btn";
 
               const n = q.global_number || q.display_order;
-              const chapterLabel = tsCanonicalTopic(q.topic);
+              const chapterLabel = tsTopicDisplayLabel(q.paper, q.topic);
 
               btn.title = "Question " + n + " \u00B7 " + chapterLabel + (q.subtopic ? " \u00B7 " + q.subtopic : "");
 
@@ -5059,7 +5262,9 @@ function applyFilters() {
       const t = el("importText");
       if (!t || !t.value.trim()) return;
       try {
-        state = JSON.parse(t.value);
+        const imported = JSON.parse(t.value);
+        if (!imported || typeof imported !== "object" || Array.isArray(imported)) throw new Error("Invalid state");
+        state = normalizeState(imported);
         saveState();
         render();
       } catch(e) {
@@ -5086,14 +5291,15 @@ function applyFilters() {
       if (topicBreakdown) {
         const byTopic = new Map();
         allMeta.forEach(q => {
-          if (!byTopic.has(q.topic)) byTopic.set(q.topic, { total:0, done:0 });
-          const row = byTopic.get(q.topic);
+          const key = tsTopicKey(q.paper, q.topic);
+          if (!byTopic.has(key)) byTopic.set(key, { label: tsTopicDisplayLabel(q.paper, q.topic), total:0, done:0 });
+          const row = byTopic.get(key);
           row.total++;
           if (state.answers[questionKey(q)]?.checked) row.done++;
         });
 
-        topicBreakdown.innerHTML = Array.from(byTopic.entries()).map(([topic, row]) =>
-          '<div class="stat-row"><span>' + escapeHtml(topic) + '</span><strong>' + row.done + ' / ' + row.total + '</strong></div>'
+        topicBreakdown.innerHTML = Array.from(byTopic.values()).map(row =>
+          '<div class="stat-row"><span>' + escapeHtml(row.label) + '</span><strong>' + row.done + ' / ' + row.total + '</strong></div>'
         ).join("");
       }
 
@@ -5121,16 +5327,42 @@ function applyFilters() {
   window.STATE = STATE;
   window.DASH = DASH;
 
+  window.addEventListener("ts-qb-state-restored", function(event) {
+    if (!event.detail || event.detail.product !== "esat-question-bank") return;
+    const activeKey = questionKey(currentMeta());
+    state = normalizeState(event.detail.state, state);
+    if (allMeta.length) {
+      applyFilters();
+      buildFilters();
+      currentIndex = Math.max(0, visibleList.findIndex(meta => questionKey(meta) === activeKey));
+      render().catch(console.warn);
+    }
+  });
+
+  function setStartupPhase(phase) {
+    const panel = el("qbStartup");
+    if (!panel) return;
+    document.body.setAttribute("data-qb-phase", phase);
+    panel.setAttribute("aria-busy", phase === "loading" ? "true" : "false");
+    panel.setAttribute("role", phase === "error" ? "alert" : "status");
+    const retry = el("qbStartupRetry");
+    if (retry) retry.hidden = phase !== "error";
+    setText("qbStartupTitle", phase === "error" ? "Let’s try that again" : "Preparing your practice");
+    setText("qbStartupCopy", phase === "error"
+      ? "We couldn’t load your questions just now. Please try again."
+      : "Your questions and progress will be ready shortly.");
+  }
+
   async function boot() {
     try {
       loadState();
 
-      setText("qTitle", "Loading Questions...");
-      setHtml("qPrompt", "<p>Loading Questions...</p>");
+      setStartupPhase("loading");
       setHtml("qOptions", "");
 
       allMeta = await loadAllMeta();
       tsApplyFinalChapterOrder();
+      await hydrateCanonicalProgress();
       applyFilters();
       buildFilters();
 
@@ -5139,13 +5371,12 @@ function applyFilters() {
       await render();
     } catch(e) {
       console.error(e);
-      setHtml("qPrompt",
-        '<p style="color:#b91c1c;"><strong>Could not load Supabase bank.</strong></p>' +
-        '<pre style="white-space:pre-wrap;">' + escapeHtml(e && e.stack ? e.stack : e) + '</pre>'
-      );
+      setStartupPhase("error");
     }
   }
 
+  const startupRetry = el("qbStartupRetry");
+  if (startupRetry) startupRetry.addEventListener("click", boot);
   document.addEventListener("DOMContentLoaded", boot);
 })();
 </script>
@@ -5634,12 +5865,19 @@ function applyFilters() {
     ].join("|");
   }
 
+  // TS_QB_TIMER_ACCOUNT_SCOPE_V3: the old unowned key stays intact for recovery.
+  var timerOwner = window.TS_QB_TRANSPORT && window.TS_QB_TRANSPORT.account() || null;
+  var timerStopped = false;
+  var unassignedTimerKey = STATE_KEY + ":unassigned-v3:" + (
+    window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2)
+  );
+  function timerStorageKey() {
+    return timerOwner ? STATE_KEY + ":account-v3:" + timerOwner : unassignedTimerKey;
+  }
+
   function loadLocalState() {
     try {
-      var raw =
-        window.localStorage.getItem(
-          STATE_KEY
-        );
+      var raw = timerOwner ? window.localStorage.getItem(timerStorageKey()) : null;
 
       if (!raw) {
         return {
@@ -5676,18 +5914,52 @@ function applyFilters() {
     loadLocalState();
 
   function saveLocalState() {
+    if (timerStopped) return false;
     try {
       window.localStorage.setItem(
-        STATE_KEY,
-        JSON.stringify({
-          pendingMs:
-            localState.pendingMs,
-          finalSeconds:
-            localState.finalSeconds
-        })
+        timerStorageKey(),
+        JSON.stringify({ pendingMs: localState.pendingMs, finalSeconds: localState.finalSeconds })
       );
-    } catch (e) {}
+      return true;
+    } catch (e) {
+      window.TS_QB_LOCAL_STORAGE_UNAVAILABLE = true;
+      window.dispatchEvent(new CustomEvent("ts-qb-sync-status", { detail: "Browser storage is full. Keep this page open until your progress syncs." }));
+      return false;
+    }
   }
+
+  function bindTimerAccount(event) {
+    var id = event && event.detail && event.detail.user_id;
+    if (!id || timerStopped || timerOwner === id) return;
+    if (timerOwner && timerOwner !== id) { timerStopped = true; return; }
+    var fresh = localState;
+    timerOwner = id;
+    localState = loadLocalState();
+    // Add time accumulated in this fresh page to this account's unfinished time.
+    Object.keys(fresh.pendingMs).forEach(function (qid) {
+      if (!entries[qid]) localState.pendingMs[qid] = Math.max(0, Number(localState.pendingMs[qid]) || 0) + Math.max(0, Number(fresh.pendingMs[qid]) || 0);
+    });
+    Object.keys(entries).forEach(function (qid) {
+      var entry = entries[qid];
+      if (entry.frozen || entry.submittedWrong) return;
+      var elapsed = currentElapsedMs(entry);
+      entry.accumulatedMs = Math.max(0, Number(localState.pendingMs[qid]) || 0) + elapsed;
+      entry.startedAtMs = entry.running ? nowMs() : 0;
+      localState.pendingMs[qid] = entry.accumulatedMs;
+    });
+    Object.assign(localState.finalSeconds, fresh.finalSeconds);
+    if (saveLocalState()) {
+      try { window.localStorage.removeItem(unassignedTimerKey); } catch (e) {}
+    }
+  }
+  window.addEventListener("ts-qb-account", bindTimerAccount);
+  window.addEventListener("ts-qb-account-changed", function () {
+    timerStopped = true;
+    Object.keys(entries).forEach(function (qid) {
+      entries[qid].accumulatedMs = currentElapsedMs(entries[qid]);
+      entries[qid].running = false;
+    });
+  });
 
   function timerIsVisible() {
     try {
@@ -5864,6 +6136,15 @@ function applyFilters() {
   function currentMetaSafe() {
     try {
       if (
+        window.TS_ESAT_PROGRESS_BRIDGE_V1 &&
+        typeof window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta === "function"
+      ) {
+        return window.TS_ESAT_PROGRESS_BRIDGE_V1.currentMeta();
+      }
+    } catch (e) {}
+
+    try {
+      if (
         typeof currentMeta ===
         "function"
       ) {
@@ -5947,6 +6228,13 @@ function applyFilters() {
 
   function currentAppAnswer() {
     try {
+      if (
+        window.TS_ESAT_PROGRESS_BRIDGE_V1 &&
+        typeof window.TS_ESAT_PROGRESS_BRIDGE_V1.currentAnswer === "function"
+      ) {
+        return window.TS_ESAT_PROGRESS_BRIDGE_V1.currentAnswer();
+      }
+
       var meta =
         currentMetaSafe();
 
@@ -6374,6 +6662,10 @@ function applyFilters() {
         },
         body: JSON.stringify({
           product: PRODUCT,
+          identity_version:
+            PRODUCT === "esat-question-bank"
+              ? "esat-qid-v1"
+              : undefined,
           updates: [update]
         })
       }
@@ -7462,22 +7754,3 @@ function applyFilters() {
 })();
 </script>
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -9,6 +9,8 @@ const solutionsRoot = path.join("public","practice-tests","solutions");
 const challenge = fs.readFileSync(
   path.join(testsRoot,"tmua-2024-2025-challenging-mock","index.html"), "utf8"
 );
+const predictivePath = path.join(testsRoot,"tmua-2026-predictive-paper","index.html");
+const predictive = fs.readFileSync(predictivePath, "utf8");
 const fullscreen = fs.readFileSync(
   path.join("public","shared","test-fullscreen.js"), "utf8"
 );
@@ -36,7 +38,13 @@ for (const text of [
   "{officialPastPapers.map(",
   'test_id: "tmua-2024-2025-challenging-mock"',
   'file: "tmua-2024-2025-challenging-mock/index.html"',
-  'solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf"'
+  'solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf"',
+  'test_id: "tmua-2026-predictive-paper"',
+  'file: "tmua-2026-predictive-paper/index.html"',
+  'solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf"',
+  "isNew: true",
+  "styles.newBadge",
+  "t.solution_url || (await fetchSolutionPdfForFile(t.file))"
 ]) {
   if (!dashboard.includes(text)) fail(`Dashboard missing: ${text}`);
 }
@@ -67,6 +75,38 @@ for (const text of [
   "/shared/test-fullscreen.js?v=20260805-2"
 ]) {
   if (!challenge.includes(text)) fail(`Challenge test missing: ${text}`);
+}
+
+for (const text of [
+  '"id":"tmua-2026-predictive-paper"',
+  "/api/practice-tests/submit",
+  "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf",
+  "/shared/test-fullscreen.js?v=20260805-2",
+  "result.status!=='saved'&&result.ok!==true",
+  "portalAutoAttempted"
+]) {
+  if (!predictive.includes(text)) fail(`Predictive test missing: ${text}`);
+}
+
+const predictiveDataMatch = predictive.match(
+  /<script type="application\/json" id="tmua-data">([\s\S]*?)<\/script>/
+);
+if (!predictiveDataMatch) fail("Predictive test data pack is missing.");
+
+const predictiveData = JSON.parse(predictiveDataMatch[1]);
+if (predictiveData.id !== "tmua-2026-predictive-paper") {
+  fail(`Unexpected predictive test id: ${predictiveData.id}`);
+}
+if (predictiveData.papers?.length !== 2) fail("Predictive test must contain two papers.");
+for (const paper of predictiveData.papers) {
+  if (paper.questions?.length !== 20) fail(`${paper.id} must contain 20 questions.`);
+  for (const question of paper.questions) {
+    if (question.placeholder) fail(`Placeholder question found: ${question.id}`);
+    if (question.options?.length !== 5) fail(`${question.id} must have five options.`);
+    if (!question.correctAnswer || !question.solutionHtml || !question.tipHtml) {
+      fail(`${question.id} is missing its answer, solution or tip.`);
+    }
+  }
 }
 
 const pdf = path.join(
@@ -107,5 +147,5 @@ for (const file of htmlFiles) {
 }
 
 console.log(
-  `TMUA practice-test verification passed: 3 sections, 9 official papers, challenge mock, solution PDF and fullscreen across ${htmlFiles.length} HTML tests.`
+  `TMUA practice-test verification passed: 3 sections, 9 official papers, challenge mock, 40-question predictive test, solution PDF and fullscreen across ${htmlFiles.length} HTML tests.`
 );

@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
+import { isMissingSession, serviceFetch, withServiceTimeout } from "@/lib/auth/service-recovery";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -11,7 +12,9 @@ const NO_STORE_HEADERS = {
 };
 
 function requiredEnv(name: string) {
-  const value = process.env[name];
+  const value = name === "NEXT_PUBLIC_SUPABASE_URL"
+    ? process.env.NEXT_PUBLIC_SUPABASE_URL
+    : process.env[name];
   if (!value) throw new Error(`Missing environment variable: ${name}`);
   return value;
 }
@@ -27,7 +30,7 @@ function anonOrPublishableKey() {
 export function json(data: unknown, status = 200) {
   return NextResponse.json(data, {
     status,
-    headers: NO_STORE_HEADERS,
+    headers: { ...NO_STORE_HEADERS, ...(status === 503 ? { "Retry-After": "30" } : {}) },
   });
 }
 
@@ -36,6 +39,7 @@ export function adminClient() {
     requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
     requiredEnv("SUPABASE_SERVICE_ROLE_KEY"),
     {
+      global: { fetch: serviceFetch },
       auth: {
         persistSession: false,
         autoRefreshToken: false,
@@ -51,6 +55,7 @@ async function getUser() {
     requiredEnv("NEXT_PUBLIC_SUPABASE_URL"),
     anonOrPublishableKey(),
     {
+      global: { fetch: serviceFetch },
       cookies: {
         getAll() {
           return cookieStore.getAll();
@@ -62,12 +67,25 @@ async function getUser() {
     }
   );
 
-  const { data, error } = await supabase.auth.getUser();
+  const { data, error } = await withServiceTimeout(supabase.auth.getUser());
+  if (error && !isMissingSession(error)) throw new Error("Authentication service temporarily unavailable");
   if (error || !data.user) return null;
   return data.user;
 }
 
 export async function requireTmuaAccess() {
+  try {
+    return await checkTmuaAccess();
+  } catch (error) {
+    console.error("TMUA access service unavailable", error);
+    return {
+      ok: false as const,
+      response: json({ ok: false, error: "Access service temporarily unavailable" }, 503),
+    };
+  }
+}
+
+async function checkTmuaAccess() {
   // Local-only bypass so you can test the Supabase-backed question bank
   // without needing magic-link login on localhost.
   if (
@@ -97,13 +115,14 @@ export async function requireTmuaAccess() {
     .select("approved")
     .eq("email", email)
     .eq("product", "tmua-question-bank")
-    .maybeSingle();
+    .maybeSingle()
+    .retry(false);
 
   if (error) {
     console.error("TMUA access check failed:", error);
     return {
       ok: false as const,
-      response: json({ ok: false, error: "Access check failed" }, 500),
+      response: json({ ok: false, error: "Access service temporarily unavailable" }, 503),
     };
   }
 

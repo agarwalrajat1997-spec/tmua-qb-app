@@ -11,7 +11,7 @@ import styles from "../dashboard/TmuaPredictionStrip.module.css";
 const PREPARATION_RANK_MODEL_NAME = "ESAT Preparation Rank";
 
 // Display calibration mirrors the existing TMUA preparation strip.
-// The server continues to return the genuine rolling 30-day portal cohort.
+// A rank is displayed only when the server supplies an available cohort rank.
 const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;
 const PREPARATION_COHORT_DISPLAY_MULTIPLIER = 3.0000;
 
@@ -41,6 +41,7 @@ type PredictorOverview = {
 };
 
 type PreparationRankOverview = {
+  status?: "temporarily_unavailable";
   modelVersion: string;
   hasGenuinePreparationEvidence: boolean;
   score: number | null;
@@ -215,6 +216,8 @@ export default function EsatPredictionStrip() {
           </InfoTooltip>
         </span>
       )
+    : preparationRank?.status === "temporarily_unavailable"
+    ? <span>Ranking is temporarily unavailable. Your practice score still updates.</span>
     : (
         <span>
           Ranking unlocks with recognised test or Question Bank evidence.
