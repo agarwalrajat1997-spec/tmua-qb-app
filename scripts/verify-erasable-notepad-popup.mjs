@@ -13,9 +13,16 @@ const dashboardRouter = readFileSync(
   "utf8",
 );
 
-assert.match(popup, /erasable_notepad_promo_dismissed/);
+assert.match(popup, /erasable_notepad_promo_2026_09_29_30_dismissed/);
+assert.match(popup, /2026-09-29T00:00:00\+05:30/);
+assert.match(popup, /2026-10-01T00:00:00\+05:30/);
+assert.match(popup, /now >= CAMPAIGN_START && now < CAMPAIGN_END/);
 assert.match(popup, /window\.localStorage\.setItem/);
-assert.match(popup, /Max-Age=315360000/);
+assert.match(popup, /Math\.ceil\(\(CAMPAIGN_END - Date\.now\(\)\) \/ 1000\)/);
+assert.match(
+  popup,
+  /Max-Age=\$\{remainingSeconds\}; Domain=thrivingscholars\.com; Path=\/; SameSite=Lax; Secure/,
+);
 assert.match(popup, /<dialog/);
 assert.match(popup, /onCancel=/);
 assert.match(popup, /data-testid="erasable-notepad-popup"/);

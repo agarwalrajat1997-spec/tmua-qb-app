@@ -4,7 +4,9 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./erasable-notepad-popup.module.css";
 
-const DISMISSAL_KEY = "erasable_notepad_promo_dismissed";
+const DISMISSAL_KEY = "erasable_notepad_promo_2026_09_29_30_dismissed";
+const CAMPAIGN_START = Date.parse("2026-09-29T00:00:00+05:30");
+const CAMPAIGN_END = Date.parse("2026-10-01T00:00:00+05:30");
 const PRODUCT_URL =
   "https://www.thrivingscholars.com/tmua-esat-tara-erasable-practice-notepad";
 const KIT_IMAGE_URL =
@@ -57,6 +59,10 @@ function isPortalRoute(pathname: string, search: string) {
   );
 }
 
+function isCampaignActive(now = Date.now()) {
+  return now >= CAMPAIGN_START && now < CAMPAIGN_END;
+}
+
 function hasDismissalCookie() {
   return document.cookie
     .split(";")
@@ -80,7 +86,11 @@ function saveDismissal() {
     // The cookie below provides the persistence fallback.
   }
 
-  document.cookie = `${DISMISSAL_KEY}=1; Max-Age=315360000; Path=/; SameSite=Lax; Secure`;
+  const remainingSeconds = Math.max(
+    0,
+    Math.ceil((CAMPAIGN_END - Date.now()) / 1000),
+  );
+  document.cookie = `${DISMISSAL_KEY}=1; Max-Age=${remainingSeconds}; Domain=thrivingscholars.com; Path=/; SameSite=Lax; Secure`;
 }
 
 export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
@@ -102,10 +112,22 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
   }, []);
 
   useEffect(() => {
-    const eligible =
-      forcePortal || isPortalRoute(pathname || "", window.location.search);
+    function refreshVisibility() {
+      const eligible =
+        forcePortal || isPortalRoute(pathname || "", window.location.search);
 
-    setShouldRender(eligible && !wasDismissed());
+      setShouldRender(eligible && isCampaignActive() && !wasDismissed());
+    }
+
+    refreshVisibility();
+
+    const now = Date.now();
+    const nextBoundary = now < CAMPAIGN_START ? CAMPAIGN_START : CAMPAIGN_END;
+    const delay = nextBoundary - now;
+    if (delay <= 0 || delay > 2_147_483_647) return;
+
+    const timer = window.setTimeout(refreshVisibility, delay);
+    return () => window.clearTimeout(timer);
   }, [forcePortal, pathname]);
 
   useEffect(() => {

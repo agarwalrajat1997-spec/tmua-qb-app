@@ -27,6 +27,22 @@ for (const executablePath of executableCandidates) {
 if (!browser) throw lastLaunchError || new Error("No supported browser found.");
 
 const context = await browser.newContext({ viewport: { width: 1440, height: 960 } });
+await context.addInitScript(() => {
+  const fixedNow = new Date("2026-09-29T12:00:00+05:30").valueOf();
+  const RealDate = Date;
+
+  class FixedDate extends RealDate {
+    constructor(...args) {
+      super(...(args.length ? args : [fixedNow]));
+    }
+
+    static now() {
+      return fixedNow;
+    }
+  }
+
+  globalThis.Date = FixedDate;
+});
 const page = await context.newPage();
 const errors = [];
 
@@ -37,9 +53,9 @@ page.on("console", (message) => {
 
 async function clearDismissal() {
   await page.evaluate(() => {
-    localStorage.removeItem("erasable_notepad_promo_dismissed");
+    localStorage.removeItem("erasable_notepad_promo_2026_09_29_30_dismissed");
     document.cookie =
-      "erasable_notepad_promo_dismissed=; Max-Age=0; Path=/; SameSite=Lax";
+      "erasable_notepad_promo_2026_09_29_30_dismissed=; Max-Age=0; Domain=thrivingscholars.com; Path=/; SameSite=Lax";
   });
 }
 
@@ -81,7 +97,7 @@ try {
   }).click();
   assert.equal(
     await page.evaluate(() =>
-      localStorage.getItem("erasable_notepad_promo_dismissed"),
+      localStorage.getItem("erasable_notepad_promo_2026_09_29_30_dismissed"),
     ),
     "1",
   );
