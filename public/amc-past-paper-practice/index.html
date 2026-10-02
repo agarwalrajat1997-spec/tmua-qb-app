@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AMC 8 & AMC 10 Past Papers by Topic | Thriving Scholars</title>
+    <meta
+      name="description"
+      content="Browse 2,325 AMC 8 and AMC 10 past-paper problems by topic, paper and difficulty, with credited links to each question and explanation."
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <style>
+      :root {
+        --wine: #7f1d25;
+        --wine-dark: #5c1017;
+        --amber: #ffc84b;
+        --amber-soft: #fff1c9;
+        --cream: #fffaf0;
+        --paper: #ffffff;
+        --ink: #2d2926;
+        --muted: #6c625c;
+        --line: #e7ddd3;
+        --blue: #116fad;
+        --green: #21794a;
+        --shadow: 0 14px 34px rgba(91, 41, 27, 0.1);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      button, select, input { font: inherit; }
+      button, select, input[type="search"] {
+        min-height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        color: var(--ink);
+      }
+      button { cursor: pointer; font-weight: 850; }
+      button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible {
+        outline: 3px solid #d78d17;
+        outline-offset: 3px;
+      }
+      a { color: var(--wine); text-underline-offset: 3px; }
+      [hidden] { display: none !important; }
+
+      .shell { width: min(1180px, calc(100% - 30px)); margin: 0 auto; padding: 22px 0 34px; }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: var(--amber);
+        border: 1px solid #e8ad28;
+      }
+      .brand { color: #17110e; text-decoration: none; font-weight: 950; letter-spacing: -0.04em; font-size: 22px; }
+      .brand small { display: block; margin-top: 1px; color: #5d4318; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; }
+      .toplink { color: #38160f; font-weight: 850; font-size: 14px; }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 30px;
+        align-items: end;
+        padding: 40px 6px 26px;
+      }
+      .eyebrow { margin: 0 0 9px; color: var(--wine); font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; }
+      h1 { margin: 0; max-width: 830px; font-size: clamp(34px, 5.8vw, 68px); line-height: 0.97; letter-spacing: -0.055em; }
+      .lede { max-width: 780px; margin: 16px 0 0; color: var(--muted); font-size: 17px; }
+      .countcard { min-width: 210px; padding: 18px 20px; border-radius: 18px; background: var(--wine); color: #fff; box-shadow: var(--shadow); }
+      .countcard strong { display: block; font-size: 31px; line-height: 1; }
+      .countcard span { display: block; margin-top: 7px; font-size: 13px; color: #f7dadd; }
+
+      .filter-card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+      .filter-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+      .modes { display: flex; gap: 5px; padding: 4px; border-radius: 14px; background: #f5eee7; }
+      .modes button { min-width: 112px; min-height: 39px; padding: 7px 14px; border: 0; background: transparent; }
+      .modes button[aria-pressed="true"] { background: var(--wine); color: #fff; }
+      .exam-toggle { display: flex; gap: 9px; border: 0; padding: 0; margin: 0; }
+      .exam-toggle legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      .exam-toggle label { display: flex; align-items: center; gap: 7px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; font-weight: 850; cursor: pointer; }
+      .exam-toggle input { width: 17px; height: 17px; accent-color: var(--wine); }
+      .filters { display: grid; grid-template-columns: 1.35fr 1fr 1fr 1.2fr; gap: 12px; margin-top: 16px; }
+      .field { display: grid; gap: 5px; min-width: 0; color: #433934; font-size: 13px; font-weight: 850; }
+      .field select, .field input { width: 100%; padding: 9px 12px; min-width: 0; font-weight: 500; }
+      .filter-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+
+      .summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 18px 2px; color: var(--muted); font-size: 14px; }
+      .summary strong { color: var(--ink); }
+      .reset { border: 0; background: transparent; color: var(--wine); text-decoration: underline; min-height: 34px; }
+
+      .problem-card { overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: #fff; box-shadow: var(--shadow); }
+      .problem-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 22px; background: #fff5df; border-bottom: 1px solid var(--line); }
+      .problem-kicker { margin: 0 0 5px; color: var(--wine); font-size: 12px; font-weight: 950; letter-spacing: 0.11em; text-transform: uppercase; }
+      .problem-head h2 { margin: 0; font-size: clamp(25px, 3.5vw, 38px); letter-spacing: -0.035em; line-height: 1.05; }
+      .paper-chip { flex: 0 0 auto; padding: 8px 11px; border: 1px solid #dabfb0; border-radius: 999px; background: #fff; color: var(--wine); font-size: 13px; font-weight: 900; }
+      .problem-body { display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 22px; padding: 24px; }
+      .topic-title { margin: 0 0 10px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.11em; font-weight: 900; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .chip { padding: 7px 10px; border-radius: 999px; background: #f8f3ee; border: 1px solid var(--line); font-weight: 800; font-size: 13px; }
+      .chip.primary { background: var(--amber-soft); border-color: #eacb70; color: #612115; }
+      .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 22px; }
+      .detail { min-height: 98px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: #fffdf9; }
+      .detail b { display: block; margin-bottom: 5px; color: var(--wine); font-size: 13px; }
+      .detail span { color: var(--muted); font-size: 14px; }
+      .source-box { padding: 18px; border-radius: 17px; background: var(--wine); color: #fff; align-self: stretch; }
+      .source-box .badge { display: inline-flex; padding: 5px 8px; border-radius: 999px; background: #fff3; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; }
+      .source-box h3 { margin: 13px 0 7px; font-size: 22px; line-height: 1.1; }
+      .source-box p { margin: 0; color: #f5dfe1; font-size: 14px; }
+      .source-button { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 48px; margin-top: 16px; padding: 10px 14px; border-radius: 12px; background: var(--amber); color: #31110d; text-decoration: none; font-weight: 950; text-align: center; }
+      .source-button:hover { background: #ffd66f; }
+      .secondary-link { display: block; margin-top: 12px; color: #fff; font-size: 13px; text-align: center; }
+
+      .navigation { display: grid; grid-template-columns: auto minmax(220px, 1fr) auto; align-items: center; gap: 12px; margin: 18px 0; }
+      .navigation button { padding: 10px 18px; background: #fff; }
+      .navigation button:disabled { opacity: 0.42; cursor: default; }
+      .jump { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--muted); font-size: 13px; }
+      .jump select { width: min(100%, 430px); padding: 8px 10px; }
+
+      .rights-note { margin-top: 20px; padding: 16px 18px; border-radius: 15px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 12px; }
+      .rights-note strong { color: var(--ink); }
+      .loading, .empty { padding: 60px 22px; border: 1px dashed #cfb9a9; border-radius: 20px; text-align: center; background: #fff; }
+      .loading strong, .empty strong { display: block; font-size: 21px; }
+      .loading span, .empty span { color: var(--muted); }
+
+      @media (max-width: 850px) {
+        .hero { grid-template-columns: 1fr; }
+        .countcard { width: min(100%, 340px); }
+        .filters { grid-template-columns: 1fr 1fr; }
+        .problem-body { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 560px) {
+        .shell { width: min(100% - 20px, 1180px); padding-top: 10px; }
+        .topbar { align-items: flex-start; padding: 13px; }
+        .brand { font-size: 19px; }
+        .toplink { max-width: 100px; text-align: right; font-size: 12px; }
+        .hero { padding: 29px 3px 20px; gap: 18px; }
+        .lede { font-size: 15px; }
+        .filter-card { padding: 13px; }
+        .filter-head { align-items: flex-start; }
+        .filters { grid-template-columns: 1fr; }
+        .problem-head { padding: 18px 15px; }
+        .paper-chip { display: none; }
+        .problem-body { padding: 18px 15px; }
+        .detail-grid { grid-template-columns: 1fr; }
+        .navigation { grid-template-columns: 1fr 1fr; }
+        .jump { grid-column: 1 / -1; grid-row: 2; }
+        .summary { align-items: flex-start; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="https://www.thrivingscholars.com" target="_blank" rel="noopener noreferrer">
+          Thriving Scholars
+          <small>AMC past-paper practice</small>
+        </a>
+        <a class="toplink" href="/amc?section=past-papers">Return to AMC workspace →</a>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">AMC 8 + AMC 10 topic index</p>
+          <h1>Find the right past-paper problem in seconds.</h1>
+          <p class="lede">
+            Filter 2,325 indexed AMC problems by paper, topic and difficulty. Each result opens the exact question and explanation on a credited contest archive.
+          </p>
+        </div>
+        <aside class="countcard" aria-label="Archive size">
+          <strong id="hero-count">2,325</strong>
+          <span>problems across 93 papers</span>
+        </aside>
+      </section>
+
+      <section class="filter-card" aria-label="Past-paper filters">
+        <div class="filter-head">
+          <div class="modes" role="group" aria-label="Browse mode">
+            <button id="mode-topic" type="button" aria-pressed="true">By topic</button>
+            <button id="mode-paper" type="button" aria-pressed="false">By paper</button>
+          </div>
+          <fieldset class="exam-toggle">
+            <legend>Include contests</legend>
+            <label><input type="checkbox" name="contest" value="AMC 8" checked /> AMC 8</label>
+            <label><input type="checkbox" name="contest" value="AMC 10" checked /> AMC 10</label>
+          </fieldset>
+        </div>
+        <div class="filters">
+          <label class="field" id="topic-field">
+            Topic
+            <select id="topic"></select>
+          </label>
+          <label class="field" id="paper-field" hidden>
+            Past paper
+            <select id="paper"></select>
+          </label>
+          <label class="field">
+            Difficulty
+            <select id="difficulty">
+              <option value="">All levels</option>
+              <option>Foundation</option>
+              <option>Developing</option>
+              <option>Intermediate</option>
+              <option>Challenging</option>
+              <option>Advanced</option>
+            </select>
+          </label>
+          <label class="field">
+            Question range
+            <select id="range">
+              <option value="">All questions</option>
+              <option value="1-10">Questions 1–10</option>
+              <option value="11-20">Questions 11–20</option>
+              <option value="21-25">Questions 21–25</option>
+            </select>
+          </label>
+          <label class="field">
+            Search concepts
+            <input id="search" type="search" placeholder="e.g. circles, ratios, counting" />
+          </label>
+        </div>
+        <p class="filter-note">Difficulty is a practice band from the supplied topic index, not an official MAA rating.</p>
+      </section>
+
+      <div class="summary">
+        <span id="summary" aria-live="polite">Loading the archive…</span>
+        <button class="reset" id="reset" type="button">Reset filters</button>
+      </div>
+
+      <div id="loading" class="loading"><strong>Preparing the AMC archive</strong><span>This should take only a moment.</span></div>
+      <div id="empty" class="empty" hidden><strong>No problems match these filters.</strong><span>Try another topic, paper or difficulty.</span></div>
+
+      <article id="problem" class="problem-card" hidden>
+        <header class="problem-head">
+          <div>
+            <p class="problem-kicker" id="contest-label"></p>
+            <h2 id="problem-title"></h2>
+          </div>
+          <span class="paper-chip" id="paper-chip"></span>
+        </header>
+        <div class="problem-body">
+          <div>
+            <p class="topic-title">Topic classification</p>
+            <div class="chips" id="topic-chips"></div>
+            <div class="detail-grid">
+              <div class="detail"><b>Concepts in this problem</b><span id="concepts"></span></div>
+              <div class="detail"><b>Useful techniques</b><span id="techniques"></span></div>
+            </div>
+          </div>
+          <aside class="source-box">
+            <span class="badge">Credited source</span>
+            <h3>Attempt the original problem</h3>
+            <p>Open the exact contest question, then review the answer and explanation at the authorised archive.</p>
+            <a class="source-button" id="source-link" target="_blank" rel="noopener noreferrer">Open question + explanation ↗</a>
+            <a class="secondary-link" id="compendium-link" target="_blank" rel="noopener noreferrer">Open the full compendium PDF</a>
+          </aside>
+        </div>
+      </article>
+
+      <nav id="navigation" class="navigation" aria-label="Problem navigation" hidden>
+        <button id="previous" type="button">← Previous</button>
+        <label class="jump" for="jump"><span id="position"></span><select id="jump" aria-label="Jump to a problem"></select></label>
+        <button id="next" type="button">Next →</button>
+      </nav>
+
+      <footer class="rights-note">
+        <strong>Source and rights note.</strong> AMC contest material is owned by the Mathematical Association of America. Thriving Scholars provides the independent topic and difficulty index only. Questions and explanations open on the credited host; this page does not bulk-copy or frame third-party contest content. Thriving Scholars is not affiliated with or endorsed by MAA, AoPS or LIVE by Po-Shen Loh.
+      </footer>
+    </main>
+
+    <script>
+      "use strict";
+
+      const els = Object.fromEntries(
+        [
+          "mode-topic", "mode-paper", "topic-field", "paper-field", "topic", "paper", "difficulty", "range", "search",
+          "summary", "reset", "loading", "empty", "problem", "contest-label", "problem-title", "paper-chip", "topic-chips",
+          "concepts", "techniques", "source-link", "compendium-link", "navigation", "previous", "next", "position", "jump"
+        ].map((id) => [id, document.getElementById(id)])
+      );
+
+      let archive = null;
+      let results = [];
+      let position = 0;
+      let mode = "topic";
+      const params = new URLSearchParams(location.search);
+
+      function checkedContests() {
+        return [...document.querySelectorAll('input[name="contest"]:checked')].map((input) => input.value);
+      }
+
+      function option(value, label = value) {
+        const node = document.createElement("option");
+        node.value = value;
+        node.textContent = label;
+        return node;
+      }
+
+      function populateFilters() {
+        els.topic.replaceChildren(option("", "All topics"));
+        archive.topics.forEach((topic) => els.topic.append(option(topic)));
+
+        els.paper.replaceChildren(option("", "All papers"));
+        ["AMC 8", "AMC 10"].forEach((contest) => {
+          const group = document.createElement("optgroup");
+          group.label = contest;
+          const papers = [...new Set(archive.problems.filter((problem) => problem.contest === contest).map((problem) => problem.paper))];
+          papers.sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
+          papers.forEach((paper) => group.append(option(`${contest}|${paper}`, `${contest} · ${paper}`)));
+          els.paper.append(group);
+        });
+
+        const requestedTopic = params.get("topic");
+        const requestedPaper = params.get("paper");
+        const requestedContest = params.get("contest");
+        if (requestedTopic && archive.topics.includes(requestedTopic)) els.topic.value = requestedTopic;
+        if (requestedPaper) {
+          const value = requestedContest ? `${requestedContest}|${requestedPaper}` : [...els.paper.options].find((item) => item.value.endsWith(`|${requestedPaper}`))?.value;
+          if (value) els.paper.value = value;
+        }
+        if (params.get("mode") === "paper" || requestedPaper) setMode("paper", false);
+      }
+
+      function setMode(nextMode, refresh = true) {
+        mode = nextMode;
+        const topicMode = mode === "topic";
+        els["mode-topic"].setAttribute("aria-pressed", String(topicMode));
+        els["mode-paper"].setAttribute("aria-pressed", String(!topicMode));
+        els["topic-field"].hidden = !topicMode;
+        els["paper-field"].hidden = topicMode;
+        if (refresh) applyFilters();
+      }
+
+      function inRange(number, range) {
+        if (!range) return true;
+        const [start, end] = range.split("-").map(Number);
+        return number >= start && number <= end;
+      }
+
+      function applyFilters() {
+        if (!archive) return;
+        const contests = checkedContests();
+        const selectedTopic = els.topic.value;
+        const selectedPaper = els.paper.value;
+        const selectedDifficulty = els.difficulty.value;
+        const selectedRange = els.range.value;
+        const query = els.search.value.trim().toLowerCase();
+
+        results = archive.problems.filter((problem) => {
+          if (!contests.includes(problem.contest)) return false;
+          if (mode === "topic" && selectedTopic && !problem.topics.includes(selectedTopic)) return false;
+          if (mode === "paper" && selectedPaper !== `${problem.contest}|${problem.paper}`) return false;
+          if (selectedDifficulty && problem.difficulty !== selectedDifficulty) return false;
+          if (!inRange(problem.number, selectedRange)) return false;
+          if (query) {
+            const haystack = [problem.title, ...problem.topics, ...problem.concepts, ...problem.techniques].join(" ").toLowerCase();
+            if (!haystack.includes(query)) return false;
+          }
+          return true;
+        });
+
+        results.sort((a, b) => a.contest.localeCompare(b.contest) || a.paper.localeCompare(b.paper, undefined, { numeric: true }) || a.number - b.number);
+        position = Math.min(position, Math.max(0, results.length - 1));
+        render();
+        writeUrl();
+      }
+
+      function textOrFallback(values, fallback) {
+        return values && values.length ? values.join(" · ") : fallback;
+      }
+
+      function render() {
+        els.loading.hidden = true;
+        els.summary.innerHTML = `<strong>${results.length.toLocaleString("en-GB")}</strong> matching problem${results.length === 1 ? "" : "s"}`;
+        els.empty.hidden = results.length > 0;
+        els.problem.hidden = results.length === 0;
+        els.navigation.hidden = results.length === 0;
+        if (!results.length) return;
+
+        const problem = results[position];
+        els["contest-label"].textContent = `${problem.contest} past paper · ${problem.difficulty}`;
+        els["problem-title"].textContent = problem.title;
+        els["paper-chip"].textContent = `${problem.paper} · Q${problem.number}`;
+        els["topic-chips"].replaceChildren(...problem.topics.map((topic, index) => {
+          const chip = document.createElement("span");
+          chip.className = `chip${index === 0 ? " primary" : ""}`;
+          chip.textContent = topic;
+          return chip;
+        }));
+        els.concepts.textContent = textOrFallback(problem.concepts, "Mixed contest reasoning");
+        els.techniques.textContent = textOrFallback(problem.techniques, "Choose a method after attempting the problem");
+        els["source-link"].href = problem.sourceUrl;
+        els["compendium-link"].href = problem.contest === "AMC 8"
+          ? "/amc-resources/amc-8-compendium.pdf"
+          : "/amc-resources/amc-10-compendium.pdf";
+        els.position.textContent = `${position + 1} of ${results.length}`;
+        els.previous.disabled = position === 0;
+        els.next.disabled = position === results.length - 1;
+
+        els.jump.replaceChildren(...results.map((item, index) => option(String(index), `${item.paper} Q${item.number} · ${item.topics.join(" / ")}`)));
+        els.jump.value = String(position);
+      }
+
+      function writeUrl() {
+        const problem = results[position];
+        const next = new URLSearchParams();
+        next.set("mode", mode);
+        if (mode === "topic" && els.topic.value) next.set("topic", els.topic.value);
+        if (mode === "paper" && els.paper.value) {
+          const [contest, paper] = els.paper.value.split("|");
+          next.set("contest", contest);
+          next.set("paper", paper);
+        }
+        if (els.difficulty.value) next.set("difficulty", els.difficulty.value);
+        if (problem) next.set("question", problem.id);
+        history.replaceState({}, "", `${location.pathname}?${next}`);
+      }
+
+      function reset() {
+        document.querySelectorAll('input[name="contest"]').forEach((input) => { input.checked = true; });
+        els.topic.value = "";
+        els.paper.value = "";
+        els.difficulty.value = "";
+        els.range.value = "";
+        els.search.value = "";
+        position = 0;
+        setMode("topic");
+      }
+
+      els["mode-topic"].addEventListener("click", () => setMode("topic"));
+      els["mode-paper"].addEventListener("click", () => setMode("paper"));
+      document.querySelectorAll('input[name="contest"]').forEach((input) => input.addEventListener("change", () => { position = 0; applyFilters(); }));
+      [els.topic, els.paper, els.difficulty, els.range].forEach((control) => control.addEventListener("change", () => { position = 0; applyFilters(); }));
+      els.search.addEventListener("input", () => { position = 0; applyFilters(); });
+      els.reset.addEventListener("click", reset);
+      els.previous.addEventListener("click", () => { if (position > 0) { position -= 1; render(); writeUrl(); els.problem.scrollIntoView({ behavior: "smooth", block: "start" }); } });
+      els.next.addEventListener("click", () => { if (position < results.length - 1) { position += 1; render(); writeUrl(); els.problem.scrollIntoView({ behavior: "smooth", block: "start" }); } });
+      els.jump.addEventListener("change", () => { position = Number(els.jump.value); render(); writeUrl(); });
+
+      fetch("./archive.json")
+        .then((response) => {
+          if (!response.ok) throw new Error(`Archive returned ${response.status}`);
+          return response.json();
+        })
+        .then((data) => {
+          archive = data;
+          document.getElementById("hero-count").textContent = data.counts.problems.toLocaleString("en-GB");
+          populateFilters();
+          if (params.get("difficulty")) els.difficulty.value = params.get("difficulty");
+          applyFilters();
+          const requestedQuestion = params.get("question");
+          if (requestedQuestion) {
+            const requestedPosition = results.findIndex((problem) => problem.id === requestedQuestion);
+            if (requestedPosition >= 0) { position = requestedPosition; render(); }
+          }
+        })
+        .catch((error) => {
+          els.loading.innerHTML = `<strong>The archive could not load.</strong><span>${error.message}. Please refresh the page.</span>`;
+        });
+    </script>
+  </body>
+</html>

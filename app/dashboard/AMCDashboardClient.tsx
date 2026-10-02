@@ -6,11 +6,11 @@ import styles from "./dashboard.module.css";
 type Props = {
   email?: string | null;
   hasTmua?: boolean;
-  initialSection?: "practice-tests" | "resources" | null;
+  initialSection?: "past-papers" | "practice-tests" | "resources" | null;
 };
 
 type AMCPaper = "AMC 8" | "AMC 10" | "AMC 12";
-type AMCView = AMCPaper | "Practice Tests" | "Resources";
+type AMCView = AMCPaper | "Past Papers" | "Practice Tests" | "Resources";
 
 const PAPERS: Array<{
   paper: AMCPaper;
@@ -226,7 +226,9 @@ function bankUrl(paper: AMCPaper) {
 
 export default function AMCDashboardClient({ email, hasTmua, initialSection }: Props) {
   const [active, setActive] = useState<AMCView>(
-    initialSection === "practice-tests"
+    initialSection === "past-papers"
+      ? "Past Papers"
+      : initialSection === "practice-tests"
       ? "Practice Tests"
       : initialSection === "resources"
         ? "Resources"
@@ -234,7 +236,7 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
   );
 
   const activePaper =
-    active === "Practice Tests" || active === "Resources"
+    active === "Past Papers" || active === "Practice Tests" || active === "Resources"
       ? null
       : PAPERS.find((paper) => paper.paper === active) || PAPERS[0];
 
@@ -242,7 +244,8 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
     setActive(view);
 
     const url = new URL(window.location.href);
-    if (view === "Practice Tests") url.searchParams.set("section", "practice-tests");
+    if (view === "Past Papers") url.searchParams.set("section", "past-papers");
+    else if (view === "Practice Tests") url.searchParams.set("section", "practice-tests");
     else if (view === "Resources") url.searchParams.set("section", "resources");
     else url.searchParams.delete("section");
     window.history.replaceState({}, "", url);
@@ -298,12 +301,23 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
             ))}
             <li>
               <button
+                className={`${styles.navBtn} ${active === "Past Papers" ? styles.navBtnOn : ""}`}
+                onClick={() => selectView("Past Papers")}
+                type="button"
+                title="AMC Past Papers by Topic"
+              >
+                <span className={styles.step}>4</span>
+                <span className={styles.navLabel}>Past Papers</span>
+              </button>
+            </li>
+            <li>
+              <button
                 className={`${styles.navBtn} ${active === "Practice Tests" ? styles.navBtnOn : ""}`}
                 onClick={() => selectView("Practice Tests")}
                 type="button"
                 title="AMC Practice Tests"
               >
-                <span className={styles.step}>4</span>
+                <span className={styles.step}>5</span>
                 <span className={styles.navLabel}>Practice Tests</span>
               </button>
             </li>
@@ -314,7 +328,7 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
                 type="button"
                 title="AMC Resources"
               >
-                <span className={styles.step}>5</span>
+                <span className={styles.step}>6</span>
                 <span className={styles.navLabel}>Resources</span>
               </button>
             </li>
@@ -358,6 +372,13 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
               </button>
             ))}
             <button
+              className={`${styles.mobileNavBtn} ${active === "Past Papers" ? styles.mobileNavBtnOn : ""}`}
+              onClick={() => selectView("Past Papers")}
+              type="button"
+            >
+              Past Papers
+            </button>
+            <button
               className={`${styles.mobileNavBtn} ${active === "Practice Tests" ? styles.mobileNavBtnOn : ""}`}
               onClick={() => selectView("Practice Tests")}
               type="button"
@@ -373,7 +394,45 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
             </button>
           </nav>
 
-          {active === "Practice Tests" ? (
+          {active === "Past Papers" ? (
+            <>
+              <div className={styles.h1}>AMC Past Papers</div>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.dot} /> 2,325 indexed problems
+                </div>
+                <div className={styles.meta}>AMC 8 · AMC 10</div>
+                <div className={styles.meta}>Topic · Paper · Difficulty</div>
+              </div>
+
+              <div className={styles.card}>
+                <div className={styles.cardTitle}>Choose exactly what to practise</div>
+                <div className={styles.muted}>
+                  Browse 93 AMC papers using the topic map, question range and difficulty
+                  filters. Each entry opens its credited original question and explanation in a
+                  new tab, so the source remains clear and the archive stays current.
+                </div>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
+                  <a
+                    className={`${styles.btn} ${styles.btnPrimary}`}
+                    href="/amc-past-paper-practice/index.html"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open full-screen archive
+                  </a>
+                </div>
+              </div>
+
+              <iframe
+                className={styles.pastPaperFrame}
+                src="/amc-past-paper-practice/index.html"
+                title="AMC 8 and AMC 10 past-paper problems by topic"
+                loading="eager"
+              />
+            </>
+          ) : active === "Practice Tests" ? (
             <>
               <div className={styles.h1}>AMC Practice Tests</div>
 

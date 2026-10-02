@@ -64,7 +64,9 @@ export default async function AMCPortalPage({ searchParams }: Props) {
       email={user.email}
       hasTmua={false}
       initialSection={
-        section === "practice-tests" || section === "resources" ? section : null
+        section === "past-papers" || section === "practice-tests" || section === "resources"
+          ? section
+          : null
       }
     />
   );

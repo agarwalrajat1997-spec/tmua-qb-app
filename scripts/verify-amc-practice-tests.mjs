@@ -216,7 +216,10 @@ for (const [title, filename, pages] of resources) {
   assert(dashboard.includes(`pages: ${pages}`), `${title} page count is missing.`);
 }
 
-assert(dashboard.includes('AMCView = AMCPaper | "Practice Tests" | "Resources"'), "AMC Resources is not a selectable view.");
+assert(
+  dashboard.includes('AMCView = AMCPaper | "Past Papers" | "Practice Tests" | "Resources"'),
+  "AMC Past Papers, Practice Tests and Resources must all be selectable views.",
+);
 assert(dashboard.includes('url.searchParams.set("section", "resources")'), "AMC Resources does not preserve its URL state.");
 assert(amcPage.includes('section === "resources"'), "The AMC route does not open the Resources tab directly.");
 
