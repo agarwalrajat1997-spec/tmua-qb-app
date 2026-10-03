@@ -1,0 +1,1004 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "2007",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/solutions",
+  "problems": [
+    {
+      "id": "amc-8-2007-q1",
+      "number": 1,
+      "question": "Theresa’s parents have agreed to buy her tickets to see her favorite band if she spends an average of \\(10\\) hours per week helping around the house for \\(6\\) weeks. For the first \\(5\\) weeks she helps around the house for \\(8,\\) \\(11,\\) \\(7,\\) \\(12\\) and \\(10\\) hours. How many hours must she work for the final week to earn the tickets?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(13\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Find the total number of hours needed over all six weeks.",
+        "Compare that total with the hours Theresa already worked in the first five weeks."
+      ],
+      "solution": "During the first \\(5\\) weeks, Theresa works for a total of \\[8+11+7+12+10=48\\] hours.\n\nShe promised to work \\(10\\cdot 6=60\\) hours in all.\n\nThis means that she has to work \\(60-48=12\\) hours during the final week to earn the tickets.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/1"
+    },
+    {
+      "id": "amc-8-2007-q2",
+      "number": 2,
+      "question": "\\(650\\) students were surveyed about their pasta preferences. The choices were lasagna, manicotti, ravioli and spaghetti. The results of the survey are displayed in the bar graph. What is the ratio of the number of students who preferred spaghetti to the number of students who preferred manicotti?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/2-1936b19ba0.svg\" style=\"max-height: 16rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{2}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Read the spaghetti and manicotti bar heights from the graph.",
+        "The requested ratio is spaghetti to manicotti, in that order."
+      ],
+      "solution": "There are \\(250\\) students who preferred spaghetti and \\(100\\) that preferred manicotti.\n\nThe ratio is therefore \\[ \\dfrac{250}{100} = \\dfrac{5}{2}. \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/2"
+    },
+    {
+      "id": "amc-8-2007-q3",
+      "number": 3,
+      "question": "What is the sum of the two smallest prime factors of \\(250?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Factor \\(250\\) into primes.",
+        "Only distinct prime factors matter when looking for the two smallest prime factors."
+      ],
+      "solution": "We can prime factorize \\(250\\) to get \\[ 250 = 2 \\cdot 5^3. \\] From this, we can see that \\(250\\) only has two prime factors: \\(2\\) and \\(5.\\) The sum of these is \\(7.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "prime factorization"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/3"
+    },
+    {
+      "id": "amc-8-2007-q4",
+      "number": 4,
+      "question": "A haunted house has six windows. In how many ways can Georgie the Ghost enter the house by one window and leave by a different window?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Choose the entrance window first.",
+        "After the entrance is chosen, the exit has one fewer option."
+      ],
+      "solution": "Georgie has \\(6\\) options for which window he enters through. He, however, only has \\(5\\) options for the exit since it must be different from the entrance.\n\nThe total number of paths is therefore \\(6 \\cdot 5 = 30.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "multiplication principle"
+      ],
+      "sourceDifficulty": 660,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/4"
+    },
+    {
+      "id": "amc-8-2007-q5",
+      "number": 5,
+      "question": "Chandler wants to buy a \\(\\$500\\) mountain bike. For his birthday, his grandparents send him \\(\\$50\\), his aunt sends him \\(\\$35\\) and his cousin gives him \\(\\$15\\). He earns \\(\\$16\\) per week for his paper route. He will use all of his birthday money and all of the money he earns from his paper route. In how many weeks will he be able to buy the mountain bike?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(28\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "First add the birthday money Chandler already has.",
+        "Divide the remaining cost by the weekly paper-route earnings."
+      ],
+      "solution": "The total amount of birthday money Chandler gets is \\(50+35+15=100\\) dollars. Therefore, he still needs \\(500-100=400\\) dollars.\n\nThis can be earned in \\(400\\div 16=25\\) weeks through his paper route.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "money"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/5"
+    },
+    {
+      "id": "amc-8-2007-q6",
+      "number": 6,
+      "question": "The average cost of a long-distance call in the USA in \\(1985\\) was \\(41\\) cents per minute, and the average cost of a long-distance call in the USA in \\(2005\\) was \\(7\\) cents per minute. Find the approximate percent decrease in the cost per minute of a long-distance call.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(34\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(41\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(80\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Percent decrease is decrease divided by the original amount.",
+        "The decrease is from \\(41\\) cents to \\(7\\) cents, so compare \\(34\\) to \\(41.\\)"
+      ],
+      "solution": "The decrease in cost is \\(41-7=34\\) cents per minute.\n\nThe percent decrease is \\(100\\cdot\\dfrac{34}{41}\\%\\), which is a little more than \\(80\\%\\), so the closest answer is \\(80\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "estimation"
+      ],
+      "sourceDifficulty": 940,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/6"
+    },
+    {
+      "id": "amc-8-2007-q7",
+      "number": 7,
+      "question": "The average age of \\(5\\) people in a room is \\(30\\) years. An \\(18\\)-year-old person leaves the room. What is the average age of the four remaining people?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(29\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(33\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Convert the original average into a total age.",
+        "Subtract the age of the person who leaves before dividing by the remaining number of people."
+      ],
+      "solution": "Initially, the total age of everyone in the room is \\(5 \\cdot 30 = 150\\) years.\n\nAfter the person leaves, the total age is \\(150 - 18 = 132.\\) With \\(4\\) people remaining, the average age becomes \\(\\dfrac{132}{4} = 33.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/7"
+    },
+    {
+      "id": "amc-8-2007-q8",
+      "number": 8,
+      "question": "In trapezoid \\(ABCD,\\) \\(\\overline{AD}\\) is perpendicular to \\(\\overline{DC},\\) \\(AD = AB = 3,\\) and \\(DC = 6.\\) In addition, \\(E\\) is on \\(\\overline{DC},\\) and \\(\\overline{BE}\\) is parallel to \\(\\overline{AD}.\\) Find the area of \\(\\triangle BEC.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/8-7298d9870f.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4.5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Figure out the base and height of triangle \\(BEC\\).",
+        "Since \\(ABED\\) is a square, \\(DE\\) and \\(BE\\) are both \\(3.\\)"
+      ],
+      "solution": "We know that \\[ EC = DC - DE\\]\\[ = 6 - 3 \\]\\[= 3. \\] We also know that \\[ BE = AD = 3. \\] Therefore, the area of \\(\\triangle BEC\\) is \\[ \\dfrac{1}{2} \\cdot 3 \\cdot 3 = \\dfrac{9}{2}. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "triangle area",
+        "trapezoid"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/8"
+    },
+    {
+      "id": "amc-8-2007-q9",
+      "number": 9,
+      "question": "To complete the grid below, each of the digits \\(1\\) through \\(4\\) must occur once in each row and once in each column. What number will occupy the lower right-hand square?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/9-9d1730891a.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "cannot be determined"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use the row and column restrictions to force entries one at a time.",
+        "Start with the last square in the second row, then move to the top-right square."
+      ],
+      "solution": "The last square in the second row must be \\(1\\), since that row already contains \\(2\\) and \\(3\\), and the last column already contains \\(4\\).\n\nThen the top-right square must be \\(3\\), since the top row already contains \\(1\\) and \\(2\\), and the last column already contains \\(1\\) and \\(4\\).\n\nThis forces the \\(2\\) to be in the bottom-right square.\n\nThus, <b>B</b> is the correct answer.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/9sol-97fd288f8d.svg\" style=\"max-height: 12rem\"/>",
+      "sourceConcepts": [
+        "logical deduction"
+      ],
+      "sourceDifficulty": 1120,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/9"
+    },
+    {
+      "id": "amc-8-2007-q10",
+      "number": 10,
+      "question": "For any positive integer \\(n,\\) define \\(\\boxed{n}\\) to be the sum of the positive factors of \\(n.\\) For example, \\[ \\boxed{6} = 1 + 2 + 3 + 6 = 12. \\] Find \\(\\boxed{\\boxed{11}}.\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(28\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(30\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Apply the boxed operation once to \\(11\\) first.",
+        "Then apply the same sum-of-factors operation to the result."
+      ],
+      "solution": "First, we find that \\[ \\boxed{11} = 1 + 11 = 12 \\] since \\(11\\) is prime. Then we need to find \\(\\boxed{12}.\\) The factors of \\(12\\) are \\[ 1, 2, 3, 4, 6, 12. \\] Adding these yields \\(\\boxed{12} = 28.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "sum of factors",
+        "custom operation"
+      ],
+      "sourceDifficulty": 1150,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/10"
+    },
+    {
+      "id": "amc-8-2007-q11",
+      "number": 11,
+      "question": "Tiles \\(I,\\) \\(II,\\) \\(III\\) and \\(IV\\) are translated so one tile coincides with each of the rectangles \\(A,\\) \\(B,\\) \\(C\\) and \\(D.\\) In the final arrangement, the two numbers on any side common to two adjacent tiles must be the same. Which of the tiles is translated to Rectangle \\(C?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/11-b23a7404b6.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(I\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(II\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(III\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(IV\\)"
+        },
+        {
+          "label": "E",
+          "content": "cannot be determined"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Look for edge numbers that appear on only one tile.",
+        "The \\(0\\) and \\(5\\) force the placement of Tile \\(III\\) before deciding which tile is in \\(C\\)."
+      ],
+      "solution": "Only Tile \\(III\\) has a \\(0\\) on an edge, so Tile \\(III\\) must be placed in \\(C\\) or \\(D\\), where that edge can be on the outside.\n\nTile \\(III\\) also has a \\(5\\) on its right edge, and no other tile has a \\(5\\). Therefore Tile \\(III\\) must be placed in \\(D\\), with its \\(5\\) on the outside.\n\nThe only tile that can match the \\(1\\) on the left edge of Tile \\(III\\) is Tile \\(IV\\), so Tile \\(IV\\) is placed in \\(C\\).\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/11sol-cbfe977074.svg\" style=\"max-height: 12rem\"/>\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "logical deduction"
+      ],
+      "sourceDifficulty": 1270,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/11"
+    },
+    {
+      "id": "amc-8-2007-q12",
+      "number": 12,
+      "question": "A unit hexagram is composed of a regular hexagon of side length \\(1\\) and its \\(6\\) equilateral triangular extensions, as shown in the diagram. What is the ratio of the area of the extensions to the area of the original hexagon?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/12-1d507a7090.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1:1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6:5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3:2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2:1\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3:1\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Divide the regular hexagon into six congruent equilateral triangles.",
+        "Each exterior triangle shares a side with one of the six interior triangles."
+      ],
+      "solution": "Note that we can split the hexagon into \\(6\\) congruent equilateral triangles as follows.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/12sol-3b7cd2a318.svg\" style=\"max-height: 12rem\"/>\n\nSince each of them share an edge with an exterior triangle, all the triangles are congruent. Therefore, the ratio of areas is \\(1:1.\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "area ratio",
+        "equilateral triangle"
+      ],
+      "sourceDifficulty": 1150,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/12"
+    },
+    {
+      "id": "amc-8-2007-q13",
+      "number": 13,
+      "question": "Sets \\(A\\) and \\(B,\\) shown in the Venn diagram, have the same number of elements. Their union has \\(2007\\) elements and their intersection has \\(1001\\) elements. Find the number of elements in \\(A.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/13-548d76ac7c.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(503\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1006\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1504\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1507\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1510\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let each set have \\(x\\) elements.",
+        "Use \\(|A\\cup B|=|A|+|B|-|A\\cap B|\\)."
+      ],
+      "solution": "Let \\(x\\) be the number of elements in each \\(A\\) and \\(B.\\) Also let \\(y\\) be the number of elements in their intersection.\n\nThe conditions give us that \\[ 2x - y = 2007 \\] and \\[ y = 1001. \\] Plugging \\(y\\) into the first equation yields \\[ \\begin{align*} 2x - 1001 &= 2007 \\\\ 2x &= 3008 \\\\ x &= 1504. \\end{align*} \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "Venn Diagram",
+        "inclusion-exclusion"
+      ],
+      "sourceDifficulty": 1290,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/13"
+    },
+    {
+      "id": "amc-8-2007-q14",
+      "number": 14,
+      "question": "The base of isosceles \\(\\triangle ABC\\) is \\(24\\) and its area is \\(60.\\) What is the length of one of the congruent sides?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Draw the altitude from the top vertex to the base.",
+        "In an isosceles triangle, that altitude splits the base into two equal parts."
+      ],
+      "solution": "Construct \\(\\overline{BD}\\) as the altitude from \\(B\\) to \\(\\overline{AC}.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/14sol-78a6e7fb0f.svg\" style=\"max-height: 8rem\"/>\n\nThen \\[ 60 = \\dfrac{1}{2} \\cdot BD \\cdot 24, \\] which gives us that \\(BD = 5.\\)\n\nFrom this, we apply the Pythagorean Theorem on \\(\\triangle ABD:\\) \\[ AB^2 = 5^2 + 12^2 = 169 = 13^2. \\] This gives us that \\(AB = 13.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "isosceles triangle",
+        "triangle area",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1350,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/14"
+    },
+    {
+      "id": "amc-8-2007-q15",
+      "number": 15,
+      "question": "Let \\(a,\\) \\(b\\) and \\(c\\) be numbers with \\(0 \\lt a \\lt b \\lt c.\\) Which of the following is impossible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(a + c \\lt b\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(a \\cdot b \\lt c\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(a + b \\lt c\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(a \\cdot c \\lt b\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{b}{c} = a\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Use the fact that \\(b&lt;c\\) and \\(a>0\\).",
+        "For the other choices, one counterexample is enough to show they are possible."
+      ],
+      "solution": "We know that \\(b \\lt c\\) and \\(0 \\lt a.\\) Adding these two inequalities together yields \\[ b \\lt c + a. \\] This shows that <b>A</b> is impossible, and therefore the right answer.\n\nTo ensure that this is correct, we can show that the other options are possible.\n\n<b>B</b> and <b>C</b> : \\(a = 1,\\) \\(b = 2,\\) and \\(c = 4\\)\n\n<b>D</b> : \\(a = \\dfrac{1}{3},\\) \\(b = \\dfrac{1}{2},\\) and \\(c = 1\\)\n\n<b>E</b> : \\(a = \\dfrac{1}{2},\\) \\(b = 1,\\) and \\(c = 2\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "inequality",
+        "counterexample"
+      ],
+      "sourceDifficulty": 1380,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/15"
+    },
+    {
+      "id": "amc-8-2007-q16",
+      "number": 16,
+      "question": "Amanda Reckonwith draws five circles with radii \\(1,\\) \\(2,\\) \\(3,\\) \\(4\\) and \\(5.\\) Then for each circle she plots the point \\((C, A),\\) where \\(C\\) is its circumference and \\(A\\) is its area. Which of the following could be her graph?",
+      "options": [
+        {
+          "label": "A",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2007/16a-b189a5ea94.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "B",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2007/16b-964f0fb07e.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "C",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2007/16c-114f518ba2.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "D",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2007/16d-fd740a3359.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "E",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2007/16e-5b02a00816.svg\" style=\"max-height: 12rem\"/>"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Write circumference and area in terms of the radius.",
+        "As the circumference grows linearly with radius, the area grows quadratically."
+      ],
+      "solution": "The circumferences of circles with radii \\(1\\) through \\(5\\) are \\(2\\pi,\\) \\(4\\pi,\\) \\(6\\pi,\\) \\(8\\pi,\\) and \\(10\\pi\\). Their respective areas are \\(\\pi,\\) \\(4\\pi,\\) \\(9\\pi,\\) \\(16\\pi,\\) and \\(25\\pi\\).\n\nAs \\(C\\) increases by equal amounts, \\(A\\) increases more and more quickly, so the points form an increasing quadratic pattern. Only graph A has that shape.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "circle area",
+        "circumference",
+        "quadratic"
+      ],
+      "sourceDifficulty": 1400,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/16"
+    },
+    {
+      "id": "amc-8-2007-q17",
+      "number": 17,
+      "question": "A mixture of \\(30\\) liters of paint is \\(25\\%\\) red tint, \\(30\\%\\) yellow tint and \\(45\\%\\) water. Five liters of yellow tint are added to the original mixture. What is the percent of yellow tint in the new mixture?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(35\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(50\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Find the original number of liters of yellow tint.",
+        "After adding yellow tint, both the yellow amount and the total mixture amount change."
+      ],
+      "solution": "The amount of yellow tint in the original mixture is \\(0.3 \\times 30 = 9\\) liters. Adding \\(5\\) liters results in a total of \\(14\\) liters of yellow tint.\n\nThe new mixture has a total of \\(35\\) liters, so the percent of yellow tint is \\[ 100 \\cdot \\dfrac{14}{35} = 100 \\cdot \\dfrac{2}{5} = 40 \\%. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "mixture",
+        "percentage"
+      ],
+      "sourceDifficulty": 1340,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/17"
+    },
+    {
+      "id": "amc-8-2007-q18",
+      "number": 18,
+      "question": "The product of the two \\(99\\)-digit numbers \\[303,030,303,\\ldots,030,303\\] and \\[505,050,505,\\ldots,050,505\\] has thousands digit \\(A\\) and units digit \\(B.\\) What is \\(A+B?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Only the last four digits can affect the thousands and units digits.",
+        "Reduce each \\(99\\)-digit number to its last four digits before multiplying."
+      ],
+      "solution": "Only the last four digits can affect the thousands digit and units digit of the product. The two numbers end in \\(0303\\) and \\(0505\\), so it is enough to compute \\(303\\cdot 505\\).\n\nSince \\(303\\cdot 505=153015\\), the last four digits of the full product are \\(3015\\).\n\nThis gives \\(A=3\\) and \\(B=5\\), so \\(A+B=8\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "modular arithmetic",
+        "digits"
+      ],
+      "sourceDifficulty": 1400,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/18"
+    },
+    {
+      "id": "amc-8-2007-q19",
+      "number": 19,
+      "question": "Pick two consecutive positive integers whose sum is less than \\(100.\\) Square both of those integers and then find the difference of the squares. Which of the following could be the difference?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(64\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(79\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(96\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(131\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let the consecutive integers be \\(x\\) and \\(x+1\\).",
+        "The difference of their squares simplifies to the sum of the two integers."
+      ],
+      "solution": "Let the consecutive positive integers be \\(x\\) and \\(x+1\\). Their sum is \\(2x+1\\), which is less than \\(100\\).\n\nThe difference of their squares is \\[ \\begin{gathered} (x+1)^2-x^2 \\\\ = (x+1+x)(x+1-x) \\\\ = 2x+1. \\end{gathered} \\]\n\nSo the difference must be an odd number less than \\(100\\). Among the choices, \\(79\\) is the only possibility, and it occurs for \\(39\\) and \\(40\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "difference of squares",
+        "parity"
+      ],
+      "sourceDifficulty": 1430,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/19"
+    },
+    {
+      "id": "amc-8-2007-q20",
+      "number": 20,
+      "question": "Before district play, the Unicorns had won \\(45 \\%\\) of their basketball games. During district play, they won six more games and lost two, to finish the season having won half their games. How many games did the Unicorns play in all?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(52\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(54\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(60\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Let \\(x\\) be the number of games before district play.",
+        "Write an equation comparing total wins after district play with half of all games played."
+      ],
+      "solution": "Let \\(x\\) be the number of games the Unicorns had played before district play. Then they had won \\(0.45x\\) games before district play and \\(0.45x+6\\) games after district play.\n\nIn total, they played \\(x+8\\) games. The problem statement tells us that \\[0.45x+6=\\dfrac{x+8}{2}.\\]\n\nSolving gives \\(0.45x+6=0.5x+4\\), so \\(2=0.05x\\), and \\(x=40\\). Therefore, the Unicorns played \\(40+8=48\\) games in all.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation",
+        "percentage"
+      ],
+      "sourceDifficulty": 1550,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/20"
+    },
+    {
+      "id": "amc-8-2007-q21",
+      "number": 21,
+      "question": "Two cards are dealt from a deck of four red cards labeled \\(A,\\) \\(B,\\) \\(C,\\) \\(D\\) and four green cards labeled \\(A,\\) \\(B,\\) \\(C,\\) \\(D.\\) A winning pair is two of the same color or two of the same letter. What is the probability of drawing a winning pair?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{7}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{4}{7}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{8}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "After the first card is drawn, count favorable second cards.",
+        "The same-color cards and same-letter card do not overlap after the first card is removed."
+      ],
+      "solution": "After drawing the first card, there are \\(7\\) left. \\(3\\) of them have the same color, and \\(1\\) of them has the same letter. Therefore, there are \\(4\\) out of \\(7\\) possibilities that result in a winning pair.\n\nThe probability of drawing a pair is then \\(\\dfrac{4}{7}.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic probability",
+        "sampling without replacement"
+      ],
+      "sourceDifficulty": 1450,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/21"
+    },
+    {
+      "id": "amc-8-2007-q22",
+      "number": 22,
+      "question": "A lemming sits at a corner of a square with side length \\(10\\) meters. The lemming runs \\(6.2\\) meters along a diagonal toward the opposite corner. It stops, makes a \\(90^{\\circ}\\) right turn and runs \\(2\\) more meters. A scientist measures the shortest distance between the lemming and each side of the square. What is the average of these four distances in meters?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4.5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6.2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "For any point inside a square, distances to opposite sides add to the side length.",
+        "Apply that idea to both pairs of opposite sides."
+      ],
+      "solution": "Based on the lengths given in the problem, the lemming is still in the square after it stops.\n\nSince the lemming is still in the square, the sum of the distances to the horizontal sides is \\(10\\) meters and the same for the vertical sides. Therefore, the \\(4\\) distances sum to \\(20\\) meters, making the average \\(20 \\div 4 = 5\\) meters.\n\nThus, <b>C</b> is the correct answer.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/22sol-2d9c56d8bc.svg\" style=\"max-height: 12rem\"/>",
+      "sourceConcepts": [
+        "square (geometry)",
+        "invariant"
+      ],
+      "sourceDifficulty": 1550,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/22"
+    },
+    {
+      "id": "amc-8-2007-q23",
+      "number": 23,
+      "question": "What is the area of the shaded pinwheel shown in the \\(5 \\times 5\\) grid?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/23-57afaed57e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "It is easier to subtract the unshaded area from the whole grid.",
+        "The unshaded part consists of four corner squares and four congruent triangles."
+      ],
+      "solution": "We can find the area of the shaded part by subtracting the area of the unshaded part from the whole area.\n\nThere are \\(4\\) squares with side length \\(1,\\) contributing \\(1\\) each to the unshaded area, for a total of \\(4.\\)\n\nThere are also \\(4\\) triangles with base \\(3\\) and height \\(\\dfrac{5}{2}.\\) This contributes a total area of \\[ 4 \\cdot \\dfrac{1}{2} \\cdot 3 \\cdot \\dfrac{5}{2} = 15. \\]\n\nThe total unshaded area is therefore \\(4 + 15 = 19.\\)\n\nThe total area is \\(5^2 = 25,\\) and subtracting the unshaded area yields \\(25 - 19 = 6\\) as the area of the shaded region.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "area decomposition",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1610,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/23"
+    },
+    {
+      "id": "amc-8-2007-q24",
+      "number": 24,
+      "question": "A bag contains four pieces of paper, each labeled with one of the digits \\(1,\\) \\(2,\\) \\(3\\) or \\(4,\\) with no repeats. Three of these pieces are drawn, one at a time without replacement, to construct a three-digit number. What is the probability that the three-digit number is a multiple of \\(3?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3}{4}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A number is divisible by \\(3\\) exactly when its digit sum is divisible by \\(3.\\)",
+        "Instead of ordering the three drawn digits, look at which digit is left out."
+      ],
+      "solution": "Recall that a number is divisible by \\(3\\) if the sum of its digits is divisible by \\(3\\).\n\nThe only triples of distinct digits from \\(1,2,3,4\\) whose sum is divisible by \\(3\\) are \\((1,2,3)\\) and \\((2,3,4)\\).\n\nThis means the constructed number is a multiple of \\(3\\) exactly when either \\(1\\) or \\(4\\) is left in the bag.\n\nEach of these events has probability \\(\\dfrac{1}{4}\\), for a total probability of \\(2\\cdot\\dfrac{1}{4}=\\dfrac{1}{2}\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "basic probability",
+        "digits"
+      ],
+      "sourceDifficulty": 1580,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/24"
+    },
+    {
+      "id": "amc-8-2007-q25",
+      "number": 25,
+      "question": "On the dart board shown in the figure below, the outer circle has radius \\(6\\) and the inner circle has radius \\(3.\\) Three radii divide each circle into three congruent regions, with point values shown. The probability that a dart will hit a given region is proportional to the area of the region. When two darts hit this board, the score is the sum of the point values of the regions hit. What is the probability that the score is odd?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2007/25-50833eaed7.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{17}{36}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{35}{72}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{37}{72}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{19}{36}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "An odd score comes from one dart landing on a \\(1\\)-region and the other on a \\(2\\)-region.",
+        "Compute the total area-weighted probability of landing on \\(1,\\) then of landing on \\(2.\\)"
+      ],
+      "solution": "The area of the outer circle is \\(6^2\\pi = 36\\pi,\\) and the area of the inner circle is \\(3^2\\pi = 9\\pi.\\) Therefore, the area of the outer ring is \\(36\\pi - 9\\pi = 27\\pi.\\)\n\nThis means that the probability of hitting an outer segment is \\(\\dfrac{9\\pi}{36\\pi} = \\dfrac{1}{4}.\\) Similarly, the probability of hitting an inner segment is \\(\\dfrac{3\\pi}{36\\pi} = \\dfrac{1}{12}.\\)\n\nSumming over all possibilities, the probability of hitting a \\(1\\) is \\[ \\dfrac{1}{12} + 2 \\cdot \\dfrac{1}{4} = \\dfrac{7}{12}. \\] Similarly, the probability of hitting a \\(2\\) is \\[ 2 \\cdot \\dfrac{1}{12} + \\dfrac{1}{4} = \\dfrac{5}{12}. \\]\n\nThe only way to get an odd score is to hit one \\(1\\) and one \\(2.\\)\n\nThe probability of hitting these numbers in either order is \\[ 2 \\cdot \\dfrac{5}{12} \\cdot \\dfrac{7}{12} = \\dfrac{35}{72}. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "geometric probability",
+        "parity"
+      ],
+      "sourceDifficulty": 1680,
+      "solveTimeSeconds": 105,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2007/problem/25"
+    }
+  ]
+}

@@ -1,0 +1,1027 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2025B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2025b-q1",
+      "number": 1,
+      "question": "The instructions on a \\(350\\)-gram bag of coffee beans say that proper brewing of a large mug of pour-over coffee requires \\(20\\) grams of coffee beans. What is the greatest number of properly brewed large mugs of coffee that can be made from the coffee beans in that bag?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each mug uses \\(20\\) grams, so divide the total mass by \\(20\\)",
+        "A partial mug does not count, so round \\(\\frac{350}{20}\\) down to a whole number"
+      ],
+      "solution": "Each mug needs \\(20\\) grams, so we divide: \\(\\frac{350}{20} = 17.5.\\) A half mug isn’t a mug, so round down. That leaves \\(17.\\) Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "floor and ceiling functions"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/1"
+    },
+    {
+      "id": "amc-10-2025b-q2",
+      "number": 2,
+      "question": "Jerry wrote down the ones digit of each of the first \\(2025\\) positive squares: \\(1,\\) \\(4,\\) \\(9,\\) \\(6,\\) \\(5,\\) \\(6,\\) \\(\\ldots\\) What is the sum of all the numbers Jerry wrote down?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9025\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9070\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9090\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9115\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9160\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The ones digit of \\(n^2\\) depends only on the ones digit of \\(n,\\) so the list repeats every \\(10\\) terms",
+        "One full block \\(1, 4, 9, 6, 5, 6, 9, 4, 1, 0\\) sums to \\(45;\\) there are \\(202\\) full blocks and \\(5\\) leftover terms"
+      ],
+      "solution": "The ones digit of \\(n^2\\) depends only on the ones digit of \\(n,\\) so the list repeats every \\(10\\) terms: \\(1, 4, 9, 6, 5, 6, 9, 4, 1, 0.\\) One block sums to \\(45.\\) Now \\(2025 = 202 \\cdot 10 + 5,\\) so we get \\(202\\) full blocks plus the first five terms: \\(202 \\cdot 45\\) \\(+ (1 + 4 + 9 + 6 + 5)\\) \\(= 9090\\) \\(+ 25 = 9115.\\) Therefore, the answer is <b>D</b>.",
+      "sourceConcepts": [
+        "units digit",
+        "perfect square",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 990,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/2"
+    },
+    {
+      "id": "amc-10-2025b-q3",
+      "number": 3,
+      "question": "A Pascal-like triangle has \\(10\\) as the top row and \\(10\\) followed by \\(1\\) as the second row. In each subsequent row the first number is \\(10,\\) the last number is \\(1,\\) and, as in the standard Pascal’s Triangle, each other number in the row is the sum of the two numbers directly above it. The first four rows are shown below.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2025b/3-82907a3693.svg\" style=\"max-height: 10rem\"/>\n\nWhat is the sum of the digits of the sum of the numbers in the \\(11\\)th row?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Track only the row sums. Each interior entry is counted by both of the two entries below it",
+        "Show \\(S_n = 2 S_{n-1}\\) for \\(n \\ge 3\\) with \\(S_2 = 11,\\) then compute \\(S_{11}\\)"
+      ],
+      "solution": "Let \\(S_n\\) be the sum of row \\(n.\\) Each entry in row \\(n-1\\) feeds the two entries just below it, and the fixed border numbers \\(10\\) and \\(1\\) exactly make up for the terms lost at the edges. So \\(S_n = 2 S_{n-1}\\) for \\(n \\ge 3.\\) With \\(S_2 = 11,\\) this gives \\(S_n = 11 \\cdot 2^{n-2},\\) so \\(S_{11} = 11 \\cdot 2^9 = 5632.\\) Its digits sum to \\(5 + 6 + 3 + 2 = 16.\\) Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "Pascal’s Triangle",
+        "recursion",
+        "geometric sequence"
+      ],
+      "sourceDifficulty": 1270,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/3"
+    },
+    {
+      "id": "amc-10-2025b-q4",
+      "number": 4,
+      "question": "The value of the two-digit number \\(\\underline{a}\\,\\underline{b}\\) in base seven equals the value of the two-digit number \\(\\underline{b}\\,\\underline{a}\\) in base nine. What is \\(a + b?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(14\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "By place value, \\(\\underline{a}\\,\\underline{b}\\) in base seven is \\(7a + b,\\) and \\(\\underline{b}\\,\\underline{a}\\) in base nine is \\(9b + a\\)",
+        "The equation reduces to \\(3a = 4b;\\) find digits with \\(a\\) a valid base-seven digit"
+      ],
+      "solution": "By place value, \\(\\underline{a}\\,\\underline{b}\\) in base seven is \\(7a + b,\\) and \\(\\underline{b}\\,\\underline{a}\\) in base nine is \\(9b + a.\\) Set them equal: \\(7a + b = 9b + a,\\) so \\(6a = 8b,\\) that is \\(3a = 4b.\\) Thus \\(a = 4t\\) and \\(b = 3t.\\) Because these are two-digit numerals, \\(t \\ne 0;\\) because \\(a\\) is a base-seven digit, \\(t \\le 1.\\) Hence \\(a = 4\\) and \\(b = 3,\\) so \\(a + b = 7.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "number base",
+        "place value",
+        "Diophantine Equation"
+      ],
+      "sourceDifficulty": 1130,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/4"
+    },
+    {
+      "id": "amc-10-2025b-q5",
+      "number": 5,
+      "question": "In \\(\\triangle ABC,\\) \\(AB = 10,\\) \\(AC = 18,\\) and \\(\\angle B = 130^\\circ.\\) Let \\(O\\) be the center of the circle containing points \\(A,\\) \\(B,\\) and \\(C.\\) What is the degree measure of \\(\\angle CAO?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(60\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "\\(O\\) is the circumcenter, so \\(OA = OB = OC.\\) Relate the central angle \\(\\angle AOC\\) to the inscribed angle \\(\\angle B\\)",
+        "Because \\(\\angle B\\) is obtuse, \\(\\angle AOC = 360^\\circ - 2\\angle B;\\) then use the isosceles triangle \\(OAC\\)"
+      ],
+      "solution": "Since \\(O\\) is the circumcenter, \\(OA = OB = OC.\\) The inscribed angle \\(\\angle B = 130^\\circ\\) subtends arc \\(AC,\\) and because \\(B\\) is obtuse, the central angle is \\(\\angle AOC = 360^\\circ\\) \\(- 2 \\cdot 130^\\circ = 100^\\circ.\\) Triangle \\(OAC\\) is isosceles, so \\(\\angle CAO = \\tfrac{180^\\circ - 100^\\circ}{2} = 40^\\circ.\\) (The lengths \\(AB\\) and \\(AC\\) never enter.) Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "circumcircle, circumcenter, and circumradius",
+        "inscribed angle",
+        "isosceles triangle"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/5"
+    },
+    {
+      "id": "amc-10-2025b-q6",
+      "number": 6,
+      "question": "The line \\(y = \\tfrac{1}{3}x + 1\\) divides the square region defined by \\(0 \\le x \\le 2\\) and \\(0 \\le y \\le 2\\) into an upper region and a lower region. The line \\(x = a\\) divides the lower region into two regions of equal area. Then \\(a\\) can be written as \\(\\sqrt{s} - t,\\) where \\(s\\) and \\(t\\) are positive integers. What is \\(s + t?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(22\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The lower region left of \\(x = a\\) is a trapezoid with vertical sides \\(1\\) and \\(\\tfrac{a}{3} + 1\\) and width \\(a\\)",
+        "The total lower area is \\(\\tfrac{8}{3},\\) so set \\(a + \\tfrac{a^2}{6}\\) equal to half of it, \\(\\tfrac{4}{3},\\) and solve the quadratic"
+      ],
+      "solution": "The lower region has area \\(\\int_0^2\\left(\\tfrac{x}{3} + 1\\right)dx = \\tfrac{2}{3} + 2 = \\tfrac{8}{3}.\\) The slice with \\(0 \\le x \\le a\\) is a trapezoid of area \\(a + \\tfrac{a^2}{6}.\\) We want that to be half the total, namely \\(\\tfrac{4}{3},\\) so \\(a^2 + 6a - 8 = 0\\) and \\(a = -3 + \\sqrt{17}.\\) Then \\(s = 17,\\) \\(t = 3,\\) and \\(s + t = 20.\\) Therefore, the answer is <b>C</b>.",
+      "sourceConcepts": [
+        "trapezoid",
+        "area",
+        "quadratic"
+      ],
+      "sourceDifficulty": 1410,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/6"
+    },
+    {
+      "id": "amc-10-2025b-q7",
+      "number": 7,
+      "question": "Frances stands \\(15\\) meters directly south of a locked gate in a fence that runs east-west. Immediately behind the fence is a box of chocolates, located \\(x\\) meters east of the locked gate. An unlocked gate lies \\(9\\) meters east of the box, and another unlocked gate lies \\(8\\) meters west of the locked gate. Frances can reach the box by walking toward an unlocked gate, passing through it, and walking toward the box. It happens that the total distance Frances would travel would be the same via either unlocked gate. What is the value of \\(x?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\tfrac{2}{7}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\tfrac{3}{7}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\tfrac{4}{7}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\tfrac{5}{7}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3\\tfrac{6}{7}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Put the locked gate at the origin and Frances at \\((0, -15);\\) each route is a straight walk to a gate plus a walk along the fence to the box",
+        "The west route totals \\(17 + (x + 8);\\) set it equal to \\(\\sqrt{(x + 9)^2 + 225} + 9\\) and square"
+      ],
+      "solution": "Put the fence on the \\(x\\)-axis, the locked gate at the origin, and Frances at \\((0, -15).\\) Then the box is at \\((x, 0),\\) the east gate at \\((x + 9, 0),\\) and the west gate at \\((-8, 0).\\) The east route is \\(\\sqrt{(x + 9)^2 + 15^2} + 9;\\) the west route is \\(\\sqrt{8^2 + 15^2}\\) \\(+ (x + 8) = 17 + x + 8.\\) Set them equal: \\(\\sqrt{(x + 9)^2 + 225} = x + 16.\\) Square and simplify to get \\(18x + 306 = 32x + 256,\\) so \\(x = \\tfrac{50}{14} = \\tfrac{25}{7} = 3\\tfrac{4}{7}.\\) Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "Pythagorean Theorem",
+        "radical"
+      ],
+      "sourceDifficulty": 1500,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/7"
+    },
+    {
+      "id": "amc-10-2025b-q8",
+      "number": 8,
+      "question": "Emmy says to Max, “I ordered \\(36\\) math club sweatshirts today.” Max asks, “How much did each shirt cost?” Emmy responds, “I’ll give you a hint. The total cost was \\(\\$\\underline{A}\\,\\underline{B}\\,\\underline{B}.\\underline{B}\\,\\underline{A},\\) where \\(A\\) and \\(B\\) are digits and \\(A \\ne 0.\\)” After a pause, Max says, “That was a good price.” What is \\(A + B?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Write the total in cents: \\(\\underline{A}\\,\\underline{B}\\,\\underline{B}.\\underline{B}\\,\\underline{A}\\) is \\(10001A + 1110B\\) cents, and it must be divisible by \\(36\\)",
+        "Reduce the condition modulo \\(36\\) to \\(7A + 6B \\equiv 0;\\) test digits to find the unique \\(A, B\\)"
+      ],
+      "solution": "In cents the total is \\(10000A + 1000B + 100B\\) \\(+ 10B + A\\) \\(= 10001A + 1110B.\\) Split evenly among \\(36\\) shirts, so it’s divisible by \\(36.\\) Now \\(10001 \\equiv 29\\) and \\(1110 \\equiv 30 \\pmod{36},\\) so we need \\(29A + 30B \\equiv 0,\\) which reduces to \\(7A + 6B \\equiv 0 \\pmod{36}.\\) The only digit solution with \\(A \\ne 0\\) is \\(A = 6, B = 5,\\) since \\(7 \\cdot 6 + 6 \\cdot 5 = 72.\\) That’s \\(\\$655.56,\\) or \\(\\$18.21\\) a shirt, so \\(A + B = 11.\\) Therefore, the answer is <b>C</b>.",
+      "sourceConcepts": [
+        "divisibility",
+        "modular arithmetic",
+        "place value"
+      ],
+      "sourceDifficulty": 1350,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/8"
+    },
+    {
+      "id": "amc-10-2025b-q9",
+      "number": 9,
+      "question": "How many ordered triples of integers \\((x, y, z)\\) satisfy the following system of inequalities?\n\n\\[-x - y - z \\le -2\\] \\[-x + y + z \\le 2\\] \\[x - y + z \\le 2\\] \\[x + y - z \\le 2\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The last three inequalities are symmetric in \\(x, y, z;\\) let \\(p = -x + y + z,\\) \\(q = x - y + z,\\) \\(r = x + y - z\\)",
+        "Then \\(p, q, r \\le 2\\) with equal parity and \\(p + q + r = x + y + z \\ge 2;\\) count such triples"
+      ],
+      "solution": "Let \\(p = -x + y + z,\\) \\(q = x - y + z,\\) \\(r = x + y - z.\\) The last three inequalities say \\(p, q, r \\le 2,\\) the first says \\(x + y + z \\ge 2,\\) and \\(p + q + r = x + y + z.\\) Since \\(x = \\tfrac{q + r}{2}\\) and so on, \\(p, q, r\\) must all share the same parity. Now count triples with each part \\(\\le 2,\\) equal parity, and sum in \\([2, 6].\\) The even ones are \\((2,2,2),\\) the permutations of \\((2,2,0),\\) of \\((2,0,0),\\) and of \\((2,2,-2),\\) giving \\(10.\\) The only odd one is \\((1,1,1).\\) That’s \\(11\\) in all, and each yields a unique \\((x, y, z).\\) Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "substitution",
+        "parity",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1560,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/9"
+    },
+    {
+      "id": "amc-10-2025b-q10",
+      "number": 10,
+      "question": "Let \\(f(n) = n^3 - 5n^2 + 2n + 8,\\) and let \\(g(n) = n^3 - 6n^2 + 5n + 12.\\) What is the sum of all integer values of \\(n\\) for which \\(\\dfrac{f(n)}{g(n)}\\) is also an integer?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Both cubics have \\(n = -1\\) as a root; factor each and cancel common factors",
+        "The ratio simplifies to \\(\\dfrac{n - 2}{n - 3} = 1 + \\dfrac{1}{n - 3};\\) it is an integer only when \\(n - 3\\) divides \\(1\\)"
+      ],
+      "solution": "Factor both cubics: \\(f(n) = (n + 1)(n - 2)(n - 4)\\) and \\(g(n) = (n + 1)(n - 3)(n - 4).\\) Away from \\(n \\in \\{-1, 3, 4\\},\\) where \\(g\\) vanishes or the ratio is \\(\\tfrac{0}{0},\\) the common factors cancel and \\(\\dfrac{f(n)}{g(n)} = \\dfrac{n - 2}{n - 3} = 1 + \\dfrac{1}{n - 3}.\\) That’s an integer only when \\(n - 3 = \\pm 1,\\) so \\(n = 2\\) or \\(n = 4.\\) But \\(n = 4\\) kills \\(g,\\) so only \\(n = 2\\) survives, and the sum is \\(2.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "polynomial",
+        "factoring",
+        "divisibility"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/10"
+    },
+    {
+      "id": "amc-10-2025b-q11",
+      "number": 11,
+      "question": "On Monday, \\(6\\) students went to the tutoring center at the same time, and each one was randomly assigned to one of the \\(6\\) tutors on duty. On Tuesday, the same \\(6\\) students showed up, the same \\(6\\) tutors were on duty, and the students were again randomly assigned to the tutors. What is the probability that exactly \\(2\\) students met with the same tutor both Monday and Tuesday?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{16}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{16}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each day’s assignment is a permutation; comparing the two days is like a single random permutation, and “same tutor” means a fixed point",
+        "Choose the \\(2\\) matched students in \\(\\binom{6}{2}\\) ways and derange the other \\(4\\) (there are \\(D_4 = 9\\) derangements); divide by \\(6!\\)"
+      ],
+      "solution": "Each day’s assignment is a permutation of the \\(6\\) students among the \\(6\\) tutors. Comparing the two days, the number who keep the same tutor is the number of fixed points of \\(\\tau = \\pi_{\\text{Tue}}^{-1}\\pi_{\\text{Mon}},\\) itself a uniformly random permutation of \\(6\\) elements. We want exactly \\(2\\) fixed points, so choose those \\(2\\) in \\(\\binom{6}{2}\\) ways and derange the other \\(4,\\) where \\(D_4 = 9.\\) The probability is \\(\\dfrac{\\binom{6}{2} D_4}{6!} = \\dfrac{15 \\cdot 9}{720} = \\dfrac{3}{16}.\\) Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "derangements",
+        "permutations",
+        "basic probability"
+      ],
+      "sourceDifficulty": 1590,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/11"
+    },
+    {
+      "id": "amc-10-2025b-q12",
+      "number": 12,
+      "question": "The figure below shows an equilateral triangle, a rhombus with a \\(60^\\circ\\) angle, and a regular hexagon, each of them containing some mutually tangent congruent disks. Let \\(T,\\) \\(R,\\) and \\(H,\\) respectively, denote the ratio in each case of the total area of the disks to the area of the enclosing polygon.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2025b/12-a03ef0b625.svg\" style=\"max-height: 12rem\"/>\n\nWhich of the following is true?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(T = H = R\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(H \\lt R = T\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(H = R \\lt T\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(H \\lt R \\lt T\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(H \\lt T \\lt R\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "For a disk tangent to two sides meeting at angle \\(\\theta,\\) its center is at distance \\(\\dfrac{r}{\\sin(\\frac{\\theta}{2})}\\) from the vertex",
+        "Use the tangency conditions to write each disk radius \\(r\\) in terms of the polygon’s size, then compute (disk area) / (polygon area) in each case"
+      ],
+      "solution": "Take the triangle with side \\(s.\\) Three disks of radius \\(r\\) give \\(s = 2r(1 + \\sqrt3),\\) so \\(T = \\dfrac{3\\pi r^2}{(\\frac{\\sqrt3}{4})s^2}\\) \\(= \\dfrac{(2\\sqrt3 - 3)\\pi}{2} \\approx 0.73.\\) For the rhombus with side \\(a,\\) the two disks sit on the long diagonal \\(a\\sqrt3 = 6r,\\) so \\(r = \\tfrac{a}{2\\sqrt3}\\) and \\(R = \\dfrac{2\\pi r^2}{(\\frac{a^2\\sqrt3}{2})} = \\dfrac{\\pi\\sqrt3}{9} \\approx 0.60.\\) For the hexagon with side \\(a,\\) each of the six disks touches a side at its midpoint, again giving \\(r = \\tfrac{a}{2\\sqrt3}\\) and \\(H = \\dfrac{6\\pi r^2}{(\\frac{3\\sqrt3}{2})a^2}\\) \\(= \\dfrac{\\pi\\sqrt3}{9} \\approx 0.60.\\) So \\(H = R \\lt T.\\) Therefore, the answer is <b>C</b>.",
+      "sourceConcepts": [
+        "tangent circles",
+        "area ratio",
+        "regular polygon"
+      ],
+      "sourceDifficulty": 1710,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/12"
+    },
+    {
+      "id": "amc-10-2025b-q13",
+      "number": 13,
+      "question": "The altitude to the hypotenuse of a \\(30\\)-\\(60\\)-\\(90^\\circ\\) right triangle is divided into two segments of lengths \\(x \\lt y\\) by the median to the shortest side of the triangle. What is the ratio \\(\\dfrac{x}{x + y}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{3}{7}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\sqrt3}{4}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{4}{9}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{11}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{4\\sqrt3}{15}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Set the right angle at the origin with legs along the axes (short leg \\(1,\\) long leg \\(\\sqrt3\\)); find the foot of the altitude and the median line",
+        "Intersect the altitude with the median to the short side, then take the ratio of the near segment to the whole altitude"
+      ],
+      "solution": "Place the right angle at \\(C = (0,0),\\) the short leg \\(CB = 1\\) with \\(B = (1, 0),\\) and the long leg \\(CA = \\sqrt3\\) with \\(A = (0, \\sqrt3).\\) The altitude from \\(C\\) to hypotenuse \\(AB\\) has foot \\(H = \\left(\\tfrac34, \\tfrac{\\sqrt3}{4}\\right)\\) and runs along \\(x = \\sqrt3\\,y.\\) The median from \\(A\\) to the midpoint \\(\\left(\\tfrac12, 0\\right)\\) of \\(CB\\) meets that altitude at \\(\\left(\\tfrac37, \\tfrac{\\sqrt3}{7}\\right).\\) This cuts \\(CH\\) (length \\(\\tfrac{\\sqrt3}{2}\\)) into \\(\\tfrac{4\\sqrt3}{14}\\) and \\(\\tfrac{3\\sqrt3}{14},\\) so \\(x = \\tfrac{3\\sqrt3}{14}\\) and \\(\\dfrac{x}{x + y} = \\dfrac{\\frac{3\\sqrt3}{14}}{\\frac{\\sqrt3}{2}} = \\dfrac{3}{7}.\\) Thus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "special right triangle",
+        "altitude",
+        "median (geometry)"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/13"
+    },
+    {
+      "id": "amc-10-2025b-q14",
+      "number": 14,
+      "question": "Nine athletes, no two of whom are the same height, try out for the basketball team. One at a time, they draw a wristband at random, without replacement, from a bag containing \\(3\\) blue bands, \\(3\\) red bands, and \\(3\\) green bands. They are divided into a blue group, a red group, and a green group. The tallest member of each group is named the group captain. What is the probability that the group captains are the three tallest athletes?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{9}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2}{7}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{9}{28}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The captains are the three tallest exactly when the three tallest end up in three different groups",
+        "Assign the top three to slots one at a time: the probabilities that each new one lands in a fresh group are \\(\\tfrac{6}{8}\\) then \\(\\tfrac{3}{7}\\)"
+      ],
+      "solution": "The captains are the three tallest exactly when those three land in three different groups, since each is then the tallest of its own group. Drop them into the \\(9\\) slots one at a time (\\(3\\) per group). The second tallest misses the first’s group with probability \\(\\tfrac{6}{8},\\) and the third misses both with probability \\(\\tfrac{3}{7}.\\) So the probability is \\(\\tfrac{6}{8} \\cdot \\tfrac{3}{7} = \\tfrac{9}{28}.\\) Therefore, the answer is <b>C</b>.",
+      "sourceConcepts": [
+        "basic probability",
+        "conditional probability"
+      ],
+      "sourceDifficulty": 1500,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/14"
+    },
+    {
+      "id": "amc-10-2025b-q15",
+      "number": 15,
+      "question": "The sum\n\n\\[\\sum_{k=1}^{\\infty} \\frac{1}{k^3 + 6k^2 + 8k}\\]\n\ncan be expressed as \\(\\dfrac{a}{b},\\) where \\(a\\) and \\(b\\) are relatively prime positive integers. What is \\(a + b?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(89\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(97\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(102\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(107\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(129\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Factor the denominator as \\(k(k + 2)(k + 4)\\) and use partial fractions",
+        "The pieces \\(\\tfrac{\\frac{1}{8}}{k} - \\tfrac{\\frac{1}{4}}{k + 2} + \\tfrac{\\frac{1}{8}}{k + 4}\\) telescope; only \\(k = 1, 2, 3, 4\\) leave a remainder"
+      ],
+      "solution": "Factor \\(k^3 + 6k^2 + 8k = k(k + 2)(k + 4),\\) then split into partial fractions: \\(\\dfrac{1}{k(k + 2)(k + 4)} = \\dfrac{\\frac{1}{8}}{k}\\) \\(- \\dfrac{\\frac{1}{4}}{k + 2}\\) \\(+ \\dfrac{\\frac{1}{8}}{k + 4}.\\) Summing over all \\(k,\\) the coefficient of \\(\\tfrac1n\\) cancels for \\(n \\ge 5,\\) so only the first few terms survive: \\(\\tfrac18\\left(1 + \\tfrac12 - \\tfrac13 - \\tfrac14\\right)\\) \\(= \\tfrac18 \\cdot \\tfrac{11}{12} = \\tfrac{11}{96}.\\) So \\(a + b = 11 + 96 = 107.\\) Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "partial fractions",
+        "telescoping"
+      ],
+      "sourceDifficulty": 1600,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/15"
+    },
+    {
+      "id": "amc-10-2025b-q16",
+      "number": 16,
+      "question": "A circle has been divided into \\(6\\) sectors of different sizes. Then \\(2\\) of the sectors are painted red, \\(2\\) painted green, and \\(2\\) painted blue so that no two neighboring sectors are painted the same color. One such coloring is shown below.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2025b/16-9abcc9a6a1.svg\" style=\"max-height: 12rem\"/>\n\nHow many different colorings are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(28\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The unequal sectors form a fixed cycle of \\(6\\) positions; you need proper colorings using each color exactly twice",
+        "A \\(6\\)-cycle has \\(2^6 + 2 = 66\\) proper \\(3\\)-colorings; remove those that do not use each color exactly twice"
+      ],
+      "solution": "The six unequal sectors form a fixed cycle of \\(6\\) distinguishable positions, so we want proper \\(3\\)-colorings of a \\(6\\)-cycle that use each color exactly twice. There are \\((3-1)^6 + (3-1) = 66\\) proper \\(3\\)-colorings altogether. Of these, \\(6\\) use only two colors: choose the missing color in \\(3\\) ways, then alternate the other two colors in \\(2\\) ways. Another \\(36\\) have color counts \\((3,2,1)\\): choose the color used three times in \\(3\\) ways, choose one of the \\(2\\) alternating sets of positions for it, choose the color used twice in \\(2\\) ways, and choose its \\(2\\) positions among the other \\(3\\) in \\(3\\) ways. The remaining \\(66 - 6 - 36 = 24\\) use each color exactly twice. Therefore, the answer is <b>D</b>.",
+      "sourceConcepts": [
+        "graph theory",
+        "complementary counting",
+        "casework"
+      ],
+      "sourceDifficulty": 1800,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/16"
+    },
+    {
+      "id": "amc-10-2025b-q17",
+      "number": 17,
+      "question": "Consider a decreasing sequence of \\(n\\) positive integers \\(x_1 \\gt x_2 \\gt x_3 \\gt \\cdots \\gt x_n\\) that satisfies the following conditions. The average of the first \\(3\\) terms in the sequence is \\(2025.\\) For all \\(4 \\le k \\le n,\\) the average of the first \\(k\\) terms in the sequence is \\(1\\) less than the average of the first \\(k - 1\\) terms in the sequence.\n\nWhat is the greatest possible value of \\(n?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1013\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1014\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1016\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2016\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2025\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(A_k\\) be the average of the first \\(k\\) terms; the conditions give \\(A_k = 2028 - k\\) for \\(k \\ge 3\\)",
+        "Then \\(x_k = k A_k\\) \\(- (k-1)A_{k-1} = 2029\\) \\(- 2k\\) for \\(k \\ge 4;\\) require it to stay a positive integer"
+      ],
+      "solution": "Let \\(A_k\\) be the average of the first \\(k\\) terms. Then \\(A_3 = 2025\\) and \\(A_k = A_{k-1} - 1\\) for \\(k \\ge 4,\\) so \\(A_k = 2028 - k.\\) The partial sum is \\(S_k = k(2028 - k),\\) and for \\(k \\ge 4\\) the terms are \\(x_k = S_k - S_{k-1} = 2029 - 2k,\\) namely \\(x_4 = 2021, x_5 = 2019, \\ldots.\\) These stay positive as long as \\(2029 - 2k \\gt 0,\\) that is \\(k \\le 1014,\\) with \\(x_{1014} = 1.\\) This bound is attainable: take \\((x_1,x_2,x_3) = (2030,2023,2022),\\) which is decreasing, sums to \\(6075,\\) and lies above \\(x_4 = 2021.\\) Thus the greatest possible value is \\(n = 1014,\\) so <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "summation",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1910,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/17"
+    },
+    {
+      "id": "amc-10-2025b-q18",
+      "number": 18,
+      "question": "What is the ones digit of the sum \\(\\lfloor\\sqrt{1}\\rfloor + \\lfloor\\sqrt{2}\\rfloor + \\lfloor\\sqrt{3}\\rfloor\\) \\(+ \\cdots + \\lfloor\\sqrt{2024}\\rfloor\\) \\(+ \\lfloor\\sqrt{2025}\\rfloor?\\) (Recall that \\(\\lfloor x \\rfloor\\) denotes the greatest integer less than or equal to \\(x.\\))",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "\\(\\lfloor\\sqrt{n}\\rfloor = m\\) for the \\(2m + 1\\) values \\(m^2 \\le n \\le (m + 1)^2 - 1\\)",
+        "Since \\(\\sqrt{2025} = 45,\\) sum \\(m(2m + 1)\\) for \\(m = 1\\) to \\(44\\) and add the final term \\(45\\)"
+      ],
+      "solution": "For each \\(m,\\) \\(\\lfloor\\sqrt{n}\\rfloor = m\\) on the \\(2m + 1\\) integers \\(m^2 \\le n \\le (m + 1)^2 - 1.\\) Since \\(\\sqrt{2025} = 45,\\) the terms with \\(1 \\le m \\le 44\\) contribute \\(\\sum_{m=1}^{44} m(2m + 1),\\) and \\(n = 2025\\) tacks on \\(45.\\) That sum is \\(\\sum_{m=1}^{44}(2m^2 + m)\\) \\(= 2 \\cdot \\tfrac{44 \\cdot 45 \\cdot 89}{6}\\) \\(+ \\tfrac{44 \\cdot 45}{2} = 58740\\) \\(+ 990 = 59730,\\) so the total is \\(59775.\\) Its ones digit is \\(5.\\) Therefore, the answer is <b>D</b>.",
+      "sourceConcepts": [
+        "floor and ceiling functions",
+        "sum of first n squares"
+      ],
+      "sourceDifficulty": 1730,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/18"
+    },
+    {
+      "id": "amc-10-2025b-q19",
+      "number": 19,
+      "question": "A container has a \\(1 \\times 1\\) square bottom, a \\(3 \\times 3\\) open square top, and four congruent trapezoidal sides, as shown. Starting when the container is empty, a hose that runs water at a constant rate takes \\(35\\) minutes to fill the container up to the midline of the trapezoids.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2025b/19-e7370b7e8c.svg\" style=\"max-height: 11rem\"/>\n\nHow many more minutes will it take to fill the remainder of the container?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(70\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(85\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(95\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(105\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The container is a piece of a pyramid; the volume from the apex up to side length \\(w\\) scales as \\(w^3\\)",
+        "Volumes split as \\(2^3 - 1^3 = 7\\) (up to the midline, side \\(2\\)) and \\(3^3 - 2^3 = 19\\) (remainder); scale the \\(35\\) minutes"
+      ],
+      "solution": "The container is a square frustum: a horizontal slice at height fraction \\(t\\) has side \\(1 + 2t.\\) Extend the sides up to their apex, and the volume out to where the side length is \\(w\\) scales as \\(w^3.\\) So the whole container is \\(3^3 - 1^3 = 26\\) parts, the piece up to the midline (side \\(2\\)) is \\(2^3 - 1^3 = 7\\) parts, and the rest is \\(3^3 - 2^3 = 19\\) parts. Those \\(7\\) parts take \\(35\\) minutes, so each part is \\(5\\) minutes. The remaining \\(19\\) parts take \\(95\\) minutes. Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "power scaling of length, area, and volume",
+        "volume",
+        "similarity"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/19"
+    },
+    {
+      "id": "amc-10-2025b-q20",
+      "number": 20,
+      "question": "Four congruent semicircles are inscribed in a square of side length \\(1\\) so that their diameters are on the sides of the square, one endpoint of each diameter is at a vertex of the square, and adjacent semicircles are tangent to each other. A small circle centered at the center of the square is tangent to each of the four semicircles, as shown below.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2025b/20-7088ba2e96.svg\" style=\"max-height: 12rem\"/>\n\nThe diameter of the small circle can be written as \\((\\sqrt{a} + b)(\\sqrt{c} + d),\\) where \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) are integers. What is \\(a + b + c + d?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "First find the semicircle radius \\(\\rho\\) from the tangency of two adjacent semicircles whose diameters start at neighboring vertices",
+        "The small radius equals (distance from the square’s center to a semicircle’s center) minus \\(\\rho;\\) then factor \\(2t\\) into two binomials"
+      ],
+      "solution": "Let each semicircle have radius \\(\\rho,\\) with centers like \\((\\rho, 0)\\) and \\((1, \\rho).\\) Adjacent semicircles are tangent, so these centers are \\(2\\rho\\) apart: \\((1 - \\rho)^2 + \\rho^2 = 4\\rho^2.\\) This gives \\(2\\rho^2 + 2\\rho - 1 = 0,\\) so \\(\\rho = \\tfrac{\\sqrt3 - 1}{2}.\\) The small circle of radius \\(t\\) sits at \\(\\left(\\tfrac12, \\tfrac12\\right),\\) and it’s tangent to a semicircle when its distance to that center equals \\(\\rho + t.\\) That distance is \\(\\sqrt{2 - \\sqrt3},\\) so \\(t = \\sqrt{2 - \\sqrt3} - \\rho,\\) and the diameter is \\(2t = \\sqrt6 - \\sqrt2\\) \\(- \\sqrt3 + 1 = (\\sqrt3 - 1)(\\sqrt2 - 1).\\) So \\(a + b + c + d = 3\\) \\(+ (-1) + 2 + (-1) = 3.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "tangent circles",
+        "coordinate geometry",
+        "radical"
+      ],
+      "sourceDifficulty": 1930,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/20"
+    },
+    {
+      "id": "amc-10-2025b-q21",
+      "number": 21,
+      "question": "Each of the \\(9\\) squares in a \\(3 \\times 3\\) grid is to be colored red, blue, or yellow in such a way that each red square shares an edge with at least one blue square, each blue square shares an edge with at least one yellow square, and each yellow square shares an edge with at least one red square. Colorings that can be obtained from one another by rotations and/or reflections are to be considered the same. How many different colorings are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(27\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The rules form a directed cycle: red needs a blue neighbor, blue needs a yellow, yellow needs a red",
+        "Count all valid colorings of the fixed labeled grid, then group them by the \\(8\\) rotations and reflections of the square"
+      ],
+      "solution": "First count colorings of a grid whose positions are distinguished. Fix the center square as red and list the four edge-middle colors cyclically. Up to a rotation or reflection, the only possible edge patterns are \\(YRBR\\) and \\(YRBY.\\) The first has \\(4\\) placements and \\(3\\) possible cyclic corner strings, \\(BRYB, BYRB,\\) and \\(BYYB;\\) the second has \\(8\\) placements and \\(2\\) possible corner strings, \\(BYBB\\) and \\(BYRB.\\) Thus there are \\(4 \\cdot 3 + 8 \\cdot 2 = 28\\) colorings with a red center. The center has \\(3\\) possible colors, so there are \\(84\\) labeled colorings.\n\nNow apply Burnside’s lemma. The identity fixes all \\(84\\) colorings. No nonidentity rotation fixes a valid coloring. Each of the two reflections across a horizontal or vertical axis fixes \\(6\\) colorings, while each diagonal reflection fixes none. Therefore, the number of colorings up to rotations and reflections is \\(\\dfrac{84 + 6 + 6}{8} = 12.\\) Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "Burnside’s Lemma",
+        "casework"
+      ],
+      "sourceDifficulty": 2100,
+      "solveTimeSeconds": 240,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/21"
+    },
+    {
+      "id": "amc-10-2025b-q22",
+      "number": 22,
+      "question": "A seven-digit positive integer is chosen at random. What is the probability that the number is divisible by \\(11,\\) given that the sum of its digits is \\(61?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{3}{14}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{11}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2}{7}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{4}{11}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3}{7}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "A digit sum of \\(61\\) is \\(2\\) below the maximum \\(63,\\) so the digits are all \\(9\\) except a total shortfall of \\(2\\)",
+        "For divisibility by \\(11\\) use the alternating digit sum; express it through the shortfalls on the odd- versus even-position digits"
+      ],
+      "solution": "A digit sum of \\(61 = 63 - 2\\) means all seven digits are \\(9\\) except for a total deficit of \\(2,\\) which gives \\(\\binom{2 + 6}{6} = 28\\) numbers. For divisibility by \\(11\\) we need \\(O - E \\equiv 0 \\pmod{11},\\) where \\(O\\) sums the \\(4\\) odd-position digits and \\(E\\) the \\(3\\) even ones. Write the deficits as \\(d_O + d_E = 2.\\) Then \\(O - E = 9 - d_O\\) \\(+ d_E = 11 - 2 d_O,\\) a multiple of \\(11\\) only when \\(d_O = 0.\\) So all of the deficit \\(2\\) falls on the \\(3\\) even positions, giving \\(\\binom{2 + 2}{2} = 6\\) ways. The probability is \\(\\tfrac{6}{28} = \\tfrac{3}{14}.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "conditional probability",
+        "divisibility",
+        "stars and bars"
+      ],
+      "sourceDifficulty": 2040,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/22"
+    },
+    {
+      "id": "amc-10-2025b-q23",
+      "number": 23,
+      "question": "A rectangular grid of squares has \\(141\\) rows and \\(91\\) columns. Each square has room for two numbers. Horace and Vera each fill in the grid by putting the numbers from \\(1\\) through \\(141 \\times 91 = 12{,}831\\) into the squares. Horace fills the grid horizontally: he puts \\(1\\) through \\(91\\) in order from left to right into row \\(1,\\) puts \\(92\\) through \\(182\\) into row \\(2\\) in order from left to right, and continues similarly through row \\(141.\\) Vera fills the grid vertically: she puts \\(1\\) through \\(141\\) in order from top to bottom into column \\(1,\\) then \\(142\\) through \\(282\\) into column \\(2\\) in order from top to bottom, and continues similarly through column \\(91.\\) How many squares get two copies of the same number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(19\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "At row \\(i,\\) column \\(j,\\) Horace writes \\(91(i - 1) + j\\) and Vera writes \\(141(j - 1) + i;\\) set them equal",
+        "The equation reduces to \\(9i - 14j = -5;\\) find the columns \\(j\\) that make \\(i\\) an integer in range"
+      ],
+      "solution": "At row \\(i,\\) column \\(j,\\) Horace writes \\(91(i - 1) + j\\) and Vera writes \\(141(j - 1) + i.\\) Set them equal and simplify to get \\(9i - 14j = -5,\\) so \\(i = \\tfrac{14j - 5}{9},\\) an integer exactly when \\(j \\equiv 1 \\pmod 9.\\) For \\(j = 1, 10, 19, \\ldots, 91,\\) that’s \\(11\\) values, and \\(i\\) runs \\(1, 15, 29, \\ldots, 141,\\) all within range. So \\(11\\) squares match. Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "Diophantine Equation",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 2300,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/23"
+    },
+    {
+      "id": "amc-10-2025b-q24",
+      "number": 24,
+      "question": "A frog hops along the number line according to the following rules. It starts at \\(0.\\) If it is at \\(0,\\) then it moves to \\(1\\) with probability \\(\\tfrac12\\) and it disappears with probability \\(\\tfrac12.\\) For \\(n = 1,\\) \\(2,\\) or \\(3,\\) if it is at \\(n,\\) then it moves to \\(n + 1\\) with probability \\(\\tfrac14,\\) it moves to \\(n - 1\\) with probability \\(\\tfrac14,\\) and it disappears with probability \\(\\tfrac12.\\)\n\nWhat is the probability that the frog reaches \\(4?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{101}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{100}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{99}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{98}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{97}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let \\(p_n\\) be the probability of ever reaching \\(4\\) starting from \\(n,\\) with \\(p_4 = 1;\\) set up one equation per state",
+        "Use \\(p_0 = \\tfrac12 p_1\\) and \\(p_n = \\tfrac14 p_{n-1} + \\tfrac14 p_{n+1}\\) for \\(n = 1, 2, 3,\\) then solve the system"
+      ],
+      "solution": "Let \\(p_n\\) be the probability of reaching \\(4\\) from position \\(n,\\) with \\(p_4 = 1.\\) The rules give \\(p_0 = \\tfrac12 p_1,\\) \\(p_1 = \\tfrac14 p_0 + \\tfrac14 p_2,\\) \\(p_2 = \\tfrac14 p_1 + \\tfrac14 p_3,\\) and \\(p_3 = \\tfrac14 p_2 + \\tfrac14.\\) Work upward: \\(p_1 = \\tfrac27 p_2\\) and \\(p_2 = \\tfrac{7}{26} p_3.\\) These unwind to \\(p_3 = \\tfrac{26}{97},\\) \\(p_2 = \\tfrac{7}{97},\\) \\(p_1 = \\tfrac{2}{97},\\) and finally \\(p_0 = \\tfrac{1}{97}.\\) Therefore, the answer is <b>E</b>.",
+      "sourceConcepts": [
+        "random walk",
+        "recursive probability",
+        "system of equations"
+      ],
+      "sourceDifficulty": 2170,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/24"
+    },
+    {
+      "id": "amc-10-2025b-q25",
+      "number": 25,
+      "question": "Square \\(ABCD\\) has sides of length \\(4.\\) Points \\(P\\) and \\(Q\\) lie on \\(\\overline{AD}\\) and \\(\\overline{CD},\\) respectively, with \\(AP = \\tfrac{8}{5}\\) and \\(DQ = \\tfrac{10}{3}.\\) A path begins along the line segment from \\(P\\) to \\(Q\\) and continues by reflecting against the sides of \\(ABCD\\) (with congruent incoming and outgoing angles), as shown in the figure. If the path hits a vertex of the square, then it terminates there; otherwise it continues forever.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2025b/25-f06ea49e74.svg\" style=\"max-height: 12rem\"/>\n\nAt which vertex does the path terminate?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(A\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(B\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(C\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(D\\)"
+        },
+        {
+          "label": "E",
+          "content": "The path continues forever."
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Reflecting billiard paths is easiest by “unfolding”: follow a straight line through a grid of reflected copies of the square",
+        "Find the first grid corner \\((4a, 4b)\\) the line hits; the parities of \\(a\\) and \\(b\\) determine which actual vertex it is"
+      ],
+      "solution": "Place \\(A = (0,0),\\) \\(B = (4,0),\\) \\(C = (4,4),\\) \\(D = (0,4),\\) so \\(P = \\left(0, \\tfrac85\\right)\\) and \\(Q = \\left(\\tfrac{10}{3}, 4\\right).\\) The initial direction is \\(\\left(\\tfrac{10}{3}, \\tfrac{12}{5}\\right) \\parallel (25, 18).\\) Unfold the billiard into a grid of reflected copies and follow the straight line from \\(P.\\) At a grid corner \\((4a,4b),\\) the horizontal coordinate gives \\(t = \\tfrac{4a}{25}.\\) The vertical coordinate then requires \\(10 + 18a = 25b,\\) so \\(a \\equiv 5 \\pmod{25}.\\) The first positive possibility is \\(a = 5,\\) giving \\(b = 4\\) and the unfolded corner \\((20,16).\\) Crossing \\(5\\) cells across (odd) puts it on the side \\(x = 4,\\) and \\(4\\) cells up (even) puts it on \\(y = 0.\\) That’s vertex \\((4,0) = B.\\) Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "reflection (geometry)",
+        "parity",
+        "greatest common divisor",
+        "coordinate geometry"
+      ],
+      "sourceDifficulty": 2520,
+      "solveTimeSeconds": 240,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2025B/problem/25"
+    }
+  ]
+}

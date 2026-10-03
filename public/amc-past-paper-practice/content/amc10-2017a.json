@@ -1,0 +1,1016 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2017A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2017a-q1",
+      "number": 1,
+      "question": "What is the value of the following expression?\n\n\\[ \\begin{aligned} &2(2(2(2(2(2+1)+1)\\\\ &\\qquad{}+1)+1)+1)+1 \\end{aligned} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(70\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(97\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(127\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(159\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(729\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Work from the innermost parentheses outward",
+        "Notice the intermediate values are one less than powers of two"
+      ],
+      "solution": "Starting with the innermost \\(2+1,\\) each new layer doubles the current value and adds \\(1.\\) The successive values are \\[3,7,15,31,63,127.\\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "whole number operations"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/1"
+    },
+    {
+      "id": "amc-10-2017a-q2",
+      "number": 2,
+      "question": "Pablo buys popsicles for his friends. The store sells single popsicles for \\(\\$1\\) each, \\(3\\)-popsicle boxes for \\(\\$2\\) each, and \\(5\\)-popsicle boxes for \\(\\$3.\\) What is the greatest number of popsicles that Pablo can buy with \\(\\$8?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compare popsicles per dollar for the three buying options",
+        "First decide the best use of \\(\\$6\\), then spend the remaining \\(\\$2\\)"
+      ],
+      "solution": "The \\(\\$3\\) boxes give us the most popsicles per dollar, so we want to buy as many of those as possible.\n\nWe can buy two of those, getting \\(5 \\cdot 2 = 10\\) popsicles with \\(\\$8 - \\$6 = \\$2\\) remaining.\n\nThe \\(\\$1\\) single popsicles are the worst deal, so Pablo should spend the rest of his money on the \\(3\\)-popsicle box.\n\nHe then ends up with \\(10 + 3 = 13\\) popsicles.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "money",
+        "optimization"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/2"
+    },
+    {
+      "id": "amc-10-2017a-q3",
+      "number": 3,
+      "question": "Tamara has three rows of two \\(6\\)-feet by \\(2\\)-feet flower beds in her garden. The beds are separated and also surrounded by \\(1\\)-foot-wide walkways, as shown on the diagram. What is the total area of the walkways, in square feet?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2017a/3-d5ad025489.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(72\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(78\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(120\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(150\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Find the dimensions of the whole rectangular garden including walkways",
+        "Subtract the total area of the six flower beds from the outside rectangle"
+      ],
+      "solution": "We can see that the width of the garden is \\[2 \\cdot 6 + 3 \\cdot 1 = 15.\\] We can also see that the height is \\[ 3 \\cdot 2 + 4 \\cdot 1 = 10. \\] The total area of the garden is therefore \\(15 \\cdot 10 = 150.\\) The area of all the flower beds is \\[ 6 \\cdot 2 \\cdot 6 = 72. \\] Subtracting this from the area of the garden yields \\(150 - 72 = 78,\\) which is the area of the walkways.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "area decomposition",
+        "rectangle"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/3"
+    },
+    {
+      "id": "amc-10-2017a-q4",
+      "number": 4,
+      "question": "Mia is “helping” her mom pick up \\(30\\) toys that are strewn on the floor. Mia’s mom manages to put \\(3\\) toys into the toy box every \\(30\\) seconds, but each time immediately after those \\(30\\) seconds have elapsed, Mia takes \\(2\\) toys out of the box. How much time, in minutes, will it take Mia and her mom to put all \\(30\\) toys into the box for the first time?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13.5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(14.5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15.5\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Track the net change during a normal half-minute cycle",
+        "At the end, stop when the box first reaches \\(30\\) before another removal"
+      ],
+      "solution": "Note that after \\(30\\) seconds, there are \\(3\\) toys added and \\(2\\) removed, leaving a net total of \\(+1\\) toys in the box.\n\nWe have to be careful towards the end, however, since it is possible for the box to have \\(30\\) toys right after Mia’s mom adds the toys and before Mia removes them.\n\nAfter there are \\(27\\) toys in the box, Mia’s mom can add \\(3,\\) leaving \\(30\\) toys in the box.\n\nIt will take \\(27 \\cdot 30\\) seconds, plus another \\(30\\) seconds, which gives us \\[ 28 \\cdot 30 \\div 60 = 14 \\] minutes to get \\(30\\) toys in the box.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "rate",
+        "process simulation"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/4"
+    },
+    {
+      "id": "amc-10-2017a-q5",
+      "number": 5,
+      "question": "The sum of two nonzero real numbers is \\(4\\) times their product. What is the sum of the reciprocals of the two numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Name the two numbers \\(x\\) and \\(y\\)",
+        "Divide the given equation by \\(xy\\)"
+      ],
+      "solution": "Let \\(x\\) and \\(y\\) be the two numbers. We are given that \\(x + y = 4xy.\\)\n\nNote that \\[ \\dfrac{1}{x} + \\dfrac{1}{y} = \\dfrac{x + y}{xy} = 4. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "algebraic manipulation",
+        "fraction"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/5"
+    },
+    {
+      "id": "amc-10-2017a-q6",
+      "number": 6,
+      "question": "Ms. Carroll promised that anyone who got all the multiple choice questions right on the upcoming exam would receive an A on the exam. Which one of these statements necessarily follows logically?",
+      "options": [
+        {
+          "label": "A",
+          "content": "If Lewis did not receive an A, then he got all of the multiple\nchoice questions wrong."
+        },
+        {
+          "label": "B",
+          "content": "If Lewis did not receive an A, then he got at\nleast one of the multiple choice questions wrong."
+        },
+        {
+          "label": "C",
+          "content": "If Lewis got at least one of the multiple choice questions\nwrong, then he did not receive an A."
+        },
+        {
+          "label": "D",
+          "content": "If Lewis received an A, then he got all of the multiple choice\nquestions right."
+        },
+        {
+          "label": "E",
+          "content": "If Lewis received an A, then he got at least one of the\nmultiple choice questions right."
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Translate the promise as an implication",
+        "Use the contrapositive of the statement"
+      ],
+      "solution": "The promise says that getting every multiple choice question right guarantees an A. Its contrapositive is that anyone who did not receive an A must not have gotten every multiple choice question right. In other words, that person got at least one multiple choice question wrong.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "logical deduction"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/6"
+    },
+    {
+      "id": "amc-10-2017a-q7",
+      "number": 7,
+      "question": "Jerry and Silvia wanted to go from the southwest corner of a square field to the northeast corner. Jerry walked due east and then due north to reach the goal, but Silvia headed northeast and reached the goal walking in a straight line. Which of the following is closest to how much shorter Silvia’s trip was, compared to Jerry’s trip?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(30\\%\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(40\\%\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(50\\%\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\%\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(70\\%\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Let the square side length be \\(s\\)",
+        "Compare \\(2s\\) with \\(s\\sqrt2\\) as a percent of Jerry’s trip"
+      ],
+      "solution": "Let \\(s\\) be the side length of the field. Then Jerry traveled \\(2s\\) and Silvia traveled \\(s\\sqrt{2}\\) from the Pythagorean theorem.\n\nThe desired value is \\[\\begin{aligned} \\dfrac{2s - s\\sqrt{2}}{2s} &= \\dfrac{2 - \\sqrt{2}}{2} \\\\ &\\approx \\dfrac{2 - 1.4}{2} \\\\&= 0.3\\\\ &= 30\\%. \\end{aligned}\\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "Pythagorean Theorem",
+        "percentage",
+        "estimation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/7"
+    },
+    {
+      "id": "amc-10-2017a-q8",
+      "number": 8,
+      "question": "At a gathering of \\(30\\) people, there are \\(20\\) people who all know each other and \\(10\\) people who know no one. People who know each other hug, and people who do not know each other shake hands. How many handshakes occur?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(240\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(245\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(290\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(480\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(490\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count handshakes involving the ten people who know no one",
+        "Avoid double-counting by thinking in pairs"
+      ],
+      "solution": "Each of the \\(10\\) people shake hands with each of the \\(20\\) people. This results in \\(10 \\cdot 20 = 200\\) handshakes.\n\nThere are also \\(\\binom{10}{2} = 45\\) handshakes within the \\(10\\) people (every pair of people shake hands).\n\nTherefore, the total number of handshakes is \\(200 + 45 = 245.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "counting pairs",
+        "combinations"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/8"
+    },
+    {
+      "id": "amc-10-2017a-q9",
+      "number": 9,
+      "question": "Minnie rides on a flat road at \\(20\\) kilometers per hour (kph), downhill at \\(30\\) kph, and uphill at \\(5\\) kph. Penny rides on a flat road at \\(30\\) kph, downhill at \\(40\\) kph, and uphill at \\(10\\) kph. Minnie goes from town \\(A\\) to town \\(B,\\) a distance of \\(10\\) km all uphill, then from town \\(B\\) to town \\(C,\\) a distance of \\(15\\) km all downhill, and then back to town \\(A,\\) a distance of \\(20\\) km on the flat. Penny goes the other way around using the same route. How many more minutes does it take Minnie to complete the \\(45\\)-km ride than it takes Penny?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(65\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(95\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compute Minnie’s three segment times in hours",
+        "Compute Penny’s three segment times on the same route in the opposite direction"
+      ],
+      "solution": "It will take Minnie \\(10 \\div 5 = 2\\) hours to travel the uphill distance. It will take her \\(15 \\div 30 = \\frac{1}{2}\\) hours to travel the downhill distance.\n\nFinally, it will take her \\(20 \\div 20 = 1\\) hour to travel the flat. This will take her a total of \\[ \\begin{aligned}60\\left(2 + \\frac{1}{2} + 1\\right) &= 60 \\cdot \\frac{7}{2} \\\\&= 210 \\end{aligned}\\] minutes.\n\nIt will take Penny \\(20 \\div 30 = \\frac{2}{3}\\) hours to travel the flat. It will take her another \\(15 \\div 10 = \\frac{3}{2}\\) hours to travel the uphill.\n\nFinally, it will take her \\(10 \\div 40 = \\frac{1}{4}\\) hours to travel the downhill. This is a total of \\[\\begin{aligned} 60\\left(\\dfrac{2}{3} + \\dfrac{3}{2} + \\dfrac{1}{4}\\right) &= 60 \\cdot \\dfrac{29}{12} \\\\&= 145 \\end{aligned}\\] minutes. The trip takes Minnie \\(210 - 145 = 65\\) more minutes to travel than Penny.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/9"
+    },
+    {
+      "id": "amc-10-2017a-q10",
+      "number": 10,
+      "question": "Joy has \\(30\\) thin rods, one each of every integer length from \\(1\\) cm through \\(30\\) cm. She places the rods with lengths \\(3\\) cm, \\(7\\) cm, and \\(15\\) cm on a table. She then wants to choose a fourth rod that she can put with these three to form a quadrilateral with positive area. How many of the remaining rods can she choose as the fourth rod?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use the quadrilateral inequality for the longest side",
+        "After finding the possible integer lengths, remove rods already on the table"
+      ],
+      "solution": "Note that no one side can be greater than or equal to the sum of the other side lengths.\n\nLet \\(x\\) be the length fourth rod. Then we have that \\[ x \\lt 3 + 7 + 15\\] and \\[ x + 3 + 7 \\gt 15\\] Simplifying, we know that \\[5\\lt x\\lt 25.\\] Counting the number of integers in this range, we are left with \\(25 - 5 - 1 = 19\\) values for \\(x.\\)\n\nThe rods with length \\(7\\) and \\(15\\) are already being used, however, so \\(x\\) cannot equal these.\n\nThis leaves \\(19 - 2 = 17\\) viable solutions for \\(x.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "triangle inequality",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/10"
+    },
+    {
+      "id": "amc-10-2017a-q11",
+      "number": 11,
+      "question": "The region consisting of all points in three-dimensional space within \\(3\\) units of line segment \\(\\overline{AB}\\) has volume \\(216\\pi.\\) What is the length \\(AB?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The solid is a cylinder with two hemispherical caps",
+        "Subtract the volume of the two hemispheres before solving for \\(AB\\)"
+      ],
+      "solution": "Recall that all the points at most a fixed distance \\(r\\) away from a point form a sphere.\n\nAt the end points of this line segment, we can visualize two hemispheres being formed at each end.\n\nAll the points in the middle also have spheres forming around them, but they get merged into the ones right next to them.\n\nThis means that the middle section forms a cylinder with radius \\(3.\\) The two hemispheres form a sphere with radius \\(3,\\) and therefore a volume of \\[ \\dfrac{4}{3} \\pi 3^3 = 27 \\cdot \\dfrac{4}{3} \\pi = 36 \\pi. \\] This means that the cylinder has a volume of \\(216 \\pi - 36 \\pi = 180 \\pi.\\) We know the base area is \\(9 \\pi,\\) so if \\(h\\) is \\(AB,\\) then the volume is \\[ \\begin{aligned} \\pi 3^2 h &= 180\\pi \\\\9h \\pi &= 180 \\pi \\\\ h &= 20. \\end{aligned}\\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "volume",
+        "cylinder",
+        "sphere"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/11"
+    },
+    {
+      "id": "amc-10-2017a-q12",
+      "number": 12,
+      "question": "Let \\(S\\) be the set of points \\((x,y)\\) in the coordinate plane such that two of the three quantities \\(3,\\) \\(x+2,\\) and \\(y-4\\) are equal and the third of the three quantities is no greater than this common value. Which of the following is a correct description of \\(S?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "a single point"
+        },
+        {
+          "label": "B",
+          "content": "two intersecting lines"
+        },
+        {
+          "label": "C",
+          "content": "three lines whose pairwise intersections are three distinct\npoints"
+        },
+        {
+          "label": "D",
+          "content": "a triangle"
+        },
+        {
+          "label": "E",
+          "content": "three rays with a common endpoint"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Split into cases according to which two quantities are equal",
+        "Each equality gives a ray once the third quantity is bounded above"
+      ],
+      "solution": "Let us case on which of the values are equal. If \\(3 = x + 2,\\) then \\(x = 1.\\) This also tells us that \\[ y - 4 \\leq 3 \\]\\[ y \\leq 7. \\] This describes a ray starting at \\((1, 7)\\) and extending in the negative \\(y\\) direction.\n\nSimilarly, if \\(3 = y - 4,\\) then \\(y = 7\\) and \\[ x + 2 \\leq 3 \\]\\[ x \\leq 1. \\] This also describes a ray starting at \\((1, 7)\\) but instead extending in the negative \\(x\\) direction.\n\nFinally, if \\(x + 2 = y - 4,\\) then we have the line \\(y = x + 6.\\) Furthermore, we have that \\[ 3 \\leq x + 2 \\]\\[ x \\geq 1 \\] and \\[ 3 \\leq y - 4 \\]\\[ y \\geq 7. \\] Note that if one of these conditions is met, the other is also necessarily true due to the equation of the line.\n\nIf \\(y = 7,\\) then \\(x = 1.\\) The other points are along the line, where \\(y \\gt 7\\) and \\(x \\gt 1.\\)\n\nThis describes another ray that starts at \\((1, 7)\\) and goes off in some third direction.\n\nAll three cases result in rays originating from \\((1, 7)\\) that all go in different directions.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "casework"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/12"
+    },
+    {
+      "id": "amc-10-2017a-q13",
+      "number": 13,
+      "question": "Define a sequence recursively by \\(F_{0}=0,\\) \\(~F_{1}=1,\\) and \\(F_{n}=\\) the remainder when \\(F_{n-1}+F_{n-2}\\) is divided by \\(3,\\) for all \\(n\\geq 2.\\) Thus the sequence starts \\(0,\\) \\(1,\\) \\(1,\\) \\(2,\\) \\(0,\\) \\(2,\\) \\(\\ldots.\\) What is \\[F_{2017}+F_{2018}+F_{2019}+F_{2020}+\\]\\[F_{2021}+F_{2022}+F_{2023}+F_{2024}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Write out enough terms to see the period modulo \\(3\\)",
+        "The requested eight terms cover one complete period"
+      ],
+      "solution": "Let us list out the first few values to see if we can find a pattern in this sequence.\n\n\\[ 0, 1, 1, 2, 0, 2, 2, 1, 0, 1, \\cdots \\]\n\nThe pair \\((F_8,F_9)=(0,1)=(F_0,F_1).\\) Because each later term is determined by the preceding two terms, the sequence therefore repeats every \\(8\\) terms.\n\nThe desired answer is the sum of \\(8\\) consecutive numbers, which is fixed. This sum is \\[ 0 + 1 + 1 + 2 + 0 + 2\\]\\[ + 2 + 1 = 9. \\] Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "Fibonacci",
+        "modular arithmetic",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/13"
+    },
+    {
+      "id": "amc-10-2017a-q14",
+      "number": 14,
+      "question": "Every week Roger pays for a movie ticket and a soda out of his allowance. Last week, Roger’s allowance was \\(A\\) dollars. The cost of his movie ticket was \\(20\\%\\) of the difference between \\(A\\) and the cost of his soda, while the cost of his soda was \\(5\\%\\) of the difference between \\(A\\) and the cost of his movie ticket. To the nearest whole percent, what fraction of \\(A\\) did Roger pay for his movie ticket and soda?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\%\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(19\\%\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(22\\%\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(23\\%\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(25\\%\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let the ticket and soda costs be variables",
+        "Turn the two percent statements into a two-equation linear system"
+      ],
+      "solution": "Let \\(t\\) be the cost of the ticket and \\(s\\) be the cost of the soda. Then we get the following equations. \\[ t = \\dfrac{A - s}{5} \\] \\[ s = \\dfrac{A - t}{20} \\]\n\nCross-multiplying the first equation gives us \\(5t = A - s.\\) Substituting in the expression for \\(s\\) yields \\[ 5t = A - \\dfrac{A - t}{20}. \\] Solving yields \\[ \\begin{aligned} 5t &= A - \\dfrac{A - t}{20} \\\\ 100t &= 20A - A + t \\\\ 99t &= 19A \\\\ t &= \\dfrac{19A}{99}. \\end{aligned} \\]\n\nThis also gives us \\[ s = \\dfrac{A - \\frac{19A}{99}}{20} = \\dfrac{4A}{99}. \\]\n\nAdding together the costs gives us \\[ \\dfrac{19A}{99} + \\dfrac{4A}{99} = \\dfrac{23A}{99} \\approx 23 \\%. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1480,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/14"
+    },
+    {
+      "id": "amc-10-2017a-q15",
+      "number": 15,
+      "question": "Chloé chooses a real number uniformly at random from the interval \\([0, 2017].\\)\n\nIndependently, Laurent chooses a real number uniformly at random from the interval \\([0, 4034].\\)\n\nWhat is the probability that Laurent’s number is greater than Chloé’s number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{6}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{7}{8}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Break Laurent’s interval into the lower half and upper half",
+        "In the lower half, symmetry decides which chosen number is larger"
+      ],
+      "solution": "If Laurent chooses a number in the interval \\((2017, 4034],\\) then there is no way that Chloé can have the greater number.\n\nThis means that Laurent has a \\(\\frac{1}{2}\\) chance of automatically winning.\n\nOtherwise, Laurent chooses a number in the interval \\([0, 2017].\\) The probability that he gets a greater number than Chloé is the same as Chloé getting a greater number than Laurent.\n\nThis means that Laurent has a \\(\\frac{1}{2}\\) chance of getting a greater number (when working with real intervals, the probability of a tie is essentially \\(0\\) due to the infinite size of the intervals).\n\nLaurent’s total chance of getting a greater number is \\[ \\dfrac{1}{2} \\cdot 1 + \\dfrac{1}{2} \\cdot \\dfrac{1}{2} = \\dfrac{3}{4}. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "geometric probability",
+        "symmetry"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/15"
+    },
+    {
+      "id": "amc-10-2017a-q16",
+      "number": 16,
+      "question": "There are \\(10\\) horses, named Horse \\(1,\\) Horse \\(2,\\) and so on through Horse \\(10.\\) They get their names from how many minutes it takes them to run one lap around a circular race track: Horse \\(k\\) runs one lap in exactly \\(k\\) minutes. At time \\(0\\) all the horses are together at the starting point on the track. The horses start running in the same direction, and they keep running around the circular track at their constant speeds.\n\nThe least time \\(S > 0,\\) in minutes, at which all \\(10\\) horses will again simultaneously be at the starting point is \\(S=2520.\\) Let \\(T > 0\\) be the least time, in minutes, such that at least \\(5\\) of the horses are again at the starting point. What is the sum of the digits of \\(T?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "A horse is at the start exactly when its name divides the elapsed time",
+        "Find the least time divisible by at least five numbers from \\(1\\) through \\(10\\)"
+      ],
+      "solution": "Horse \\(k\\) is back at the starting point after \\(t\\) minutes exactly when \\(t\\) is divisible by \\(k\\). Thus we need the least positive \\(t\\) that is divisible by at least five of the integers \\(1,2,\\ldots,10\\).\n\nChecking upward, no number below \\(12\\) has five divisors from this list: for example, \\(6\\) has \\(1,2,3,6\\), \\(8\\) has \\(1,2,4,8\\), \\(9\\) has \\(1,3,9\\), and \\(10\\) has \\(1,2,5,10\\).\n\nThe number \\(12\\) is divisible by \\(1,2,3,4,\\) and \\(6\\), so the least possible time is \\(T=12\\). The sum of its digits is \\(1+2=3\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "least common multiple"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/16"
+    },
+    {
+      "id": "amc-10-2017a-q17",
+      "number": 17,
+      "question": "Distinct points \\(P,\\) \\(Q,\\) \\(R,\\) \\(S\\) lie on the circle \\(x^{2}+y^{2}=25\\) and have integer coordinates. The distances \\(PQ\\) and \\(RS\\) are irrational numbers.\n\nWhat is the greatest possible value of the ratio \\(\\dfrac{PQ}{RS}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\sqrt{5}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\sqrt{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "List the lattice points on the circle",
+        "Maximize one irrational distance and minimize another irrational distance"
+      ],
+      "solution": "The integer-coordinate points on \\(x^2+y^2=25\\) are \\((\\pm5,0)\\), \\((0,\\pm5)\\), \\((\\pm3,\\pm4)\\), and \\((\\pm4,\\pm3)\\).\n\nFor \\(PQ\\) and \\(RS\\) to be irrational, the squared distance must not be a perfect square. To maximize the ratio, make \\(PQ\\) as large as possible and \\(RS\\) as small as possible under that condition.\n\nThe largest possible irrational distance is between \\((-4,3)\\) and \\((3,-4)\\), giving \\(PQ=\\sqrt{7^2+7^2}=\\sqrt{98}\\). The smallest possible irrational distance is between \\((3,4)\\) and \\((4,3)\\), giving \\(RS=\\sqrt{1^2+1^2}=\\sqrt2\\).\n\nThe greatest possible ratio is \\(\\dfrac{\\sqrt{98}}{\\sqrt2}=7\\). Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "lattice point",
+        "circle",
+        "distance formula",
+        "optimization"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/17"
+    },
+    {
+      "id": "amc-10-2017a-q18",
+      "number": 18,
+      "question": "Amelia has a coin that lands heads with probability \\(\\frac{1}{3},\\) and Blaine has a coin that lands on heads with probability \\(\\frac{2}{5}.\\) Amelia and Blaine alternately toss their coins until someone gets a head; the first one to get a head wins. All coin tosses are independent. Amelia goes first. The probability that Amelia wins is \\(\\frac{p}{q},\\) where \\(p\\) and \\(q\\) are relatively prime positive integers. What is \\(q-p?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let \\(x\\) be Amelia’s chance to win from the start of her turn",
+        "After both players toss tails, the same situation repeats"
+      ],
+      "solution": "Let \\(x\\) be the probability that Amelia wins.\n\nThere is a \\(\\frac{1}{3}\\) chance Amelia wins off her first flip.\n\nIf she gets tails, Blaine must also get tails for the game to return to the same state; this happens with probability \\(\\frac{3}{5}.\\)\n\nThe total probability of this case is \\[\\dfrac{2}{3} \\cdot \\dfrac{3}{5} = \\dfrac{2}{5}.\\]\n\nThe game then goes back to Amelia, who then again has a \\(x\\) chance of winning.\n\nTherefore, we get the following equation. \\[ x = \\dfrac{1}{3} + \\dfrac{2}{5}x\\]\\[\\dfrac{3}{5}x = \\dfrac{1}{3} \\]\\[ x = \\dfrac{5}{9}. \\]\n\nThe difference between the denominator and numerator is \\(9 - 5 = 4.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "recursive probability",
+        "geometric distribution"
+      ],
+      "sourceDifficulty": 1480,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/18"
+    },
+    {
+      "id": "amc-10-2017a-q19",
+      "number": 19,
+      "question": "Alice refuses to sit next to either Bob or Carla. Derek refuses to sit next to Eric. How many ways are there for the five of them to sit in a row of \\(5\\) chairs under these conditions?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(28\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(32\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(40\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Case on Alice’s seat position",
+        "When Alice is not on an end, Derek and Eric must occupy her neighboring seats"
+      ],
+      "solution": "If Alice sits on an end, then the person next to her cannot be Bob or Carla. This means that it must be Derek or Eric.\n\nWLOG, let the person be Eric. Then the person next to Eric has to be Bob or Carla. After that there are no more restrictions.\n\nThis gives us a total of \\[ 2 \\cdot 2 \\cdot 2 \\cdot 2 = 16. \\]\n\nThe first \\(2\\) is for both edges. The second \\(2\\) is for Derek or Eric. The third \\(2\\) is for Bob or Carla. The final \\(2\\) is just for the \\(2\\) people that are remaining.\n\nOtherwise, let Alice be in one of the three non-end seats. Then the two people next to her have to be Derek and Eric. Bob and Carla are forced to be in the last \\(2\\) seats.\n\nThere are \\(3\\) choices for Alice’s seat. The side on which Derek sits has \\(2\\) options, and then there are \\(2\\) options for where Bob and Carla go.\n\nThis gives us \\[ 3 \\cdot 2 \\cdot 2 = 12 \\] configurations.\n\nTherefore, there are a total of \\(12 + 16 = 28\\) total seating arrangements.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "casework"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/19"
+    },
+    {
+      "id": "amc-10-2017a-q20",
+      "number": 20,
+      "question": "Let \\(S(n)\\) equal the sum of the digits of positive integer \\(n.\\) For example, \\(S(1507) = 13.\\) For a particular positive integer \\(n,\\) \\(S(n) = 1274.\\)\n\nWhich of the following could be the value of \\(S(n+1)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1239\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1265\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use digit sums modulo \\(9\\)",
+        "Since \\(n+1\\) is one more than \\(n\\), compare possible answer choices modulo \\(9\\)"
+      ],
+      "solution": "Recall that a number is divisible by \\(9\\) if and only if the sum of its digits is also divisible by \\(9.\\)\n\nThis means that looking at \\(S(n)\\) mod \\(9\\) would also give us \\(n\\) mod \\(9.\\)\n\nLet us prove this. If we add \\(x\\) to \\(n\\) without carrying, it is clear that the sum of the digits increases by \\(x\\) and that \\(n\\) itself increases by \\(x.\\)\n\nThis would increase both their values mod \\(9\\) by \\(x.\\)\n\nNow, if it does carry, we would be subtracting \\(10\\) from some digit and adding on \\(1\\) to the next digit.\n\nThis would keep the value mod \\(9\\) constant. We did, however, add \\(x\\) in there, so the value mod \\(9\\) still increased by \\(x.\\)\n\nThese are the only two cases, and in both we have shown that the value mod \\(9\\) for both \\(n\\) and \\(S(n)\\) increased by \\(x.\\)\n\nTherefore, we have that \\[ n \\equiv S(n) \\equiv 5 \\pmod 9. \\]\n\nFrom this, we can see that \\[ \\begin{aligned} n + 1 &\\equiv 6 \\\\ &\\equiv S(n + 1) \\pmod 9. \\end{aligned} \\]\n\nThe only answer choice that leaves a remainder of \\(6\\) when divided by \\(9\\) is \\(1239.\\)\n\nThis value is attainable. Take \\(n\\) to consist of \\(137\\) digits \\(9,\\) followed by a digit \\(5,\\) followed by four more digits \\(9.\\) Then \\[\\begin{aligned}S(n)&=137\\cdot9+5+4\\cdot9\\\\&=1274.\\end{aligned}\\] Adding \\(1\\) changes the final four \\(9\\)s to \\(0\\)s and changes the \\(5\\) to \\(6,\\) so \\(S(n+1)=137\\cdot9+6=1239.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 1480,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/20"
+    },
+    {
+      "id": "amc-10-2017a-q21",
+      "number": 21,
+      "question": "A square with side length \\(x\\) is inscribed in a right triangle with sides of length \\(3,\\) \\(4,\\) and \\(5\\) so that one vertex of the square coincides with the right-angle vertex of the triangle. A square with side length \\(y\\) is inscribed in another right triangle with sides of length \\(3,\\) \\(4,\\) and \\(5\\) so that one side of the square lies on the hypotenuse of the triangle. What is \\(\\dfrac{x}{y}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{12}{13}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{35}{37}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{37}{35}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{13}{12}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use similar triangles in the first square placement",
+        "In the second placement, express the two leftover side pieces in terms of \\(y\\)"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2017a/21sol1-54c83fde1d.svg\" style=\"max-height: 12rem\"/>\n\nWe can see that \\(\\triangle ABC\\) and \\(\\triangle FBE\\) are similar (angle-angle). This gives us \\[ \\dfrac{BF}{FE} = \\dfrac{AB}{AC} \\]\\[ \\dfrac{4 - x}{x} = \\dfrac{4}{3}. \\]\n\nCross-multiplying yields \\[ 12 - 3x = 4x \\]\\[ x = \\dfrac{12}{7}. \\]\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2017a/21sol2-b19e92e82a.svg\" style=\"max-height: 12rem\"/>\n\nHere, we have that \\(\\triangle ABC,\\) \\(\\triangle RBQ,\\) and \\(\\triangle STC\\) are similar (angle-angle).\n\nThis means that \\(RB = \\dfrac{4}{3}y\\) and \\(CS = \\dfrac{3}{4}y.\\) This gives us the equation \\[ \\dfrac{4}{3}y + \\dfrac{3}{4}y + y = 5 \\]\\[ \\dfrac{37}{12}y = 5. \\]\n\nFinally, we get that \\(y = \\dfrac{60}{37}.\\) The desired ratio is \\[ \\dfrac{\\frac{12}{7}}{\\frac{60}{37}} = \\dfrac{37}{35}. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "similarity",
+        "right triangle",
+        "square (geometry)"
+      ],
+      "sourceDifficulty": 2060,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/21"
+    },
+    {
+      "id": "amc-10-2017a-q22",
+      "number": 22,
+      "question": "Sides \\(\\overline{AB}\\) and \\(\\overline{AC}\\) of equilateral triangle \\(ABC\\) are tangent to a circle at points \\(B\\) and \\(C\\) respectively. What fraction of the area of \\(\\triangle ABC\\) lies outside the circle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{4\\sqrt{3}\\pi}{27}-\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\sqrt{3}}{2}-\\dfrac{\\pi}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{3}-\\dfrac{2\\sqrt{3}\\pi}{9}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{4}{3}-\\dfrac{4\\sqrt{3}\\pi}{27}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let the circle radius be \\(r\\)",
+        "Compare the circular segment inside the triangle with the full area of \\(\\triangle ABC\\)"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2017a/22sol-22cd6ec4ef.svg\" style=\"max-height: 14rem\"/>\n\nLet the radius of the circle be \\(r.\\)\n\nTo find the area of the triangle outside of the circle, we can find the area of the triangle inside the circle and subtract it.\n\nWe get that \\(\\angle BOC = 120^{\\circ}\\) since \\(\\angle ABO\\) and \\(\\angle ACO\\) are right angles.\n\nThis means that the area of sector \\(OBC\\) is \\[ \\dfrac{120}{360} \\cdot \\pi r^2 = \\dfrac{\\pi r^2}{3}. \\]\n\nNow, we need to find the area of \\(\\triangle BOC.\\) Using the formula for the area of a triangle with sine, we get the area to be \\[ \\dfrac{1}{2} \\sin (120^{\\circ}) \\cdot r^2 = \\dfrac{r^2\\sqrt{3}}{4}. \\]\n\nThen the area of the triangle inside the circle is \\[ \\dfrac{\\pi r^2}{3} - \\dfrac{r^2\\sqrt{3}}{4} = \\dfrac{r^2(4\\pi - 3\\sqrt{3})}{12}. \\]\n\nThe area of \\(\\triangle ABC\\) is \\[ \\dfrac{(r\\sqrt{3})^2\\sqrt{3}}{4} = \\dfrac{3r^2\\sqrt{3}}{4}. \\]\n\nThe fraction of the triangle lying inside the circle is \\[\\dfrac{r^2(4\\pi-3\\sqrt3)}{12}\\cdot \\dfrac{4}{3r^2\\sqrt3},\\] which simplifies to \\[\\dfrac{4\\pi-3\\sqrt3}{9\\sqrt3}.\\]\n\nHence the desired fraction is \\[\\begin{aligned} &1-\\dfrac{4\\pi-3\\sqrt3}{9\\sqrt3}\\\\ &=1-\\dfrac{4\\pi\\sqrt3}{27}+\\dfrac13\\\\ &=\\dfrac43-\\dfrac{4\\pi\\sqrt3}{27}. \\end{aligned}\\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "equilateral triangle",
+        "sector",
+        "tangent line"
+      ],
+      "sourceDifficulty": 2150,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/22"
+    },
+    {
+      "id": "amc-10-2017a-q23",
+      "number": 23,
+      "question": "How many triangles with positive area have all their vertices at points \\((i,j)\\) in the coordinate plane, where \\(i\\) and \\(j\\) are integers between \\(1\\) and \\(5,\\) inclusive?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2128\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2148\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2160\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2200\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2300\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Start with all triples of lattice points",
+        "Subtract collinear triples by line length and slope"
+      ],
+      "solution": "We can use complementary counting to find the total number of triangles and subtract out the ones that don’t work.\n\nThere are a total of \\(5^2 = 25\\) points, so there are \\(\\binom{25}{3} = 2300\\) possible triangles.\n\nNote that the only way a triangle doesn’t work is if all the \\(3\\) points are in a straight line.\n\nThere are \\(5\\) rows, \\(5\\) columns, and \\(2\\) long diagonals. Each of these \\(12\\) lines have \\(5\\) points, which means they contribute \\[ 12 \\cdot \\binom{5}{3} = 12 \\cdot 10 = 120 \\] degenerate triangles.\n\nThere are also the diagonal lines with \\(4\\) points, such as the line from \\((1,2)\\) to \\((4,5).\\) There are \\(4\\) of these lines, so they have \\[ 4 \\cdot \\binom{4}{3} = 4 \\cdot 4 = 16 \\] degenerate triangles.\n\nSimilarly, there are \\(4\\) diagonal lines with \\(3\\) points. These give us \\(4 \\cdot 1 = 4\\) extra triangles that don’t work.\n\nNow, we have to look at the lines with slopes of \\(\\dfrac{1}{2}, 2, -\\dfrac{1}{2},\\) and \\(-2.\\)\n\nThere are \\(3\\) such lines for each slope, and they all have \\(3\\) points on them. Therefore, they contribute \\[ 4 \\cdot 3 \\cdot 1 = 12 \\] more triangles to discount.\n\nThe total number of working triangles is then \\[ 2300 - 120 - 16 - 4 - 12 \\]\\[= 2148. \\] Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "lattice point",
+        "counting shapes in figures",
+        "complementary counting"
+      ],
+      "sourceDifficulty": 2250,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/23"
+    },
+    {
+      "id": "amc-10-2017a-q24",
+      "number": 24,
+      "question": "For certain real numbers \\(a,\\) \\(b,\\) and \\(c,\\) the polynomial \\[g(x) = x^3 + ax^2 + x + 10\\] has three distinct roots, and each root of \\(g(x)\\) is also a root of the polynomial \\[ \\begin{aligned} f(x) &= x^4 + x^3 \\\\ &\\quad {}+ bx^2 + 100x + c. \\end{aligned} \\] What is \\(f(1)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-9009\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-8008\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(-7007\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(-6006\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(-5005\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Because the roots of \\(g\\) are roots of \\(f\\), factor \\(f\\) by \\(g\\)",
+        "Compare the \\(x^3\\) and \\(x\\) coefficients to find the extra root and \\(a\\)"
+      ],
+      "solution": "Because the three distinct roots of the cubic \\(g\\) are also roots of the monic quartic \\(f,\\) we can write \\[f(x)=g(x)(x-r)\\] for some real number \\(r.\\)\n\nThe coefficient of \\(x\\) in this product is \\(10-r,\\) so \\(10-r=100\\) and \\(r=-90.\\) The coefficient of \\(x^3\\) is \\(a-r,\\) so \\(a-r=1\\) and \\(a=-89.\\)\n\nTherefore, \\[\\begin{aligned} f(1)&=g(1)(1-r)\\\\ &=(1-89+1+10)(91)\\\\ &=(-77)(91)\\\\ &=-7007. \\end{aligned}\\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "polynomial",
+        "factoring"
+      ],
+      "sourceDifficulty": 2110,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/24"
+    },
+    {
+      "id": "amc-10-2017a-q25",
+      "number": 25,
+      "question": "How many integers between \\(100\\) and \\(999,\\) inclusive, have the property that some permutation of its digits is a multiple of \\(11\\) between \\(100\\) and \\(999?\\) For example, both \\(121\\) and \\(211\\) have this property.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(226\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(243\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(270\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(469\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(486\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Use the divisibility rule for \\(11\\)",
+        "Group three-digit multiples of \\(11\\) by repeated digits and whether a digit is \\(0\\)"
+      ],
+      "solution": "We can analyze all the multiples of \\(11\\) and see how many permutations each of them contribute. We can do this by casing on the number of unique digits in the number.\n\n<b>Case \\(1:\\) all the digits are the same</b>\n\nThis cannot happen. We can see this by the divisibility rule for \\(11,\\) which says that the sum of the first and last digit minus the middle digit must be divisible by \\(11.\\)\n\nIf all the digits are the same, then the above expression evaluates to that digit, which cannot be divisible by \\(11.\\)\n\n<b>Case \\(2:\\) two of the digits are the same</b>\n\nWe can split this up into the numbers that have the digit \\(0\\) and those that don’t.\n\nThere are \\(8\\) multiples of \\(11\\) that do not have the digit \\(0:\\) \\[ 121, 242, 363, 484, 616, 737, 858, \\] and \\(979.\\)\n\nEach of these numbers contributes \\(3\\) permutations, so this scenario has \\(8 \\cdot 3 = 24\\) numbers.\n\nThere are \\(9\\) multiples of \\(11\\) that have the digit \\(0:\\)\\[ 110, 220, 330, 440, 550, 660, 770, \\] \\(880,\\) and \\(990.\\)\n\nFor these numbers, \\(0\\) cannot be the hundreds digit, so each of them only contributes \\(2\\) permutations, for a total of \\(9 \\cdot 2 = 18.\\)\n\n<b>Case \\(3:\\) all the digits are different</b>\n\nThere are a total of \\(81\\) multiples of \\(11\\) between \\(100\\) and \\(999.\\) The number of these with all different digits is \\[ 81 - 8 - 9 = 64. \\] As in case \\(2,\\) we have to specially account for the numbers with \\(0\\) as a digit. There are \\(8:\\) \\[ 209, 308, 407, 506, 605, 704, 803, \\] and \\(902.\\)\n\nEach of these gives us \\(2 \\cdot 2 = 4\\) permutations, but we overcount by a factor of \\(2\\) since flipping the first and last digits creates another number already in the set.\n\nTherefore, these numbers provide a total of \\[ 8 \\cdot 4 \\div 2 = 16 \\] unique permutations.\n\nThere are now \\(64 - 8 = 56\\) multiples of \\(11\\) that we need to account for.\n\nWe know that each of these provides \\(3! = 6\\) permutations. As above, however, note that flipping the first and last digit of any number in this set produces another number in this set.\n\nWe can see this by using the divisibility rule for \\(11.\\) If \\(ABC\\) is divisible by \\(11,\\) then we have that \\(A + C - B\\) is divisible by \\(11.\\)\n\nThis means that \\(C + A - B\\) is divisible by \\(11,\\) which means that \\(CBA\\) is also divisible by \\(11.\\)\n\nTherefore, these numbers contribute \\[ 56 \\cdot 6 \\div 2 = 168 \\] more permutations.\n\nOver all the cases, we have a total of \\[ 24 + 18 + 16 + 168 = 226 \\] numbers.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "digits",
+        "permutations",
+        "casework"
+      ],
+      "sourceDifficulty": 2380,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017A/problem/25"
+    }
+  ]
+}

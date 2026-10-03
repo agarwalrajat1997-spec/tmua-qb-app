@@ -1,0 +1,1016 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "2024",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/solutions",
+  "problems": [
+    {
+      "id": "amc-8-2024-q1",
+      "number": 1,
+      "question": "What is the ones digit of \\[\\begin{align*} & 222,222 - 22,222 - 2,222 \\\\ &- 222 - 22 - 2? \\end{align*}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Only the ones digits affect the ones digit of the result",
+        "Compute the ones digit of \\(2-2-2-2-2-2\\)"
+      ],
+      "solution": "Only the ones digits matter. Modulo \\(10,\\) the expression is \\[ \\begin{gathered} 2-2-2-2-2-2=-8,\\\\ -8\\equiv2\\pmod{10}. \\end{gathered} \\] Therefore its ones digit is \\(2.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "units digit"
+      ],
+      "sourceDifficulty": 370,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/1"
+    },
+    {
+      "id": "amc-8-2024-q2",
+      "number": 2,
+      "question": "What is the value of this expression in decimal form? \\[ \\frac{44}{11} + \\frac{110}{44} + \\frac{44}{1100} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6.4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6.504\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6.54\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6.9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6.94\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Simplify each fraction first",
+        "\\(\\frac{44}{11}=4\\), \\(\\frac{110}{44}=2.5\\), and \\(\\frac{44}{1100}=0.04\\)"
+      ],
+      "solution": "We can simplify the fractions by taking out the common factor \\(11\\): \\( \\dfrac{44}{11} \\) simplifies to \\( 4 \\), \\( \\dfrac{110}{44} \\) simplifies to \\( \\dfrac{10}{4} = \\dfrac{5}{2} = 2.5 \\), and \\( \\dfrac{44}{1100} \\) simplifies to \\( \\dfrac{4}{100} = 0.04 \\). Therefore, we have \\( 4 + 2.5 + 0.04 = 6.54.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "fraction",
+        "decimal"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/2"
+    },
+    {
+      "id": "amc-8-2024-q3",
+      "number": 3,
+      "question": "Four squares of side length \\(4,\\) \\(7,\\) \\(9,\\) and \\(10\\) units are arranged in increasing size order so that their left edges and bottom edges align. The squares alternate shaded and unshaded, as shown in the figure. What is the area of the visible shaded region in square units?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/3-c5f3a96fca.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(49\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(52\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Use shaded and unshaded nested square areas",
+        "The visible shaded area is \\(10^2-9^2+7^2-4^2\\)"
+      ],
+      "solution": "The visible shaded region is the part inside the \\(10\\) by \\(10\\) square but outside the \\(9\\) by \\(9\\) square, together with the part inside the \\(7\\) by \\(7\\) square but outside the \\(4\\) by \\(4\\) square. Its area is \\[ \\begin{gathered} 10^2-9^2+7^2-4^2 \\\\ =100-81+49-16 \\\\ =52. \\end{gathered} \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "area decomposition",
+        "square (geometry)"
+      ],
+      "sourceDifficulty": 720,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/3"
+    },
+    {
+      "id": "amc-8-2024-q4",
+      "number": 4,
+      "question": "When Yunji added all the integers from \\(1\\) to \\(9,\\) she mistakenly left out a number. Her incorrect sum turned out to be a square number. Which number did Yunji leave out?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The sum from \\(1\\) to \\(9\\) is \\(45\\)",
+        "The incorrect sum must be a square below \\(45\\)"
+      ],
+      "solution": "To find the number that Yunji left out, we need to find the sum of the integers from \\(1\\) to \\(9\\) and find its difference with the largest perfect square below the sum. We can calculate the sum of the integers from \\(1\\) to \\(9\\) as follows: \\[ 1 + \\ldots + 9 = \\dfrac{9(9+1)}{2} = 45 \\] The largest perfect square less than \\( 45 \\) would be \\( 36 \\) and \\( 45 - 36 = 9 \\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "triangular number",
+        "perfect square"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/4"
+    },
+    {
+      "id": "amc-8-2024-q5",
+      "number": 5,
+      "question": "Aaliyah rolls two standard \\(6\\)-sided dice. She notices that the product of the two numbers rolled is a multiple of \\(6.\\) Which of the following integers <i>cannot</i> be the sum of the two numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "A multiple of \\(6\\) needs a factor of \\(2\\) and a factor of \\(3\\)",
+        "List the possible sums from dice products divisible by \\(6\\)"
+      ],
+      "solution": "For the product to be a multiple of \\(6\\), the two dice together must supply a factor of \\(2\\) and a factor of \\(3\\). The possible sums among the answer choices can occur as follows: \\[ \\begin{gathered} 5=2+3,\\quad 7=1+6, \\\\ 8=2+6,\\quad 9=3+6. \\end{gathered} \\] There is no way to get sum \\(6\\) while also having a product divisible by \\(6\\): the pairs with sum \\(6\\) are \\((1,5),\\) \\((2,4),\\) \\((3,3),\\) \\((4,2),\\) and \\((5,1)\\), and none have product divisible by \\(6\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "divisibility",
+        "casework"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/5"
+    },
+    {
+      "id": "amc-8-2024-q6",
+      "number": 6,
+      "question": "Sergei skated around an ice rink, gliding along different paths. The marked lines in the figures below show four of the paths labeled P, Q, R, and S. What is the sorted order of the four paths from shortest to longest?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/6-06e5e59cea.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "P, Q, R, S"
+        },
+        {
+          "label": "B",
+          "content": "P, R, S, Q"
+        },
+        {
+          "label": "C",
+          "content": "Q, S, P, R"
+        },
+        {
+          "label": "D",
+          "content": "R, P, S, Q"
+        },
+        {
+          "label": "E",
+          "content": "R, S, P, Q"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compare the path pieces: arcs are longer than their chords",
+        "The answer choices already agree that Path R is shortest and Path Q is longest"
+      ],
+      "solution": "Path R is shortest because it replaces curved arc portions with straight-line chords. Path Q is longest because it includes the most interior crossing distance while still using the curved ends.\n\nIt remains to compare paths P and S. The relevant straight piece in path S is a diagonal across the rink, while the corresponding straight piece in path P is a side of the same right triangle. A diagonal is longer than a side, so path S is longer than path P.\n\nThe order from shortest to longest is R, P, S, Q.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "arc",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/6"
+    },
+    {
+      "id": "amc-8-2024-q7",
+      "number": 7,
+      "question": "A \\(3 \\times 7\\) rectangle is covered without overlap by \\(3\\) shapes of tiles: \\(2 \\times 2,\\) \\(1 \\times 4,\\) and \\(1 \\times 1,\\) shown below. What is the minimum possible number of \\(1 \\times 1\\) tiles used?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/7-fdc53690f0.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The area left for non-unit tiles must be a multiple of \\(4\\)",
+        "If only one unit tile were used, two rows would need an odd number of cells covered by larger tiles"
+      ],
+      "solution": "The \\(2\\times2\\) and \\(1\\times4\\) tiles each have area \\(4\\). Since the rectangle has area \\(21\\), the number of \\(1\\times1\\) tiles must be congruent to \\(1\\pmod4\\). Among the choices, only \\(1\\) and \\(5\\) are possible by area.\n\nIt is impossible to use just one \\(1\\times1\\) tile. If the larger tiles covered the other \\(20\\) cells, then two rows would have all \\(7\\) cells covered by larger tiles. But each \\(2\\times2\\) tile covers \\(2\\) cells in any row it meets, and each \\(1\\times4\\) tile covers \\(4\\) cells in one row, so each row would have an even number of cells covered by larger tiles. A row cannot have \\(7\\) such cells.\n\nThe following tiling shows that \\(5\\) unit tiles are possible.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/7sol-89a642a3e3.svg\" style=\"max-height: 11rem\"/>\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "tiling",
+        "parity",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/7"
+    },
+    {
+      "id": "amc-8-2024-q8",
+      "number": 8,
+      "question": "On Monday Taye has \\(\\$2.\\) Every day, he either gains \\(\\$3\\) or doubles the amount of money he had on the previous day. How many different dollar amounts could Taye have on Thursday, \\(3\\) days later?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "After each day, branch into adding \\(3\\) or doubling",
+        "List the amounts after Tuesday, then Wednesday, then Thursday"
+      ],
+      "solution": "After Tuesday, Taye could have \\(5\\) or \\(4\\) dollars. After Wednesday, the possible amounts are \\[ 8,10,7,8, \\] so the distinct amounts are \\(7,8,10\\).\n\nAfter Thursday, these can become \\[ 10,14,\\quad 11,16,\\quad 13,20. \\] These are \\(6\\) distinct dollar amounts.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "tree diagram",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/8"
+    },
+    {
+      "id": "amc-8-2024-q9",
+      "number": 9,
+      "question": "All of the marbles in Maria’s collection are red, green, or blue. Maria has half as many red marbles as green marbles and twice as many blue marbles as green marbles. Which of the following could be the total number of marbles in Maria’s collection?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(28\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "If red is \\(r\\), then green is \\(2r\\)",
+        "Blue is twice green, so the total is a multiple of \\(7\\)"
+      ],
+      "solution": "We can let \\(r\\) be the number of red marbles that Maria has. Since Maria has half as many red marbles as green, then we know that she has \\(2r\\) green marbles. Moreover, since she has twice as many blue marbles as green, then she will have \\(2(2r) = 4r\\) blue marbles. Adding these together gives us \\( r + 2r + 4r = 7r, \\) and so the answer must be a multiple of \\(7.\\) Among the answer choices, only \\(28\\) is a multiple of \\(7.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "divisibility"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/9"
+    },
+    {
+      "id": "amc-8-2024-q10",
+      "number": 10,
+      "question": "In January \\(1980\\) the Mauna Loa Observatory recorded carbon dioxide CO<sub>\\(2\\)</sub> levels of \\(338\\) ppm (parts per million). Over the years the average CO<sub>\\(2\\)</sub> reading has increased by about \\(1.515\\) ppm each year. What is the expected CO<sub>\\(2\\)</sub> level in ppm in January \\(2030?\\) Round your answer to the nearest integer.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(399\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(414\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(420\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(444\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(459\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "There are \\(50\\) years from January \\(1980\\) to January \\(2030\\)",
+        "Estimate \\(50\\cdot1.515\\), then add the \\(1980\\) level"
+      ],
+      "solution": "There are \\(50\\) years between \\(1980\\) and \\(2030\\), so we can expect the CO<sub>\\(2\\)</sub> reading to increase by \\(50 \\times 1.515 = 75.75 \\approx 76 \\) ppm by \\(2030\\). Since the CO<sub>\\(2\\)</sub> reading in \\(1980\\) was \\(338\\) ppm, then we will have \\(338 + 76 = 414\\) ppm by \\(2030\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "decimal",
+        "estimation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/10"
+    },
+    {
+      "id": "amc-8-2024-q11",
+      "number": 11,
+      "question": "The coordinates of \\(\\bigtriangleup ABC\\) are \\(A(5, 7),\\) \\(B(11, 7),\\) and \\(C(3, y),\\) with \\(y > 7.\\) The area of \\(\\bigtriangleup ABC\\) is \\(12.\\) What is the value of \\(y?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/11-c705abd473.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use \\(AB\\) as the base of the triangle",
+        "The height from \\(C\\) to \\(AB\\) is \\(y-7\\)"
+      ],
+      "solution": "Consider the base of the triangle to be \\(\\overline{\\rm AB}\\) which has length \\(11-5=6\\). Given that the area of the triangle is \\(12\\), its height must be of length \\(\\dfrac{2(12)}{6}=4\\). Since \\(y>7\\), then \\(y\\) must be \\(7+4=11\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "triangle area",
+        "linear equation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/11"
+    },
+    {
+      "id": "amc-8-2024-q12",
+      "number": 12,
+      "question": "Rohan keeps a total of \\(90\\) guppies in \\(4\\) fish tanks.\n\n• There is \\(1\\) more guppy in the \\(2\\)nd tank than in the \\(1\\)st tank.\n\n• There are \\(2\\) more guppies in the \\(3\\)rd tank than in the \\(2\\)nd tank.\n\n• There are \\(3\\) more guppies in the \\(4\\)th tank than in the \\(3\\)rd tank.\n\nHow many guppies are in the \\(4\\)th tank?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(23\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(26\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Write each tank amount in terms of the first tank",
+        "The fourth tank has \\(6\\) more guppies than the first"
+      ],
+      "solution": "Let \\(x\\) be the number of guppies in the \\(1\\)st tank. Hence, there are \\(x+1\\) guppies in the \\(2\\)nd tank, \\(x+3\\) guppies in the \\(3\\)rd tank, and \\(x+6\\) guppies in the \\(4\\)th tank. We then use the fact that there are a total of \\(90\\) guppies in the \\(4\\) tanks to find \\(x\\): \\[x + x + 1 + x + 3 + x + 6 = 90\\] \\[4x+10=90\\] \\[x=20.\\]\n\nNote that we are <b>not</b> yet done since we are asked for the number of guppies in the <b>\\(4\\)th</b> tank and not the \\(1\\)st. There are \\(x+6=20+6=26\\) guppies in the \\(4\\)th tank.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation"
+      ],
+      "sourceDifficulty": 980,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/12"
+    },
+    {
+      "id": "amc-8-2024-q13",
+      "number": 13,
+      "question": "Buzz Bunny is hopping up and down a set of stairs, one step at a time. In how many ways can Buzz start on the ground, make a sequence of \\(6\\) hops, and end up back on the ground? (For example, one sequence of hops is up-up-down-down-up-down.)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The sequence must have three up hops and three down hops",
+        "Buzz can never have more down hops than up hops at any point"
+      ],
+      "solution": "We can deduce from the choices that it is possible to exhaust all possible cases for this problem. Note that all sequences must start with up \\((U)\\) and end with down \\((D)\\), and that it should not be possible to go down more times than Buzz has gone up so far. Keeping this in mind, we can arrive at the following possible cases: \\[UUUDDD\\] \\[UUDUDD\\] \\[UUDDUD\\] \\[UDUDUD\\] \\[UDUUDD\\] which is a total of five possible sequences.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "Catalan Number",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/13"
+    },
+    {
+      "id": "amc-8-2024-q14",
+      "number": 14,
+      "question": "The one-way routes connecting towns \\(A,\\) \\(M,\\) \\(C,\\) \\(X,\\) \\(Y,\\) and \\(Z\\) are shown in the figure below (not drawn to scale). The distances in kilometers along each route are marked. Traveling along these routes, what is the shortest distance from \\(A\\) to \\(Z\\) in kilometers?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/14-f4a1c0082a.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(28\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(29\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(31\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(32\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Track the shortest distance from \\(A\\) to each town",
+        "Once a shortest distance to a town is known, use it to update outgoing routes"
+      ],
+      "solution": "A systematic way of tracking the shortest overall distance to \\(Z\\) is to consider the shortest distance to get to each town from \\(A\\). For instance, the shortest distance to get to town \\(X\\) from \\(A\\) is \\(5\\) km, trivially.\n\nThen, for town \\(M\\), going to town \\(X\\) first will be shorter compared to going directly from \\(A\\), so the shortest path to town \\(M\\) has a length of \\(7\\) km.\n\nFor town \\(Y\\), it will take us \\(15\\) km if we come from town \\(X\\) and only \\(13\\) km coming from \\(M,\\) so \\(13\\) km is the length of shortest path to \\(Y\\) from \\(A\\).\n\nDoing the same for town \\(C\\) will give us \\(18\\) km as the shortest distance by coming from town \\(Y\\).\n\nFinally, for town \\(Z\\), we can either come from town \\(Y,\\) \\(C,\\) or \\(M\\). The total distance if we come from each three towns respectively would be \\(30,\\) \\(28,\\) and \\(32\\). Hence, \\(28\\) km is the shortest distance from \\(A\\) to \\(Z\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "graph theory"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/14"
+    },
+    {
+      "id": "amc-8-2024-q15",
+      "number": 15,
+      "question": "Let the letters \\(F,\\) \\(L,\\) \\(Y,\\) \\(B,\\) \\(U,\\) \\(G\\) represent distinct digits. Suppose \\(\\text{FLYFLY}\\) is the greatest number that satisfies the equation \\[ 8 \\cdot \\text{FLYFLY} = \\text{BUGBUG}. \\] What is the value of \\(\\text{FLY} + \\text{BUG}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1089\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1098\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1107\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1116\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1125\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "\\(\\text{FLYFLY}=1001\\cdot\\text{FLY}\\)",
+        "The equation reduces to \\(8\\cdot\\text{FLY}=\\text{BUG}\\)"
+      ],
+      "solution": "Firstly, note that \\[\\text{FLYFLY} = 1001(\\text{FLY})\\] and, similarly, \\[\\text{BUGBUG}=1001(\\text{BUG})\\] so the equation can be simplified to \\(8 \\cdot \\text{FLY} = \\text{BUG}.\\)\n\nBecause \\(\\text{BUG}\\) has three digits, \\(\\text{FLY}\\le124.\\) The largest possible three-digit number at most \\(124\\) with distinct digits is \\(124,\\) but \\(8\\cdot124=992\\) repeats a digit and also reuses the digit \\(2.\\)\n\nThe next candidate is \\(123,\\) and \\(8\\cdot123=984.\\) The six digits \\(1,\\) \\(2,\\) \\(3,\\) \\(9,\\) \\(8,\\) and \\(4\\) are all distinct, so \\(123\\) is the greatest possible value of \\(\\text{FLY}.\\)\n\nHence, \\[ \\begin{gathered} \\text{FLY} + \\text{BUG} = 123 + 984 \\\\ = 1107. \\end{gathered} \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "cryptarithm",
+        "place value",
+        "optimization"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/15"
+    },
+    {
+      "id": "amc-8-2024-q16",
+      "number": 16,
+      "question": "Minh enters the numbers \\(1\\) through \\(81\\) into the cells of a \\(9 \\times 9\\) grid in some order. She calculates the product of the numbers in each row and column. What is the least number of rows and columns that could have a product divisible by \\(3?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Only multiples of \\(3\\) make a row or column product divisible by \\(3\\)",
+        "Cover the \\(27\\) multiples of \\(3\\) using as few rows and columns as possible"
+      ],
+      "solution": "There are \\(27\\) multiples of \\(3\\) from \\(1\\) through \\(81\\). A row or column has product divisible by \\(3\\) exactly when it contains at least one of these multiples.\n\nSuppose \\(r\\) rows and \\(c\\) columns have products divisible by \\(3\\). Every multiple of \\(3\\) must lie in one of those \\(r\\) rows and also in one of those \\(c\\) columns, or else it would create another marked row or column. Thus the \\(27\\) multiples must fit in the \\(rc\\) intersection cells. If \\(r+c\\le10\\), then \\(rc\\le25\\), which is too small. So at least \\(11\\) rows and columns are needed.\n\nThis can be done by placing \\(25\\) multiples of \\(3\\) in a \\(5\\times5\\) block, then placing the remaining \\(2\\) multiples in a sixth column within two of those same rows. Then exactly \\(5\\) rows and \\(6\\) columns are marked, for a total of \\(11\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "optimization",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/16"
+    },
+    {
+      "id": "amc-8-2024-q17",
+      "number": 17,
+      "question": "A chess king is said to <i>attack</i> all the squares one step away from it, horizontally, vertically, or diagonally. For instance, a king on the center square of a \\(3 \\times 3\\) grid attacks all \\(8\\) other squares, as shown below. Suppose a white king and a black king are placed on different squares of a \\(3 \\times 3\\) grid so that they do not attack each other. In how many ways can this be done?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/17-5efdfcd6b0.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(28\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(32\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Count ordered placements for the white king first",
+        "A corner allows \\(5\\) safe black-king squares; an edge-center allows \\(3\\)"
+      ],
+      "solution": "Count ordered placements by first choosing the square for the white king. If the white king is in the center, it attacks every other square, so there are \\(0\\) choices for the black king.\n\nIf the white king is in a corner, it attacks \\(3\\) squares, so the black king has \\(9-1-3=5\\) safe squares. There are \\(4\\) corner choices, giving \\(4\\cdot5=20\\) placements.\n\nIf the white king is on an edge but not a corner, it attacks \\(5\\) squares, so the black king has \\(9-1-5=3\\) safe squares. There are \\(4\\) such edge choices, giving \\(4\\cdot3=12\\) placements.\n\nThe total number of placements is \\(20+12=32\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "casework",
+        "basic counting"
+      ],
+      "sourceDifficulty": 1410,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/17"
+    },
+    {
+      "id": "amc-8-2024-q18",
+      "number": 18,
+      "question": "Three concentric circles centered at \\(O\\) have radii of \\(1,\\) \\(2,\\) and \\(3.\\) Points \\(B\\) and \\(C\\) lie on the largest circle. The region between the two smaller circles is shaded, as is the portion of the region between the two larger circles bounded by central angle \\(BOC,\\) as shown in the figure below. Suppose the shaded and unshaded regions are equal in area. What is the measure of \\(\\angle BOC\\) in degrees?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/18-d57f6e2244.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(108\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(120\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(135\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(144\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(150\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Compute the area of the shaded annulus between radii \\(1\\) and \\(2\\)",
+        "Set shaded area equal to unshaded area and solve for the sector angle"
+      ],
+      "solution": "Let \\(\\theta\\) be the measure of \\(\\angle BOC.\\)\n\nOne component of the shaded region is the area of the circle with radius \\(2\\) minus the area of the circle with radius \\(1.\\) This part has area \\(4\\pi-\\pi=3\\pi.\\) The remaining area is a sector of the biggest circle minus the area of the circle with radius \\(2\\). This has area \\(\\dfrac{\\theta}{360}(9\\pi-4\\pi) = \\dfrac{\\theta}{360}(5\\pi).\\) Hence, the total area of the shaded region is \\(3\\pi + \\dfrac{\\theta}{360}(5\\pi).\\)\n\nNext, we note that the unshaded region is composed of the smallest circle and the unshaded portion of the outer ring. This will have a total area of \\(\\pi + \\dfrac{360-\\theta}{360}(5\\pi).\\)\n\nLastly, we equate the area of both regions and solve for \\(\\theta:\\) \\[ \\begin{gathered} 3\\pi + \\dfrac{\\theta}{360}(5\\pi) \\\\ = \\pi + \\dfrac{360-\\theta}{360}(5\\pi) \\end{gathered} \\] \\[ 2\\pi = \\dfrac{360-\\theta-\\theta}{360}(5\\pi) \\] \\[ \\dfrac{2}{5} = 1 - \\dfrac{2\\theta}{360} \\] \\[ 2\\theta = \\dfrac{3}{5}(360) \\] \\[ \\theta = 108. \\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "annulus",
+        "sector",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/18"
+    },
+    {
+      "id": "amc-8-2024-q19",
+      "number": 19,
+      "question": "Jordan owns \\(15\\) pairs of sneakers. Three fifths of the pairs are red and the rest are white. Two thirds of the pairs are high-top and the rest are low-top. The red high-top sneakers make up a fraction of the collection. What is the least possible value of this fraction?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{4}{15}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "There are \\(9\\) red pairs and \\(10\\) high-top pairs",
+        "To minimize red high-tops, make as many white pairs high-top as possible"
+      ],
+      "solution": "Jordan has \\(\\dfrac{3}{5} \\times 15 = 9\\) pairs of red sneakers and \\(6\\) pairs of white sneakers. Moreover, \\(\\dfrac{2}{3} \\times 15 = 10\\) are high-top and \\(5\\) are low-top. If we want to minimize the number of red high-top sneakers, then we can set all \\(6\\) white sneakers to be high-top, leaving \\(10-6=4\\) red sneakers as high-top. Hence, the fraction of red high-top sneakers would be \\(\\dfrac{4}{15}\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "inclusion-exclusion",
+        "optimization",
+        "fraction"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/19"
+    },
+    {
+      "id": "amc-8-2024-q20",
+      "number": 20,
+      "question": "Any three vertices of the cube \\(PQRSTUVW,\\) shown in the figure below, can be connected to form a triangle. (For example, vertices \\(P,\\) \\(Q,\\) and \\(R\\) can be connected to form isosceles \\(\\bigtriangleup PQR.\\)) How many of these triangles are equilateral and contain \\(P\\) as a vertex?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/20-3188191587.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "An equilateral triangle through \\(P\\) must use face diagonals from \\(P\\)",
+        "Look at the three vertices a face diagonal away from \\(P\\)"
+      ],
+      "solution": "We first note that we can only form equilateral triangles if we go through the diagonals of the square faces, otherwise at least one angle of the triangle will be different. Afterwards, it is easy to exhaust all possible equilateral triangles that can be formed: \\(\\triangle PVT,\\) \\(\\triangle PRT,\\) and \\(\\triangle PRV.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "cube geometry",
+        "equilateral triangle"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/20"
+    },
+    {
+      "id": "amc-8-2024-q21",
+      "number": 21,
+      "question": "A group of frogs (called an <i>army</i>) is living in a tree. A frog turns green when in the shade and turns yellow when in the sun. Initially, the ratio of green to yellow frogs was \\(3 : 1.\\) Then \\(3\\) green frogs moved to the sunny side and \\(5\\) yellow frogs moved to the shady side. Now the ratio is \\(4 : 1.\\) What is the difference between the number of green frogs and yellow frogs now?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let the initial yellow count be \\(y\\)",
+        "After the moves, green changes by \\(+2\\) and yellow changes by \\(-2\\)"
+      ],
+      "solution": "We can let \\(g\\) be the number of green frogs and \\(y\\) be the number of yellow frogs. Initially, we have \\(g=3y\\). Then, after some frogs moved, we have the following proportion: \\[\\dfrac{g+5-3}{y+3-5} = \\dfrac{4}{1}.\\]\n\nSubstituting \\(3y\\) for \\(g\\) will allow us to determine the number of yellow frogs originally (\\(y\\)): \\[\\dfrac{3y+2}{y-2} = 4\\] \\[3y+2 = 4(y-2) = 4y-8\\] \\[y = 10\\]\n\nHence, there were \\(10\\) yellow frogs and \\(3 \\times 10 = 30\\) green frogs initially. After some frogs moved, we now have \\(10+3-5 = 8\\) yellow frogs and \\(30+5-3=32\\) green frogs, giving us a difference of \\(32-8=24\\) between the number of green and yellow frogs.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "linear equation",
+        "substitution"
+      ],
+      "sourceDifficulty": 1340,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/21"
+    },
+    {
+      "id": "amc-8-2024-q22",
+      "number": 22,
+      "question": "A roll of tape is \\(4\\) inches in diameter and is wrapped around a ring that is \\(2\\) inches in diameter. A cross section of the tape is shown in the figure below. The tape is \\(0.015\\) inches thick. If the tape is completely unrolled, approximately how long would it be? Round your answer to the nearest \\(100\\) inches.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/22-5f0563924a.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(300\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(600\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1200\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1500\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1800\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The tape occupies an annulus with outer radius \\(2\\) and inner radius \\(1\\)",
+        "Area of tape cross-section equals thickness times total length"
+      ],
+      "solution": "The tape occupies an annulus with outer radius \\(2\\) inches and inner radius \\(1\\) inch, so its cross-sectional area is \\[ \\pi(2^2-1^2)=3\\pi. \\]\n\nWhen unrolled, this same cross section is a rectangle of thickness \\(0.015\\) inches and length \\(L.\\) Thus \\[ 0.015L=3\\pi, \\] so \\(L=200\\pi\\approx628\\) inches. Rounded to the nearest \\(100\\) inches, this is \\(600\\) inches.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "circumference",
+        "estimation"
+      ],
+      "sourceDifficulty": 1580,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/22"
+    },
+    {
+      "id": "amc-8-2024-q23",
+      "number": 23,
+      "question": "Rodrigo has a very large piece of graph paper. First he draws a line segment connecting point \\((0, 4)\\) to point \\((2, 0)\\) and colors the \\(4\\) cells whose interiors intersect the segment, as shown below. Next, Rodrigo draws a line segment connecting point \\((2000, 3000)\\) to point \\((5000, 8000).\\) Again he colors the cells whose interiors intersect the segment. How many cells will he color this time?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/23-2bd811551e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6000\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6500\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7000\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7500\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8000\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "For a segment with integer endpoint differences \\(a\\) and \\(b\\), count grid cells crossed",
+        "Use \\(a+b-\\gcd(a,b)\\) for cells whose interiors are intersected"
+      ],
+      "solution": "For a segment whose endpoint differences are \\(a\\) horizontally and \\(b\\) vertically, the segment crosses \\(a\\) vertical grid lines and \\(b\\) horizontal grid lines, but crossings at lattice points are counted twice. Therefore the number of cells whose interiors are intersected is \\[ a+b-\\gcd(a,b). \\]\n\nHere the endpoint differences are \\(3000\\) and \\(5000\\), and \\(\\gcd(3000,5000)=1000\\). Thus the number of cells colored is \\[ 3000+5000-1000=7000. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "greatest common divisor",
+        "lattice point"
+      ],
+      "sourceDifficulty": 1810,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/23"
+    },
+    {
+      "id": "amc-8-2024-q24",
+      "number": 24,
+      "question": "Jean made a piece of stained glass art in the shape of two mountains, as shown in the figure below. One mountain peak is \\(8\\) feet high and the other peak is \\(12\\) feet high. Each peak forms a \\(90^\\circ\\) angle, and the straight sides of the mountains form \\(45^\\circ\\) angles with the ground. The artwork has an area of \\(183\\) square feet. The sides of the mountains meet at an intersection point near the center of the artwork, \\(h\\) feet above the ground. What is the value of \\(h?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/24-c37dc81ba3.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\sqrt{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\sqrt{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each mountain is built from a \\(45^\\circ\\)-\\(45^\\circ\\)-\\(90^\\circ\\) triangle",
+        "Add the two large triangle areas and subtract the overlap"
+      ],
+      "solution": "Each mountain is a \\(45^\\circ\\text{-}45^\\circ\\text{-}90^\\circ\\) triangle. A right isosceles triangle with height \\(x\\) has area \\(x^2\\), since its two perpendicular sides each have length \\(x\\sqrt2\\).\n\nThe two large mountains have areas \\(8^2=64\\) and \\(12^2=144\\). Their overlap is also a \\(45^\\circ\\text{-}45^\\circ\\text{-}90^\\circ\\) triangle with height \\(h\\), so its area is \\(h^2\\). Thus \\[ 64+144-h^2=183, \\] so \\(h^2=25\\), and \\(h=5\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "special right triangle",
+        "area",
+        "inclusion-exclusion"
+      ],
+      "sourceDifficulty": 1710,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/24"
+    },
+    {
+      "id": "amc-8-2024-q25",
+      "number": 25,
+      "question": "A small airplane has \\(4\\) rows of seats with \\(3\\) seats in each row. Eight passengers have boarded the plane and are distributed randomly among the seats. A married couple is next to board. What is the probability there will be \\(2\\) adjacent seats in the same row for the couple?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2024/25-94234c4c11.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{8}{15}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{32}{55}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{20}{33}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{34}{55}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{8}{11}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Count the four empty seats after the first eight passengers board",
+        "Use the complement: no row has two adjacent empty seats"
+      ],
+      "solution": "After the first \\(8\\) passengers sit, there are \\(4\\) empty seats among the \\(12\\) seats, so there are \\(\\binom{12}{4}=495\\) equally likely sets of empty seats.\n\nCount the complement, where no row has two adjacent empty seats. In a row of three seats, the possible empty-seat patterns with no adjacent empty seats have sizes \\(0,\\) \\(1,\\) and \\(2,\\) with \\(1,\\) \\(3,\\) and \\(1\\) choices respectively. So we need the coefficient of \\(x^4\\) in \\[ (1+3x+x^2)^4. \\] This coefficient is \\[ \\begin{gathered} 3^4+4\\cdot3\\cdot3^2+\\binom42 \\\\ =81+108+6 \\\\ =195. \\end{gathered} \\]\n\nTherefore the probability that at least one row has adjacent empty seats is \\[ \\frac{495-195}{495}=\\frac{20}{33}. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic probability",
+        "complementary counting",
+        "generating functions"
+      ],
+      "sourceDifficulty": 1950,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2024/problem/25"
+    }
+  ]
+}

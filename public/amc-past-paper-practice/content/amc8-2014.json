@@ -1,0 +1,1008 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "2014",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/solutions",
+  "problems": [
+    {
+      "id": "amc-8-2014-q1",
+      "number": 1,
+      "question": "Harry and Terry are each told to calculate \\(8-(2+5).\\) Harry gets the correct answer. Terry ignores the parentheses and calculates \\(8-2+5.\\) If Harry’s answer is \\(H\\) and Terry’s answer is \\(T,\\) what is \\(H-T?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( -10 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( -6 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 0 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 6 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 10 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Compute inside the parentheses first for Harry.",
+        "Compare Harry’s result with Terry’s left-to-right calculation."
+      ],
+      "solution": "Harry calculates it correctly as follows: \\[\\begin{align*} 8 - (2 + 5) &= 8 - 7 \\\\ &= 1. \\end{align*}\\] Terry calculates it incorrectly as follows: \\[\\begin{align*} 8 - 2 + 5 &= 6 + 5 \\\\ &= 11. \\end{align*}\\] Therefore: \\[\\begin{align*} H - T &= 1 - 11 \\\\ &= -10. \\end{align*}\\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "order of operations"
+      ],
+      "sourceDifficulty": 370,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/1"
+    },
+    {
+      "id": "amc-8-2014-q2",
+      "number": 2,
+      "question": "Paul owes Paula \\(35\\) cents and has a pocket full of \\(5\\)-cent coins, \\(10\\)-cent coins, and \\(25\\)-cent coins that he can use to pay her. What is the difference between the largest and the smallest number of coins he can use to pay her?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 3 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 5 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Use the smallest coins to maximize the number of coins.",
+        "Use a quarter and a dime to minimize the number of coins."
+      ],
+      "solution": "To use the largest number of coins, Paul would use only \\(5\\)-cent coins, which gives \\(\\frac{35}{5}=7\\) coins.\n\nTo use the smallest number of coins, Paul would use a \\(25\\)-cent coin and a \\(10\\)-cent coin, for a total of \\(2\\) coins. The difference is \\(7-2=5\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "money",
+        "optimization"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/2"
+    },
+    {
+      "id": "amc-8-2014-q3",
+      "number": 3,
+      "question": "Isabella had a week to read a book for a school assignment. She read an average of \\(36\\) pages per day for the first three days and an average of \\(44\\) pages per day for the next three days. She then finished the book by reading \\(10\\) pages on the last day. How many pages were in the book?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 240 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 250 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 260 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 270 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 280 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Convert each average into a total number of pages.",
+        "Add the first three days, next three days, and last day."
+      ],
+      "solution": "During the first three days, Isabella read \\(36 \\cdot 3 = 108\\) pages.\n\nDuring the next three days, Isabella read \\(44 \\cdot 3 = 132\\) pages.\n\nTherefore, she read a total of \\(108 + 132 + 10 = 250\\) pages.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/3"
+    },
+    {
+      "id": "amc-8-2014-q4",
+      "number": 4,
+      "question": "The sum of two prime numbers is \\(85.\\) What is the product of these two prime numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 85 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 91 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 115 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 133 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 166 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "An odd sum of two primes must include the only even prime.",
+        "Subtract that even prime from \\(85\\)."
+      ],
+      "solution": "The sum of two odd primes is even. Since \\(85\\) is odd, one of the primes must be the only even prime, \\(2\\).\n\nThe other prime is \\(85-2=83\\), so the product is \\(2\\cdot83=166\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "prime",
+        "parity"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/4"
+    },
+    {
+      "id": "amc-8-2014-q5",
+      "number": 5,
+      "question": "Margie’s car can go \\(32\\) miles on a gallon of gas, and gas currently costs \\(\\$4\\) per gallon. How many miles can Margie drive on \\(\\$20\\) worth of gas?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 64 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 128 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 160 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 320 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 640 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "First find how many gallons \\(\\$20\\) buys.",
+        "Multiply the gallons by \\(32\\) miles per gallon."
+      ],
+      "solution": "With \\(\\$20\\), Margie can buy \\(\\frac{20}{4}=5\\) gallons of gas.\n\nAt \\(32\\) miles per gallon, she can drive \\(5\\cdot32=160\\) miles.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "rate",
+        "money"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/5"
+    },
+    {
+      "id": "amc-8-2014-q6",
+      "number": 6,
+      "question": "Six rectangles each with a common base width of \\(2\\) have lengths of \\(1,\\) \\(4,\\) \\(9,\\) \\(16,\\) \\(25,\\) and \\(36.\\) What is the sum of the areas of the six rectangles?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 91 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 93 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 162 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 182 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 202 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Each rectangle has area \\(2\\) times its listed length.",
+        "Add the lengths first, then multiply by \\(2\\)."
+      ],
+      "solution": "To find the area of each rectangle we multiply \\(2\\) by their respective lengths. This means that we can factor out the \\(2\\) and we are left with the sum of the lengths. Adding together the lengths, we get \\(91.\\)\n\nTherefore, the sum of the areas is \\(2 \\cdot 91 = 182.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "rectangle",
+        "area"
+      ],
+      "sourceDifficulty": 720,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/6"
+    },
+    {
+      "id": "amc-8-2014-q7",
+      "number": 7,
+      "question": "There are four more girls than boys in Ms. Raub’s class of \\(28\\) students. What is the ratio of the number of girls to the number of boys in her class?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 3 : 4 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 4 : 3 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 3 : 2 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 7 : 4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 2 : 1 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let the number of boys be \\(b\\).",
+        "Then the number of girls is \\(b+4\\), and the total is \\(28\\)."
+      ],
+      "solution": "Let \\(x\\) be the number of boys in the class. This means that there are \\(x + 4\\) girls. As there are \\(28\\) students, we know that: \\[\\begin{align*} x + x + 4 &= 28\\\\ 2x&=24 \\\\ x&=12. \\end{align*}\\] Therefore, the ratio of girls to boys is \\(16 : 12 = 4 : 3.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "linear equation"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/7"
+    },
+    {
+      "id": "amc-8-2014-q8",
+      "number": 8,
+      "question": "Eleven members of the Middle School Math Club each paid the same amount for a guest speaker to talk about problem solving at their math club meeting. They paid their guest speaker \\(\\$\\underline{1}\\underline{A}\\underline{2}\\). What is the missing digit \\(A\\) of this \\(3\\)-digit number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 0 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 3 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 4 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The total paid by \\(11\\) members must be divisible by \\(11\\).",
+        "For a three-digit number, use the alternating-sum test for divisibility by \\(11\\)."
+      ],
+      "solution": "Note that since \\(11\\) people paid the same amount, then the resulting sum is divisible by \\(11.\\) Therefore, \\(\\underline{1} \\underline{A} \\underline{2}\\) must be divisible by \\(11.\\)\n\nRemember the divisibility rule for \\(11\\): if we take the difference of the sums of alternating digits, and this difference is divisible by \\(11,\\) the whole number is divisible by \\(11.\\)\n\nFor \\(\\underline{1} \\underline{A} \\underline{2},\\) the aforementioned difference is \\[1 + 2 - A = 3 - A.\\] The only way for this to be divisible by \\(11\\) is if \\(A = 3.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "digits"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/8"
+    },
+    {
+      "id": "amc-8-2014-q9",
+      "number": 9,
+      "question": "In \\(\\triangle ABC,\\) \\(D\\) is a point on side \\(\\overline{AC}\\) such that \\(BD=DC\\) and \\(\\angle BCD\\) measures \\(70^\\circ.\\) What is the degree measure of \\(\\angle ADB?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2014/9-6acefea5fc.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 100 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 120 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 135 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 140 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 150 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Since \\(BD=DC\\), triangle \\(BCD\\) is isosceles.",
+        "Find \\(\\angle BDC\\), then use the straight angle at \\(D\\)."
+      ],
+      "solution": "Since \\(BD=DC\\), triangle \\(BDC\\) is isosceles, so \\(\\angle DBC=\\angle BCD=70^\\circ\\).\n\nThus \\[\\begin{aligned}\\angle BDC&=180^\\circ-70^\\circ-70^\\circ\\\\&=40^\\circ.\\end{aligned}\\] Because \\(A,D,C\\) are collinear, \\(\\angle ADB\\) and \\(\\angle BDC\\) form a straight angle, so \\(\\angle ADB=180^\\circ-40^\\circ=140^\\circ\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "isosceles triangle",
+        "angle chasing"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/9"
+    },
+    {
+      "id": "amc-8-2014-q10",
+      "number": 10,
+      "question": "The first AMC \\(8\\) was given in \\(1985\\) and it has been given annually since that time. Samantha turned \\(12\\) years old the year that she took the seventh AMC \\(8.\\) In what year was Samantha born?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1979 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 1980 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 1981 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 1982 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 1983 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The seventh AMC \\(8\\) was six years after the first AMC \\(8.\\)",
+        "Subtract Samantha’s age from that year."
+      ],
+      "solution": "The seventh AMC \\(8\\) would have been administered \\(6\\) years after the first one. Therefore, Samantha took it in \\(1985 + 6 = 1991.\\)\n\nThis means that Samantha was born \\(12\\) years prior in \\(1991 - 12 = 1979.\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "ages",
+        "date and time"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/10"
+    },
+    {
+      "id": "amc-8-2014-q11",
+      "number": 11,
+      "question": "Jack wants to bike from his house to Jill’s house, which is located three blocks east and two blocks north of Jack’s house. After biking each block, Jack can continue either east or north, but he needs to avoid a dangerous intersection one block east and one block north of his house. In how many ways can he reach Jill’s house by biking a total of five blocks?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 5 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 6 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 8 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 10 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Any shortest path uses three east moves and two north moves.",
+        "Count or list only the paths that avoid the intersection after one east and one north move."
+      ],
+      "solution": "Let E represent traveling one block east and N represent traveling one block north. A shortest route uses three E moves and two N moves. To avoid the dangerous intersection one block east and one block north of Jack’s house, the first two moves must be either EE or NN.\n\nThe possible routes are \\(EEENN\\), \\(EENEN\\), \\(EENNE\\), and \\(NNEEE\\), for \\(4\\) routes.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "lattice paths",
+        "complementary counting"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/11"
+    },
+    {
+      "id": "amc-8-2014-q12",
+      "number": 12,
+      "question": "A magazine printed photos of three celebrities along with three photos of the celebrities as babies. The baby pictures did not identify the celebrities. Readers were asked to match each celebrity with the correct baby picture. What is the probability that a reader guessing at random will match all three correctly?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{1}{9} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{1}{6} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{1}{4} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{1}{3} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{1}{2} \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "There are \\(3!\\) ways to match the babies to celebrities.",
+        "Only one matching is completely correct."
+      ],
+      "solution": "Notice that there are \\(3! = 6\\) total ways that a reader could match the celebrities. However, only one of these is the correct matching. Therefore, the probability that the reader guesses it correctly is \\(\\frac{1}{6}.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic probability",
+        "permutations"
+      ],
+      "sourceDifficulty": 940,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/12"
+    },
+    {
+      "id": "amc-8-2014-q13",
+      "number": 13,
+      "question": "If \\(n\\) and \\(m\\) are integers and \\(n^2 + m^2\\) is even, which of the following is impossible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(n\\) and \\(m\\) are even"
+        },
+        {
+          "label": "B",
+          "content": "\\(n\\) and \\(m\\) are odd"
+        },
+        {
+          "label": "C",
+          "content": "\\(n + m\\) is even"
+        },
+        {
+          "label": "D",
+          "content": "\\(n + m\\) is odd"
+        },
+        {
+          "label": "E",
+          "content": "none of these are impossible"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A square has the same parity as its base integer.",
+        "For a sum of two squares to be even, the two integers have the same parity."
+      ],
+      "solution": "Since \\(n^2 + m^2\\) is even, either \\(n^2\\) and \\(m^2\\) are both odd, or both even.\n\nIf they are both odd, then \\(n\\) and \\(m\\) are both odd. If they are both even, then \\(n\\) and \\(m\\) are both even. If \\(n\\) and \\(m\\) are both odd or even, their sum will always be even.\n\nTherefore, \\(n + m\\) is never odd.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "parity"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/13"
+    },
+    {
+      "id": "amc-8-2014-q14",
+      "number": 14,
+      "question": "Rectangle \\(ABCD\\) and right triangle \\(DCE\\) have the same area. They are joined to form a trapezoid, as shown. What is \\(DE?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2014/14-19bf30513e.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 12 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 13 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 14 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 15 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 16 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Set the triangle area equal to the rectangle area.",
+        "After finding \\(CE\\), use the \\(5\\)-\\(12\\)-\\(13\\) right triangle."
+      ],
+      "solution": "The area of \\(ABCD\\) is \\[5 \\cdot 6 = 30.\\]\n\nThe area of \\[\\begin{align*} \\triangle DCE &= \\frac{1}{2}DC \\cdot CE \\\\ &= 30 \\end{align*}\\] Therefore: \\[\\begin{align*} \\dfrac{1}{2} \\cdot 5 \\cdot CE &= 30 \\\\ CE &= 12. \\end{align*}\\] Then using the Pythagorean theorem we get that \\[\\begin{align*} DE &= \\sqrt{5^2 + 12^2} \\\\ &= \\sqrt{169} \\\\ &= 13. \\end{align*}\\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "area",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/14"
+    },
+    {
+      "id": "amc-8-2014-q15",
+      "number": 15,
+      "question": "The circumference of the circle with center \\(O\\) is divided into \\(12\\) equal arcs, marked the letters \\(A\\) through \\(L\\) as seen below. What is the number of degrees in the sum of the angles \\(x\\) and \\(y?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2014/15-ae5b00bb3a.svg\" style=\"max-height: 15rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 75 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 80 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 90 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 120 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 150 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Each adjacent pair of letters cuts off \\(30^\\circ\\) at the center.",
+        "The two relevant triangles are isosceles because their sides are radii."
+      ],
+      "solution": "Note that each of the \\(12\\) arcs splits the circle evenly, so they each cover \\(\\frac{360^{\\circ}}{12} = 30^{\\circ}.\\)\n\n\\(\\angle AOE\\) spans \\(4\\) of these arcs, so \\[\\angle AOE = 4 \\cdot 30^{\\circ} = 120^{\\circ}.\\] Similarly, \\[\\angle GOI = 2 \\cdot 30^{\\circ} = 60^{\\circ}.\\] We also know that both triangles are isosceles since two of their sides are radii. Therefore, \\[ x = \\dfrac{180 - 120}{2} = 30^{\\circ} \\] and \\[ y = \\dfrac{180 - 60}{2} = 60^{\\circ}. \\] Therefore, \\(x + y = 90^{\\circ}.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "arc",
+        "isosceles triangle",
+        "angle chasing"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/15"
+    },
+    {
+      "id": "amc-8-2014-q16",
+      "number": 16,
+      "question": "The “Middle School Eight” basketball conference has \\(8\\) teams. Every season, each team plays every other conference team twice (home and away), and each team also plays \\(4\\) games against non-conference opponents. What is the total number of games in a season involving the “Middle School Eight” teams?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 60 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 88 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 96 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 144 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 160 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count non-conference games separately from conference games.",
+        "For conference games, count each team’s home games against the other seven teams."
+      ],
+      "solution": "Each team plays \\(4\\) non-conference games, for \\(8\\cdot4=32\\) games involving Middle School Eight teams and non-conference opponents.\n\nWithin the conference, each of the \\(8\\) teams has \\(7\\) home games against the other teams, so there are \\(8\\cdot7=56\\) conference games. The total is \\(32+56=88\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic counting"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/16"
+    },
+    {
+      "id": "amc-8-2014-q17",
+      "number": 17,
+      "question": "George walks \\(1\\) mile to school. He leaves home at the same time each day, walks at a steady speed of \\(3\\) miles per hour, and arrives just as school begins.\n\nToday he was distracted by the pleasant weather and walked the first \\(\\frac{1}{2}\\) mile at a speed of only \\(2\\) miles per hour. At how many miles per hour must George run the last \\(\\frac{1}{2}\\) mile in order to arrive just as school begins today?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 6 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 8 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 10 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 12 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Find the usual time for one mile at \\(3\\) mph.",
+        "Subtract the time already spent walking the first half mile."
+      ],
+      "solution": "If George normally walks \\(1\\) mile at \\(3\\) miles per hour, it takes him \\(\\dfrac{1}{3}\\) hour, or \\(20\\) minutes, to get to school.\n\nToday he walked the first \\(\\dfrac{1}{2}\\) mile at \\(2\\) miles per hour, taking \\(\\dfrac{1}{2}\\div2=\\dfrac{1}{4}\\) hour, or \\(15\\) minutes. He has \\(5\\) minutes, which is \\(\\dfrac{1}{12}\\) hour, left to cover \\(\\dfrac{1}{2}\\) mile.\n\nHis required speed is \\(\\dfrac{1}{2}\\div\\dfrac{1}{12}=6\\) miles per hour.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "distance rate and time"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/17"
+    },
+    {
+      "id": "amc-8-2014-q18",
+      "number": 18,
+      "question": "Four children were born at City Hospital yesterday. Assume each child is equally likely to be a boy or a girl. Which of the following outcomes is most likely?",
+      "options": [
+        {
+          "label": "A",
+          "content": "all \\(4\\) are boys"
+        },
+        {
+          "label": "B",
+          "content": "all \\(4\\) are girls"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\) are girls and \\(2\\) are boys"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\) are of one gender and \\(1\\) is of the\nother gender"
+        },
+        {
+          "label": "E",
+          "content": "all of these outcomes are equally likely"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "List outcomes by the number of boys and girls.",
+        "The most likely category is the one with the most arrangements."
+      ],
+      "solution": "There are \\(2^4=16\\) equally likely birth-order outcomes. The counts by category are: all boys, \\(1\\); all girls, \\(1\\); two boys and two girls, \\(\\binom{4}{2}=6\\); and three of one gender and one of the other, \\(2\\binom{4}{1}=8\\).\n\nThe largest count is \\(8\\), so the most likely outcome is three children of one gender and one of the other.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "binomial probability",
+        "combinations"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/18"
+    },
+    {
+      "id": "amc-8-2014-q19",
+      "number": 19,
+      "question": "A cube with \\(3\\)-inch edges is to be constructed from \\(27\\) smaller cubes with \\(1\\)-inch edges. Twenty-one of the cubes are colored red and \\(6\\) are colored white.\n\nIf the \\(3\\)-inch cube is constructed to have the smallest possible white surface area showing, what fraction of the surface area is white?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{5}{54} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{1}{9} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{5}{27} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{2}{9} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{1}{3} \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Hide one white cube in the center of the \\(3\\times3\\times3\\) cube.",
+        "Put the remaining white cubes in face centers to expose only one white face each."
+      ],
+      "solution": "To minimize visible white area, place one white cube in the center of the large cube, where no faces are visible. Place each of the other five white cubes at the center of a face of the large cube, where each contributes only one visible white square.\n\nThe visible white surface area is therefore \\(5\\) square inches. The total surface area of the \\(3\\)-inch cube is \\(6\\cdot3^2=54\\) square inches, so the fraction that is white is \\(\\dfrac{5}{54}\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "cube geometry",
+        "surface area",
+        "optimization"
+      ],
+      "sourceDifficulty": 1410,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/19"
+    },
+    {
+      "id": "amc-8-2014-q20",
+      "number": 20,
+      "question": "Rectangle \\(ABCD\\) has sides \\(CD=3\\) and \\(DA=5.\\) A circle of radius \\(1\\) is centered at \\(A,\\) a circle of radius \\(2\\) is centered at \\(B,\\) and a circle of radius \\(3\\) is centered at \\(C.\\) Which of the following is closest to the area of the region inside the rectangle but outside all three circles?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2014/20-f8e9e2d39f.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 3.5 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 4.0 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 4.5 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 5.0 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 5.5 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Inside the rectangle, each circle contributes a quarter-circle sector.",
+        "Subtract the total sector area from the rectangle area and approximate \\(\\pi\\)."
+      ],
+      "solution": "The parts of the three circles inside the rectangle are quarter-circles with radii \\(1\\), \\(2\\), and \\(3\\). Their total area is \\[\\dfrac{\\pi}{4}+\\pi+\\dfrac{9\\pi}{4}=\\dfrac{7\\pi}{2}.\\]\n\nUsing \\(\\pi\\approx\\dfrac{22}{7}\\), this total is about \\(11\\). The rectangle has area \\(3\\cdot5=15\\), so the desired area is about \\(15-11=4\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "sector",
+        "area",
+        "estimation"
+      ],
+      "sourceDifficulty": 1340,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/20"
+    },
+    {
+      "id": "amc-8-2014-q21",
+      "number": 21,
+      "question": "The \\(7\\)-digit numbers \\(\\underline{74A52B1}\\) and \\(\\underline{326AB4C}\\) are each multiples of \\(3\\). Which of the following could be the value of \\(C\\)?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 3 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 5 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 8 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Use the divisibility-by-\\(3\\) test on both numbers.",
+        "Compare what the first number says about \\(A+B\\) with what the second number needs."
+      ],
+      "solution": "For \\(\\underline{74A52B1}\\) to be divisible by \\(3\\), the digit sum \\(19+A+B\\) must be a multiple of \\(3\\). Hence \\(A+B\\) is \\(1\\) less than a multiple of \\(3\\).\n\nFor \\(\\underline{326AB4C}\\) to be divisible by \\(3\\), the digit sum \\(15+A+B+C\\) must be a multiple of \\(3\\). Since \\(15\\) is already divisible by \\(3\\), \\(A+B+C\\) must be divisible by \\(3\\).\n\nTherefore \\(C\\) must be \\(1\\) more than a multiple of \\(3\\). Among the answer choices, only \\(1\\) has that form.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "digits"
+      ],
+      "sourceDifficulty": 1300,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/21"
+    },
+    {
+      "id": "amc-8-2014-q22",
+      "number": 22,
+      "question": "A \\(2\\)-digit number is such that the product of the digits plus the sum of the digits is equal to the number. What is the units digit of the number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 3 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 5 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 7 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 9 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let the tens digit be \\(a\\) and the units digit be \\(b\\).",
+        "Translate the condition into \\(ab+a+b=10a+b\\)."
+      ],
+      "solution": "Let the number be \\(10a+b\\), where \\(a\\) is the tens digit and \\(b\\) is the units digit. The condition gives \\[ab+a+b=10a+b.\\]\n\nCanceling \\(b\\) from both sides gives \\(ab+a=10a\\), so \\(ab=9a\\). Since \\(a\\neq0\\), we get \\(b=9\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/22"
+    },
+    {
+      "id": "amc-8-2014-q23",
+      "number": 23,
+      "question": "Three members of the Euclid Middle School girls’ softball team had the following conversation.\n\nAshley: I just realized that our uniform numbers are all \\(2\\)-digit primes.\n\nBethany: And the sum of your two uniform numbers is the date of my birthday earlier this month.\n\nCaitlin: That’s funny. The sum of your two uniform numbers is the date of my birthday later this month.\n\nAshley: And the sum of your two uniform numbers is today’s date.\n\nWhat number does Caitlin wear?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 11 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 13 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 17 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 19 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 23 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Pair sums of two two-digit primes must be dates in a month.",
+        "Use the earlier-today-later order to determine which uniform number is smallest."
+      ],
+      "solution": "Any pair-sum must be a date in the month, so it is at most \\(31\\). The possible sums of two two-digit primes that are at most \\(31\\) are \\(11+13=24\\), \\(11+17=28\\), \\(11+19=30\\), and \\(13+17=30\\).\n\nThe three dates are earlier, today, and later, so they must be distinct and increasing. The only possible set of three distinct dates is \\(24,28,30\\), coming from the numbers \\(11\\), \\(13\\), and \\(17\\).\n\nBethany’s date is Ashley plus Caitlin, Ashley’s date is Bethany plus Caitlin, and Caitlin’s later date is Ashley plus Bethany. This means Caitlin’s number is the smallest of the three, namely \\(11\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "prime",
+        "logical deduction",
+        "casework"
+      ],
+      "sourceDifficulty": 1610,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/23"
+    },
+    {
+      "id": "amc-8-2014-q24",
+      "number": 24,
+      "question": "One day the Beverage Barn sold \\(252\\) cans of soda to \\(100\\) customers, and every customer bought at least one can of soda. What is the maximum possible median number of cans of soda bought per customer on that day?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 2.5 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 3.0 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 3.5 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 4.0 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 4.5 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The median is the average of the \\(50\\)th and \\(51\\)st ordered purchases.",
+        "Make the first \\(49\\) purchases as small as possible."
+      ],
+      "solution": "Order the \\(100\\) purchases from least to greatest. The median is the average of the \\(50\\)th and \\(51\\)st entries. To maximize it, make the first \\(49\\) entries as small as possible, so set them all equal to \\(1\\).\n\nIf the \\(50\\)th entry were at least \\(4\\), then the total would be at least \\(49+51\\cdot4=253\\), too many cans. So the \\(50\\)th entry is at most \\(3\\).\n\nThis maximum is attainable: use \\(49\\) entries equal to \\(1\\), the \\(50\\)th entry equal to \\(3\\), and the final \\(50\\) entries equal to \\(4\\). The total is \\(49+3+50\\cdot4=252\\), and the median is \\(\\frac{3+4}{2}=3.5\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "median (data)",
+        "optimization"
+      ],
+      "sourceDifficulty": 1560,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/24"
+    },
+    {
+      "id": "amc-8-2014-q25",
+      "number": 25,
+      "question": "A straight one-mile stretch of highway, \\(40\\) feet wide, is closed. Robert rides his bike on a path composed of semicircles as shown. If he rides at \\(5\\) miles per hour, how many hours will it take to cover the one-mile stretch?\n\nNote: \\(1\\) mile = \\(5280\\) feet\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2014/25-bb43b2b71d.svg\" style=\"max-height: 5rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{\\pi}{11} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{\\pi}{10} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{\\pi}{5} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{2\\pi}{5} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{2\\pi}{3} \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each semicircle advances Robert \\(40\\) feet along the highway.",
+        "Compare the length of a semicircle to its diameter."
+      ],
+      "solution": "Each semicircle advances Robert \\(40\\) feet along the highway, so a one-mile stretch requires \\(\\frac{5280}{40}=132\\) semicircles.\n\nEach semicircle has diameter \\(40\\) feet, so its arc length is \\(20\\pi\\) feet. The total distance Robert rides is \\(132\\cdot20\\pi=2640\\pi\\) feet, which is \\(\\dfrac{2640\\pi}{5280}=\\dfrac{\\pi}{2}\\) miles.\n\nAt \\(5\\) miles per hour, the time is \\(\\dfrac{\\pi}{2}\\div5=\\dfrac{\\pi}{10}\\) hours.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "arc",
+        "unit conversion",
+        "distance rate and time"
+      ],
+      "sourceDifficulty": 1460,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2014/problem/25"
+    }
+  ]
+}

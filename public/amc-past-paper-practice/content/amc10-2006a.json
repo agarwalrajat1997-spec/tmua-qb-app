@@ -1,0 +1,1016 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2006A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2006a-q1",
+      "number": 1,
+      "question": "Sandwiches at Joe’s Fast Food cost \\(\\$3\\) each and sodas cost \\(\\$2\\) each. How many dollars will it cost to purchase \\(5\\) sandwiches and \\(8\\) sodas?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(31\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(32\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(33\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(34\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(35\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Find the sandwich total and the soda total separately",
+        "Compute \\(5 \\cdot 3 + 8 \\cdot 2\\)"
+      ],
+      "solution": "Five sandwiches cost \\(5 \\cdot 3 = 15\\) dollars and eight sodas cost \\(8 \\cdot 2 = 16\\) dollars. Together they cost \\(15 + 16 = 31\\) dollars.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "money",
+        "whole number operations"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/1"
+    },
+    {
+      "id": "amc-10-2006a-q2",
+      "number": 2,
+      "question": "Define \\(x \\otimes y = x^3 - y.\\) What is \\(h \\otimes (h \\otimes h)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-h\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(h\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2h\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(h^3\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "First evaluate the inner \\(h \\otimes h\\)",
+        "\\(h \\otimes h = h^3 - h,\\) then apply the operation again"
+      ],
+      "solution": "The inner operation gives \\(h \\otimes h = h^3 - h.\\) Then \\[ \\begin{aligned} h \\otimes (h^3 - h) &= h^3 - (h^3 - h) \\\\ &= h. \\end{aligned} \\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "custom operation",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/2"
+    },
+    {
+      "id": "amc-10-2006a-q3",
+      "number": 3,
+      "question": "The ratio of Mary’s age to Alice’s age is \\(3 : 5.\\) Alice is \\(30\\) years old. How many years old is Mary?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(50\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Mary’s age is \\(\\dfrac{3}{5}\\) of Alice’s age",
+        "Compute \\(\\dfrac{3}{5} \\cdot 30\\)"
+      ],
+      "solution": "Since the ratio is \\(3 : 5\\) and Alice is \\(30,\\) Mary is \\(\\dfrac{3}{5} \\cdot 30 = 18\\) years old.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "ages"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/3"
+    },
+    {
+      "id": "amc-10-2006a-q4",
+      "number": 4,
+      "question": "A digital watch displays hours and minutes with am and pm. What is the largest possible sum of the digits in the display?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(22\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(23\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The display uses a \\(12\\)-hour clock, so the hour is \\(1\\) through \\(12\\)",
+        "Maximize the minutes’ digit sum and the hour’s digit sum separately"
+      ],
+      "solution": "The minutes run from \\(00\\) to \\(59,\\) so the largest digit sum for the minutes is \\(5 + 9 = 14,\\) at \\(59\\) minutes.\n\nFor the hour, the single digit \\(9\\) beats \\(1 + 2 = 3\\) from \\(12.\\) The largest total is \\(9 + 14 = 23,\\) occurring at \\(9\\!:\\!59.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "clock",
+        "digits",
+        "optimization"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/4"
+    },
+    {
+      "id": "amc-10-2006a-q5",
+      "number": 5,
+      "question": "Doug and Dave shared a pizza with \\(8\\) equally-sized slices. Doug wanted a plain pizza, but Dave wanted anchovies on half of the pizza. The cost of a plain pizza was \\(\\$8,\\) and there was an additional cost of \\(\\$2\\) for putting anchovies on one half. Dave ate all the slices of anchovy pizza and one plain slice. Doug ate the remainder. Each then paid for what he had eaten. How many more dollars did Dave pay than Doug?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A plain pizza costs \\(\\$8\\) for \\(8\\) slices, so each slice is \\(\\$1\\)",
+        "Dave also pays the full \\(\\$2\\) for the anchovies on top of his five slices"
+      ],
+      "solution": "Each of the \\(8\\) slices costs \\(\\$1.\\) Dave ate \\(5\\) slices and also pays the extra \\(\\$2\\) for the anchovies, for a total of \\(5 + 2 = 7\\) dollars.\n\nDoug ate \\(3\\) slices, paying \\(3\\) dollars. So Dave paid \\(7 - 3 = 4\\) dollars more.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "money",
+        "fraction"
+      ],
+      "sourceDifficulty": 1120,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/5"
+    },
+    {
+      "id": "amc-10-2006a-q6",
+      "number": 6,
+      "question": "What non-zero real value for \\(x\\) satisfies \\((7x)^{14} = (14x)^7?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{7}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2}{7}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(14\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Take the seventh root of both sides",
+        "\\((7x)^2 = 14x,\\) then divide by \\(x\\)"
+      ],
+      "solution": "Taking the seventh root of both sides gives \\((7x)^2 = 14x,\\) so \\(49x^2 = 14x.\\) Since \\(x \\neq 0,\\) divide by \\(x\\) to get \\(49x = 14,\\) hence \\(x = \\dfrac{2}{7}.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "exponent",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/6"
+    },
+    {
+      "id": "amc-10-2006a-q7",
+      "number": 7,
+      "question": "The \\(8 \\times 18\\) rectangle \\(ABCD\\) is cut into two congruent hexagons, as shown, in such a way that the two hexagons can be repositioned without overlap to form a square. What is \\(y?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2006a/7-713cab8b53.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The two hexagons form a square with the same area as the rectangle",
+        "The rectangle has area \\(8 \\cdot 18 = 144,\\) so the square has side \\(12\\)"
+      ],
+      "solution": "The rectangle’s area is \\(8 \\cdot 18 = 144,\\) so the square formed has side \\(\\sqrt{144} = 12.\\)\n\nLet \\(E\\) and \\(F\\) be the upper and lower endpoints of the stair-step cut. For the two congruent pieces to fit into a square, the three horizontal segments \\(DE,\\) the middle segment of length \\(y,\\) and \\(FB\\) must be equal. Together they span the rectangle’s width, so \\(DE+y+FB=18\\) gives \\(3y=18\\) and \\(y=6.\\) Indeed, the resulting square has side \\(2y=12,\\) agreeing with the area calculation.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "area",
+        "area decomposition"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/7"
+    },
+    {
+      "id": "amc-10-2006a-q8",
+      "number": 8,
+      "question": "A parabola with equation \\(y = x^2 + bx + c\\) passes through the points \\((2, 3)\\) and \\((4, 3).\\) What is \\(c?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The two points have the same \\(y\\)-value, so they are symmetric about the vertex",
+        "The axis of symmetry is \\(x = 3,\\) giving \\(b = -6\\)"
+      ],
+      "solution": "Substituting the points gives \\(3 = 4 + 2b + c\\) and \\(3 = 16 + 4b + c.\\) Subtracting yields \\(0 = 12 + 2b,\\) so \\(b = -6.\\)\n\nThen \\(c = 3 - 4 - 2(-6) = 11.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "parabola",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1270,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/8"
+    },
+    {
+      "id": "amc-10-2006a-q9",
+      "number": 9,
+      "question": "How many sets of two or more consecutive positive integers have a sum of \\(15?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The sum of \\(n\\) consecutive integers is \\(n\\) times the middle value",
+        "Check \\(n = 2, 3, 4, 5\\)"
+      ],
+      "solution": "The sum of \\(n\\) consecutive integers equals \\(n\\) times their median. For a sum of \\(15\\): \\(n = 2\\) gives \\(7 + 8,\\) \\(n = 3\\) gives \\(4 + 5 + 6,\\) and \\(n = 5\\) gives \\(1 + 2 + 3 + 4 + 5.\\)\n\nNo set of \\(4\\) works (their sum is even), and \\(6\\) or more consecutive positive integers already exceed \\(15.\\) There are \\(3\\) such sets.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "casework"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/9"
+    },
+    {
+      "id": "amc-10-2006a-q10",
+      "number": 10,
+      "question": "For how many real values of \\(x\\) is \\(\\sqrt{120 - \\sqrt{x}}\\) an integer?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let \\(k = \\sqrt{120 - \\sqrt{x}}\\) and bound \\(k\\)",
+        "\\(k\\) is an integer with \\(0 \\le k \\le 10\\)"
+      ],
+      "solution": "Let \\(k = \\sqrt{120 - \\sqrt{x}}.\\) Since \\(\\sqrt{x} \\ge 0,\\) we need \\(0 \\le k \\le \\sqrt{120},\\) so \\(k \\in \\{0, 1, \\ldots, 10\\},\\) giving \\(11\\) values.\n\nEach \\(k\\) yields \\(\\sqrt{x} = 120 - k^2,\\) and since \\(120 - k^2\\) is positive and strictly decreasing, the resulting values \\(x = (120 - k^2)^2\\) are distinct.\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "radical",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1390,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/10"
+    },
+    {
+      "id": "amc-10-2006a-q11",
+      "number": 11,
+      "question": "Which of the following describes the graph of the equation \\((x + y)^2 = x^2 + y^2?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "the empty set"
+        },
+        {
+          "label": "B",
+          "content": "one point"
+        },
+        {
+          "label": "C",
+          "content": "two lines"
+        },
+        {
+          "label": "D",
+          "content": "a circle"
+        },
+        {
+          "label": "E",
+          "content": "the entire plane"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Expand \\((x + y)^2\\) and simplify",
+        "The equation reduces to \\(xy = 0\\)"
+      ],
+      "solution": "Expanding, \\(x^2 + 2xy + y^2 = x^2 + y^2,\\) which reduces to \\(2xy = 0,\\) i.e. \\(xy = 0.\\)\n\nThis holds exactly when \\(x = 0\\) or \\(y = 0,\\) the two coordinate axes, so the graph is two lines.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "algebraic manipulation",
+        "coordinate geometry"
+      ],
+      "sourceDifficulty": 1270,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/11"
+    },
+    {
+      "id": "amc-10-2006a-q12",
+      "number": 12,
+      "question": "Rolly wishes to secure his dog with an \\(8\\)-foot rope to a square shed that is \\(16\\) feet on each side. His preliminary drawings are shown.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2006a/12-8d79417f6b.svg\" style=\"max-height: 12rem\"/>\n\nWhich of these arrangements gives the dog the greater area to roam, and by how many square feet?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\mathrm{I},\\) by \\(8\\pi\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\mathrm{I},\\) by \\(6\\pi\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\mathrm{II},\\) by \\(4\\pi\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\mathrm{II},\\) by \\(8\\pi\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\mathrm{II},\\) by \\(10\\pi\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "In each case the dog sweeps a half-disk of radius \\(8\\) on the open side",
+        "In arrangement II the rope also wraps around the near corner"
+      ],
+      "solution": "In arrangement I the dog is tied at the middle of a side and sweeps a half-disk of radius \\(8\\): area \\(\\frac12 \\pi \\cdot 8^2 = 32\\pi.\\) The rope reaches exactly to the corners, so nothing wraps.\n\nIn arrangement II the dog is tied \\(4\\) feet from a corner. It sweeps the same \\(32\\pi\\) half-disk, and after the rope reaches the corner, \\(4\\) feet remain to sweep a quarter-disk of radius \\(4\\): \\(\\frac14 \\pi \\cdot 4^2 = 4\\pi.\\)\n\nSo II gives \\(36\\pi,\\) exceeding I by \\(4\\pi.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "sector",
+        "circle area"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/12"
+    },
+    {
+      "id": "amc-10-2006a-q13",
+      "number": 13,
+      "question": "A player pays \\(\\$5\\) to play a game. A die is rolled. If the number on the die is odd, the game is lost. If the number on the die is even, the die is rolled again. In this case the player wins if the second number matches the first and loses otherwise. How much should the player win if the game is fair? (In a fair game the probability of winning times the amount won is what the player should pay.)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$30\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$50\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$100\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Find the probability of winning: an even roll, then a matching roll",
+        "The win probability is \\(\\frac12 \\cdot \\frac16 = \\frac{1}{12};\\) set (probability)(prize) equal to \\(5\\)"
+      ],
+      "solution": "The player wins only if the first roll is even (probability \\(\\frac12\\)) and the second roll matches it (probability \\(\\frac16\\)), so the win probability is \\(\\frac12 \\cdot \\frac16 = \\frac{1}{12}.\\)\n\nFor a fair game, \\(\\frac{1}{12} x = 5,\\) so \\(x = 60.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "expected value",
+        "dice (probability)"
+      ],
+      "sourceDifficulty": 1390,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/13"
+    },
+    {
+      "id": "amc-10-2006a-q14",
+      "number": 14,
+      "question": "A number of linked rings, each \\(1\\) cm thick, are hanging on a peg. The top ring has an outside diameter of \\(20\\) cm. The outside diameter of each of the other rings is \\(1\\) cm less than that of the ring above it. The bottom ring has an outside diameter of \\(3\\) cm. What is the distance, in cm, from the top of the top ring to the bottom of the bottom ring?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2006a/14-187a342528.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(171\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(173\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(182\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(188\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(210\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The exposed part of each lower ring is its outside diameter minus the \\(2\\) cm of overlap with the ring above",
+        "Add \\(20\\) to \\(17 + 16 + \\cdots + 1\\)"
+      ],
+      "solution": "The top ring contributes its full outside diameter, \\(20\\) cm. Because the rings are \\(1\\) cm thick, each ring hangs \\(2\\) cm below the top of the ring above it, so each lower ring adds its outside diameter minus \\(2.\\)\n\nThe outside diameters run \\(20, 19, \\ldots, 3,\\) so the added distances are \\(17, 16, \\ldots, 1.\\) The total is \\[ \\begin{gathered} 20 + (17 + 16 + \\cdots + 1) \\\\ = 20 + \\frac{17 \\cdot 18}{2} \\\\ = 20 + 153 \\\\ = 173. \\end{gathered} \\]\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "summation"
+      ],
+      "sourceDifficulty": 1330,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/14"
+    },
+    {
+      "id": "amc-10-2006a-q15",
+      "number": 15,
+      "question": "Odell and Kershaw run for \\(30\\) minutes on a circular track. Odell runs clockwise at \\(250\\) m/min and uses the inner lane with a radius of \\(50\\) meters. Kershaw runs counterclockwise at \\(300\\) m/min and uses the outer lane with a radius of \\(60\\) meters, starting on the same radial line as Odell. How many times after the start do they pass each other?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(29\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(47\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(50\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compute each runner’s time for one lap; they turn out equal",
+        "Running in opposite directions, they meet twice per lap; count how many laps fit in \\(30\\) minutes"
+      ],
+      "solution": "Odell’s lap is \\(2\\pi(50) = 100\\pi\\) m at \\(250\\) m/min, taking \\(\\frac{100\\pi}{250} = 0.4\\pi\\) min. Kershaw’s lap is \\(2\\pi(60) = 120\\pi\\) m at \\(300\\) m/min, also \\(\\frac{120\\pi}{300} = 0.4\\pi\\) min.\n\nTheir periods are equal. Running in opposite directions, they meet at times \\(t = \\frac{k}{2}(0.4\\pi)\\) for \\(k = 1, 2, \\ldots\\) Requiring \\(t \\le 30\\) gives \\(k \\le \\frac{60}{0.4\\pi} = \\frac{150}{\\pi} \\approx 47.7,\\) so they pass \\(47\\) times.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "relative speed",
+        "distance rate and time",
+        "circumference"
+      ],
+      "sourceDifficulty": 1630,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/15"
+    },
+    {
+      "id": "amc-10-2006a-q16",
+      "number": 16,
+      "question": "A circle of radius \\(1\\) is tangent to a circle of radius \\(2.\\) The sides of \\(\\triangle ABC\\) are tangent to the circles as shown, and the sides \\(AB\\) and \\(AC\\) are congruent. What is the area of \\(\\triangle ABC?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2006a/16-50777d19ec.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{35}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(15\\sqrt{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{64}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\sqrt{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let \\(O\\) and \\(O'\\) be the centers; the right triangles cut off along \\(AC\\) are similar",
+        "The centers lie \\(3\\) and \\(6\\) from \\(A,\\) and the base is \\(8\\) below \\(A\\)"
+      ],
+      "solution": "Let \\(O, O'\\) be the centers of the small and large circles, and let \\(D\\) be the point where the small circle touches \\(AC.\\) The right triangles cut off along \\(AC\\) are similar, so \\(\\frac{AO}{1} = \\frac{AO + 3}{2},\\) giving \\(AO = 3\\) and \\(AO' = 6.\\)\n\nThe tangent length is \\(AD = \\sqrt{AO^2 - 1^2}\\) \\(= \\sqrt{3^2 - 1^2}\\) \\(= 2\\sqrt2.\\) Let \\(F\\) be the midpoint of \\(BC\\); then \\(AF = AO' + 2 = 8.\\)\n\nSince \\(\\triangle ADO \\sim \\triangle AFC,\\) we get \\(\\frac{FC}{1} = \\frac{AF}{2\\sqrt2} = \\frac{8}{2\\sqrt2} = 2\\sqrt2.\\) Thus \\(BC = 4\\sqrt2,\\) and the area is \\(\\frac12 \\cdot BC \\cdot AF\\) \\(= \\frac12 \\cdot 4\\sqrt2 \\cdot 8\\) \\(= 16\\sqrt2.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "tangent circles",
+        "similarity",
+        "isosceles triangle"
+      ],
+      "sourceDifficulty": 1720,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/16"
+    },
+    {
+      "id": "amc-10-2006a-q17",
+      "number": 17,
+      "question": "In rectangle \\(ADEH,\\) points \\(B\\) and \\(C\\) trisect \\(\\overline{AD},\\) and points \\(G\\) and \\(F\\) trisect \\(\\overline{HE}.\\) In addition, \\(AH = AC = 2.\\) What is the area of quadrilateral \\(WXYZ\\) shown in the figure?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2006a/17-f8ec0c16c3.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\sqrt{2}}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{\\sqrt{3}}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2\\sqrt{2}}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2\\sqrt{3}}{3}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Assign coordinates using \\(AB = BC = CD = 1\\) and \\(AH = 2\\)",
+        "\\(WXYZ\\) is a square; find its diagonals"
+      ],
+      "solution": "Set \\(A = (0, 0),\\) \\(D = (3, 0),\\) \\(H = (0, 2),\\) so \\(B = (1, 0),\\) \\(C = (2, 0),\\) \\(G = (1, 2),\\) \\(F = (2, 2),\\) and \\(E = (3, 2).\\)\n\nThe drawn segments meet at \\(W = (1.5, 1.5),\\) \\(X = (1, 1),\\) \\(Y = (1.5, 0.5),\\) and \\(Z = (2, 1).\\) These form a square whose perpendicular diagonals \\(WY\\) and \\(XZ\\) each have length \\(1.\\)\n\nIts area is \\(\\frac12 \\cdot 1 \\cdot 1 = \\frac12.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "area",
+        "square (geometry)"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/17"
+    },
+    {
+      "id": "amc-10-2006a-q18",
+      "number": 18,
+      "question": "A license plate in a certain state consists of \\(4\\) digits, not necessarily distinct, and \\(2\\) letters, also not necessarily distinct. These six characters may appear in any order, except that the two letters must appear next to each other. How many distinct license plates are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10^4 \\cdot 26^2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10^3 \\cdot 26^3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5 \\cdot 10^4 \\cdot 26^2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10^2 \\cdot 26^4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5 \\cdot 10^3 \\cdot 26^3\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Glue the two letters into a single block that moves as a unit",
+        "Count digit choices, letter choices, and positions for the block"
+      ],
+      "solution": "Since the two letters must be adjacent, treat them as one block. A plate is then \\(4\\) digits plus this block—\\(5\\) objects—and the block can occupy \\(5\\) positions.\n\nThere are \\(10^4\\) choices for the digits and \\(26^2\\) for the two letters, so the total is \\(5 \\cdot 10^4 \\cdot 26^2.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "multiplication principle"
+      ],
+      "sourceDifficulty": 1450,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/18"
+    },
+    {
+      "id": "amc-10-2006a-q19",
+      "number": 19,
+      "question": "How many non-similar triangles have angles whose degree measures are distinct positive integers in arithmetic progression?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(59\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(89\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(178\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "If the angles are in arithmetic progression, the middle angle is \\(60^\\circ\\)",
+        "The common difference \\(d\\) satisfies \\(1 \\le d \\le 59\\)"
+      ],
+      "solution": "Let the angles be \\(n - d,\\) \\(n,\\) \\(n + d.\\) Their sum is \\(3n = 180,\\) so \\(n = 60.\\)\n\nThe measures are distinct positive integers, so \\(d \\ge 1,\\) and \\(n - d \\gt 0\\) forces \\(d \\lt 60.\\) Thus \\(d \\in \\{1, 2, \\ldots, 59\\},\\) giving \\(59\\) non-similar triangles.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "angle sum",
+        "arithmetic sequence",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1630,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/19"
+    },
+    {
+      "id": "amc-10-2006a-q20",
+      "number": 20,
+      "question": "Six distinct positive integers are randomly chosen between \\(1\\) and \\(2006,\\) inclusive. What is the probability that some pair of these integers has a difference that is a multiple of \\(5?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{5}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{4}{5}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Consider the remainders when the integers are divided by \\(5\\)",
+        "There are only \\(5\\) possible remainders for \\(6\\) integers"
+      ],
+      "solution": "Group the integers by their remainder modulo \\(5.\\) There are only \\(5\\) possible remainders but \\(6\\) integers, so by the Pigeonhole Principle two share a remainder.\n\nTheir difference is then a multiple of \\(5.\\) This always happens, so the probability is \\(1.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "pigeonhole principle",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/20"
+    },
+    {
+      "id": "amc-10-2006a-q21",
+      "number": 21,
+      "question": "How many four-digit positive integers have at least one digit that is a \\(2\\) or a \\(3?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2439\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4096\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4903\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4904\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5416\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Count the complement: four-digit numbers with no \\(2\\) and no \\(3\\)",
+        "The leading digit has \\(7\\) choices; each other digit has \\(8\\)"
+      ],
+      "solution": "There are \\(9000\\) four-digit integers. For those avoiding \\(2\\) and \\(3,\\) the leading digit is one of \\(\\{1, 4, 5, 6, 7, 8, 9\\}\\) (\\(7\\) choices) and each remaining digit is one of \\(\\{0, 1, 4, 5, 6, 7, 8, 9\\}\\) (\\(8\\) choices): \\(7 \\cdot 8^3 = 3584.\\)\n\nSo \\(9000 - 3584 = 5416\\) have at least one \\(2\\) or \\(3.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "complementary counting",
+        "digits"
+      ],
+      "sourceDifficulty": 1450,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/21"
+    },
+    {
+      "id": "amc-10-2006a-q22",
+      "number": 22,
+      "question": "Two farmers agree that pigs are worth \\(\\$300\\) and that goats are worth \\(\\$210.\\) When one farmer owes the other money, he pays the debt in pigs or goats, with “change” received in the form of goats or pigs as necessary. (For example, a \\(\\$390\\) debt could be paid with two pigs, with one goat received in change.) What is the amount of the smallest positive debt that can be resolved in this way?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$30\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$90\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$210\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A resolvable debt is \\(300p + 210g\\) for integers \\(p,\\) \\(g\\) (possibly negative)",
+        "This equals \\(30(10p + 7g),\\) and \\(\\gcd(10, 7) = 1\\)"
+      ],
+      "solution": "A resolvable debt is \\(D = 300p + 210g\\) for integers \\(p,\\) \\(g,\\) where a negative value means change received. Since \\(D = 30(10p + 7g)\\) and \\(\\gcd(10, 7) = 1,\\) the value \\(10p + 7g\\) can be any integer, so \\(D\\) is any multiple of \\(30.\\)\n\nThe smallest positive one is \\(30,\\) achieved by \\(30 = 300(-2) + 210(3)\\) (give \\(3\\) goats, receive \\(2\\) pigs).\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "greatest common divisor",
+        "Diophantine Equation"
+      ],
+      "sourceDifficulty": 1630,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/22"
+    },
+    {
+      "id": "amc-10-2006a-q23",
+      "number": 23,
+      "question": "Circles with centers \\(A\\) and \\(B\\) have radii \\(3\\) and \\(8,\\) respectively. A common internal tangent touches the circles at \\(C\\) and \\(D,\\) as shown. Lines \\(AB\\) and \\(CD\\) intersect at \\(E,\\) and \\(AE = 5.\\) What is \\(CD?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2006a/23-213d2ee087.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{44}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\sqrt{221}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{255}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{55}{3}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Radii \\(AC\\) and \\(BD\\) are perpendicular to the tangent \\(CD\\)",
+        "\\(\\triangle ACE \\sim \\triangle BDE\\); first find \\(CE\\)"
+      ],
+      "solution": "Since \\(AC \\perp CD,\\) we have \\(CE = \\sqrt{AE^2 - AC^2}\\) \\(= \\sqrt{25 - 9}\\) \\(= 4.\\)\n\nBecause \\(\\triangle ACE \\sim \\triangle BDE,\\) \\(\\frac{DE}{CE} = \\frac{BD}{AC},\\) so \\(DE = 4 \\cdot \\frac{8}{3} = \\frac{32}{3}.\\)\n\nThen \\(CD = CE + DE\\) \\(= 4 + \\frac{32}{3}\\) \\(= \\frac{44}{3}.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "tangent line",
+        "similarity",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1720,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/23"
+    },
+    {
+      "id": "amc-10-2006a-q24",
+      "number": 24,
+      "question": "Centers of adjacent faces of a unit cube are joined to form a regular octahedron. What is the volume of this octahedron?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The octahedron is two square pyramids glued at their bases",
+        "Adjacent face-centers are \\(\\frac{\\sqrt2}{2}\\) apart; find the base area and height"
+      ],
+      "solution": "The six face centers form a regular octahedron, viewed as two congruent square pyramids sharing a base. Adjacent face centers are \\(\\frac{\\sqrt2}{2}\\) apart, so the square base has area \\(\\left(\\frac{\\sqrt2}{2}\\right)^2 = \\frac12.\\)\n\nEach pyramid has height \\(\\frac12,\\) so its volume is \\(\\frac13 \\cdot \\frac12 \\cdot \\frac12 = \\frac{1}{12}.\\) The octahedron has volume \\(2 \\cdot \\frac{1}{12} = \\frac16.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "3D geometry",
+        "pyramid",
+        "volume"
+      ],
+      "sourceDifficulty": 1760,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/24"
+    },
+    {
+      "id": "amc-10-2006a-q25",
+      "number": 25,
+      "question": "A bug starts at one vertex of a cube and moves along the edges of the cube according to the following rule. At each vertex the bug will choose to travel along one of the three edges emanating from that vertex. Each edge has equal probability of being chosen, and all choices are independent. What is the probability that after seven moves the bug will have visited every vertex exactly once?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2187}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{729}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2}{243}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{81}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{243}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The bug must trace a path visiting all \\(8\\) vertices, i.e. \\(7\\) moves with no repeated vertices",
+        "Count such paths from the start; there are \\(3^7\\) equally likely walks"
+      ],
+      "solution": "After \\(7\\) moves there are \\(3^7 = 2187\\) equally likely walks. A successful walk visits every vertex exactly once.\n\nLabel the cube’s vertices by binary triples, with adjacent vertices differing in one coordinate. There are \\(3\\) choices for the first move and \\(2\\) for the second move if the bug is not to return to its starting point. By symmetry, fix these first moves as \\(000\\to100\\to110.\\)\n\nThe successful continuations are exactly \\[ \\begin{aligned} 110&\\to111\\to101\\\\ &\\to001\\to011\\to010, \\end{aligned} \\] \\[ \\begin{aligned} 110&\\to010\\to011\\\\ &\\to001\\to101\\to111, \\end{aligned} \\] and \\[ \\begin{aligned} 110&\\to010\\to011\\\\ &\\to111\\to101\\to001. \\end{aligned} \\] Thus each allowed pair of first moves has \\(3\\) successful continuations, giving \\(3\\cdot2\\cdot3=18\\) successful walks.\n\nThe probability is \\(\\frac{18}{2187} = \\frac{2}{243}.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "graph theory",
+        "basic probability",
+        "casework"
+      ],
+      "sourceDifficulty": 2120,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2006A/problem/25"
+    }
+  ]
+}

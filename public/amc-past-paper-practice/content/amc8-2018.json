@@ -1,0 +1,1013 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "2018",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/solutions",
+  "problems": [
+    {
+      "id": "amc-8-2018-q1",
+      "number": 1,
+      "question": "An amusement park has a collection of scale models, with a ratio of \\( 1: 20,\\) of buildings and other sights from around the country. The height of the United States Capitol is \\(289\\) feet. What is the height in feet of its replica at this park, rounded to the nearest whole number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 14 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 15 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 16 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 18 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 20 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "A \\(1:20\\) scale means the replica height is the real height divided by \\(20\\).",
+        "After dividing \\(289\\) by \\(20\\), round to the nearest whole foot."
+      ],
+      "solution": "The replica is \\(\\dfrac{289}{20}=14.45\\) feet tall, which rounds to \\(14\\) feet.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "estimation"
+      ],
+      "sourceDifficulty": 370,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/1"
+    },
+    {
+      "id": "amc-8-2018-q2",
+      "number": 2,
+      "question": "What is the value of the product \\[\\begin{align*} &\\left(1+\\frac{1}{1}\\right)\\cdot\\left(1+\\frac{1}{2}\\right)\\\\ &\\quad{}\\cdot\\left(1+\\frac{1}{3}\\right)\\cdot\\left(1+\\frac{1}{4}\\right)\\\\ &\\quad{}\\cdot\\left(1+\\frac{1}{5}\\right)\\cdot\\left(1+\\frac{1}{6}\\right)? \\end{align*}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{7}{6} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{4}{3} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{7}{2} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 7 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 8 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Rewrite each factor \\(1+\\frac1n\\) as \\(\\frac{n+1}{n}\\).",
+        "The product telescopes after the fractions are rewritten."
+      ],
+      "solution": "Let’s first note that if we are given an expression of the form \\(1 + \\frac{1}{n},\\) we can rewrite this as \\[\\frac{n}{n} + \\frac{1}{n} = \\frac{n+1}{n}.\\] With that in mind, we can rewrite the expression given to us in the problem, as shown below: \\[\\begin{align*} &\\left(1+\\frac{1}{1}\\right)\\cdot\\left(1+\\frac{1}{2}\\right)\\\\ &\\quad{}\\cdot\\left(1+\\frac{1}{3}\\right)\\cdot\\left(1+\\frac{1}{4}\\right)\\\\ &\\quad{}\\cdot\\left(1+\\frac{1}{5}\\right)\\cdot\\left(1+\\frac{1}{6}\\right)\\\\ &=\\dfrac{2}{1} \\cdot \\dfrac{3}{2} \\cdot \\dfrac{4}{3} \\cdot\\dfrac{5}{4} \\cdot\\dfrac{6}{5} \\cdot\\dfrac{7}{6}\\\\ &=7 \\end{align*}\\] Thus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "telescoping",
+        "fraction"
+      ],
+      "sourceDifficulty": 660,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/2"
+    },
+    {
+      "id": "amc-8-2018-q3",
+      "number": 3,
+      "question": "Students Arn, Bob, Cyd, Dan, Eve, and Fon are arranged in that order in a circle. They start counting: Arn first, then Bob, and so forth. When the number contains a \\(7\\) as a digit (such as \\(47\\)) or is a multiple of \\(7\\) that person leaves the circle and the counting continues. Who is the last one present in the circle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\text{Arn} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\text{Bob} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\text{Cyd} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\text{Dan} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\text{Eve} \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Simulate only the numbers that cause someone to leave.",
+        "Keep the counting order after each person leaves; the next number goes to the next person still in the circle."
+      ],
+      "solution": "The first five removal numbers are \\(7,14,17,21,27.\\) Tracking only those turns gives:\n\nArn says \\(7\\), Cyd says \\(14\\), Fon says \\(17\\), Bob says \\(21\\), and Eve says \\(27\\).\n\nDan is the only student remaining, so <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "digits",
+        "process simulation"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/3"
+    },
+    {
+      "id": "amc-8-2018-q4",
+      "number": 4,
+      "question": "The twelve-sided figure shown has been drawn on \\(1 \\text{ cm}\\times 1 \\text{ cm}\\) graph paper. What is the area of the figure in \\(\\text{cm}^2?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/4-09488a5df3.svg\" style=\"max-height: 20rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 12 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 12.5 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 13 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 13.5 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 14 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Enclose the figure in an easy rectangle or split it into a central square and small triangles.",
+        "The slanted parts form four congruent right triangles of area \\(1\\)."
+      ],
+      "solution": "To solve for the area of the figure, we separate the compound shape into parts that are easier to work with, as such:\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/4sol-3806b46f12.svg\" style=\"max-height: 13rem\"/>\n\nAs is now clear, there is the center \\(3 \\times 3\\) square, with \\(4 \\) smaller shaded triangles surrounding it.\n\nThe area of the square is \\(3 \\cdot 3 = 9.\\) The other triangles each have a base of \\(2\\) and a height of \\(1,\\) so their area is equal to \\[\\dfrac{bh}{2} = \\dfrac{2\\cdot 1}{2} =1 .\\] There are \\(4\\) of these triangles, so their total area is \\(1\\cdot 4 = 4.\\)\n\nTherefore, the total area is \\(9+4 = 13.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "area decomposition",
+        "triangle area"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/4"
+    },
+    {
+      "id": "amc-8-2018-q5",
+      "number": 5,
+      "question": "What is the value of \\[\\begin{align*} &1+3+5+\\cdots+2017+2019 \\\\ -&2-4-6-\\cdots-2016-2018? \\end{align*}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( -1010 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( -1009 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 1008 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 1009 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 1010 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Pair each positive odd number after \\(1\\) with the even number just before it.",
+        "Count how many \\(1\\)’s remain after pairing."
+      ],
+      "solution": "Rearranging the terms, notice that the expression in the question is equal to: \\[\\begin{align*}&1 + (3-2) + (5-4) + \\cdots +\\\\ &(2017-2016) + (2019-2018). \\end{align*}\\] Each term is equal to \\(1,\\) and there are \\(\\frac{2019-1}2+1 = 1010\\) terms, so the total sum is \\(1010\\cdot1 = 1010.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "pairing and grouping"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/5"
+    },
+    {
+      "id": "amc-8-2018-q6",
+      "number": 6,
+      "question": "On a trip to the beach, Anh traveled \\(50\\) miles on the highway and \\(10\\) miles on a coastal access road. He drove three times as fast on the highway as on the coastal road. If Anh spent \\(30\\) minutes driving on the coastal road, how many minutes did his entire trip take?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 50 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 70 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 80 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 90 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 100 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use the coastal-road information to find Anh’s coastal-road speed.",
+        "The highway speed is three times the coastal-road speed, so the highway time follows from the \\(50\\) highway miles."
+      ],
+      "solution": "Anh drove \\(10\\) miles on the coastal road in \\(30\\) minutes. Therefore, his speed on the coastal road (notated as \\(v_c\\)) is \\[\\begin{align*}v_c&=\\dfrac{10}{30}\\\\ &=\\dfrac13.\\end{align*}\\] This is \\(\\dfrac13\\) mile per minute. Since he drives \\(3\\) times as fast on the highway (i.e. \\(v_h=3v_c\\)), his highway speed is \\[3\\cdot \\dfrac13 = 1\\] mile per minute. Armed with these two facts, we know that Anh drove for \\(30\\) minutes on the coastal road, and he drove \\(50\\) miles at \\(1\\) mile per minute. This means it takes \\(50\\) minutes to drive the \\(50\\) miles on the highway.\n\nAs such, the total travel time is \\(50+30=80\\) minutes.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/6"
+    },
+    {
+      "id": "amc-8-2018-q7",
+      "number": 7,
+      "question": "The \\(5\\)-digit number \\(\\underline{2}\\) \\(\\underline{0}\\) \\(\\underline{1}\\) \\(\\underline{8}\\) \\(\\underline{U}\\) is divisible by \\(9.\\) What is the remainder when this number is divided by \\(8?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 3 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 5 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 6 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 7 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use the divisibility-by-\\(9\\) rule to determine \\(U\\).",
+        "Once \\(U\\) is known, only the last three digits matter for the remainder modulo \\(8\\)."
+      ],
+      "solution": "Notice that a number is divisible by \\(9\\) if and only if the sum of its digits is also divisible by \\(9.\\)\n\nThe sum of the digits of the \\(5\\)-digit number in the problem is: \\[2+0+1+8+U= 11+U.\\] As \\(\\underline{2}\\) \\(\\underline{0}\\) \\(\\underline{1}\\) \\(\\underline{8}\\) \\(\\underline{U}\\) is divisible by \\(9,\\) \\(11+U\\) must also be divisible by \\(9.\\) Also, as \\(U\\) is a digit, we know that \\(0\\le U\\le 9.\\) This means that \\(U\\) can only be \\(7.\\)\n\nNow we know that the \\(5\\)-digit number in question is \\(20187,\\) and we want to find the remainder when we divide \\(20187\\) by \\(8.\\) To solve this, simply use long division to see that \\(20187=2523\\cdot 8 + 3.\\) Therefore, the remainder is \\(3.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "divisibility",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/7"
+    },
+    {
+      "id": "amc-8-2018-q8",
+      "number": 8,
+      "question": "Mr. Garcia asked the members of his health class how many days last week they exercised for at least \\(30\\) minutes. The results are summarized in the following bar graph, where the heights of the bars represent the number of students.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/8-704ee30176.svg\" style=\"max-height: 20rem\"/>\n\nWhat was the mean number of days of exercise last week, rounded to the nearest hundredth, reported by the students in Mr. Garcia’s class?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 3.50 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 3.57 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 4.36 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 4.50 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 5.00 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compute the weighted average from the bar heights.",
+        "First find the total number of students, then find the total number of reported exercise days."
+      ],
+      "solution": "The bar heights for \\(1,2,3,4,5,6,7\\) days are \\(1,3,2,6,8,3,2\\), for a total of \\(25\\) students.\n\nThe total number of reported exercise days is \\[\\begin{aligned} &1\\cdot1+2\\cdot3+3\\cdot2+4\\cdot6\\\\ &\\qquad+5\\cdot8+6\\cdot3+7\\cdot2=109. \\end{aligned}\\]\n\nThe mean is \\(\\frac{109}{25}=4.36\\) days.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "data and graph interpretation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/8"
+    },
+    {
+      "id": "amc-8-2018-q9",
+      "number": 9,
+      "question": "Tyler is tiling the floor of his \\(12\\) foot by \\(16\\) foot living room. He plans to place one-foot by one-foot square tiles to form a border along the edges of the room and to fill in the rest of the floor with two-foot by two-foot square tiles. How many tiles will he use?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 48 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 87 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 91 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 96 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 120 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count the \\(1\\)-foot border tiles first, being careful not to double-count the corners.",
+        "After removing a \\(1\\)-foot border, the remaining rectangle is \\(10\\) feet by \\(14\\) feet."
+      ],
+      "solution": "Note that each square foot of the border would require one tile, meaning that the border will take \\(16+12+16+12=56\\) tiles. However, notice that this will cause overlapping tiles in each of the four corners, so to fix this, we subtract \\(4.\\) Therefore, the border will take \\(56-4=52\\) \\(1\\times 1\\) square tiles to completely tile.\n\nSince we have removed one foot from each side due to the border, the remaining rectangle is \\(10\\) feet by \\(14\\) feet. This must be tiled completely by \\(2 \\times 2 \\) tiles, so it will take \\[ \\dfrac{10\\cdot14}{2\\cdot2} = 35 \\] tiles in total to tile this area.\n\nAs it takes \\(52\\) \\(1\\times 1\\) square tiles to tile the border, and \\(35\\) \\(2\\times 2\\) square tiles to tile the remaining area, it will take \\(52+35=87\\) tiles in total to fill in Tyler’s entire living room floor.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "tiling",
+        "area"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/9"
+    },
+    {
+      "id": "amc-8-2018-q10",
+      "number": 10,
+      "question": "The <i>harmonic mean</i> of a set of non-zero numbers is the reciprocal of the average of the reciprocals of the numbers. What is the harmonic mean of \\(1,\\) \\(2,\\) and \\(4?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{3}{7} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{7}{12} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{12}{7} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{7}{4} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{7}{3} \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Average the reciprocals of \\(1,2,\\) and \\(4\\).",
+        "The harmonic mean is the reciprocal of that average."
+      ],
+      "solution": "The reciprocals of \\(1\\), \\(2\\), and \\(4\\) are \\(\\dfrac11\\), \\(\\dfrac12\\), and \\(\\dfrac14\\), respectively. The average of these reciprocals is \\[\\begin{align*}\\dfrac{\\left(1 + \\dfrac12 + \\dfrac14\\right)}{3} &= \\dfrac{\\left(\\dfrac{7}{4}\\right)}{3} \\\\&= \\dfrac{7}{12}. \\end{align*}\\]\n\nAs the harmonic mean is the reciprocal of the average of the reciprocals of the numbers (which we just calculated to be \\(\\dfrac{7}{12}\\)), we conclude that the harmonic mean is \\(\\dfrac{12}{7}.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "harmonic mean",
+        "fraction"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/10"
+    },
+    {
+      "id": "amc-8-2018-q11",
+      "number": 11,
+      "question": "Abby, Bridget, and four of their classmates will be seated in two rows of three for a group picture, as shown. \\[\\begin{array}{ccc} \\text{\\text{X}}&\\text{X}&\\text{X} \\\\ \\text{X}&\\text{X}&\\text{X} \\end{array}\\] If the seating positions are assigned randomly, what is the probability that Abby and Bridget are adjacent to each other in the same row or the same column?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{1}{3} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{2}{5} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{7}{15} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{1}{2} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{2}{3} \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "First choose Abby’s seat, then count how many seats are adjacent to it.",
+        "Middle seats and corner seats have different numbers of adjacent seats."
+      ],
+      "solution": "We can split the problem into two cases. In case \\(1,\\) Abby is in one of the middle two seats, and in case \\(2,\\) she is in one of the outer \\(4\\) seats.\n\nFirstly notice that there is a \\( \\dfrac26 = \\dfrac13 \\) probability of case \\(1\\) being true (i.e. Abby is in the middle two seats). For Bridget to be adjacent to Abby in this case, she must be in either of the two seats beside Abby in the same row, or she is in the same column as her. There are \\(3\\) ways to make this happen out of a possible \\(5\\) open seats, so there is a \\( \\frac35 \\) chance of this happening. Therefore, the total probability of this case is \\[ \\dfrac13 \\cdot \\dfrac35 = \\dfrac{3}{15} .\\]\n\nNext, notice that there is a \\( \\dfrac46 = \\dfrac23 \\) probability of case \\(2\\) being true (i.e. Abby is in the outer four seats). For Bridget to be adjacent to Abby in this case, she must either be in the single seat next to Abby in the same row, or she is in the same column as Abby. There are \\(2\\) ways to make this happen out of a possible \\(5\\) open seats, so there is a \\( \\frac25 \\) chance of this happening. Therefore, the total probability of this case is \\[ \\frac23 \\cdot \\frac25 = \\frac{4}{15} .\\]\n\nTherefore, the final probability of <i>either</i> of these cases happening is \\( \\dfrac{3}{15} + \\dfrac{4}{15} = \\dfrac{7}{15} .\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic probability",
+        "casework"
+      ],
+      "sourceDifficulty": 1210,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/11"
+    },
+    {
+      "id": "amc-8-2018-q12",
+      "number": 12,
+      "question": "The clock in Sri’s car, which is not accurate, gains time at a constant rate. One day as he begins shopping he notes that his car clock and his watch (which is accurate) both say \\(12{:}00\\) noon. When he is done shopping, his watch says \\(12{:}30\\) and his car clock says \\(12{:}35.\\) Later that day, Sri loses his watch. He looks at his car clock and it says \\(7{:}00.\\) What is the actual time?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 5:50 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 6:00 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 6:30 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 6:55 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 8:10 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Compare how much time the car clock gains to how much real time passes.",
+        "The car clock’s \\(35\\) minutes correspond to \\(30\\) actual minutes."
+      ],
+      "solution": "Starting from \\(12:00\\) noon, after \\(30\\) minutes of time elapsed, the car clock went \\(35\\) minutes ahead.\n\nTherefore, for every minute the car clock goes ahead, \\( \\frac {30}{35} = \\frac 67 \\) minutes of actual time pass by. From the time \\(12:00 \\) to \\(7:00,\\) the car clock goes ahead \\(7\\cdot 60 = 420 \\) minutes, and therefore, \\(420 \\cdot \\frac67 = 360 \\) minutes, or \\(6\\) hours, of actual time have passed by. If we start at \\(12:00 \\) and \\(6\\) hours pass by, the time is \\(6:00 .\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "clock",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/12"
+    },
+    {
+      "id": "amc-8-2018-q13",
+      "number": 13,
+      "question": "Laila took five math tests, each worth a maximum of \\(100\\) points. Laila’s score on each test was an integer between \\(0\\) and \\(100,\\) inclusive. Laila received the same score on the first four tests, and she received a higher score on the last test. Her average score on the five tests was \\(82.\\) How many values are possible for Laila’s score on the last test?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 5 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 9 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 10 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 18 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Let the repeated score be \\(f\\) and the last test score be \\(l\\).",
+        "Use \\(4f+l=410\\) and the fact that \\(l\\) is larger than the average."
+      ],
+      "solution": "Since the average score on the five tests is \\(82,\\) the total score of those five tests must be \\(5\\cdot82 = 410 .\\)\n\nNow, let \\(f\\) be the score on the first \\(4\\) tests and let \\(l\\) be the score for the last test.\n\nWe know that \\[f &lt; l \\leq 100\\] and \\[4f + l = 410. \\] And as \\(410 = 4f + l &lt; 5l ,\\) we know \\(\\frac{410}{5} = 82 &lt; l .\\)\n\nAlso, since \\(4f + l = 410 ,\\) and dividing \\(410\\) by \\(4\\) gives us a remainder of \\(2,\\) we know that dividing \\(l\\) by \\(4\\) must leave a remainder of \\(2\\) as \\(4f\\) will leave no remainder when divided by \\(4.\\) Equivalently: \\[l \\equiv 2 \\mod 4 .\\] Since \\(82 &lt; l \\leq 100 \\) and \\(l \\equiv 2 \\mod 4, \\) the only options for \\(l\\) are \\(86,90,94,98.\\) This yields four distinct solutions as follows: \\[\\begin{align*} (f,l) =& (81,86);\\\\ &(80,90);\\\\ &(79,94);\\\\ &(78,98) \\end{align*}\\] Therefore, there are \\(4\\) solutions, and <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 1250,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/13"
+    },
+    {
+      "id": "amc-8-2018-q14",
+      "number": 14,
+      "question": "Let \\(N\\) be the greatest five-digit number whose digits have a product of \\(120.\\) What is the sum of the digits of \\(N?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 15 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 16 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 17 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 18 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 20 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "To maximize the five-digit number, maximize the digits from left to right.",
+        "Each chosen digit must divide the remaining required product."
+      ],
+      "solution": "To make the largest possible \\(5\\) digit number, we must maximize the first digit (the digit in the ten-thousands place).\n\nThe largest number that is strictly less than \\(10\\) and divides \\(120\\) is \\(8,\\) so the first digit must be \\(8.\\) Therefore, the product of the remaining number is \\(15.\\)\n\nSimilarly, we must now maximize the second digit.\n\nThe largest number that is less than \\(10\\) and divides \\(15\\) is \\(5,\\) so the second digit is \\(5.\\) Therefore, the product of the remaining number is \\(3.\\)\n\nWe must then maximize the third digit.\n\nThe largest number that is less than \\(10\\) and divides \\(3\\) is \\(3,\\) so the third digit is \\(3.\\) Therefore, the product of the remaining number is \\(1.\\) This means the \\(4\\)th and \\(5\\)th digits are \\(1.\\)\n\nThis makes \\(N = 85311,\\) so the sum of the digits is \\[8+5+3+1+1=18\\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "optimization"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/14"
+    },
+    {
+      "id": "amc-8-2018-q15",
+      "number": 15,
+      "question": "In the diagram below, a diameter of each of the two smaller circles is a radius of the larger circle. If the two smaller circles have a combined area of \\(1\\) square unit, then what is the area of the shaded region, in square units?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/15-1bb900a325.svg\" style=\"max-height: 10rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{1}{4} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{1}{3} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{1}{2} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{\\pi}{2} \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compare the radius of a smaller circle to the radius of the larger circle.",
+        "Area scales by the square of the scale factor."
+      ],
+      "solution": "Let \\(A\\) be the area of the large circle.\n\nSince the diameter of each of the two smaller circles is itself the radius of the larger circle, the radius of each smaller circle is half that of the larger circle.\n\nSymbolically, if we allow \\(r_l\\) to be the radius of the large circle and \\(r_s\\) to be the radius of each of the smaller circles: \\[r_s = \\dfrac12 r_l\\] As the area of the larger circle is equal to \\(A=\\pi r_l^2,\\) the area of the smaller circles are equal to \\[\\begin{align*}\\pi r_s^2 &= \\pi \\left(\\dfrac12 r_l\\right)^2 \\\\&= \\dfrac14 (\\pi r_l^2)\\\\&=\\dfrac14 A.\\end{align*}\\] As the area of two of these smaller circles combined is equal to \\(1\\) square unit, then it follows that \\(2\\cdot \\dfrac14 A=1\\) square unit, implying that \\(A=2\\) square units.\n\nAs the area of the shaded region is equal to the area of the larger circle \\((A)\\) minus the combined area of the two smaller circles \\((1),\\) the area of the shaded region is \\( A - 1=2-1=1\\) square unit.\n\nThus, the correct answer is <b>D</b>",
+      "sourceConcepts": [
+        "circle area",
+        "power scaling of length, area, and volume"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/15"
+    },
+    {
+      "id": "amc-8-2018-q16",
+      "number": 16,
+      "question": "Professor Chang has nine different language books lined up on a bookshelf: two Arabic, three German, and four Spanish. How many ways are there to arrange the nine books on the shelf keeping the Arabic books together and keeping the Spanish books together?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1440 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 2880 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 5760 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(182{,}440\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(362{,}880\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Treat the two Arabic books as one block and the four Spanish books as one block.",
+        "Arrange the five objects, then arrange the books within the Arabic and Spanish blocks."
+      ],
+      "solution": "Since we are keeping the Arabic books together and the Spanish books together, we can look at each group as a single block.\n\nAs such, there are \\(5\\) objects on the bookshelf: three German books, one collection of Arabic books, and one collection of Spanish books. There are \\(5!\\) ways to order the \\(5\\) objects. As we already have the books together, there are \\(2!\\) ways of ordering the Arabic books and \\(4!\\) ways of ordering the Spanish books. Therefore, the total ways to order the books is \\[\\begin{align*}5! \\cdot 4! \\cdot 2! &= 120 \\cdot 24 \\cdot 2 \\\\&= 5760 \\end{align*}\\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "permutations",
+        "arrangements with restrictions"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/16"
+    },
+    {
+      "id": "amc-8-2018-q17",
+      "number": 17,
+      "question": "Bella begins to walk from her house toward her friend Ella’s house. At the same time, Ella begins to ride her bicycle toward Bella’s house. They each maintain a constant speed, and Ella rides \\(5\\) times as fast as Bella walks. The distance between their houses is \\(2\\) miles, which is \\(10{,}560\\) feet, and Bella covers \\(2 \\tfrac{1}{2}\\) feet with each step. How many steps will Bella take by the time she meets Ella?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 704 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 845 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 1056 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 1760 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 3520 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Since Ella is \\(5\\) times as fast as Bella, split the distance in the ratio \\(1:5\\).",
+        "After finding Bella’s walking distance in feet, divide by \\(2\\frac12\\) feet per step."
+      ],
+      "solution": "Since for every foot Bella walks, Ella rides \\(5\\) feet, we know that Bella will walk \\(\\frac16\\) of the distance between the two houses, and so she walks \\[\\dfrac16 \\cdot 10560=1760\\] feet. Since she walks \\(2.5\\) feet per step, she takes \\[\\dfrac{1760}{2.5} = 704 \\] steps by the time she meets Ella.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "ratio and proportion",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 1210,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/17"
+    },
+    {
+      "id": "amc-8-2018-q18",
+      "number": 18,
+      "question": "How many positive factors does \\(23{,}232\\) have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 9 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 12 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 28 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 36 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 42 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Prime-factorize \\(23,232\\).",
+        "If \\(n=p^a q^b r^c\\), then its number of positive factors is \\((a+1)(b+1)(c+1)\\)."
+      ],
+      "solution": "The prime factorization is \\(23{,}232=2^6\\cdot3\\cdot11^2.\\) A divisor may use any exponent from \\(0\\) through \\(6\\) on \\(2\\), from \\(0\\) through \\(1\\) on \\(3\\), and from \\(0\\) through \\(2\\) on \\(11\\). Therefore, the number of positive divisors is \\((6+1)(1+1)(2+1)=42.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "prime factorization",
+        "factor counting"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/18"
+    },
+    {
+      "id": "amc-8-2018-q19",
+      "number": 19,
+      "question": "In a sign pyramid a cell gets a “+” if the two cells below it have the same sign, and it gets a “-” if the two cells below it have different signs. The diagram below illustrates a sign pyramid with four levels. How many possible ways are there to fill the four cells in the bottom row to produce a “+” at the top of the pyramid?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/19-0d9345be40.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 8 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 12 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 16 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "If you know one lower cell and the cell above a pair, the other lower cell is forced.",
+        "Work downward from the top, counting how many choices appear at each new row."
+      ],
+      "solution": "Suppose we have two cells and the cell above them. If we are given the bottom left cell and the top cell, we can always find the bottom right cell as follows:\n\nIf the top cell is \\(+,\\) then the bottom right cell must be the same as the bottom left cell, and if the top cell is \\(-,\\) the bottom right cell must be the opposite of the bottom left cell.\n\nNow, suppose we are given a row. Then, suppose we choose a value for the cell below and to the left of the leftmost cell in our given row. We then can inductively determine the entire row below our given by first finding the bottom-right cell of the leftmost cell in our row, and using that newly found cell as the bottom-left reference for the second to the left cell in the given row to find its bottom-right counterpart. The process continues on until the row below the given row is fully solved.\n\nTherefore, since we know that the top row has a cell labelled \\(+,\\) we have \\(2\\) choices for the row below, depending on our choice of the bottom-left cell. Similarly, we have \\(2\\) choices for the third row, and thus \\(2\\) choices for the fourth row. This makes \\(2\\cdot2\\cdot2=8\\) total choices for the bottom row of the sign pyramid.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "parity",
+        "multiplication principle"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/19"
+    },
+    {
+      "id": "amc-8-2018-q20",
+      "number": 20,
+      "question": "In \\(\\triangle ABC,\\) a point \\(E\\) is on \\(\\overline{AB}\\) with \\(AE=1\\) and \\(EB=2.\\) Point \\(D\\) is on \\(\\overline{AC}\\) so that \\(\\overline{DE} \\parallel \\overline{BC}\\) and point \\(F\\) is on \\(\\overline{BC}\\) so that \\(\\overline{EF} \\parallel \\overline{AC}.\\) What is the ratio of the area of \\(CDEF\\) to the area of \\(\\triangle ABC?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/20-3f0a449350.svg\" style=\"max-height: 16rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{4}{9} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{1}{2} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{5}{9} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{3}{5} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{2}{3} \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Use similarity from the two parallel-line conditions.",
+        "Compare the areas of the two small corner triangles to the area of \\(\\triangle ABC\\)."
+      ],
+      "solution": "Let the area of \\(\\triangle ABC\\) be equal to \\(t.\\) Since \\(DE \\parallel BC\\) and \\(FE \\parallel CA ,\\) we can deduce that \\[ADE \\sim ABC\\] and \\[EFB \\sim ABC. \\] Since \\(AE = \\dfrac{AB}3,\\) the area of \\(ADE\\) is equal to \\(\\left(\\dfrac13\\right)^2 t = \\dfrac{t}{9} .\\) Since \\(EB = \\dfrac{2AB}3,\\) the area of \\(EFB\\) is equal to \\(\\left(\\dfrac23\\right)^2 t = \\dfrac{4}{9}t .\\) Finally, to find the area of \\(CDEF,\\) we take the area of \\(ABC =t\\) and subtract the areas of \\(ADE \\) and \\(EFB.\\) This is equivalent to the expression \\[t- \\frac{t}{9} - \\frac{4t}{9} = \\frac{4t}{9} .\\] Therefore, the ratio of the area of \\(CDEF\\) and \\(ABC \\) is \\(\\dfrac{\\left(\\dfrac{4t}{9}\\right)}{t} = \\dfrac{4}{9} .\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "similarity",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1340,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/20"
+    },
+    {
+      "id": "amc-8-2018-q21",
+      "number": 21,
+      "question": "How many positive three-digit integers have a remainder of \\(2\\) when divided by \\(6,\\) a remainder of \\(5\\) when divided by \\(9,\\) and a remainder of \\(7\\) when divided by \\(11?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 3 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 5 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Each remainder condition says the number is \\(4\\) less than a multiple of the divisor.",
+        "Count three-digit numbers of the form \\(198k-4\\)."
+      ],
+      "solution": "Each required remainder is \\(4\\) less than its divisor, so \\(x+4\\) must be divisible by \\(6,9,\\) and \\(11\\). Hence \\(x+4\\) is a multiple of \\(\\operatorname{lcm}(6,9,11)=198.\\)\n\nFor a three-digit \\(x\\), we have \\(104\\le x+4\\le1003\\). The multiples of \\(198\\) in this interval are \\(198,396,594,792,990\\), giving \\(5\\) possible integers.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "Chinese Remainder Theorem",
+        "least common multiple",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1490,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/21"
+    },
+    {
+      "id": "amc-8-2018-q22",
+      "number": 22,
+      "question": "Point \\(E\\) is the midpoint of side \\(\\overline{CD}\\) in square \\(ABCD,\\) and \\(\\overline{BE}\\) meets diagonal \\(\\overline{AC}\\) at \\(F.\\) The area of quadrilateral \\(AFED\\) is \\(45.\\) What is the area of \\(ABCD?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/22-dddcaa69c0.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 100 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 108 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 120 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 135 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 144 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let the square have side length \\(s\\).",
+        "Find the small triangle cut from \\(\\triangle ACD\\), then subtract it from half the square."
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc8/2018/22sol-ff7cbf523a.svg\" style=\"max-height: 12rem\"/>\n\nLet the square have side length \\(s,\\) and let \\(H\\) be the foot of the perpendicular from \\(F\\) to \\(\\overline{BC}.\\) The right triangles \\(CAB\\) and \\(CFH\\) are similar, so \\(CH=FH.\\) Also, triangles \\(BFH\\) and \\(BEC\\) are similar, giving \\[ \\frac{FH}{EC}=\\frac{BH}{BC}. \\] Since \\(EC=\\frac{s}{2},\\) \\(BC=s,\\) and \\(BH=s-CH=s-FH,\\) this becomes \\(\\frac{2FH}{s}=1-\\frac{FH}{s},\\) so \\(FH=CH=\\frac{s}{3}.\\)\n\nThus triangle \\(EFC\\) has base \\(EC=\\frac{s}{2}\\) and height \\(CH=\\frac{s}{3},\\) so its area is \\(\\frac{s^2}{12}.\\) Therefore \\[\\begin{aligned} [AFED]&=[\\triangle ACD]-[\\triangle EFC]\\\\ &=\\dfrac{s^2}{2}-\\dfrac{s^2}{12}\\\\ &=\\dfrac{5s^2}{12}. \\end{aligned}\\] Since this area is \\(45\\), we get \\(s^2=108\\), the area of the square.",
+      "sourceConcepts": [
+        "similarity",
+        "square (geometry)",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1770,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/22"
+    },
+    {
+      "id": "amc-8-2018-q23",
+      "number": 23,
+      "question": "From a regular octagon, a triangle is formed by connecting three randomly chosen vertices of the octagon. What is the probability that at least one of the sides of the triangle is also a side of the octagon?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/23-d3a7aacc18.svg\" style=\"max-height: 10rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{2}{7} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{5}{42} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{11}{14} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{5}{7} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{6}{7} \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use complementary counting: count triangles with no adjacent chosen vertices.",
+        "After fixing one vertex, count the positive gaps around the octagon between the chosen vertices."
+      ],
+      "solution": "Count the complement: triangles with no two chosen vertices adjacent. Starting at a chosen vertex, let \\(x,y,z\\) be the positive numbers of unchosen vertices in the three gaps. Then \\(x+y+z=5\\), which has \\(\\binom42=6\\) positive solutions.\n\nThere are \\(8\\) choices for the starting vertex, and each triangle is counted from each of its \\(3\\) vertices, so the complement contains \\(\\frac{8\\cdot6}{3}=16\\) triangles. Out of \\(\\binom83=56\\) total triangles, the desired probability is \\(1-\\frac{16}{56}=\\frac{5}{7}.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "complementary counting",
+        "stars and bars"
+      ],
+      "sourceDifficulty": 1650,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/23"
+    },
+    {
+      "id": "amc-8-2018-q24",
+      "number": 24,
+      "question": "In the cube \\(ABCDEFGH\\) with opposite vertices \\(C\\) and \\(E,\\) \\(J\\) and \\(I\\) are the midpoints of edges \\(\\overline{FB}\\) and \\(\\overline{HD},\\) respectively. Let \\(R\\) be the ratio of the area of the cross-section \\(EJCI\\) to the area of one of the faces of the cube. What is \\(R^2?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2018/24-489d0c1f16.svg\" style=\"max-height: 15rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{5}{4} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{4}{3} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{3}{2} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{25}{16} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{9}{4} \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The quadrilateral \\(EJCI\\) is a rhombus, so use its diagonals.",
+        "Express the diagonals \\(IJ\\) and \\(CE\\) in terms of the cube side length."
+      ],
+      "solution": "Allow \\(s\\) to represent the length of an edge of the cube. Noting that each side of the cross section is equal in length, we conclude that \\(EJCI\\) is a rhombus. The area of this rhombus can be calculated as \\(\\frac12 IJ\\cdot CE,\\) as the area of a rhombus is equal to half the product of its diagonals. Using the Pythagorean Theorem: \\[IJ=FH=s\\sqrt{2}.\\] Similarly, using the Pythagorean Theorem again lets us see that: \\[\\begin{align*}CE&=\\sqrt{AC^2+AE^2}\\\\&=\\sqrt{(s\\sqrt{2})^2+s^2}\\\\&=\\sqrt{2s^2+s^2}\\\\&=s\\sqrt{3}\\end{align*}\\] Therefore, \\[\\begin{align*}R&=\\dfrac{\\frac12 IJ\\cdot CE}{s^2}\\\\&=\\dfrac{\\frac12 s^2\\sqrt{2}\\sqrt{3}}{s^2}\\\\&=\\sqrt{\\dfrac32}\\end{align*}\\] Thus, \\(R^2=\\dfrac32,\\) and the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "cube geometry",
+        "rhombus",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1910,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/24"
+    },
+    {
+      "id": "amc-8-2018-q25",
+      "number": 25,
+      "question": "How many perfect cubes lie between \\(2^8+1\\) and \\(2^{18}+1,\\) inclusive?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 4 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 9 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 10 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 57 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 58 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "A perfect cube in the interval has the form \\(n^3\\).",
+        "Compare the bounds to \\(6^3,7^3,64^3,\\) and \\(65^3\\)."
+      ],
+      "solution": "Because \\(6^3=216&lt;257\\) and \\(257&lt;343=7^3\\), the smallest cube in the interval is \\(7^3\\). Also, \\(64^3=2^{18}&lt;2^{18}+1&lt;65^3\\), so the largest cube is \\(64^3\\).\n\nThe integer cube roots are therefore \\(7,8,\\ldots,64\\), a total of \\(64-7+1=58\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "perfect power",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2018/problem/25"
+    }
+  ]
+}

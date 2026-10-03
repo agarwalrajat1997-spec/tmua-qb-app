@@ -1,0 +1,1007 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "1991",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/solutions",
+  "problems": [
+    {
+      "id": "amc-8-1991-q1",
+      "number": 1,
+      "question": "What is the value of \\[ \\begin{aligned} &1{,}000{,}000{,}000{,}000 \\\\ &\\quad {}- 777{,}777{,}777{,}777? \\end{aligned} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(222{,}222{,}222{,}222\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(222{,}222{,}222{,}223\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(233{,}333{,}333{,}333\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(322{,}222{,}222{,}223\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(333{,}333{,}333{,}333\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Think of the amount you must add to \\(777{,}777{,}777{,}777\\) to reach \\(1{,}000{,}000{,}000{,}000\\)",
+        "Work from the right: the units digits must add to \\(10\\) with a carry, and every other column then adds to \\(10\\) with that carry"
+      ],
+      "solution": "Lining up the subtraction gives \\[ \\begin{aligned} &1{,}000{,}000{,}000{,}000 \\\\ &\\quad {}- 777{,}777{,}777{,}777 \\\\ &= 222{,}222{,}222{,}223. \\end{aligned} \\]\n\nEquivalently, to climb from \\(777{,}777{,}777{,}777\\) up to \\(1{,}000{,}000{,}000{,}000\\) you add \\(3\\) in the units place and \\(2\\) in each of the other eleven places.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "place value"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/1"
+    },
+    {
+      "id": "amc-8-1991-q2",
+      "number": 2,
+      "question": "What is the value of \\[\\frac{16+8}{4-2}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The fraction bar groups the whole numerator over the whole denominator",
+        "Simplify \\(16+8\\) and \\(4-2\\) separately before dividing"
+      ],
+      "solution": "\\[\\frac{16+8}{4-2} = \\frac{24}{2} = 12.\\]\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "order of operations",
+        "whole number operations"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/2"
+    },
+    {
+      "id": "amc-8-1991-q3",
+      "number": 3,
+      "question": "Two hundred thousand times two hundred thousand equals",
+      "options": [
+        {
+          "label": "A",
+          "content": "four hundred thousand"
+        },
+        {
+          "label": "B",
+          "content": "four million"
+        },
+        {
+          "label": "C",
+          "content": "forty thousand"
+        },
+        {
+          "label": "D",
+          "content": "four hundred million"
+        },
+        {
+          "label": "E",
+          "content": "forty billion"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Write two hundred thousand as \\(200{,}000\\)",
+        "Multiply the leading digits, then count the zeros: each factor has five zeros"
+      ],
+      "solution": "\\(200{,}000 \\times 200{,}000\\) \\(= 4 \\times 10^{10}\\) \\(= 40{,}000{,}000{,}000,\\) which is forty billion.\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "place value",
+        "exponent"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/3"
+    },
+    {
+      "id": "amc-8-1991-q4",
+      "number": 4,
+      "question": "If \\(991 + 993 + 995\\) \\(+ 997 + 999\\) \\(= 5000 - N,\\) then \\(N = \\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(25\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Each of the five numbers is just a little less than \\(1000\\)",
+        "Write each as \\(1000 - k;\\) the sum becomes \\(5000 - (9+7+5+3+1)\\)"
+      ],
+      "solution": "Since \\[ \\begin{aligned} &991+993+995 \\\\ &\\quad {}+997+999 \\\\ &= (1000-9)+(1000-7) \\\\ &\\quad {}+(1000-5) \\\\ &\\quad {}+(1000-3)+(1000-1) \\\\ &= 5000 - (9+7+5+3+1) \\\\ &= 5000 - 25, \\end{aligned} \\] we get \\(N = 25.\\)\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "arithmetic sequence"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/4"
+    },
+    {
+      "id": "amc-8-1991-q5",
+      "number": 5,
+      "question": "A “domino” is made up of two small squares:\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1991/5-747a4898b5.svg\" style=\"max-height:1.2rem;vertical-align:middle\"/>\n\n. Which of the “checkerboards” illustrated below CANNOT be covered exactly and completely by a whole number of non-overlapping dominoes?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3 \\times 4\\) <img src=\"/amc-past-paper-practice/assets/amc8/1991/5a-a7cfded203.svg\" style=\"max-height:3rem\"/>"
+        },
+        {
+          "label": "B",
+          "content": "\\(3 \\times 5\\) <img src=\"/amc-past-paper-practice/assets/amc8/1991/5b-5631fba97e.svg\" style=\"max-height:3rem\"/>"
+        },
+        {
+          "label": "C",
+          "content": "\\(4 \\times 4\\) <img src=\"/amc-past-paper-practice/assets/amc8/1991/5c-4ff9b1d017.svg\" style=\"max-height:3rem\"/>"
+        },
+        {
+          "label": "D",
+          "content": "\\(4 \\times 5\\) <img src=\"/amc-past-paper-practice/assets/amc8/1991/5d-4a178b7bd1.svg\" style=\"max-height:3rem\"/>"
+        },
+        {
+          "label": "E",
+          "content": "\\(6 \\times 3\\) <img src=\"/amc-past-paper-practice/assets/amc8/1991/5e-37c2f0e033.svg\" style=\"max-height:3rem\"/>"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each domino covers exactly two small squares, so focus on how many small squares each board has.",
+        "A board can be fully covered only if its total number of squares is even; find the number of squares in each board by multiplying its two dimensions."
+      ],
+      "solution": "Every domino covers exactly \\(2\\) squares, so any board that is completely covered by non-overlapping dominoes must contain an even number of small squares.\n\nCounting squares: \\(3 \\times 4 = 12,\\) \\(3 \\times 5 = 15,\\) \\(4 \\times 4 = 16,\\) \\(4 \\times 5 = 20,\\) and \\(6 \\times 3 = 18.\\) Only \\(3 \\times 5 = 15\\) is odd, so that board cannot be covered. (Each of the even boards has a side of even length and is easily tiled with dominoes.)\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "tiling",
+        "parity"
+      ],
+      "sourceDifficulty": 800,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/5"
+    },
+    {
+      "id": "amc-8-1991-q6",
+      "number": 6,
+      "question": "Which number in the array below is both the largest in its column and the smallest in its row? (Columns go up and down, rows go right and left.)\n\n\\[\\begin{array}{ccccc} 10 & 6 & 4 & 3 & 2 \\\\ 11 & 7 & 14 & 10 & 8 \\\\ 8 & 3 & 4 & 5 & 9 \\\\ 13 & 4 & 15 & 12 & 1 \\\\ 8 & 2 & 5 & 9 & 3 \\end{array}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "First find the largest number in each of the five columns",
+        "Then check which of those column-maxima is also the smallest number in its own row"
+      ],
+      "solution": "The largest entry in each column is \\(13\\) (column \\(1\\)), \\(7\\) (column \\(2\\)), \\(15\\) (column \\(3\\)), \\(12\\) (column \\(4\\)), and \\(9\\) (column \\(5\\)).\n\nOf these, only \\(7\\) is the smallest number in its own row (row \\(2\\) is \\(11,\\) \\(7,\\) \\(14,\\) \\(10,\\) \\(8\\)).\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "systematic listing",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 800,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/6"
+    },
+    {
+      "id": "amc-8-1991-q7",
+      "number": 7,
+      "question": "The value of \\[\\tiny\\frac{(487{,}000)(12{,}027{,}300) + (9{,}621{,}001)(487{,}000)}{(19{,}367)(0.05)}\\] is closest to",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10{,}000{,}000\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(100{,}000{,}000\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1{,}000{,}000{,}000\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10{,}000{,}000{,}000\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100{,}000{,}000{,}000\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The numerator shares a common factor of \\(487{,}000\\)",
+        "Round each number to a single leading digit before dividing, for example \\(487{,}000 \\approx 500{,}000\\) and \\((19{,}367)(0.05) \\approx 1000\\)"
+      ],
+      "solution": "Factor the numerator: \\(487{,}000\\) \\(\\cdot\\, (12{,}027{,}300 + 9{,}621{,}001).\\)\n\nRounding to leading digits, this is about \\(500{,}000\\) \\(\\times (10{,}000{,}000 + 10{,}000{,}000)\\) \\(= 500{,}000 \\times 2\\) \\(\\times 10^{7}.\\) The denominator is about \\(20{,}000 \\times 0.05 = 1000.\\)\n\nSo the value is roughly \\(\\dfrac{500{,}000 \\times 2 \\times 10^{7}}{1000}\\) \\(= 10^{10}\\) \\(= 10{,}000{,}000{,}000.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "estimation",
+        "distributive property"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/7"
+    },
+    {
+      "id": "amc-8-1991-q8",
+      "number": 8,
+      "question": "What is the largest quotient that can be formed using two numbers chosen from the set \\(\\{-24, -3, -2, 1, 2, 8\\}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-24\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A quotient is largest when it is positive and large in size",
+        "A negative divided by a negative is positive; try the largest-magnitude negative over the smallest-magnitude negative"
+      ],
+      "solution": "For a large quotient it should be positive, so use two positive numbers or two negative numbers.\n\nBest positive pair: \\(\\dfrac{8}{1} = 8.\\) Best negative pair: \\(\\dfrac{-24}{-2} = 12.\\) The larger is \\(12.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "optimization",
+        "casework"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/8"
+    },
+    {
+      "id": "amc-8-1991-q9",
+      "number": 9,
+      "question": "How many whole numbers from \\(1\\) through \\(46\\) are divisible by either \\(3\\) or \\(5\\) or both?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(27\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count the multiples of \\(3\\) and the multiples of \\(5\\) separately",
+        "Numbers divisible by both \\(3\\) and \\(5\\) are multiples of \\(15\\) and get counted twice, so subtract them once"
+      ],
+      "solution": "There are \\(15\\) multiples of \\(3\\) and \\(9\\) multiples of \\(5\\) up to \\(46.\\) The \\(3\\) multiples of \\(15\\) (namely \\(15,\\) \\(30,\\) \\(45\\)) were counted twice.\n\nBy inclusion-exclusion, the count is \\(15 + 9 - 3 = 21.\\)\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "inclusion-exclusion",
+        "multiple"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/9"
+    },
+    {
+      "id": "amc-8-1991-q10",
+      "number": 10,
+      "question": "The area in square units of the region enclosed by parallelogram \\(ABCD\\) is\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1991/10-0c34fce69d.svg\" style=\"max-height:11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Take \\(\\overline{BC}\\) as the base; it is horizontal from \\(B(0,2)\\) to \\(C(4,2)\\)",
+        "The area is base times height, where the height is the vertical distance between the two horizontal sides"
+      ],
+      "solution": "Side \\(BC\\) runs from \\((0,2)\\) to \\((4,2),\\) so the base is \\(4.\\) The opposite side \\(AD\\) lies on the \\(x\\)-axis, so the height is \\(2.\\)\n\nThe area is \\(4 \\times 2 = 8.\\)\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "parallelogram",
+        "area"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/10"
+    },
+    {
+      "id": "amc-8-1991-q11",
+      "number": 11,
+      "question": "There are several sets of three different numbers whose sum is \\(15\\) which can be chosen from \\(\\{1, 2, 3, 4, 5, 6, 7, 8, 9\\}.\\) How many of these sets contain a \\(5?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "If \\(5\\) is one of the three numbers, the other two must add to \\(10\\)",
+        "List the pairs of different numbers from \\(\\{1,2,3,4,6,7,8,9\\}\\) that sum to \\(10\\)"
+      ],
+      "solution": "With \\(5\\) chosen, the other two different numbers must sum to \\(10.\\) The pairs are \\(1+9,\\) \\(2+8,\\) \\(3+7,\\) \\(4+6,\\) giving \\(4\\) sets.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "counting pairs",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/11"
+    },
+    {
+      "id": "amc-8-1991-q12",
+      "number": 12,
+      "question": "If \\[ \\begin{aligned} &\\frac{2+3+4}{3} \\\\ &= \\frac{1990+1991+1992}{N}, \\end{aligned} \\] then \\(N = \\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1990\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1991\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1992\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Simplify the left side first",
+        "The sum of three consecutive integers divided by the middle one equals \\(3\\)"
+      ],
+      "solution": "The left side is \\(\\dfrac{9}{3} = 3.\\) The right side is \\(\\dfrac{5973}{N},\\) and setting it equal to \\(3\\) gives \\(N = 1991.\\)\n\nEquivalently, \\((k-1) + k + (k+1) = 3k,\\) so dividing by \\(3\\) leaves the middle term. Here the middle term is \\(1991.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "mean"
+      ],
+      "sourceDifficulty": 820,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/12"
+    },
+    {
+      "id": "amc-8-1991-q13",
+      "number": 13,
+      "question": "How many zeros are at the end of the product \\[ \\begin{aligned} &25 \\times 25 \\times 25 \\times 25 \\\\ &\\quad {}\\times 25 \\times 25 \\times 25 \\\\ &\\quad {}\\times 8 \\times 8 \\times 8? \\end{aligned} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A trailing zero comes from a factor of \\(10 = 2 \\times 5\\)",
+        "Count the total factors of \\(2\\) and of \\(5;\\) the number of trailing zeros is the smaller count"
+      ],
+      "solution": "Since \\(25 = 5^2,\\) the seven \\(25\\)’s give \\(5^{14}.\\) Since \\(8 = 2^3,\\) the three \\(8\\)’s give \\(2^9.\\)\n\nThe number of trailing zeros is \\(\\min(14, 9) = 9.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "trailing zeros",
+        "prime factorization"
+      ],
+      "sourceDifficulty": 1000,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/13"
+    },
+    {
+      "id": "amc-8-1991-q14",
+      "number": 14,
+      "question": "Several students are competing in a series of three races. A student earns \\(5\\) points for winning a race, \\(3\\) points for finishing second, and \\(1\\) point for finishing third. There are no ties. What is the smallest number of points that a student must earn in the three races to be guaranteed of earning more points than any other student?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "To be guaranteed the lead, plan for the worst case where another student does as well as possible",
+        "Check the attainable three-race totals in increasing order; for each one, see whether the remaining places allow a rival to tie or exceed it"
+      ],
+      "solution": "A total of \\(11\\) (for example \\(5+5+1\\)) does not guarantee first place, since another student could also reach \\(11.\\)\n\nBut if one student scores \\(5+5+3 = 13,\\) the remaining places give every other student at most \\(3+3+5 = 11.\\) So \\(13\\) points guarantees the lead.\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "extremal argument"
+      ],
+      "sourceDifficulty": 1090,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/14"
+    },
+    {
+      "id": "amc-8-1991-q15",
+      "number": 15,
+      "question": "All six sides of a rectangular solid were rectangles. A one-foot cube was cut out of the rectangular solid as shown. The total number of square feet in the surface of the new solid is how many more or less than that of the original solid?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1991/15-f6da099596.svg\" style=\"max-height:12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\) less"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\) less"
+        },
+        {
+          "label": "C",
+          "content": "the same"
+        },
+        {
+          "label": "D",
+          "content": "\\(1\\) more"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\) more"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Cutting the cube removes some faces that were on the surface but uncovers new ones; compare the two amounts",
+        "The cube’s top, front, and back faces were on the surface (\\(3\\) square feet removed); the notch’s floor and its two side walls become new surface (\\(3\\) square feet added)"
+      ],
+      "solution": "The removed cube had three faces on the surface of the solid (top, front, and back), so \\(3\\) square feet of surface are removed.\n\nCutting it out exposes three new faces (the floor of the notch and its two side walls), adding \\(3\\) square feet. The surface area is unchanged.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "surface area",
+        "3D geometry"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/15"
+    },
+    {
+      "id": "amc-8-1991-q16",
+      "number": 16,
+      "question": "The \\(16\\) squares on a piece of paper are numbered as shown in the diagram. While lying on a table, the paper is folded in half four times in the following sequence:\n\n\\((1)\\) fold the top half over the bottom half;\n\n\\((2)\\) fold the bottom half over the top half;\n\n\\((3)\\) fold the right half over the left half;\n\n\\((4)\\) fold the left half over the right half.\n\nWhich numbered square is on top after step \\(4?\\)\n\n\\[\\begin{array}{|c|c|c|c|} \\hline 1 & 2 & 3 & 4 \\\\ \\hline 5 & 6 & 7 & 8 \\\\ \\hline 9 & 10 & 11 & 12 \\\\ \\hline 13 & 14 & 15 & 16 \\\\ \\hline \\end{array}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(16\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "After each fold, track which squares end up on the bottom (or top) of the stack",
+        "Folds \\(1\\) and \\(2\\) leave the middle rows; folds \\(3\\) and \\(4\\) leave the middle columns, and the final left-over-right fold flips square \\(9\\) to the top"
+      ],
+      "solution": "Fold \\(1\\) (top over bottom) leaves squares \\(9\\text{–}16\\) on the bottom. Fold \\(2\\) (bottom over top) leaves \\(9\\text{–}12\\) on the bottom. Fold \\(3\\) (right over left) leaves \\(9\\) and \\(10\\) on the bottom.\n\nFold \\(4\\) (left over right) puts \\(10\\) on the bottom and brings \\(9\\) to the top.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "paper folding",
+        "process simulation"
+      ],
+      "sourceDifficulty": 1180,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/16"
+    },
+    {
+      "id": "amc-8-1991-q17",
+      "number": 17,
+      "question": "An auditorium with \\(20\\) rows of seats has \\(10\\) seats in the first row. Each successive row has one more seat than the previous row. If students taking an exam are permitted to sit in any row, but not next to another student in that row, then the maximum number of students that can be seated for an exam is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(150\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(180\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(200\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(400\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(460\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "In a row of \\(n\\) seats, the most students with no two adjacent is \\(\\left\\lceil \\frac{n}{2} \\right\\rceil\\)",
+        "Row \\(k\\) has \\(9+k\\) seats; add \\(\\left\\lceil \\frac{9+k}{2} \\right\\rceil\\) over the \\(20\\) rows"
+      ],
+      "solution": "Row \\(k\\) has \\(9+k\\) seats, so it holds \\(\\left\\lceil \\frac{9+k}{2} \\right\\rceil\\) students. For rows \\(1\\) through \\(20\\) (seats \\(10\\) through \\(29\\)) the maxima are \\(5,\\) \\(6,\\) \\(6,\\) \\(7,\\) \\(7,\\) \\(8,\\) \\(8,\\) \\(\\ldots,\\) \\(14,\\) \\(14,\\) \\(15.\\)\n\nThese sum to \\(200.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "arithmetic sequence",
+        "floor and ceiling functions"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/17"
+    },
+    {
+      "id": "amc-8-1991-q18",
+      "number": 18,
+      "question": "The vertical axis indicates the number of employees, but the scale was accidentally omitted from this graph. What percent of the employees at the Gauss Company have worked there for \\(5\\) years or more?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1991/18-4c25898b1b.svg\" style=\"max-height:14rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\%\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(23\\dfrac13\\%\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30\\%\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(42\\dfrac67\\%\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(50\\%\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Since the vertical scale is unknown, work with the number of X’s rather than any value",
+        "Divide the X’s over years \\(5\\) through \\(10\\) by the total number of X’s"
+      ],
+      "solution": "No matter the missing scale, each X represents the same number of employees. There are \\(9\\) X’s over years \\(5\\) through \\(10,\\) and \\(30\\) X’s in all.\n\nSo the fraction is \\(\\dfrac{9}{30} = 30\\%.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "percentage"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/18"
+    },
+    {
+      "id": "amc-8-1991-q19",
+      "number": 19,
+      "question": "The average (arithmetic mean) of \\(10\\) different positive whole numbers is \\(10.\\) The largest possible value of any of these numbers is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(55\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(91\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The ten numbers must sum to \\(10 \\times 10 = 100\\)",
+        "To make one number as large as possible, make the other nine as small as possible: \\(1, 2, \\ldots, 9\\)"
+      ],
+      "solution": "The ten numbers sum to \\(100.\\) To maximize one of them, the other nine (all different positive whole numbers) should be as small as possible: \\(1 + 2 + \\cdots + 9 = 45.\\)\n\nThe largest number is then \\(100 - 45 = 55.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "mean",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/19"
+    },
+    {
+      "id": "amc-8-1991-q20",
+      "number": 20,
+      "question": "In the addition problem shown, each digit has been replaced by a letter. If different letters represent different digits, then \\(C = \\)\n\n\\[\\begin{array}{cccc} & A & B & C \\\\ & & A & B \\\\ + & & & A \\\\ \\hline & 3 & 0 & 0 \\end{array}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Write the sum in terms of \\(A, B, C\\)",
+        "\\(100A + 10B + C\\) \\(+ 10A + B + A\\) \\(= 111A + 11B + C\\) \\(= 300\\)"
+      ],
+      "solution": "The three numbers add to \\(111A + 11B + C = 300.\\) Since \\(A = 1\\) is too small and \\(A \\ge 3\\) is too large, \\(A = 2.\\)\n\nThen \\(11B + C = 78,\\) which forces \\(B = 7\\) and \\(C = 1.\\) So \\(C = 1.\\)\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "cryptarithm",
+        "place value"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/20"
+    },
+    {
+      "id": "amc-8-1991-q21",
+      "number": 21,
+      "question": "For every \\(3^\\circ\\) rise in temperature, the volume of a certain gas expands by \\(4\\) cubic centimeters. If the volume of the gas is \\(24\\) cubic centimeters when the temperature is \\(32^\\circ,\\) what was the volume of the gas in cubic centimeters when the temperature was \\(20^\\circ?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(40\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The temperature dropped from \\(32^\\circ\\) to \\(20^\\circ,\\) a change of \\(12^\\circ\\)",
+        "Each \\(3^\\circ\\) drop shrinks the volume by \\(4\\) cubic centimeters"
+      ],
+      "solution": "From \\(32^\\circ\\) to \\(20^\\circ\\) is a \\(12^\\circ\\) decrease, which is \\(4\\) steps of \\(3^\\circ.\\)\n\nThe volume decreases by \\(4 \\times 4 = 16\\) cubic centimeters, from \\(24\\) down to \\(24 - 16 = 8.\\)\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "rate",
+        "work backwards"
+      ],
+      "sourceDifficulty": 950,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/21"
+    },
+    {
+      "id": "amc-8-1991-q22",
+      "number": 22,
+      "question": "Each spinner is divided into \\(3\\) equal parts. The results obtained from spinning the two spinners are multiplied. What is the probability that this product is an even number?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1991/22-4d9e38f16d.svg\" style=\"max-height:8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac23\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac79\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A product is even unless both spun numbers are odd",
+        "Find the probability of an odd product (odd times odd), then subtract from \\(1\\)"
+      ],
+      "solution": "The product is odd only when both numbers are odd. The first spinner is odd (\\(1\\) or \\(3\\)) with probability \\(\\dfrac23,\\) and the second is odd (\\(5\\)) with probability \\(\\dfrac13.\\)\n\nSo the product is odd with probability \\(\\dfrac23 \\times \\dfrac13 = \\dfrac29,\\) and even with probability \\(1 - \\dfrac29 = \\dfrac79.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "complementary probability",
+        "parity"
+      ],
+      "sourceDifficulty": 1000,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/22"
+    },
+    {
+      "id": "amc-8-1991-q23",
+      "number": 23,
+      "question": "The Pythagoras High School band has \\(100\\) female and \\(80\\) male members. The Pythagoras High School orchestra has \\(80\\) female and \\(100\\) male members. There are \\(60\\) females who are members in both band and orchestra. Altogether, there are \\(230\\) students who are in either band or orchestra or both. The number of males in the band who are NOT in the orchestra is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(70\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "First find how many females are in at least one group, using \\(100 + 80 - 60\\)",
+        "Subtract the females from the \\(230\\) total to get the males in at least one group, then use inclusion–exclusion to find how many males are in both groups"
+      ],
+      "solution": "Females in band or orchestra: \\(100 + 80 - 60 = 120.\\) So males in at least one group: \\(230 - 120 = 110.\\)\n\nWith \\(80\\) males in band and \\(100\\) in orchestra, the males in both are \\(80 + 100 - 110 = 70.\\) Hence males in band but not orchestra: \\(80 - 70 = 10.\\)\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "inclusion-exclusion",
+        "Venn Diagram"
+      ],
+      "sourceDifficulty": 1200,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/23"
+    },
+    {
+      "id": "amc-8-1991-q24",
+      "number": 24,
+      "question": "A cube of edge \\(3\\) cm is cut into \\(N\\) smaller cubes, not all the same size. If the edge of each of the smaller cubes is a whole number of centimeters, then \\(N = \\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The smaller cubes must have whole-number edges, so each is edge \\(1\\) or edge \\(2\\)",
+        "Only one edge-\\(2\\) cube fits; the rest are unit cubes filling the remaining volume \\(27 - 8\\)"
+      ],
+      "solution": "The \\(3 \\times 3 \\times 3\\) cube has volume \\(27.\\) Since the cubes are smaller and have whole-number edge lengths, their edges are \\(1\\) or \\(2\\). Two edge-\\(2\\) cubes cannot be disjoint inside the original cube: separating them would require a total span of at least \\(4\\) in some direction. Thus at most one edge-\\(2\\) cube fits.\n\nThe remaining \\(27 - 8 = 19\\) of volume is filled by \\(19\\) unit cubes. That is \\(1 + 19 = 20\\) cubes.\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "cube geometry",
+        "volume"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/24"
+    },
+    {
+      "id": "amc-8-1991-q25",
+      "number": 25,
+      "question": "An equilateral triangle is originally painted black. Each time the triangle is changed, the middle fourth of each black triangle turns white. After five changes, what fractional part of the original area of the black triangle remains black?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1991/25-5aaf54214c.svg\" style=\"max-height:5rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{1024}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{15}{64}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{243}{1024}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{81}{256}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "After one change the middle fourth turns white, so \\(\\dfrac34\\) of the black area remains",
+        "Each change multiplies the black area by \\(\\dfrac34,\\) so after five changes multiply by \\(\\left(\\dfrac34\\right)^5\\)"
+      ],
+      "solution": "Each change leaves \\(\\dfrac34\\) of the current black area black. After five changes the black fraction is \\[\\left(\\dfrac34\\right)^5 = \\dfrac{243}{1024}.\\]\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "geometric sequence",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1991/problem/25"
+    }
+  ]
+}

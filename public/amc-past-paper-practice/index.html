@@ -6,9 +6,21 @@
     <title>AMC 8 & AMC 10 Past Papers by Topic | Thriving Scholars</title>
     <meta
       name="description"
-      content="Browse 2,325 AMC 8 and AMC 10 past-paper problems by topic, paper and difficulty, with credited links to each question and explanation."
+      content="Practise 2,325 AMC 8 and AMC 10 past-paper problems by topic, paper and difficulty, with each question, answer choice and worked solution shown together."
     />
     <meta name="robots" content="noindex,nofollow" />
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["\\(", "\\)"], ["$", "$"]],
+          displayMath: [["\\[", "\\]"], ["$$", "$$"]],
+        },
+        options: {
+          skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+        },
+      };
+    </script>
+    <script defer src="/shared/mathjax-tex-mml-chtml.js?v=3"></script>
     <style>
       :root {
         --wine: #7f1d25;
@@ -124,6 +136,67 @@
       .source-button:hover { background: #ffd66f; }
       .secondary-link { display: block; margin-top: 12px; color: #fff; font-size: 13px; text-align: center; }
 
+      .problem-body { display: block; padding: 22px; }
+      .classification {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: start;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+      .classification-meta { display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 9px; min-width: 300px; }
+      .classification-meta .detail { min-height: 0; padding: 11px 13px; }
+      .content-status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 150px;
+        color: var(--muted);
+        font-weight: 750;
+      }
+      .content-status::before {
+        width: 20px;
+        height: 20px;
+        content: "";
+        border: 3px solid #ead9cb;
+        border-top-color: var(--wine);
+        border-radius: 999px;
+        animation: spin 0.85s linear infinite;
+      }
+      .content-status.error { display: block; min-height: 0; margin-top: 20px; padding: 16px; border: 1px solid #e5b6b9; border-radius: 14px; background: #fff4f4; color: var(--wine); }
+      .content-status.error::before { display: none; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .content-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(330px, 0.9fr);
+        gap: 18px;
+        align-items: start;
+        margin-top: 22px;
+      }
+      .content-panel { min-width: 0; padding: 21px; border: 1px solid var(--line); border-radius: 17px; background: #fff; }
+      .solution-panel { background: #fffaf0; border-color: #e5c76e; }
+      .section-label { margin: 0 0 13px; color: var(--wine); font-size: 12px; font-weight: 950; letter-spacing: 0.11em; text-transform: uppercase; }
+      .rich-content { min-width: 0; overflow-wrap: anywhere; color: #201d1b; font-family: Georgia, "Times New Roman", serif; font-size: 18px; line-height: 1.62; }
+      .rich-content p:first-child { margin-top: 0; }
+      .rich-content p:last-child { margin-bottom: 0; }
+      .rich-content img { display: block; width: auto; max-width: 100%; height: auto; margin: 16px auto; border-radius: 8px; }
+      .rich-content table { width: 100%; border-collapse: collapse; }
+      .rich-content td, .rich-content th { padding: 7px; border: 1px solid var(--line); }
+      .choices { display: grid; gap: 9px; margin-top: 20px; }
+      .choice { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 10px; align-items: start; padding: 11px 13px; border: 1px solid var(--line); border-radius: 12px; background: #fffdf9; }
+      .choice-label { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 999px; background: #f3ebe3; color: var(--wine); font-weight: 950; }
+      .choice .rich-content { font-size: 17px; line-height: 1.45; }
+      .answer-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+      .answer-badge { flex: 0 0 auto; padding: 8px 12px; border-radius: 999px; background: #def2e5; border: 1px solid #a9d8b9; color: var(--green); font-weight: 950; }
+      .hints { margin-top: 18px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+      .hints summary { cursor: pointer; padding: 12px 14px; color: var(--wine); font-weight: 900; }
+      .hints-list { margin: 0; padding: 0 17px 14px 38px; }
+      .hints-list li + li { margin-top: 9px; }
+      .credit-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #eadbc2; color: var(--muted); font-size: 12px; }
+      .credit-row a { flex: 0 0 auto; font-weight: 850; }
+
       .navigation { display: grid; grid-template-columns: auto minmax(220px, 1fr) auto; align-items: center; gap: 12px; margin: 18px 0; }
       .navigation button { padding: 10px 18px; background: #fff; }
       .navigation button:disabled { opacity: 0.42; cursor: default; }
@@ -140,7 +213,9 @@
         .hero { grid-template-columns: 1fr; }
         .countcard { width: min(100%, 340px); }
         .filters { grid-template-columns: 1fr 1fr; }
-        .problem-body { grid-template-columns: 1fr; }
+        .classification { grid-template-columns: 1fr; }
+        .classification-meta { min-width: 0; }
+        .content-grid { grid-template-columns: 1fr; }
       }
       @media (max-width: 560px) {
         .shell { width: min(100% - 20px, 1180px); padding-top: 10px; }
@@ -155,7 +230,10 @@
         .problem-head { padding: 18px 15px; }
         .paper-chip { display: none; }
         .problem-body { padding: 18px 15px; }
-        .detail-grid { grid-template-columns: 1fr; }
+        .detail-grid, .classification-meta { grid-template-columns: 1fr; }
+        .content-panel { padding: 17px 14px; }
+        .rich-content { font-size: 17px; }
+        .credit-row { align-items: flex-start; flex-direction: column; }
         .navigation { grid-template-columns: 1fr 1fr; }
         .jump { grid-column: 1 / -1; grid-row: 2; }
         .summary { align-items: flex-start; }
@@ -177,7 +255,7 @@
           <p class="eyebrow">AMC 8 + AMC 10 topic index</p>
           <h1>Find the right past-paper problem in seconds.</h1>
           <p class="lede">
-            Filter 2,325 indexed AMC problems by paper, topic and difficulty. Each result opens the exact question and explanation on a credited contest archive.
+            Filter 2,325 AMC problems by paper, topic and difficulty, then study the full question, all five choices and worked solution together without leaving this page.
           </p>
         </div>
         <aside class="countcard" aria-label="Archive size">
@@ -252,21 +330,40 @@
           <span class="paper-chip" id="paper-chip"></span>
         </header>
         <div class="problem-body">
-          <div>
+          <div class="classification">
+            <div>
             <p class="topic-title">Topic classification</p>
             <div class="chips" id="topic-chips"></div>
-            <div class="detail-grid">
+            </div>
+            <div class="classification-meta">
               <div class="detail"><b>Concepts in this problem</b><span id="concepts"></span></div>
               <div class="detail"><b>Useful techniques</b><span id="techniques"></span></div>
             </div>
           </div>
-          <aside class="source-box">
-            <span class="badge">Credited source</span>
-            <h3>Attempt the original problem</h3>
-            <p>Open the exact contest question, then review the answer and explanation at the authorised archive.</p>
-            <a class="source-button" id="source-link" target="_blank" rel="noopener noreferrer">Open question + explanation ↗</a>
-            <a class="secondary-link" id="compendium-link" target="_blank" rel="noopener noreferrer">Open the full compendium PDF</a>
-          </aside>
+
+          <div id="content-status" class="content-status" role="status">Loading the question and worked solution…</div>
+          <div id="content-grid" class="content-grid" hidden>
+            <section class="content-panel" aria-labelledby="question-label">
+              <p class="section-label" id="question-label">Question</p>
+              <div class="rich-content" id="question-content"></div>
+              <div class="choices" id="choices" aria-label="Answer choices"></div>
+              <details class="hints" id="hints" hidden>
+                <summary id="hints-summary">Show hints</summary>
+                <ol class="hints-list" id="hints-list"></ol>
+              </details>
+            </section>
+            <section class="content-panel solution-panel" aria-labelledby="solution-label">
+              <div class="answer-row">
+                <p class="section-label" id="solution-label">Worked solution</p>
+                <span class="answer-badge" id="answer"></span>
+              </div>
+              <div class="rich-content" id="solution-content"></div>
+              <div class="credit-row">
+                <span>Problem © MAA; worked explanation © Expii / LIVE. Reproduced with permission.</span>
+                <a id="source-link" target="_blank" rel="noopener noreferrer">View credited source ↗</a>
+              </div>
+            </section>
+          </div>
         </div>
       </article>
 
@@ -277,7 +374,7 @@
       </nav>
 
       <footer class="rights-note">
-        <strong>Source and rights note.</strong> AMC contest material is owned by the Mathematical Association of America. Thriving Scholars provides the independent topic and difficulty index only. Questions and explanations open on the credited host; this page does not bulk-copy or frame third-party contest content. Thriving Scholars is not affiliated with or endorsed by MAA, AoPS or LIVE by Po-Shen Loh.
+        <strong>Source and rights note.</strong> Problems, answer choices and original figures © Mathematical Association of America; written solutions, hints, concept tags and difficulty ratings © Expii, Inc. / LIVE by Po-Shen Loh. Reproduced with permission. Topic organisation is curated by Thriving Scholars. Thriving Scholars is not affiliated with or endorsed by the Mathematical Association of America.
       </footer>
     </main>
 
@@ -288,7 +385,8 @@
         [
           "mode-topic", "mode-paper", "topic-field", "paper-field", "topic", "paper", "difficulty", "range", "search",
           "summary", "reset", "loading", "empty", "problem", "contest-label", "problem-title", "paper-chip", "topic-chips",
-          "concepts", "techniques", "source-link", "compendium-link", "navigation", "previous", "next", "position", "jump"
+          "concepts", "techniques", "content-status", "content-grid", "question-content", "choices", "hints", "hints-summary",
+          "hints-list", "answer", "solution-content", "source-link", "navigation", "previous", "next", "position", "jump"
         ].map((id) => [id, document.getElementById(id)])
       );
 
@@ -296,7 +394,16 @@
       let results = [];
       let position = 0;
       let mode = "topic";
+      let renderToken = 0;
+      const paperCache = new Map();
       const params = new URLSearchParams(location.search);
+
+      const ALLOWED_RICH_TAGS = new Set([
+        "b", "strong", "i", "em", "br", "p", "div", "span", "ul", "ol", "li",
+        "table", "thead", "tbody", "tr", "td", "th", "img", "sup", "sub"
+      ]);
+      const DISCARDED_TAGS = new Set(["script", "style", "template", "iframe", "object", "embed", "link", "meta"]);
+      const LOCAL_ASSET_PREFIX = "/amc-past-paper-practice/assets/";
 
       function checkedContests() {
         return [...document.querySelectorAll('input[name="contest"]:checked')].map((input) => input.value);
@@ -382,13 +489,166 @@
         return values && values.length ? values.join(" · ") : fallback;
       }
 
+      function contentFile(problem) {
+        const contestSlug = problem.contest === "AMC 8" ? "amc8" : "amc10";
+        return `/amc-past-paper-practice/content/${contestSlug}-${String(problem.paper).toLowerCase()}.json`;
+      }
+
+      function cleanRichNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) return document.createTextNode(node.nodeValue || "");
+        if (node.nodeType !== Node.ELEMENT_NODE) return null;
+
+        const tag = node.tagName.toLowerCase();
+        if (DISCARDED_TAGS.has(tag)) return null;
+
+        if (!ALLOWED_RICH_TAGS.has(tag)) {
+          const unwrapped = document.createDocumentFragment();
+          [...node.childNodes].forEach((child) => {
+            const safeChild = cleanRichNode(child);
+            if (safeChild) unwrapped.append(safeChild);
+          });
+          return unwrapped;
+        }
+
+        if (tag === "img") {
+          const source = node.getAttribute("src") || "";
+          if (!source.startsWith(LOCAL_ASSET_PREFIX) || source.includes("..")) return null;
+          const image = document.createElement("img");
+          image.src = source;
+          image.alt = (node.getAttribute("alt") || "AMC problem diagram").slice(0, 240);
+          image.loading = "lazy";
+          image.decoding = "async";
+          ["width", "height"].forEach((attribute) => {
+            const value = node.getAttribute(attribute);
+            if (value && /^\d{1,4}$/.test(value)) image.setAttribute(attribute, value);
+          });
+          return image;
+        }
+
+        const element = document.createElement(tag);
+        [...node.childNodes].forEach((child) => {
+          const safeChild = cleanRichNode(child);
+          if (safeChild) element.append(safeChild);
+        });
+        return element;
+      }
+
+      function safeRichFragment(value) {
+        const template = document.createElement("template");
+        template.innerHTML = String(value ?? "").replace(/\r\n?|\n/g, "<br>");
+        const fragment = document.createDocumentFragment();
+        [...template.content.childNodes].forEach((node) => {
+          const safeNode = cleanRichNode(node);
+          if (safeNode) fragment.append(safeNode);
+        });
+        return fragment;
+      }
+
+      function renderRich(target, value) {
+        target.replaceChildren(safeRichFragment(value));
+      }
+
+      function typesetRich(nodes, attempt = 0) {
+        const mathJax = window.MathJax;
+        if (mathJax && typeof mathJax.typesetPromise === "function") {
+          try {
+            if (typeof mathJax.typesetClear === "function") mathJax.typesetClear(nodes);
+            mathJax.typesetPromise(nodes).catch(() => {});
+          } catch (_) {}
+          return;
+        }
+        if (attempt < 40) window.setTimeout(() => typesetRich(nodes, attempt + 1), 100);
+      }
+
+      function loadPaper(problem) {
+        const file = contentFile(problem);
+        if (!paperCache.has(file)) {
+          const request = fetch(file)
+            .then((response) => {
+              if (!response.ok) throw new Error(`Question file returned ${response.status}`);
+              return response.json();
+            })
+            .then((data) => {
+              const records = Array.isArray(data) ? data : data.problems || data.records || data.questions;
+              if (!Array.isArray(records)) throw new Error("Question file has an unexpected format");
+              return new Map(records.map((record) => [record.id, record]));
+            })
+            .catch((error) => {
+              paperCache.delete(file);
+              throw error;
+            });
+          paperCache.set(file, request);
+        }
+        return paperCache.get(file);
+      }
+
+      async function renderInlineContent(problem, token) {
+        els["content-grid"].hidden = true;
+        els["content-status"].hidden = false;
+        els["content-status"].className = "content-status";
+        els["content-status"].textContent = "Loading the question and worked solution…";
+
+        try {
+          const paper = await loadPaper(problem);
+          if (token !== renderToken) return;
+          const record = paper.get(problem.id);
+          if (!record) throw new Error("This problem is missing from its paper file");
+          if (!Array.isArray(record.options) || record.options.length !== 5) throw new Error("Answer choices are incomplete");
+
+          renderRich(els["question-content"], record.question);
+          els.choices.replaceChildren(...record.options.map((choice, index) => {
+            const row = document.createElement("div");
+            row.className = "choice";
+            const label = document.createElement("span");
+            label.className = "choice-label";
+            label.textContent = String(choice.label || String.fromCharCode(65 + index)).slice(0, 2);
+            const content = document.createElement("div");
+            content.className = "rich-content";
+            renderRich(content, choice.content);
+            row.append(label, content);
+            return row;
+          }));
+
+          const hints = Array.isArray(record.hints) ? record.hints.filter(Boolean) : [];
+          els.hints.hidden = hints.length === 0;
+          els.hints.open = false;
+          els["hints-summary"].textContent = `Show ${hints.length} hint${hints.length === 1 ? "" : "s"}`;
+          els["hints-list"].replaceChildren(...hints.map((hint) => {
+            const item = document.createElement("li");
+            item.className = "rich-content";
+            renderRich(item, hint);
+            return item;
+          }));
+
+          els.answer.textContent = `Answer ${String(record.answer || "").toUpperCase()}`;
+          renderRich(els["solution-content"], record.solution);
+          const creditedUrl = /^https:\/\//i.test(record.sourceUrl || "") ? record.sourceUrl : problem.sourceUrl;
+          els["source-link"].href = creditedUrl;
+
+          els["content-status"].hidden = true;
+          els["content-grid"].hidden = false;
+          typesetRich([els["question-content"], els.choices, els["hints-list"], els["solution-content"]]);
+        } catch (error) {
+          if (token !== renderToken) return;
+          els["content-grid"].hidden = true;
+          els["content-status"].hidden = false;
+          els["content-status"].className = "content-status error";
+          els["content-status"].textContent = `The inline question could not load: ${error.message}. Please refresh and try again.`;
+        }
+      }
+
       function render() {
+        const token = ++renderToken;
         els.loading.hidden = true;
         els.summary.innerHTML = `<strong>${results.length.toLocaleString("en-GB")}</strong> matching problem${results.length === 1 ? "" : "s"}`;
         els.empty.hidden = results.length > 0;
         els.problem.hidden = results.length === 0;
         els.navigation.hidden = results.length === 0;
-        if (!results.length) return;
+        if (!results.length) {
+          els["content-grid"].hidden = true;
+          els["content-status"].hidden = true;
+          return;
+        }
 
         const problem = results[position];
         els["contest-label"].textContent = `${problem.contest} past paper · ${problem.difficulty}`;
@@ -402,16 +662,13 @@
         }));
         els.concepts.textContent = textOrFallback(problem.concepts, "Mixed contest reasoning");
         els.techniques.textContent = textOrFallback(problem.techniques, "Choose a method after attempting the problem");
-        els["source-link"].href = problem.sourceUrl;
-        els["compendium-link"].href = problem.contest === "AMC 8"
-          ? "/amc-resources/amc-8-compendium.pdf"
-          : "/amc-resources/amc-10-compendium.pdf";
         els.position.textContent = `${position + 1} of ${results.length}`;
         els.previous.disabled = position === 0;
         els.next.disabled = position === results.length - 1;
 
         els.jump.replaceChildren(...results.map((item, index) => option(String(index), `${item.paper} Q${item.number} · ${item.topics.join(" / ")}`)));
         els.jump.value = String(position);
+        renderInlineContent(problem, token);
       }
 
       function writeUrl() {
@@ -464,7 +721,7 @@
           const requestedQuestion = params.get("question");
           if (requestedQuestion) {
             const requestedPosition = results.findIndex((problem) => problem.id === requestedQuestion);
-            if (requestedPosition >= 0) { position = requestedPosition; render(); }
+            if (requestedPosition >= 0) { position = requestedPosition; render(); writeUrl(); }
           }
         })
         .catch((error) => {

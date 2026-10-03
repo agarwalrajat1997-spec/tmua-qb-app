@@ -1,0 +1,1022 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2009A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2009a-q1",
+      "number": 1,
+      "question": "One can holds \\(12\\) ounces of soda. What is the minimum number of cans needed to provide a gallon (\\(128\\) ounces) of soda?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Divide \\(128\\) by \\(12\\)",
+        "A partly filled last can still counts as a whole can"
+      ],
+      "solution": "Since \\(\\dfrac{128}{12} = 10\\dfrac{2}{3},\\) ten cans hold only \\(120\\) ounces, which is not enough.\n\nTherefore \\(11\\) cans are needed.\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "divisibility",
+        "estimation"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/1"
+    },
+    {
+      "id": "amc-10-2009a-q2",
+      "number": 2,
+      "question": "Four coins are picked out of a piggy bank that contains a collection of pennies, nickels, dimes, and quarters. Which of the following could <i>not</i> be the total value of the four coins, in cents?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(35\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(55\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "A total that is a multiple of \\(5\\) forces the number of pennies to be a multiple of \\(5\\)",
+        "With no pennies, four coins are worth at least \\(4 \\cdot 5 = 20\\) cents"
+      ],
+      "solution": "To get a multiple of \\(5\\) cents, the number of pennies must be a multiple of \\(5.\\) With only four coins, that means using no pennies, but then the four coins are each worth at least \\(5\\) cents, for a total of at least \\(20\\) cents.\n\nSo \\(15\\) cents cannot be made. The others can: \\(25 = 10 + 3(5),\\) \\(35 = 3(10) + 5,\\) \\(45 = 25 + 10 + 2(5),\\) and \\(55 = 25 + 3(10).\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "money",
+        "divisibility",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 940,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/2"
+    },
+    {
+      "id": "amc-10-2009a-q3",
+      "number": 3,
+      "question": "Which of the following is equal to\n\n\\[1 + \\cfrac{1}{1 + \\cfrac{1}{1 + 1}}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Simplify from the innermost fraction outward",
+        "The inner expression \\(1 + \\dfrac{1}{1+1}\\) equals \\(\\dfrac{3}{2}\\)"
+      ],
+      "solution": "Working outward, \\[ \\begin{aligned} &1 + \\cfrac{1}{1 + \\cfrac{1}{1 + 1}} \\\\ &= 1 + \\cfrac{1}{1 + \\dfrac{1}{2}} \\\\ &= 1 + \\dfrac{1}{\\frac{3}{2}} \\\\ &= 1 + \\dfrac{2}{3} = \\dfrac{5}{3}. \\end{aligned} \\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "continued fraction",
+        "fraction"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/3"
+    },
+    {
+      "id": "amc-10-2009a-q4",
+      "number": 4,
+      "question": "Eric plans to compete in a triathlon. He can average \\(2\\) miles per hour in the \\(\\tfrac14\\)-mile swim and \\(6\\) miles per hour in the \\(3\\)-mile run. His goal is to finish the triathlon in \\(2\\) hours. To accomplish his goal what must his average speed, in miles per hour, be for the \\(15\\)-mile bicycle ride?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{120}{11}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{56}{5}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{45}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Find the time used by the swim and the run, then subtract from \\(2\\) hours",
+        "Speed equals \\(15\\) miles divided by the leftover time"
+      ],
+      "solution": "The swim takes \\(\\dfrac{\\frac{1}{4}}{2} = \\dfrac18\\) hour and the run takes \\(\\dfrac{3}{6} = \\dfrac12\\) hour. This leaves \\[2 - \\dfrac18 - \\dfrac12 = \\dfrac{11}{8}\\] hours for the bicycle ride.\n\nHis average speed must be \\[\\dfrac{15}{\\frac{11}{8}} = \\dfrac{120}{11}\\] miles per hour.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "fraction"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/4"
+    },
+    {
+      "id": "amc-10-2009a-q5",
+      "number": 5,
+      "question": "What is the sum of the digits of the square of \\(111{,}111{,}111?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(63\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(81\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Try squaring the shorter repunits \\(11,\\) \\(111,\\) \\(1111\\) to spot a pattern",
+        "The square of the nine-digit repunit is \\(12345678987654321\\)"
+      ],
+      "solution": "The square of the nine-digit repunit is the palindrome \\[ \\begin{aligned} &111{,}111{,}111^2 \\\\ &= 12{,}345{,}678{,}987{,}654{,}321. \\end{aligned} \\]\n\nIts digits are \\(1, 2, \\ldots, 9, 8, \\ldots, 1,\\) so the sum is \\[ \\begin{aligned} &2(1 + 2 + \\cdots + 8) + 9 \\\\ &= 2 \\cdot 36 + 9 = 81. \\end{aligned} \\]\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "digits",
+        "palindrome",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/5"
+    },
+    {
+      "id": "amc-10-2009a-q6",
+      "number": 6,
+      "question": "A circle of radius \\(2\\) is inscribed in a semicircle, as shown. The area inside the semicircle but outside the circle is shaded. What fraction of the semicircle’s area is shaded?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2009a/6-52a38d6b07.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\pi}{6}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2}{\\pi}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3}{\\pi}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The circle sits on the diameter and touches the arc, so the semicircle has radius \\(4\\)",
+        "Compare the circle’s area to the semicircle’s area"
+      ],
+      "solution": "The inscribed circle rests on the diameter and is tangent to the arc, so the semicircle has radius \\(4.\\) Its area is \\[\\dfrac12 \\pi (4)^2 = 8\\pi.\\]\n\nThe circle’s area is \\(\\pi(2)^2 = 4\\pi,\\) so the shaded area is \\(8\\pi - 4\\pi = 4\\pi.\\)\n\nThe shaded fraction is \\(\\dfrac{4\\pi}{8\\pi} = \\dfrac12.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "circle area",
+        "tangent circles"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/6"
+    },
+    {
+      "id": "amc-10-2009a-q7",
+      "number": 7,
+      "question": "A carton contains milk that is \\(2\\%\\) fat, an amount that is \\(40\\%\\) less fat than the amount contained in a carton of whole milk. What is the percentage of fat in whole milk?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{12}{5}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{10}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(38\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(42\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "\\(40\\%\\) less than \\(x\\) means \\(60\\%\\) of \\(x\\)",
+        "Solve \\(0.6x = 2\\)"
+      ],
+      "solution": "Let whole milk be \\(x\\%\\) fat. Since \\(2\\) is \\(40\\%\\) less than \\(x,\\) we have \\[0.6x = 2,\\] so \\[x = \\dfrac{2}{0.6} = \\dfrac{10}{3}.\\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "percentage",
+        "linear equation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/7"
+    },
+    {
+      "id": "amc-10-2009a-q8",
+      "number": 8,
+      "question": "Three generations of the Wen family are going to the movies, two from each generation. The two members of the youngest generation receive a \\(50\\%\\) discount as children. The two members of the oldest generation receive a \\(25\\%\\) discount as senior citizens. The two members of the middle generation receive no discount. Grandfather Wen, whose senior ticket costs \\(\\$6.00,\\) is paying for everyone. How many dollars must he pay?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(34\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(36\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(46\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(48\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "A senior ticket is \\(75\\%\\) of the full price, so find the full price first",
+        "Add two senior, two full, and two child tickets"
+      ],
+      "solution": "The senior ticket costs \\(\\$6,\\) which is \\(\\dfrac34\\) of the full price, so a full ticket costs \\(\\dfrac43 \\cdot 6 = \\$8,\\) and a child ticket costs \\(\\dfrac12 \\cdot 8 = \\$4.\\)\n\nThe total is \\[2(6 + 8 + 4) = \\$36.\\]\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "percentage",
+        "work backwards"
+      ],
+      "sourceDifficulty": 1060,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/8"
+    },
+    {
+      "id": "amc-10-2009a-q9",
+      "number": 9,
+      "question": "Positive integers \\(a,\\) \\(b,\\) and \\(2009,\\) with \\(a \\lt b \\lt 2009,\\) form a geometric sequence with an integer ratio. What is \\(a?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(41\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(49\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(287\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2009\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "If the ratio is \\(r,\\) then \\(a r^2 = 2009\\)",
+        "Factor \\(2009 = 7^2 \\cdot 41\\) to find the only integer ratio greater than \\(1\\)"
+      ],
+      "solution": "Let the common ratio be \\(r.\\) Then \\(a r^2 = 2009 = 7^2 \\cdot 41.\\)\n\nSince \\(r\\) must be an integer greater than \\(1,\\) the only possibility is \\(r = 7,\\) giving \\(a = 41\\) and the sequence \\(41, 287, 2009.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "geometric sequence",
+        "prime factorization"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/9"
+    },
+    {
+      "id": "amc-10-2009a-q10",
+      "number": 10,
+      "question": "Triangle \\(ABC\\) has a right angle at \\(B.\\) Point \\(D\\) is the foot of the altitude from \\(B,\\) \\(AD = 3,\\) and \\(DC = 4.\\) What is the area of \\(\\triangle ABC?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2009a/10-d5a72cf8d1.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\sqrt{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\sqrt{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\sqrt{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(42\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The altitude to the hypotenuse satisfies \\(BD^2 = AD \\cdot DC\\)",
+        "The hypotenuse is \\(AC = AD + DC = 7\\)"
+      ],
+      "solution": "For the altitude from the right angle to the hypotenuse, \\[BD^2 = AD \\cdot DC = 3 \\cdot 4 = 12,\\] so \\(BD = 2\\sqrt{3}.\\)\n\nThe hypotenuse is \\(AC = 3 + 4 = 7,\\) so the area is \\[\\dfrac12 \\cdot 7 \\cdot 2\\sqrt3 = 7\\sqrt3.\\]\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "right triangle",
+        "altitude",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/10"
+    },
+    {
+      "id": "amc-10-2009a-q11",
+      "number": 11,
+      "question": "One dimension of a cube is increased by \\(1,\\) another is decreased by \\(1,\\) and the third is left unchanged. The volume of the new rectangular solid is \\(5\\) less than that of the cube. What was the volume of the cube?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(64\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(125\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(216\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let the cube have side \\(x\\) and write the new volume as \\(x(x+1)(x-1)\\)",
+        "Note that \\(x(x+1)(x-1) = x^3 - x\\)"
+      ],
+      "solution": "Let the cube have side length \\(x.\\) The new solid has volume \\[x(x+1)(x-1) = x^3 - x.\\]\n\nSetting this equal to \\(x^3 - 5\\) gives \\(x^3 - x = x^3 - 5,\\) so \\(x = 5.\\)\n\nThe cube’s volume is \\(5^3 = 125.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "difference of squares",
+        "volume",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/11"
+    },
+    {
+      "id": "amc-10-2009a-q12",
+      "number": 12,
+      "question": "In quadrilateral \\(ABCD,\\) \\(AB = 5,\\) \\(BC = 17,\\) \\(CD = 5,\\) \\(DA = 9,\\) and \\(BD\\) is an integer. What is \\(BD?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2009a/12-59ba718c14.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Apply the triangle inequality to \\(\\triangle BCD\\) and \\(\\triangle ABD\\) separately",
+        "The diagonal \\(BD\\) must satisfy \\(12 \\lt BD \\lt 14\\)"
+      ],
+      "solution": "In \\(\\triangle BCD,\\) the triangle inequality gives \\(5 + BD \\gt 17,\\) so \\(BD \\gt 12.\\)\n\nIn \\(\\triangle ABD,\\) it gives \\(5 + 9 \\gt BD,\\) so \\(BD \\lt 14.\\)\n\nThe only integer with \\(12 \\lt BD \\lt 14\\) is \\(BD = 13.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "triangle inequality",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/12"
+    },
+    {
+      "id": "amc-10-2009a-q13",
+      "number": 13,
+      "question": "Suppose that \\(P = 2^m\\) and \\(Q = 3^n.\\) Which of the following is equal to \\(12^{mn}\\) for every pair of integers \\((m, n)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(P^2 Q\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(P^n Q^m\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(P^n Q^{2m}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(P^{2m} Q^n\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(P^{2n} Q^m\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Write \\(12 = 2^2 \\cdot 3\\) and raise it to the power \\(mn\\)",
+        "Regroup \\(2^{2mn} \\cdot 3^{mn}\\) using \\(P = 2^m\\) and \\(Q = 3^n\\)"
+      ],
+      "solution": "Since \\(12 = 2^2 \\cdot 3,\\) \\[ \\begin{aligned} 12^{mn} &= 2^{2mn} \\cdot 3^{mn} \\\\ &= (2^m)^{2n} \\cdot (3^n)^m \\\\ &= P^{2n} Q^m. \\end{aligned} \\]\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "exponent",
+        "prime factorization"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/13"
+    },
+    {
+      "id": "amc-10-2009a-q14",
+      "number": 14,
+      "question": "Four congruent rectangles are placed as shown. The area of the outer square is \\(4\\) times that of the inner square. What is the ratio of the length of the longer side of each rectangle to the length of its shorter side?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2009a/14-e250df76b7.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\sqrt{10}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2 + \\sqrt{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2\\sqrt{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Let the rectangle have shorter side \\(x\\) and longer side \\(y,\\) and express the two square sides",
+        "The outer square has side \\(y + x\\) and the inner square has side \\(y - x,\\) with ratio \\(\\sqrt{4} = 2\\)"
+      ],
+      "solution": "Let each rectangle have shorter side \\(x\\) and longer side \\(y.\\) The outer square has side length \\(y + x\\) and the inner square has side length \\(y - x.\\)\n\nSince the area ratio is \\(4,\\) the side ratio is \\(2,\\) so \\[y + x = 2(y - x),\\] which gives \\(y = 3x.\\)\n\nThe ratio of longer to shorter side is \\(\\dfrac{y}{x} = 3.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "area ratio",
+        "rectangle",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1340,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/14"
+    },
+    {
+      "id": "amc-10-2009a-q15",
+      "number": 15,
+      "question": "The figures \\(F_1,\\) \\(F_2,\\) \\(F_3,\\) and \\(F_4\\) shown are the first in a sequence of figures. For \\(n \\ge 3,\\) \\(F_n\\) is constructed from \\(F_{n-1}\\) by surrounding it with a square and placing one more diamond on each side of the new square than \\(F_{n-1}\\) had on each side of its outside square. For example, figure \\(F_3\\) has \\(13\\) diamonds. How many diamonds are there in figure \\(F_{20}?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2009a/15-de63ae1bdb.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(401\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(485\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(585\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(626\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(761\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The outside square of \\(F_n\\) contributes \\(4(n-1)\\) new diamonds",
+        "The total is \\(1\\) plus \\(4\\big(1 + 2 + \\cdots + (n-1)\\big)\\)"
+      ],
+      "solution": "Going from \\(F_{n-1}\\) to \\(F_n,\\) the new outside square carries \\(4(n-1)\\) diamonds. Starting from the single diamond of \\(F_1,\\) \\[ \\begin{aligned} F_n &= 1 \\\\ &\\quad {}+ 4\\big(1 + 2 + \\cdots + (n-1)\\big) \\\\ &= 1 + 4 \\cdot \\dfrac{(n-1)n}{2} \\\\ &= 1 + 2n(n-1). \\end{aligned} \\]\n\nTherefore \\[F_{20} = 1 + 2 \\cdot 20 \\cdot 19 = 761.\\]\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "recursion",
+        "arithmetic sequence",
+        "summation"
+      ],
+      "sourceDifficulty": 1400,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/15"
+    },
+    {
+      "id": "amc-10-2009a-q16",
+      "number": 16,
+      "question": "Let \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) be real numbers with \\(|a - b| = 2,\\) \\(|b - c| = 3,\\) and \\(|c - d| = 4.\\) What is the sum of all possible values of \\(|a - d|?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Write \\(a - d\\) \\(= (a - b) + (b - c) + (c - d)\\) \\(= \\pm 2 \\pm 3 \\pm 4\\)",
+        "List the distinct values of \\(|\\pm 2 \\pm 3 \\pm 4|\\)"
+      ],
+      "solution": "Since \\(a - d\\) \\(= (a-b) + (b-c) + (c-d)\\) \\(= \\pm 2 \\pm 3 \\pm 4,\\) the possible absolute values are \\[ \\begin{aligned} 2+3+4 &= 9, \\\\ 2+3-4 &= 1, \\\\ 2-3+4 &= 3, \\\\ -2+3+4 &= 5. \\end{aligned} \\]\n\nTheir sum is \\(9 + 1 + 3 + 5 = 18.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "absolute value",
+        "casework"
+      ],
+      "sourceDifficulty": 1400,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/16"
+    },
+    {
+      "id": "amc-10-2009a-q17",
+      "number": 17,
+      "question": "Rectangle \\(ABCD\\) has \\(AB = 4\\) and \\(BC = 3.\\) Segment \\(EF\\) is constructed through \\(B\\) so that \\(EF \\perp DB,\\) and \\(A\\) and \\(C\\) lie on \\(DE\\) and \\(DF,\\) respectively. What is \\(EF?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{125}{12}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{103}{9}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "First find \\(DB = \\sqrt{4^2 + 3^2}\\)",
+        "Triangles \\(EBA\\) and \\(BFC\\) are each similar to \\(\\triangle DBA,\\) so find \\(EB\\) and \\(BF\\) from ratios"
+      ],
+      "solution": "The diagonal is \\(DB = \\sqrt{4^2 + 3^2} = 5.\\)\n\nRight triangles \\(EBA,\\) \\(DBC,\\) and \\(BFC\\) are all similar to \\(\\triangle DBA.\\) From \\(\\triangle EBA,\\) \\[ \\begin{aligned} \\dfrac{EB}{AB} &= \\dfrac{DB}{BC} \\\\ &\\implies \\dfrac{EB}{4} = \\dfrac{5}{3} \\\\ &\\implies EB = \\dfrac{20}{3}. \\end{aligned} \\]\n\nFrom \\(\\triangle BFC,\\) \\[ \\begin{aligned} \\dfrac{BF}{BC} &= \\dfrac{DB}{AB} \\\\ &\\implies \\dfrac{BF}{3} = \\dfrac{5}{4} \\\\ &\\implies BF = \\dfrac{15}{4}. \\end{aligned} \\]\n\nTherefore \\[ \\begin{aligned} EF &= EB + BF \\\\ &= \\dfrac{20}{3} + \\dfrac{15}{4} \\\\ &= \\dfrac{125}{12}. \\end{aligned} \\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "similarity",
+        "right triangle",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1580,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/17"
+    },
+    {
+      "id": "amc-10-2009a-q18",
+      "number": 18,
+      "question": "At Jefferson Summer Camp, \\(60\\%\\) of the children play soccer, \\(30\\%\\) of the children swim, and \\(40\\%\\) of the soccer players swim. To the nearest whole percent, what percent of the non-swimmers play soccer?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(30\\%\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(40\\%\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(49\\%\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(51\\%\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(70\\%\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Assume \\(100\\) children and count soccer players who swim",
+        "Find how many of the \\(70\\) non-swimmers play soccer"
+      ],
+      "solution": "Take \\(100\\) children: \\(60\\) play soccer, and \\(40\\%\\) of them, or \\(24,\\) also swim. So \\(60 - 24 = 36\\) soccer players do not swim.\n\nThere are \\(30\\) swimmers and \\(70\\) non-swimmers, so the fraction of non-swimmers who play soccer is \\[\\dfrac{36}{70} \\approx 0.514 \\approx 51\\%.\\]\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "percentage",
+        "Venn Diagram",
+        "conditional probability"
+      ],
+      "sourceDifficulty": 1460,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/18"
+    },
+    {
+      "id": "amc-10-2009a-q19",
+      "number": 19,
+      "question": "Circle \\(A\\) has radius \\(100.\\) Circle \\(B\\) has an integer radius \\(r \\lt 100\\) and remains internally tangent to circle \\(A\\) as it rolls once around the circumference of circle \\(A.\\) The two circles have the same points of tangency at the beginning and end of circle \\(B\\)’s trip. How many possible values can \\(r\\) have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(90\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Divide the circumference of circle \\(A\\) by the circumference of circle \\(B\\) to count the rolls",
+        "That number is \\(\\dfrac{100}{r},\\) which must be an integer greater than \\(1\\)"
+      ],
+      "solution": "The circumferences are \\(200\\pi\\) and \\(2\\pi r,\\) so the initial point of tangency returns after \\[\\dfrac{200\\pi}{2\\pi r} = \\dfrac{100}{r}\\] rolls.\n\nFor this to be an integer greater than \\(1,\\) \\(r\\) must be a divisor of \\(100\\) less than \\(100:\\) namely \\(1, 2, 4, 5, 10, 20, 25,\\) and \\(50.\\) That is \\(8\\) values.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "circumference",
+        "divisibility",
+        "factor counting"
+      ],
+      "sourceDifficulty": 1630,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/19"
+    },
+    {
+      "id": "amc-10-2009a-q20",
+      "number": 20,
+      "question": "Andrea and Lauren are \\(20\\) kilometers apart. They bike toward one another with Andrea traveling three times as fast as Lauren, and the distance between them decreasing at a rate of \\(1\\) kilometer per minute. After \\(5\\) minutes, Andrea stops biking because of a flat tire and waits for Lauren. After how many minutes from the time they started to bike does Lauren reach Andrea?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(55\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(65\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(80\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let Lauren’s rate be \\(r;\\) then \\(r + 3r = 1\\) kilometer per minute",
+        "Find the distance left after \\(5\\) minutes, then the time for Lauren to cover it alone"
+      ],
+      "solution": "Let Lauren’s rate be \\(r\\) km/min. Then \\(r + 3r = 1,\\) so \\(r = \\dfrac14.\\)\n\nIn the first \\(5\\) minutes the gap shrinks by \\(5\\) km, leaving \\(15\\) km. Lauren covers this alone at \\(\\dfrac14\\) km/min, taking \\[\\dfrac{15}{\\frac{1}{4}} = 60\\] minutes.\n\nThe total time is \\(5 + 60 = 65\\) minutes.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "rate"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/20"
+    },
+    {
+      "id": "amc-10-2009a-q21",
+      "number": 21,
+      "question": "Many Gothic cathedrals have windows with portions containing a ring of congruent circles that are circumscribed by a larger circle. In the figure shown, the number of smaller circles is four. What is the ratio of the sum of the areas of the four smaller circles to the area of the larger circle?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2009a/21-ac0b0be2d6.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3 - 2\\sqrt{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2 - \\sqrt{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4(3 - 2\\sqrt{2})\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{2}(3 - \\sqrt{2})\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\sqrt{2} - 2\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let each small circle have radius \\(1;\\) their centers form a square of side \\(2\\)",
+        "The large circle’s diameter is the square’s diagonal plus two small radii"
+      ],
+      "solution": "Let each small circle have radius \\(1.\\) Their centers form a square of side \\(2,\\) whose diagonal is \\(2\\sqrt2.\\)\n\nThe large circle’s diameter is \\(2 + 2\\sqrt2,\\) so its radius is \\(1 + \\sqrt2.\\)\n\nThe desired ratio is \\[ \\begin{aligned} \\dfrac{4 \\cdot \\pi (1)^2}{\\pi (1 + \\sqrt2)^2} &= \\dfrac{4}{3 + 2\\sqrt2} \\\\ &= 4(3 - 2\\sqrt2). \\end{aligned} \\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "tangent circles",
+        "area ratio",
+        "rationalizing denominator"
+      ],
+      "sourceDifficulty": 1690,
+      "solveTimeSeconds": 105,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/21"
+    },
+    {
+      "id": "amc-10-2009a-q22",
+      "number": 22,
+      "question": "Two cubical dice each have removable numbers \\(1\\) through \\(6.\\) The twelve numbers on the two dice are removed, put into a bag, then drawn one at a time and randomly reattached to the faces of the cubes, one number to each face. The dice are then rolled and the numbers on the two top faces are added. What is the probability that the sum is \\(7?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{9}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2}{11}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The whole process is equivalent to picking two of the twelve tiles at random and adding them",
+        "After the first tile shows \\(N,\\) count how many of the remaining \\(11\\) tiles equal \\(7 - N\\)"
+      ],
+      "solution": "Randomly attaching the tiles and then rolling is equivalent to choosing two of the twelve numbers at random and adding them.\n\nSuppose the first top face shows \\(N.\\) For a sum of \\(7,\\) the second must be \\(7 - N,\\) and there are exactly \\(2\\) tiles equal to \\(7 - N\\) among the remaining \\(11.\\)\n\nSo the probability is \\(\\dfrac{2}{11}.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "basic probability",
+        "symmetry"
+      ],
+      "sourceDifficulty": 1820,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/22"
+    },
+    {
+      "id": "amc-10-2009a-q23",
+      "number": 23,
+      "question": "Convex quadrilateral \\(ABCD\\) has \\(AB = 9\\) and \\(CD = 12.\\) Diagonals \\(AC\\) and \\(BD\\) intersect at \\(E,\\) \\(AC = 14,\\) and \\(\\triangle AED\\) and \\(\\triangle BEC\\) have equal areas. What is \\(AE?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{9}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{50}{11}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{21}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{17}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Adding \\(\\triangle CED\\) to each equal-area triangle shows \\(\\triangle ACD\\) and \\(\\triangle BCD\\) have equal areas",
+        "Equal areas over the shared base \\(CD\\) force \\(AB \\parallel CD,\\) making \\(\\triangle ABE \\sim \\triangle CDE\\)"
+      ],
+      "solution": "Since \\([AED] = [BEC],\\) adding \\([CED]\\) to both gives \\([ACD] = [BCD].\\) These share base \\(CD,\\) so \\(A\\) and \\(B\\) are equidistant from line \\(CD,\\) meaning \\(AB \\parallel CD.\\)\n\nThen \\(\\triangle ABE \\sim \\triangle CDE\\) with ratio \\(\\dfrac{AB}{CD} = \\dfrac{9}{12} = \\dfrac34,\\) so \\(\\dfrac{AE}{EC} = \\dfrac34.\\)\n\nWith \\(AE + EC = AC = 14,\\) we get \\(AE = \\dfrac{3}{7} \\cdot 14 = 6.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "triangle area",
+        "parallel lines",
+        "similarity"
+      ],
+      "sourceDifficulty": 1690,
+      "solveTimeSeconds": 105,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/23"
+    },
+    {
+      "id": "amc-10-2009a-q24",
+      "number": 24,
+      "question": "Three distinct vertices of a cube are chosen at random. What is the probability that the plane determined by these three vertices contains points inside the cube?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{4}{7}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{7}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3}{4}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The plane avoids the interior exactly when all three vertices lie on one face",
+        "Count the same-face triples and subtract from the total \\(\\binom{8}{3}\\)"
+      ],
+      "solution": "Three vertices determine a plane that cuts through the interior unless all three lie on a single face.\n\nEach of the \\(6\\) faces gives \\(\\binom{4}{3} = 4\\) triples, so \\(6 \\cdot 4 = 24\\) triples lie on a face out of \\(\\binom{8}{3} = 56\\) total.\n\nThe probability of hitting the interior is \\[1 - \\dfrac{24}{56} = \\dfrac{4}{7}.\\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "complementary counting",
+        "cube geometry",
+        "combinations"
+      ],
+      "sourceDifficulty": 1860,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/24"
+    },
+    {
+      "id": "amc-10-2009a-q25",
+      "number": 25,
+      "question": "For \\(k \\gt 0,\\) let \\(I_k = 10\\ldots064,\\) where there are \\(k\\) zeros between the \\(1\\) and the \\(6.\\) Let \\(N(k)\\) be the number of factors of \\(2\\) in the prime factorization of \\(I_k.\\) What is the maximum value of \\(N(k)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Write \\(I_k = 10^{k+2} + 64\\), then factor as \\(2^{k+2} \\cdot 5^{k+2} + 2^6\\)",
+        "Compare the powers of \\(2\\) in the two terms; the tie case \\(k = 4\\) needs factoring \\(5^6 + 1\\)"
+      ],
+      "solution": "Write \\[ \\begin{aligned} I_k &= 10^{k+2} + 64 \\\\ &= 2^{k+2} \\cdot 5^{k+2} + 2^6. \\end{aligned} \\]\n\nIf \\(k \\lt 4,\\) the first term has fewer than \\(6\\) factors of \\(2,\\) so \\(N(k) = k + 2 \\lt 6.\\)\n\nIf \\(k \\gt 4,\\) the first term has at least \\(7\\) factors of \\(2\\) while the second has exactly \\(6,\\) so their sum has exactly \\(6:\\) \\(N(k) = 6.\\)\n\nIf \\(k = 4,\\) then \\(I_4 = 2^6(5^6 + 1).\\) Since \\(5^6 + 1\\) \\(= (5^2 + 1)\\big((5^2)^2 - 5^2 + 1\\big)\\) \\(= 26 \\cdot 601,\\) it contributes exactly one more factor of \\(2.\\) Thus \\(N(4) = 7.\\)\n\nThe maximum value is \\(N(4) = 7.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "prime factorization",
+        "sum and difference of cubes",
+        "casework"
+      ],
+      "sourceDifficulty": 2160,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2009A/problem/25"
+    }
+  ]
+}

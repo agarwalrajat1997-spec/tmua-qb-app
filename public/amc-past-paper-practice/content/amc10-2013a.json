@@ -1,0 +1,1019 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2013A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2013a-q1",
+      "number": 1,
+      "question": "A taxi ride costs \\(\\$1.50\\) plus \\(\\$0.25\\) per mile traveled. How much does a \\(5\\)-mile taxi ride cost?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$2.25\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$2.50\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$2.75\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$3.00\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$3.25\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compute the mileage charge first",
+        "Add the fixed starting charge after the mileage charge"
+      ],
+      "solution": "The mileage charge is \\(\\$0.25\\cdot 5=\\$1.25\\).\n\nAdding the fixed charge gives \\(\\$1.50+\\$1.25=\\$2.75\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "rate",
+        "money"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/1"
+    },
+    {
+      "id": "amc-10-2013a-q2",
+      "number": 2,
+      "question": "Alice is making a batch of cookies and needs \\(2\\frac{1}{2}\\) cups of sugar. Unfortunately, her measuring cup holds only \\(\\frac{1}{4}\\) cup of sugar. How many times must she fill that cup to get the correct amount of sugar?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Convert the mixed number of cups to an improper fraction",
+        "Divide the needed sugar by the cup size"
+      ],
+      "solution": "Alice needs \\(2\\frac12=\\frac52\\) cups of sugar.\n\nEach full measuring cup gives \\(\\frac14\\) cup, so the number of fillings is \\(\\frac52\\div\\frac14=\\frac52\\cdot4=10\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "fraction"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/2"
+    },
+    {
+      "id": "amc-10-2013a-q3",
+      "number": 3,
+      "question": "Square \\(ABCD\\) has side length \\(10.\\) Point \\(E\\) is on \\(\\overline{BC},\\) and the area of \\(\\triangle ABE\\) is \\(40.\\) What is \\(BE?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2013a/3-53ce77d890.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Use \\(AB\\) as the height of \\(\\triangle ABE\\)",
+        "Set \\(\\frac12\\cdot AB\\cdot BE\\) equal to the given area"
+      ],
+      "solution": "We have by the formula for the area of a triangle that \\[ 40 = \\dfrac{1}{2} \\cdot 10 \\cdot BE. \\] This gives us \\[ 40 = 5BE \\]\\[ BE = 8. \\] Thus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "triangle area"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/3"
+    },
+    {
+      "id": "amc-10-2013a-q4",
+      "number": 4,
+      "question": "A softball team played ten games, scoring \\(1,\\) \\(2,\\) \\(3,\\) \\(4,\\) \\(5,\\) \\(6,\\) \\(7,\\) \\(8,\\) \\(9,\\) and \\(10\\) runs. They lost by one run in exactly five games. In each of their other games, they scored twice as many runs as their opponent. How many total runs did their opponents score?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(35\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(55\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The doubled-score games must be the even scoring games",
+        "Pair odd scores with one-run losses and even scores with halved opponent scores"
+      ],
+      "solution": "Note that if they scored twice as many runs as their opponents, then they scored an even number of runs.\n\nThis means in the games where they scored \\(2, 4, 6, 8,\\) and \\(10\\) runs, their opponents scored \\(1, 2, 3, 4,\\) and \\(5\\) runs respectively.\n\nThis sums to \\[ 1 + 2 + 3 + 4 + 5 = 15. \\]\n\nIn the other games, their opponents scored \\(2, 4, 6, 8,\\) and \\(10\\) runs.\n\nThis sums to \\[ 2 + 4 + 6 + 8 + 10 = 30. \\]\n\nThe total number of runs is then \\[ 15 + 30 = 45. \\] Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "parity",
+        "casework"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/4"
+    },
+    {
+      "id": "amc-10-2013a-q5",
+      "number": 5,
+      "question": "Tom, Dorothy, and Sammy went on a vacation and agreed to split the costs evenly. During their trip Tom paid \\(\\$105,\\) Dorothy paid \\(\\$125,\\) and Sammy paid \\(\\$175.\\) In order to share costs equally, Tom gave Sammy \\(t\\) dollars, and Dorothy gave Sammy \\(d\\) dollars. What is \\(t-d?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(35\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "First find the total trip cost and each person’s fair share",
+        "Tom and Dorothy each pay Sammy the amount they are short of a fair share"
+      ],
+      "solution": "The total cost was \\(\\$105+\\$125+\\$175=\\$405\\), so each person’s share was \\(\\$405\\div3=\\$135\\).\n\nTom paid \\(\\$30\\) less than his share, and Dorothy paid \\(\\$10\\) less than her share, so \\(t=30\\) and \\(d=10\\).\n\nTherefore \\(t-d=30-10=20\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "money"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/5"
+    },
+    {
+      "id": "amc-10-2013a-q6",
+      "number": 6,
+      "question": "Joey and his five brothers are ages \\(3,\\) \\(5,\\) \\(7,\\) \\(9,\\) \\(11,\\) and \\(13.\\) One afternoon two of his brothers whose ages sum to \\(16\\) went to the movies, two brothers younger than \\(10\\) went to play baseball, and Joey and the \\(5\\)-year-old stayed home. How old is Joey?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(13\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "List the age pairs whose sum is \\(16\\), remembering the \\(5\\)-year-old stayed home",
+        "After choosing the movie pair, the baseball pair must be two remaining brothers younger than \\(10\\)"
+      ],
+      "solution": "The age pairs that sum to \\(16\\) are \\((3,13)\\), \\((5,11)\\), and \\((7,9)\\).\n\nThe \\(5\\)-year-old stayed home, so the movie pair cannot be \\((5,11)\\). If \\(7\\) and \\(9\\) went to the movies, then the only remaining brother younger than \\(10\\) would be the \\(3\\)-year-old, not enough for baseball.\n\nThus the movie pair was \\((3,13)\\), the baseball pair was \\((7,9)\\), and Joey is the remaining brother, age \\(11\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "logical deduction",
+        "casework"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/6"
+    },
+    {
+      "id": "amc-10-2013a-q7",
+      "number": 7,
+      "question": "A student must choose a program of four courses from a menu of courses consisting of English, Algebra, Geometry, History, Art, and Latin. This program must contain English and at least one mathematics course. In how many ways can this program be chosen?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(16\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "English is fixed, so choose three of the five remaining courses",
+        "Count all three-course choices from the remaining courses, then remove the choice with no math"
+      ],
+      "solution": "English is required, so choose the other \\(3\\) courses from the \\(5\\) courses Algebra, Geometry, History, Art, and Latin.\n\nThere are \\(\\binom53=10\\) such choices, but one of them, History-Art-Latin, contains no mathematics course.\n\nTherefore the number of valid programs is \\(10-1=9\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "combinations",
+        "complementary counting"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/7"
+    },
+    {
+      "id": "amc-10-2013a-q8",
+      "number": 8,
+      "question": "What is the value of \\[\\dfrac{2^{2014}+2^{2012}}{2^{2014}-2^{2012}} ?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2013\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2^{4024}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Factor out the smaller power \\(2^{2012}\\)",
+        "After factoring, only \\(2^2\\) remains in each parenthesis"
+      ],
+      "solution": "Factoring out a \\(2^{2012},\\) we get: \\[ \\dfrac{2^{2012}(2^2 + 1)}{2^{2012}(2^2 - 1)} = \\dfrac{5}{3}. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "exponent",
+        "factoring"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/8"
+    },
+    {
+      "id": "amc-10-2013a-q9",
+      "number": 9,
+      "question": "In a recent basketball game, Shenille attempted only three-point shots and two-point shots. She was successful on \\(20\\%\\) of her three-point shots and \\(30\\%\\) of her two-point shots. Shenille attempted \\(30\\) shots. How many points did she score?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(x\\) and \\(y\\) be the numbers of two-point and three-point attempts",
+        "Compare the points earned per attempted shot type after applying the success percentages"
+      ],
+      "solution": "Let \\(x\\) be the number of two-point shots and \\(y\\) be the number of three-point shots.\n\nThen, Shenille makes \\(0.3x\\) two-point shots and \\(0.2y\\) three-point shots, for a total score of \\[ 2 \\cdot 0.3x + 3 \\cdot 0.2y = 0.6x + 0.6y. \\]\n\nWe know that \\[ x + y = 30 \\]\\[ 0.6(x + y) = 18. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/9"
+    },
+    {
+      "id": "amc-10-2013a-q10",
+      "number": 10,
+      "question": "A flower bouquet contains pink roses, red roses, pink carnations, and red carnations. One third of the pink flowers are roses, three fourths of the red flowers are carnations, and six tenths of the flowers are pink. What percent of the flowers are carnations?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(70\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Break the bouquet into pink carnations and red carnations",
+        "Use the given fractions of pink and red flowers separately"
+      ],
+      "solution": "Let the total number of flowers be \\(x.\\) There are \\(0.6x\\) pink flowers and \\(0.4x\\) red flowers.\n\nThen there are \\[ \\dfrac{1}{3} \\cdot 0.6x = 0.2x \\] pink roses, which means there are \\(0.4x\\) pink carnations.\n\nThere are also \\[ \\dfrac{3}{4} \\cdot 0.4x = 0.3x \\] red carnations. This means there are \\(0.3x + 0.4x = 0.7x\\) carnations. This is \\(70\\%\\) of the total flowers.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "fraction",
+        "percentage"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/10"
+    },
+    {
+      "id": "amc-10-2013a-q11",
+      "number": 11,
+      "question": "A student council must select a two-person welcoming committee and a three-person planning committee from among its members. There are exactly \\(10\\) ways to select a two-person team for the welcoming committee. It is possible for students to serve on both committees. In how many different ways can a three-person planning committee be selected?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(25\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Let \\(n\\) be the number of council members and use \\(\\binom n2=10\\)",
+        "After finding \\(n\\), count \\(\\binom n3\\) planning committees"
+      ],
+      "solution": "Let \\(x\\) be the number of students. Then the number of ways to pick a two-person committee is \\[ \\binom{x}{2} = \\dfrac{x(x - 1)}{2}. \\] We know that this equals \\(10,\\) so \\[ x^2 - x = 20 \\]\\[ x^2 - x - 20 = 0. \\] Factoring yields \\[ (x - 5)(x + 4) = 0 \\]\\[ x = 5, \\] since there cannot be a negative number of students.\n\nThen, the number of ways to pick a \\(3\\)-person committee is \\[ \\binom{5}{3} = \\binom{5}{2} = 10. \\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "combinations",
+        "quadratic"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/11"
+    },
+    {
+      "id": "amc-10-2013a-q12",
+      "number": 12,
+      "question": "In \\(\\triangle ABC,\\) \\(AB=AC=28\\) and \\(BC=20.\\) Points \\(D,\\) \\(E,\\) and \\(F\\) are on sides \\(\\overline{AB},\\) \\(\\overline{BC},\\) and \\(\\overline{AC},\\) respectively, such that \\(\\overline{DE}\\) and \\(\\overline{EF}\\) are parallel to \\(\\overline{AC}\\) and \\(\\overline{AB},\\) respectively. What is the perimeter of parallelogram \\(ADEF?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2013a/12-ad82773c81.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(52\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(56\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(72\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use the parallels to get similar triangles near \\(B\\) and \\(C\\)",
+        "Rewrite opposite sides of the parallelogram as pieces of \\(AB\\) and \\(AC\\)"
+      ],
+      "solution": "Note that \\(\\triangle DBE \\sim \\triangle ABC\\) and \\(\\triangle FEC \\sim \\triangle ABC\\) due to the parallel lines.\n\nThis tells us that \\(DB = DE\\) and \\(FE = FC.\\) We have that the perimeter of \\(ADEF\\) is \\[ AD + DE + EF + AF \\]\\[= AD + DB + FC + AF \\] \\[ = AB + AC \\]\\[= 56. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "similarity",
+        "parallelogram",
+        "perimeter"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/12"
+    },
+    {
+      "id": "amc-10-2013a-q13",
+      "number": 13,
+      "question": "How many three-digit numbers are not divisible by \\(5,\\) have digits that sum to less than \\(20,\\) and have the first digit equal to the third digit?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(52\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(66\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(68\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(70\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The number has form \\(aba\\)",
+        "Case on the repeated digit \\(a\\), excluding values that make the number divisible by \\(5\\)"
+      ],
+      "solution": "Note that for the number to not be divisible by \\(5,\\) the units digits cannot be either \\(0\\) or \\(5.\\)\n\nLet \\(x\\) be the hundreds and units digit and \\(y\\) be the tens digit. Then we want \\[ 2x + y \\lt 20. \\] Casing on the \\(8\\) possible values of \\(x,\\) we get:\n\nIf \\(x\\) is \\(1, 2, 3,\\) or \\(4,\\) then \\(y\\) can be anything since \\(y \\lt 10.\\)\n\nIf \\(x = 6,\\) then \\(y \\lt 8,\\) which gives us \\(8\\) solutions.\n\nIf \\(x = 7,\\) then \\(y \\lt 6,\\) which gives us \\(6\\) solutions.\n\nIf \\(x = 8,\\) then \\(y \\lt 4,\\) which gives us \\(4\\) solutions.\n\nIf \\(x = 9,\\) then \\(y \\lt 2,\\) which gives us \\(2\\) solutions.\n\nThis gives us a total of \\[ 4 \\cdot 10 + 8 + 6 + 4 + 2 = 60\\] solutions.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "casework"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/13"
+    },
+    {
+      "id": "amc-10-2013a-q14",
+      "number": 14,
+      "question": "A solid cube of side length \\(1\\) is removed from each corner of a solid cube of side length \\(3.\\) How many edges does the remaining solid have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(36\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(72\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(84\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(108\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Each corner removal creates new exposed edges",
+        "Count the original cube edges plus the new edges from each removed corner"
+      ],
+      "solution": "Removing the cubes does not remove any edges from the original cube. It only adds edges.\n\nAfter removing each cube, we can see that \\(9\\) extra edges are added to the solid.\n\n\\(8\\) cubes are removed, which means \\(8 \\cdot 9 = 72\\) edges are added to the original \\(12\\) edges, for a total of \\(72 + 12 = 84\\) edges.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "polyhedron",
+        "cube geometry"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/14"
+    },
+    {
+      "id": "amc-10-2013a-q15",
+      "number": 15,
+      "question": "Two sides of a triangle have lengths \\(10\\) and \\(15.\\) The length of the altitude to the third side is the average of the lengths of the altitudes to the two given sides. How long is the third side?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Express the same doubled area using each side and its altitude",
+        "Use the average-altitude condition to relate the unknown third side to a known altitude"
+      ],
+      "solution": "Let \\(h_1\\) be the length of the altitude to the side of length \\(10\\) and similarly define \\(h_2\\) for the other given side.\n\nWe have that \\[ 10h_1 = 15h_2 \\]\\[ h_1 = \\dfrac{3}{2}h_2. \\]\n\nThe third altitude is the average of the other two, which makes its length \\[ \\dfrac{h_2 + \\frac{3}{2}h_2}{2} = \\dfrac{5}{4}h_2. \\]\n\nLet the third side have length \\(x.\\) Then \\[ \\dfrac{5}{4}h_2x = 15h_2 \\]\\[ x = 12. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "triangle area",
+        "altitude",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/15"
+    },
+    {
+      "id": "amc-10-2013a-q16",
+      "number": 16,
+      "question": "A triangle with vertices \\((6, 5),\\) \\((8, -3),\\) and \\((9, 1)\\) is reflected about the line \\(x = 8\\) to create a second triangle. What is the area of the union of the two triangles?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{28}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{31}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{32}{3}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Reflect the two non-fixed vertices across \\(x=8\\)",
+        "Find the shared vertical segment created by the two overlapping triangles"
+      ],
+      "solution": "The reflected triangle has vertices \\((7,1)\\), \\((8,-3)\\), and \\((10,5)\\).\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2013a/16sol-6aa763baf9.svg\" style=\"max-height: 14rem\"/>\n\nThe line through \\((6,5)\\) and \\((9,1)\\) is \\(y=-\\frac43x+13\\), so it meets \\(x=8\\) at \\(y=\\frac73\\). By symmetry, the union is two congruent triangles with vertical base from \\((8,-3)\\) to \\((8,\\frac73)\\).\n\nThat base has length \\(\\frac73+3=\\frac{16}{3}\\), and each triangle has horizontal height \\(2\\). Hence the union area is \\(2\\left(\\frac12\\cdot\\frac{16}{3}\\cdot2\\right)=\\frac{32}{3}\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "reflection (geometry)",
+        "triangle area",
+        "symmetry"
+      ],
+      "sourceDifficulty": 2060,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/16"
+    },
+    {
+      "id": "amc-10-2013a-q17",
+      "number": 17,
+      "question": "Daphne is visited periodically by her three best friends: Alice, Beatrix, and Claire. Alice visits every third day, Beatrix visits every fourth day, and Claire visits every fifth day.\n\nAll three friends visited Daphne yesterday. How many days of the next \\(365\\)-day period will exactly two friends visit her?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(54\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(66\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(72\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count pairwise meeting days using least common multiples",
+        "Subtract the triple-meeting days from each pair count"
+      ],
+      "solution": "Pairwise visits occur every \\(\\operatorname{lcm}(3,4)=12\\), \\(\\operatorname{lcm}(3,5)=15\\), and \\(\\operatorname{lcm}(4,5)=20\\) days.\n\nIn the next \\(365\\) days, these pair counts are \\(\\left\\lfloor\\frac{365}{12}\\right\\rfloor=30\\), \\(\\left\\lfloor\\frac{365}{15}\\right\\rfloor=24\\), and \\(\\left\\lfloor\\frac{365}{20}\\right\\rfloor=18\\).\n\nAll three visit every \\(60\\) days, which happens \\(\\left\\lfloor\\frac{365}{60}\\right\\rfloor=6\\) times. Subtracting those days from each pair count gives \\((30-6)+(24-6)\\) \\(+(18-6)=54\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "least common multiple",
+        "inclusion-exclusion",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/17"
+    },
+    {
+      "id": "amc-10-2013a-q18",
+      "number": 18,
+      "question": "Let points \\(A=(0,0),\\) \\(B=(1,2),\\) \\(C=(3,3),\\) and \\(D=(4,0).\\) Quadrilateral \\(ABCD\\) is cut into equal area pieces by a line passing through \\(A.\\) This line intersects \\(\\overline{CD}\\) at point \\(\\left(\\dfrac{p}{q}, \\dfrac{r}{s}\\right),\\) where these fractions are in lowest terms. What is \\(p+q+r+s?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(54\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(58\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(62\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(70\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(75\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "First compute the total area of \\(ABCD\\)",
+        "The cutting line through \\(A\\) makes \\(\\triangle ADG\\) half the quadrilateral area"
+      ],
+      "solution": "Let the cutting line meet \\(\\overline{CD}\\) at \\(G\\). Drop perpendiculars from \\(B\\), \\(C\\), and \\(G\\) to the \\(x\\)-axis as in the diagram.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2013a/18sol-91324608b0.svg\" style=\"max-height: 12rem\"/>\n\nThe areas of \\(\\triangle ABF\\), trapezoid \\(BCEF\\), and \\(\\triangle CDE\\) are \\(1\\), \\(5\\), and \\(\\frac32\\), respectively, so \\([ABCD]=\\frac{15}{2}\\).\n\nThus \\(\\triangle ADG\\) has area \\(\\frac{15}{4}\\). Since \\(AD=4\\), the height of \\(G\\) is \\(\\frac{15}{8}\\).\n\nThe line \\(CD\\) has equation \\(y=-3x+12\\), so \\(\\frac{15}{8}=-3x+12\\), giving \\(x=\\frac{27}{8}\\). Therefore \\(p+q+r+s\\) \\(=27+8+15+8\\) \\(=58\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "area decomposition",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/18"
+    },
+    {
+      "id": "amc-10-2013a-q19",
+      "number": 19,
+      "question": "In base \\(10,\\) the number \\(2013\\) ends in the digit \\(3.\\) In base \\(9,\\) on the other hand, the same number is written as \\((2676)_9\\) and ends in the digit \\(6.\\) For how many positive integers \\(b\\) does the base-\\(b\\)-representation of \\(2013\\) end in the digit \\(3?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A final base digit is a remainder",
+        "The base must be greater than \\(3\\) and divide \\(2013-3\\)"
+      ],
+      "solution": "Note that the units digit represents the remainder when the number is divided by the base.\n\nThe question then boils down to finding all numbers, \\(b,\\) such that \\(2013\\) leaves a remainder of \\(3\\) when divided by \\(b.\\)\n\nThis means that \\(b\\) must divide \\(2010.\\) Also note that \\(b \\geq 4,\\) since otherwise the remainder cannot be \\(3.\\)\n\nThe prime factorization of \\(2010\\) is \\[ 2010 = 2 \\cdot 3 \\cdot 5 \\cdot 67. \\] Then, \\(2010\\) has \\[ (1 + 1)^4 = 2^4 = 16 \\] factors. It has \\(3\\) factors less than \\(4,\\) namely \\(1, 2,\\) and \\(3.\\) This means there are \\(16 - 3 = 13\\) valid values for \\(b.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "number base",
+        "modular arithmetic",
+        "factor counting"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/19"
+    },
+    {
+      "id": "amc-10-2013a-q20",
+      "number": 20,
+      "question": "A unit square is rotated \\(45^\\circ\\) about its center. What is the area of the region swept out by the interior of the square?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 - \\dfrac{\\sqrt2}{2} + \\dfrac{\\pi}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{2} + \\dfrac{\\pi}{4}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2 - \\sqrt2 + \\dfrac{\\pi}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{\\sqrt2}{2} + \\dfrac{\\pi}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1 + \\dfrac{\\sqrt2}{4} + \\dfrac{\\pi}{8}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Work with one quadrant of the swept region",
+        "Decompose that quadrant into a sector and two right-triangle pieces"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2013a/20sol1-ef58d7a19b.svg\" style=\"max-height: 12rem\"/>\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2013a/20sol2-9360a82246.svg\" style=\"max-height: 11rem\"/>\n\nConsider one quarter of the swept region and multiply its area by \\(4\\).\n\nThe sector has angle \\(45^\\circ\\) and radius \\(\\frac{\\sqrt2}{2}\\), so its area is \\(\\frac18\\pi\\left(\\frac{\\sqrt2}{2}\\right)^2=\\frac{\\pi}{16}\\).\n\nThe two right-triangle pieces in that quarter have areas \\(\\frac12\\cdot\\frac12\\cdot\\frac12=\\frac18\\) and \\(\\frac12\\left(\\frac{\\sqrt2-1}{2}\\right)^2\\).\n\nMultiplying the quarter-area sum by \\(4\\) gives \\(2-\\sqrt2+\\frac{\\pi}{4}\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "transformation",
+        "sector",
+        "area decomposition"
+      ],
+      "sourceDifficulty": 2060,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/20"
+    },
+    {
+      "id": "amc-10-2013a-q21",
+      "number": 21,
+      "question": "A group of \\(12\\) pirates agree to divide a treasure chest of gold coins among themselves as follows. The \\(k^{\\text{th}}\\) pirate to take a share takes \\(\\dfrac{k}{12}\\) of the coins that remain in the chest. The number of coins initially in the chest is the smallest number for which this arrangement will allow each pirate to receive a positive whole number of coins. How many coins does the \\(12^{\\text{th}}\\) pirate receive?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(720\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1296\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1728\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1925\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3850\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Work backward from the number left for the last pirate",
+        "The remaining amount is multiplied by \\(\\frac{12}{12-k}\\) when reversing pirate \\(k\\)"
+      ],
+      "solution": "Work backward. If \\(n\\) coins remain for the \\(12\\)th pirate, then before pirate \\(k\\) took a share, the chest had \\(\\frac{12}{12-k}\\) times as many coins as it had afterward.\n\nTherefore the initial number of coins is \\(n\\cdot\\frac{12^{11}}{11!}\\).\n\nSince \\(\\frac{12^{11}}{11!}=\\frac{2^{14}3^7}{5\\cdot7\\cdot11}\\), the smallest \\(n\\) that makes the initial number an integer is \\(5^2\\cdot7\\cdot11=1925\\).\n\nThis value is attainable. The number of coins present just before pirate \\(k\\) takes a share is \\[ 2^{14}3^7\\cdot \\frac{11!}{(12-k)!\\,12^{k-1}}. \\] For \\(k=1,2,\\ldots,12\\), all these amounts are integers. Each pirate’s share is the difference between two consecutive remaining amounts, so every share is an integer as well.\n\nThus, the \\(12\\)th pirate receives \\(1925\\) coins, and <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "prime factorization",
+        "work backwards"
+      ],
+      "sourceDifficulty": 2300,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/21"
+    },
+    {
+      "id": "amc-10-2013a-q22",
+      "number": 22,
+      "question": "Six spheres of radius \\(1\\) are positioned so that their centers are at the vertices of a regular hexagon of side length \\(2.\\) The six spheres are internally tangent to a larger sphere whose center is the center of the hexagon. An eighth sphere is externally tangent to the six smaller spheres and internally tangent to the larger sphere. What is the radius of this eighth sphere?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\sqrt2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The large sphere has radius \\(3\\)",
+        "Use a right triangle joining the large center, a small-sphere center, and the eighth-sphere center"
+      ],
+      "solution": "The centers of the six radius-\\(1\\) spheres form a regular hexagon of side length \\(2\\), so each is \\(2\\) units from the large sphere’s center. Hence the large sphere has radius \\(3\\).\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2013a/22sol-2acb799108.svg\" style=\"max-height: 12rem\"/>\n\nLet the eighth sphere have radius \\(r\\), and let its center be distance \\(x\\) from the large sphere’s center. Internal tangency gives \\(x+r=3\\), so \\(x=3-r\\).\n\nUsing the right triangle between the large center, a small-sphere center, and the eighth-sphere center, \\((r+1)^2=2^2+(3-r)^2\\). Thus \\(2r+1=13-6r\\), so \\(r=\\frac32\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "sphere",
+        "3D geometry",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1970,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/22"
+    },
+    {
+      "id": "amc-10-2013a-q23",
+      "number": 23,
+      "question": "In \\(\\triangle ABC,\\) \\(AB = 86,\\) and \\(AC=97.\\) A circle with center \\(A\\) and radius \\(AB\\) intersects \\(\\overline{BC}\\) at points \\(B\\) and \\(X.\\) Moreover \\(\\overline{BX}\\) and \\(\\overline{CX}\\) have integer lengths. What is \\(BC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(28\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(33\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(61\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(72\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use power of a point from \\(C\\)",
+        "Factor \\(AC^2-AB^2\\) and use the triangle inequality to choose the valid factor pair"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2013a/23sol-bbe4eb5b71.svg\" style=\"max-height: 12rem\"/>\n\nBy power of a point from \\(C\\), \\(CB\\cdot CX\\) \\(=AC^2-AB^2\\) \\(=97^2-86^2\\).\n\nThis equals \\((97-86)(97+86)\\) \\(=11\\cdot183\\) \\(=2013\\) \\(=3\\cdot11\\cdot61\\).\n\nBoth \\(CX\\) and \\(BX\\) are integers, so \\(BC=BX+CX\\) is an integer factor paired with \\(CX\\). Also \\(CX&lt;BC&lt;86+97=183\\), so the only possible pair is \\(CX=33\\), \\(BC=61\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "power of a point",
+        "prime factorization",
+        "triangle inequality"
+      ],
+      "sourceDifficulty": 2010,
+      "solveTimeSeconds": 125,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/23"
+    },
+    {
+      "id": "amc-10-2013a-q24",
+      "number": 24,
+      "question": "Central High School is competing against Northern High School in a backgammon match. Each school has three players, and the contest rules require that each player play two games against each of the other school’s players. The match takes place in six rounds, with three games played simultaneously in each round. In how many different ways can the match be scheduled?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(540\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(600\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(720\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(810\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(900\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Fix one player’s six-round schedule first",
+        "For the second player, count strings avoiding the first player’s opponent in every round"
+      ],
+      "solution": "Label Central’s players \\(A,B,C\\) and Northern’s players \\(X,Y,Z\\).\n\nPlayer \\(A\\)’s six-round opponent string contains two each of \\(X,Y,Z\\), so it can be chosen in \\(\\frac{6!}{2!2!2!}=90\\) ways.\n\nFor a fixed \\(A\\)-string, say \\(XXYYZZ\\), player \\(B\\)’s string must also contain two each of \\(X,Y,Z\\) and cannot match \\(A\\)’s opponent in any position.\n\nIf \\(B\\)’s first two entries are \\(Y,Z\\) in either order, then the middle two entries must be \\(X,Z\\) in either order and the last two must be \\(X,Y\\) in either order, giving \\(2^3=8\\) strings. The two remaining possibilities are \\(YYZZXX\\) and \\(ZZXXYY\\), for \\(10\\) total \\(B\\)-strings.\n\nOnce \\(A\\) and \\(B\\) are scheduled, \\(C\\)’s schedule is forced. Hence there are \\(90\\cdot10=900\\) schedules.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "multiset permutations",
+        "casework"
+      ],
+      "sourceDifficulty": 2390,
+      "solveTimeSeconds": 160,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/24"
+    },
+    {
+      "id": "amc-10-2013a-q25",
+      "number": 25,
+      "question": "All \\(20\\) diagonals are drawn in a regular octagon. At how many distinct points in the interior of the octagon (not on the boundary) do two or more diagonals intersect?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(49\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(65\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(70\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(96\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(128\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Start with \\(\\binom84\\) intersections from four vertices",
+        "Correct for the center and the eight other triple-concurrence points"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2013a/25sol-46946c5e91.svg\" style=\"max-height: 12rem\"/>\n\nIf no three diagonals were concurrent, each choice of \\(4\\) vertices would determine one interior intersection, giving \\(\\binom84=70\\).\n\nThe \\(4\\) long diagonals through opposite vertices all meet at the center, so the center was counted \\(\\binom42=6\\) times and should be counted once. Subtract \\(5\\).\n\nThere are also \\(8\\) symmetric points where \\(3\\) diagonals meet. Each was counted \\(\\binom32=3\\) times and should be counted once, so subtract \\(8(3-1)=16\\).\n\nThe number of distinct interior intersection points is \\(70-5-16=49\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "counting intersections",
+        "regular polygon",
+        "combinations"
+      ],
+      "sourceDifficulty": 2180,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2013A/problem/25"
+    }
+  ]
+}

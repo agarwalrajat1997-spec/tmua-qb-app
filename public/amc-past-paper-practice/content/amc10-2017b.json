@@ -1,0 +1,1024 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2017B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2017b-q1",
+      "number": 1,
+      "question": "Mary thought of a positive two-digit number. She multiplied it by \\(3\\) and added \\(11.\\) Then she switched the digits of the result, obtaining a number between \\(71\\) and \\(75,\\) inclusive. What was Mary’s number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Work backward from the possible reversed results",
+        "After reversing and subtracting \\(11\\), check divisibility by \\(3\\)"
+      ],
+      "solution": "Work backward from the possible results. Reversing \\(71,72,73,74,75\\) gives \\(17,27,37,47,57,\\) respectively. Subtracting \\(11\\) gives \\(6,16,26,36,46.\\) Only \\(6\\) and \\(36\\) are divisible by \\(3,\\) and only \\(36\\div3=12\\) is a two-digit number.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "digits",
+        "divisibility",
+        "work backwards"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/1"
+    },
+    {
+      "id": "amc-10-2017b-q2",
+      "number": 2,
+      "question": "Sofia ran \\(5\\) laps around the \\(400\\)-meter track at her school. For each lap, she ran the first \\(100\\) meters at an average speed of \\(4\\) meters per second and the remaining \\(300\\) meters at an average speed of \\(5\\) meters per second. How much time did Sofia take running the \\(5\\) laps?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\) minutes and \\(35\\) seconds"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\) minutes and \\(40\\) seconds"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\) minutes and \\(5\\) seconds"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\) minutes and \\(25\\) seconds"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\) minutes and \\(10\\) seconds"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Find the time for the first \\(100\\) meters and the last \\(300\\) meters of one lap",
+        "Multiply one-lap time by \\(5\\) and convert seconds to minutes"
+      ],
+      "solution": "She ran a total of \\(5\\cdot 100=500\\) meters at \\(4\\) meters per second and \\(5\\cdot 300=1500\\) meters at \\(5\\) meters per second.\n\nTherefore, her time is \\[\\frac{500}4 + \\frac{1500}5 = 425\\] seconds.\n\nThis is equal to a total of \\(7\\) minutes and \\(5\\) seconds.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "distance rate and time",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/2"
+    },
+    {
+      "id": "amc-10-2017b-q3",
+      "number": 3,
+      "question": "Real numbers \\(x,\\) \\(y,\\) and \\(z\\) satisfy the inequalities \\(0 &lt; x &lt; 1,\\) \\(-1 &lt; y &lt; 0,\\) and \\(1 &lt; z &lt; 2.\\)\n\nWhich of the following numbers is necessarily positive?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(y+x^2 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(y+xz \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(y+y^2 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(y+2y^2 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(y+z \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The choice \\(y+z\\) can be tested directly from the given bounds",
+        "Use one small counterexample to reject each other expression"
+      ],
+      "solution": "Since \\(-1 &lt; y\\) and \\(1 &lt; z,\\) we can add the inequalities to see that \\(0 &lt; y+z.\\) This naturally proves choice <b>E</b> correct.\n\nFurthermore, we can eliminate every other choice with the following values: \\[x=0.1,\\]\\[y=-0.25,\\]\\[z=1.25.\\]\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "inequality",
+        "counterexample"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/3"
+    },
+    {
+      "id": "amc-10-2017b-q4",
+      "number": 4,
+      "question": "Suppose that \\(x\\) and \\(y\\) are nonzero real numbers such that \\[\\frac{3x+y}{x-3y}=-2.\\] What is the value of \\[\\frac{x+3y}{3x-y}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-3 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-1 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Clear the denominator in the given equation",
+        "The equation quickly forces a relation between \\(x\\) and \\(y\\)"
+      ],
+      "solution": "Given that \\[\\frac{3x+y}{x-3y}=-2,\\] we can multiply by the denominator to get \\[3x+y = 6y-2x.\\] Solving, we can see that \\(x=y.\\)\n\nTherefore, \\[\\frac{x+3y}{3x-y} = \\frac{x+3x}{3x-x}=2.\\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "rational equation",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/4"
+    },
+    {
+      "id": "amc-10-2017b-q5",
+      "number": 5,
+      "question": "Camilla had twice as many blueberry jelly beans as cherry jelly beans. After eating \\(10\\) pieces of each kind, she now has three times as many blueberry jelly beans as cherry jelly beans. How many blueberry jelly beans did she originally have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(40 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(50 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let the original cherry and blueberry counts be variables",
+        "Use one equation before and one equation after eating the jelly beans"
+      ],
+      "solution": "Let the number of cherry jelly beans be \\(c\\) and let the number of blueberry jelly beans be \\(b.\\)\n\nThen, we know \\[b = 2c\\]\\[b-10=3(c-10)\\] from the first and second statements respectively.\n\nTherefore, \\[2c-10 = 3c-30\\]\\[c=20.\\] This means that \\[b = 2\\cdot 20=40.\\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "system of equations",
+        "linear equation"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/5"
+    },
+    {
+      "id": "amc-10-2017b-q6",
+      "number": 6,
+      "question": "What is the largest number of solid \\(2\\)-in \\(\\times\\) \\(2\\)-in \\(\\times\\) \\(1\\)-in blocks that can fit in a \\(3\\)-in \\(\\times\\) \\(2\\)-in \\(\\times\\) \\(3\\)-in box?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Start with the volume upper bound",
+        "Then check that four blocks really can be arranged"
+      ],
+      "solution": "The volume of the large solid object is \\(3\\cdot 3\\cdot 2 = 18\\) and volume of the smaller object is \\(2\\cdot 2\\cdot 1=4.\\) This means we can fit at most \\(4\\) of the small objects.\n\nWe can make this happen by putting \\(3\\) of the small objects in a \\(3 \\times 2 \\times 2\\) rectangular prism, and then we have a \\(3 \\times 2 \\times 1\\) space left where we can place one small object.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "volume",
+        "rectangular prism",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/6"
+    },
+    {
+      "id": "amc-10-2017b-q7",
+      "number": 7,
+      "question": "Samia set off on her bicycle to visit her friend, traveling at an average speed of \\(17\\) kilometers per hour. When she had gone half the distance to her friend’s house, a tire went flat, and she walked the rest of the way at \\(5\\) kilometers per hour.\n\nIn all, it took her \\(44\\) minutes to reach her friend’s house. In kilometers rounded to the nearest tenth, how far did Samia walk?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2.0 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2.2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2.8 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3.4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4.4 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let the walking distance be \\(d\\), so the biking distance is also \\(d\\)",
+        "Add the biking time and walking time to get \\(44\\) minutes"
+      ],
+      "solution": "Let \\(d\\) be the distance Samia walked. She bicycled the same distance, so her total travel time gives \\[\\dfrac{d}{17}+\\dfrac{d}{5}=\\dfrac{44}{60}.\\] Solving yields \\(d=\\dfrac{17}{6}=2.833\\ldots,\\) which rounds to \\(2.8\\) kilometers.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "distance rate and time",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/7"
+    },
+    {
+      "id": "amc-10-2017b-q8",
+      "number": 8,
+      "question": "Points \\(A(11, 9)\\) and \\(B(2, -3)\\) are vertices of \\(\\triangle ABC\\) with \\(AB=AC.\\) The altitude from \\(A\\) meets the opposite side at \\(D(-1, 3).\\) What are the coordinates of point \\(C?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\((-8, 9) \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\((-4, 8) \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\((-4, 9) \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\((-2, 3) \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\((-1, 0) \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "In an isosceles triangle, the altitude from the vertex also bisects the base",
+        "Use \\(D\\) as the midpoint of \\(BC\\)"
+      ],
+      "solution": "Since \\(AB=AC,\\) the altitude from \\(A\\) also bisects the base \\(BC.\\) Therefore, \\(D\\) is the midpoint of \\(BC.\\) If \\(C=(x,y),\\) then we have \\[\\frac{x+2}2 = -1,\\]\\[\\frac{y-3}2=3.\\] As such, \\[C=(x,y)=(-4,9).\\]\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "midpoint",
+        "isosceles triangle"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/8"
+    },
+    {
+      "id": "amc-10-2017b-q9",
+      "number": 9,
+      "question": "A radio program has a quiz consisting of \\(3\\) multiple-choice questions, each with \\(3\\) choices. A contestant wins if he or she gets \\(2\\) or more of the questions right. The contestant answers randomly to each question. What is the probability of winning?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{27} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{9} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2}{9} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{7}{27} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2} \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Count exactly three correct plus exactly two correct",
+        "For exactly two correct, choose which question is missed"
+      ],
+      "solution": "The probability that a contestant gets all \\(3\\) correct is \\[\\left(\\dfrac13\\right)^3=\\dfrac1{27}.\\] The probability of getting exactly \\(2\\) correct is \\[\\binom32\\left(\\dfrac13\\right)^2\\left(\\dfrac23\\right)=\\dfrac6{27}.\\] The combined probability is \\[\\dfrac6{27}+\\dfrac1{27}=\\dfrac7{27}.\\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "binomial probability",
+        "casework"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/9"
+    },
+    {
+      "id": "amc-10-2017b-q10",
+      "number": 10,
+      "question": "The lines with equations \\(ax-2y=c\\) and \\(2x+by=-c\\) are perpendicular and intersect at \\((1, -5).\\) What is \\(c?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( -13 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( -8 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 8 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 13 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Rewrite both lines in slope-intercept form",
+        "Perpendicular slopes and the point \\((1,-5)\\) determine the parameters"
+      ],
+      "solution": "The first equation can be rewritten as \\(y=\\dfrac a2x-\\dfrac c2,\\) and the second as \\(y=-\\dfrac2b x-\\dfrac cb.\\) Because the lines are perpendicular, their slopes multiply to \\(-1,\\) so \\(a=b.\\)\n\nSubstituting \\((x,y)=(1,-5)\\) into the two original equations gives \\(a+10=c\\) and \\(2-5a=-c.\\) Adding these equations yields \\(12-4a=0,\\) so \\(a=3\\) and \\(c=13.\\)\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "slope",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/10"
+    },
+    {
+      "id": "amc-10-2017b-q11",
+      "number": 11,
+      "question": "At Typico High School, \\(60\\%\\) of the students like dancing, and the rest dislike it. Of those who like dancing, \\(80\\%\\) say that they like it, and the rest say that they dislike it. Of those who dislike dancing, \\(90\\%\\) say that they dislike it, and the rest say that they like it. What fraction of students who say they dislike dancing actually like it?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\% \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\% \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\% \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(25\\% \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(33\\frac{1}{3}\\% \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Separate actual preference from reported preference",
+        "The denominator is everyone who says they dislike dancing"
+      ],
+      "solution": "Observe that of the \\(60\\%\\) of people that actually like dancing, only \\(80\\%\\) say they like dancing. This suggests that \\(48\\%\\) of the students say that they like dancing, and as such, \\(60\\%-48\\% = 12\\% \\) of the students who like dancing say they don’t like it.\n\nThen, we know that \\(90\\%\\) of the \\(40\\%\\) of people who don’t like dancing say they don’t like it, which is \\(36\\%\\) of the total student population.\n\nThis means the total amount of people who say they don’t like dancing is \\(12\\%+36\\% = 48\\%.\\)\n\nWe know then that the fraction of people who say they dislike dancing but actually like it is equal to: \\[\\frac{12}{48} = \\frac 14 = 25\\% .\\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "conditional probability",
+        "percentage"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/11"
+    },
+    {
+      "id": "amc-10-2017b-q12",
+      "number": 12,
+      "question": "Elmer’s new car gets \\(50\\%\\) better fuel efficiency, measured in kilometers per liter, than his old car. However, his new car uses diesel fuel, which is \\(20\\%\\) more expensive per liter than the gasoline his old car uses. By what percent will Elmer save money if he uses his new car instead of his old car for a long trip?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 20\\% \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( 26\\tfrac23\\% \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( 27\\tfrac79\\% \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 33\\tfrac13\\% \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 41\\tfrac23\\% \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Compare cost per kilometer, not cost per liter",
+        "New fuel uses fewer liters but each liter costs more"
+      ],
+      "solution": "Let the old car’s fuel efficiency be \\(M\\) kilometers per liter and let gasoline cost \\(C\\) dollars per liter. The old car therefore costs \\(\\dfrac CM\\) dollars per kilometer to fuel.\n\nThe new car gets \\(1.5M\\) kilometers per liter and its fuel costs \\(1.2C\\) dollars per liter, so its fuel cost per kilometer is \\[\\dfrac{1.2C}{1.5M}=0.8\\dfrac CM.\\]\n\nThe new fuel cost is \\(80\\%\\) of the old one, so Elmer saves \\(20\\%.\\)\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "rate",
+        "percentage"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/12"
+    },
+    {
+      "id": "amc-10-2017b-q13",
+      "number": 13,
+      "question": "There are \\(20\\) students participating in an after-school program offering classes in yoga, bridge, and painting. Each student must take at least one of these three classes, but may take two or all three.\n\nThere are \\(10\\) students taking yoga, \\(13\\) taking bridge, and \\(9\\) taking painting. There are \\(9\\) students taking at least two classes. How many students are taking all three classes?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(x,y,z\\) count students taking exactly one, two, and three classes",
+        "The total class enrollment counts these groups with weights \\(1,2,3\\)"
+      ],
+      "solution": "The number of classes taken total is \\(10+13+9=32.\\)\n\nLet \\(x\\) represent the number of people who take \\(1,\\) let \\(y\\) represent the number of people who take \\(2\\) classes, and let \\(z\\) represent the number of people who take \\(3\\) classes.\n\nThen, we know \\(x+2y+3z = 32.\\)\n\nAs such, the total number of people is \\(20,\\) so \\(x+y+z = 20.\\) This makes \\(y+2z=12.\\)\n\nThe number of people who take at least two classes is \\(9,\\) so \\(y+z = 9.\\)\n\nTherefore, \\(z=3,\\) making that the answer.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "inclusion-exclusion",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/13"
+    },
+    {
+      "id": "amc-10-2017b-q14",
+      "number": 14,
+      "question": "An integer \\(N\\) is selected at random in the range \\(1\\leq N \\leq 2020\\) . What is the probability that the remainder when \\(N^{16}\\) is divided by \\(5\\) is \\(1?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( \\dfrac{1}{5} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{2}{5} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{3}{5} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( \\dfrac{4}{5} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( 1 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Modulo \\(5\\), only whether \\(N\\) is divisible by \\(5\\) matters",
+        "Use Fermat’s little theorem or check residue classes modulo \\(5\\)"
+      ],
+      "solution": "By Fermat’s Little Theorem, \\(N^4\\equiv1\\pmod5\\) whenever \\(N\\) is not divisible by \\(5.\\) Therefore, \\[N^{16}\\equiv(N^4)^4\\equiv1\\pmod5.\\]\n\nThere are \\(\\frac{2020}{5}=404\\) multiples of \\(5,\\) so there are \\(2020-404=1616\\) allowable values of \\(N.\\)\n\nA multiple of \\(5\\) has \\(N^{16}\\equiv0\\pmod5,\\) so no other values work. Thus the probability is \\[\\dfrac{1616}{2020}=\\dfrac45.\\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "Fermat’s Little Theorem",
+        "modular exponentiation",
+        "basic probability"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/14"
+    },
+    {
+      "id": "amc-10-2017b-q15",
+      "number": 15,
+      "question": "Rectangle \\(ABCD\\) has \\(AB=3\\) and \\(BC=4.\\) Point \\(E\\) is the foot of the perpendicular from \\(B\\) to diagonal \\(\\overline{AC}.\\) What is the area of \\(\\triangle ADE?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\( 1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\( \\dfrac{42}{25} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\( \\dfrac{28}{15} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\( 2 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\( \\dfrac{54}{25} \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Use similarity between \\(\\triangle ABE\\) and \\(\\triangle ACB\\)",
+        "Then compare \\(\\triangle EAD\\) to \\(\\triangle CDA\\) using their bases on \\(AC\\)"
+      ],
+      "solution": "The area of \\(\\triangle CDA\\) is \\(\\dfrac{3\\cdot4}{2}=6\\). Since \\(E\\) lies on \\(AC\\), triangles \\(EAD\\) and \\(CDA\\) share the same altitude from \\(D\\), so \\([EAD]=[CDA]\\cdot \\dfrac{AE}{AC}\\).\n\nBy the Pythagorean Theorem, \\(AC=5\\). Also \\(\\triangle ABE\\sim \\triangle ACB\\), so \\(\\dfrac{AE}{AB}=\\dfrac{AB}{AC}=\\dfrac35\\), giving \\(AE=\\dfrac95\\). Thus \\(\\dfrac{AE}{AC}=\\dfrac{9}{25}\\).\n\nTherefore \\([EAD]=6\\cdot \\dfrac{9}{25}=\\dfrac{54}{25}\\). Thus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "similarity",
+        "area ratio",
+        "right triangle"
+      ],
+      "sourceDifficulty": 1600,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/15"
+    },
+    {
+      "id": "amc-10-2017b-q16",
+      "number": 16,
+      "question": "How many of the base-ten numerals for the positive integers less than or equal to \\(2017\\) contain the digit \\(0?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(469 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(471 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(475 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(478 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(481 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Count the complement: numbers with no digit \\(0\\)",
+        "Split by one-, two-, three-, and four-digit numbers up to \\(2017\\)"
+      ],
+      "solution": "For numbers less than \\(100,\\) we only have a \\(0\\) if it is a multiple of \\(10,\\) of which there are \\(9.\\)\n\nFor numbers between \\(100\\) and \\(999\\) inclusive, we will use complementary counting. There are \\(900\\) total numbers in this range. Also, there are \\(9\\cdot 9\\cdot 9=729\\) numbers in this range with no \\(0\\) since there are \\(9\\) ways to choose each digit to not be \\(0.\\) Thus, the total in this range is \\(171.\\)\n\nFor numbers between \\(1000\\) and \\(1999\\) inclusive, we will use complementary counting again. There are \\(1000\\) total numbers in this range. Also, there are \\(1\\cdot 9\\cdot 9\\cdot 9=729\\) numbers in this range with no \\(0\\) since there are \\(9\\) ways to choose each of the last \\(3\\) digits to not be \\(0\\) and the first digit must be \\(1.\\) Thus, the total in this range is \\(271.\\)\n\nThere are \\(18\\) numbers between \\(2000\\) and \\(2017\\) inclusive, each with a \\(0\\) in the second digit from the left.\n\nThis makes the total \\[9+171+271+18=469.\\]\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "digits",
+        "complementary counting"
+      ],
+      "sourceDifficulty": 1480,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/16"
+    },
+    {
+      "id": "amc-10-2017b-q17",
+      "number": 17,
+      "question": "Call a positive integer <i>monotonous</i> if it is a one-digit number or its digits, when read from left to right, form either a strictly increasing or a strictly decreasing sequence. For example, \\(3,\\) \\(23578,\\) and \\(987620\\) are monotonous, but \\(88,\\) \\(7434,\\) and \\(23557\\) are not. How many monotonous positive integers are there?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1024 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1524 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1533 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1536 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2048 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Increasing numbers are determined by their digit set",
+        "Decreasing numbers may include \\(0\\), but the number \\(0\\) itself is not positive"
+      ],
+      "solution": "The strictly increasing positive integers correspond to the nonempty subsets of \\(\\{1,2,3,4,5,6,7,8,9\\}\\), written in increasing order. There are \\(2^9-1=511\\) of these.\n\nThe strictly decreasing positive integers correspond to subsets of \\(\\{0,1,2,3,4,5,6,7,8,9\\}\\), written in decreasing order, except for the empty set and \\(\\{0\\}\\). There are \\(2^{10}-2=1022\\) of these.\n\nThe one-digit numbers \\(1\\) through \\(9\\) were counted in both groups, so the total is \\(511+1022-9=1524\\). Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "subsets",
+        "digits",
+        "bijection"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/17"
+    },
+    {
+      "id": "amc-10-2017b-q18",
+      "number": 18,
+      "question": "In the figure below, \\(3\\) of the \\(6\\) disks are to be painted blue, \\(2\\) are to be painted red, and \\(1\\) is to be painted green. Two paintings that can be obtained from one another by a rotation or a reflection of the entire figure are considered the same. How many different paintings are possible?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2017b/18-52b1f9793d.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use symmetry to reduce the green disk to two cases",
+        "For each green position, count possible red-disk placements up to symmetry"
+      ],
+      "solution": "By symmetry, the green disk has two possible types of position: a corner or a side midpoint. Fix one representative of either type. There are \\(\\binom52=10\\) ways to choose the two red disks.\n\nThe reflection that fixes the green position fixes one of the other disks and exchanges the other four disks in two pairs. Exactly \\(2\\) red-disk choices are unchanged by this reflection: choosing either exchanged pair. The other \\(8\\) choices form \\(4\\) mirror-image pairs. Hence there are \\(2+4=6\\) paintings for each type of green position.\n\nThe two types therefore give \\(6+6=12\\) paintings.\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "combinations",
+        "symmetry",
+        "casework"
+      ],
+      "sourceDifficulty": 2010,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/18"
+    },
+    {
+      "id": "amc-10-2017b-q19",
+      "number": 19,
+      "question": "Let \\(ABC\\) be an equilateral triangle. Extend side \\(\\overline{AB}\\) beyond \\(B\\) to a point \\(B'\\) so that \\(BB'=3 \\cdot AB.\\) Similarly, extend side \\(\\overline{BC}\\) beyond \\(C\\) to a point \\(C'\\) so that \\(CC'=3 \\cdot BC,\\) and extend side \\(\\overline{CA}\\) beyond \\(A\\) to a point \\(A'\\) so that \\(AA'=3 \\cdot CA.\\)\n\nWhat is the ratio of the area of \\(\\triangle A'B'C'\\) to the area of \\(\\triangle ABC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9:1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(16:1 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(25:1 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(36:1 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(37:1 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Break the large triangle into the original triangle and six surrounding triangles",
+        "Compare each surrounding triangle area to the original using base and height"
+      ],
+      "solution": "Let \\(X\\) be the area of \\(\\triangle ABC.\\) Each of \\(\\triangle BB'C,\\) \\(\\triangle CC'A,\\) and \\(\\triangle AA'B\\) has a base three times as long as a side of \\(\\triangle ABC\\) and the same corresponding altitude. Each therefore has area \\(3X.\\)\n\nNext, \\(\\triangle AA'C'\\) has three times the base and the same altitude as \\(\\triangle ACC',\\) whose area is \\(3X.\\) Thus \\(\\triangle AA'C'\\) has area \\(9X.\\) Similarly, \\(\\triangle CC'B'\\) and \\(\\triangle BB'A'\\) each have area \\(9X.\\)\n\nThese seven regions partition the large triangle, so \\[\\begin{aligned}[A'B'C']&=X+3(3X)+3(9X)\\\\&=37X.\\end{aligned}\\] The requested ratio is \\(37:1.\\)\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "area ratio",
+        "equilateral triangle",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1860,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/19"
+    },
+    {
+      "id": "amc-10-2017b-q20",
+      "number": 20,
+      "question": "The number \\(21!\\) \\(=51{,}090{,}942{,}171{,}709{,}440{,}000\\) has over \\(60{,}000\\) positive integer divisors. One of them is chosen at random. What is the probability that it is odd?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{21} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{19} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{18} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{2} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{11}{21} \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count the exponent of \\(2\\) in \\(21!\\)",
+        "For each odd part of a divisor, only one exponent of \\(2\\) gives an odd divisor"
+      ],
+      "solution": "The exponent of \\(2\\) in \\(21!\\) is \\[\\begin{aligned} &\\left\\lfloor\\dfrac{21}{2}\\right\\rfloor+ \\left\\lfloor\\dfrac{21}{4}\\right\\rfloor\\\\ &\\quad{}+\\left\\lfloor\\dfrac{21}{8}\\right\\rfloor+ \\left\\lfloor\\dfrac{21}{16}\\right\\rfloor\\\\ &=10+5+2+1=18. \\end{aligned}\\] Thus \\(21!=2^{18}d\\) for some odd integer \\(d.\\)\n\nFor every divisor \\(x\\) of \\(d,\\) the divisors of \\(21!\\) with odd part \\(x\\) are \\(x,2x,\\ldots,2^{18}x.\\) Exactly one of these \\(19\\) divisors is odd, so the probability is \\(\\dfrac1{19}.\\)\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "factor counting",
+        "prime factorization",
+        "basic probability"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/20"
+    },
+    {
+      "id": "amc-10-2017b-q21",
+      "number": 21,
+      "question": "In \\(\\triangle ABC,\\) \\(AB=6,\\) \\(AC=8,\\) \\(BC=10,\\) and \\(D\\) is the midpoint of \\(\\overline{BC}.\\) What is the sum of the radii of the circles inscribed in \\(\\triangle ADB\\) and \\(\\triangle ADC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\sqrt{5} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{11}{4} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\sqrt{2} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{17}{6} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "First recognize the \\(6,8,10\\) triangle as right",
+        "Use area equals inradius times semiperimeter for the two smaller triangles"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2017b/21sol-09bd0ad880.svg\" style=\"max-height: 12rem\"/>\n\nThe triangle \\(ABC\\) is a right triangle with a right angle at \\(A.\\) This makes \\(D\\) the circumcenter of the triangle since it is the midpoint of the hypotenuse.\n\nTherefore, \\[AD = BD = DC = 5.\\] Also, the area of \\(ABC\\) is \\[\\dfrac{6\\cdot 8}2 = 24.\\]\n\nThe bases \\(BD\\) and \\(DC\\) are equal, and the two triangles share the same altitude from \\(A.\\) Therefore, \\(\\triangle ABD\\) and \\(\\triangle ACD\\) each have area \\(12.\\)\n\nThen, for each triangle, we have \\(A = rs\\) where \\(A\\) is the area, \\(r\\) is the inradius, and \\(s\\) is the semiperimeter. Equivalently, \\(12=\\dfrac12rP,\\) where \\(P\\) is the perimeter, so \\(r=\\dfrac{24}{P}.\\) For \\(\\triangle ABD,\\) the inradius is \\(\\dfrac{24}{5+5+6}=\\dfrac32.\\) For \\(\\triangle ACD,\\) it is \\(\\dfrac{24}{5+5+8}=\\dfrac43.\\)\n\nTheir sum is \\(\\dfrac 32 + \\dfrac 43 = \\dfrac{17}6 .\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "incircle, incenter, and inradius",
+        "right triangle",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1720,
+      "solveTimeSeconds": 105,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/21"
+    },
+    {
+      "id": "amc-10-2017b-q22",
+      "number": 22,
+      "question": "The diameter \\(\\overline{AB}\\) of a circle of radius \\(2\\) is extended to a point \\(D\\) outside the circle so that \\(BD=3.\\) Point \\(E\\) is chosen so that \\(ED=5\\) and line \\(ED\\) is perpendicular to line \\(AD.\\) Segment \\(\\overline{AE}\\) intersects the circle at a point \\(C\\) between \\(A\\) and \\(E.\\) What is the area of \\(\\triangle ABC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{120}{37} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{140}{39} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{145}{39} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{140}{37} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{120}{31} \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use the semicircle angle to get a right triangle",
+        "Compare \\(\\triangle ABC\\) and \\(\\triangle AED\\) by similarity"
+      ],
+      "solution": "Since the radius is \\(2\\) and \\(BD =3,\\) we have \\(AD = 7.\\) Since \\(ED = 5\\) and the angle at \\(D\\) is a right angle, the area of \\(ADE\\) is \\(\\dfrac{5\\cdot 7}{2} = \\dfrac{35}{2} .\\)\n\nBy the Pythagorean Theorem, \\(AE=\\sqrt{5^2+7^2}=\\sqrt{74}.\\) Also, \\(\\angle ACB\\) is a right angle because \\(AB\\) is a diameter. The triangles share the angle at \\(A,\\) so \\(\\triangle ABC\\sim\\triangle AED\\) by angle-angle similarity.\n\nTheir corresponding hypotenuses are \\(AB=4\\) and \\(AE=\\sqrt{74},\\) so their area ratio is \\[\\dfrac{[ABC]}{[AED]}=\\left(\\dfrac4{\\sqrt{74}}\\right)^2=\\dfrac8{37}.\\] Therefore, \\[[ABC]=\\dfrac8{37}\\cdot\\dfrac{35}{2}=\\dfrac{140}{37}.\\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "inscribed angle",
+        "similarity",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1900,
+      "solveTimeSeconds": 115,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/22"
+    },
+    {
+      "id": "amc-10-2017b-q23",
+      "number": 23,
+      "question": "Let \\[N=123456789101112\\dots4344\\] be the \\(79\\)-digit number that is formed by writing the integers from \\(1\\) to \\(44\\) in order, one after the other. What is the remainder when \\(N\\) is divided by \\(45?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(44 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Find the remainder modulo \\(5\\) and modulo \\(9\\)",
+        "Combine them to get the remainder modulo \\(45\\)"
+      ],
+      "solution": "To find the remainder when divided by \\(45,\\) we must find the remainder when divided by \\(5\\) and \\(9.\\) The remainder when divided by \\(5\\) is the remainder when the units digit is divided by \\(5,\\) making it \\(4.\\)\n\nTo find the remainder when divided by \\(9,\\) we usually find the sum of the digits. However, each double digit number has the same remainder when divided by \\(9\\) as its digit sum, so we can just sum the integers from \\(1\\) to \\(44,\\) because each integer is congruent to its own digit sum. This sum is \\(\\dfrac{44\\cdot45}{2}=990,\\) which is a multiple of \\(9.\\) Thus, \\(N\\) is a multiple of \\(9.\\)\n\nSince it is a multiple of \\(9\\) and has a remainder of \\(4\\) when divided by \\(5,\\) the remainder when divided by \\(45\\) is \\(9.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "modular arithmetic",
+        "Chinese Remainder Theorem",
+        "digits"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/23"
+    },
+    {
+      "id": "amc-10-2017b-q24",
+      "number": 24,
+      "question": "The vertices of an equilateral triangle lie on the hyperbola \\(xy=1,\\) and a vertex of this hyperbola is the centroid of the triangle. What is the square of the area of the triangle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(48 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(108 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(120 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(169 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use symmetry of the hyperbola about \\(y=x\\)",
+        "Relate the centroid-to-vertex distance to the circumradius of the equilateral triangle"
+      ],
+      "solution": "By symmetry, assume that the centroid is the hyperbola vertex \\(G=(1,1).\\) At least two triangle vertices lie on the same branch of the hyperbola. They cannot both lie on the negative branch: if two of their \\(x\\)-coordinates were negative, the third would exceed \\(3,\\) while the sum of the three \\(y\\)-coordinates would be less than \\(\\frac{1}{3},\\) contradicting that their centroid is \\((1,1).\\) Thus two vertices lie on the positive branch.\n\nWrite these vertices as \\(P=(a,\\frac{1}{a})\\) and \\(Q=(b,\\frac{1}{b}),\\) where \\(a,b>0.\\) The centroid of an equilateral triangle is also its circumcenter, so \\(P\\) and \\(Q\\) are equidistant from \\(G.\\) For \\(t>0,\\) the squared distance from \\((t,\\frac{1}{t})\\) to \\(G\\) is \\[\\left(t+\\dfrac1t\\right)\\left(t+\\dfrac1t-2\\right).\\] This is strictly increasing as \\(t+\\frac{1}{t}\\) increases from \\(2,\\) so the distinct points must satisfy \\(b=\\frac{1}{a}.\\) Hence \\(P\\) and \\(Q\\) are reflections across \\(y=x.\\)\n\nThe third vertex lies on the perpendicular bisector \\(y=x.\\) Its coordinates also satisfy \\(xy=1,\\) so it is either \\((1,1)\\) or \\((-1,-1).\\) It cannot equal the centroid, so it is \\((-1,-1).\\) Therefore, the circumradius is the distance from \\((1,1)\\) to \\((-1,-1),\\) namely \\(2\\sqrt2.\\)\n\nDividing the equilateral triangle into three triangles at its center gives its area as \\[3\\cdot\\dfrac12(2\\sqrt2)^2\\sin120^\\circ=6\\sqrt3.\\] The square of the area is \\((6\\sqrt3)^2=108.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "hyperbola",
+        "equilateral triangle",
+        "centroid",
+        "symmetry"
+      ],
+      "sourceDifficulty": 2380,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/24"
+    },
+    {
+      "id": "amc-10-2017b-q25",
+      "number": 25,
+      "question": "Last year Isabella took \\(7\\) math tests and received \\(7\\) different scores, each an integer between \\(91\\) and \\(100,\\) inclusive. After each test she noticed that the average of her test scores was an integer. Her score on the seventh test was \\(95.\\) What was her score on the sixth test?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(92 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(94 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(96 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(98 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The final total score must be a multiple of \\(7\\)",
+        "Use the seventh score to force the first six-score sum, then use divisibility by \\(5\\)"
+      ],
+      "solution": "Let \\(S\\) be the sum of all seven scores. Since all seven averages were integers, \\(S\\) is divisible by \\(7\\). Also the seven distinct scores are between \\(91\\) and \\(100\\), so \\(91+92+\\cdots+97\\) \\(\\le S\\le\\) \\(94+95+\\cdots+100\\).\n\nThus \\(658\\le S\\le 679\\), and the possible multiples of \\(7\\) are \\(658,665,672,679\\). Since the seventh score is \\(95\\), the first six scores sum to \\(S-95\\), which must be divisible by \\(6\\). This forces \\(S=665\\).\n\nThe first six scores sum to \\(570\\). The first five-score average was also an integer, so the sum of the first five scores is divisible by \\(5\\). Therefore the sixth score is divisible by \\(5\\). Since the seventh score is already \\(95\\) and all scores are distinct, the sixth score is \\(100\\). Thus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "mean",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 2300,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2017B/problem/25"
+    }
+  ]
+}

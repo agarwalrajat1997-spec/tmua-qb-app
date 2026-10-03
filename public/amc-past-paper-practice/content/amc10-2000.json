@@ -1,0 +1,1022 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2000",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2000-q1",
+      "number": 1,
+      "question": "In the year \\(2001,\\) the United States will host the International Mathematical Olympiad. Let \\(I,\\) \\(M,\\) and \\(O\\) be distinct positive integers such that the product \\(I \\cdot M \\cdot O = 2001.\\) What is the largest possible value of the sum \\(I + M + O?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(23\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(55\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(99\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(111\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(671\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Factor \\(2001\\) into primes",
+        "To make the sum large, keep one factor as small as possible so another can be as large as possible"
+      ],
+      "solution": "Factoring gives \\(2001 = 3 \\cdot 23 \\cdot 29.\\)\n\nIf one factor is \\(1,\\) the possible pairs for the other two factors are \\((3,667),\\) \\((23,87),\\) and \\((29,69).\\) Their corresponding sums with \\(1\\) are \\(671,\\) \\(111,\\) and \\(99.\\) (The pair \\((1,2001)\\) would repeat the factor \\(1.\\))\n\nIf no factor is \\(1,\\) all three prime factors must be split among the three integers, giving only \\(3,23,29\\) and a much smaller sum. Therefore, the largest possible sum is \\(1 + 3 + 667 = 671.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "prime factorization",
+        "optimization"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/1"
+    },
+    {
+      "id": "amc-10-2000-q2",
+      "number": 2,
+      "question": "Which of the following is equal to \\(2000 \\cdot 2000^{2000}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2000^{2001}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4000^{2000}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2000^{4000}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4{,}000{,}000^{2000}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2000^{4{,}000{,}000}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Write the leading \\(2000\\) as \\(2000^1\\)",
+        "Multiplying powers with the same base adds the exponents"
+      ],
+      "solution": "Write the factor \\(2000\\) as \\(2000^1.\\) Then \\[ \\begin{aligned} 2000^1 \\cdot 2000^{2000} &= 2000^{1 + 2000} \\\\ &= 2000^{2001}. \\end{aligned} \\]\n\nEach of the other options is larger than \\(2000^{2001}.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "exponent"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/2"
+    },
+    {
+      "id": "amc-10-2000-q3",
+      "number": 3,
+      "question": "Each day, Jenny ate \\(20\\%\\) of the jellybeans that were in her jar at the beginning of that day. At the end of the second day, \\(32\\) remained. How many jellybeans were in the jar originally?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(55\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(75\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Eating \\(20\\%\\) leaves \\(80\\%\\) of the jellybeans at the end of each day",
+        "If \\(x\\) is the original amount, then \\((0.8)^2 x = 32\\)"
+      ],
+      "solution": "Since Jenny eats \\(20\\%\\) each day, \\(80\\%\\) remain at the end of each day.\n\nIf \\(x\\) is the original number, then \\[(0.8)^2 x = 0.64x = 32,\\] so \\(x = 50.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "percentage",
+        "work backwards"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/3"
+    },
+    {
+      "id": "amc-10-2000-q4",
+      "number": 4,
+      "question": "Chandra pays an on-line service provider a fixed monthly fee plus an hourly charge for connect time. Her December bill was \\(\\$12.48,\\) but in January her bill was \\(\\$17.54\\) because she used twice as much connect time as in December. What is the fixed monthly fee?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$2.53\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$5.06\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$6.24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$7.42\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$8.77\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The extra charge in January comes entirely from one additional December’s worth of connect time",
+        "The difference \\(\\$17.54 - \\$12.48\\) equals December’s connect-time cost"
+      ],
+      "solution": "January doubled only the connect time, so the increase \\(\\$17.54 - \\$12.48 = \\$5.06\\) equals December’s connect-time cost.\n\nThe fixed monthly fee is therefore \\(\\$12.48 - \\$5.06 = \\$7.42.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "system of equations",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/4"
+    },
+    {
+      "id": "amc-10-2000-q5",
+      "number": 5,
+      "question": "Points \\(M\\) and \\(N\\) are the midpoints of sides \\(PA\\) and \\(PB\\) of \\(\\triangle PAB.\\) As \\(P\\) moves along a line that is parallel to side \\(AB,\\) how many of the four quantities listed below change?\n\n(a) the length of the segment \\(MN;\\) (b) the perimeter of \\(\\triangle PAB;\\) (c) the area of \\(\\triangle PAB;\\) (d) the area of trapezoid \\(ABNM.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2000/5-f3a8a2147c.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "\\(MN\\) is a midsegment of the triangle, so \\(MN = \\tfrac12 AB\\)",
+        "Since \\(P\\) stays on a line parallel to \\(AB,\\) the height from \\(P\\) to \\(AB\\) never changes"
+      ],
+      "solution": "Since \\(MN\\) is a midsegment, \\(MN = \\tfrac12 AB,\\) which is fixed.\n\nThe base \\(AB\\) and the height from \\(P\\) to \\(AB\\) are both constant as \\(P\\) slides along the parallel line, so the area of \\(\\triangle PAB\\) does not change. The trapezoid \\(ABNM\\) is the triangle minus \\(\\triangle PMN,\\) both of whose areas are constant, so its area does not change either.\n\nOnly the perimeter changes, since \\(PA\\) and \\(PB\\) vary as \\(P\\) moves. So exactly one quantity changes.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "triangle area",
+        "midpoint",
+        "parallel lines"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/5"
+    },
+    {
+      "id": "amc-10-2000-q6",
+      "number": 6,
+      "question": "The Fibonacci sequence \\(1,\\) \\(1,\\) \\(2,\\) \\(3,\\) \\(5,\\) \\(8,\\) \\(13,\\) \\(21,\\) \\(\\ldots\\) starts with two \\(1\\)s, and each term afterwards is the sum of its two predecessors. Which one of the ten digits is the last to appear in the units position of a number in the Fibonacci sequence?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Track only the units digit of each term, adding the two previous units digits modulo \\(10\\)",
+        "List the units digits and note which digit is slowest to first appear"
+      ],
+      "solution": "Recording only the units digits gives the sequence \\[ \\begin{gathered} 1, 1, 2, 3, 5, 8, 3, 1, 4, 5, 9, \\\\ 4, 3, 7, 0, 7, 7, 4, 1, 5, 6, \\ldots \\end{gathered} \\]\n\nScanning for the first appearance of each digit, the digit \\(6\\) is the last of the ten digits to show up.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "Fibonacci",
+        "units digit",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/6"
+    },
+    {
+      "id": "amc-10-2000-q7",
+      "number": 7,
+      "question": "In rectangle \\(ABCD,\\) \\(AD = 1,\\) \\(P\\) is on \\(\\overline{AB},\\) and \\(\\overline{DB}\\) and \\(\\overline{DP}\\) trisect \\(\\angle ADC.\\) What is the perimeter of \\(\\triangle BDP?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2000/7-ff6238fe2c.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3 + \\dfrac{\\sqrt3}{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2 + \\dfrac{4\\sqrt3}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2 + 2\\sqrt2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3 + 3\\sqrt5}{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2 + \\dfrac{5\\sqrt3}{3}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Angle \\(ADC = 90^\\circ\\) is split into three \\(30^\\circ\\) angles",
+        "Triangles \\(ADP\\) and \\(ADB\\) are both \\(30\\)-\\(60\\)-\\(90\\) right triangles with leg \\(AD = 1\\)"
+      ],
+      "solution": "The right angle \\(\\angle ADC = 90^\\circ\\) is trisected into three \\(30^\\circ\\) angles, so \\(\\angle ADP = 30^\\circ\\) and \\(\\angle ADB = 60^\\circ.\\)\n\nIn right triangle \\(ADP,\\) with \\(AD = 1,\\) we get \\(DP = \\dfrac{1}{\\cos 30^\\circ} = \\dfrac{2\\sqrt3}{3}\\) and \\(AP = \\tan 30^\\circ = \\dfrac{\\sqrt3}{3}.\\)\n\nIn right triangle \\(ADB,\\) with \\(AD = 1,\\) we get \\(DB = \\dfrac{1}{\\cos 60^\\circ} = 2\\) and \\(AB = \\tan 60^\\circ = \\sqrt3.\\)\n\nThen \\[ \\begin{aligned} PB = AB - AP &= \\sqrt3 - \\dfrac{\\sqrt3}{3} \\\\ &= \\dfrac{2\\sqrt3}{3}. \\end{aligned} \\]\n\nThe perimeter of \\(\\triangle BDP\\) is \\[ \\begin{gathered} DP + PB + DB \\\\ = \\dfrac{2\\sqrt3}{3} + \\dfrac{2\\sqrt3}{3} + 2 \\\\ = 2 + \\dfrac{4\\sqrt3}{3}. \\end{gathered} \\]\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "special right triangle",
+        "rectangle",
+        "perimeter"
+      ],
+      "sourceDifficulty": 1390,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/7"
+    },
+    {
+      "id": "amc-10-2000-q8",
+      "number": 8,
+      "question": "At Olympic High School, \\(\\tfrac25\\) of the freshmen and \\(\\tfrac45\\) of the sophomores took the AMC \\(10.\\) Given that the number of freshmen and sophomore contestants was the same, which of the following must be true?",
+      "options": [
+        {
+          "label": "A",
+          "content": "There are five times as many sophomores as freshmen."
+        },
+        {
+          "label": "B",
+          "content": "There are twice as many sophomores as freshmen."
+        },
+        {
+          "label": "C",
+          "content": "There are as many freshmen as sophomores."
+        },
+        {
+          "label": "D",
+          "content": "There are twice as many freshmen as\nsophomores."
+        },
+        {
+          "label": "E",
+          "content": "There are five times as many freshmen as sophomores."
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let \\(f\\) and \\(s\\) be the numbers of freshmen and sophomores, and set the two contestant counts equal",
+        "Solve \\(\\tfrac25 f = \\tfrac45 s\\) for \\(f\\) in terms of \\(s\\)"
+      ],
+      "solution": "Let \\(f\\) and \\(s\\) be the numbers of freshmen and sophomores. The contestant counts are equal, so \\[\\tfrac25 f = \\tfrac45 s.\\]\n\nMultiplying by \\(5\\) gives \\(2f = 4s,\\) so \\(f = 2s.\\) There are twice as many freshmen as sophomores.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/8"
+    },
+    {
+      "id": "amc-10-2000-q9",
+      "number": 9,
+      "question": "If \\(|x - 2| = p,\\) where \\(x \\lt 2,\\) then \\(x - p =\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2 - 2p\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2p - 2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(|2p - 2|\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Since \\(x \\lt 2,\\) the quantity \\(x - 2\\) is negative, so \\(|x - 2| = 2 - x\\)",
+        "Solve \\(2 - x = p\\) for \\(x,\\) then substitute into \\(x - p\\)"
+      ],
+      "solution": "Because \\(x \\lt 2,\\) we have \\(|x - 2| = 2 - x = p,\\) so \\(x = 2 - p.\\)\n\nThen \\[x - p = (2 - p) - p = 2 - 2p.\\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "absolute value",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/9"
+    },
+    {
+      "id": "amc-10-2000-q10",
+      "number": 10,
+      "question": "The sides of a triangle with positive area have lengths \\(4,\\) \\(6,\\) and \\(x.\\) The sides of a second triangle with positive area have lengths \\(4,\\) \\(6,\\) and \\(y.\\) What is the smallest positive number that is not a possible value of \\(|x - y|?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The triangle inequality forces each of \\(x\\) and \\(y\\) to lie strictly between \\(2\\) and \\(10\\)",
+        "Find the range of \\(|x - y|\\) when \\(x\\) and \\(y\\) each range over that open interval"
+      ],
+      "solution": "By the triangle inequality, each of \\(x\\) and \\(y\\) can be any number strictly between \\(6 - 4 = 2\\) and \\(6 + 4 = 10.\\)\n\nThen \\(|x - y|\\) can take any value with \\(0 \\le |x - y| \\lt 8.\\)\n\nThe smallest positive number not attainable is \\(10 - 2 = 8.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "triangle inequality",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/10"
+    },
+    {
+      "id": "amc-10-2000-q11",
+      "number": 11,
+      "question": "Two different prime numbers between \\(4\\) and \\(18\\) are chosen. When their sum is subtracted from their product, which of the following numbers could be obtained?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(119\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(180\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(231\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The primes between \\(4\\) and \\(18\\) are \\(5,\\) \\(7,\\) \\(11,\\) \\(13,\\) \\(17,\\) all odd",
+        "Note that \\(xy - (x + y)\\) \\(= (x - 1)(y - 1) - 1,\\) which is odd and increases with \\(x\\) and \\(y\\)"
+      ],
+      "solution": "The primes between \\(4\\) and \\(18\\) are \\(5,\\) \\(7,\\) \\(11,\\) \\(13,\\) and \\(17.\\) The product of two of them is odd and the sum is even, so \\(xy - (x + y)\\) is odd.\n\nSince \\(xy - (x + y)\\) \\(= (x - 1)(y - 1) - 1\\) increases as either prime increases, the result ranges from \\(5 \\cdot 7 - 12 = 23\\) up to \\(13 \\cdot 17 - 30 = 191.\\)\n\nThe only odd option in \\([23, 191]\\) is \\(119 = 11 \\cdot 13 - (11 + 13).\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "prime",
+        "parity",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/11"
+    },
+    {
+      "id": "amc-10-2000-q12",
+      "number": 12,
+      "question": "Figures \\(0,\\) \\(1,\\) \\(2,\\) and \\(3\\) consist of \\(1,\\) \\(5,\\) \\(13,\\) and \\(25\\) nonoverlapping unit squares, respectively. If the pattern were continued, how many nonoverlapping unit squares would there be in figure \\(100?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2000/12-b1163a5b28.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10401\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(19801\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20201\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(39801\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(40801\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The differences \\(1, 5, 13, 25, \\ldots\\) grow by \\(4, 8, 12, \\ldots\\)",
+        "Figure \\(n\\) has \\(n^2 + (n+1)^2\\) unit squares"
+      ],
+      "solution": "Figure \\(n\\) can be split into the sum of the first \\(n\\) odd numbers and the first \\(n+1\\) odd numbers, giving \\(n^2 + (n+1)^2\\) unit squares.\n\nFor figure \\(100,\\) this is \\[ \\begin{aligned} 100^2 + 101^2 &= 10000 + 10201 \\\\ &= 20201. \\end{aligned} \\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "sum of first n odd numbers",
+        "perfect square",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/12"
+    },
+    {
+      "id": "amc-10-2000-q13",
+      "number": 13,
+      "question": "There are \\(5\\) yellow pegs, \\(4\\) red pegs, \\(3\\) green pegs, \\(2\\) blue pegs, and \\(1\\) orange peg to be placed on a triangular peg board. In how many ways can the pegs be placed so that no (horizontal) row or (vertical) column contains two pegs of the same color?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2000/13-83af058565.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5! \\cdot 4! \\cdot 3! \\cdot 2! \\cdot 1!\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\frac{15!}{5! \\cdot 4! \\cdot 3! \\cdot 2! \\cdot 1!}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15!\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "There are exactly five rows and five columns, and five yellow pegs",
+        "Each color that has as many pegs as available lines must occupy exactly one peg in each such line, forcing its positions"
+      ],
+      "solution": "The board has five rows and five columns. To avoid two yellow pegs in a row or column, there must be exactly one yellow peg in each row, forcing the yellow pegs onto the long diagonal.\n\nThe four red pegs must then each go in rows \\(2\\) through \\(5,\\) and the only positions left force them into a single diagonal as well. Continuing with green, blue, and orange, every color is forced into a unique position.\n\nHence there is exactly one valid arrangement.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "logical deduction"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/13"
+    },
+    {
+      "id": "amc-10-2000-q14",
+      "number": 14,
+      "question": "Mrs. Walter gave an exam in a mathematics class of five students. She entered the scores in random order into a spreadsheet, which recalculated the class average after each score was entered. Mrs. Walter noticed that after each score was entered, the average was always an integer. The scores (listed in ascending order) were \\(71,\\) \\(76,\\) \\(80,\\) \\(82,\\) and \\(91.\\) What was the last score Mrs. Walter entered?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(71\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(76\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(80\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(82\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(91\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The sum of the first \\(n\\) entered scores must be divisible by \\(n\\)",
+        "Use the residues of the scores modulo \\(3\\) to pin down which three could be entered first"
+      ],
+      "solution": "The residues of \\(71, 76, 80, 82, 91\\) modulo \\(3\\) are \\(2, 1, 2, 1, 1.\\) The sum of the first three scores must be divisible by \\(3,\\) and the only such triple is \\(76 + 82 + 91 = 249,\\) so the third score entered is \\(91\\) and the first two are \\(76\\) and \\(82.\\)\n\nSince \\(249\\) is one more than a multiple of \\(4,\\) the fourth score must be three more than a multiple of \\(4,\\) which only \\(71\\) satisfies. That leaves \\(80\\) as the fifth and last score.\n\nIndeed \\(76, 158, 249, 320, 400\\) are divisible by \\(1, 2, 3, 4, 5.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "divisibility",
+        "modular arithmetic",
+        "mean"
+      ],
+      "sourceDifficulty": 1560,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/14"
+    },
+    {
+      "id": "amc-10-2000-q15",
+      "number": 15,
+      "question": "Two non-zero real numbers, \\(a\\) and \\(b,\\) satisfy \\(ab = a - b.\\) Find a possible value of \\[\\dfrac{a}{b} + \\dfrac{b}{a} - ab.\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-\\dfrac12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Combine \\(\\dfrac{a}{b} + \\dfrac{b}{a}\\) over the common denominator \\(ab\\)",
+        "Replace \\(ab\\) with \\(a - b\\) inside \\((ab)^2\\)"
+      ],
+      "solution": "Over the common denominator \\(ab,\\) \\[\\dfrac{a}{b} + \\dfrac{b}{a} - ab = \\dfrac{a^2 + b^2 - (ab)^2}{ab}.\\]\n\nSubstituting \\(ab = a - b\\) gives \\[\\dfrac{a^2 + b^2 - (a - b)^2}{ab} = \\dfrac{2ab}{ab} = 2.\\]\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "algebraic manipulation",
+        "substitution"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/15"
+    },
+    {
+      "id": "amc-10-2000-q16",
+      "number": 16,
+      "question": "The diagram shows \\(28\\) lattice points, each one unit from its nearest neighbors. Segment \\(AB\\) meets segment \\(CD\\) at \\(E.\\) Find the length of segment \\(AE.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2000/16-45ef1f8e18.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{4\\sqrt5}{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{5\\sqrt5}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{12\\sqrt5}{7}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2\\sqrt5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5\\sqrt{65}}{9}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Assign coordinates \\(A = (0, 3),\\) \\(B = (6, 0),\\) \\(C = (4, 2),\\) \\(D = (2, 0)\\)",
+        "Find the equations of lines \\(AB\\) and \\(CD\\) and solve for their intersection \\(E\\)"
+      ],
+      "solution": "Place the points at \\(A = (0, 3),\\) \\(B = (6, 0),\\) \\(C = (4, 2),\\) \\(D = (2, 0).\\)\n\nLine \\(AB\\) is \\(x + 2y = 6\\) and line \\(CD\\) is \\(x - y = 2.\\) Solving simultaneously gives \\(E = \\left(\\dfrac{10}{3}, \\dfrac{4}{3}\\right).\\)\n\nThen \\[ \\begin{aligned} AE &= \\sqrt{\\left(\\dfrac{10}{3}\\right)^2 + \\left(\\dfrac{4}{3} - 3\\right)^2} \\\\ &= \\sqrt{\\dfrac{100}{9} + \\dfrac{25}{9}} \\\\ &= \\dfrac{5\\sqrt5}{3}. \\end{aligned} \\]\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "distance formula",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1690,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/16"
+    },
+    {
+      "id": "amc-10-2000-q17",
+      "number": 17,
+      "question": "Boris has an incredible coin changing machine. When he puts in a quarter, it returns five nickels; when he puts in a nickel, it returns five pennies; and when he puts in a penny, it returns five quarters. Boris starts with just one penny. Which of the following amounts could Boris have after using the machine repeatedly?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$3.63\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$5.13\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$6.30\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$7.45\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$9.07\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A quarter for five nickels and a nickel for five pennies each leave the total value unchanged",
+        "Only the penny-for-five-quarters trade changes the total, always adding \\(\\$1.24\\)"
+      ],
+      "solution": "Trading a quarter for five nickels or a nickel for five pennies does not change the total value. Only trading a penny for five quarters changes it, adding \\(5 \\cdot 25 - 1 = 124\\) cents.\n\nStarting from \\(1\\) cent, Boris always has \\(1 + 124n\\) cents for some nonnegative integer \\(n.\\)\n\nOnly \\(\\$7.45\\) has this form, since \\(745 = 1 + 124 \\cdot 6.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "invariant",
+        "modular arithmetic",
+        "money"
+      ],
+      "sourceDifficulty": 1750,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/17"
+    },
+    {
+      "id": "amc-10-2000-q18",
+      "number": 18,
+      "question": "Charlyn walks completely around the boundary of a square whose sides are each \\(5\\) km long. From any point on her path she can see exactly \\(1\\) km horizontally in all directions. What is the area of the region consisting of all points Charlyn can see during her walk, expressed in square kilometers and rounded to the nearest whole number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(39\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(42\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Split the visible region into the part inside the square and the part outside it",
+        "Outside, the region is four \\(5 \\times 1\\) rectangles plus four quarter circles of radius \\(1\\)"
+      ],
+      "solution": "Inside the square, Charlyn sees everything except a central square of side \\(5 - 2 = 3,\\) an area of \\(25 - 9 = 16\\) square kilometers.\n\nOutside the square, the region is four rectangles each \\(5 \\times 1\\) plus four quarter circles of radius \\(1,\\) an area of \\(4 \\cdot 5 + \\pi = 20 + \\pi\\) square kilometers.\n\nThe total area is \\(36 + \\pi \\approx 39\\) square kilometers.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "area decomposition",
+        "circle area",
+        "estimation"
+      ],
+      "sourceDifficulty": 1820,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/18"
+    },
+    {
+      "id": "amc-10-2000-q19",
+      "number": 19,
+      "question": "Through a point on the hypotenuse of a right triangle, lines are drawn parallel to the legs of the triangle so that the triangle is divided into a square and two smaller right triangles. The area of one of the two small right triangles is \\(m\\) times the area of the square. The ratio of the area of the other small right triangle to the area of the square is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2m + 1}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(m\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1 - m\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{4m}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{8m^2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let the square have side \\(1,\\) and let the two small triangles have legs matching the square’s sides",
+        "The two small triangles are similar, so their leg lengths are reciprocals"
+      ],
+      "solution": "Let the square have side \\(1.\\) One small triangle has legs \\(1\\) and \\(r,\\) with area \\(\\tfrac12 r = m,\\) so \\(r = 2m.\\)\n\nThe two small triangles are similar, so the other has legs \\(1\\) and \\(\\tfrac1r,\\) with area \\(\\tfrac12 \\cdot \\tfrac1r = \\tfrac{1}{4m}.\\)\n\nSince the square has area \\(1,\\) the desired ratio is \\(\\dfrac{1}{4m}.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "similarity",
+        "area ratio",
+        "right triangle"
+      ],
+      "sourceDifficulty": 1750,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/19"
+    },
+    {
+      "id": "amc-10-2000-q20",
+      "number": 20,
+      "question": "Let \\(A,\\) \\(M,\\) and \\(C\\) be nonnegative integers such that \\(A + M + C = 10.\\) What is the maximum value of \\[ \\begin{aligned} &A \\cdot M \\cdot C + A \\cdot M \\\\ &\\quad {}+ M \\cdot C + C \\cdot A? \\end{aligned} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(49\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(59\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(69\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(79\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(89\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Add \\(1\\) to each variable and expand \\((A+1)(M+1)(C+1)\\)",
+        "The expression equals \\((A+1)(M+1)(C+1) - 11,\\) so maximize a product of three positive integers summing to \\(13\\)"
+      ],
+      "solution": "Notice that \\[ \\begin{gathered} A \\cdot M \\cdot C + AM + MC + CA \\\\ = (A+1)(M+1)(C+1) \\\\ {}- (A + M + C) - 1 \\\\ = (A+1)(M+1)(C+1) - 11. \\end{gathered} \\]\n\nWe maximize a product of three positive integers summing to \\(13.\\) The most balanced split is \\(4, 4, 5,\\) giving \\(4 \\cdot 4 \\cdot 5 = 80.\\)\n\nThe maximum is \\(80 - 11 = 69.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "factoring",
+        "optimization"
+      ],
+      "sourceDifficulty": 1820,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/20"
+    },
+    {
+      "id": "amc-10-2000-q21",
+      "number": 21,
+      "question": "If all alligators are ferocious creatures and some creepy crawlers are alligators, which statement(s) must be true?\n\nI. All alligators are creepy crawlers.\n\nII. Some ferocious creatures are creepy crawlers.\n\nIII. Some alligators are not creepy crawlers.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\mathrm{I}\\) only"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\mathrm{II}\\) only"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\mathrm{III}\\) only"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\mathrm{II}\\) and \\(\\mathrm{III}\\) only"
+        },
+        {
+          "label": "E",
+          "content": "None must be true"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Some creepy crawlers are alligators, and every alligator is ferocious",
+        "Test statements I and III by drawing a diagram where alligators sit entirely inside the creepy crawlers"
+      ],
+      "solution": "Some creepy crawlers are alligators, and all alligators are ferocious, so those creatures are both creepy crawlers and ferocious. Hence some ferocious creatures are creepy crawlers, making II true.\n\nStatement I fails because not every alligator need be a creepy crawler, and III fails because it is possible that all alligators are creepy crawlers. Only II must hold.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "logical deduction",
+        "Venn Diagram"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/21"
+    },
+    {
+      "id": "amc-10-2000-q22",
+      "number": 22,
+      "question": "One morning each member of Angela’s family drank an \\(8\\)-ounce mixture of coffee with milk. The amounts of coffee and milk varied from cup to cup, but were never zero. Angela drank a quarter of the total amount of milk and a sixth of the total amount of coffee. How many people are in the family?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Angela’s cup is a fraction \\(\\tfrac1n\\) of everyone’s total drink",
+        "Her cup is a mix of \\(\\tfrac14\\) of the milk and \\(\\tfrac16\\) of the coffee, so \\(\\tfrac1n\\) lies strictly between \\(\\tfrac16\\) and \\(\\tfrac14\\)"
+      ],
+      "solution": "Let there be \\(n\\) people, drinking \\(8n\\) ounces total, split into milk \\(M\\) and coffee \\(C.\\) Angela drank one cup, so \\[\\tfrac14 M + \\tfrac16 C = \\tfrac1n (M + C).\\]\n\nThe left side is a weighted average of \\(\\tfrac14\\) and \\(\\tfrac16,\\) so \\(\\tfrac1n\\) lies strictly between \\(\\tfrac16\\) and \\(\\tfrac14.\\) That forces \\(4 \\lt n \\lt 6,\\) so \\(n = 5.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "weighted mean",
+        "bounding to limit cases",
+        "mixture",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1900,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/22"
+    },
+    {
+      "id": "amc-10-2000-q23",
+      "number": 23,
+      "question": "When the mean, median, and mode of the list \\[10, 2, 5, 2, 4, 2, x\\] are arranged in increasing order, they form a non-constant arithmetic progression. What is the sum of all possible real values of \\(x?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The mode is \\(2\\) and the mean is \\(\\dfrac{25 + x}{7};\\) the median depends on where \\(x\\) falls",
+        "Split into cases by the size of \\(x,\\) and require the three ordered values to be equally spaced"
+      ],
+      "solution": "The mode is always \\(2,\\) and the mean is \\(\\mu = \\dfrac{25+x}{7}.\\)\n\nIf \\(x \\leq 2,\\) the median is also \\(2.\\) Two equal values cannot belong to a non-constant three-term arithmetic progression, so this case gives no solutions.\n\nIf \\(2 &lt; x &lt; 4,\\) the values occur in the order \\(2 &lt; x &lt; \\mu.\\) They form an arithmetic progression exactly when \\(x-2 = \\mu-x.\\) Substituting for \\(\\mu\\) gives \\[ x-2 = \\dfrac{25+x}{7}-x, \\] whose solution is \\(x=3.\\)\n\nIf \\(x \\geq 4,\\) the median is \\(4\\) and \\(\\mu>4.\\) Thus the condition is \\[ 4-2 = \\mu-4, \\] so \\(\\mu=6\\) and \\(x=17.\\)\n\nThe two possible values are therefore \\(3\\) and \\(17,\\) whose sum is \\(20.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "mean",
+        "median (data)",
+        "arithmetic sequence",
+        "casework"
+      ],
+      "sourceDifficulty": 1950,
+      "solveTimeSeconds": 160,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/23"
+    },
+    {
+      "id": "amc-10-2000-q24",
+      "number": 24,
+      "question": "Let \\(f\\) be a function for which \\(f\\left(\\dfrac{x}{3}\\right) = x^2 + x + 1.\\) Find the sum of all values of \\(z\\) for which \\(f(3z) = 7.\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-\\dfrac13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-\\dfrac19\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac59\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac53\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "To make \\(\\dfrac{x}{3} = 3z,\\) set \\(x = 9z\\)",
+        "This gives a quadratic in \\(z;\\) use the sum-of-roots formula \\(-\\dfrac{b}{a}\\)"
+      ],
+      "solution": "To evaluate \\(f(3z),\\) set \\(\\dfrac{x}{3} = 3z,\\) so \\(x = 9z.\\) Then \\[ \\begin{aligned} f(3z) &= (9z)^2 + 9z + 1 \\\\ &= 81z^2 + 9z + 1. \\end{aligned} \\]\n\nSetting this equal to \\(7\\) gives \\(81z^2 + 9z - 6 = 0.\\)\n\nBy the sum-of-roots formula, the sum of the values of \\(z\\) is \\(-\\dfrac{9}{81} = -\\dfrac19.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "function",
+        "substitution",
+        "Vieta’s Formulas"
+      ],
+      "sourceDifficulty": 1690,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/24"
+    },
+    {
+      "id": "amc-10-2000-q25",
+      "number": 25,
+      "question": "In year \\(N,\\) the \\(300\\)th day of the year is a Tuesday. In year \\(N + 1,\\) the \\(200\\)th day is also a Tuesday. On what day of the week did the \\(100\\)th day of year \\(N - 1\\) occur?",
+      "options": [
+        {
+          "label": "A",
+          "content": "Thursday"
+        },
+        {
+          "label": "B",
+          "content": "Friday"
+        },
+        {
+          "label": "C",
+          "content": "Saturday"
+        },
+        {
+          "label": "D",
+          "content": "Sunday"
+        },
+        {
+          "label": "E",
+          "content": "Monday"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Two dates fall on the same weekday exactly when the number of days between them is a multiple of \\(7\\)",
+        "Count the days from day \\(300\\) of year \\(N\\) to day \\(200\\) of year \\(N+1\\) to decide whether \\(N\\) is a leap year"
+      ],
+      "solution": "From day \\(300\\) of year \\(N\\) to day \\(200\\) of year \\(N + 1\\) is \\((L - 300) + 200\\) days, where \\(L\\) is the length of year \\(N.\\) If \\(N\\) were not a leap year, this is \\(265 \\equiv 6 \\pmod 7,\\) giving a Monday, not a Tuesday. So year \\(N\\) is a leap year, and the count is \\(266 = 7 \\cdot 38,\\) consistent with Tuesday.\n\nThen years \\(N - 1\\) and \\(N + 1\\) are not leap years.\n\nThe \\(100\\)th day of year \\(N - 1\\) precedes the Tuesday (day \\(300\\) of year \\(N\\)) by \\((365 - 100) + 300 = 565\\) days. Since \\(565 = 7 \\cdot 80 + 5,\\) that day is \\(5\\) days earlier in the week than Tuesday, which is a Thursday.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "date and time",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 1860,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2000/problem/25"
+    }
+  ]
+}

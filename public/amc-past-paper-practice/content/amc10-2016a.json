@@ -1,0 +1,1013 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2016A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2016a-q1",
+      "number": 1,
+      "question": "What is the value of \\(\\dfrac{11!-10!}{9!}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(99\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(100\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(110\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(121\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(132\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Factor \\(10!\\) or \\(9!\\) from the numerator",
+        "Use \\(11!=11\\cdot10\\cdot9!\\)"
+      ],
+      "solution": "We can factor a \\(9!\\) out of the numerator and simplify. \\[\\begin{aligned} \\dfrac{9!(11 \\cdot 10 - 10)}{9!} &=11 \\cdot 10 - 10 \\\\&= 110 - 10 \\\\&= 100. \\end{aligned}\\] Thus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "factorial",
+        "factoring"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/1"
+    },
+    {
+      "id": "amc-10-2016a-q2",
+      "number": 2,
+      "question": "For what value of \\(x\\) does \\[10^{x} \\cdot 100^{2x}=1000^{5}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Write everything as a power of \\(10\\)",
+        "The left side becomes \\(10^{5x}\\)"
+      ],
+      "solution": "Rewrite all bases as powers of \\(10\\): \\[\\small 10^x\\cdot100^{2x}=10^x\\cdot(10^2)^{2x}=10^{5x},\\] and \\[1000^5=(10^3)^5=10^{15}.\\]\n\nTherefore \\(5x=15\\), so \\(x=3\\).\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "exponent"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/2"
+    },
+    {
+      "id": "amc-10-2016a-q3",
+      "number": 3,
+      "question": "For every dollar Ben spent on bagels, David spent \\(25\\) cents less. Ben paid \\(\\$12.50\\) more than David. How much did they spend in the bagel store together?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$37.50\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$50.00\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$87.50\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$90.00\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$92.50\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "David spends \\(75\\) cents for each dollar Ben spends",
+        "The difference is one quarter of Ben’s spending"
+      ],
+      "solution": "For each dollar Ben spent, David spent \\(75\\) cents, so the difference was \\(25\\) cents. The total difference \\(\\$12.50\\) is therefore one quarter of Ben’s spending.\n\nBen spent \\(12.50\\div0.25=50\\) dollars, and David spent \\(37.50\\) dollars. Together they spent \\(87.50\\) dollars.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "money"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/3"
+    },
+    {
+      "id": "amc-10-2016a-q4",
+      "number": 4,
+      "question": "The remainder function can be defined for all real numbers \\(x\\) and \\(y\\) with \\(y \\neq 0\\) by \\[\\operatorname{rem}(x,y)=x-y\\left\\lfloor\\frac{x}{y}\\right\\rfloor,\\] where \\(\\left \\lfloor \\frac{x}{y} \\right \\rfloor\\) denotes the greatest integer less than or equal to \\(\\frac{x}{y}.\\) What is the value of \\(\\text{rem} \\left(\\frac{3}{8}, -\\frac{2}{5} \\right)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-\\dfrac{1}{40}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{31}{40}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Compute \\(\\frac{x}{y}\\) before applying the floor function",
+        "\\(\\left\\lfloor-\\frac{15}{16}\\right\\rfloor=-1\\)"
+      ],
+      "solution": "Using the formula, we get \\[ \\begin{aligned} \\text{rem} \\left(\\dfrac{3}{8}, -\\dfrac{2}{5}\\right) &= \\dfrac{3}{8} \\\\ &{}+ \\dfrac{2}{5} \\left \\lfloor \\dfrac{\\frac{3}{8}}{-\\frac{2}{5}}\\right \\rfloor \\\\ &= \\dfrac{3}{8} \\\\ &{}+ \\dfrac{2}{5} \\left \\lfloor -\\dfrac{15}{16} \\right \\rfloor \\\\ &= \\dfrac{3}{8} + \\dfrac{2}{5} \\cdot -1 \\\\ &= \\dfrac{3}{8} - \\dfrac{2}{5} \\\\ &= - \\dfrac{1}{40} \\end{aligned} \\] Thus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "floor and ceiling functions",
+        "fraction"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/4"
+    },
+    {
+      "id": "amc-10-2016a-q5",
+      "number": 5,
+      "question": "A rectangular box has integer side lengths in the ratio \\(1:3:4.\\) Which of the following could be the volume of the box?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(56\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(64\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(96\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(144\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "If the sides are \\(s,3s,4s\\), the volume is \\(12s^3\\)",
+        "Test which choice is \\(12\\) times a cube"
+      ],
+      "solution": "Let \\(s\\) be the side length of the smallest side. Then the other two sides are \\(3s\\) and \\(4s.\\)\n\nThe volume is therefore \\[ s \\cdot 3s \\cdot 4s = 12s^3. \\] Testing out values of \\(s,\\) we see that if \\(s = 2,\\) then \\(12s^3 = 96,\\) which is an answer choice.\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "volume",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/5"
+    },
+    {
+      "id": "amc-10-2016a-q6",
+      "number": 6,
+      "question": "Ximena lists the whole numbers \\(1\\) through \\(30\\) once. Emilio copies Ximena’s numbers, replacing each occurrence of the digit \\(2\\) by the digit \\(1.\\) Ximena adds her numbers and Emilio adds his numbers. How much larger is Ximena’s sum than Emilio’s?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(102\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(103\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(110\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Changing a units digit \\(2\\) to \\(1\\) loses \\(1\\)",
+        "Changing a tens digit \\(2\\) to \\(1\\) loses \\(10\\)"
+      ],
+      "solution": "When Emilio changes a units digit \\(2\\) to \\(1\\), his copied number is smaller by \\(1\\). This happens in \\(2,12,22\\), for a loss of \\(3\\).\n\nWhen he changes a tens digit \\(2\\) to \\(1\\), his copied number is smaller by \\(10\\). This happens for \\(20,21,\\ldots,29\\), for a loss of \\(100\\).\n\nThus Emilio’s sum is \\(103\\) less than Ximena’s sum, so Ximena’s sum is \\(103\\) larger.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "place value",
+        "digits"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/6"
+    },
+    {
+      "id": "amc-10-2016a-q7",
+      "number": 7,
+      "question": "The mean, median, and mode of the \\(7\\) data values \\[60, 100, x, 40, 50, 200, 90\\] are all equal to \\(x.\\) What is the value of \\(x?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(75\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use the mean condition first",
+        "After finding \\(x\\), check that median and mode also equal \\(x\\)"
+      ],
+      "solution": "The sum of the seven data values is \\(540+x\\). If the mean equals \\(x\\), then \\[\\frac{540+x}{7}=x,\\] so \\(540=6x\\) and \\(x=90\\).\n\nWith \\(x=90\\), the ordered data set is \\(40,50,60,90,90,100,200\\). Its median is \\(90\\), and its mode is also \\(90\\), so the value works.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "mean",
+        "median (data)",
+        "mode"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/7"
+    },
+    {
+      "id": "amc-10-2016a-q8",
+      "number": 8,
+      "question": "Trickster Rabbit agrees with Foolish Fox to double Fox’s money every time Fox crosses the bridge by Rabbit’s house, as long as Fox pays \\(40\\) coins in toll to Rabbit after each crossing. The payment is made after the doubling. Fox is excited about his good fortune until he discovers that all his money is gone after crossing the bridge three times. How many coins did Fox have at the beginning?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(35\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(45\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Work backward from zero coins after the third toll",
+        "Undo each crossing by adding \\(40\\), then halving"
+      ],
+      "solution": "We know that Fox has \\(0\\) coins at the end. Then before paying the final toll, Fox had \\(40\\) coins.\n\nThen he had \\(40 \\div 2 = 20\\) coins before the doubling. Then before paying the toll for the second crossing, he had \\(20 + 40 = 60\\) coins.\n\nBefore the doubling on the second crossing, he had \\(60 \\div 2 = 30\\) coins. On the first crossing before the toll, Fox had \\(30 + 40 = 70\\) coins.\n\nFinally, before the first doubling, Fox had \\(70 \\div 2 = 35\\) coins.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "work backwards"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/8"
+    },
+    {
+      "id": "amc-10-2016a-q9",
+      "number": 9,
+      "question": "A triangular array of \\(2016\\) coins has \\(1\\) coin in the first row, \\(2\\) coins in the second row, \\(3\\) coins in the third row, and so on up to \\(N\\) coins in the \\(N\\)th row. What is the sum of the digits of \\(N?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Solve \\(\\frac{N(N+1)}{2}=2016\\)",
+        "Look for consecutive factors of \\(4032\\)"
+      ],
+      "solution": "Recall that the sum of the first \\(N\\) numbers is \\(\\dfrac{N(N + 1)}{2}.\\)\n\nWe want to find \\(N\\) such that \\[ \\dfrac{N(N + 1)}{2} = 2016. \\] Cross-multiplying and simplifying gives us \\[ N^2 + N - 4032 = 0. \\] Factoring gives us \\[ (N - 63)(N + 64) = 0. \\] We want the positive value so \\(N = 63.\\) Adding together the digits gives us \\(9.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "triangular number",
+        "factoring",
+        "digits"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/9"
+    },
+    {
+      "id": "amc-10-2016a-q10",
+      "number": 10,
+      "question": "A rug is made with three different colors as shown. The areas of the three differently colored regions form an arithmetic progression. The inner rectangle is one foot wide, and each of the two shaded regions is \\(1\\) foot wide on all four sides. What is the length in feet of the inner rectangle?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2016a/10-d12fe0fbe9.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let the inner rectangle have length \\(l\\)",
+        "The three region areas are \\(l,2l+6,2l+14\\)"
+      ],
+      "solution": "Let \\(l\\) be the length of the inner rectangle. Then the area of the inner rectangle is \\(l.\\)\n\nThe area of the middle region is going to be \\[ (l + 2) \\cdot 3 - l = 2l + 6. \\] The area of the outer region is \\[ (l + 4) \\cdot 5 - (l + 2) \\cdot 3 = 2l + 14. \\]\n\nWe know that these \\(3\\) values form an arithmetic sequence. That means that \\[\\begin{aligned} l + 2l + 14 &= 2(2l + 6) \\\\ 3l + 14 &= 4l + 12 \\\\ l &= 2\\end{aligned}\\]\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "area",
+        "arithmetic sequence"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/10"
+    },
+    {
+      "id": "amc-10-2016a-q11",
+      "number": 11,
+      "question": "What is the area of the shaded region of the given \\(8\\times5\\) rectangle?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2016a/11-6508634ced.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\dfrac{3}{5}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Split the shaded region into four triangles",
+        "Use bases of length \\(1\\) with heights \\(4\\) and \\(\\frac{5}{2}\\)"
+      ],
+      "solution": "We can split the region into \\(4\\) triangles with bases of \\(1.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2016a/11sol-086f030c82.svg\" style=\"max-height: 10rem\"/>\n\nAll four triangles have base \\(1.\\) Two have height \\(8\\div2=4,\\) and the other two have height \\(5\\div2=\\dfrac52.\\)\n\nThe sum of the areas of the triangles is \\[ \\begin{aligned} &2 \\cdot \\dfrac{1}{2} \\left(1 \\cdot \\dfrac{5}{2}\\right) \\\\ &\\quad {}+ 2 \\cdot \\dfrac{1}{2} \\left(1 \\cdot 4\\right) = 6\\dfrac{1}{2} \\end{aligned} \\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "area decomposition",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/11"
+    },
+    {
+      "id": "amc-10-2016a-q12",
+      "number": 12,
+      "question": "Three distinct integers are selected at random between \\(1\\) and \\(2016,\\) inclusive. Which of the following is a correct statement about the probability \\(p\\) that the product of the three integers is odd?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(p \\lt \\dfrac{1}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(p = \\dfrac{1}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{8} \\lt p \\lt \\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(p = \\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(p \\gt \\dfrac{1}{3}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The product is odd only if all three selected integers are odd",
+        "Sampling without replacement makes the probability slightly less than \\((\\frac{1}{2})^3\\)"
+      ],
+      "solution": "The product is odd exactly when all three selected integers are odd. There are \\(1008\\) odd and \\(1008\\) even integers from \\(1\\) to \\(2016\\).\n\nBecause the integers are selected without replacement, \\[p=\\frac{1008}{2016}\\cdot\\frac{1007}{2015}\\cdot\\frac{1006}{2014}.\\] The first factor is \\(\\frac12\\), and each of the next two factors is slightly less than \\(\\frac12\\). Therefore \\(p&lt;\\frac18\\).\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "basic probability",
+        "parity",
+        "sampling without replacement"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/12"
+    },
+    {
+      "id": "amc-10-2016a-q13",
+      "number": 13,
+      "question": "Five friends sat in a movie theater in a row containing \\(5\\) seats, numbered \\(1\\) to \\(5\\) from left to right. (The directions “left” and “right” are from the point of view of the people as they sit in the seats.)\n\nDuring the movie Ada went to the lobby to get some popcorn. When she returned, she found that Bea had moved two seats to the right, Ceci had moved one seat to the left, and Dee and Edie had switched seats, leaving an end seat for Ada. In which seat had Ada been sitting before she got up?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Track net displacement of the occupied seats",
+        "Bea moves two right and Ceci moves one left"
+      ],
+      "solution": "The sum of the occupied seat numbers is \\(1+2+3+4+5=15\\) both before and after the moves. Dee and Edie merely switch seats, so their combined displacement is \\(0.\\) Bea’s displacement is \\(+2,\\) and Ceci’s is \\(-1.\\) Therefore Ada’s displacement must be \\(-1\\) so that the total displacement is \\(0.\\)\n\nAda returns to an end seat. Since she moves one seat left, she must move from seat \\(2\\) to seat \\(1.\\)\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "logical deduction",
+        "invariant"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/13"
+    },
+    {
+      "id": "amc-10-2016a-q14",
+      "number": 14,
+      "question": "How many ways are there to write \\(2016\\) as the sum of twos and threes, ignoring order? (For example, \\(1008\\cdot 2 + 0\\cdot 3\\) and \\(402\\cdot 2 + 404\\cdot 3\\) are two such ways.)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(236\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(336\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(337\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(403\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(672\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Write \\(2x+3y=2016\\)",
+        "\\(y\\) must be even from \\(0\\) through \\(672\\)"
+      ],
+      "solution": "The problem can be rewritten as an equation \\(2x + 3y = 2016,\\) where \\(x\\) is the number of twos and \\(y\\) is the number of threes.\n\nThe goal is to find the number of multiples of \\(3\\) that can be subtracted from \\(2016\\) to result in an even number.\n\nThis can be achieved by the pairs of \\((1008, 0)\\) up to \\((0, 672)\\) with \\(y\\) being incremented by \\(2.\\)\n\nThis gives us \\[\\dfrac{672}{2} + 1 = 337\\] solutions for \\(y\\) and \\(x.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "Diophantine Equation",
+        "parity"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/14"
+    },
+    {
+      "id": "amc-10-2016a-q15",
+      "number": 15,
+      "question": "Seven cookies of radius \\(1\\) inch are cut from a circle of cookie dough, as shown. Neighboring cookies are tangent, and all except the center cookie are tangent to the edge of the dough. The leftover scrap is reshaped to form another cookie of the same thickness. What is the radius in inches of the scrap cookie?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2016a/15-b727b44f7f.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\sqrt{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1.5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\sqrt{\\pi}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{2\\pi}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\pi\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The large circle has radius \\(3\\)",
+        "Subtract the total area of the seven unit cookies"
+      ],
+      "solution": "The circle of cookie dough has a radius of \\(3\\) inches since it is the same as the diameter plus the radius of a cookie.\n\nThe area of the cookie dough is \\(3^2\\pi = 9\\pi,\\) and the cookies have an area of \\(7 \\cdot 1^2\\pi = 7\\pi.\\)\n\nThe area of the leftover scrap is therefore \\(9\\pi - 7\\pi = 2\\pi.\\) This means that its radius is \\(\\sqrt{2}.\\)\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "circle area",
+        "tangent circles"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/15"
+    },
+    {
+      "id": "amc-10-2016a-q16",
+      "number": 16,
+      "question": "A triangle with vertices \\(A(0, 2),\\) \\(B(-3, 2),\\) and \\(C(-3, 0)\\) is reflected about the \\(x\\)-axis, then the image \\(\\triangle A'B'C'\\) is rotated counterclockwise about the origin by \\(90^{\\circ}\\) to produce \\(\\triangle A''B''C''.\\) Which of the following transformations will return \\(\\triangle A''B''C''\\) to \\(\\triangle ABC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "counterclockwise rotation about the origin by\n\\(90^{\\circ}\\)"
+        },
+        {
+          "label": "B",
+          "content": "clockwise rotation about the origin by \\(90^{\\circ}\\)"
+        },
+        {
+          "label": "C",
+          "content": "reflection about the \\(x\\)-axis"
+        },
+        {
+          "label": "D",
+          "content": "reflection about the line \\(y = x\\)"
+        },
+        {
+          "label": "E",
+          "content": "reflection about the \\(y\\)-axis"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Follow a generic point \\((x,y)\\) through the two transformations",
+        "The image point is \\((y,x)\\)"
+      ],
+      "solution": "To figure out how to reverse the transformations, we can analyze a single point and see what happens to it.\n\nLet \\((x, y)\\) be the point. After being reflected about the \\(x\\)-axis, the point would go to \\((x, -y).\\)\n\nRotating this counterclockwise would put it at \\((y, x).\\) The only transformation that puts this back at \\((x, y)\\) is reflection about \\(y = x.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "transformation",
+        "coordinate geometry"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/16"
+    },
+    {
+      "id": "amc-10-2016a-q17",
+      "number": 17,
+      "question": "Let \\(N\\) be a positive multiple of \\(5.\\) One red ball and \\(N\\) green balls are arranged in a line in random order. Let \\(P(N)\\) be the probability that at least \\(\\frac{3}{5}\\) of the green balls are on the same side of the red ball. Observe that \\(P(5)=1\\) and that \\(P(N)\\) approaches \\(\\frac{4}{5}\\) as \\(N\\) grows large. What is the sum of the digits of the least value of \\(N\\) such that \\(P(N) &lt; \\dfrac{321}{400}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Place the red ball in one of the \\(N+1\\) gaps among the green balls",
+        "The bad gaps have between \\(\\frac{2N}{5}\\) and \\(\\frac{3N}{5}\\) green balls on the left"
+      ],
+      "solution": "Think of first arranging the \\(N\\) green balls, then placing the red ball in one of the \\(N+1\\) gaps. If \\(k\\) green balls are to the left of the red ball, then \\(N-k\\) are to its right.\n\nAt least \\(\\frac35N\\) green balls are on one side exactly when \\(k\\le\\frac25N\\) or \\(k\\ge\\frac35N\\). Thus the bad gaps are \\[\\frac25N+1,\\frac25N+2,\\ldots,\\frac35N-1,\\] a total of \\(\\frac15N-1\\) gaps.\n\nTherefore \\[ \\begin{aligned} P(N) &= 1-\\frac{\\frac{N}{5}-1}{N+1} \\\\ &= \\frac{4N+10}{5N+5}. \\end{aligned} \\] Solving \\(\\frac{4N+10}{5N+5}&lt;\\frac{321}{400}\\) gives \\(N>479\\). The least positive multiple of \\(5\\) is \\(480\\), whose digit sum is \\(12\\).\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "basic probability",
+        "inequality"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/17"
+    },
+    {
+      "id": "amc-10-2016a-q18",
+      "number": 18,
+      "question": "Each vertex of a cube is to be labeled with an integer \\(1\\) through \\(8,\\) with each integer being used once, in such a way that the sum of the four numbers on the vertices of a face is the same for each face. Arrangements that can be obtained from each other through rotations of the cube are considered to be the same. How many different arrangements are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Opposite faces must each sum to half of \\(1+2+\\cdots+8\\)",
+        "Choose the three neighbors of \\(1\\) and force the opposite vertices"
+      ],
+      "solution": "Opposite faces together use all eight labels, whose sum is \\(36\\), so every face must have sum \\(18\\).\n\nPut label \\(1\\) at one vertex, and let the three adjacent labels be \\(a,b,c\\). The three vertices adjacent to those across faces are then forced to be \\[ \\begin{gathered} 17-a-b, \\\\ \\quad 17-a-c, \\\\ \\quad 17-b-c, \\end{gathered} \\] and the opposite vertex is \\(a+b+c-16\\).\n\nAssume the three neighbor labels are listed in increasing order. Substituting triples from \\(2,3,\\ldots,8\\) into the four forced expressions above gives exactly \\[ \\begin{array}{c|c} \\{a,b,c\\} & \\text{four forced labels} \\\\ \\hline \\{4,6,8\\} & \\{7,5,3,2\\} \\\\ \\{4,7,8\\} & \\{6,5,2,3\\} \\\\ \\{6,7,8\\} & \\{4,3,2,5\\} \\end{array} \\] For each neighbor set, the six orders around the vertex fall into two groups of three under the \\(120^\\circ\\) rotations about the diagonal through that vertex. Thus each set gives two non-rotationally equivalent arrangements, for \\(3\\cdot2=6\\) arrangements in all.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "cube geometry",
+        "casework",
+        "symmetry"
+      ],
+      "sourceDifficulty": 2060,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/18"
+    },
+    {
+      "id": "amc-10-2016a-q19",
+      "number": 19,
+      "question": "In rectangle \\(ABCD,\\) \\(AB=6\\) and \\(BC=3.\\) Point \\(E\\) between \\(B\\) and \\(C,\\) and point \\(F\\) between \\(E\\) and \\(C\\) are such that \\(BE=EF=FC.\\) Segments \\(\\overline{AE}\\) and \\(\\overline{AF}\\) intersect \\(\\overline{BD}\\) at \\(P\\) and \\(Q,\\) respectively.\n\nThe ratio \\(BP:PQ:QD\\) can be written as \\(r:s:t\\) where the greatest common factor of \\(r,\\) \\(s,\\) and \\(t\\) is \\(1.\\) What is \\(r+s+t?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Use similar triangles on the two cevians from \\(A\\)",
+        "Convert \\(BP, PQ, QD\\) into fractions of \\(BD\\)"
+      ],
+      "solution": "Since \\(BC=3\\) and \\(BE=EF=FC\\), we have \\(BE=1\\) and \\(BF=2\\). Also \\(AD=3\\).\n\nFrom \\(\\triangle APD\\sim\\triangle EPB\\), \\[\\frac{BP}{BD}=\\frac{BE}{AD+BE}=\\frac14.\\] From \\(\\triangle AQD\\sim\\triangle FQB\\), \\[\\frac{BQ}{BD}=\\frac{BF}{AD+BF}=\\frac25.\\]\n\nTherefore \\(BP=\\frac14BD\\), \\(PQ=\\left(\\frac25-\\frac14\\right)BD=\\frac3{20}BD\\), and \\(QD=\\frac35BD\\). Thus \\[ \\begin{aligned} BP:PQ:QD &= \\frac14:\\frac3{20}:\\frac35 \\\\ &= 5:3:12. \\end{aligned} \\] The sum is \\(5+3+12=20\\).\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "similarity",
+        "rectangle"
+      ],
+      "sourceDifficulty": 1720,
+      "solveTimeSeconds": 105,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/19"
+    },
+    {
+      "id": "amc-10-2016a-q20",
+      "number": 20,
+      "question": "For some particular value of \\(N,\\) when \\((a+b+c+d+1)^N\\) is expanded and like terms are combined, the resulting expression contains exactly \\(1001\\) terms that include all four variables \\(a,\\) \\(b,\\) \\(c,\\) and \\(d,\\) each to some positive power. What is \\(N?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(19\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count exponent choices for terms containing all four variables",
+        "Stars and bars gives \\(\\binom N4=1001\\)"
+      ],
+      "solution": "A term that includes all four variables has form \\(a^vb^wc^xd^y\\), with \\(v,w,x,y\\ge1\\), multiplied by some power of \\(1\\). If that power is \\(z\\), then \\[v+w+x+y+z=N.\\]\n\nAfter subtracting \\(1\\) from each of \\(v,w,x,y\\), this becomes a nonnegative stars-and-bars count with \\(5\\) variables summing to \\(N-4\\). The number of such terms is \\[\\binom{N}{4}.\\]\n\nSince \\(\\binom{14}{4}=1001\\), we get \\(N=14\\).\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "stars and bars",
+        "combinations"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/20"
+    },
+    {
+      "id": "amc-10-2016a-q21",
+      "number": 21,
+      "question": "Circles with centers \\(P,\\) \\(Q\\) and \\(R,\\) having radii \\(1,\\) \\(2\\) and \\(3,\\) respectively, lie on the same side of line \\(l\\) and are tangent to \\(l\\) at \\(P',\\) \\(Q'\\) and \\(R',\\) respectively, with \\(Q'\\) between \\(P'\\) and \\(R'.\\) The circle with center \\(Q\\) is externally tangent to each of the other two circles. What is the area of \\(\\triangle PQR?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\sqrt{\\dfrac{2}{3}}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{6}-\\sqrt{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\sqrt{\\dfrac{3}{2}}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use horizontal distances between tangent points",
+        "Use those horizontal distances in a coordinate-area formula"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2016a/21sol-f874413832.svg\" style=\"max-height: 11rem\"/>\n\nPut the tangent line on the \\(x\\)-axis and take \\(P=(0,1).\\) Because \\(PQ=1+2=3\\) and the centers differ in height by \\(1,\\) the horizontal distance from \\(P\\) to \\(Q\\) is \\[\\sqrt{3^2-1^2}=2\\sqrt2.\\] Similarly, \\(QR=2+3=5\\) and its centers also differ in height by \\(1,\\) so their horizontal distance is \\(2\\sqrt6.\\)\n\nThus we may use \\[ \\begin{aligned} P&=(0,1),\\qquad Q=(2\\sqrt2,2), \\\\ R&=(2\\sqrt2+2\\sqrt6,3). \\end{aligned} \\] The coordinate-area formula gives \\[ \\begin{aligned} [PQR] &=\\frac12\\left|4\\sqrt2-(2\\sqrt2+2\\sqrt6)\\right| \\\\ &=\\sqrt6-\\sqrt2. \\end{aligned} \\]\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "tangent circles",
+        "Pythagorean Theorem",
+        "coordinate geometry"
+      ],
+      "sourceDifficulty": 1970,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/21"
+    },
+    {
+      "id": "amc-10-2016a-q22",
+      "number": 22,
+      "question": "For some positive integer \\(n,\\) the number \\(110n^3\\) has \\(110\\) positive integer divisors, including \\(1\\) and the number \\(110n^3.\\) How many positive integer divisors does the number \\(81n^4\\) have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(110\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(191\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(261\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(325\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(425\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The divisor count \\(110=2\\cdot5\\cdot11\\) forces exponents \\(1,4,10\\)",
+        "Those exponents are all \\(1\\pmod3\\), so they can come from \\(110n^3\\)"
+      ],
+      "solution": "The prime factorization is \\(110=2\\cdot5\\cdot11\\). If \\(110n^3\\) has \\(110=2\\cdot5\\cdot11\\) divisors, then it has exactly three prime factors, with exponents \\(1,4,10\\) in some order.\n\nFor each of the primes \\(2,5,11\\), its exponent in \\(110n^3\\) is \\(1\\) more than a multiple of \\(3\\). The exponents \\(1,4,10\\) all have this form, so the corresponding exponents in \\(n\\) are \\(0,1,3\\) in some order.\n\nIn \\(81n^4=3^4n^4\\), the exponents from \\(n^4\\) are therefore \\(0,4,12\\), in some order, along with the exponent \\(4\\) on prime \\(3\\). Hence the divisor count is \\[ \\begin{aligned} &(0+1)\\cdot(4+1)\\cdot(12+1) \\\\ &\\quad {}\\cdot(4+1)=325. \\end{aligned} \\]\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "factor counting",
+        "prime factorization"
+      ],
+      "sourceDifficulty": 2110,
+      "solveTimeSeconds": 135,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/22"
+    },
+    {
+      "id": "amc-10-2016a-q23",
+      "number": 23,
+      "question": "A binary operation \\(\\diamondsuit\\) has the properties that \\[a\\,\\diamondsuit\\, (b\\,\\diamondsuit \\,c) = (a\\,\\diamondsuit \\,b)\\cdot c\\] and that \\(a\\,\\diamondsuit \\,a=1\\) for all nonzero real numbers \\(a,\\) \\(b,\\) and \\(c.\\) (Here the dot \\(\\cdot\\) represents the usual multiplication operation.) The solution to the equation \\[2016 \\,\\diamondsuit\\, (6\\,\\diamondsuit\\, x)=100\\] can be written as \\(\\frac{p}{q},\\) where \\(p\\) and \\(q\\) are relatively prime positive integers. What is \\(p+q?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(109\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(201\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(301\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3049\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(33{,}601\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "First prove \\(a\\diamondsuit b=\\frac{a}{b}\\)",
+        "Then compute \\(2016\\diamondsuit(6\\diamondsuit x)\\)"
+      ],
+      "solution": "Since \\(a\\diamondsuit a=1\\), substituting \\(b=c\\) in \\[a\\diamondsuit(b\\diamondsuit c)=(a\\diamondsuit b)c\\] gives \\(a\\diamondsuit1=(a\\diamondsuit b)b\\). Also, using \\(a\\diamondsuit(a\\diamondsuit a)=(a\\diamondsuit a)a\\) gives \\(a\\diamondsuit1=a\\). Therefore \\(a\\diamondsuit b=\\frac ab\\).\n\nThe equation becomes \\[ \\begin{aligned} 2016\\diamondsuit(6\\diamondsuit x) &= 2016\\diamondsuit\\frac6x \\\\ &= \\frac{2016}{\\frac{6}{x}} \\\\ &= 336x \\\\ &= 100. \\end{aligned} \\] Thus \\(x=\\frac{25}{84}\\), so \\(p+q=25+84=109\\).\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "custom operation",
+        "functional equation"
+      ],
+      "sourceDifficulty": 1820,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/23"
+    },
+    {
+      "id": "amc-10-2016a-q24",
+      "number": 24,
+      "question": "A quadrilateral is inscribed in a circle of radius \\(200\\sqrt{2}.\\) Three of the sides of this quadrilateral have length \\(200.\\) What is the length of the fourth side?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(200\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(200\\sqrt{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(200\\sqrt{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(300\\sqrt{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(500\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Equal chords give equal central angles",
+        "If a \\(200\\)-unit chord subtends angle \\(2\\theta\\), use the chord formula and \\(\\sin(3\\theta)\\)"
+      ],
+      "solution": "Label the quadrilateral \\(ABCD\\), with \\(AB=BC=CD=200\\). Let each of these equal chords subtend central angle \\(2\\theta\\). The chord formula gives \\[200=2(200\\sqrt2)\\sin\\theta,\\] so \\(\\sin\\theta=\\frac{1}{2\\sqrt2}\\). In particular, \\(\\theta&lt;30^\\circ\\), so the smaller central angle subtended by \\(AD\\) is \\(6\\theta&lt;180^\\circ\\).\n\nTherefore another use of the chord formula gives \\[AD=2(200\\sqrt2)\\sin(3\\theta).\\] Using \\(\\sin(3\\theta)=3\\sin\\theta-4\\sin^3\\theta\\), we obtain \\[ \\begin{aligned} \\sin(3\\theta) &=\\frac{3}{2\\sqrt2}-\\frac{1}{4\\sqrt2} \\\\ &=\\frac{5}{4\\sqrt2}. \\end{aligned} \\]\n\nHence \\[AD=400\\sqrt2\\cdot\\frac{5}{4\\sqrt2}=500.\\]\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "cyclic quadrilateral",
+        "chord",
+        "triple-angle identity"
+      ],
+      "sourceDifficulty": 2300,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/24"
+    },
+    {
+      "id": "amc-10-2016a-q25",
+      "number": 25,
+      "question": "How many ordered triples \\((x,y,z)\\) of positive integers satisfy \\[\\text{lcm}(x,y) = 72,\\]\\[ \\text{lcm}(x,z) = 600,\\] and \\[\\text{lcm}(y,z)=900?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(64\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Treat each prime exponent independently",
+        "The powers of \\(3\\) and \\(2\\) each leave a small max-condition count"
+      ],
+      "solution": "Factor the given least common multiples: \\[ \\begin{gathered} 72=2^3\\cdot3^2, \\\\ \\quad 600=2^3\\cdot3\\cdot5^2, \\\\ \\quad 900=2^2\\cdot3^2\\cdot5^2. \\end{gathered} \\] Since \\(\\operatorname{lcm}(x,y)\\) has no factor of \\(5\\), neither \\(x\\) nor \\(y\\) has a factor of \\(5\\), and \\(z\\) must contain \\(5^2\\).\n\nWrite \\(x=2^a3^b\\), \\(y=2^c3^d\\), and \\(z=2^e3^f5^2\\). The power of \\(3\\) in \\(\\operatorname{lcm}(y,z)\\) forces \\(d=2\\), and the power of \\(2\\) in \\(\\operatorname{lcm}(x,z)\\) forces \\(a=3\\).\n\nThe remaining independent conditions are \\(\\max(b,f)=1\\) and \\(\\max(c,e)=2\\). These have \\(3\\) and \\(5\\) ordered choices, respectively, so there are \\(3\\cdot5=15\\) triples.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "least common multiple",
+        "prime factorization",
+        "casework"
+      ],
+      "sourceDifficulty": 2390,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2016A/problem/25"
+    }
+  ]
+}

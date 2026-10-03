@@ -1,0 +1,1022 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2010B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2010b-q1",
+      "number": 1,
+      "question": "What is the value of the following expression? \\[100(100-3)-(100 \\cdot 100-3)\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-20{,}000\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-10{,}000\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(-297\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(-6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(0\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Expand both terms before subtracting",
+        "Most of the \\(100\\cdot100\\) terms cancel"
+      ],
+      "solution": "We have that \\[ \\begin{aligned}100(100 - 3) &= 100 \\cdot 97 \\\\&= 9700\\end{aligned} \\] and \\[ \\begin{aligned}100 \\cdot 100 - 3 &= 10000 - 3\\\\ &= 9997.\\end{aligned} \\]\n\nAs such, their difference is: \\[ 9700 - 9997 = - 297. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "order of operations",
+        "whole number operations"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/1"
+    },
+    {
+      "id": "amc-10-2010b-q2",
+      "number": 2,
+      "question": "Makayla attended two meetings during her \\(9\\)-hour work day. The first meeting took \\(45\\) minutes and the second meeting took twice as long. What percent of her work day was spent attending meetings?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(35\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Convert the meeting times to the same units",
+        "The meetings last \\(45+90\\) minutes out of \\(9\\) hours"
+      ],
+      "solution": "Note that \\(45\\) minutes is \\[ \\dfrac{45}{60} = \\dfrac{3}{4} \\] hours. The second meeting is then \\[ 2 \\cdot \\dfrac{3}{4} = \\dfrac{3}{2} \\] hours. Both meetings take a total of \\[ \\dfrac{3}{4} + \\dfrac{3}{2} = \\dfrac{9}{4} \\] hours then. The percent of Makayla’s work day spent attending meetings is \\[ 100 \\% \\cdot \\dfrac{\\frac{9}{4}}{9} = 100 \\% \\cdot \\dfrac{1}{4} = 25 \\%. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/2"
+    },
+    {
+      "id": "amc-10-2010b-q3",
+      "number": 3,
+      "question": "A drawer contains red, green, blue, and white socks with at least \\(2\\) of each color. What is the minimum number of socks that must be pulled from the drawer to guarantee a matching pair?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use the worst case before a pair appears",
+        "You can draw one sock of each of the four colors first"
+      ],
+      "solution": "To maximize the number of socks, we want to grab as many single socks as possible before getting a pair.\n\nThere are \\(4\\) colors, which means that we can draw one sock of each color before drawing a pair.\n\nThis means that it takes at least \\(4 + 1 = 5\\) socks to be drawn before a pair is guaranteed.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "pigeonhole principle"
+      ],
+      "sourceDifficulty": 720,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/3"
+    },
+    {
+      "id": "amc-10-2010b-q4",
+      "number": 4,
+      "question": "For a real number \\(x,\\) define \\(\\heartsuit(x)\\) to be the average of \\(x\\) and \\(x^2.\\) What is the value of the following expression? \\[\\heartsuit(1)+\\heartsuit(2)+\\heartsuit(3)\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Evaluate \\(\\heartsuit(1),\\heartsuit(2),\\heartsuit(3)\\) separately",
+        "\\(\\heartsuit(x)=\\dfrac{x+x^2}{2}\\)"
+      ],
+      "solution": "We have \\[ \\heartsuit(1) = \\dfrac{1 + 1^2}{2} = 1, \\] \\[ \\heartsuit(2) = \\dfrac{2 + 2^2}{2} = 3, \\] and \\[ \\heartsuit(3) = \\dfrac{3 + 3^2}{2} = 6. \\]\n\nThen \\[ 1 + 3 + 6 = 10. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "custom operation",
+        "mean"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/4"
+    },
+    {
+      "id": "amc-10-2010b-q5",
+      "number": 5,
+      "question": "A month with \\(31\\) days has the same number of Mondays and Wednesdays. How many of the seven days of the week could be the first day of this month?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "In \\(31\\) days, three weekdays occur one extra time",
+        "Monday and Wednesday must either both be extra days or both not be extra days"
+      ],
+      "solution": "Note that \\(31\\) days leaves a remainder of \\(3\\) when divided by \\(7.\\)\n\nThis means that if the month starts on a Saturday, Sunday, Tuesday, or Wednesday, there will be an uneven number of Mondays and Wednesdays.\n\nThen the month can only start on a Monday, Thursday, or Friday.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "date and time",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/5"
+    },
+    {
+      "id": "amc-10-2010b-q6",
+      "number": 6,
+      "question": "A circle is centered at \\(O,\\) \\(\\overline{AB}\\) is a diameter and \\(C\\) is a point on the circle with \\(\\angle COB = 50^\\circ.\\) What is the degree measure of \\(\\angle CAB?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(65\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Relate \\(\\angle COB\\) to \\(\\angle AOC\\)",
+        "\\(OA=OC\\), so \\(\\triangle AOC\\) is isosceles"
+      ],
+      "solution": "Consider the following diagram:\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2010b/6sol-4d580283fa.svg\" style=\"max-height: 12rem\"/>\n\nWe have that \\[ \\angle AOC = 180^{\\circ} - 50^{\\circ} = 130^{\\circ}. \\]\n\nSince \\(\\triangle AOC\\) is isosceles, we have that \\[ \\angle CAO = \\dfrac{180^{\\circ} - 130^{\\circ}}{2} = 25^{\\circ}. \\]\n\nSince \\(\\angle CAB = \\angle CAO,\\) we have that \\(\\angle CAB = 25^{\\circ}.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "circle",
+        "isosceles triangle",
+        "angle chasing"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/6"
+    },
+    {
+      "id": "amc-10-2010b-q7",
+      "number": 7,
+      "question": "A triangle has side lengths \\(10,\\) \\(10,\\) and \\(12.\\) A rectangle has width \\(4\\) and area equal to the area of the triangle. What is the perimeter of this rectangle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(28\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(32\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Drop the altitude to the side of length \\(12\\)",
+        "The altitude splits the triangle into two \\(6\\)-\\(8\\)-\\(10\\) triangles"
+      ],
+      "solution": "To find the area of the triangle, we can drop the altitude to the side of length \\(12.\\)\n\nThen we have a right triangle with one leg \\(12 \\div 2 = 6\\) and hypotenuse \\(10.\\)\n\nThe other leg has length \\[ \\sqrt{10^2 - 6^2} = \\sqrt{64} = 8. \\]\n\nThe area of the triangle is then \\[ \\dfrac{8 \\cdot 12}{2} = 48. \\]\n\nThe length of the rectangle is then \\(48 \\div 4 = 12.\\) Its perimeter is \\[ 2(4 + 12) = 2 \\cdot 16 = 32. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "triangle area",
+        "Pythagorean Theorem",
+        "perimeter"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/7"
+    },
+    {
+      "id": "amc-10-2010b-q8",
+      "number": 8,
+      "question": "A ticket to a school play costs \\(x\\) dollars, where \\(x\\) is a whole number. A group of \\(9\\)th graders buys tickets costing a total of \\(\\$48,\\) and a group of \\(10\\)th graders buys tickets costing a total of \\(\\$64.\\) How many values for \\(x\\) are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The ticket price must divide both totals",
+        "Count the positive divisors of \\(\\gcd(48,64)\\)"
+      ],
+      "solution": "Note that \\(x\\) must divide both \\(48\\) and \\(64,\\) which means that it must divide their greatest common divisor.\n\nThe greatest common divisor of \\(48\\) and \\(64\\) is \\(16,\\) which means \\(x\\) divides \\(16.\\)\n\n\\(16\\) has \\(5\\) factors, namely all the powers of \\(2\\) up to \\(16.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "greatest common divisor",
+        "factor counting"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/8"
+    },
+    {
+      "id": "amc-10-2010b-q9",
+      "number": 9,
+      "question": "Lucky Larry’s teacher asked him to substitute numbers for \\(a,\\) \\(b,\\) \\(c,\\) \\(d,\\) and \\(e\\) in the expression \\[a-(b-(c-(d+e)))\\] and evaluate the result. Larry ignored the parentheses but added and subtracted correctly and obtained the correct result by coincidence. The numbers Larry substituted for \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) were \\(1,\\) \\(2,\\) \\(3,\\) and \\(4,\\) respectively. What number did Larry substitute for \\(e?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compare Larry’s ignored-parentheses value to the correct value",
+        "Correctly evaluated, the expression is \\(-2-e\\)"
+      ],
+      "solution": "Ignoring the parentheses, Larry would get \\[ 1 - 2 - 3 - 4 + e = e - 8. \\]\n\nEvaluating with the parentheses, one would get \\[\\begin{aligned} &1 - (2 -(3 - (4 + e)))\\\\ & = 1 - (2 - (-1 - e))\\\\ &= 1 - (3 + e) \\\\ &=-2 - e.\\end{aligned}\\]\n\nBoth of these values are the same, so \\[ e - 8 = -2 - e \\]\\[ e = 3. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "order of operations",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/9"
+    },
+    {
+      "id": "amc-10-2010b-q10",
+      "number": 10,
+      "question": "Shelby drives her scooter at a speed of \\(30\\) miles per hour if it is not raining, and \\(20\\) miles per hour if it is raining. Today she drove in the sun in the morning and in the rain in the evening, for a total of \\(16\\) miles in \\(40\\) minutes. How many minutes did she drive in the rain?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(30\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(t\\) be the rain time in minutes",
+        "Use \\(20\\cdot\\dfrac{t}{60}+30\\cdot\\dfrac{40-t}{60}=16\\)"
+      ],
+      "solution": "Note that \\(40\\) minutes is \\(\\frac{2}{3}\\) hours. Let Shelby drive \\(h\\) hours in the sun.\n\nThen she drives \\(\\frac{2}{3} - h\\) hours in the rain, which means she travels a total of \\[ 30h + 20\\left(\\dfrac{2}{3} - h\\right) = 10h + \\dfrac{40}{3} \\] miles. We have this equals \\(16,\\) so \\[ 10h + \\dfrac{40}{3} = 16 \\]\\[ h = \\dfrac{4}{15}. \\]\n\nThen Shelby drives \\[ 60\\left(\\dfrac{2}{3} - \\dfrac{4}{15}\\right) = 60 \\cdot \\dfrac{2}{5} = 24 \\] minutes in the rain.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/10"
+    },
+    {
+      "id": "amc-10-2010b-q11",
+      "number": 11,
+      "question": "A shopper plans to purchase an item that has a listed price greater than \\(\\$100\\) and can use any one of the three coupons. Coupon A gives \\(15\\%\\) off the listed price, Coupon B gives \\(\\$30\\) off the listed price, and Coupon C gives \\(25\\%\\) off the amount by which the listed price exceeds \\(\\$100.\\)\n\nLet \\(x\\) and \\(y\\) be the smallest and largest prices, respectively, for which Coupon A saves at least as many dollars as Coupon B or C. What is \\(y - x?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(75\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(80\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Write each coupon’s savings in terms of the listed price",
+        "Coupon A must beat both \\(\\$30\\) and \\(0.25(p-100)\\)"
+      ],
+      "solution": "Let \\(p\\) be the price of the item. Then coupon A saves \\(0.15p.\\) Coupon B saves \\(\\$ 30.\\)\n\nCoupon C will save \\[ 0.25(p - 100) = 0.25p - 25. \\]\n\nWe must have that \\[ 0.15p \\ge 30 \\]\\[ p \\geq 200 \\] and \\[ 0.15p \\ge 0.25p - 25 \\]\\[ 250 \\geq p. \\]\n\nThis shows that \\(x = 200\\) and \\(y = 250.\\) Therefore \\(y - x = 50.\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "inequality"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/11"
+    },
+    {
+      "id": "amc-10-2010b-q12",
+      "number": 12,
+      "question": "At the beginning of the school year, \\(50\\%\\) of all students in Mr. Wells’ math class answered “Yes” to the question “Do you love math”, and \\(50\\%\\) answered “No.” At the end of the school year, \\(70\\%\\) answered “Yes” and \\(30\\%\\) answered “No.” Altogether, \\(x\\%\\) of the students gave a different answer at the beginning and end of the school year. What is the difference between the maximum and the minimum possible values of \\(x?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(80\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Think of \\(100\\) students",
+        "Minimize or maximize the number who switch answers"
+      ],
+      "solution": "To minimize \\(x,\\) we want to have as many kids as possible maintain their answer.\n\nWe then need at least \\(70 - 50 = 20\\) percent of the students to change their answer.\n\nTo maximize \\(x,\\) we can have everybody that answered no change their answer, but some who answered yes must stay yes.\n\nWe need \\(70 - 50 = 20\\) percent of the people who said yes to stay yes, which means only \\(50 - 20 = 30\\) percent can switch.\n\nThis makes the maximum percent of students that can switch \\(50 + 30 = 80\\) percent. The difference is then \\(80 - 20 = 60.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/12"
+    },
+    {
+      "id": "amc-10-2010b-q13",
+      "number": 13,
+      "question": "What is the sum of all the solutions of the equation below? \\[x = |2x-|60-2x||\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(32\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(92\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(120\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(124\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Split cases based on the sign of \\(60-2x\\)",
+        "After resolving the inner absolute value, solve the resulting absolute-value equations"
+      ],
+      "solution": "We first take care of the outer absolute value. We have either \\[ x = 2x - |60 - 2x| \\] or \\[ x = -2x + |60 - 2x|. \\]\n\nThese simplify to \\[ x = |60 - 2x| \\] and \\[ 3x = |60 - 2x|. \\]\n\nWe have \\(2\\) cases for each equation. For the first one, we have \\[x = 60 - 2x\\] and \\[x = 2x - 60.\\]\n\nSolving both gives us \\[ 3x = 60 \\]\\[ x = 20 \\] and \\[ -x = -60 \\]\\[ x = 60. \\]\n\nFor the other equation, we have \\[3x = 60 - 2x\\] and \\[3x = 2x - 60.\\]\n\nAgain solving both, we have \\[ 5x = 60 \\]\\[ x = 12 \\] and \\(x = -60.\\) Note that \\(x\\) cannot be negative since the right side of the original equation is nonnegative.\n\nAdding up all the solutions gives us \\[ 20 + 60 + 12 = 92. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "absolute value",
+        "casework"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/13"
+    },
+    {
+      "id": "amc-10-2010b-q14",
+      "number": 14,
+      "question": "The average of the numbers \\(1,\\) \\(2,\\) \\(3,\\) \\(\\cdots,\\) \\(98,\\) \\(99,\\) and \\(x\\) is \\(100x.\\) What is \\(x?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{49}{101}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{50}{101}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{51}{101}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{50}{99}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use the sum \\(1+2+\\cdots+99\\)",
+        "Set \\(\\dfrac{99\\cdot50+x}{100}=100x\\)"
+      ],
+      "solution": "Recall that the sum of the first \\(n\\) integers is \\(\\dfrac{n(n + 1)}{2}.\\)\n\nThen, we have that \\[ \\dfrac{\\frac{99 \\cdot 100}{2} + x}{100} = 100x, \\] which simplifies to \\[ 99 \\cdot 50 = (100^2 - 1)x\\]\\[ = 101 \\cdot 99x, \\] by difference of squares. Dividing gives us \\(x = \\dfrac{50}{101}.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "arithmetic sequence",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/14"
+    },
+    {
+      "id": "amc-10-2010b-q15",
+      "number": 15,
+      "question": "On a \\(50\\)-question multiple choice math contest, students receive \\(4\\) points for a correct answer, \\(0\\) points for an answer left blank, and \\(-1\\) point for an incorrect answer. Jesse’s total score on the contest was \\(99.\\) What is the maximum number of questions that Jesse could have answered correctly?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(29\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(31\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(33\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(R\\) be correct answers and \\(W\\) wrong answers",
+        "Use \\(4R-W=99\\) and \\(R+W\\le50\\)"
+      ],
+      "solution": "Let \\(x\\) be the number of questions Jesse answered correctly and \\(y\\) be the number he answered incorrectly.\n\nThen \\[4x-y=99\\] and \\[x+y\\leq50.\\]\n\nWe have that \\[ y = 4x - 99 \\]\\[ 5x - 99 \\leq 50. \\]\n\nRearranging and simplifying tells us that \\(x \\leq 29.8.\\) Since \\(x\\) is an integer, its maximum value is \\(29.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation",
+        "inequality",
+        "optimization"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/15"
+    },
+    {
+      "id": "amc-10-2010b-q16",
+      "number": 16,
+      "question": "A square of side length \\(1\\) and a circle of radius \\(\\dfrac{\\sqrt{3}}{3}\\) share the same center. What is the area inside the circle, but outside the square?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{\\pi}{3}-1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2\\pi}{9}-\\dfrac{\\sqrt{3}}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{\\pi}{18}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2\\pi}{9}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Find where the circle cuts one side of the square",
+        "One side contributes a circular segment outside the square"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2010b/16sol-d07ef18116.svg\" style=\"max-height: 12rem\"/>\n\nDrop the altitude from \\(O\\) to \\(\\overline{AB}\\) at \\(X.\\)\n\nLooking at the side lengths, we see that \\(\\triangle OBX\\) is a \\(30-60-90\\) triangle.\n\nThis means that the area of sector \\(AOB\\) is \\[ \\dfrac{1}{6} \\cdot \\pi \\cdot \\left(\\dfrac{\\sqrt3}{3}\\right)^2 = \\dfrac{\\pi}{18}. \\]\n\nWe also have that the area of \\(\\triangle AOB\\) is \\[ \\dfrac{1}{2} \\cdot 2 \\cdot \\dfrac{\\sqrt3}{6} \\cdot \\dfrac{1}{2} = \\dfrac{\\sqrt3}{12}. \\]\n\nThe area of the sector outside the square and inside the circle is then \\[ \\dfrac{\\pi}{18} - \\dfrac{\\sqrt3}{12}. \\]\n\nThere are \\(4\\) of these regions, which gives us a total area of \\[ 4\\left(\\dfrac{\\pi}{18} - \\dfrac{\\sqrt3}{12}\\right) = \\dfrac{2\\pi}{9} - \\dfrac{\\sqrt3}{3}. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "circle area",
+        "sector",
+        "special right triangle",
+        "area decomposition"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/16"
+    },
+    {
+      "id": "amc-10-2010b-q17",
+      "number": 17,
+      "question": "Every high school in the city of Euclid sent a team of \\(3\\) students to a math contest. Each participant in the contest received a different score. Andrea’s score was the median among all students, and hers was the highest score on her team. Andrea’s teammates Beth and Carla placed \\(37\\)th and \\(64\\)th, respectively. How many schools are in the city?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(22\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(23\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(26\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "If there are \\(n\\) schools, there are \\(3n\\) contestants",
+        "Andrea’s median place is \\(\\dfrac{3n+1}{2}\\)"
+      ],
+      "solution": "Let there be \\(n\\) schools. Then there are \\(3n\\) participants in the contest.\n\nBecause the median is one student’s score, \\(3n\\) is odd, so \\(n\\) is odd. Carla’s \\(64\\)th place requires \\(3n\\ge64,\\) and hence the odd integer \\(n\\) is at least \\(23.\\)\n\nAndrea’s median place is \\(\\dfrac{3n+1}{2}.\\) Because she had the highest score on her team, she finished ahead of Beth, so \\(\\dfrac{3n+1}{2}\\lt37.\\) This gives \\(3n\\lt73,\\) and therefore the odd integer \\(n\\) is at most \\(23.\\)\n\nThus there are \\(23\\) schools.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "median (data)",
+        "inequality",
+        "logical deduction"
+      ],
+      "sourceDifficulty": 1600,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/17"
+    },
+    {
+      "id": "amc-10-2010b-q18",
+      "number": 18,
+      "question": "Positive integers \\(a,\\) \\(b,\\) and \\(c\\) are randomly and independently selected with replacement from the set \\(\\{1, 2, 3,\\dots, 2010\\}.\\)\n\nWhat is the probability that \\(abc + ab + a\\) is divisible by \\(3?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{29}{81}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{31}{81}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{11}{27}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{13}{27}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Factor the expression as \\(a(bc+b+1)\\)",
+        "If \\(a\\) is not divisible by \\(3\\), work modulo \\(3\\) with \\(b(c+1)\\)"
+      ],
+      "solution": "Note that \\[ abc + ab + a = a(bc + b + 1). \\] This means that if \\(a\\) is divisible by \\(3,\\) the whole expression is as well.\n\nSince \\(2010\\) is divisible by \\(3,\\) we have that \\(a\\) is divisible by \\(3\\) with probability \\(\\frac{1}{3}.\\)\n\nNow consider \\(a\\) not divisible by \\(3.\\) For the expression to be divisible by \\(3,\\) we must have that \\(bc + b + 1\\) is divisible by \\(3.\\)\n\nThis means that \\[ bc + b = b(c + 1) \\equiv 2 \\pmod{3}. \\]\n\nThe only possibility for this is that one of the factors is \\(2\\) mod \\(3\\) and the other is \\(1\\) mod \\(3.\\)\n\nFor each of the two cases, there is a \\(\\frac{1}{3}\\) chance that each of the factors is the desired modulus, for a probability of \\[\\dfrac{1}{3} \\cdot \\dfrac{1}{3} = \\dfrac{1}{9}.\\]\n\nThere are two cases, which means that this happens with a \\(\\dfrac{2}{9}\\) probability.\n\nThe total probability is then \\[ \\dfrac{1}{3} \\cdot 1 + \\dfrac{2}{3} \\cdot \\dfrac{2}{9} = \\dfrac{13}{27}. \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "modular arithmetic",
+        "basic probability",
+        "casework"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/18"
+    },
+    {
+      "id": "amc-10-2010b-q19",
+      "number": 19,
+      "question": "A circle with center \\(O\\) has area \\(156\\pi.\\) Triangle \\(ABC\\) is equilateral, \\(\\overline{BC}\\) is a chord on the circle, \\(OA = 4\\sqrt{3},\\) and point \\(O\\) is outside \\(\\triangle ABC.\\) What is the side length of \\(\\triangle ABC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\sqrt{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\sqrt{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(s\\) be the side length and drop the altitude from \\(A\\)",
+        "Use the circle radius \\(\\sqrt{156}\\) and the equilateral triangle altitude"
+      ],
+      "solution": "Consider the following diagram:\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2010b/19sol-860e3a1d8e.svg\" style=\"max-height: 12rem\"/>\n\nUsing the formula for the area of a circle, we have that \\(BO = \\sqrt{156}\\) since it is a radius.\n\nExtend \\(\\overline{AO}\\) to intersect \\(\\overline{BC}\\) at \\(X.\\) Let \\(s\\) be the side length of \\(\\triangle ABC.\\)\n\nThen we have that \\[ BX = \\dfrac{s}{2} \\] and \\[ AX = \\dfrac{s\\sqrt3}{2}. \\]\n\nWe have that \\(\\triangle OXB\\) is right, which means that we can apply the Pythagorean Theorem. This gives us \\[ (\\sqrt{156})^2 = \\left(\\dfrac{s}{2}\\right)^2\\]\\[ + \\left(\\dfrac{s\\sqrt3}{2} + 4\\sqrt3\\right)^2. \\]\n\nSimplifying, we get \\[ 156 = s^2 + 12s + 48 \\] \\[ s^2 + 12s - 108 = 0 \\] \\[ (s - 6)(s + 18) = 0. \\]\n\nSince \\(s\\) is positive, we must have that \\(s = 6.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "chord",
+        "equilateral triangle",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1860,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/19"
+    },
+    {
+      "id": "amc-10-2010b-q20",
+      "number": 20,
+      "question": "Two circles lie outside regular hexagon \\(ABCDEF.\\) The first is tangent to \\(\\overline{AB},\\) and the second is tangent to \\(\\overline{DE}.\\) Both are tangent to lines \\(BC\\) and \\(FA.\\) What is the ratio of the area of the second circle to that of the first circle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(36\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(81\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(108\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compare the two circle radii",
+        "The larger radius comes from a \\(30\\)-\\(60\\)-\\(90\\) triangle"
+      ],
+      "solution": "Consider the following diagram:\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2010b/20sol-4e490c837d.svg\" style=\"max-height: 12rem\"/>\n\nAssume the regular hexagon has side length \\(1.\\) The smaller circle is inscribed in an equilateral triangle of side length \\(1.\\)\n\nThe inradius of this equilateral triangle is \\(\\dfrac{\\sqrt3}{6}.\\) The area of the circle is then \\[ \\pi \\cdot \\left(\\dfrac{\\sqrt3}{6}\\right)^2 = \\dfrac{\\pi}{12}. \\]\n\nLet \\(O\\) be the center of the larger circle. Drop the perpendicular from \\(O\\) to \\(\\overline{GH}\\) at \\(J.\\) Draw \\(\\overline{OG}.\\)\n\nWe have that \\(\\triangle OJG\\) is right. Since \\(\\angle HGI = 60^{\\circ},\\) we also have that \\(\\triangle OJG\\) is a \\(30-60-90\\) triangle.\n\nLet \\(OJ = r.\\) Then \\(OG = 2r.\\) We also have that \\(OG\\) is the sum of the height of the hexagon, equilateral triangle, and radius of the circle.\n\nThen \\[ OG = \\dfrac{\\sqrt3}{2} + \\sqrt3 + r. \\]\n\nSubstituting in \\(OG,\\) we get \\[ 2r = \\dfrac{\\sqrt3}{2} + \\sqrt3 + r. \\] Simplifying gives us \\[ r = \\dfrac{3\\sqrt3}{2}. \\]\n\nThe area of the larger circle is then \\[ \\pi \\cdot \\left(\\dfrac{3\\sqrt3}{2}\\right)^2 = \\dfrac{27}{4}\\pi. \\]\n\nThe desired ratio is then \\[ \\dfrac{\\frac{27\\pi}{4}}{\\frac{\\pi}{12}} = 81. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "regular polygon",
+        "tangent line",
+        "special right triangle",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1960,
+      "solveTimeSeconds": 125,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/20"
+    },
+    {
+      "id": "amc-10-2010b-q21",
+      "number": 21,
+      "question": "A palindrome between \\(1000\\) and \\(10{,}000\\) is chosen at random. What is the probability that it is divisible by \\(7?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{10}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{9}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{7}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Write a four-digit palindrome as \\(abba\\)",
+        "The value is \\(1001a+110b\\), and \\(1001\\) is divisible by \\(7\\)"
+      ],
+      "solution": "Note that we can express any \\(4\\) digit number as \\(abcd.\\) This can be expressed in long form as \\[ 10^3a + 10^2b + 10c + d. \\] Since in a palindrome, we have that \\(a = d\\) and \\(b = c.\\) We can simplify this to get \\[ 1001a + 110b. \\] Note that \\(1001\\) is divisible by \\(7.\\) This means that \\(110b\\) must also be divisible by \\(7.\\)\n\nThe only way for this to happen is if \\(b\\) is \\(0\\) or \\(7\\) since \\(110\\) is not divisible by \\(7.\\)\n\nThere are \\(9\\) options for \\(a\\) and \\(2\\) options for \\(b,\\) for a total of \\(9 \\cdot 2 = 18\\) palindromes.\n\nThe total number of palindromes is \\(9 \\cdot 10\\) since there are \\(9\\) options for the thousands digit and \\(10\\) options for the hundreds digit.\n\nThe desired probability is then \\[ \\dfrac{18}{9 \\cdot 10} = \\dfrac{1}{5}. \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "palindrome",
+        "divisibility",
+        "basic probability"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/21"
+    },
+    {
+      "id": "amc-10-2010b-q22",
+      "number": 22,
+      "question": "Seven distinct pieces of candy are to be distributed among three bags. The red bag and the blue bag must each receive at least one piece of candy; the white bag may remain empty. How many arrangements are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1930\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1931\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1932\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1933\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1934\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Count all \\(3^7\\) distributions first",
+        "Subtract cases with the red or blue bag empty, then add back the overlap"
+      ],
+      "solution": "We can count this with complementary counting. The total number of ways to distribute the candies with no restrictions is \\[ 3^7 = 2187. \\]\n\nTo find the number of invalid arrangements, we have to count the number of ways where either the red or blue bag is empty.\n\nFor the case where the red bag is empty, each candy has \\(2\\) options for the bag that goes into. There are then \\[ 2^7 = 128 \\] arrangements for this case. Similarly, there are \\(128\\) arrangements for the case where the blue bag is empty.\n\nThere is an overlap of one case where both bags are empty. The final answer is then \\[ 2187 - (128 + 128 - 1) = 1932. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "complementary counting",
+        "inclusion-exclusion",
+        "multiplication principle"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/22"
+    },
+    {
+      "id": "amc-10-2010b-q23",
+      "number": 23,
+      "question": "The entries in a \\(3 \\times 3\\) array include all the digits from \\(1\\) through \\(9,\\) arranged so that the entries in every row and column are in increasing order. How many such arrays are there?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(36\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(60\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The center entry can only be \\(4,5,\\) or \\(6\\)",
+        "Case on the center and use the row-column increasing constraints"
+      ],
+      "solution": "Let \\(a_{ij}\\) be the entry in row \\(i\\) and column \\(j.\\) The increasing conditions force \\(a_{11}=1,\\) \\(a_{33}=9,\\) and \\(a_{22}\\) to be \\(4,\\) \\(5,\\) or \\(6.\\)\n\nIf \\(a_{22}=4,\\) then \\(\\{a_{12},a_{21}\\}=\\{2,3\\}.\\) Choose which two of \\(5,\\) \\(6,\\) \\(7,\\) and \\(8\\) go in the bottom-left pair \\(\\{a_{31},a_{32}\\};\\) the other two go in the top-right pair \\(\\{a_{13},a_{23}\\}.\\) Each pair then has only one increasing order. There are \\(2\\binom42=12\\) arrays: two orders for \\(2,\\) \\(3\\) around the upper-left corner and \\(\\binom42\\) choices for the bottom-left pair. By reversing the digits and rotating the array, there are also \\(12\\) arrays with center \\(6.\\)\n\nIf \\(a_{22}=5,\\) choose the three entries in positions \\(a_{12},\\) \\(a_{13},\\) and \\(a_{23}.\\) They can be any three of \\(\\{2,3,4,6,7,8\\}\\) except \\(\\{2,3,4\\}\\) or \\(\\{6,7,8\\};\\) those two choices would put all three small or all three large entries on one side and violate a required comparison with the center. Every other choice uniquely determines the remaining entries and their increasing orders. This gives \\(\\binom63-2=18\\) arrays.\n\nThe total is \\(12+18+12=42.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "casework"
+      ],
+      "sourceDifficulty": 2030,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/23"
+    },
+    {
+      "id": "amc-10-2010b-q24",
+      "number": 24,
+      "question": "A high school basketball game between the Raiders and Wildcats was tied at the end of the first quarter. The number of points scored by the Raiders in each of the four quarters formed an increasing geometric sequence, and the number of points scored by the Wildcats in each of the four quarters formed an increasing arithmetic sequence. At the end of the fourth quarter, the Raiders had won by one point. Neither team scored more than \\(100\\) points. What was the total number of points scored by the two teams in the first half?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(31\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(32\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(33\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(34\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let the tied first-quarter score be \\(a\\)",
+        "Use the geometric and arithmetic total scores and the one-point final margin"
+      ],
+      "solution": "Let the first-quarter score for each team be \\(a.\\) Let the Raiders have common ratio \\(r\\) and let the Wildcats have common difference \\(d.\\)\n\nWrite \\(r=\\frac{m}{n}\\) in lowest terms. Since the Raiders’ four quarter scores are integers, \\(a=n^3A\\) for some positive integer \\(A\\), and their total is \\(A(n^3+n^2m+nm^2+m^3)\\le100\\). Thus the only possible ratios are \\(\\dfrac{3}{2},2,3,4\\).\n\nFor \\(r=\\dfrac{3}{2}\\) or \\(r=4\\), the only possible Raiders totals give Wildcats totals that are not of the form \\(4a+6d\\). For \\(r=3\\), the equation \\(40a=4a+6d+1\\) is impossible modulo \\(6\\).\n\nFor \\(r=2\\), the equation is \\(15a=4a+6d+1\\), so \\(11a=6d+1\\). The only positive solution with total at most \\(100\\) is \\(a=5,d=9\\).\n\nThe first-half total is \\(5+10+5+14=34.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "geometric sequence",
+        "arithmetic sequence",
+        "Diophantine Equation"
+      ],
+      "sourceDifficulty": 2180,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/24"
+    },
+    {
+      "id": "amc-10-2010b-q25",
+      "number": 25,
+      "question": "Let \\(a \\gt 0,\\) and let \\(P(x)\\) be a polynomial with integer coefficients such that \\[ \\begin{aligned} P(1) &= P(3) \\\\ &= P(5) = P(7) = a, \\end{aligned} \\] and \\[ \\begin{aligned} P(2)&=P(4)=P(6)\\\\ &=P(8)=-a. \\end{aligned} \\] What is the smallest possible value of \\(a?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(105\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(315\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(945\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7!\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8!\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use the roots of \\(P(x)-a\\)",
+        "Plug \\(2,\\) \\(4,\\) \\(6,\\) and \\(8\\) into the factored form to force divisibility of \\(a\\)"
+      ],
+      "solution": "Because \\(1,\\) \\(3,\\) \\(5,\\) and \\(7\\) are roots of \\(P(x)-a\\), write \\(P(x)-a=(x-1)(x-3)\\) \\(\\cdot(x-5)(x-7)Q(x)\\), where \\(Q(x)\\) has integer coefficients.\n\nSubstituting \\(2,\\) \\(4,\\) \\(6,\\) and \\(8\\) for \\(x\\) gives \\(-2a=-15Q(2)\\) \\(=9Q(4)\\) \\(=-15Q(6)\\) \\(=105Q(8)\\). Hence \\(a\\) must be a multiple of \\(\\operatorname{lcm}(15,9,105)=315\\).\n\nThis lower bound is attainable: take \\(Q(x)=42\\) \\(+(x-2)(x-6)(60-8x)\\) and define \\(P(x)=315\\) \\(+(x-1)(x-3)\\) \\(\\cdot(x-5)(x-7)Q(x)\\). This polynomial has integer coefficients and satisfies the required values.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "polynomial",
+        "divisibility",
+        "least common multiple"
+      ],
+      "sourceDifficulty": 2350,
+      "solveTimeSeconds": 160,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2010B/problem/25"
+    }
+  ]
+}

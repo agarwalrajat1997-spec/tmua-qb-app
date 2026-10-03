@@ -1,0 +1,1027 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2024B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2024b-q1",
+      "number": 1,
+      "question": "In a long line of people arranged left to right, the \\(1013\\)th person from the left is also the \\(1010\\)th person from the right. How many people are in the line?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2021\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2022\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2023\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2024\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2025\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "There are \\(1012\\) people to the left of this person and \\(1009\\) to the right",
+        "Add the two counts, but do not count this one person twice"
+      ],
+      "solution": "There are \\(1012\\) people to the left of this spot and \\(1009\\) to the right. Add those two groups plus the person themselves: \\(1012 + 1009 + 1 = 2022.\\) Or, just as fast, the two positions overlap on one person, so \\(1013 + 1010 - 1 = 2022.\\) Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic counting"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/1"
+    },
+    {
+      "id": "amc-10-2024b-q2",
+      "number": 2,
+      "question": "What is \\(10! - 7! \\cdot 6!?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-120\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(120\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(600\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(720\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Write \\(10! = 10 \\cdot 9 \\cdot 8 \\cdot 7!\\)",
+        "Notice that \\(10 \\cdot 9 \\cdot 8\\) equals \\(6!\\)"
+      ],
+      "solution": "Write \\(10! = 10 \\cdot 9 \\cdot 8 \\cdot 7! = 720 \\cdot 7!.\\) But \\(720 = 6!\\) too, so \\(10! = 6! \\cdot 7! = 7! \\cdot 6!.\\) The two terms are the same. That makes \\(10! - 7! \\cdot 6! = 0.\\) Therefore, the answer is <b>B</b>.",
+      "sourceConcepts": [
+        "factorial"
+      ],
+      "sourceDifficulty": 980,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/2"
+    },
+    {
+      "id": "amc-10-2024b-q3",
+      "number": 3,
+      "question": "For how many integer values of \\(x\\) is \\(|2x| \\le 7\\pi?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(21\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Divide by \\(2\\): the inequality is \\(|x| \\le 3.5\\pi\\)",
+        "\\(3.5\\pi \\approx 10.99,\\) so \\(x\\) ranges over the integers with \\(|x| \\le 10\\)"
+      ],
+      "solution": "Divide by \\(2\\) to get \\(|x| \\le 3.5\\pi \\approx 10.996.\\) The integers that fit run from \\(-10\\) up to \\(10,\\) and there are \\(21\\) of them. Thus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "absolute value",
+        "estimation",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1050,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/3"
+    },
+    {
+      "id": "amc-10-2024b-q4",
+      "number": 4,
+      "question": "Balls numbered \\(1,\\) \\(2,\\) \\(3,\\) \\(\\ldots\\) are deposited in \\(5\\) bins, labeled \\(A,\\) \\(B,\\) \\(C,\\) \\(D,\\) and \\(E,\\) using the following procedure. Ball \\(1\\) is deposited in bin \\(A,\\) and balls \\(2\\) and \\(3\\) are deposited in bin \\(B.\\) The next \\(3\\) balls are deposited in bin \\(C,\\) the next \\(4\\) in bin \\(D,\\) and so on, cycling back to bin \\(A\\) after balls are deposited in bin \\(E.\\) (For example, balls numbered \\(22,\\) \\(23,\\) \\(\\ldots,\\) \\(28\\) are deposited in bin \\(B\\) at step \\(7\\) of this process.) In which bin is ball \\(2024\\) deposited?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(A\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(B\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(C\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(D\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(E\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Group \\(g\\) has \\(g\\) balls, so groups \\(1\\) through \\(g\\) use \\(\\tfrac{g(g+1)}{2}\\) balls",
+        "Find the group containing ball \\(2024,\\) then read its bin from \\(g \\bmod 5,\\) with group \\(1\\) corresponding to \\(A\\)"
+      ],
+      "solution": "Group \\(g\\) holds \\(g\\) balls, so the first \\(g\\) groups swallow \\(\\tfrac{g(g+1)}{2}\\) of them. Now \\(\\tfrac{63 \\cdot 64}{2} = 2016\\) and \\(\\tfrac{64 \\cdot 65}{2} = 2080,\\) which puts ball \\(2024\\) in group \\(64\\) (balls \\(2017\\) through \\(2080\\)). The bins cycle \\(A, B, C, D, E,\\) so group \\(g\\) lands in bin number \\((g - 1) \\bmod 5.\\) For \\(g = 64\\) that’s \\(63 \\bmod 5 = 3,\\) bin \\(D.\\) Therefore, the answer is <b>D</b>.",
+      "sourceConcepts": [
+        "triangular number",
+        "modular arithmetic"
+      ],
+      "sourceDifficulty": 1130,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/4"
+    },
+    {
+      "id": "amc-10-2024b-q5",
+      "number": 5,
+      "question": "In the following expression, Melanie changed some of the plus signs to minus signs:\n\n\\[1 + 3 + 5 + 7 + \\cdots + 97 + 99\\]\n\nWhen the new expression was evaluated, it was negative. What is the least number of plus signs that Melanie could have changed to minus signs?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The full sum is \\(1 + 3 + \\cdots + 99 = 50^2 = 2500;\\) flipping a term \\(t\\) lowers the sum by \\(2t\\)",
+        "To go below \\(0\\) with the fewest flips, flip the largest terms; their doubled total must exceed \\(2500\\)"
+      ],
+      "solution": "The full sum is \\(1 + 3 + \\cdots + 99 = 50^2 = 2500.\\) Flipping a term \\(t\\) drops the total by \\(2t,\\) so to go negative the flipped terms have to add up to more than \\(1250.\\) The greedy move is to flip the biggest odd numbers: flipping the top \\(k\\) gives \\(99 + 97 + \\cdots = k(100 - k).\\) We want \\(k(100 - k) \\gt 1250.\\) At \\(k = 14\\) it’s only \\(1204,\\) but at \\(k = 15\\) it jumps to \\(1275.\\) So \\(15\\) flips do it. Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "summation",
+        "optimization",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1250,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/5"
+    },
+    {
+      "id": "amc-10-2024b-q6",
+      "number": 6,
+      "question": "A rectangle has integer side lengths and an area of \\(2024.\\) What is the least possible perimeter of the rectangle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(160\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(180\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(222\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(228\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(390\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "For a fixed area, the perimeter is smallest when the two sides are as close to equal as possible",
+        "\\(2024 = 2^3 \\cdot 11 \\cdot 23;\\) look for a factor pair near \\(\\sqrt{2024} \\approx 45\\)"
+      ],
+      "solution": "The perimeter \\(2(\\ell + w)\\) with \\(\\ell w = 2024\\) is smallest when \\(\\ell\\) and \\(w\\) are as close together as possible. Factor \\(2024 = 2^3 \\cdot 11 \\cdot 23.\\) The divisor pair nearest \\(\\sqrt{2024} \\approx 45\\) is \\(44 \\times 46,\\) which gives perimeter \\(2(44 + 46) = 180.\\) Therefore, the answer is <b>B</b>.",
+      "sourceConcepts": [
+        "factor",
+        "perimeter",
+        "optimization"
+      ],
+      "sourceDifficulty": 1200,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/6"
+    },
+    {
+      "id": "amc-10-2024b-q7",
+      "number": 7,
+      "question": "What is the remainder when \\(7^{2024} + 7^{2025} + 7^{2026}\\) is divided by \\(19?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Factor out \\(7^{2024}\\)",
+        "The remaining factor is \\(1 + 7 + 49;\\) check its relationship to \\(19\\)"
+      ],
+      "solution": "Pull out the common power: \\(7^{2024} + 7^{2025} + 7^{2026}\\) \\(= 7^{2024}(1 + 7 + 49)\\) \\(= 7^{2024} \\cdot 57.\\) And \\(57 = 3 \\cdot 19,\\) so the product is a multiple of \\(19.\\) The remainder is \\(0.\\) Thus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "modular arithmetic",
+        "factoring",
+        "exponent"
+      ],
+      "sourceDifficulty": 1250,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/7"
+    },
+    {
+      "id": "amc-10-2024b-q8",
+      "number": 8,
+      "question": "Let \\(N\\) be the product of all the positive integer divisors of \\(42.\\) What is the units digit of \\(N?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A number with \\(d\\) divisors has divisor product equal to itself raised to the \\(\\tfrac{d}{2}\\) power",
+        "\\(42 = 2 \\cdot 3 \\cdot 7\\) has \\(8\\) divisors, so \\(N = 42^4;\\) track only the units digit"
+      ],
+      "solution": "Since \\(42 = 2 \\cdot 3 \\cdot 7\\) has \\((1+1)^3 = 8\\) divisors, we can pair each divisor with its complement, so \\(N = 42^{\\frac{8}{2}} = 42^4.\\) Only the units digit matters, and \\(2^4 = 16\\) ends in \\(6,\\) so \\(42^4\\) does too. Therefore, the answer is <b>D</b>.",
+      "sourceConcepts": [
+        "factor counting",
+        "units digit",
+        "pairing and grouping"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/8"
+    },
+    {
+      "id": "amc-10-2024b-q9",
+      "number": 9,
+      "question": "Real numbers \\(a,\\) \\(b,\\) and \\(c\\) have arithmetic mean \\(0.\\) The arithmetic mean of \\(a^2,\\) \\(b^2,\\) and \\(c^2\\) is \\(10.\\) What is the arithmetic mean of \\(ab,\\) \\(ac,\\) and \\(bc?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-\\dfrac{10}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(-\\dfrac{10}{9}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{10}{9}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Mean \\(0\\) means \\(a + b + c = 0;\\) mean \\(10\\) means \\(a^2 + b^2 + c^2 = 30\\)",
+        "Use \\((a + b + c)^2\\) \\(= a^2 + b^2 + c^2\\) \\(+ 2(ab + bc + ca)\\)"
+      ],
+      "solution": "The means tell us \\(a + b + c = 0\\) and \\(a^2 + b^2 + c^2 = 30.\\) Square the first: \\((a+b+c)^2\\) \\(= a^2 + b^2 + c^2\\) \\(+ 2(ab + bc + ca),\\) so \\(0 = 30 + 2(ab + bc + ca)\\) and \\(ab + bc + ca = -15.\\) Their mean is \\(-\\frac{15}{3} = -5.\\) Thus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "algebraic manipulation",
+        "mean"
+      ],
+      "sourceDifficulty": 1350,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/9"
+    },
+    {
+      "id": "amc-10-2024b-q10",
+      "number": 10,
+      "question": "Quadrilateral \\(ABCD\\) is a parallelogram, and \\(E\\) is the midpoint of the side \\(\\overline{AD}.\\) Let \\(F\\) be the intersection of lines \\(EB\\) and \\(AC.\\) What is the ratio of the area of quadrilateral \\(CDEF\\) to the area of triangle \\(CFB?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5 : 4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4 : 3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3 : 2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5 : 3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2 : 1\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Area ratios are unchanged by an affine map, so compute with \\(A = (0,0),\\) \\(B = (1,0),\\) \\(C = (1,1),\\) \\(D = (0,1)\\)",
+        "Find \\(F\\) as the intersection of line \\(AC\\) with line \\(EB,\\) then use the shoelace formula"
+      ],
+      "solution": "Area ratios don’t change under an affine map, so drop in convenient coordinates: \\(A = (0,0),\\) \\(B = (1,0),\\) \\(C = (1,1),\\) \\(D = (0,1),\\) which makes \\(E = (0, \\tfrac12).\\) Line \\(AC\\) is \\(y = x,\\) and line \\(EB\\) runs from \\((0, \\tfrac12)\\) to \\((1, 0);\\) they cross at \\(F = (\\tfrac13, \\tfrac13).\\) The shoelace formula gives quadrilateral \\(CDEF\\) area \\(\\tfrac{5}{12}\\) and triangle \\(CFB\\) area \\(\\tfrac13.\\) So the ratio is \\(\\tfrac{5}{12} : \\tfrac13 = 5 : 4.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "parallelogram",
+        "area ratio",
+        "coordinate geometry",
+        "shoelace formula"
+      ],
+      "sourceDifficulty": 1440,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/10"
+    },
+    {
+      "id": "amc-10-2024b-q11",
+      "number": 11,
+      "question": "In the figure below \\(WXYZ\\) is a rectangle with \\(WX = 4\\) and \\(WZ = 8.\\) Point \\(M\\) lies on \\(\\overline{XY},\\) point \\(A\\) lies on \\(\\overline{YZ},\\) and \\(\\angle WMA\\) is a right angle. The areas of \\(\\triangle WXM\\) and \\(\\triangle WAZ\\) are equal. What is the area of \\(\\triangle WMA?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2024b/11-fdf1d73cd1.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Set \\(X = (0,0),\\) \\(Y = (8,0),\\) \\(W = (0,4),\\) \\(Z = (8,4),\\) with \\(M = (m, 0)\\) and \\(A = (8, a)\\)",
+        "Perpendicularity gives \\(m(8 - m) = 4a;\\) equal areas give \\(2m = 4(4 - a)\\)"
+      ],
+      "solution": "Set \\(X = (0,0),\\) \\(Y = (8,0),\\) \\(W = (0,4),\\) \\(Z = (8,4),\\) so \\(M = (m, 0)\\) and \\(A = (8, a).\\) The right angle means \\(\\overrightarrow{MW} \\cdot \\overrightarrow{MA} = 0,\\) which gives \\(-m(8 - m) + 4a = 0,\\) that is \\(m(8 - m) = 4a.\\) Equal areas \\([WXM] = 2m\\) and \\([WAZ] = 4(4 - a)\\) force \\(m = 8 - 2a,\\) so \\(a = \\tfrac{8 - m}{2}.\\) Substitute back and \\((8 - m)(2 - m) = 0.\\) Taking \\(M \\ne Y\\) leaves \\(m = 2\\) and \\(a = 3.\\) Then \\([WMA] = 32\\) \\(- [WXM]\\) \\(- [MYA]\\) \\(- [AZW]\\) \\(= 32 - 4 - 9 - 4\\) \\(= 15.\\) Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "vector",
+        "area decomposition"
+      ],
+      "sourceDifficulty": 1500,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/11"
+    },
+    {
+      "id": "amc-10-2024b-q12",
+      "number": 12,
+      "question": "A group of \\(100\\) students from different countries meet at a mathematics competition. Each student speaks the same number of languages, and, for every pair of students \\(A\\) and \\(B,\\) student \\(A\\) speaks some language that student \\(B\\) does not speak, and student \\(B\\) speaks some language that student \\(A\\) does not speak. What is the least possible total number of languages spoken by all the students?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(51\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Give each student the set of languages they speak; the condition means no set contains another",
+        "Equal-size distinct sets never contain one another, so you need \\(\\binom{n}{k} \\ge 100\\) for some \\(k\\)"
+      ],
+      "solution": "Give each student the set of languages they speak. The condition says no one’s set sits inside another’s. Everyone speaks the same number \\(k\\) of languages, and two distinct \\(k\\)-element sets can never contain each other, so all we need is \\(100\\) different \\(k\\)-subsets of the \\(n\\) languages, i.e. \\(\\binom{n}{k} \\ge 100.\\) With \\(n = 8\\) the best we can manage is \\(\\binom{8}{4} = 70,\\) short of \\(100.\\) But \\(\\binom{9}{4} = 126 \\ge 100.\\) So \\(9\\) languages are both enough and necessary. Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "subsets",
+        "combinations",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 1500,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/12"
+    },
+    {
+      "id": "amc-10-2024b-q13",
+      "number": 13,
+      "question": "Positive integers \\(x\\) and \\(y\\) satisfy the equation \\(\\sqrt{x} + \\sqrt{y} = \\sqrt{1183}.\\) What is the minimum possible value of \\(x + y?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(585\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(595\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(623\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(700\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(791\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "\\(1183 = 7 \\cdot 13^2,\\) so \\(\\sqrt{1183} = 13\\sqrt{7}\\)",
+        "Then \\(\\sqrt{x} = a\\sqrt{7}\\) and \\(\\sqrt{y} = b\\sqrt{7}\\) with \\(a + b = 13;\\) minimize \\(x + y = 7(a^2 + b^2)\\)"
+      ],
+      "solution": "Since \\(1183 = 7 \\cdot 13^2,\\) we have \\(\\sqrt{1183} = 13\\sqrt7.\\) Squaring the given equation shows that \\(\\sqrt{xy}\\) is rational. Thus \\(x\\) and \\(y\\) have the same squarefree part: write \\(x=da^2\\) and \\(y=db^2,\\) where \\(d\\) is squarefree and \\(a,b\\) are positive integers. Then \\((a+b)\\sqrt d=13\\sqrt7,\\) so \\(d=7\\) and \\(a+b=13.\\) Therefore \\(x+y=7(a^2+b^2),\\) which is smallest when \\(a\\) and \\(b\\) are as close as possible. Taking \\(a=6\\) and \\(b=7\\) gives \\(x+y=7(36+49)=595.\\) Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "radical",
+        "prime factorization",
+        "optimization"
+      ],
+      "sourceDifficulty": 1560,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/13"
+    },
+    {
+      "id": "amc-10-2024b-q14",
+      "number": 14,
+      "question": "A dartboard is the region \\(B\\) in the coordinate plane consisting of points \\((x, y)\\) such that \\(|x| + |y| \\le 8.\\) A target \\(T\\) is the region where \\((x^2 + y^2 - 25)^2 \\le 49.\\) A dart is thrown and lands at a random point in \\(B.\\) The probability that the dart lands in \\(T\\) can be expressed as \\(\\dfrac{m}{n} \\cdot \\pi,\\) where \\(m\\) and \\(n\\) are relatively prime positive integers. What is \\(m + n?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(39\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(71\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(73\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(75\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(135\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "\\(B\\) is a square of diagonal \\(16,\\) and \\(T\\) is the annulus \\(18 \\le x^2 + y^2 \\le 32\\)",
+        "The outer radius \\(\\sqrt{32} = 4\\sqrt2\\) equals the distance from the origin to each edge of \\(B,\\) so \\(T\\) sits entirely inside \\(B\\)"
+      ],
+      "solution": "\\(B\\) is the square \\(|x| + |y| \\le 8,\\) with area \\(2 \\cdot 8^2 = 128.\\) The target condition \\((x^2 + y^2 - 25)^2 \\le 49\\) unpacks to \\(|x^2 + y^2 - 25| \\le 7,\\) that is \\(18 \\le x^2 + y^2 \\le 32,\\) an annulus of area \\(\\pi(32 - 18) = 14\\pi.\\) Does it fit inside \\(B?\\) The distance from the origin to an edge \\(x + y = 8\\) is \\(\\tfrac{8}{\\sqrt2} = 4\\sqrt2 = \\sqrt{32},\\) exactly the outer radius, so yes, the annulus sits inside the square. The probability is \\(\\tfrac{14\\pi}{128} = \\tfrac{7}{64}\\pi,\\) giving \\(m + n = 71.\\) Therefore, the answer is <b>B</b>.",
+      "sourceConcepts": [
+        "geometric probability",
+        "annulus",
+        "tangent line"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/14"
+    },
+    {
+      "id": "amc-10-2024b-q15",
+      "number": 15,
+      "question": "A list of \\(9\\) real numbers consists of \\(1,\\) \\(2.2,\\) \\(3.2,\\) \\(5.2,\\) \\(6.2,\\) \\(7,\\) as well as \\(x,\\) \\(y,\\) \\(z\\) with \\(x \\le y \\le z.\\) The range of the list is \\(7,\\) and the mean and median are both positive integers. How many ordered triples \\((x, y, z)\\) are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "infinitely many"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The six given numbers sum to \\(24.8,\\) so \\(x + y + z\\) must make the total a multiple of \\(9\\)",
+        "Range \\(7\\) fixes the smallest and largest values; then require the \\(5\\)th smallest number to be a positive integer"
+      ],
+      "solution": "The six fixed numbers total \\(24.8.\\) If the mean is the integer \\(k,\\) then \\(x+y+z=9k-24.8.\\) Because the fixed entries already run from \\(1\\) to \\(7,\\) the range condition gives three cases.\n\nIf \\(z\\le7,\\) then \\(x=0.\\) The bounds on \\(y+z\\) force \\(k=3\\) or \\(4.\\) For \\(k=3,\\) the median is \\(2.2;\\) for \\(k=4,\\) we have \\(y+z=11.2,\\) so \\(y\\ge4.2\\) and the median is integral only when \\(y=5,\\) giving \\((x,y,z)=(0,5,6.2).\\)\n\nIf \\(x\\ge1,\\) then \\(z=8.\\) Here \\(k=4\\) gives median \\(3.2.\\) For \\(k=5,\\) we have \\(x+y=12.2;\\) the median is integral only when \\(x=6,\\) giving \\((6,6.2,8).\\)\n\nThe remaining case has \\(0&lt;x&lt;1\\) and \\(z=x+7.\\) The total lies between \\(31.8\\) and \\(41.8,\\) so \\(k=4\\) and \\(y=4.2-2x.\\) The median can be an integer only when \\(y=4,\\) giving \\((0.1,4,7.1).\\) Hence exactly \\(3\\) ordered triples work. Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "median (data)",
+        "range",
+        "casework"
+      ],
+      "sourceDifficulty": 1730,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/15"
+    },
+    {
+      "id": "amc-10-2024b-q16",
+      "number": 16,
+      "question": "Jerry likes to play with numbers. One day, he wrote all the integers from \\(1\\) to \\(2024\\) on the whiteboard. Then he repeatedly chose four numbers on the whiteboard, erased them, and replaced them by either their sum or their product. (For example, Jerry’s first step might have been to erase \\(1,\\) \\(2,\\) \\(3,\\) and \\(5,\\) and then write either \\(11,\\) their sum, or \\(30,\\) their product, on the whiteboard.) After repeatedly performing this operation, Jerry noticed that all the remaining numbers on the whiteboard were odd. What is the maximum possible number of integers on the whiteboard at that time?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1010\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1011\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1012\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1013\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1014\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Each move turns \\(4\\) numbers into \\(1,\\) so the count drops by \\(3;\\) maximizing the count means minimizing the moves",
+        "There are \\(1012\\) even entries, and any move decreases their number by at most \\(3\\)"
+      ],
+      "solution": "Among \\(1, \\ldots, 2024\\) there are \\(1012\\) even numbers and \\(1012\\) odd numbers. Each operation replaces \\(4\\) entries by \\(1,\\) so the total count falls by \\(3.\\) If a move consumes \\(e\\) even entries, its output is either odd, reducing the even count by \\(e,\\) or even, reducing it by \\(e-1.\\) In either case the even count falls by at most \\(3.\\) Therefore eliminating all \\(1012\\) even entries takes at least \\(\\lceil\\frac{1012}{3}\\rceil=338\\) moves. This is achievable: use \\(337\\) sums containing one odd and three evens, then one sum containing three odds and the final even. Every output is odd. Thus the maximum remaining count is \\(2024-3\\cdot338=1010.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "parity",
+        "invariant",
+        "optimization"
+      ],
+      "sourceDifficulty": 1800,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/16"
+    },
+    {
+      "id": "amc-10-2024b-q17",
+      "number": 17,
+      "question": "In a race among \\(5\\) snails, there is at most one tie, but that tie can involve any number of snails. For example, the result of the race might be that Dazzler is first; Abby, Cyrus, and Elroy are tied for second; and Bruna is fifth. How many different results of the race are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(180\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(361\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(420\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(431\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(720\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Count results with no tie separately from results with exactly one tied group",
+        "For a tied group of \\(k\\) snails, choose them in \\(\\binom{5}{k}\\) ways and order the \\(6 - k\\) resulting blocks in \\((6-k)!\\) ways"
+      ],
+      "solution": "If nobody ties, the \\(5\\) snails finish in \\(5! = 120\\) orders. Now allow exactly one tied group of size \\(k\\) with \\(2 \\le k \\le 5.\\) Choose the group in \\(\\binom{5}{k}\\) ways, then treat it as one block, leaving \\(6 - k\\) blocks to arrange in \\((6 - k)!\\) ways. Summing over \\(k:\\) \\(\\binom{5}{2}4!\\) \\(+ \\binom{5}{3}3!\\) \\(+ \\binom{5}{4}2!\\) \\(+ \\binom{5}{5}1!\\) \\(= 240 + 60 + 10 + 1\\) \\(= 311.\\) Add the no-tie count: \\(120 + 311 = 431.\\) Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "permutations",
+        "combinations",
+        "casework"
+      ],
+      "sourceDifficulty": 1730,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/17"
+    },
+    {
+      "id": "amc-10-2024b-q18",
+      "number": 18,
+      "question": "How many different remainders can result when the \\(100\\)th power of an integer is divided by \\(125?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(125\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "\\(125 = 5^3\\) and \\(\\varphi(125) = 100;\\) split into \\(n\\) coprime to \\(5\\) and \\(n\\) divisible by \\(5\\)",
+        "If \\(\\gcd(n, 5) = 1,\\) then \\(n^{100} \\equiv 1;\\) if \\(n\\) is divisible by \\(5,\\) then \\(n^{100}\\) is divisible by \\(5^3\\)"
+      ],
+      "solution": "Here \\(125 = 5^3\\) and \\(\\varphi(125) = 100.\\) If \\(\\gcd(n, 5) = 1,\\) Euler’s theorem gives \\(n^{100} \\equiv 1 \\pmod{125}.\\) And if \\(n\\) is divisible by \\(5,\\) then \\(n^{100}\\) carries a factor of \\(5^{100},\\) hence of \\(125,\\) so \\(n^{100} \\equiv 0 \\pmod{125}.\\) That leaves only two possible remainders, \\(0\\) and \\(1.\\) Therefore, the answer is <b>B</b>.",
+      "sourceConcepts": [
+        "Euler’s Totient Function",
+        "modular exponentiation",
+        "casework"
+      ],
+      "sourceDifficulty": 1840,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/18"
+    },
+    {
+      "id": "amc-10-2024b-q19",
+      "number": 19,
+      "question": "In the following table, each question mark is to be replaced by “Possible” or “Not Possible” to indicate whether a nonvertical line with the given slope can contain the given number of lattice points (points both of whose coordinates are integers). How many of the \\(12\\) entries will be “Possible”?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2024b/19-22792e4290.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Two lattice points on a line force its slope to be rational; so an irrational slope allows at most one lattice point",
+        "A rational-slope line through one lattice point passes through infinitely many, so it has either \\(0\\) or infinitely many"
+      ],
+      "solution": "Any two lattice points give a rational slope. So a line with irrational slope holds at most one lattice point: it can have \\(0\\) (say \\(y = \\sqrt2\\,x + \\tfrac12\\)) or exactly \\(1\\) (say \\(y = \\sqrt2\\,x\\)), never two. A line with rational slope (zero included) through a lattice point \\((x_0, y_0)\\) also passes through \\((x_0 + q, y_0 + p)\\) for its reduced slope \\(\\tfrac{p}{q},\\) so it hits infinitely many; such a line has either \\(0\\) lattice points (shift it by an irrational intercept) or more than two, never exactly one or two. So each row gives exactly two “Possible” entries. For zero and nonzero rational slope those are the “zero” and “more than two” columns; for irrational slope, the “zero” and “exactly one” columns. That’s \\(6\\) in all. Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "lattice point",
+        "slope",
+        "casework"
+      ],
+      "sourceDifficulty": 1910,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/19"
+    },
+    {
+      "id": "amc-10-2024b-q20",
+      "number": 20,
+      "question": "Three different pairs of shoes are placed in a row so that no left shoe is next to a right shoe from a different pair. In how many ways can these six shoes be lined up?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(72\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(108\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(120\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The rule says: wherever a left shoe touches a right shoe, they must be mates from the same pair",
+        "Case on the left/right pattern of the six spots; each place where the side switches pins down one pair"
+      ],
+      "solution": "Wherever an \\(L\\) meets an \\(R\\) in the side pattern, those two shoes must be mates. Thus an interior run cannot have length \\(1:\\) its lone shoe would have to be the mate of both neighbors. With three \\(L\\)’s and three \\(R\\)’s, the only possible patterns are \\(LLLRRR,\\) \\(RRRLLL,\\) \\(LLRRRL,\\) \\(LRRLLR,\\) \\(LRRRLL,\\) \\(RLLLRR,\\) \\(RLLRRL,\\) and \\(RRLLLR.\\) For either one-switch pattern, choose the pair at the switch and order the remaining shoes, giving \\(3\\cdot2\\cdot2=12\\) arrangements. Each of the other six patterns has \\(6\\) assignments of the three pairs to its switches. Hence the total is \\(2\\cdot12+6\\cdot6=60.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "casework"
+      ],
+      "sourceDifficulty": 2080,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/20"
+    },
+    {
+      "id": "amc-10-2024b-q21",
+      "number": 21,
+      "question": "Two straight pipes (circular cylinders), with radii \\(1\\) and \\(\\tfrac14,\\) lie parallel and in contact on a flat floor. The figure below shows a head-on view. What is the sum of the possible radii of a third parallel pipe lying on the same floor and in contact with both?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2024b/21-3454c49ac9.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{9}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{10}{9}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{11}{9}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{19}{9}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "For two circles of radii \\(R\\) and \\(r\\) resting on a line and touching each other, their floor contact points are \\(2\\sqrt{Rr}\\) apart",
+        "The new pipe’s contact point is \\(2\\sqrt{r}\\) from the big pipe’s and \\(\\sqrt{r}\\) from the small pipe’s; it can sit between them or outside"
+      ],
+      "solution": "Two circles of radii \\(R\\) and \\(r\\) resting on the floor and touching each other have contact points a horizontal distance \\(2\\sqrt{Rr}\\) apart. So the radius-\\(1\\) and radius-\\(\\tfrac14\\) pipes touch the floor \\(2\\sqrt{1 \\cdot \\tfrac14} = 1\\) apart. A third pipe of radius \\(r\\) sits \\(2\\sqrt{r}\\) from the big pipe’s contact point and \\(2\\sqrt{\\tfrac14 r} = \\sqrt{r}\\) from the small pipe’s. Nestled between them, \\(2\\sqrt r + \\sqrt r = 1,\\) so \\(\\sqrt r = \\tfrac13\\) and \\(r = \\tfrac19.\\) Sitting past the small pipe, \\(2\\sqrt r - \\sqrt r = 1,\\) so \\(r = 1.\\) (Past the big pipe can’t happen.) The sum is \\(\\tfrac19 + 1 = \\tfrac{10}{9}.\\) Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "tangent circles",
+        "Pythagorean Theorem",
+        "casework"
+      ],
+      "sourceDifficulty": 2120,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/21"
+    },
+    {
+      "id": "amc-10-2024b-q22",
+      "number": 22,
+      "question": "A group of \\(16\\) people will be partitioned into \\(4\\) indistinguishable \\(4\\)-person committees. Each committee will have one chairperson and one secretary. The number of different ways to make these assignments can be written as \\(3^r M,\\) where \\(r\\) and \\(M\\) are positive integers and \\(M\\) is not divisible by \\(3.\\) What is \\(r?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The number of ways is \\(\\dfrac{16!}{(4!)^4 \\cdot 4!} \\cdot (4 \\cdot 3)^4,\\) the partition count times chair/secretary choices per committee",
+        "Count factors of \\(3\\) in each piece using Legendre’s formula on \\(16!\\) and \\(4!\\)"
+      ],
+      "solution": "Split \\(16\\) people into \\(4\\) indistinguishable groups of \\(4\\) in \\(\\dfrac{16!}{(4!)^4 \\, 4!}\\) ways, then each committee picks a chairperson and a secretary in \\(4 \\cdot 3 = 12\\) ways, a factor of \\(12^4.\\) Now count factors of \\(3.\\) In \\(16!\\) there are \\(\\lfloor \\frac{16}{3} \\rfloor + \\lfloor \\frac{16}{9} \\rfloor = 6;\\) the denominator \\((4!)^4 \\, 4!\\) contributes \\(4 \\cdot 1 + 1 = 5;\\) and \\(12^4\\) contributes \\(4.\\) The exponent is \\(6 - 5 + 4 = 5,\\) so \\(r = 5.\\) Therefore, the answer is <b>A</b>.",
+      "sourceConcepts": [
+        "combinations",
+        "Legendre’s Formula",
+        "prime factorization"
+      ],
+      "sourceDifficulty": 2120,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/22"
+    },
+    {
+      "id": "amc-10-2024b-q23",
+      "number": 23,
+      "question": "The Fibonacci numbers are defined by \\(F_1 = 1,\\) \\(F_2 = 1,\\) and \\(F_n = F_{n-1} + F_{n-2}\\) for \\(n \\ge 3.\\) What is\n\n\\[\\frac{F_2}{F_1} + \\frac{F_4}{F_2} + \\frac{F_6}{F_3} + \\cdots + \\frac{F_{20}}{F_{10}}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(318\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(319\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(320\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(321\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(322\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each term is \\(\\dfrac{F_{2k}}{F_k};\\) use the identity \\(F_{2k} = F_k L_k,\\) where \\(L_k\\) is the Lucas number",
+        "The sum becomes \\(L_1 + L_2 + \\cdots + L_{10};\\) sums of Lucas numbers satisfy \\(\\sum_{k=1}^{n} L_k = L_{n+2} - 3\\)"
+      ],
+      "solution": "Use \\(F_{2k} = F_k L_k,\\) so each term \\(\\dfrac{F_{2k}}{F_k} = L_k,\\) the \\(k\\)th Lucas number. That collapses the sum to \\(\\sum_{k=1}^{10} L_k.\\) With \\(L_1 = 1,\\) \\(L_2 = 3,\\) \\(L_3 = 4,\\) \\(\\ldots,\\) \\(L_{10} = 123,\\) the identity \\(\\sum_{k=1}^{n} L_k = L_{n+2} - 3\\) gives \\(L_{12} - 3 = 322 - 3 = 319.\\) Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "Fibonacci",
+        "summation"
+      ],
+      "sourceDifficulty": 2270,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/23"
+    },
+    {
+      "id": "amc-10-2024b-q24",
+      "number": 24,
+      "question": "Let\n\n\\[ \\begin{aligned} P(m) &= \\frac{m}{2} + \\frac{m^2}{4} \\\\ &\\quad {}+ \\frac{m^4}{8} + \\frac{m^8}{8}. \\end{aligned} \\]\n\nHow many of the values of \\(P(2022),\\) \\(P(2023),\\) \\(P(2024),\\) and \\(P(2025)\\) are integers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Over the common denominator \\(8,\\) \\(P(m) = \\dfrac{4m + 2m^2 + m^4 + m^8}{8}\\)",
+        "Check \\(4m + 2m^2 + m^4 + m^8 \\pmod 8\\) separately for even and odd \\(m\\)"
+      ],
+      "solution": "Put everything over \\(8:\\) \\(P(m) = \\dfrac{m^8 + m^4 + 2m^2 + 4m}{8}.\\) If \\(m\\) is even, every term up top is divisible by \\(8.\\) If \\(m\\) is odd, then \\(m^2 \\equiv m^4 \\equiv m^8 \\equiv 1\\) and \\(4m \\equiv 4 \\pmod 8,\\) so the numerator is \\(1 + 1 + 2 + 4 = 8 \\equiv 0 \\pmod 8.\\) Either way \\(P(m)\\) is an integer, so all \\(4\\) values are integers. Therefore, the answer is <b>E</b>.",
+      "sourceConcepts": [
+        "modular arithmetic",
+        "parity",
+        "casework"
+      ],
+      "sourceDifficulty": 2380,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/24"
+    },
+    {
+      "id": "amc-10-2024b-q25",
+      "number": 25,
+      "question": "Each of \\(27\\) bricks (right rectangular prisms) has dimensions \\(a \\times b \\times c,\\) where \\(a,\\) \\(b,\\) and \\(c\\) are pairwise relatively prime positive integers. These bricks are arranged to form a \\(3 \\times 3 \\times 3\\) block, as shown on the left below. A \\(28\\)th brick with the same dimensions is introduced, and these bricks are reconfigured into a \\(2 \\times 2 \\times 7\\) block, shown on the right. The new block is \\(1\\) unit taller, \\(1\\) unit wider, and \\(1\\) unit deeper than the old one. What is \\(a + b + c?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2024b/25-bb09beafd1.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(88\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(89\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(91\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(92\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The old block has side lengths \\(3a, 3b, 3c;\\) the new block has side lengths \\(2u, 2v, 7w\\) for some assignment of \\(a, b, c\\) to \\(u, v, w\\)",
+        "Relabel so the new side lengths are \\(7a,2b,2c;\\) no one of these can equal \\(3a+1,3b+1,3c+1\\) with the same letter"
+      ],
+      "solution": "Relabel the brick dimensions so the new block has sides \\(7a,2b,2c.\\) These must be the three old side lengths \\(3a,3b,3c,\\) each increased by \\(1.\\) A new side cannot match the old side with the same letter: \\(7a=3a+1\\) has no positive integer solution, while \\(2b=3b+1\\) and \\(2c=3c+1\\) would give negative lengths. Therefore the matching must be one of the two three-cycles. In one orientation, \\[ \\begin{aligned} 7a&=3c+1,\\\\ 2b&=3a+1,\\\\ 2c&=3b+1. \\end{aligned} \\] The last two equations give \\(b=\\frac{3a+1}{2}\\) and \\(c=\\frac{9a+5}{4}.\\) Substituting into the first gives \\(28a=27a+19,\\) so \\((a,b,c)=(19,29,44).\\) The other cycle merely exchanges \\(b\\) and \\(c.\\) These lengths are pairwise relatively prime, and \\(a+b+c=19+29+44=92.\\) Thus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "Diophantine Equation",
+        "rectangular prism",
+        "casework"
+      ],
+      "sourceDifficulty": 2470,
+      "solveTimeSeconds": 240,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2024B/problem/25"
+    }
+  ]
+}

@@ -1,0 +1,1018 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2015A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2015a-q1",
+      "number": 1,
+      "question": "What is the value of the following expression?\n\n\\[(2^0-1+5^2+0)^{-1} \\times 5\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-125\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-120\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{24}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(25\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Evaluate inside the parentheses first",
+        "After simplifying the parentheses, multiply its reciprocal by \\(5\\)"
+      ],
+      "solution": "We can evaluate it as follows. \\[\\begin{aligned} &(2^0-1+5^2+0)^{-1} \\times 5 \\\\&=\\dfrac{1}{1 - 1 + 25} \\times 5 \\\\ &= \\dfrac{5}{25}\\\\ &= \\dfrac{1}{5} \\end{aligned}\\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "order of operations",
+        "exponent"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/1"
+    },
+    {
+      "id": "amc-10-2015a-q2",
+      "number": 2,
+      "question": "A box contains a collection of triangular and square tiles. There are \\(25\\) tiles in the box, containing \\(84\\) edges total. How many square tiles are there in the box?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Compare the total to the case where all tiles are triangular",
+        "Each square contributes one more edge than a triangle"
+      ],
+      "solution": "Let \\(x\\) be the number of triangular tiles and \\(y\\) be the number of square tiles. We then have that \\[ x + y = 25 \\] and \\[ 3x + 4y = 84. \\] Multiplying the first equation by \\(3\\) gives us \\[ 3x + 3y = 75 \\] and subtracting this from the other equation gives us \\(y = 9.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "system of equations"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/2"
+    },
+    {
+      "id": "amc-10-2015a-q3",
+      "number": 3,
+      "question": "Ann made a \\(3\\)-step staircase using \\(18\\) toothpicks as shown in the figure. How many toothpicks does she need to add to complete a \\(5\\)-step staircase?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2015a/3-ba1fd9e4af.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(22\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Look at how many new toothpicks the next stair step adds",
+        "The number of new toothpicks increases by \\(2\\) with each added step"
+      ],
+      "solution": "Let us try to find a pattern between the number of toothpicks needed for the staircases.\n\nFor a \\(1\\)-step staircase, we would only need \\(4\\) toothpicks (just a square).\n\nFor a \\(2\\)-step staircase, we would need \\(10\\) toothpicks according to the diagram.\n\nSimilarly, we would need \\(18\\) toothpicks for a \\(3\\)-step staircase.\n\nA \\(2\\)-step staircase needs \\(10 - 4 = 6\\) more toothpicks than a \\(1\\)-step staircase. A \\(3\\)-step staircase needs \\(18 - 10 = 8\\) more toothpicks than a \\(2\\)-step staircase.\n\nFollowing this pattern, we can see that a \\(4\\)-step staircase will need \\(18 + 10 = 28\\) toothpicks, and a \\(5\\)-step staircase will need \\(28 + 12 = 40\\) toothpicks.\n\nThis means that Ann would need to add \\(40 - 18 = 22\\) more toothpicks.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/3"
+    },
+    {
+      "id": "amc-10-2015a-q4",
+      "number": 4,
+      "question": "Pablo, Sofia, and Mia got some candy eggs at a party. Pablo had three times as many eggs as Sofia, and Sofia had twice as many eggs as Mia. Pablo decides to give some of his eggs to Sofia and Mia so that all three will have the same number of eggs. What fraction of his eggs should Pablo give to Sofia?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{12}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Write Mia, Sofia, Pablo as \\(m,2m,6m\\)",
+        "Equal sharing means each person ends with \\(3m\\) eggs"
+      ],
+      "solution": "Let \\(m\\) be the number of candy eggs that Mia had. Then Sofia had \\(2m\\) eggs and Pablo had \\(6m\\) eggs.\n\nThe total number of eggs is then \\[ m + 2m + 6m = 9m. \\] For all of them to have the same number of eggs, they each must have \\(9m \\div 3 = 3m\\) eggs.\n\nSofia needs \\(3m - 2m = m\\) more eggs. This means Pablo must give \\(\\dfrac{m}{6m} = \\dfrac{1}{6}\\) of his eggs to Sofia.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "fraction"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/4"
+    },
+    {
+      "id": "amc-10-2015a-q5",
+      "number": 5,
+      "question": "Mr. Patrick teaches math to \\(15\\) students. He was grading tests and found that when he graded everyone’s test except Payton’s, the average grade for the class was \\(80.\\) After he graded Payton’s test, the class average became \\(81.\\) What was Payton’s score on the test?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(81\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(85\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(91\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(94\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(95\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Total score equals the average times the number of graded tests",
+        "Subtract the first \\(14\\) students’ total from the full class total"
+      ],
+      "solution": "The total for the first \\(14\\) graded tests was \\(14\\cdot 80=1120\\).\n\nAfter Payton’s test was included, the total became \\(15\\cdot 81=1215\\). Therefore Payton’s score was \\(1215-1120=95\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/5"
+    },
+    {
+      "id": "amc-10-2015a-q6",
+      "number": 6,
+      "question": "The sum of two positive numbers is \\(5\\) times their difference. What is the ratio of the larger number to the smaller number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{9}{5}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let the larger number be \\(L\\) and the smaller be \\(S\\)",
+        "Simplify \\(L+S=5(L-S)\\)"
+      ],
+      "solution": "Let \\(x\\) and \\(y\\) be the two numbers. Then we have that \\[ x + y = 5(x - y). \\] Note that we are assuming \\(x \\gt y.\\) This gives us \\[ x + y = 5x - 5y \\]\\[ 6y = 4x. \\]\n\nDividing through yields \\[\\dfrac{x}{y} = \\dfrac{6}{4} = \\dfrac{3}{2}.\\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/6"
+    },
+    {
+      "id": "amc-10-2015a-q7",
+      "number": 7,
+      "question": "How many terms are in the arithmetic sequence \\(13,\\) \\(16,\\) \\(19,\\) \\(\\dotsc,\\) \\(70,\\) \\(73?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(61\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use the first term, last term, and common difference",
+        "Count intervals, then add one endpoint"
+      ],
+      "solution": "Recall that the \\(n\\)th term of an arithmetic sequence is \\(a + d(n - 1),\\) where \\(a\\) is the first term and \\(d\\) is the common difference.\n\nFor us, \\(a = 13\\) and \\(d = 3.\\) Plugging these in, we get that \\[\\begin{aligned} 73 &= 13 + 3(n - 1) \\\\ 20&= n - 1 \\\\ n &= 21. \\end{aligned}\\] Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/7"
+    },
+    {
+      "id": "amc-10-2015a-q8",
+      "number": 8,
+      "question": "Two years ago Pete was three times as old as his cousin Claire. Two years before that, Pete was four times as old as Claire. In how many years will the ratio of their ages be \\(2:1?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Translate the two age statements using current ages",
+        "Solve for current ages before setting the future ratio"
+      ],
+      "solution": "Let \\(p\\) and \\(c\\) be Pete’s and Claire’s current ages respectively.\n\nThen we have that \\[ p - 2 = 3(c - 2) \\] and \\[ p - 4 = 4(c - 4). \\] Simplifying both equations gives us \\[ p = 3c - 4 \\] and \\[ p = 4c - 12. \\] Setting them equal, we have \\[ 3c - 4 = 4c - 12 \\]\\[ c = 8. \\]\n\nThis means that \\[ p = 3 \\cdot 8 - 4 = 20. \\]\n\nNow, we need to find the number of years (\\(y\\)) until \\[ 20 + y = 2(8 + y), \\] which gives us \\[ 20 + y = 16 + 2y \\]\\[ y = 4. \\] Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "ages",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/8"
+    },
+    {
+      "id": "amc-10-2015a-q9",
+      "number": 9,
+      "question": "Two right circular cylinders have the same volume. The radius of the second cylinder is \\(10\\%\\) more than the radius of the first. What is the relationship between the heights of the two cylinders?",
+      "options": [
+        {
+          "label": "A",
+          "content": "The second height is \\(10\\%\\) less than the first."
+        },
+        {
+          "label": "B",
+          "content": "The first height is \\(10\\%\\) more than the second."
+        },
+        {
+          "label": "C",
+          "content": "The second height is \\(21\\%\\) less than the first."
+        },
+        {
+          "label": "D",
+          "content": "The first height is \\(21\\%\\) more than the\nsecond."
+        },
+        {
+          "label": "E",
+          "content": "The second height is \\(80\\%\\) of the first."
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Equal volumes mean height changes by the reciprocal square of the radius change",
+        "Use \\(h_2=\\frac{h_1}{(1.1)^2}\\)"
+      ],
+      "solution": "Let \\(r_1\\) and \\(h_1\\) be the radius and height of the first cylinder and similarly define \\(r_2\\) and \\(h_2\\) for the second cylinder.\n\nWe know that \\[ r_2 = \\dfrac{11}{10}r_1 \\] and \\[ \\pi r_1^2h_1 = \\pi r_2^2h_2. \\]\n\nSubstituting and simplifying gives us \\[ r_1^2h_1 = \\dfrac{121}{100}r_1^2h_2, \\] which tells us that \\[ h_1 = \\dfrac{121}{100}h_2. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "cylinder",
+        "volume",
+        "percentage"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/9"
+    },
+    {
+      "id": "amc-10-2015a-q10",
+      "number": 10,
+      "question": "How many rearrangements of \\(abcd\\) are there in which no two adjacent letters are also adjacent letters in the alphabet? For example, no such rearrangements could include either \\(ab\\) or \\(ba.\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Forbid the adjacent alphabet pairs in either order",
+        "Starting with \\(b\\) or \\(c\\) is the only way to finish"
+      ],
+      "solution": "The forbidden adjacent pairs are \\(ab,ba,bc,cb,cd,dc.\\)\n\nIf an arrangement starts with \\(a,\\) its second letter must be \\(c\\) or \\(d.\\)\n\nAfter \\(ac,\\) either remaining order contains \\(cb\\) or \\(cd.\\) After \\(ad,\\) the remaining \\(b\\) and \\(c\\) must be adjacent. Thus no valid arrangement starts with \\(a.\\)\n\nBy symmetry, no valid arrangement starts with \\(d.\\)\n\nIf an arrangement starts with \\(b,\\) it must continue with \\(d,\\) then \\(a,\\) then \\(c,\\) giving \\(bdac.\\)\n\nSimilarly, starting with \\(c\\) gives only \\(cadb.\\) Therefore there are \\(2\\) valid rearrangements.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "casework"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/10"
+    },
+    {
+      "id": "amc-10-2015a-q11",
+      "number": 11,
+      "question": "The ratio of the length to the width of a rectangle is \\(4:3.\\) If the rectangle has diagonal of length \\(d,\\) then the area may be expressed as \\(kd^2\\) for some constant \\(k.\\) What is \\(k?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{7}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{7}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{12}{25}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{16}{25}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3}{4}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A \\(3\\)-\\(4\\)-\\(5\\) rectangle has diagonal scale \\(5x\\)",
+        "Express the area in terms of \\(d=5x\\)"
+      ],
+      "solution": "Let the side lengths be \\(4x\\) and \\(3x.\\) Then the diagonal has length \\[ \\sqrt{(4x)^2 + (3x)^2} = \\sqrt{25x^2} = 5x. \\]\n\nThe area of the rectangle is \\[ 4x \\cdot 3x = 12x^2. \\] Then we get that \\[ kd^2 = 12x^2 \\]\\[ k = \\dfrac{12x^2}{25x^2} = \\dfrac{12}{25}. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "rectangle",
+        "Pythagorean Theorem",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/11"
+    },
+    {
+      "id": "amc-10-2015a-q12",
+      "number": 12,
+      "question": "Points \\((\\sqrt{\\pi}, a)\\) and \\((\\sqrt{\\pi}, b)\\) are distinct points on the graph of \\[y^2 + x^4 = 2x^2 y + 1.\\] What is \\(|a-b|?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\pi}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{1+\\pi}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1 + \\sqrt{\\pi}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Substitute \\(x=\\sqrt{\\pi}\\) and complete a square in \\(y\\)",
+        "The two \\(y\\)-values are symmetric around \\(\\pi\\)"
+      ],
+      "solution": "Substitute \\(x=\\sqrt{\\pi}\\). Then \\(x^2=\\pi\\) and \\(x^4=\\pi^2\\), so the equation becomes \\[y^2-2\\pi y+\\pi^2=1.\\]\n\nHence \\((y-\\pi)^2=1\\), giving the two possible values \\(y=\\pi+1\\) and \\(y=\\pi-1\\). Their distance is \\(2\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "completing the square",
+        "quadratic"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/12"
+    },
+    {
+      "id": "amc-10-2015a-q13",
+      "number": 13,
+      "question": "Claudia has \\(12\\) coins, each of which is a \\(5\\)-cent coin or a \\(10\\)-cent coin. There are exactly \\(17\\) different values that can be obtained as combinations of one or more of her coins. How many \\(10\\)-cent coins does Claudia have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Count possible values in units of five cents",
+        "If there are \\(x\\) nickels, the largest value is \\(120-5x\\) cents"
+      ],
+      "solution": "Let the number of \\(5\\)-cent coins be \\(x\\) and the number of \\(10\\)-cent coins be \\(12 - x.\\)\n\nIf \\(x=0,\\) the only possible values are \\(10,20,\\ldots,120\\) cents, giving just \\(12\\) values. Hence \\(x>0.\\) Having at least one \\(5\\)-cent coin then makes every multiple of \\(5\\) from \\(5\\) through the total value \\[5x+10(12-x)=120-5x\\] obtainable.\n\nThere are \\(24 - x\\) such multiples of \\(5,\\) which means that \\(x = 7\\) to get \\(17\\) possible different values.\n\nThe number of \\(10\\)-cent coins is therefore \\(12 - 7 = 5.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "money",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1480,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/13"
+    },
+    {
+      "id": "amc-10-2015a-q14",
+      "number": 14,
+      "question": "The diagram below shows the circular face of a clock with radius \\(20\\) cm and a circular disk with radius \\(10\\) cm externally tangent to the clock face at \\(12\\) o’clock. The disk has an arrow painted on it, initially pointing in the upward vertical direction. Let the disk roll clockwise around the clock face. At what point on the clock face will the disk be tangent when the arrow is next pointing in the upward vertical direction?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2015a/14-08c69fa664.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\) o’clock"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\) o’clock"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\) o’clock"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\) o’clock"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\) o’clock"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A disk rolling externally rotates \\(\\frac{R+r}{r}\\) times the central angle",
+        "Set the disk’s total rotation equal to one full turn"
+      ],
+      "solution": "The disk of radius \\(10\\) rolls externally around the clock face of radius \\(20\\). If the point of tangency moves through central angle \\(\\theta\\) around the clock, the disk rotates through \\(\\frac{20+10}{10}\\theta=3\\theta\\) relative to its original direction.\n\nThe arrow next points upward when \\(3\\theta\\) is a positive multiple of \\(2\\pi\\). The first time this happens is \\(\\theta=\\frac{2\\pi}{3}\\), which is one-third of the way around the clock from \\(12\\) o’clock, namely \\(4\\) o’clock.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "circumference",
+        "circle",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/14"
+    },
+    {
+      "id": "amc-10-2015a-q15",
+      "number": 15,
+      "question": "Consider the set of all fractions \\(\\dfrac{x}{y},\\) where \\(x\\) and \\(y\\) are relatively prime positive integers. How many of these fractions have the property that if both numerator and denominator are increased by \\(1,\\) the value of the fraction is increased by \\(10\\%?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\text{infinitely many}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Turn the fraction condition into a factorization",
+        "Only negative factor pairs with \\(y+11>11\\) can work"
+      ],
+      "solution": "The condition is \\[\\frac{x+1}{y+1}=\\frac{11}{10}\\cdot\\frac{x}{y}.\\] Cross-multiplying gives \\(10y(x+1)=11x(y+1)\\), or \\(xy+11x-10y=0\\).\n\nFactoring by grouping after subtracting \\(110\\) gives \\[(x-10)(y+11)=-110.\\] Since \\(x,y\\) are positive, the useful negative factor pairs are \\((-1,110)\\), \\((-2,55)\\), and \\((-5,22)\\), producing \\((x,y)=(9,99),(8,44),(5,11)\\).\n\nOnly \\(\\frac{5}{11}\\) has relatively prime numerator and denominator, so exactly one fraction works.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "Diophantine Equation",
+        "Simon’s Favorite Factoring Trick",
+        "fraction"
+      ],
+      "sourceDifficulty": 1860,
+      "solveTimeSeconds": 115,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/15"
+    },
+    {
+      "id": "amc-10-2015a-q16",
+      "number": 16,
+      "question": "If \\[y+4 = (x-2)^2,\\] \\[ x+4 = (y-2)^2,\\] and \\(x \\neq y,\\) what is the value of \\[x^2+y^2\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(30\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Add and subtract the two equations separately",
+        "Since \\(x\\ne y\\), divide the difference equation by \\(x-y\\)"
+      ],
+      "solution": "Adding the two equations gives us \\[ x^2 + y^2 - 4x - 4y + 8 \\] \\[ = x + y + 8. \\] We can rearrange this equation to get \\[ x^2 + y^2 = 5(x + y). \\] We can then subtract them to get \\[ x^2 - y^2 - 4x + 4y = y - x. \\] Once again rearranging, we can find \\[ x^2 - y^2 = 3(x - y). \\] We have that \\(x \\neq y,\\) which means that we can divide both sides by \\(x - y.\\) This gives us \\[ x + y = 3 \\]\\[ x^2 + y^2 = 15. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "system of equations",
+        "symmetry (algebra)",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/16"
+    },
+    {
+      "id": "amc-10-2015a-q17",
+      "number": 17,
+      "question": "A line that passes through the origin intersects both the line \\(x = 1\\) and the line \\[y=1+ \\dfrac{\\sqrt{3}}{3} x.\\] The three lines create an equilateral triangle. What is the perimeter of the triangle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\sqrt{6}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2 + 2\\sqrt{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3 + 2\\sqrt{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6 + \\dfrac{\\sqrt{3}}{3}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The third line must make a \\(60^\\circ\\) angle with the vertical side",
+        "Evaluate the two intersection heights at \\(x=1\\)"
+      ],
+      "solution": "Since one of the sides of the equilateral triangle is a vertical line, the line of symmetry perpendicular to this side must be horizontal.\n\nThis means that the slope of the third side must be opposite the slope of the second side, which would be \\(-\\dfrac{\\sqrt{3}}{3}.\\)\n\nTo find the perimeter, we only need to find the length of one of the sides of the triangle.\n\nWe can plug in \\(x = 1\\) into the two other equations to get the two vertices on the vertical line.\n\nThe two \\(y\\)-values are \\(1 + \\dfrac{\\sqrt{3}}{3}\\) and \\(-\\dfrac{\\sqrt{3}}{3}.\\) Their difference is \\(1 + \\dfrac{2\\sqrt{3}}{3},\\) which makes the perimeter \\[ 3 \\cdot \\left(1 + \\dfrac{2\\sqrt{3}}{3}\\right) = 3 + 2\\sqrt{3}. \\] Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "equilateral triangle",
+        "slope"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/17"
+    },
+    {
+      "id": "amc-10-2015a-q18",
+      "number": 18,
+      "question": "Hexadecimal (base-\\(16\\)) numbers are written using numeric digits \\(0\\) through \\(9\\) as well as the letters \\(A\\) through \\(F\\) to represent \\(10\\) through \\(15.\\) Among the first \\(1000\\) positive integers, there are \\(n\\) whose hexadecimal representation contains only numeric digits. What is the sum of the digits of \\(n?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(21\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Count valid hexadecimal strings up to \\(3E8_{16}\\)",
+        "Pad shorter hexadecimal representations with leading zeros before counting digit choices"
+      ],
+      "solution": "In hexadecimal, \\(1000=3E8_{16}.\\) Pad each shorter representation to three digits with leading zeros. Every numeric-only string from \\(000_{16}\\) through \\(399_{16}\\) is at most \\(3E8_{16},\\) and these are all the possibilities.\n\nThe first digit has \\(4\\) choices, and each of the other two digits has \\(10\\) choices. This gives \\[4\\cdot10\\cdot10=400\\] strings, including \\(000_{16}.\\) Excluding zero leaves \\(n=399.\\)\n\nThe sum of the digits in \\(399\\) is \\(21.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "number base",
+        "digits",
+        "basic counting"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/18"
+    },
+    {
+      "id": "amc-10-2015a-q19",
+      "number": 19,
+      "question": "The isosceles right triangle \\(ABC\\) has right angle at \\(C\\) and area \\(12.5.\\) The rays trisecting \\(\\angle ACB\\) intersect \\(AB\\) at \\(D\\) and \\(E.\\) What is the area of \\(\\triangle CDE?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5\\sqrt{2}}{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{50\\sqrt{3}-75}{4}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{15\\sqrt{3}}{8}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{50-25\\sqrt{3}}{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{25}{6}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use the \\(30^\\circ\\) trisector and subtract two congruent corner triangles",
+        "If \\(AC=BC=5\\), find the height of \\(\\triangle ACD\\)"
+      ],
+      "solution": "Since \\(\\triangle ABC\\) is isosceles right with area \\(12.5\\), its legs have length \\(5\\). The trisectors make \\(\\angle ACD=30^\\circ\\) and \\(\\angle BCE=30^\\circ\\), so \\(\\triangle ACD\\) and \\(\\triangle BCE\\) have equal area.\n\nDrop a perpendicular from \\(D\\) to \\(AC,\\) with foot \\(F.\\) Since \\(D\\) lies on \\(AB\\) and \\(\\angle A=45^\\circ,\\) \\(\\triangle AFD\\) is isosceles right. Let \\(AF=DF=h.\\) Then \\(CF=5-h,\\) and the \\(30^\\circ\\) angle gives \\[\\frac{CF}{DF}=\\sqrt{3}.\\] Thus \\(5-h=h\\sqrt{3}\\), so \\(h=\\frac{5}{1+\\sqrt{3}}=\\frac{5\\sqrt{3}-5}{2}\\).\n\nTherefore \\[ \\begin{aligned} &[ACD]=\\frac12\\cdot 5\\cdot h \\\\ &=\\frac{25\\sqrt{3}-25}{4}. \\end{aligned} \\] Subtracting the two congruent corner triangles from \\(\\triangle ABC\\), \\[ \\begin{aligned} &[CDE]=\\frac{25}{2} \\\\ &\\quad {}-2\\cdot\\frac{25\\sqrt{3}-25}{4} \\\\ &=\\frac{50-25\\sqrt{3}}{2}. \\end{aligned} \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "special right triangle",
+        "area decomposition",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1880,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/19"
+    },
+    {
+      "id": "amc-10-2015a-q20",
+      "number": 20,
+      "question": "A rectangle with positive integer side lengths in \\(\\mathrm{cm}\\) has area \\(A\\) \\(\\mathrm{cm}^2\\) and perimeter \\(P\\) \\(\\mathrm{cm}.\\) Which of the following numbers cannot equal \\(A+P?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(100\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(102\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(104\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(106\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(108\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Factor \\(A+P+4\\) as \\((x+2)(y+2)\\)",
+        "Test the choices after adding \\(4\\)"
+      ],
+      "solution": "Let the side lengths be positive integers \\(x\\) and \\(y\\). Then \\[ \\begin{aligned} &A+P=xy+2x+2y \\\\ &=(x+2)(y+2)-4. \\end{aligned} \\] Hence \\(A+P+4\\) must factor into two integers both at least \\(3\\).\n\nThe answer choices plus \\(4\\) are \\(104,106,108,110,112\\). All except \\(106\\) have a factorization with both factors at least \\(3\\): \\[104=4\\cdot26,\\] \\[108=9\\cdot12,\\] \\[110=10\\cdot11,\\] \\[112=7\\cdot16.\\] But \\(106=2\\cdot53\\), so it cannot equal \\((x+2)(y+2)\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "area",
+        "perimeter",
+        "Simon’s Favorite Factoring Trick"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/20"
+    },
+    {
+      "id": "amc-10-2015a-q21",
+      "number": 21,
+      "question": "Tetrahedron \\(ABCD\\) has \\(AB=5,\\) \\(AC=3,\\) \\(BC=4,\\) \\(BD=4,\\) \\(AD=3,\\) and \\(CD=\\tfrac{12}5\\sqrt2.\\) What is the volume of the tetrahedron?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\sqrt2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\sqrt5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{24}5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\sqrt{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{24}5\\sqrt2\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Put the two \\(3\\)-\\(4\\)-\\(5\\) triangles on a common base \\(AB\\)",
+        "\\(CD=(\\frac{12}{5})\\sqrt2\\) makes the two altitudes perpendicular"
+      ],
+      "solution": "We claim that the planes \\(ABC\\) and \\(ABD\\) are perpendicular to each other.\n\nWe can show this by dropping the perpendiculars from \\(C\\) and \\(D\\) to \\(AB\\).\n\nSince \\(AC = AD\\) and \\(BC = BD,\\) we have that the feet of these altitudes will coincide at point \\(P.\\)\n\nThen we have that \\[ CP = DP = \\dfrac{3 \\cdot 4}{5} = \\dfrac{12}{5}. \\] We also have \\(CD = CP\\sqrt{2},\\) so \\(\\triangle CPD\\) is an isosceles right triangle and \\(CP\\perp DP.\\)\n\nSince \\(CP\\perp AB\\) and \\(CP\\perp DP\\), the segment \\(CP\\) is perpendicular to the plane \\(ABD\\). Finally, the volume of the tetrahedron is \\[ \\dfrac{1}{3}[ABD] \\cdot CP = \\dfrac{6}{3} \\cdot \\dfrac{12}{5} = \\dfrac{24}{5}. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "3D geometry",
+        "volume",
+        "right triangle"
+      ],
+      "sourceDifficulty": 2010,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/21"
+    },
+    {
+      "id": "amc-10-2015a-q22",
+      "number": 22,
+      "question": "Eight people are sitting around a circular table, each holding a fair coin. All eight people flip their coins and those who flip heads stand while those who flip tails remain seated. What is the probability that no two adjacent people will stand?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{47}{256}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{16}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{49}{256}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{25}{128}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{51}{256}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Count subsets of a cycle by the number of standing people",
+        "Separate the count into cases with \\(0,1,2,3,\\) or \\(4\\) heads"
+      ],
+      "solution": "Count the possible sets of people who stand. For \\(0\\) and \\(1\\) people standing, there are \\(1\\) and \\(8\\) possibilities.\n\nFor \\(2\\) people standing, choose any pair and subtract the \\(8\\) adjacent pairs: \\(\\binom82-8=20\\).\n\nFor \\(3\\) people standing, first choose one standing person. Among the remaining five non-neighbor seats, \\(10\\) pairs are possible, but \\(4\\) of those pairs are adjacent, leaving \\(6\\). This counts each final set three times, so there are \\(\\frac{8\\cdot6}{3}=16\\) possibilities.\n\nFor \\(4\\) people standing, the only possibilities are the two alternating sets. Thus the number of favorable coin-flip outcomes is \\(1+8+20+16+2=47\\). Since all \\(2^8=256\\) outcomes are equally likely, the probability is \\(\\frac{47}{256}\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "basic probability",
+        "casework"
+      ],
+      "sourceDifficulty": 1970,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/22"
+    },
+    {
+      "id": "amc-10-2015a-q23",
+      "number": 23,
+      "question": "The zeros of the function \\[f(x)=x^2-ax+2a\\] are integers. What is the sum of the possible values of \\(a?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let integer roots be \\(r,s\\) and factor \\((r-2)(s-2)\\)",
+        "The factor pairs of \\(4\\) give the possible values of \\(a\\)"
+      ],
+      "solution": "Let the zeros be \\(r\\) and \\(s.\\) Using Vieta’s formulas, we have that \\(a = r + s\\) and \\(2a = rs.\\)\n\nThen we get that \\[ rs = 2(r + s), \\] which rearranges to \\[ rs - 2r - 2s = 0 \\] \\[ rs - 2r - 2s + 4 = 4 \\] \\[ (r - 2)(s - 2) = 4. \\]\n\nThe only possible pairs \\((r - 2, s - 2)\\) that work are \\[ (1, 4), (-1, -4), (4, 1), (-4, -1), \\] \\[ (2, 2), (-2, -2). \\] For any of these pairs, we have that \\[ a = r - 2 + s - 2 + 4. \\] We want all the such unique values of \\(a.\\) We get that they are \\[ -1, 0, 8, 9. \\] The sum of these values is \\(-1 + 8 + 9 = 16.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "Vieta’s Formulas",
+        "Simon’s Favorite Factoring Trick",
+        "quadratic"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/23"
+    },
+    {
+      "id": "amc-10-2015a-q24",
+      "number": 24,
+      "question": "For some positive integers \\(p,\\) there is a quadrilateral \\(ABCD\\) with positive integer side lengths, perimeter \\(p,\\) right angles at \\(B\\) and \\(C,\\) \\(AB=2,\\) and \\(CD=AD.\\) How many different values of \\(p &lt; 2015\\) are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(31\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(61\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(62\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(63\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Set \\(x=2k\\) from the right triangle in the diagram",
+        "Use \\(p=2k^2+2k+4\\)"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2015a/24sol-41cc20fd4e.svg\" style=\"max-height: 12rem\"/>\n\nLet \\(BC=x\\) and \\(CD=AD=y\\). Dropping the altitude from \\(A\\) to \\(CD\\) gives a right triangle with legs \\(x\\) and \\(y-2\\), and hypotenuse \\(y\\). Therefore \\[(y-2)^2+x^2=y^2, \\] so \\(x^2=4(y-1)\\).\n\nSince \\(x\\) is an integer, write \\(x=2k\\). Then \\(y=k^2+1\\), and the perimeter is \\[ \\begin{aligned} &p=2+x+y+y \\\\ &=2k^2+2k+4. \\end{aligned} \\]\n\nWe need \\(2k^2+2k+4&lt;2015\\), or \\(k^2+k&lt;1005.5\\). This holds for \\(k=1,2,\\ldots,31\\), while \\(k=32\\) is too large. Thus there are \\(31\\) possible perimeters.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "Pythagorean Theorem",
+        "Diophantine Equation",
+        "perimeter"
+      ],
+      "sourceDifficulty": 2300,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/24"
+    },
+    {
+      "id": "amc-10-2015a-q25",
+      "number": 25,
+      "question": "Let \\(S\\) be a square of side length \\(1.\\) Two points are chosen independently at random on the sides of \\(S.\\) The probability that the straight-line distance between the points is at least \\(\\dfrac{1}{2}\\) is \\(\\dfrac{a-b\\pi}{c},\\) where \\(a,\\) \\(b,\\) and \\(c\\) are positive integers with \\(\\gcd(a,b,c)=1.\\) What is \\(a+b+c?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(59\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(61\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(62\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(63\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Condition on whether the second point is on the same, adjacent, or opposite side",
+        "The adjacent-side case removes a quarter circle of radius \\(\\frac{1}{2}\\)"
+      ],
+      "solution": "Fix one of the two points. The second point is on the same side with probability \\(\\frac14\\), on an adjacent side with probability \\(\\frac12\\), and on the opposite side with probability \\(\\frac14\\).\n\nOn the same side, two coordinates \\(a,b\\in[0,1]\\) are at distance at least \\(\\frac12\\) when \\(|a-b|\\ge\\frac12\\). This region consists of two right triangles with total area \\(\\frac14\\).\n\nOn adjacent sides, the distance has the form \\(\\sqrt{a^2+b^2}\\). The failing region is a quarter circle of radius \\(\\frac12\\), so the success probability is \\(1-\\frac{\\pi}{16}\\).\n\nOn opposite sides, the distance is always at least \\(1\\), so the success probability is \\(1\\). Therefore the desired probability is \\[ \\begin{aligned} &\\frac14\\cdot\\frac14 \\\\ &\\quad {}+\\frac12\\left(1-\\frac{\\pi}{16}\\right) \\\\ &\\quad {}+\\frac14=\\frac{26-\\pi}{32}. \\end{aligned} \\] Hence \\(a+b+c=26+1+32=59\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "geometric probability",
+        "casework"
+      ],
+      "sourceDifficulty": 2390,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2015A/problem/25"
+    }
+  ]
+}

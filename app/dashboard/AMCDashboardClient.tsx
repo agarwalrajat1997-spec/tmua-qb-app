@@ -410,8 +410,8 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
                 <div className={styles.cardTitle}>Choose exactly what to practise</div>
                 <div className={styles.muted}>
                   Browse 93 AMC papers using the topic map, question range and difficulty
-                  filters. Each entry opens its credited original question and explanation in a
-                  new tab, so the source remains clear and the archive stays current.
+                  filters. Each question, all five answer choices and the worked solution appear
+                  together inside the archive, with source credit kept beside the solution.
                 </div>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
                   <a

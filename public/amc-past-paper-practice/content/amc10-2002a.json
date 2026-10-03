@@ -1,0 +1,1020 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2002A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2002a-q1",
+      "number": 1,
+      "question": "The ratio \\[\\dfrac{10^{2000}+10^{2002}}{10^{2001}+10^{2001}}\\] is closest to which of the following numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0.1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(0.2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Factor \\(10^{2000}\\) out of the numerator",
+        "The denominator equals \\(2\\cdot 10^{2001}\\)"
+      ],
+      "solution": "Factoring gives \\[\\dfrac{10^{2000}(1+100)}{2\\cdot 10^{2001}}=\\dfrac{101}{20}=5.05,\\] which is closest to \\(5.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "exponent",
+        "estimation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/1"
+    },
+    {
+      "id": "amc-10-2002a-q2",
+      "number": 2,
+      "question": "For the nonzero numbers \\(a,\\) \\(b,\\) and \\(c,\\) define \\[(a,b,c)=\\dfrac{a}{b}+\\dfrac{b}{c}+\\dfrac{c}{a}.\\] Find \\((2,12,9).\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Substitute \\(a=2,\\) \\(b=12,\\) \\(c=9\\)",
+        "Add \\(\\dfrac{2}{12}+\\dfrac{12}{9}+\\dfrac{9}{2}\\) over a common denominator"
+      ],
+      "solution": "\\[ \\begin{aligned} (2,12,9) &= \\dfrac{2}{12}+\\dfrac{12}{9}+\\dfrac{9}{2} \\\\ &= \\dfrac{1}{6}+\\dfrac{4}{3}+\\dfrac{9}{2}. \\end{aligned} \\] Over a denominator of \\(6,\\) this is \\(\\dfrac{1+8+27}{6}=\\dfrac{36}{6}=6.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "custom operation",
+        "fraction"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/2"
+    },
+    {
+      "id": "amc-10-2002a-q3",
+      "number": 3,
+      "question": "According to the standard convention for exponentiation, \\[2^{2^{2^{2}}}=2^{\\left(2^{\\left(2^{2}\\right)}\\right)}=2^{16}=65{,}536.\\] If the order in which the exponentiations are performed is changed, how many <i>other</i> values are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "List the five ways to parenthesize a tower of four \\(2\\)’s",
+        "Every grouping evaluates to either \\(2^{16}\\) or \\(2^{8}\\)"
+      ],
+      "solution": "There are five ways to parenthesize the tower. Three of them, \\((2^2)^{\\left(2^2\\right)},\\) \\(\\left(2^{\\left(2^2\\right)}\\right)^2,\\) and \\(\\left(\\left(2^2\\right)^2\\right)^2,\\) all equal \\(2^{8}=256.\\) The other two both give the standard value \\(2^{16}=65{,}536.\\)\n\nSo exactly one other value, \\(256,\\) is possible.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "exponent",
+        "order of operations",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/3"
+    },
+    {
+      "id": "amc-10-2002a-q4",
+      "number": 4,
+      "question": "For how many positive integers \\(m\\) does there exist at least one positive integer \\(n\\) such that \\(m\\cdot n\\le m+n?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "infinitely many"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Try a very small positive value of \\(n\\)",
+        "See whether the resulting inequality places any upper bound on \\(m\\)"
+      ],
+      "solution": "Take \\(n=1.\\) Then \\(m\\cdot 1\\le m+1\\) becomes \\(m\\le m+1,\\) which holds for every positive integer \\(m.\\)\n\nSo every positive integer \\(m\\) works, giving infinitely many.\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "inequality",
+        "small cases"
+      ],
+      "sourceDifficulty": 980,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/4"
+    },
+    {
+      "id": "amc-10-2002a-q5",
+      "number": 5,
+      "question": "Each of the small circles in the figure has radius one. The innermost circle is tangent to the six circles that surround it, and each of those circles is tangent to the large circle and to its small-circle neighbors. Find the area of the shaded region.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2002a/5-f3b28db71c.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\pi\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1.5\\pi\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\pi\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\pi\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3.5\\pi\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The large radius spans the center circle plus two more radii",
+        "Subtract the seven unit circles from the large circle"
+      ],
+      "solution": "The center of a surrounding circle is \\(2\\) from the center (two radii), and adding its own radius \\(1\\) gives a large radius of \\(3.\\)\n\nThe large circle has area \\(9\\pi,\\) and the seven unit circles have total area \\(7\\pi,\\) so the shaded region is \\(9\\pi-7\\pi=2\\pi.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "tangent circles",
+        "circle area"
+      ],
+      "sourceDifficulty": 1060,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/5"
+    },
+    {
+      "id": "amc-10-2002a-q6",
+      "number": 6,
+      "question": "Cindy was asked by her teacher to subtract \\(3\\) from a certain number and then divide the result by \\(9.\\) Instead, she subtracted \\(9\\) and then divided the result by \\(3,\\) giving an answer of \\(43.\\) What would her answer have been had she worked the problem correctly?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(34\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(43\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(51\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(138\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Recover the original number from Cindy’s incorrect steps",
+        "Solve \\(\\dfrac{x-9}{3}=43\\)"
+      ],
+      "solution": "Let \\(x\\) be the number. Cindy computed \\(\\dfrac{x-9}{3}=43,\\) so \\(x-9=129\\) and \\(x=138.\\)\n\nThe correct computation is \\(\\dfrac{138-3}{9}=\\dfrac{135}{9}=15.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "linear equation",
+        "work backwards"
+      ],
+      "sourceDifficulty": 1120,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/6"
+    },
+    {
+      "id": "amc-10-2002a-q7",
+      "number": 7,
+      "question": "If an arc of \\(45^\\circ\\) on circle \\(A\\) has the same length as an arc of \\(30^\\circ\\) on circle \\(B,\\) then the ratio of the area of circle \\(A\\) to the area of circle \\(B\\) is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{4}{9}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{6}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3}{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{9}{4}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Arc length is \\(\\dfrac{\\theta}{360}\\cdot 2\\pi r\\)",
+        "Equal arc lengths give the ratio \\(\\dfrac{r_A}{r_B}\\)"
+      ],
+      "solution": "Equal arc lengths give \\(\\dfrac{45}{360}\\cdot 2\\pi r_A=\\dfrac{30}{360}\\cdot 2\\pi r_B,\\) so \\(45 r_A=30 r_B\\) and \\(\\dfrac{r_A}{r_B}=\\dfrac{2}{3}.\\)\n\nThe ratio of areas is \\(\\left(\\dfrac{r_A}{r_B}\\right)^2=\\dfrac{4}{9}.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "arc",
+        "area ratio",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/7"
+    },
+    {
+      "id": "amc-10-2002a-q8",
+      "number": 8,
+      "question": "Betsy designed a flag using blue triangles, small white squares, and a red center square, as shown. Let \\(B\\) be the total area of the blue triangles, \\(W\\) the total area of the white squares, and \\(R\\) the area of the red square. Which of the following is correct?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2002a/8-4f0186e869.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(B=W\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(W=R\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(B=R\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3B=2R\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2R=W\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Cut the whole flag into congruent right triangles",
+        "Count how many of those congruent triangles fill each color"
+      ],
+      "solution": "Divide the flag into congruent right triangles by drawing the grid lines and diagonals. Counting gives \\(24\\) triangles in the blue region, \\(24\\) in the white region, and \\(16\\) in the red region.\n\nHence \\(B=W.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "area decomposition",
+        "congruence (geometry)"
+      ],
+      "sourceDifficulty": 1270,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/8"
+    },
+    {
+      "id": "amc-10-2002a-q9",
+      "number": 9,
+      "question": "Suppose \\(A,\\) \\(B,\\) and \\(C\\) are three numbers for which \\(1001C-2002A=4004\\) and \\(1001B+3003A=5005.\\) The average of the three numbers \\(A,\\) \\(B,\\) and \\(C\\) is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "not uniquely determined"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Add the two equations together",
+        "The sum collapses to a multiple of \\(A+B+C\\)"
+      ],
+      "solution": "Adding the equations, \\[ \\begin{gathered} 1001C-2002A+1001B \\\\ {}+3003A \\\\ = 1001A+1001B+1001C \\\\ = 9009. \\end{gathered} \\]\n\nSo \\(A+B+C=9\\) and the average is \\(\\dfrac{9}{3}=3.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "system of equations",
+        "mean"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/9"
+    },
+    {
+      "id": "amc-10-2002a-q10",
+      "number": 10,
+      "question": "Compute the sum of all the roots of \\((2x+3)(x-4)\\) \\(+(2x+3)(x-6)=0.\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{7}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(13\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Factor out the common \\((2x+3)\\)",
+        "Combine \\((x-4)+(x-6)\\) inside the bracket"
+      ],
+      "solution": "Factoring, \\[ \\begin{gathered} (2x+3)\\left[(x-4)+(x-6)\\right] \\\\ = (2x+3)(2x-10) \\\\ = 0. \\end{gathered} \\]\n\nThe roots are \\(-\\dfrac{3}{2}\\) and \\(5,\\) which sum to \\(\\dfrac{7}{2}.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "quadratic",
+        "factoring"
+      ],
+      "sourceDifficulty": 1120,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/10"
+    },
+    {
+      "id": "amc-10-2002a-q11",
+      "number": 11,
+      "question": "Jamal wants to store \\(30\\) computer files on floppy disks, each of which has a capacity of \\(1.44\\) megabytes (mb). Three of his files require \\(0.8\\) mb of memory each, \\(12\\) more require \\(0.7\\) mb each, and the remaining \\(15\\) require \\(0.4\\) mb each. No file can be split between floppy disks. What is the minimal number of floppy disks that will hold all the files?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(16\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "A \\(0.8\\) mb file leaves room for only one \\(0.4\\) mb file on its disk",
+        "Account for the wasted space on the three \\(0.8\\) mb disks, then build a packing that reaches the bound"
+      ],
+      "solution": "The files need \\(3(0.8)+12(0.7)+15(0.4)\\) \\(=16.8\\) mb. On any disk holding a \\(0.8\\) mb file, only one \\(0.4\\) mb file fits alongside it (since \\(0.8+0.7\\gt 1.44\\)), leaving at least \\(0.24\\) mb wasted. Across the three such disks that is at least \\(0.72\\) mb, so the effective demand is at least \\(16.8+0.72=17.52\\) mb, requiring at least \\(\\left\\lceil\\dfrac{17.52}{1.44}\\right\\rceil=13\\) disks.\n\nThis is achievable: \\(3\\) disks each hold one \\(0.8\\) file and one \\(0.4\\) file, \\(6\\) disks each hold two \\(0.7\\) files, and \\(4\\) disks each hold three \\(0.4\\) files.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "optimization",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/11"
+    },
+    {
+      "id": "amc-10-2002a-q12",
+      "number": 12,
+      "question": "Mr. Earl E. Bird leaves his house for work at exactly \\(8{:}00\\) A.M. every morning. When he averages \\(40\\) miles per hour, he arrives at his workplace three minutes late. When he averages \\(60\\) miles per hour, he arrives three minutes early. At what average speed, in miles per hour, should Mr. Bird drive to arrive at his workplace precisely on time?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(55\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(58\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(t\\) be the on-time travel time in hours; three minutes is \\(0.05\\) hours",
+        "The distance is the same both ways: \\(40(t+0.05)=60(t-0.05)\\)"
+      ],
+      "solution": "Let \\(t\\) hours be the on-time travel time. Since \\(3\\) minutes is \\(0.05\\) hours, \\(40(t+0.05)=60(t-0.05).\\) Then \\(40t+2=60t-3,\\) so \\(t=0.25.\\)\n\nThe distance is \\(40(0.30)=12\\) miles, so the required speed is \\(\\dfrac{12}{0.25}=48\\) mph.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1410,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/12"
+    },
+    {
+      "id": "amc-10-2002a-q13",
+      "number": 13,
+      "question": "The sides of a triangle have lengths of \\(15,\\) \\(20,\\) and \\(25.\\) Find the length of the shortest altitude.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12.5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Check whether \\(15,\\) \\(20,\\) \\(25\\) is a right triangle",
+        "The shortest altitude is drawn to the longest side"
+      ],
+      "solution": "Since \\(15^2+20^2=225+400\\) \\(=625=25^2,\\) the triangle is right with legs \\(15\\) and \\(20,\\) and area \\(\\dfrac{1}{2}(15)(20)=150.\\)\n\nThe shortest altitude falls to the longest side \\(25,\\) and equals \\(\\dfrac{2\\cdot 150}{25}=12.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "right triangle",
+        "altitude",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/13"
+    },
+    {
+      "id": "amc-10-2002a-q14",
+      "number": 14,
+      "question": "Both roots of the quadratic equation \\(x^2-63x+k=0\\) are prime numbers. The number of possible values of \\(k\\) is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "more than four"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The roots sum to \\(63\\) and multiply to \\(k\\)",
+        "An odd sum of two primes forces one of them to be \\(2\\)"
+      ],
+      "solution": "If the roots are primes \\(p\\) and \\(q,\\) then \\(p+q=63\\) and \\(pq=k.\\) Because \\(63\\) is odd, one prime must be \\(2,\\) making the other \\(61,\\) which is prime.\n\nSo \\(k=2\\cdot 61=122\\) is the only possible value.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "Vieta’s Formulas",
+        "prime",
+        "parity"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/14"
+    },
+    {
+      "id": "amc-10-2002a-q15",
+      "number": 15,
+      "question": "The digits \\(1,\\) \\(2,\\) \\(3,\\) \\(4,\\) \\(5,\\) \\(6,\\) \\(7,\\) and \\(9\\) are used to form four two-digit prime numbers, with each digit used exactly once. What is the sum of these four primes?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(150\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(160\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(170\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(180\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(190\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "A two-digit prime cannot end in \\(2,\\) \\(4,\\) \\(5,\\) or \\(6\\)",
+        "Those four digits must therefore be the tens digits"
+      ],
+      "solution": "A two-digit prime cannot end in \\(2,\\) \\(4,\\) \\(5,\\) or \\(6,\\) so these four are the tens digits and \\(1,\\) \\(3,\\) \\(7,\\) and \\(9\\) are the units digits.\n\nThe sum is \\(10(2+4+5+6)\\) \\(+(1+3+7+9)\\) \\(=170+20=190.\\) One valid set is \\(\\{23,47,59,61\\}.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "prime",
+        "digits",
+        "place value"
+      ],
+      "sourceDifficulty": 1390,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/15"
+    },
+    {
+      "id": "amc-10-2002a-q16",
+      "number": 16,
+      "question": "If \\(a+1\\) \\(=b+2\\) \\(=c+3\\) \\(=d+4\\) \\(=a+b+c+d+5,\\) then \\(a+b+c+d\\) is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-\\dfrac{10}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(-\\dfrac{7}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Set every expression equal to a single value \\(k\\)",
+        "Write \\(a,\\) \\(b,\\) \\(c,\\) \\(d\\) in terms of \\(k\\) and add them"
+      ],
+      "solution": "Let the common value be \\(k.\\) Then \\(a=k-1,\\) \\(b=k-2,\\) \\(c=k-3,\\) \\(d=k-4,\\) so \\(a+b+c+d=4k-10.\\)\n\nSince \\(a+b+c+d+5=k,\\) we get \\(4k-10+5=k,\\) so \\(3k=5\\) and \\(k=\\dfrac{5}{3}.\\) Then \\(a+b+c+d=k-5\\) \\(=\\dfrac{5}{3}-5=-\\dfrac{10}{3}.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "system of equations",
+        "substitution"
+      ],
+      "sourceDifficulty": 1330,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/16"
+    },
+    {
+      "id": "amc-10-2002a-q17",
+      "number": 17,
+      "question": "Sarah pours four ounces of coffee into an eight-ounce cup and four ounces of cream into a second cup of the same size. She then transfers half the coffee from the first cup to the second and, after stirring thoroughly, transfers half the liquid in the second cup back to the first. What fraction of the liquid in the first cup is now cream?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Track ounces of coffee and cream after each transfer",
+        "The second cup is uniformly mixed before the second transfer"
+      ],
+      "solution": "After transferring \\(2\\) oz of coffee, cup \\(1\\) has \\(2\\) oz coffee and cup \\(2\\) has \\(2\\) oz coffee plus \\(4\\) oz cream, a total of \\(6\\) oz.\n\nTransferring back half of cup \\(2\\) (that is \\(3\\) oz, consisting of \\(1\\) oz coffee and \\(2\\) oz cream) leaves cup \\(1\\) with \\(3\\) oz coffee and \\(2\\) oz cream. The fraction that is cream is \\(\\dfrac{2}{2+3}=\\dfrac{2}{5}.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "mixture",
+        "process simulation"
+      ],
+      "sourceDifficulty": 1450,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/17"
+    },
+    {
+      "id": "amc-10-2002a-q18",
+      "number": 18,
+      "question": "A \\(3\\times 3\\times 3\\) cube is formed by gluing together \\(27\\) standard cubical dice. (On a standard die, the sum of the numbers on any pair of opposite faces is \\(7.\\)) The smallest possible sum of all the numbers showing on the surface of the \\(3\\times 3\\times 3\\) cube is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(72\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(84\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(96\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Classify the \\(27\\) dice as corner, edge, face-center, and interior dice",
+        "Minimize each die’s showing faces: corners show \\(1+2+3,\\) edges show \\(1+2,\\) face-centers show \\(1\\)"
+      ],
+      "solution": "The \\(8\\) corner dice show \\(3\\) faces each, minimized at \\(1+2+3=6,\\) contributing \\(8\\cdot 6=48.\\) The \\(12\\) edge dice show \\(2\\) faces, minimized at \\(1+2=3,\\) contributing \\(12\\cdot 3=36.\\)\n\nThe \\(6\\) face-center dice show \\(1\\) face, minimized at \\(1,\\) contributing \\(6,\\) and the hidden interior die contributes \\(0.\\) The total is \\(48+36+6=90.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "cube geometry",
+        "optimization",
+        "casework"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/18"
+    },
+    {
+      "id": "amc-10-2002a-q19",
+      "number": 19,
+      "question": "Spot’s doghouse has a regular hexagonal base that measures one yard on each side. He is tethered to a vertex with a two-yard rope. What is the area, in square yards, of the region outside the doghouse that Spot can reach?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{3}\\pi\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\pi\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{2}\\pi\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{8}{3}\\pi\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3\\pi\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The interior angle of a regular hexagon is \\(120^\\circ,\\) so Spot sweeps \\(240^\\circ\\) at radius \\(2\\)",
+        "Around each adjacent vertex the leftover \\(1\\) yard of rope sweeps a \\(60^\\circ\\) sector"
+      ],
+      "solution": "At the tether vertex the hexagon blocks its \\(120^\\circ\\) interior angle, leaving a \\(240^\\circ\\) sector of radius \\(2:\\) area \\(\\dfrac{240}{360}\\pi(2)^2=\\dfrac{8\\pi}{3}.\\)\n\nWrapping around each of the two adjacent vertices, \\(1\\) yard of rope remains and sweeps a \\(60^\\circ\\) sector: \\(2\\cdot\\dfrac{60}{360}\\pi(1)^2=\\dfrac{\\pi}{3}.\\) The total is \\(\\dfrac{8\\pi}{3}+\\dfrac{\\pi}{3}=3\\pi.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "sector",
+        "regular polygon",
+        "circle area"
+      ],
+      "sourceDifficulty": 1600,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/19"
+    },
+    {
+      "id": "amc-10-2002a-q20",
+      "number": 20,
+      "question": "Points \\(A,\\) \\(B,\\) \\(C,\\) \\(D,\\) \\(E,\\) and \\(F\\) lie, in that order, on \\(\\overline{AF},\\) dividing it into five segments, each of length \\(1.\\) Point \\(G\\) is not on line \\(AF.\\) Point \\(H\\) lies on \\(\\overline{GD},\\) and point \\(J\\) lies on \\(\\overline{GF}.\\) The line segments \\(\\overline{HC},\\) \\(\\overline{JE},\\) and \\(\\overline{AG}\\) are parallel. Find \\(\\frac{HC}{JE}.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2002a/20-9d330549d6.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{4}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "\\(\\triangle DHC\\sim\\triangle DGA\\) gives \\(HC\\) in terms of \\(AG\\)",
+        "\\(\\triangle FJE\\sim\\triangle FGA\\) gives \\(JE\\) in terms of \\(AG\\)"
+      ],
+      "solution": "Since \\(HC\\parallel AG,\\) \\(\\triangle DHC\\sim\\triangle DGA,\\) so \\(\\dfrac{HC}{AG}=\\dfrac{DC}{DA}=\\dfrac{1}{3},\\) giving \\(HC=\\dfrac{AG}{3}.\\)\n\nSince \\(JE\\parallel AG,\\) \\(\\triangle FJE\\sim\\triangle FGA,\\) so \\(\\dfrac{JE}{AG}=\\dfrac{FE}{FA}=\\dfrac{1}{5},\\) giving \\(JE=\\dfrac{AG}{5}.\\)\n\nTherefore \\(\\dfrac{HC}{JE}=\\dfrac{\\frac{AG}{3}}{\\frac{AG}{5}}=\\dfrac{5}{3}.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "similarity",
+        "parallel lines"
+      ],
+      "sourceDifficulty": 1460,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/20"
+    },
+    {
+      "id": "amc-10-2002a-q21",
+      "number": 21,
+      "question": "The mean, median, unique mode, and range of a collection of eight integers are all equal to \\(8.\\) The largest integer that can be an element of this collection is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The eight integers sum to \\(64,\\) and a range of \\(8\\) ties the largest and smallest together",
+        "Test the largest candidate values while keeping both the median and unique mode equal to \\(8\\)"
+      ],
+      "solution": "The sum is \\(8\\cdot 8=64.\\) The collection \\(6,\\) \\(6,\\) \\(6,\\) \\(8,\\) \\(8,\\) \\(8,\\) \\(8,\\) \\(14\\) has mean, median, unique mode, and range all equal to \\(8,\\) so \\(14\\) is attainable.\n\nIf the largest were at least \\(16,\\) the range condition would make the smallest at least \\(8.\\) A mean of \\(8\\) would then force all eight integers to equal \\(8,\\) contradicting the range.\n\nIf the largest were \\(15,\\) the range \\(8\\) forces the smallest to be \\(7,\\) so all eight integers are at least \\(7.\\) The other seven then sum to \\(64-15=49=7\\cdot 7,\\) forcing every one of them to equal \\(7.\\) But then the median and mode would be \\(7,\\) not \\(8,\\) a contradiction.\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "mean",
+        "median (data)",
+        "mode",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/21"
+    },
+    {
+      "id": "amc-10-2002a-q22",
+      "number": 22,
+      "question": "A set of tiles numbered \\(1\\) through \\(100\\) is modified repeatedly by the following operation: remove all tiles numbered with a perfect square, and renumber the remaining tiles consecutively starting with \\(1.\\) How many times must the operation be performed to reduce the number of tiles in the set to one?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Removing the perfect squares from \\(n^2\\) tiles leaves \\(n^2-n\\) tiles",
+        "Two operations take \\(n^2\\) tiles down to \\((n-1)^2\\)"
+      ],
+      "solution": "Starting from \\(n^2\\) tiles, one operation removes the \\(n\\) perfect squares, leaving \\(n^2-n.\\) The next operation removes \\(n-1\\) perfect squares, leaving \\(n^2-n-(n-1)=(n-1)^2.\\)\n\nSo every two operations reduce \\(n^2\\) to \\((n-1)^2.\\) Going from \\(10^2=100\\) down to \\(1^2=1\\) takes \\(2(10-1)=18\\) operations.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "perfect square",
+        "recursion",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/22"
+    },
+    {
+      "id": "amc-10-2002a-q23",
+      "number": 23,
+      "question": "Points \\(A,\\) \\(B,\\) \\(C,\\) and \\(D\\) lie on a line, in that order, with \\(AB=CD\\) and \\(BC=12.\\) Point \\(E\\) is not on the line, and \\(BE=CE=10.\\) The perimeter of \\(\\triangle AED\\) is twice the perimeter of \\(\\triangle BEC.\\) Find \\(AB.\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2002a/23-085416dfe2.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{15}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{17}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{19}{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let \\(M\\) be the midpoint of \\(BC;\\) then \\(EM\\perp AD\\) and \\(EM=8\\)",
+        "With \\(AB=CD=x\\) and \\(AE=ED=y,\\) use the perimeter condition and the Pythagorean theorem"
+      ],
+      "solution": "Let \\(M\\) be the midpoint of \\(BC.\\) Since \\(BE=CE,\\) \\(EM\\perp BC\\) and \\(EM=\\sqrt{10^2-6^2}=8.\\) By symmetry \\(AE=ED;\\) write \\(AB=CD=x\\) and \\(AE=ED=y.\\)\n\nThe perimeter condition gives \\(2y+(2x+12)\\) \\(=2(10+10+12)=64,\\) so \\(x+y=26.\\) Also \\(y^2=EM^2+(x+6)^2\\) \\(=64+(x+6)^2.\\)\n\nSubstituting \\(y=26-x,\\) \\((26-x)^2=64+(x+6)^2,\\) which simplifies to \\(676-52x=100+12x,\\) so \\(64x=576\\) and \\(x=9.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "isosceles triangle",
+        "Pythagorean Theorem",
+        "perimeter"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/23"
+    },
+    {
+      "id": "amc-10-2002a-q24",
+      "number": 24,
+      "question": "Tina randomly selects two distinct numbers from the set \\(\\{1,2,3,4,5\\},\\) and Sergio randomly selects a number from the set \\(\\{1,2,\\ldots,10\\}.\\) The probability that Sergio’s number is larger than the sum of the two numbers chosen by Tina is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{9}{20}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{11}{20}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{24}{25}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "List the ten possible sums Tina can make and how often each occurs",
+        "For a sum \\(s,\\) Sergio’s number exceeds it with probability \\(\\dfrac{10-s}{10}\\)"
+      ],
+      "solution": "Tina’s \\(10\\) equally likely pairs give sums \\(3,\\) \\(4,\\) \\(5,\\) \\(5,\\) \\(6,\\) \\(6,\\) \\(7,\\) \\(7,\\) \\(8,\\) and \\(9.\\) For a sum \\(s,\\) Sergio’s number exceeds it with probability \\(\\dfrac{10-s}{10}.\\)\n\nAveraging the winning probability over the ten pairs, the total is \\(\\small\\dfrac{7+6+5+5+4+4+3+3+2+1}{100}\\) \\(=\\dfrac{40}{100}=\\dfrac{2}{5}.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "basic probability",
+        "casework"
+      ],
+      "sourceDifficulty": 1900,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/24"
+    },
+    {
+      "id": "amc-10-2002a-q25",
+      "number": 25,
+      "question": "In trapezoid \\(ABCD\\) with bases \\(\\overline{AB}\\) and \\(\\overline{CD},\\) we have \\(AB=52,\\) \\(BC=12,\\) \\(CD=39,\\) and \\(DA=5.\\) The area of \\(ABCD\\) is\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2002a/25-48c29e1a43.svg\" style=\"max-height: 6rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(182\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(195\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(210\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(234\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(260\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Extend the legs \\(DA\\) and \\(CB\\) until they meet at a point \\(P\\)",
+        "\\(\\triangle PDC\\sim\\triangle PAB\\) with ratio \\(\\dfrac{39}{52}=\\dfrac{3}{4}\\)"
+      ],
+      "solution": "Extend \\(DA\\) and \\(CB\\) to meet at \\(P.\\) Since \\(DC\\parallel AB,\\) \\(\\triangle PDC\\sim\\triangle PAB\\) with ratio \\(\\dfrac{39}{52}=\\dfrac{3}{4}.\\) From \\(\\dfrac{PD}{PD+5}=\\dfrac{3}{4}\\) we get \\(PD=15,\\) and similarly \\(PC=36.\\)\n\nThen \\(PD:PC:DC=15:36:39\\) \\(=3\\cdot(5:12:13),\\) so \\(\\angle P\\) is a right angle. The area of \\(ABCD\\) is \\[ \\begin{gathered} \\dfrac{1}{2}(PA)(PB) \\\\ {}-\\dfrac{1}{2}(PD)(PC) \\\\ = \\dfrac{1}{2}(20)(48) \\\\ {}-\\dfrac{1}{2}(15)(36) \\\\ = 480-270=210. \\end{gathered} \\]\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "trapezoid",
+        "similarity",
+        "Pythagorean Triple"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2002A/problem/25"
+    }
+  ]
+}

@@ -1,0 +1,1007 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "2022",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/solutions",
+  "problems": [
+    {
+      "id": "amc-8-2022-q1",
+      "number": 1,
+      "question": "The Math Team designed a logo shaped like a multiplication symbol, shown below on a grid of \\(1\\)-inch squares. What is the area of the logo in square inches?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/1-36450d8ed2.svg\" style=\"max-height: 15rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Break the logo into congruent tilted squares",
+        "Each tilted square is half of a \\(2\\) by \\(2\\) grid square"
+      ],
+      "solution": "The logo is made from \\(5\\) congruent tilted squares. Each tilted square has both diagonals of length \\(2\\), so its area is \\(\\frac{2\\cdot2}{2}=2\\) square inches.\n\nThe total area is \\(5\\cdot2=10\\).\n\nThus, the correct answer is <strong>A</strong>.",
+      "sourceConcepts": [
+        "area decomposition"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/1"
+    },
+    {
+      "id": "amc-8-2022-q2",
+      "number": 2,
+      "question": "Consider these two operations: \\[\\begin{align*} a\\,\\blacklozenge\\,b &= a^2 - b^2 \\\\ a \\star b &= (a - b)^2 \\end{align*}\\]\n\nCompute the value:\n\n\\[ (5\\,\\blacklozenge\\,3) \\star 6 \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(100\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(220\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Evaluate \\(5\\,\\blacklozenge\\,3\\) first",
+        "Substitute the value from the first operation into \\(\\star 6\\)"
+      ],
+      "solution": "Using the definitions, \\[\\begin{align*} (5\\,\\blacklozenge\\,3) \\star 6 &= (5^2-3^2) \\star 6 \\\\ &=16 \\star 6 \\\\ &=(16-6)^2\\\\ &= 100\\end{align*}\\]\n\nThus, the correct answer is <strong>D</strong>.",
+      "sourceConcepts": [
+        "custom operation",
+        "order of operations"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/2"
+    },
+    {
+      "id": "amc-8-2022-q3",
+      "number": 3,
+      "question": "When three positive integers \\(a,\\) \\(b,\\) and \\(c\\) are multiplied together, their product is \\(100.\\) Suppose \\(a &lt; b &lt; c.\\) In how many ways can the numbers be chosen?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The smallest number must be a factor of \\(100\\)",
+        "Try possible values of \\(a\\) with \\(a^3&lt;100\\)"
+      ],
+      "solution": "Since \\(a&lt; b&lt; c\\) and \\(abc=100\\), we have \\(a^3&lt;100\\), so \\(a\\le4\\). Also \\(a\\) must divide \\(100\\), so \\(a\\in\\{1,2,4\\}\\).\n\nIf \\(a=1\\), the pairs \\((b,c)\\) are \\((2,50),(4,25),(5,20)\\). If \\(a=2\\), the only possible pair is \\((5,10)\\). If \\(a=4\\), then \\(bc=25\\), and there is no integer \\(b\\) with \\(4&lt; b&lt; c\\).\n\nThere are \\(4\\) possible triples.\n\nThus, the correct answer is <strong>E</strong>.",
+      "sourceConcepts": [
+        "factor",
+        "casework"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/3"
+    },
+    {
+      "id": "amc-8-2022-q4",
+      "number": 4,
+      "question": "The letter <strong>M</strong> in the figure below is first reflected over the line \\(q\\) and then reflected over the line \\(p.\\) What is the resulting image?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/4-b259d94f99.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/4a-71842dc183.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "B",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/4b-8e80e1a54f.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "C",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/4c-a85699eef1.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "D",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/4d-70a7bc43ad.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "E",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/4e-02fd655fe5.svg\" style=\"max-height: 12rem\"/>"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Reflecting over \\(q\\) moves the letter across the diagonal line",
+        "After the first reflection, reflect the new image over the horizontal line \\(p\\)"
+      ],
+      "solution": "Reflecting over the diagonal line \\(q\\) changes the orientation of the letter as if the diagonal were a mirror. Reflecting that image over the horizontal line \\(p\\) then places the final letter below \\(p\\), to the right of the vertical line, with the orientation shown in choice E.\n\nThus, the correct answer is <strong>E</strong>.",
+      "sourceConcepts": [
+        "reflection (geometry)",
+        "transformation"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/4"
+    },
+    {
+      "id": "amc-8-2022-q5",
+      "number": 5,
+      "question": "Anna and Bella are celebrating their birthdays together. Five years ago, when Bella turned \\(6\\) years old, she received a newborn kitten as a birthday present. Today the sum of the ages of the two children and the kitten is \\(30\\) years. How many years older than Bella is Anna?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Bella is \\(5\\) years older now than when she turned \\(6\\)",
+        "Find Bella’s current age and the kitten’s current age before finding Anna’s"
+      ],
+      "solution": "If Bella was \\(6\\) five years ago, then she is \\(11\\) right now.\n\nIf the kitten was a newborn five years ago, then it is \\(5\\) right now.\n\nSince the sum of all \\(3\\) ages is \\(30,\\) Anna’s age is \\[30-5-11 = 14\\]\n\nSince Anna is \\(14\\) and Bella is \\(11,\\) she is \\(3\\) years older than Bella.\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "ages",
+        "linear equation"
+      ],
+      "sourceDifficulty": 720,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/5"
+    },
+    {
+      "id": "amc-8-2022-q6",
+      "number": 6,
+      "question": "Three positive integers are equally spaced on a number line. The middle number is \\(15\\) and the largest number is \\(4\\) times the smallest number. What is the smallest of these three numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The middle of three equally spaced numbers is their average",
+        "If the smallest is \\(x\\), then the largest is \\(4x\\)"
+      ],
+      "solution": "Let the smallest number be \\(x\\). Then the largest is \\(4x\\). Since the three numbers are equally spaced, the middle number is the average of the smallest and largest: \\[ \\frac{x+4x}{2}=15. \\] Thus \\(5x=30\\), so \\(x=6\\).\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "linear equation"
+      ],
+      "sourceDifficulty": 820,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/6"
+    },
+    {
+      "id": "amc-8-2022-q7",
+      "number": 7,
+      "question": "When the World Wide Web first became popular in the 1990s, download speeds reached a maximum of about \\(56\\) kilobits per second. Approximately how many minutes would the download of a \\(4.2\\)-megabyte song have taken at that speed? (Note that there are \\(8000\\) kilobits in a megabyte.)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0.6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1800\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7200\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36000\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Convert megabytes to kilobits first",
+        "\\(4.2\\cdot8000\\) kilobits divided by \\(56\\) kilobits per second gives seconds"
+      ],
+      "solution": "The song has \\(4.2\\cdot8000=33{,}600\\) kilobits. At \\(56\\) kilobits per second, the download takes \\[ \\frac{33{,}600}{56}=600 \\] seconds, which is \\(10\\) minutes.\n\nThus, the correct answer is <strong>B</strong>.",
+      "sourceConcepts": [
+        "unit conversion",
+        "rate"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/7"
+    },
+    {
+      "id": "amc-8-2022-q8",
+      "number": 8,
+      "question": "What is the value of:\n\n\\[ \\dfrac{1}{3} \\cdot \\dfrac{2}{4} \\cdot \\dfrac{3}{5} \\cdots \\dfrac{18}{20} \\cdot \\dfrac{19}{21} \\cdot \\dfrac{20}{22} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\displaystyle \\dfrac{1}{462}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\displaystyle \\dfrac{1}{231}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\displaystyle \\dfrac{1}{132}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\displaystyle \\dfrac{2}{213}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\displaystyle \\dfrac{1}{22}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Most numerator and denominator factors cancel",
+        "After cancellation, only \\(1\\cdot2\\) remains on top"
+      ],
+      "solution": "Since every integer from \\(3\\) to \\(20\\) occurs once as a denominator and once as a numerator, they cancel each other out.\n\nAfter canceling every number out, we have only \\(1\\) and \\(2\\) left as numerators and \\(21\\) and \\(22\\) left as denominators.\n\nThe remaining fraction is \\( \\dfrac{1 \\cdot 2}{21 \\cdot 22} .\\) This simplifies to \\( \\dfrac{2}{462} = \\dfrac{1}{231} \\)\n\nThus, the correct answer is <strong>B</strong>.",
+      "sourceConcepts": [
+        "telescoping",
+        "fraction"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/8"
+    },
+    {
+      "id": "amc-8-2022-q9",
+      "number": 9,
+      "question": "A cup of boiling water (\\(212^\\circ\\) F) is placed to cool in a room whose temperature remains constant at \\(68^\\circ\\) F. Suppose the difference between the water temperature and the room temperature is halved every \\(5\\) minutes. What is the water temperature, in degrees Fahrenheit, after \\(15\\) minutes?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(77\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(86\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(92\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(98\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(104\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Track the difference from room temperature",
+        "In \\(15\\) minutes, the difference is halved \\(3\\) times"
+      ],
+      "solution": "The current difference is \\(212-68 = 144 .\\)\n\nSince we have \\(15\\) minutes while halving every \\(5\\) minutes, we halve the difference \\(3\\) times.\n\nThis means the difference is multiplied by \\((\\dfrac{1}{2})^3 = \\dfrac{1}{8} ,\\) so our new difference is \\(\\dfrac{1}{8}\\cdot144=18.\\) This makes our final temperature \\(68+18=86.\\)\n\nThus, the correct answer is <strong>B</strong>.",
+      "sourceConcepts": [
+        "geometric sequence"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/9"
+    },
+    {
+      "id": "amc-8-2022-q10",
+      "number": 10,
+      "question": "One sunny day, Ling decided to take a hike in the mountains. She left her house at \\(8\\) a.m., drove at a constant speed of \\(45\\) miles per hour, and arrived at the hiking trail at \\(10\\) a.m. After hiking for \\(3\\) hours, Ling drove home at a constant speed of \\(60\\) miles per hour. Which of the following graphs best illustrates the distance between Ling’s car and her house over the course of her trip?",
+      "options": [
+        {
+          "label": "A",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/10a-3429a0673c.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "B",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/10b-d71b5170a7.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "C",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/10c-f21f9b90f4.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "D",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/10d-9b0f39d99f.svg\" style=\"max-height: 12rem\"/>"
+        },
+        {
+          "label": "E",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2022/10e-b8c75c1539.svg\" style=\"max-height: 12rem\"/>"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Find the distance to the trail from the first drive",
+        "The return drive is faster, so it takes less time than the outward drive"
+      ],
+      "solution": "She drives \\(45\\) miles per hour for \\(2\\) hours, so the trail is \\(90\\) miles from her house. The graph must rise from \\(0\\) to \\(90\\) miles between \\(8\\) AM and \\(10\\) AM, then stay flat for the \\(3\\)-hour hike.\n\nShe starts home at \\(1\\) PM. Driving \\(90\\) miles at \\(60\\) miles per hour takes \\(1.5\\) hours, so she gets home at \\(2{:}30\\) PM. This matches choice E.\n\nThus, the correct answer is <strong>E</strong>.",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "distance rate and time"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/10"
+    },
+    {
+      "id": "amc-8-2022-q11",
+      "number": 11,
+      "question": "Henry the donkey has a very long piece of pasta. He takes a number of bites of pasta, each time eating \\(3\\) inches of pasta from the middle of one piece. In the end, he has \\(10\\) pieces of pasta whose total length is \\(17\\) inches. How long, in inches, was the piece of pasta he started with?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(34\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(38\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(41\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(44\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(47\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Each bite increases the number of pasta pieces by \\(1\\)",
+        "To end with \\(10\\) pieces, Henry made \\(9\\) bites"
+      ],
+      "solution": "Since there are \\(10\\) pieces, there were \\(9\\) locations where a bite was made. Since we have \\(9\\) bites and \\(3\\) inches are removed per bite, a total of \\(27\\) inches were removed.\n\nWith \\(27\\) inches removed and \\(17\\) inches remaining, we know we started with \\(27+17 = 44 \\) inches.\n\nThus, the correct answer is <strong>D</strong>.",
+      "sourceConcepts": [
+        "invariant"
+      ],
+      "sourceDifficulty": 1020,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/11"
+    },
+    {
+      "id": "amc-8-2022-q12",
+      "number": 12,
+      "question": "The arrows on the two spinners shown below are spun. Let the number \\(N\\) equal \\(10\\) times the number on Spinner A, added to the number on Spinner B. What is the probability that \\(N\\) is a perfect square number?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/12-34698b3a54.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\displaystyle \\dfrac{1}{16}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\displaystyle \\dfrac{1}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\displaystyle \\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\displaystyle \\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\displaystyle \\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Spinner A gives the tens digit and spinner B gives the ones digit",
+        "Check which two-digit squares have tens digit \\(5,6,7,8\\) and ones digit \\(1,2,3,4\\)"
+      ],
+      "solution": "Spinner A gives the tens digit and Spinner B gives the ones digit. There are \\(4\\cdot4=16\\) equally likely two-digit numbers.\n\nThe possible perfect squares between \\(51\\) and \\(84\\) are \\(64\\) and \\(81\\), and both can occur. Thus the probability is \\[ \\frac{2}{16}=\\frac{1}{8}. \\]\n\nThus, the correct answer is <strong>B</strong>.",
+      "sourceConcepts": [
+        "basic probability",
+        "perfect square"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/12"
+    },
+    {
+      "id": "amc-8-2022-q13",
+      "number": 13,
+      "question": "How many positive integers can fill the blank in the sentence below?\n\n“One positive integer is ___ more than twice another, and the sum of the two numbers is \\(28\\)”",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let the smaller of the two positive integers be \\(x\\)",
+        "If the blank is \\(c\\), the two numbers can be \\(x\\) and \\(2x+c\\)"
+      ],
+      "solution": "Let the smaller number be \\(x\\), and let the blank be \\(c\\). Then the other number is \\(2x+c\\), where both \\(x\\) and \\(c\\) are positive integers.\n\nThe sum condition gives \\(x+(2x+c)=28\\), so \\(c=28-3x\\). For \\(c\\) to be positive, \\(28-3x>0\\), so \\(x&lt;\\frac{28}{3}\\).\n\nThus \\(x\\) can be any integer from \\(1\\) through \\(9\\), giving \\(9\\) possible values of the blank.\n\nThus, the correct answer is <strong>D</strong>.",
+      "sourceConcepts": [
+        "linear equation",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/13"
+    },
+    {
+      "id": "amc-8-2022-q14",
+      "number": 14,
+      "question": "In how many ways can the letters in <strong>BEEKEEPER</strong> be rearranged so that two or more <strong>E</strong>’s do not appear together?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(120\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "There are \\(5\\) E’s and \\(4\\) other letters",
+        "The four non-E letters must fill the four gaps between the E’s"
+      ],
+      "solution": "The word has \\(5\\) E’s and \\(4\\) other letters: B, K, P, and R. To keep no two E’s adjacent, the only possible pattern is \\[ E\\_E\\_E\\_E\\_E, \\] with the four non-E letters in the four gaps.\n\nThe letters B, K, P, and R can be arranged in those gaps in \\(4!=24\\) ways.\n\nThus, the correct answer is <strong>D</strong>.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "permutations"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/14"
+    },
+    {
+      "id": "amc-8-2022-q15",
+      "number": 15,
+      "question": "Laszlo went online to shop for black pepper and found thirty different black pepper options varying in weight and price, shown in the scatter plot below. In ounces, what is the weight of the pepper that offers the lowest price per ounce?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/15-2bc0c99cea.svg\" style=\"max-height: 18rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compare price divided by weight",
+        "For each weight, only the lowest plotted price can be best"
+      ],
+      "solution": "For each weight, only the lowest-price point at that weight can give the lowest price per ounce.\n\nAt \\(1\\) ounce, the lowest price is more than \\(1\\) dollar, so the price per ounce is more than \\(1\\).\n\nAt \\(2\\) ounces, the lowest price is \\(2\\) dollars, so the price per ounce is \\(1\\).\n\nAt \\(3\\) ounces, the lowest price is about \\(2.5\\) dollars, so the price per ounce is about \\(\\frac{2.5}{3}\\), less than \\(1\\).\n\nAt \\(4\\) ounces, the lowest price is close to \\(3.9\\) dollars, so the price per ounce is close to \\(\\frac{3.9}{4}\\), still larger than the \\(3\\)-ounce option.\n\nAt \\(5\\) ounces, the lowest price is close to \\(4.5\\) dollars, so the price per ounce is close to \\(\\frac{4.5}{5}\\), also larger than the \\(3\\)-ounce option.\n\nThe price per ounce is lowest at \\(3\\) ounces.\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "slope",
+        "optimization"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/15"
+    },
+    {
+      "id": "amc-8-2022-q16",
+      "number": 16,
+      "question": "Four numbers are written in a row. The average of the first two is \\(21,\\) the average of the middle two is \\(26,\\) and the average of the last two is \\(30.\\) What is the average of the first and last of the numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(28\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Convert each average into a sum",
+        "Find \\(a+b+c+d\\), then subtract \\(b+c\\)"
+      ],
+      "solution": "Let the numbers be \\(a,b,c,d\\) in order.\n\nSince the average of \\(a\\) and \\(b\\) is \\(21,\\) we know their sum is \\(21\\cdot2 = 42.\\)<br/> Since the average of \\(c\\) and \\(d\\) is \\(30,\\) we know their sum is \\(30\\cdot2 = 60.\\)<br/> Since \\(a+b = 42\\) and \\(c+d = 60 ,\\) we know \\[\\begin{align*} a+b+c+d &= 42 + 60\\\\ &= 102 \\end{align*}\\]\n\nNow, with the average of \\(b\\) and \\(c\\) being \\(26,\\) we know their sum is \\(26\\cdot2=52.\\) This means \\(b+c = 52.\\)\n\nSubtracting this result from the sum of all the terms yields \\(a+d =50.\\)<br/> Since \\(\\dfrac{a+d}{2}=25,\\) our answer is \\(25.\\)\n\nThus, the correct answer is <strong>B</strong>.",
+      "sourceConcepts": [
+        "mean",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/16"
+    },
+    {
+      "id": "amc-8-2022-q17",
+      "number": 17,
+      "question": "If \\(n\\) is an even positive integer, the double factorial notation \\(n!!\\) represents the product of all the even integers from \\(2\\) to \\(n.\\) For example:\n\n\\[ 8!! = 2 \\times 4 \\times 6 \\times 8 \\]\n\nWhat is the units digit of the following sum?\n\n\\[ \\begin{aligned} &2!! + 4!! + 6!! + \\cdots \\\\ &\\quad {}+ 2018!! + 2020!! + 2022!! \\end{aligned} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Any even double factorial at least \\(10!!\\) has a factor of \\(10\\)",
+        "Only \\(2!!,4!!,6!!,\\) and \\(8!!\\) can affect the units digit"
+      ],
+      "solution": "For every even \\(n\\ge10,\\) the product \\(n!!\\) contains a factor of \\(10,\\) so that term has units digit \\(0.\\) Only the first four terms can affect the units digit.\n\nThey sum to \\[ \\begin{gathered} 2!!+4!!+6!!+8!!\\\\ =2+8+48+384\\\\ =442. \\end{gathered} \\] Therefore the full sum has units digit \\(2.\\)\n\nThus, the correct answer is <strong>B</strong>.",
+      "sourceConcepts": [
+        "factorial",
+        "units digit"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/17"
+    },
+    {
+      "id": "amc-8-2022-q18",
+      "number": 18,
+      "question": "The midpoints of the four sides of a rectangle are \\((-3, 0),\\) \\((2, 0),\\) \\((5, 4),\\) and \\((0, 4).\\) What is the area of the rectangle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(80\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The given midpoints form a parallelogram inside the rectangle",
+        "The midpoint parallelogram has half the area of the original rectangle"
+      ],
+      "solution": "The four given midpoints form a parallelogram. Its horizontal base has length \\(2-(-3)=5\\), and its height is \\(4\\), so its area is \\(5\\cdot4=20\\).\n\nFor any rectangle, the parallelogram formed by joining the side midpoints has half the area of the rectangle. Therefore the rectangle’s area is \\(2\\cdot20=40\\).\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "parallelogram",
+        "midpoint"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/18"
+    },
+    {
+      "id": "amc-8-2022-q19",
+      "number": 19,
+      "question": "Mr. Ramos gave a test to his class of \\(20\\) students. The dot plot below shows the distribution of test scores.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/19-5faf0ae3b4.svg\" style=\"max-height: 7rem\"/>\n\nLater Mr. Ramos discovered that there was a scoring error on one of the questions. He regraded the tests, awarding some of the students \\(5\\) extra points, which increased the median test score to \\(85.\\) What is the minimum number of students who received extra points?\n\n(Note that the median test score equals the average of the \\(2\\) scores in the middle if the \\(20\\) test scores are arranged in increasing order.)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The median is controlled by the \\(10\\)th and \\(11\\)th scores",
+        "Count how many scores are at least \\(85\\) before and after regrading"
+      ],
+      "solution": "All scores are multiples of \\(5,\\) and adding \\(5\\) preserves that fact. If the \\(10\\)th and \\(11\\)th scores average \\(85\\) but are not both \\(85,\\) then the \\(11\\)th score must be at least \\(90.\\) That would require at least \\(10\\) scores of \\(90\\) or more.\n\nHowever, even after regrading, only the original scores of \\(85\\) or more can reach \\(90.\\) The plot has only \\(7\\) such scores, so the two middle scores must both be \\(85.\\)\n\nThe plot initially has \\(7\\) scores of at least \\(85.\\) To make the \\(10\\)th and \\(11\\)th scores both \\(85,\\) there must be at least \\(11\\) scores of at least \\(85.\\) Raising four of the \\(80\\)’s to \\(85\\) is both necessary and sufficient.\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "median (data)",
+        "data and graph interpretation"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/19"
+    },
+    {
+      "id": "amc-8-2022-q20",
+      "number": 20,
+      "question": "The grid below is to be filled with integers in such a way that the sum of the numbers in each row and the sum of the numbers in each column are the same. Four numbers are missing. The number \\(x\\) in the lower left corner is larger than the other three missing numbers. What is the smallest possible value of \\(x?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/20-a6b233978b.svg\" style=\"max-height: 9rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The completed row and column sums must match the top row",
+        "Express the other missing entries in terms of \\(x\\)"
+      ],
+      "solution": "Adding the numbers in the top row shows that every row and column must have sum \\(12\\).\n\nIn the first column, the missing number above \\(x\\) is \\(14-x\\). In the bottom row, the missing number to the right of \\(x\\) is \\(4-x\\). In the middle row, the remaining missing number is \\(x-1\\).\n\nSince \\(x\\) is larger than the other missing numbers, we need \\(x>14-x\\), \\(x>4-x\\), and \\(x> x-1\\). The strongest condition is \\(x>7\\), so the smallest possible integer value is \\(8\\).\n\nThus, the correct answer is <strong>D</strong>.",
+      "sourceConcepts": [
+        "magic square",
+        "inequality"
+      ],
+      "sourceDifficulty": 1430,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/20"
+    },
+    {
+      "id": "amc-8-2022-q21",
+      "number": 21,
+      "question": "Steph scored \\(15\\) baskets out of \\(20\\) attempts in the first half of a game, and \\(10\\) baskets out of \\(10\\) attempts in the second half. Candace took \\(12\\) attempts in the first half and \\(18\\) attempts in the second. In each half, Steph scored a higher percentage of baskets than Candace. Surprisingly they ended with the same overall percentage of baskets scored. How many more baskets did Candace score in the second half than in the first?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/21-0401409b1e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Steph made \\(25\\) baskets in \\(30\\) attempts overall",
+        "Candace must also have made \\(25\\) baskets total"
+      ],
+      "solution": "Steph made \\(25\\) baskets in \\(30\\) attempts. Candace also took \\(12+18=30\\) attempts, and their overall percentages were the same, so Candace also made \\(25\\) baskets.\n\nLet \\(f\\) be Candace’s first-half baskets and \\(s\\) be her second-half baskets. Then \\(f+s=25\\).\n\nSteph’s first-half percentage was \\(\\frac{15}{20}=\\frac34\\), so \\(\\frac{f}{12}&lt;\\frac34\\), giving \\(f&lt;9\\). Steph’s second-half percentage was \\(1\\), so \\(s&lt;18\\).\n\nThus \\(f\\le8\\) and \\(s\\le17\\). Since \\(f+s=25\\), the only possibility is \\(f=8\\) and \\(s=17\\), so \\(s-f=9\\).\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "percentage",
+        "inequality"
+      ],
+      "sourceDifficulty": 1460,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/21"
+    },
+    {
+      "id": "amc-8-2022-q22",
+      "number": 22,
+      "question": "A bus takes \\(2\\) minutes to drive from one stop to the next, and waits \\(1\\) minute at each stop to let passengers board. Zia takes \\(5\\) minutes to walk from one bus stop to the next. As Zia reaches a bus stop, if the bus is at the previous stop or has already left the previous stop, then she will wait for the bus. Otherwise she will start walking toward the next stop. Suppose the bus and Zia start at the same time toward the library, with the bus \\(3\\) stops behind. After how many minutes will Zia board the bus?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/22-9670f75798.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(23\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Check Zia’s decision only when she reaches a stop",
+        "Compare positions at \\(5\\), \\(10\\), and \\(15\\) minutes"
+      ],
+      "solution": "The bus takes \\(2\\) minutes to drive to the next stop and then waits \\(1\\) minute, so it moves through one-stop cycles every \\(3\\) minutes.\n\nZia makes a decision only when she reaches a stop, every \\(5\\) minutes. Measure stops from the bus’s starting stop. Zia starts at stop \\(3\\).\n\nAfter \\(5\\) minutes, Zia is at stop \\(4\\), while the bus is waiting at stop \\(2\\), so she keeps walking. After \\(10\\) minutes, Zia is at stop \\(5\\), while the bus is between stops \\(3\\) and \\(4\\), so she keeps walking. After \\(15\\) minutes, Zia is at stop \\(6\\), while the bus is at stop \\(5\\), the previous stop, so she waits.\n\nThe bus then takes \\(2\\) more minutes to reach her stop, so she boards after \\(17\\) minutes.\n\nThus, the correct answer is <strong>A</strong>.",
+      "sourceConcepts": [
+        "process simulation",
+        "distance rate and time"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/22"
+    },
+    {
+      "id": "amc-8-2022-q23",
+      "number": 23,
+      "question": "A \\(\\bigtriangleup\\) or \\(\\bigcirc\\) is placed in each of the nine squares in a \\(3 \\times 3\\) grid. Shown below is a sample configuration with three \\(\\bigtriangleup\\)’s in a line.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/23-d581027ee1.svg\" style=\"max-height: 9rem\"/>\n\nHow many configurations will have three \\(\\bigtriangleup\\)’s in a line and three \\(\\bigcirc\\)’s in a line?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(39\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(78\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(84\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(96\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Split by how many triangles are in the grid",
+        "With exactly \\(3\\) triangles, diagonal triangle lines do not work"
+      ],
+      "solution": "Let \\(k\\) be the number of triangles. To have both a triangle line and a circle line, we need \\(3\\le k\\le6\\).\n\nIf \\(k=3\\), the three triangles must form a line. A row or column works, because the remaining six circles contain a full circle row or column. A diagonal does not work, because its complement contains no full line of circles. Thus there are \\(6\\) configurations for \\(k=3\\). By symmetry, there are also \\(6\\) configurations for \\(k=6\\).\n\nIf \\(k=4\\), choose the triangle line and then the extra triangle. If the line is a row or column, all \\(6\\) possible extra positions work, because one parallel row or column remains all circles. This gives \\(6\\cdot6=36\\) configurations. If the triangle line is a diagonal, no extra position leaves a full circle line. By symmetry, \\(k=5\\) also gives \\(36\\) configurations.\n\nThe total number of configurations is \\(6+36+36+6=84\\).\n\nThus, the correct answer is <strong>D</strong>.",
+      "sourceConcepts": [
+        "casework",
+        "symmetry"
+      ],
+      "sourceDifficulty": 1670,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/23"
+    },
+    {
+      "id": "amc-8-2022-q24",
+      "number": 24,
+      "question": "The figure below shows a polygon \\(ABCDEFGH,\\) consisting of rectangles and right triangles. When cut out and folded on the dotted lines, the polygon forms a triangular prism. Suppose that:\n\n\\[ AH = EF = 8 \\]\n\nand\n\n\\[ GH = 14. \\]\n\nWhat is the volume of the prism?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2022/24-f901d47977.svg\" style=\"max-height: 15rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(112\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(128\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(192\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(240\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(288\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Find the right-triangle base of the prism",
+        "The folded net gives a base with legs \\(6\\) and \\(8\\), and prism length \\(8\\)"
+      ],
+      "solution": "When the net is folded, the matching side lengths give \\(GF=EF=8\\). Since \\(GFCB\\) is a rectangle, \\(BC=8\\). The fold identifies \\(AB\\) with \\(BC\\), so \\(AB=8\\). In rectangle \\(HJBA\\), this gives \\(HJ=8\\), and the opposite side \\(BJ\\) equals \\(AH=8\\).\n\nSince \\(GH=14\\), we have \\(GJ=14-8=6\\). Thus one triangular base of the prism is right triangle \\(BJG\\), with area \\[ \\frac{6\\cdot8}{2}=24. \\] The prism length is \\(GF=8\\), so the volume is \\(24\\cdot8=192\\).\n\nThus, the correct answer is <strong>C</strong>.",
+      "sourceConcepts": [
+        "net (3D geometry)",
+        "volume"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/24"
+    },
+    {
+      "id": "amc-8-2022-q25",
+      "number": 25,
+      "question": "A cricket randomly hops between \\(4\\) leaves, on each turn hopping to one of the other \\(3\\) leaves with equal probability. After \\(4\\) hops, what is the probability that the cricket has returned to the leaf where it started?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\displaystyle \\dfrac{2}{9}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\displaystyle \\dfrac{19}{80}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\displaystyle \\dfrac{20}{81}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\displaystyle \\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\displaystyle \\dfrac{7}{27}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Track only whether the cricket is on the starting leaf",
+        "If the cricket is not at the start, the next hop returns with probability \\(\\frac13\\)"
+      ],
+      "solution": "Let \\(p_n\\) be the probability that the cricket is on its starting leaf after \\(n\\) hops. We have \\(p_0=1\\).\n\nIf the cricket is on the starting leaf, the next hop must leave it. If the cricket is not on the starting leaf, exactly one of the \\(3\\) possible hops returns to the start. Therefore \\[ p_{n+1}=\\frac{1-p_n}{3}. \\]\n\nThus \\[ \\begin{gathered} p_1=0,\\quad p_2=\\frac13,\\quad p_3=\\frac29,\\quad \\\\ p_4=\\frac{1-\\frac29}{3}=\\frac{7}{27}. \\end{gathered} \\]\n\nThus, the correct answer is <strong>E</strong>.",
+      "sourceConcepts": [
+        "recursive probability",
+        "symmetry"
+      ],
+      "sourceDifficulty": 1670,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2022/problem/25"
+    }
+  ]
+}

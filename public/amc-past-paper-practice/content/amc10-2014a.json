@@ -1,0 +1,1024 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2014A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2014a-q1",
+      "number": 1,
+      "question": "What is the value of the following expression?\n\n\\[ 10\\cdot\\left(\\dfrac{1}{2}+\\dfrac{1}{5}+\\dfrac{1}{10}\\right)^{-1} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{25}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{170}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(170\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Add the fractions inside the parentheses first",
+        "Take the reciprocal before multiplying by \\(10\\)"
+      ],
+      "solution": "We get that \\[\\begin{aligned} &\\dfrac{1}{2} + \\dfrac{1}{5} + \\dfrac{1}{10} \\\\ &= \\dfrac{5}{10} + \\dfrac{2}{10} + \\dfrac{1}{10} \\\\&= \\dfrac{4}{5}. \\end{aligned}\\]\n\nThen \\(\\left(\\dfrac{4}{5}\\right)^{-1} = \\dfrac{5}{4}\\) and then finally, \\[10 \\cdot \\dfrac{5}{4} = \\dfrac{25}{2}.\\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "fraction",
+        "order of operations"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/1"
+    },
+    {
+      "id": "amc-10-2014a-q2",
+      "number": 2,
+      "question": "Roy’s cat eats \\(\\dfrac{1}{3}\\) of a can of cat food every morning and \\(\\dfrac{1}{4}\\) of a can of cat food every evening. Before feeding his cat on Monday morning, Roy opened a box containing \\(6\\) cans of cat food. On what day of the week did the cat finish eating all the cat food in the box?",
+      "options": [
+        {
+          "label": "A",
+          "content": "Tuesday"
+        },
+        {
+          "label": "B",
+          "content": "Wednesday"
+        },
+        {
+          "label": "C",
+          "content": "Thursday"
+        },
+        {
+          "label": "D",
+          "content": "Friday"
+        },
+        {
+          "label": "E",
+          "content": "Saturday"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The cat eats \\(\\frac7{12}\\) can per full day",
+        "Check the integer day when the total first reaches \\(6\\) cans"
+      ],
+      "solution": "The cat eats \\[ \\dfrac{1}{3} + \\dfrac{1}{4} = \\dfrac{7}{12} \\] cans of food each full day. After \\(10\\) full days, it has eaten \\(10\\cdot\\frac7{12}=\\frac{35}{6}\\) cans, leaving \\(\\frac16\\) of a can.\n\nThe cat finishes that remainder during its next morning feeding. The eleventh morning, counting Monday as the first, is Thursday.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "rate",
+        "fraction",
+        "date and time"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/2"
+    },
+    {
+      "id": "amc-10-2014a-q3",
+      "number": 3,
+      "question": "Bridget bakes \\(48\\) loaves of bread for her bakery. She sells half of them in the morning for \\(\\$ 2.50\\) each. In the afternoon she sells two thirds of what she has left, and because they are not fresh, she charges only half price. In the late afternoon she sells the remaining loaves at a dollar each. Each loaf costs \\(\\$ 0.75\\) for her to make. In dollars, what is her profit for the day?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(36\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(44\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(52\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Track morning, afternoon, and late-afternoon sales separately",
+        "Subtract the total baking cost from the total revenue"
+      ],
+      "solution": "In the morning Bridget sells \\(24\\) loaves for \\(24\\cdot\\$2.50=\\$60\\).\n\nShe has \\(24\\) loaves left. In the afternoon she sells \\(\\frac23\\cdot24=16\\) loaves at half price, earning \\(16\\cdot\\$1.25=\\$20\\).\n\nThe remaining \\(8\\) loaves sell for \\(\\$8\\), so her revenue is \\(\\$60+\\$20+\\$8=\\$88\\). Her cost is \\(48\\cdot\\$0.75=\\$36\\).\n\nHer profit is \\(\\$88-\\$36=\\$52\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "money",
+        "fraction"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/3"
+    },
+    {
+      "id": "amc-10-2014a-q4",
+      "number": 4,
+      "question": "Walking down Jane Street, Ralph passed four houses in a row, each painted a different color. He passed the orange house before the red house, and he passed the blue house before the yellow house. The blue house was not next to the yellow house. How many orderings of the colored houses are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Case on where the yellow house appears",
+        "Use the blue-before-yellow condition and the no-adjacent condition together"
+      ],
+      "solution": "Blue must come before yellow but not next to it, so they sit in positions \\((1,3)\\) or \\((1,4)\\) or \\((2,4)\\).\n\nIn each case orange and red fill the two remaining spots with orange before red, which is forced. The three orderings are orange, blue, red, yellow; blue, orange, red, yellow; and blue, orange, yellow, red.\n\nThere are \\(3\\) possible orderings.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "permutations",
+        "casework"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/4"
+    },
+    {
+      "id": "amc-10-2014a-q5",
+      "number": 5,
+      "question": "On an algebra quiz, \\(10\\%\\) of the students scored \\(70\\) points, \\(35\\%\\) scored \\(80\\) points, \\(30\\%\\) scored \\(90\\) points, and the rest scored \\(100\\) points. What is the difference between the mean and the median of the students’ scores on this quiz?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Find the median from the cumulative percentages",
+        "Compute the weighted mean using the score percentages"
+      ],
+      "solution": "The median is \\(90\\), because \\(45\\%\\) of the students scored below \\(90\\) and \\(25\\%\\) scored above \\(90\\).\n\nThe mean is \\(0.10\\cdot70\\) \\(+0.35\\cdot80\\) \\(+0.30\\cdot90\\) \\(+0.25\\cdot100=87\\).\n\nThe difference is \\(90-87=3\\).\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "median (data)"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/5"
+    },
+    {
+      "id": "amc-10-2014a-q6",
+      "number": 6,
+      "question": "Suppose that \\(a\\) cows give \\(b\\) gallons of milk in \\(c\\) days. At this rate, how many gallons of milk will \\(d\\) cows give in \\(e\\) days?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{bde}{ac}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{ac}{bde}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{abde}{c}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{bcde}{a}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{abc}{de}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Find the production rate per cow per day",
+        "Scale by \\(d\\) cows and \\(e\\) days"
+      ],
+      "solution": "We have to multiply \\(b\\) by \\(\\dfrac{d}{a}\\) to account for the new number of cows.\n\nWe then have to multiply by \\(\\dfrac{e}{c}\\) to account for the new time that we have.\n\nThis gives us a final answer of \\[ b \\cdot \\dfrac{d}{a} \\cdot \\dfrac{e}{c} = \\dfrac{bde}{ac}. \\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "rate"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/6"
+    },
+    {
+      "id": "amc-10-2014a-q7",
+      "number": 7,
+      "question": "Nonzero real numbers \\(x,\\) \\(y,\\) \\(a,\\) and \\(b\\) satisfy \\(x &lt; a\\) and \\(y &lt; b.\\) How many of the following inequalities must be true?\n\n<b>(I)</b> \\(x + y \\lt a + b\\)\n\n<b>(II)</b> \\(x - y \\lt a - b\\)\n\n<b>(III)</b> \\(xy \\lt ab\\)\n\n<b>(IV)</b> \\(\\dfrac{x}{y} \\lt \\dfrac{a}{b}\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Adding inequalities with the same direction is safe",
+        "Find counterexamples for the other proposed inequalities"
+      ],
+      "solution": "Adding the two inequalities together gets us\n\n\\[ x + y \\lt a + b, \\] which shows that <b>(I)</b> is correct.\n\nOne cannot subtract inequalities, which means that <b>(II)</b> is not necessarily true.\n\nConsider \\(x = 1,\\) \\(y = 1,\\) \\(a = 2,\\) and \\(b = 3\\) as a counter-example. This would give us \\(0 \\lt -1.\\)\n\n<b>(III)</b> is also not always true, since \\(x\\) and \\(y\\) might be negative numbers.\n\nLet \\(x = -3,\\) \\(y = -2,\\) \\(a = 1,\\) and \\(b = 1.\\) Then \\(xy = 6\\) and \\(ab = 1\\) which shows that <b>(III)</b> is wrong.\n\nThe same thing occurs with <b>(IV)</b> . Using the same values as above, we have \\(\\dfrac{x}{y} = 1.5\\) and \\(\\dfrac{a}{b} = 1.\\)\n\nThis shows that <b>(I)</b> is the only true statement.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "inequality",
+        "counterexample"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/7"
+    },
+    {
+      "id": "amc-10-2014a-q8",
+      "number": 8,
+      "question": "Which of the following numbers is a perfect square?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{14!15!}2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{15!16!}2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{16!17!}2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{17!18!}2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{18!19!}2\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Write each choice as \\(\\frac{n!(n+1)!}{2}\\)",
+        "Only \\(\\frac{n+1}{2}\\) needs to be a square"
+      ],
+      "solution": "Note that all of these answer choices are of the form \\[ \\dfrac{n!(n + 1)!}{2} = \\dfrac{(n!)^2(n + 1)}{2}. \\] We have that \\((n!)^2\\) is square, so we need \\(\\dfrac{n + 1}{2}\\) to be square as well.\n\nThis means that \\(n + 1\\) must be twice a perfect square. The only choice we have is \\(n + 1 = 18,\\) which gives us \\(n = 17.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "factorial",
+        "perfect square",
+        "prime factorization"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/8"
+    },
+    {
+      "id": "amc-10-2014a-q9",
+      "number": 9,
+      "question": "The two legs of a right triangle, which are altitudes, have lengths \\(2\\sqrt3\\) and \\(6.\\) How long is the third altitude of the triangle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use the two given legs to find the area",
+        "Use the hypotenuse as the base for the third altitude"
+      ],
+      "solution": "We get that the area of the triangle is \\[ \\dfrac{1}{2} \\cdot 2\\sqrt{3} \\cdot 6 = 6\\sqrt{3}. \\] The length of the hypotenuse is \\[ \\sqrt{(2\\sqrt{3})^2 + 6^2} = \\sqrt{48} = 4\\sqrt{3}. \\]\n\nDropping the altitude, \\(h,\\) from the vertex to the hypotenuse, we get that \\[ \\dfrac{1}{2} \\cdot h \\cdot 4\\sqrt{3} = 6\\sqrt{3} \\]\\[ h = 3. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "altitude",
+        "triangle area",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/9"
+    },
+    {
+      "id": "amc-10-2014a-q10",
+      "number": 10,
+      "question": "Five positive consecutive integers starting with \\(a\\) have average \\(b.\\) What is the average of \\(5\\) consecutive integers that start with \\(b?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(a+3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(a+4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(a+5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(a+6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(a+7\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The average of five consecutive integers starting at \\(x\\) is \\(x+2\\)",
+        "Apply that rule first to \\(a\\), then to \\(b\\)"
+      ],
+      "solution": "Note that the average of \\(5\\) consecutive numbers starting with \\(x\\) is \\[ \\dfrac{5x + 1 + 2 + 3 + 4}{5} = x + 2. \\]\n\nThis means that the average of \\(5\\) consecutive integers starting with \\(a\\) is \\(a + 2,\\) which we know is \\(b.\\)\n\nFurthermore, the average of \\(5\\) consecutive numbers starting with \\(b\\) is \\[b + 2 = a + 4.\\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "mean"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/10"
+    },
+    {
+      "id": "amc-10-2014a-q11",
+      "number": 11,
+      "question": "A customer who intends to purchase an appliance has three coupons, only one of which may be used:\n\nCoupon \\(1:\\) \\(10\\%\\) off the listed price if the listed price is at least \\(\\$50\\)\n\nCoupon \\(2:\\) \\(\\$ 20\\) off the listed price if the listed price is at least \\(\\$100\\)\n\nCoupon \\(3:\\) \\(18\\%\\) off the amount by which the listed price exceeds \\(\\$100\\)\n\nFor which of the following listed prices will coupon \\(1\\) offer a greater price reduction than either coupon \\(2\\) or coupon \\(3?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$ 179.95\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$ 199.95\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$ 219.95\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$ 239.95\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$ 259.95\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compare the actual dollar discount, not the final price",
+        "Solve the inequalities where coupon \\(1\\) beats coupons \\(2\\) and \\(3\\)"
+      ],
+      "solution": "Let us analyze what these coupons do to an arbitrary price, \\(x.\\)\n\nCoupon \\(1\\) changes this price to \\(0.9x.\\) Coupon \\(2\\) changes the price to \\(x - 20.\\) Coupon \\(3\\) changes the price to \\[ x - 0.18(x - 100) = 0.82x + 18. \\]\n\nWe want \\[ 0.9x \\lt x - 20 \\] and \\[ 0.9x \\lt 0.82x + 18. \\] Solving both gives us \\[200 \\lt x \\lt 225. \\]\n\nThe only answer choice that works is \\(\\$ 219.95.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "inequality",
+        "percentage"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/11"
+    },
+    {
+      "id": "amc-10-2014a-q12",
+      "number": 12,
+      "question": "A regular hexagon has side length \\(6.\\) Congruent arcs with radius \\(3\\) are drawn with the center at each of the vertices, creating circular sectors as shown. The region inside the hexagon but outside the sectors is shaded as shown. What is the area of the shaded region?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2014a/12-061e2be312.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(27\\sqrt{3}-9\\pi\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(27\\sqrt{3}-6\\pi\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(54\\sqrt{3}-18\\pi\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(54\\sqrt{3}-12\\pi\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(108\\sqrt{3}-9\\pi\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Subtract the six circular sectors from the hexagon area",
+        "Each sector has central angle \\(120^\\circ\\)"
+      ],
+      "solution": "Note that we can split the hexagon up into \\(6\\) equilateral triangles each with side length \\(6.\\)\n\nRecall that the area of an equilateral triangle with side length \\(s\\) is \\[ \\dfrac{s^2 \\sqrt{3}}{4}. \\]\n\nThis means that the area of the hexagon is \\[ 6 \\cdot \\dfrac{6^2 \\sqrt{3}}{4} = 54\\sqrt{3}. \\]\n\nSince each interior angle of a regular hexagon is \\(120^{\\circ},\\) the six sectors form \\(2\\) full circles.\n\nThis means that the area of all the sectors is \\[ 2 \\cdot 3^2 \\pi = 18\\pi. \\]\n\nThe area of the shaded region is then \\[ 54\\sqrt{3} - 18\\pi. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "regular polygon",
+        "sector",
+        "area"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/12"
+    },
+    {
+      "id": "amc-10-2014a-q13",
+      "number": 13,
+      "question": "Equilateral \\(\\triangle ABC\\) has side length \\(1,\\) and squares \\(ABDE,\\) \\(BCHI,\\) \\(CAFG\\) lie outside the triangle. What is the area of hexagon \\(DEFGHI?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2014a/13-05734fdee5.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{12+3\\sqrt3}4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac92\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3+\\sqrt3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{6+3\\sqrt3}2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Decompose the hexagon into the original triangle, three squares, and three outer triangles",
+        "Each outer triangle has sides \\(1,1\\) with included angle \\(120^\\circ\\)"
+      ],
+      "solution": "We can find the areas of all the individual pieces and then add them up together.\n\nThe area of the center equilateral triangle is \\[ \\dfrac{1^2 \\sqrt{3}}{4} = \\dfrac{\\sqrt{3}}{4}. \\]\n\nWe have that the areas of all the squares is \\[ 3 \\cdot 1^2 = 3. \\]\n\nWe also have that \\[ \\angle EAF = 360^{\\circ} - 60^{\\circ} - 2 \\cdot 90^{\\circ}\\]\\[ = 120^{\\circ}. \\]\n\nAlso, \\(AE=AF=1\\) and \\(\\angle EAF=120^\\circ\\). Dropping the altitude from \\(A\\) shows that \\(EF=\\sqrt3\\) and the altitude is \\(\\frac12\\), so \\([EAF]=\\frac{\\sqrt3}{4}\\). The other two outer triangles have the same area. Thus their combined area is \\(\\frac{3\\sqrt3}{4}\\).\n\nThe total area is then \\[ \\dfrac{\\sqrt{3}}{4} + \\dfrac{3\\sqrt{3}}{4} + 3 = 3 + \\sqrt{3}. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "equilateral triangle",
+        "square (geometry)",
+        "area decomposition"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/13"
+    },
+    {
+      "id": "amc-10-2014a-q14",
+      "number": 14,
+      "question": "The \\(y\\)-intercepts, \\(P\\) and \\(Q,\\) of two perpendicular lines intersecting at the point \\(A(6,8)\\) have a sum of zero. What is the area of \\(\\triangle APQ?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(45\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(48\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(54\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(72\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let the y-intercepts be \\(b\\) and \\(-b\\)",
+        "Use perpendicular slopes through \\((6,8)\\)"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2014a/14sol-0b33f2b1e1.svg\" style=\"max-height: 18rem\"/>\n\nWe have that the \\(y\\)-intercepts are an equal distance from the origin since their values sum to \\(0.\\)\n\nLet this distance be \\(z.\\) Because the two given lines are perpendicular, \\(\\triangle APQ\\) is right at \\(A\\). The origin is the midpoint of its hypotenuse \\(PQ\\), so it is equidistant from \\(P\\), \\(Q\\), and \\(A\\). Hence the distance from \\(A\\) to the origin is also \\(z\\).\n\nWe then know that \\[ z = \\sqrt{6^2 + 8^2} = 10 \\] by the distance formula. We know the altitude from \\(A\\) to \\(\\overline{PQ}\\) is \\(6\\) (it is just the \\(x\\)-value of \\(A\\)).\n\nWe also know that \\(PQ = 2 \\cdot 10 = 20,\\) which tells us that the area \\[ [APQ] = \\dfrac{1}{2} \\cdot 6 \\cdot 20 = 60. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "median (geometry)",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/14"
+    },
+    {
+      "id": "amc-10-2014a-q15",
+      "number": 15,
+      "question": "David drives from his home to the airport to catch a flight. He drives \\(35\\) miles in the first hour, but realizes that he will be \\(1\\) hour late if he continues at this speed. He increases his speed by \\(15\\) miles per hour for the rest of the way to the airport and arrives \\(30\\) minutes early. How many miles is the airport from his home?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(140\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(175\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(210\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(245\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(280\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compare the original too-slow schedule with the faster schedule",
+        "The faster trip saves \\(1.5\\) hours overall"
+      ],
+      "solution": "Note that David drives at \\(50\\) miles per hour after one hour.\n\nThen, if the airport is \\(x\\) miles from David’s house, we know that: \\[\\dfrac x{35} - \\left(1+\\dfrac{x-35}{50}\\right) = \\dfrac 32\\] We solve this equation as follows: \\[\\begin{aligned} \\dfrac x{35} - \\left(1+\\dfrac{x-35}{50}\\right) &= \\dfrac 32\\\\ \\dfrac x{35} - \\dfrac{x-35+50}{50} &= \\dfrac 32\\\\ 10x - 7(x+15)&= 525\\\\ 10x - 7x-105&= 525\\\\ 3x&= 630\\\\ x&=210 \\end{aligned}\\] Therefore, the airport is \\(x=210\\) miles from David’s house.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/15"
+    },
+    {
+      "id": "amc-10-2014a-q16",
+      "number": 16,
+      "question": "In rectangle \\(ABCD,\\) \\(AB=1,\\) \\(BC=2,\\) and points \\(E,\\) \\(F,\\) and \\(G\\) are midpoints of \\(\\overline{BC},\\) \\(\\overline{CD},\\) and \\(\\overline{AD},\\) respectively. Point \\(H\\) is the midpoint of \\(\\overline{GE}.\\) What is the area of the shaded region?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2014a/16-dc6b6ae7f9.svg\" style=\"max-height: 14rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac1{12}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\sqrt3}{18}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{\\sqrt2}{12}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{\\sqrt3}{12}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac16\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Use similar triangles created by the crossing lines",
+        "The shaded kite area is twice one small triangle area"
+      ],
+      "solution": "We can find the area of the shaded region by finding the area of \\(\\triangle DHC\\) and subtracting out the two unshaded triangles.\n\nExtend \\(\\overline{DH}\\) so that it hits \\(B.\\) Let the intersection of \\(\\overline{DB}\\) and \\(\\overline{AF}\\) be \\(X.\\)\n\nWe have that \\(\\triangle DXF\\sim\\triangle BXA.\\) Since \\(AB=2\\cdot DF\\), corresponding sides give \\(BX=2\\cdot DX\\).\n\nThis means that \\(DX = \\dfrac{1}{3} \\cdot DB,\\) which means that the altitude of \\(\\triangle DXF\\) is \\(\\dfrac{1}{3}\\) the height of the rectangle.\n\nThe area of \\(\\triangle DXF\\) is then \\[ \\dfrac{1}{2} \\cdot \\dfrac{1}{2} \\cdot \\dfrac{2}{3} = \\dfrac{1}{6}. \\]\n\nThe area of both unshaded triangles is then \\(2 \\cdot \\dfrac{1}{6} = \\dfrac{1}{3}.\\) The area of \\(\\triangle DHC\\) is \\[ \\dfrac{1}{2} \\cdot 1 \\cdot 1 = \\dfrac{1}{2}. \\]\n\nThe area of the shaded region is then \\(\\dfrac{1}{2} - \\dfrac{1}{3} = \\dfrac{1}{6}.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "rectangle",
+        "midpoint",
+        "similarity"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/16"
+    },
+    {
+      "id": "amc-10-2014a-q17",
+      "number": 17,
+      "question": "Three fair six-sided dice are rolled. What is the probability that the values shown on two of the dice sum to the value shown on the remaining die?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{13}{72}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac7{36}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac5{24}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac29\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "List possible ordered dice pairs by their sum",
+        "Remember to count ordered triples of dice rolls"
+      ],
+      "solution": "Note that if one die is the sum of the other two dice, then it is strictly greater than the other two dice.\n\nThere are \\(3\\) ways to choose which of the dice is the sum of the other two, which makes it the greatest.\n\nThis die cannot be \\(1,\\) since there is no way to sum two positive integers to get \\(1.\\)\n\nThere is a \\(\\dfrac{1}{6}\\) chance that this die is any of the other numbers.\n\nThere is \\(1\\) way to get a sum of \\(2,\\) \\(2\\) ways for \\(3,\\) \\(3\\) for \\(4,\\) \\(4\\) for \\(5,\\) and \\(5\\) for \\(6.\\)\n\nWe take these numbers of ways out of a total of \\(6^2 = 36\\) possibilities. The desired probability is then \\[ 3 \\cdot \\dfrac{1}{6} \\cdot \\dfrac{1 + 2 + 3 + 4 + 5}{36} = \\dfrac{5}{24}. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "casework"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/17"
+    },
+    {
+      "id": "amc-10-2014a-q18",
+      "number": 18,
+      "question": "A square in the coordinate plane has vertices whose \\(y\\)-coordinates are \\(0,\\) \\(1,\\) \\(4,\\) and \\(5.\\) What is the area of the square?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(27\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Choose adjacent vertices whose y-coordinates differ by \\(1\\)",
+        "A side vector rotated \\(90^\\circ\\) creates a y-change of \\(4\\)"
+      ],
+      "solution": "Opposite vertices of a square have the same average \\(y\\)-coordinate. Thus the opposite pairs must have \\(y\\)-coordinates \\((0,5)\\) and \\((1,4)\\), the two pairs with equal sum. In particular, a vertex with \\(y\\)-coordinate \\(0\\) is adjacent to vertices with \\(y\\)-coordinates \\(1\\) and \\(4\\).\n\nLet one vertex be \\(A=(0,0)\\), and let its adjacent vertex with \\(y\\)-coordinate \\(1\\) be \\(B=(x,1)\\) with \\(x>0\\).\n\nRotating the side vector \\((x,1)\\) by \\(90^\\circ\\) gives the next side vector \\((-1,x)\\), so another vertex has y-coordinate \\(x\\). The remaining y-coordinates are \\(4\\) and \\(5\\), hence \\(x=4\\).\n\nThe side length squared is \\(AB^2=x^2+1^2=4^2+1=17\\), which is the area of the square.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "square (geometry)",
+        "vector"
+      ],
+      "sourceDifficulty": 1720,
+      "solveTimeSeconds": 105,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/18"
+    },
+    {
+      "id": "amc-10-2014a-q19",
+      "number": 19,
+      "question": "Four cubes with edge lengths \\(1,\\) \\(2,\\) \\(3,\\) and \\(4\\) are stacked as shown. What is the length of the portion of \\(\\overline{XY}\\) contained in the cube with edge length \\(3?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2014a/19-94fb33236d.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{3\\sqrt{33}}5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\sqrt3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2\\sqrt{33}}3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3\\sqrt2\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The whole segment \\(XY\\) has vertical change \\(10\\)",
+        "The part inside the side-\\(3\\) cube is the same fraction of the full segment as its vertical change"
+      ],
+      "solution": "The distance between \\(X\\) and \\(Y\\) with respect to the \\(z\\)-axis is \\[ 1 + 2 + 3 + 4 = 10. \\]\n\nBoth the distances along the \\(x\\) and \\(y\\)-axes are \\(4.\\)\n\nThen \\[ XY = \\sqrt{4^2 + 4^2 + 10^2} = 2\\sqrt{33}. \\]\n\nUsing coordinates \\(X=(0,0,10)\\) and \\(Y=(4,4,0)\\), the line meets the top and bottom of the side-\\(3\\) cube at \\((\\frac65,\\frac65,7)\\) and \\((\\frac{12}5,\\frac{12}5,4)\\). Both points lie inside those square faces, so the portion inside this cube really does have vertical change \\(3\\).\n\nLet the desired length be \\(x.\\) Then using similar triangles, we have that \\[ \\dfrac{x}{3} = \\dfrac{2\\sqrt{33}}{10} \\]\\[ x = \\dfrac{3\\sqrt{33}}{5}. \\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "3D geometry",
+        "distance formula",
+        "similarity"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/19"
+    },
+    {
+      "id": "amc-10-2014a-q20",
+      "number": 20,
+      "question": "The product \\((8)(888\\dots8),\\) where the second factor has \\(k\\) digits, is an integer whose digits have a sum of \\(1000.\\) What is \\(k?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(901\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(911\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(919\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(991\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(999\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Multiply a few examples to see the digit pattern",
+        "For \\(k\\ge3\\), the product has \\(k-2\\) digits equal to \\(1\\)"
+      ],
+      "solution": "The \\(k\\)-digit number made entirely of \\(8\\)s is \\(8\\frac{10^k-1}{9}\\), so the product is \\[ \\begin{aligned} 64\\frac{10^k-1}{9} &=7\\cdot10^k\\\\ &\\quad+100\\frac{10^{k-2}-1}{9}\\\\ &\\quad+4. \\end{aligned} \\] For \\(k\\ge2\\), this is the number whose digits are \\(7\\), followed by \\(k-2\\) ones, then \\(0,4\\).\n\nThis means that for any \\(k \\geq 3,\\) the sum of the digits in the product is \\[ 7 + 4 + 0 + k - 2 = k + 9. \\]\n\nFinally, we get \\[ k + 9 = 1000 \\]\\[ k = 991. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "pattern recognition",
+        "induction"
+      ],
+      "sourceDifficulty": 1660,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/20"
+    },
+    {
+      "id": "amc-10-2014a-q21",
+      "number": 21,
+      "question": "Positive integers \\(a\\) and \\(b\\) are such that the graphs of \\(y=ax+5\\) and \\(y=3x+b\\) intersect the \\(x\\)-axis at the same point. What is the sum of all possible \\(x\\)-coordinates of these points of intersection?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(-15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(-12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(-8\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Set both x-intercepts equal",
+        "Positive integer factor pairs of \\(15\\) give all possibilities"
+      ],
+      "solution": "Note that the lines intersect the \\(x\\)-axis when \\(y = 0.\\) This gives us \\[ 0 = ax + 5\\] and \\[ 0 = 3x + b, \\] which when solved gives us \\[ x = -\\dfrac{5}{a}\\] and \\[ x = -\\dfrac{b}{3}. \\]\n\nSetting these equal to each other, we have \\[ \\dfrac{5}{a} = \\dfrac{b}{3} \\]\\[ ab = 15. \\]\n\nWe know that \\(a\\) and \\(b\\) are positive, which means that the only pairs of values \\((a, b)\\) that satisfy the above equation are \\[ (1, 15),\\]\\[ (3, 5),\\]\\[ (5, 3),\\] \\[(15, 1).\\]\n\nPlugging these values back into the equations gives us \\(x\\)-values of \\[ x = -5, -\\dfrac{5}{3}, -1, -\\dfrac{1}{3}. \\] The sum of all these values is \\(-8.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation",
+        "factor",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1600,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/21"
+    },
+    {
+      "id": "amc-10-2014a-q22",
+      "number": 22,
+      "question": "In rectangle \\(ABCD,\\) \\(\\overline{AB}=20\\) and \\(\\overline{BC}=10.\\) Let \\(E\\) be a point on \\(\\overline{CD}\\) such that \\(\\angle CBE=15^\\circ.\\) What is \\(\\overline{AE}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{20\\sqrt3}3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(10\\sqrt3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11\\sqrt3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Construct a helpful point making a \\(30\\)-\\(60\\)-\\(90\\) triangle",
+        "Show the constructed point is the same as \\(E\\)"
+      ],
+      "solution": "Let \\(E'\\) be the point on \\(\\overline{CD}\\) such that \\(AE'=AB=20\\).\n\nSince \\(AD=10\\), triangle \\(ADE'\\) is a \\(30\\)-\\(60\\)-\\(90\\) triangle, so \\(\\angle DAE'=60^\\circ\\) and \\(\\angle BAE'=30^\\circ\\).\n\nAlso \\(AE'=AB\\), so triangle \\(ABE'\\) is isosceles. Its vertex angle at \\(A\\) is \\(30^\\circ\\), so each base angle is \\(75^\\circ\\).\n\nTherefore \\(\\angle CBE'=90^\\circ-75^\\circ=15^\\circ\\), so \\(E'=E\\), and \\(AE=20\\).\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "special right triangle",
+        "isosceles triangle",
+        "angle chasing"
+      ],
+      "sourceDifficulty": 1950,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/22"
+    },
+    {
+      "id": "amc-10-2014a-q23",
+      "number": 23,
+      "question": "A rectangular piece of paper whose length is \\(\\sqrt3\\) times the width has area \\(A.\\) The paper is divided into three equal sections along the opposite lengths, and then a dotted line is drawn from the first divider to the second divider on the opposite side as shown. The paper is then folded flat along this dotted line to create a new shape with area \\(B.\\) What is the ratio \\(B:A?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2014a/23-d5ea8ba059.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1:2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3:5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2:3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3:4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4:5\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Scale the rectangle to width \\(1\\)",
+        "The fold creates equilateral overlap triangles"
+      ],
+      "solution": "WLOG, let the width of the rectangle be \\(1\\) and the length be \\(\\sqrt3.\\)\n\nDraw the line perpendicular to the midpoint of the fold, as shown below.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2014a/23sol-8c4b8d035e.svg\" style=\"max-height: 12rem\"/>\n\nNote that \\(QR = \\dfrac{2\\sqrt3}{3}\\) and \\[ QT = \\sqrt{1^2 + \\left(\\dfrac{\\sqrt3}{3}\\right)^2}\\]\\[ = \\sqrt{1 + \\dfrac{1}{3}} = \\sqrt{\\dfrac{4}{3}}. \\] This tells us \\[ QT = \\dfrac{2\\sqrt3}{3} = QR. \\] This means that \\(\\triangle QRT\\) is equilateral. Similarly, \\(\\triangle RTS\\) is equilateral. This makes the two triangles congruent.\n\nThis means that after the rectangle gets folded, this area will be overlapped. The area of the rectangle is \\(1 \\cdot \\sqrt3 = \\sqrt3.\\) The side length of this triangle is \\(QT = \\dfrac{2\\sqrt3}{3}.\\) The area of it is then \\[ \\left(\\dfrac{2\\sqrt3}{3}\\right)^2 \\cdot \\dfrac{\\sqrt3}{4} = \\dfrac{\\sqrt3}{3}. \\] The area of the folded figure is then \\[ \\sqrt3 - \\dfrac{\\sqrt3}{3} = \\dfrac{2\\sqrt3}{3}. \\] The desired ratio is then \\[ \\dfrac{2\\sqrt3}{3} \\div \\sqrt3 = \\dfrac{2}{3}. \\] Therefore \\(B:A=2:3\\). Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "paper folding",
+        "equilateral triangle",
+        "area"
+      ],
+      "sourceDifficulty": 2150,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/23"
+    },
+    {
+      "id": "amc-10-2014a-q24",
+      "number": 24,
+      "question": "A sequence of natural numbers is constructed by listing the first \\(4,\\) then skipping one, listing the next \\(5,\\) skipping \\(2,\\) listing \\(6,\\) skipping \\(3,\\) and on the \\(n\\)th iteration, listing \\(n+3\\) and skipping \\(n.\\) The sequence begins \\[1,2,3,4,6,7,8,9,10,13.\\] What is the \\(500{,}000\\)th number in the sequence?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(996,\\) \\(\\!506\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(996,\\) \\(\\!507\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(996,\\) \\(\\!508\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(996,\\) \\(\\!509\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(996,\\) \\(\\!510\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Count how many terms have been listed after \\(n\\) full iterations",
+        "Then locate the desired term inside the next listed block"
+      ],
+      "solution": "After \\(n\\) full iterations, the number of listed terms is \\(4+5+\\cdots+(n+3)=\\frac{n(n+7)}2\\).\n\nWe need the largest \\(n\\) with \\(\\frac{n(n+7)}2&lt;500000\\). Since \\(996\\cdot1003=998988\\), after \\(996\\) iterations there are \\(499494\\) listed numbers.\n\nThe first number listed in iteration \\(997\\) is one more than the total of all listed and skipped numbers so far, namely \\(996^2+4\\cdot996+1=996001\\).\n\nThe \\(500000\\)th listed number is the \\(500000-499494=506\\)th number of this next block, so it is \\(996001+505=996506\\).\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "summation",
+        "triangular number"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/24"
+    },
+    {
+      "id": "amc-10-2014a-q25",
+      "number": 25,
+      "question": "The number \\(5^{867}\\) is between \\(2^{2013}\\) and \\(2^{2014}.\\) How many pairs of integers \\((m,n)\\) are there such that \\(1\\leq m\\leq 2012\\) and \\[5^n &lt; 2^m &lt; 2^{m+2} &lt; 5^{n+1}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(278\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(279\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(280\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(281\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(282\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Each interval between consecutive powers of \\(5\\) contains two or three powers of \\(2\\)",
+        "Use the total number of powers of \\(2\\) before \\(5^{867}\\)"
+      ],
+      "solution": "Since \\(2^2&lt;5&lt;2^3\\), each interval \\((5^n,5^{n+1})\\) contains either two or three powers of \\(2\\). The desired inequality holds exactly for intervals containing three such powers.\n\nFor \\(0\\le n&lt;867\\), let \\(d\\) be the number of intervals with two powers of \\(2\\), and let \\(t\\) be the number with three powers of \\(2\\). Then \\(d+t=867\\).\n\nBecause \\(2^{2013}&lt;5^{867}&lt;2^{2014}\\), these intervals contain \\(2013\\) powers of \\(2\\) altogether, so \\(2d+3t=2013\\).\n\nSolving the system gives \\(t=279\\).\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "exponent",
+        "counting integers in a range",
+        "system of equations"
+      ],
+      "sourceDifficulty": 2300,
+      "solveTimeSeconds": 160,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2014A/problem/25"
+    }
+  ]
+}

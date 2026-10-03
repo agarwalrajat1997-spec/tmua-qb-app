@@ -1,0 +1,1026 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2004B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2004b-q1",
+      "number": 1,
+      "question": "Each row of the Misty Moon Amphitheater has \\(33\\) seats. Rows \\(12\\) through \\(22\\) are reserved for a youth club. How many seats are reserved for this club?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(297\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(330\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(363\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(396\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(726\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Count how many rows run from \\(12\\) through \\(22\\) inclusive",
+        "Multiply the number of rows by \\(33\\)"
+      ],
+      "solution": "Rows \\(12\\) through \\(22\\) inclusive make up \\(22 - 12 + 1 = 11\\) rows.\n\nEach row has \\(33\\) seats, so the total is \\(33 \\times 11 = 363.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "counting integers in a range",
+        "basic counting"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/1"
+    },
+    {
+      "id": "amc-10-2004b-q2",
+      "number": 2,
+      "question": "How many two-digit positive integers have at least one \\(7\\) as a digit?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(19\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(30\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Count the numbers with \\(7\\) in the tens place and those with \\(7\\) in the units place separately",
+        "The number \\(77\\) belongs to both groups"
+      ],
+      "solution": "The numbers \\(70\\) through \\(79\\) give \\(10\\) with a \\(7\\) in the tens place.\n\nThe numbers \\(17, 27, \\ldots, 97\\) give \\(9\\) with a \\(7\\) in the units place.\n\nSince \\(77\\) is counted twice, the total is \\(10 + 9 - 1 = 18.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "digits",
+        "inclusion-exclusion"
+      ],
+      "sourceDifficulty": 920,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/2"
+    },
+    {
+      "id": "amc-10-2004b-q3",
+      "number": 3,
+      "question": "At each basketball practice last week, Jenny made twice as many free throws as she made at the previous practice. At her fifth practice she made \\(48\\) free throws. How many free throws did she make at the first practice?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Each practice count is twice the previous one, so work backward by halving",
+        "Halve \\(48\\) repeatedly to reach the first practice"
+      ],
+      "solution": "Working backward from the fifth practice, the counts are \\(48, 24, 12, 6,\\) and \\(3\\) at the fourth, third, second, and first practices.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "geometric sequence",
+        "work backwards"
+      ],
+      "sourceDifficulty": 820,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/3"
+    },
+    {
+      "id": "amc-10-2004b-q4",
+      "number": 4,
+      "question": "A standard six-sided die is rolled, and \\(P\\) is the product of the five numbers that are visible. What is the largest number that is certain to divide \\(P?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(144\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(720\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The product of all six faces is \\(6! = 720\\); exactly one face is hidden",
+        "For each prime, find how many copies must remain no matter which face is hidden"
+      ],
+      "solution": "Since \\(6! = 720 = 2^4 \\cdot 3^2 \\cdot 5,\\) the visible product uses only the primes \\(2,\\) \\(3,\\) and \\(5.\\)\n\nHiding \\(4\\) leaves the fewest \\(2\\)’s, namely \\(2^2.\\) Hiding \\(3\\) or \\(6\\) leaves the fewest \\(3\\)’s, namely one. Hiding \\(5\\) leaves no factor of \\(5.\\)\n\nTherefore \\(P\\) is always divisible by \\(2^2 \\cdot 3 = 12,\\) but not necessarily by any larger number.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "prime factorization",
+        "divisibility",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1190,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/4"
+    },
+    {
+      "id": "amc-10-2004b-q5",
+      "number": 5,
+      "question": "In the expression \\(c \\cdot a^b - d,\\) the values of \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) are \\(0,\\) \\(1,\\) \\(2,\\) and \\(3,\\) although not necessarily in that order. What is the maximum possible value of the result?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "To maximize the result, make the subtracted value \\(d = 0\\)",
+        "With \\(1,\\) \\(2,\\) \\(3\\) remaining, compare \\(c \\cdot a^b\\) for the sensible assignments"
+      ],
+      "solution": "Setting \\(d = 0\\) removes the subtraction, so we maximize \\(c \\cdot a^b\\) using \\(1,\\) \\(2,\\) \\(3.\\)\n\nTaking \\(c = 1,\\) \\(a = 3,\\) \\(b = 2\\) gives \\(3^2 = 9.\\) The alternative \\(2^3 = 8\\) is smaller, and any assignment with \\(c \\gt 1\\) forces a smaller power. The maximum is \\(9.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "exponent",
+        "optimization",
+        "casework"
+      ],
+      "sourceDifficulty": 1120,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/5"
+    },
+    {
+      "id": "amc-10-2004b-q6",
+      "number": 6,
+      "question": "Which of the following numbers is a perfect square?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(98! \\cdot 99!\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(98! \\cdot 100!\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(99! \\cdot 100!\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(99! \\cdot 101!\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100! \\cdot 101!\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "For \\(m \\lt n,\\) write \\(m! \\cdot n!\\) as \\((m!)^2 \\cdot (m+1)(m+2)\\cdots n\\)",
+        "The product is a perfect square exactly when \\((m+1)(m+2)\\cdots n\\) is"
+      ],
+      "solution": "For \\(m \\lt n,\\) \\(m! \\cdot n!\\) equals \\((m!)^2 \\cdot (m+1)(m+2)\\cdots n,\\) which is a perfect square precisely when \\((m+1)\\cdots n\\) is a perfect square.\n\nFor the five choices this leftover factor is \\(99,\\) \\(99 \\cdot 100,\\) \\(100,\\) \\(100 \\cdot 101,\\) and \\(101.\\) Only \\(100 = 10^2\\) is a perfect square.\n\nTherefore \\(99! \\cdot 100! = (99! \\cdot 10)^2\\) is the perfect square.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "factorial",
+        "perfect square"
+      ],
+      "sourceDifficulty": 1290,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/6"
+    },
+    {
+      "id": "amc-10-2004b-q7",
+      "number": 7,
+      "question": "On a trip from the United States to Canada, Isabella took \\(d\\) U.S. dollars. At the border she exchanged them all, receiving \\(10\\) Canadian dollars for every \\(7\\) U.S. dollars. After spending \\(60\\) Canadian dollars, she had \\(d\\) Canadian dollars left. What is the sum of the digits of \\(d?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Exchanging \\(d\\) U.S. dollars gives \\(\\dfrac{10}{7}d\\) Canadian dollars",
+        "Set \\(\\dfrac{10}{7}d - 60 = d\\) and solve for \\(d\\)"
+      ],
+      "solution": "Isabella received \\(\\dfrac{10}{7}d\\) Canadian dollars and spent \\(60,\\) leaving \\(d.\\) So \\[ \\dfrac{10}{7}d - 60 = d. \\]\n\nThen \\(\\dfrac{3}{7}d = 60,\\) so \\(d = 140.\\) The sum of its digits is \\(1 + 4 + 0 = 5.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "linear equation",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1100,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/7"
+    },
+    {
+      "id": "amc-10-2004b-q8",
+      "number": 8,
+      "question": "Minneapolis-St. Paul International Airport is \\(8\\) miles southwest of downtown St. Paul and \\(10\\) miles southeast of downtown Minneapolis. Which of the following is closest to the number of miles between downtown St. Paul and downtown Minneapolis?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Southwest and southeast are perpendicular directions",
+        "The distance is \\(\\sqrt{8^2 + 10^2}\\); estimate the nearest whole number"
+      ],
+      "solution": "The two given directions are perpendicular, so the airport sits at the right angle of a right triangle with legs \\(8\\) and \\(10.\\)\n\nThe distance between the downtowns is \\(\\sqrt{8^2 + 10^2} = \\sqrt{164} \\approx 12.8,\\) which is closest to \\(13.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "Pythagorean Theorem",
+        "estimation"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/8"
+    },
+    {
+      "id": "amc-10-2004b-q9",
+      "number": 9,
+      "question": "A square has sides of length \\(10,\\) and a circle centered at one of its vertices has radius \\(10.\\) What is the area of the union of the regions enclosed by the square and the circle?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(200 + 25\\pi\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(100 + 75\\pi\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(75 + 100\\pi\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(100 + 100\\pi\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(100 + 125\\pi\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Add the areas of the square and the circle, then subtract the overlap",
+        "The overlap is the quarter of the circle that lies inside the square"
+      ],
+      "solution": "The square has area \\(10^2 = 100\\) and the circle has area \\(\\pi(10)^2 = 100\\pi.\\)\n\nSince the circle is centered at a vertex of the square, exactly one quarter of the circle, area \\(25\\pi,\\) lies inside the square.\n\nThe union has area \\(100 + 100\\pi - 25\\pi = 100 + 75\\pi.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "circle area",
+        "sector",
+        "inclusion-exclusion"
+      ],
+      "sourceDifficulty": 1270,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/9"
+    },
+    {
+      "id": "amc-10-2004b-q10",
+      "number": 10,
+      "question": "A grocer makes a display of cans in which the top row has one can and each lower row has two more cans than the row above it. If the display contains \\(100\\) cans, how many rows does it contain?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The rows contain \\(1, 3, 5, \\ldots\\) cans",
+        "The sum of the first \\(n\\) odd numbers equals \\(n^2\\)"
+      ],
+      "solution": "The rows hold \\(1, 3, 5, \\ldots\\) cans, and the sum of the first \\(n\\) odd numbers is \\(n^2.\\)\n\nSetting \\(n^2 = 100\\) gives \\(n = 10.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "sum of first n odd numbers"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/10"
+    },
+    {
+      "id": "amc-10-2004b-q11",
+      "number": 11,
+      "question": "Two eight-sided dice each have faces numbered \\(1\\) through \\(8.\\) When the dice are rolled, each face has an equal probability of appearing on the top. What is the probability that the product of the two top numbers is greater than their sum?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{47}{64}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{55}{64}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{7}{8}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The condition \\(mn \\gt m + n\\) rearranges to \\((m-1)(n-1) \\gt 1\\)",
+        "Count the ordered pairs where \\((m-1)(n-1) \\le 1\\) instead"
+      ],
+      "solution": "There are \\(8 \\cdot 8 = 64\\) ordered pairs. The inequality \\(mn \\gt m + n\\) is equivalent to \\((m-1)(n-1) \\gt 1.\\)\n\nThis fails only when \\(m = 1,\\) \\(n = 1,\\) or \\(m = n = 2,\\) which account for \\(8 + 8 - 1 + 1 = 16\\) pairs.\n\nThe probability is \\(\\dfrac{64 - 16}{64} = \\dfrac{48}{64} = \\dfrac{3}{4}.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "Simon’s Favorite Factoring Trick",
+        "complementary counting"
+      ],
+      "sourceDifficulty": 1430,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/11"
+    },
+    {
+      "id": "amc-10-2004b-q12",
+      "number": 12,
+      "question": "An <i>annulus</i> is the region between two concentric circles. The concentric circles in the figure have radii \\(b\\) and \\(c,\\) with \\(b \\gt c.\\) Let \\(\\overline{OX}\\) be a radius of the larger circle, let \\(\\overline{XZ}\\) be tangent to the smaller circle at \\(Z,\\) and let \\(\\overline{OY}\\) be the radius of the larger circle that contains \\(Z.\\) Let \\(a = XZ,\\) \\(d = YZ,\\) and \\(e = XY.\\) What is the area of the annulus?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2004b/12-677ed9f67e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\pi a^2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\pi b^2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\pi c^2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\pi d^2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\pi e^2\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The annulus area is \\(\\pi b^2 - \\pi c^2\\)",
+        "Since \\(\\overline{XZ}\\) is tangent at \\(Z,\\) triangle \\(OZX\\) is right-angled, giving \\(b^2 - c^2 = a^2\\)"
+      ],
+      "solution": "The annulus is the difference of the two circular areas, \\(\\pi b^2 - \\pi c^2.\\)\n\nBecause \\(\\overline{XZ}\\) is tangent to the small circle at \\(Z,\\) it is perpendicular to the radius \\(\\overline{OZ}.\\) In right triangle \\(OZX\\) with \\(OX = b,\\) \\(OZ = c,\\) and \\(XZ = a,\\) we get \\(b^2 - c^2 = a^2.\\)\n\nTherefore the area of the annulus is \\(\\pi a^2.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "annulus",
+        "circle area",
+        "tangent line",
+        "Pythagorean Theorem"
+      ],
+      "sourceDifficulty": 1390,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/12"
+    },
+    {
+      "id": "amc-10-2004b-q13",
+      "number": 13,
+      "question": "In the United States, coins have the following thicknesses: penny, \\(1.55\\) mm; nickel, \\(1.95\\) mm; dime, \\(1.35\\) mm; quarter, \\(1.75\\) mm. If a stack of these coins is exactly \\(14\\) mm high, how many coins are in the stack?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(11\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Every coin thickness ends in a \\(5\\) in the hundredths place, so consider the height’s last two decimal digits",
+        "For the height to be a whole number of mm, the number of coins must be a multiple of \\(4\\)"
+      ],
+      "solution": "Measure every thickness in hundredths of a millimeter. The four possible thicknesses are \\(135,\\) \\(155,\\) \\(175,\\) \\(195,\\) all congruent to \\(15\\pmod{20}.\\) If the stack has \\(k\\) coins and an integer height, its total in hundredths is divisible by \\(20,\\) so \\(15k\\) is divisible by \\(20.\\) Therefore \\(k\\) must be a multiple of \\(4.\\)\n\nA stack of \\(4\\) coins is at most \\(4(1.95) = 7.8\\) mm, and a stack of \\(12\\) coins is at least \\(12(1.35) = 16.2\\) mm, so only \\(8\\) coins can total \\(14\\) mm.\n\nIndeed, \\(8\\) quarters give \\(8(1.75) = 14\\) mm.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "place value",
+        "decimal",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1530,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/13"
+    },
+    {
+      "id": "amc-10-2004b-q14",
+      "number": 14,
+      "question": "A bag initially contains red marbles and blue marbles only, with more blue than red. Red marbles are added to the bag until only \\(\\tfrac{1}{3}\\) of the marbles in the bag are blue. Then yellow marbles are added to the bag until only \\(\\tfrac{1}{5}\\) of the marbles in the bag are blue. Finally, the number of blue marbles in the bag is doubled. What fraction of the marbles now in the bag are blue?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(B\\) be the number of blue marbles and track the total at each stage",
+        "Just before doubling there are \\(B\\) blue out of \\(5B\\) total"
+      ],
+      "solution": "Let there be \\(B\\) blue marbles. After adding red marbles the total is \\(3B;\\) after adding yellow marbles the total is \\(5B,\\) still with \\(B\\) blue.\n\nDoubling the blue marbles gives \\(2B\\) blue out of \\(6B\\) total, which is \\(\\dfrac{2B}{6B} = \\dfrac{1}{3}.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "fraction",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/14"
+    },
+    {
+      "id": "amc-10-2004b-q15",
+      "number": 15,
+      "question": "Patty has \\(20\\) coins consisting of nickels and dimes. If her nickels were dimes and her dimes were nickels, she would have \\(70\\) cents more. How much are her coins worth?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$1.15\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$1.20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$1.25\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$1.30\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$1.35\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Swapping raises the value, so she has more nickels than dimes",
+        "Each nickel-for-dime swap changes the total by \\(5\\) cents"
+      ],
+      "solution": "Swapping increases the value, so Patty has more nickels than dimes. Each swapped coin changes the total by \\(5\\) cents, so she has \\(\\frac{70}{5} = 14\\) more nickels than dimes.\n\nWith \\(n + d = 20\\) and \\(n - d = 14,\\) she has \\(17\\) nickels and \\(3\\) dimes.\n\nHer coins are worth \\(17 \\cdot 5 + 3 \\cdot 10 = 115\\) cents, or \\(\\$1.15.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "system of equations",
+        "money"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/15"
+    },
+    {
+      "id": "amc-10-2004b-q16",
+      "number": 16,
+      "question": "Three circles of radius \\(1\\) are externally tangent to each other and internally tangent to a larger circle. What is the radius of the large circle?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2004b/16-7f5a7a412a.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2 + \\sqrt{6}}{3}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{2 + 3\\sqrt{2}}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3 + 2\\sqrt{3}}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{3 + \\sqrt{3}}{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The three small centers form an equilateral triangle of side \\(2\\)",
+        "The large radius is \\(1\\) plus the distance from that triangle’s center to a vertex"
+      ],
+      "solution": "The centers of the three unit circles form an equilateral triangle with side \\(2.\\) Its center is the center of the large circle.\n\nFor an equilateral triangle of side length \\(2,\\) the distance from its center to a vertex is \\(\\dfrac{2}{\\sqrt3} = \\dfrac{2\\sqrt3}{3}.\\)\n\nAdding the unit radius, the large radius is \\(1 + \\dfrac{2\\sqrt3}{3} = \\dfrac{3 + 2\\sqrt3}{3}.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "tangent circles",
+        "equilateral triangle",
+        "special right triangle"
+      ],
+      "sourceDifficulty": 1640,
+      "solveTimeSeconds": 95,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/16"
+    },
+    {
+      "id": "amc-10-2004b-q17",
+      "number": 17,
+      "question": "The two digits in Jack’s age are the same as the digits in Bill’s age, but in reverse order. In five years Jack will be twice as old as Bill will be then. What is the difference in their current ages?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(27\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(36\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(45\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Write Jack’s age as \\(10x + y\\) and Bill’s as \\(10y + x\\)",
+        "The condition \\(10x + y + 5 = 2(10y + x + 5)\\) reduces to \\(8x = 19y + 5\\)"
+      ],
+      "solution": "Let Jack’s age be \\(10x + y\\) and Bill’s be \\(10y + x.\\) In five years \\(10x + y + 5 = 2(10y + x + 5),\\) which simplifies to \\(8x = 19y + 5.\\)\n\nSince \\(x\\) and \\(y\\) are digits, the only solution is \\(y = 1,\\) \\(x = 3.\\)\n\nSo Jack is \\(31\\) and Bill is \\(13,\\) a difference of \\(18.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "ages",
+        "digits",
+        "Diophantine Equation"
+      ],
+      "sourceDifficulty": 1410,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/17"
+    },
+    {
+      "id": "amc-10-2004b-q18",
+      "number": 18,
+      "question": "In right triangle \\(\\triangle ACE,\\) we have \\(AC = 12,\\) \\(CE = 16,\\) and \\(EA = 20.\\) Points \\(B,\\) \\(D,\\) and \\(F\\) are located on \\(AC,\\) \\(CE,\\) and \\(EA,\\) respectively, so that \\(AB = 3,\\) \\(CD = 4,\\) and \\(EF = 5.\\) What is the ratio of the area of \\(\\triangle BDF\\) to that of \\(\\triangle ACE?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2004b/18-13d2eab24e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{9}{25}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{11}{25}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{7}{16}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The area of \\(\\triangle ACE\\) is \\(\\tfrac12(12)(16) = 96\\)",
+        "Subtract the three corner triangles; each has a base and height that are known fractions of the big triangle’s"
+      ],
+      "solution": "The area of \\(\\triangle ACE\\) is \\(\\tfrac12(12)(16) = 96.\\)\n\nEach corner triangle \\(\\triangle ABF,\\) \\(\\triangle BCD,\\) and \\(\\triangle DEF\\) has a base and an altitude that are \\(\\tfrac34\\) and \\(\\tfrac14\\) of a corresponding base and altitude of \\(\\triangle ACE.\\) So each has area \\(\\tfrac14 \\cdot \\tfrac34 = \\tfrac{3}{16}\\) of \\(\\triangle ACE.\\)\n\nHence \\[ \\begin{aligned} \\dfrac{[BDF]}{[ACE]} &= 1 - 3 \\cdot \\dfrac{3}{16} \\\\ &= 1 - \\dfrac{9}{16} = \\dfrac{7}{16}. \\end{aligned} \\]\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "area ratio",
+        "area decomposition",
+        "triangle area"
+      ],
+      "sourceDifficulty": 1630,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/18"
+    },
+    {
+      "id": "amc-10-2004b-q19",
+      "number": 19,
+      "question": "In the sequence \\(2001,\\) \\(2002,\\) \\(2003,\\) \\(\\ldots,\\) each term after the third is found by subtracting the previous term from the sum of the two terms that precede that term. For example, the fourth term is \\(2001 + 2002 - 2003 = 2000.\\) What is the \\(2004\\)th term in this sequence?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-2004\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4003\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6007\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Write out several terms: \\(2001,\\) \\(2002,\\) \\(2003,\\) \\(2000,\\) \\(2005,\\) \\(1998,\\) \\(\\ldots\\)",
+        "The even-position terms decrease by \\(2\\) each time"
+      ],
+      "solution": "The recurrence \\(a_{k+1} = a_{k-2} + a_{k-1} - a_k\\) gives \\(a_{k+1} - a_{k-1} = -(a_k - a_{k-2}).\\) The sequence begins \\(2001,\\) \\(2002,\\) \\(2003,\\) \\(2000,\\) \\(2005,\\) \\(1998,\\) \\(\\ldots\\)\n\nSo the even-position terms form the arithmetic sequence \\(2002, 2000, 1998, \\ldots\\) with common difference \\(-2.\\) The \\(2004\\)th term is its \\(1002\\)nd term, \\(2002 + 1001(-2) = 0.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "recursion",
+        "arithmetic sequence",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1460,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/19"
+    },
+    {
+      "id": "amc-10-2004b-q20",
+      "number": 20,
+      "question": "In \\(\\triangle ABC\\) points \\(D\\) and \\(E\\) lie on \\(\\overline{BC}\\) and \\(\\overline{AC},\\) respectively. If \\(\\overline{AD}\\) and \\(\\overline{BE}\\) intersect at \\(T\\) so that \\(\\frac{AT}{DT} = 3\\) and \\(\\frac{BT}{ET} = 4,\\) what is \\(\\frac{CD}{BD}?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2004b/20-f573c084a3.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2}{9}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{10}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{4}{11}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{12}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Draw the line through \\(D\\) parallel to \\(\\overline{BE}\\) meeting \\(\\overline{AC}\\) at a point \\(F\\)",
+        "Two pairs of similar triangles give \\(\\frac{CD}{BC},\\) which converts to \\(\\frac{CD}{BD}\\)"
+      ],
+      "solution": "Let \\(F\\) be on \\(\\overline{AC}\\) with \\(DF \\parallel BE,\\) and write \\(ET = x,\\) \\(BT = 4x.\\)\n\nFrom \\(\\triangle ATE \\sim \\triangle ADF,\\) \\(\\dfrac{DF}{x} = \\dfrac{AD}{AT} = \\dfrac{4}{3},\\) so \\(DF = \\dfrac{4x}{3}.\\)\n\nFrom \\(\\triangle BEC \\sim \\triangle DFC,\\) \\(\\dfrac{CD}{BC} = \\dfrac{DF}{BE} = \\dfrac{\\frac{4x}{3}}{5x} = \\dfrac{4}{15}.\\)\n\nTherefore \\[ \\begin{aligned} \\dfrac{CD}{BD} &= \\dfrac{\\frac{CD}{BC}}{1 - \\frac{CD}{BC}} \\\\ &= \\dfrac{\\frac{4}{15}}{\\frac{11}{15}} = \\dfrac{4}{11}. \\end{aligned} \\]\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "similarity",
+        "parallel lines",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1840,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/20"
+    },
+    {
+      "id": "amc-10-2004b-q21",
+      "number": 21,
+      "question": "Let \\(1,\\) \\(4,\\) \\(\\ldots\\) and \\(9,\\) \\(16,\\) \\(\\ldots\\) be two arithmetic progressions. The set \\(S\\) is the union of the first \\(2004\\) terms of each sequence. How many distinct numbers are in \\(S?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3722\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3732\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3914\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3924\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4007\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The first sequence has common difference \\(3\\) and last term \\(1 + 3 \\cdot 2003 = 6010\\)",
+        "Common terms start at \\(16\\) and are spaced by \\(\\mathrm{lcm}(3, 7) = 21;\\) count the terms not exceeding \\(6010\\)"
+      ],
+      "solution": "The first sequence is \\(1 + 3k\\) with largest term \\(6010,\\) and the second is \\(9 + 7j\\) with a much larger last term, so the binding limit is \\(6010.\\)\n\nA common value has the form \\(16 + 21m\\) (the first shared term is \\(16,\\) spaced by \\(\\mathrm{lcm}(3, 7) = 21\\)). Requiring \\(16 + 21m \\le 6010\\) gives \\(0 \\le m \\le 285,\\) that is \\(286\\) common numbers.\n\nThe number of distinct values is \\(2004 + 2004 - 286 = 3722.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "least common multiple",
+        "inclusion-exclusion"
+      ],
+      "sourceDifficulty": 1740,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/21"
+    },
+    {
+      "id": "amc-10-2004b-q22",
+      "number": 22,
+      "question": "A triangle with sides of \\(5,\\) \\(12,\\) and \\(13\\) has both an inscribed and a circumscribed circle. What is the distance between the centers of those circles?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{3\\sqrt{5}}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{7}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\sqrt{15}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{\\sqrt{65}}{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{9}{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Place the right triangle with vertices \\((0, 0),\\) \\((5, 0),\\) and \\((0, 12)\\)",
+        "The circumcenter is the midpoint of the hypotenuse; a right triangle’s inradius is \\(r = \\tfrac{a + b - c}{2}\\)"
+      ],
+      "solution": "Since \\(5^2 + 12^2 = 13^2,\\) the triangle is right. Place it at \\((0, 0),\\) \\((5, 0),\\) \\((0, 12).\\) The circumcenter is the midpoint of the hypotenuse, \\(\\left(\\tfrac52, 6\\right).\\)\n\nThe inradius satisfies \\((12 - r) + (5 - r) = 13,\\) so \\(r = 2\\) and the incenter is \\((2, 2).\\)\n\nThe distance is \\[ \\begin{gathered} \\sqrt{\\left(\\tfrac52 - 2\\right)^2 + (6 - 2)^2} \\\\ = \\sqrt{\\tfrac14 + 16} \\\\ = \\dfrac{\\sqrt{65}}{2}. \\end{gathered} \\]\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "incircle, incenter, and inradius",
+        "circumcircle, circumcenter, and circumradius",
+        "right triangle",
+        "coordinate geometry"
+      ],
+      "sourceDifficulty": 1770,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/22"
+    },
+    {
+      "id": "amc-10-2004b-q23",
+      "number": 23,
+      "question": "Each face of a cube is painted either red or blue, each with probability \\(\\tfrac12.\\) The color of each face is determined independently. What is the probability that the painted cube can be placed on a horizontal surface so that the four vertical faces are all the same color?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{5}{16}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{7}{16}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Fixing the cube’s orientation, there are \\(2^6 = 64\\) equally likely colorings",
+        "The working colorings are: all one color, exactly five one color, or four of one color with the opposite pair the other"
+      ],
+      "solution": "Fixing the orientation, there are \\(2^6 = 64\\) colorings.\n\nA coloring works if all six faces match (\\(2\\) ways), exactly five match (\\(\\binom{6}{5} \\cdot 2 = 12\\) ways), or four faces share a color with the remaining pair being opposite faces of the other color (\\(3\\) opposite pairs, \\(2\\) colors, giving \\(6\\) ways).\n\nThe total is \\(2 + 12 + 6 = 20,\\) so the probability is \\(\\dfrac{20}{64} = \\dfrac{5}{16}.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "basic probability",
+        "casework",
+        "cube geometry"
+      ],
+      "sourceDifficulty": 1990,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/23"
+    },
+    {
+      "id": "amc-10-2004b-q24",
+      "number": 24,
+      "question": "In \\(\\triangle ABC\\) we have \\(AB = 7,\\) \\(AC = 8,\\) and \\(BC = 9.\\) Point \\(D\\) is on the circumscribed circle of the triangle so that \\(\\overline{AD}\\) bisects \\(\\angle BAC.\\) What is the value of \\(\\frac{AD}{CD}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{9}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{5}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{17}{7}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(\\overline{AD}\\) meet \\(\\overline{BC}\\) at \\(E;\\) inscribed angles give \\(\\angle ABE = \\angle ADC\\)",
+        "Triangles \\(ABE\\) and \\(ADC\\) are similar, so \\(\\frac{AD}{CD} = \\frac{AB}{BE};\\) find \\(BE\\) from the Angle Bisector Theorem"
+      ],
+      "solution": "Let \\(\\overline{AD}\\) meet \\(\\overline{BC}\\) at \\(E.\\) Since \\(\\angle ABC\\) and \\(\\angle ADC\\) subtend the same arc, they are equal, and \\(\\angle EAB = \\angle CAD,\\) so \\(\\triangle ABE \\sim \\triangle ADC.\\)\n\nHence \\(\\dfrac{AD}{CD} = \\dfrac{AB}{BE}.\\)\n\nBy the Angle Bisector Theorem, \\(\\dfrac{BE}{EC} = \\dfrac{AB}{AC},\\) so \\(BE = \\dfrac{AB \\cdot BC}{AB + AC} = \\dfrac{7 \\cdot 9}{15}.\\)\n\nTherefore \\[ \\begin{aligned} \\dfrac{AD}{CD} &= \\dfrac{AB}{BE} = \\dfrac{AB + AC}{BC} \\\\ &= \\dfrac{15}{9} = \\dfrac{5}{3}. \\end{aligned} \\]\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "inscribed angle",
+        "similarity",
+        "angle bisector theorem"
+      ],
+      "sourceDifficulty": 2030,
+      "solveTimeSeconds": 170,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/24"
+    },
+    {
+      "id": "amc-10-2004b-q25",
+      "number": 25,
+      "question": "A circle of radius \\(1\\) is internally tangent to two circles of radius \\(2\\) at points \\(A\\) and \\(B,\\) where \\(AB\\) is a diameter of the smaller circle. What is the area of the region, shaded in the figure, that is outside the smaller circle and inside each of the two larger circles?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2004b/25-36427887dd.svg\" style=\"max-height: 14rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{3}\\pi - 3\\sqrt{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{5}{3}\\pi - 2\\sqrt{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{8}{3}\\pi - 3\\sqrt{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{8}{3}\\pi - 3\\sqrt{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{8}{3}\\pi - 2\\sqrt{3}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "By symmetry the shaded region splits into four congruent pieces; compute one quarter",
+        "One quarter is a \\(60^\\circ\\) sector of a large circle minus a right triangle minus a quarter of the small circle"
+      ],
+      "solution": "Let the large circles have centers \\(A\\) and \\(B,\\) let \\(C\\) be the center of the small circle, and let \\(D\\) be a point where the two large circles meet.\n\nThen \\(\\triangle ACD\\) is right with \\(AC = 1\\) and \\(AD = 2,\\) so \\(CD = \\sqrt3,\\) \\(\\angle CAD = 60^\\circ,\\) and its area is \\(\\dfrac{\\sqrt3}{2}.\\)\n\nOne quarter of the shaded region equals the \\(60^\\circ\\) sector of the radius-\\(2\\) circle (area \\(\\dfrac{2\\pi}{3}\\)) minus \\(\\triangle ACD\\) (area \\(\\dfrac{\\sqrt3}{2}\\)) minus a quarter of the small circle (area \\(\\dfrac{\\pi}{4}\\)), giving \\(\\dfrac{2\\pi}{3} - \\dfrac{\\sqrt3}{2} - \\dfrac{\\pi}{4} = \\dfrac{5\\pi}{12} - \\dfrac{\\sqrt3}{2}.\\)\n\nMultiplying by \\(4,\\) the shaded area is \\(\\dfrac{5\\pi}{3} - 2\\sqrt3.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "sector",
+        "area decomposition",
+        "special right triangle",
+        "symmetry"
+      ],
+      "sourceDifficulty": 2270,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2004B/problem/25"
+    }
+  ]
+}

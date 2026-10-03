@@ -1,0 +1,1020 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2008B",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2008b-q1",
+      "number": 1,
+      "question": "A basketball player made \\(5\\) baskets during a game. Each basket was worth either \\(2\\) or \\(3\\) points. How many different numbers could represent the total points scored by the player?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "If \\(k\\) baskets are worth \\(3\\) points, the total is \\(2(5-k)+3k\\)",
+        "As \\(k\\) runs from \\(0\\) to \\(5\\), the total increases by \\(1\\) each time"
+      ],
+      "solution": "If \\(k\\) of the baskets are worth \\(3\\) points and the rest worth \\(2,\\) the total is \\(2(5-k)+3k=10+k.\\)\n\nAs \\(k\\) ranges over \\(0,1,\\ldots,5,\\) the total takes every integer value from \\(10\\) to \\(15,\\) giving \\(6\\) possibilities.\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "basic counting",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 720,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/1"
+    },
+    {
+      "id": "amc-10-2008b-q2",
+      "number": 2,
+      "question": "A \\(4 \\times 4\\) block of calendar dates is shown. The order of the numbers in the second row is to be reversed. Then the order of the numbers in the fourth row is to be reversed. Finally, the numbers on each diagonal are to be added. What will be the positive difference between the two diagonal sums?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2008b/2-11ceccde21.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "After reversing rows \\(2\\) and \\(4,\\) write out the new grid",
+        "The main diagonal reads \\(1,10,17,22\\) and the other reads \\(4,9,16,25\\)"
+      ],
+      "solution": "After reversing the second row to \\(11,10,9,8\\) and the fourth row to \\(25,24,23,22,\\) the two diagonals are \\(1,10,17,22\\) and \\(4,9,16,25.\\)\n\nTheir sums are \\(1+10+17+22=50\\) and \\(4+9+16+25=54,\\) so the positive difference is \\(54-50=4.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "date and time",
+        "process simulation"
+      ],
+      "sourceDifficulty": 880,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/2"
+    },
+    {
+      "id": "amc-10-2008b-q3",
+      "number": 3,
+      "question": "Assume that \\(x\\) is a positive real number. Which is equivalent to \\[\\sqrt[3]{x\\sqrt{x}}\\,?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(x^{\\frac{1}{6}}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(x^{\\frac{1}{4}}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(x^{\\frac{3}{8}}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(x^{\\frac{1}{2}}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(x\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Write \\(\\sqrt{x}=x^{\\frac{1}{2}}\\)",
+        "Then \\(x\\sqrt{x}=x^{\\frac{3}{2}},\\) and the cube root divides the exponent by \\(3\\)"
+      ],
+      "solution": "Since \\(\\sqrt{x}=x^{\\frac{1}{2}},\\) we have \\(x\\sqrt{x}=x^{1}\\cdot x^{\\frac{1}{2}}=x^{\\frac{3}{2}}.\\)\n\nTaking the cube root multiplies the exponent by \\(\\tfrac13,\\) giving \\(\\left(x^{\\frac{3}{2}}\\right)^{\\frac{1}{3}}=x^{\\frac{1}{2}}.\\)\n\nThus, the correct answer is <b>D</b>.",
+      "sourceConcepts": [
+        "exponent",
+        "radical"
+      ],
+      "sourceDifficulty": 940,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/3"
+    },
+    {
+      "id": "amc-10-2008b-q4",
+      "number": 4,
+      "question": "A semipro baseball league has teams with \\(21\\) players each. League rules state that a player must be paid at least \\(\\$15{,}000,\\) and that the total of all players’ salaries for each team cannot exceed \\(\\$700{,}000.\\) What is the maximum possible salary, in dollars, for a single player?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(270{,}000\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(385{,}000\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(400{,}000\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(430{,}000\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(700{,}000\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "To maximize one salary, pay everyone else as little as allowed",
+        "The other \\(20\\) players each earn \\(\\$15{,}000\\)"
+      ],
+      "solution": "One player’s salary is largest when the other \\(20\\) players each earn the minimum \\(\\$15{,}000.\\)\n\nThat leaves \\(\\$700{,}000-20\\cdot\\$15{,}000\\) \\(=\\$700{,}000-\\$300{,}000\\) \\(=\\$400{,}000\\) for the single player.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "inequality",
+        "optimization",
+        "extremal argument"
+      ],
+      "sourceDifficulty": 840,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/4"
+    },
+    {
+      "id": "amc-10-2008b-q5",
+      "number": 5,
+      "question": "For real numbers \\(a\\) and \\(b,\\) define \\(a\\,\\$\\,b=(a-b)^2.\\) What is \\((x-y)^2\\,\\$\\,(y-x)^2?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(x^2+y^2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2x^2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2y^2\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4xy\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Compare \\((x-y)^2\\) and \\((y-x)^2\\)",
+        "Once you know the two inputs agree, apply the definition of \\(a\\,\\$\\,b\\)"
+      ],
+      "solution": "Since \\((y-x)^2=(x-y)^2,\\) the two inputs are identical.\n\nTherefore \\((x-y)^2\\,\\$\\,(y-x)^2\\) \\(=\\left((x-y)^2-(x-y)^2\\right)^2\\) \\(=0^2=0.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "custom operation",
+        "symmetry (algebra)"
+      ],
+      "sourceDifficulty": 880,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/5"
+    },
+    {
+      "id": "amc-10-2008b-q6",
+      "number": 6,
+      "question": "Points \\(B\\) and \\(C\\) lie on \\(\\overline{AD}.\\) The length of \\(\\overline{AB}\\) is \\(4\\) times the length of \\(\\overline{BD},\\) and the length of \\(\\overline{AC}\\) is \\(9\\) times the length of \\(\\overline{CD}.\\) The length of \\(\\overline{BC}\\) is what fraction of the length of \\(\\overline{AD}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{36}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{13}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{10}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{36}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "From \\(AB=4\\,BD\\) and \\(AB+BD=AD,\\) find \\(BD\\) as a fraction of \\(AD\\)",
+        "Similarly \\(CD=\\tfrac{1}{10}AD,\\) and \\(BC=BD-CD\\)"
+      ],
+      "solution": "Since \\(AB=4\\,BD\\) and \\(AB+BD=AD,\\) we get \\(5\\,BD=AD,\\) so \\(BD=\\tfrac15 AD.\\)\n\nSince \\(AC=9\\,CD\\) and \\(AC+CD=AD,\\) we get \\(10\\,CD=AD,\\) so \\(CD=\\tfrac{1}{10}AD.\\)\n\nThen \\(BC=BD-CD\\) \\(=\\tfrac15 AD-\\tfrac{1}{10}AD\\) \\(=\\tfrac{1}{10}AD.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "ratio and proportion",
+        "fraction"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/6"
+    },
+    {
+      "id": "amc-10-2008b-q7",
+      "number": 7,
+      "question": "An equilateral triangle of side length \\(10\\) is completely filled in by non-overlapping equilateral triangles of side length \\(1.\\) How many small triangles are required?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(100\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(250\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1000\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Area scales with the square of the side length",
+        "The big triangle has \\(10^2\\) times the area of a small one"
+      ],
+      "solution": "The large triangle has side length \\(10\\) times that of a small triangle, so its area is \\(10^2=100\\) times as large.\n\nSince the small triangles tile it without overlap, exactly \\(100\\) of them are required.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "power scaling of length, area, and volume",
+        "equilateral triangle"
+      ],
+      "sourceDifficulty": 880,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/7"
+    },
+    {
+      "id": "amc-10-2008b-q8",
+      "number": 8,
+      "question": "A class collects \\(\\$50\\) to buy flowers for a classmate who is in the hospital. Roses cost \\(\\$3\\) each, and carnations cost \\(\\$2\\) each. No other flowers are to be used. How many different bouquets could be purchased for exactly \\(\\$50?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(r\\) be the number of roses; then \\(3r+2c=50\\)",
+        "Since \\(2c\\) is even and \\(50\\) is even, \\(r\\) must be even, and \\(3r\\le 50\\)"
+      ],
+      "solution": "If \\(r\\) roses and \\(c\\) carnations are bought, then \\(3r+2c=50.\\) Because \\(2c\\) and \\(50\\) are even, \\(3r\\) must be even, so \\(r\\) is even.\n\nAlso \\(3r\\le 50,\\) so \\(r\\le 16.\\) The even values \\(r=0,2,4,\\ldots,16\\) each give a valid \\(c,\\) which is \\(9\\) bouquets.\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "Diophantine Equation",
+        "parity"
+      ],
+      "sourceDifficulty": 1080,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/8"
+    },
+    {
+      "id": "amc-10-2008b-q9",
+      "number": 9,
+      "question": "A quadratic equation \\(ax^2-2ax+b=0\\) has two real solutions. What is the average of the solutions?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{b}{a}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2b}{a}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\sqrt{2a-b}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "For \\(Ax^2+Bx+C=0,\\) the sum of the roots is \\(-\\dfrac{B}{A}\\)",
+        "The average is half the sum of the roots"
+      ],
+      "solution": "By Vieta’s formulas, the sum of the roots of \\(ax^2-2ax+b=0\\) is \\(\\dfrac{-(-2a)}{a}=2.\\)\n\nThe average is half of this, namely \\(1.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "Vieta’s Formulas",
+        "quadratic"
+      ],
+      "sourceDifficulty": 1040,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/9"
+    },
+    {
+      "id": "amc-10-2008b-q10",
+      "number": 10,
+      "question": "Points \\(A\\) and \\(B\\) are on a circle of radius \\(5\\) and \\(AB=6.\\) Point \\(C\\) is the midpoint of the minor arc \\(AB.\\) What is the length of the line segment \\(AC?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\sqrt{10}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{7}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\sqrt{14}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{15}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The line from the center through \\(C\\) perpendicularly bisects chord \\(AB\\)",
+        "Find the center-to-chord distance, subtract from \\(5\\) to reach \\(C,\\) then use the right triangle with leg \\(3\\)"
+      ],
+      "solution": "Let \\(O\\) be the center and \\(D\\) the midpoint of \\(AB.\\) Then \\(OD\\perp AB\\) with \\(AD=3,\\) so \\(OD=\\sqrt{5^2-3^2}=4.\\)\n\nSince \\(C\\) is the midpoint of the minor arc, \\(O,\\) \\(D,\\) \\(C\\) are collinear and \\(DC=OC-OD=5-4=1.\\)\n\nThen \\(AC=\\sqrt{AD^2+DC^2}\\) \\(=\\sqrt{3^2+1^2}\\) \\(=\\sqrt{10}.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "chord",
+        "Pythagorean Theorem",
+        "circle"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/10"
+    },
+    {
+      "id": "amc-10-2008b-q11",
+      "number": 11,
+      "question": "Suppose that \\((u_n)\\) is a sequence of real numbers satisfying \\(u_{n+2}=2u_{n+1}+u_n,\\) and that \\(u_3=9\\) and \\(u_6=128.\\) What is \\(u_5?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(53\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(68\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(88\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(104\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Write \\(u_5\\) and \\(u_6\\) in terms of \\(u_4\\) and \\(u_3\\)",
+        "\\(u_5=2u_4+9\\) and \\(u_6=2u_5+u_4,\\) so \\(128=5u_4+18\\)"
+      ],
+      "solution": "Using the recurrence, \\(u_5=2u_4+u_3=2u_4+9\\) and \\(u_6=2u_5+u_4\\) \\(=2(2u_4+9)+u_4\\) \\(=5u_4+18.\\)\n\nSetting \\(5u_4+18=128\\) gives \\(u_4=22,\\) so \\(u_5=2\\cdot 22+9=53.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "recursion",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/11"
+    },
+    {
+      "id": "amc-10-2008b-q12",
+      "number": 12,
+      "question": "Postman Pete has a pedometer to count his steps. The pedometer records up to \\(99999\\) steps, then flips over to \\(00000\\) on the next step. Pete plans to determine his mileage for a year. On January \\(1\\) Pete sets the pedometer to \\(00000.\\) During the year, the pedometer flips from \\(99999\\) to \\(00000\\) forty-four times. On December \\(31\\) the pedometer reads \\(50000.\\) Pete takes \\(1800\\) steps per mile. Which of the following is closest to the number of miles Pete walked during the year?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2500\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3000\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3500\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4000\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4500\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Each flip represents \\(100000\\) steps",
+        "Total steps are \\(44\\cdot 100000+50000,\\) then divide by \\(1800\\)"
+      ],
+      "solution": "Each flip counts \\(100000\\) steps, so Pete took \\(44\\cdot 100000+50000=4{,}450{,}000\\) steps.\n\nDividing by \\(1800\\) gives about \\(2472\\) miles, which is closest to \\(2500.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "place value",
+        "unit conversion",
+        "estimation"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/12"
+    },
+    {
+      "id": "amc-10-2008b-q13",
+      "number": 13,
+      "question": "For each positive integer \\(n,\\) the mean of the first \\(n\\) terms of a sequence is \\(n.\\) What is the \\(2008\\)th term of the sequence?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2008\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4015\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4016\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4{,}030{,}056\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4{,}032{,}064\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The sum of the first \\(n\\) terms is \\(n\\cdot n=n^2\\)",
+        "The \\(n\\)th term is \\(n^2-(n-1)^2\\)"
+      ],
+      "solution": "Since the mean of the first \\(n\\) terms is \\(n,\\) their sum is \\(n^2.\\)\n\nThe \\(n\\)th term is \\(n^2-(n-1)^2=2n-1,\\) so the \\(2008\\)th term is \\(2\\cdot 2008-1=4015.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "mean",
+        "summation",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1170,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/13"
+    },
+    {
+      "id": "amc-10-2008b-q14",
+      "number": 14,
+      "question": "Triangle \\(OAB\\) has \\(O=(0,0),\\) \\(B=(5,0),\\) and \\(A\\) in the first quadrant. In addition, \\(\\angle ABO=90^\\circ\\) and \\(\\angle AOB=30^\\circ.\\) Suppose that \\(\\overline{OA}\\) is rotated \\(90^\\circ\\) counterclockwise about \\(O.\\) What are the coordinates of the image of \\(A?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\left(-\\dfrac{10}{3}\\sqrt{3},\\,5\\right)\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\left(-\\dfrac{5}{3}\\sqrt{3},\\,5\\right)\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\left(\\sqrt{3},\\,5\\right)\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\left(\\dfrac{5}{3}\\sqrt{3},\\,5\\right)\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\left(\\dfrac{10}{3}\\sqrt{3},\\,5\\right)\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Find \\(A\\) first: \\(AB=OB\\tan 30^\\circ\\) since the right angle is at \\(B\\)",
+        "A \\(90^\\circ\\) counterclockwise rotation sends \\((x,y)\\) to \\((-y,x)\\)"
+      ],
+      "solution": "Because \\(\\angle ABO=90^\\circ,\\) segment \\(AB\\) is vertical, so \\(A=\\left(5,\\,5\\tan 30^\\circ\\right)=\\left(5,\\,\\tfrac{5\\sqrt3}{3}\\right).\\)\n\nA \\(90^\\circ\\) counterclockwise rotation about the origin sends \\((x,y)\\) to \\((-y,x),\\) so the image of \\(A\\) is \\(\\left(-\\tfrac{5\\sqrt3}{3},\\,5\\right).\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "transformation",
+        "special right triangle"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/14"
+    },
+    {
+      "id": "amc-10-2008b-q15",
+      "number": 15,
+      "question": "How many right triangles have integer leg lengths \\(a\\) and \\(b\\) and a hypotenuse of length \\(b+1,\\) where \\(b\\lt 100?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(10\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Set \\(a^2+b^2=(b+1)^2\\) and simplify",
+        "This gives \\(a^2=2b+1,\\) so \\(a^2\\) is an odd perfect square with \\(a^2\\lt 201\\)"
+      ],
+      "solution": "From \\(a^2+b^2=(b+1)^2\\) we get \\(a^2=2b+1,\\) so \\(a\\) is odd and \\(a^2\\) is an odd perfect square.\n\nSince \\(b\\lt 100,\\) we need \\(a^2=2b+1\\lt 201,\\) and \\(a^2\\ge 9\\) for \\(b\\ge 4.\\) The odd squares \\(9,25,49,81,121,169\\) give \\(a=3,5,7,9,11,13,\\) which is \\(6\\) triangles.\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "Pythagorean Triple",
+        "perfect square"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/15"
+    },
+    {
+      "id": "amc-10-2008b-q16",
+      "number": 16,
+      "question": "Two fair coins are to be tossed once. For each head that results, one fair die is to be rolled. What is the probability that the sum of the die rolls is odd? (Note that if no die is rolled, the sum is \\(0.\\))",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{43}{72}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "If at least one die is rolled, the sum is odd exactly half the time",
+        "Subtract the probability of rolling no dice (both coins tails), then take half of the rest"
+      ],
+      "solution": "Whenever at least one die is rolled, by symmetry the sum is odd with probability \\(\\tfrac12.\\)\n\nNo die is rolled only when both coins are tails, with probability \\(\\tfrac14;\\) that sum \\(0\\) is even. So the answer is \\(\\left(1-\\tfrac14\\right)\\cdot\\tfrac12=\\tfrac38.\\)\n\nThus, the correct answer is <b>A</b>.",
+      "sourceConcepts": [
+        "conditional probability",
+        "dice (probability)",
+        "parity"
+      ],
+      "sourceDifficulty": 1490,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/16"
+    },
+    {
+      "id": "amc-10-2008b-q17",
+      "number": 17,
+      "question": "A poll shows that \\(70\\%\\) of all voters approve of the mayor’s work. On three separate occasions a pollster selects a voter at random. What is the probability that on exactly one of these three occasions the voter approves of the mayor’s work?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0.063\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(0.189\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(0.233\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(0.333\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(0.441\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Exactly one approval can happen in \\(3\\) ordered ways",
+        "Each such arrangement has probability \\((0.7)(0.3)(0.3)\\)"
+      ],
+      "solution": "Exactly one approval among three occasions arises in \\(\\binom{3}{1}=3\\) ways, each with probability \\((0.7)(0.3)(0.3)=0.063.\\)\n\nThe total is \\(3\\cdot 0.063=0.189.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "binomial probability",
+        "independent events"
+      ],
+      "sourceDifficulty": 1240,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/17"
+    },
+    {
+      "id": "amc-10-2008b-q18",
+      "number": 18,
+      "question": "Bricklayer Brenda would take \\(9\\) hours to build a chimney alone, and bricklayer Brandon would take \\(10\\) hours to build it alone. When they work together, they talk a lot, and their combined output is decreased by \\(10\\) bricks per hour. Working together, they build the chimney in \\(5\\) hours. How many bricks are in the chimney?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(500\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(900\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(950\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1000\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1900\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(n\\) be the number of bricks; their solo rates are \\(\\tfrac{n}{9}\\) and \\(\\tfrac{n}{10}\\)",
+        "Together they lay \\(\\tfrac{n}{9}+\\tfrac{n}{10}-10\\) bricks per hour for \\(5\\) hours to total \\(n\\)"
+      ],
+      "solution": "Let \\(n\\) be the number of bricks. Brenda lays \\(\\tfrac{n}{9}\\) per hour and Brandon \\(\\tfrac{n}{10},\\) so together they lay \\(\\tfrac{n}{9}+\\tfrac{n}{10}-10\\) per hour.\n\nOver \\(5\\) hours this equals \\(n:\\) \\[5\\left(\\tfrac{n}{9}+\\tfrac{n}{10}-10\\right)=n.\\] Solving, \\(\\tfrac{5n}{9}+\\tfrac{n}{2}-50=n,\\) which gives \\(n=900.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "rate",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/18"
+    },
+    {
+      "id": "amc-10-2008b-q19",
+      "number": 19,
+      "question": "A cylindrical tank with radius \\(4\\) feet and height \\(9\\) feet is lying on its side. The tank is filled with water to a depth of \\(2\\) feet. What is the volume of the water, in cubic feet?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24\\pi-36\\sqrt{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(24\\pi-24\\sqrt{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(36\\pi-36\\sqrt{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(36\\pi-24\\sqrt{2}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(48\\pi-36\\sqrt{3}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The water cross-section is a circular segment cut by a chord \\(2\\) feet below the center",
+        "Its area is a \\(120^\\circ\\) sector minus a triangle; multiply by the length \\(9\\)"
+      ],
+      "solution": "The submerged cross-section is a circular segment. The chord is \\(4-2=2\\) feet below the center, and \\(\\cos\\theta=\\tfrac{2}{4}=\\tfrac12,\\) so the half-angle is \\(60^\\circ\\) and the central angle is \\(120^\\circ.\\)\n\nThe sector area is \\(\\tfrac{120}{360}\\pi(4)^2=\\tfrac{16\\pi}{3},\\) and the triangle formed by the two radii has area \\(\\tfrac12(4)^2\\sin 120^\\circ=4\\sqrt3.\\) The segment area is \\(\\tfrac{16\\pi}{3}-4\\sqrt3.\\)\n\nMultiplying by the length \\(9\\) gives \\(9\\left(\\tfrac{16\\pi}{3}-4\\sqrt3\\right)=48\\pi-36\\sqrt3.\\)\n\nThus, the correct answer is <b>E</b>.",
+      "sourceConcepts": [
+        "cylinder",
+        "sector",
+        "volume"
+      ],
+      "sourceDifficulty": 1680,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/19"
+    },
+    {
+      "id": "amc-10-2008b-q20",
+      "number": 20,
+      "question": "The faces of a cubical die are marked with the numbers \\(1,\\) \\(2,\\) \\(2,\\) \\(3,\\) \\(3,\\) and \\(4.\\) The faces of a second cubical die are marked with the numbers \\(1,\\) \\(3,\\) \\(4,\\) \\(5,\\) \\(6,\\) and \\(8.\\) Both dice are thrown. What is the probability that the sum of the two top numbers will be \\(5,\\) \\(7,\\) or \\(9?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{18}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{7}{18}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{11}{18}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{8}{9}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "There are \\(6\\times 6=36\\) equally likely outcomes; count those summing to \\(5,7,\\) or \\(9\\)",
+        "Remember each \\(2\\) and each \\(3\\) on the first die appears on two faces"
+      ],
+      "solution": "Of the \\(36\\) equally likely outcomes, the pairs giving sum \\(5\\) are \\((1,4),(2,3),(2,3),(4,1),\\) which is \\(4\\) outcomes.\n\nSum \\(7\\) comes from \\((1,6),(2,5),(2,5),\\) \\((3,4),(3,4),(4,3),\\) which is \\(6,\\) and sum \\(9\\) from \\((1,8),(3,6),(3,6),(4,5),\\) which is \\(4.\\)\n\nThe probability is \\(\\tfrac{4+6+4}{36}=\\tfrac{14}{36}=\\tfrac{7}{18}.\\)\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1510,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/20"
+    },
+    {
+      "id": "amc-10-2008b-q21",
+      "number": 21,
+      "question": "Ten chairs are evenly spaced around a round table and numbered clockwise from \\(1\\) through \\(10.\\) Five married couples are to sit in the chairs with men and women alternating, and no one is to sit either next to or directly across from his or her spouse. How many seating arrangements are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(240\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(360\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(480\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(540\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(720\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Seat the women first; count their arrangements in the alternating seats",
+        "For a fixed seating of the women, count how many ways the men can avoid their spouses"
+      ],
+      "solution": "Seat the women first. The first woman may take any of the \\(10\\) chairs, and since seats alternate, the remaining women fill their four seats in \\(4!\\) ways, giving \\(10\\cdot 4!=240\\) arrangements.\n\nFix a woman in chair \\(1.\\) Her spouse must sit in chair \\(4\\) or chair \\(8;\\) each choice then forces the placement of every other man consistently. So each seating of the women yields exactly \\(2\\) valid seatings of the men.\n\nThe total is \\(2\\cdot 240=480.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "circular arrangements",
+        "arrangements with restrictions",
+        "casework"
+      ],
+      "sourceDifficulty": 1870,
+      "solveTimeSeconds": 180,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/21"
+    },
+    {
+      "id": "amc-10-2008b-q22",
+      "number": 22,
+      "question": "Three red beads, two white beads, and one blue bead are placed in a line in random order. What is the probability that no two neighboring beads are the same color?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{12}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{10}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "There are \\(\\dfrac{6!}{3!\\,2!}=60\\) distinguishable orderings",
+        "First place the three red beads so no two are adjacent, then fit the white and blue beads"
+      ],
+      "solution": "There are \\(\\tfrac{6!}{3!\\,2!}=60\\) distinguishable orderings. The three reds must occupy non-adjacent positions, and the possible red placements are \\(\\{1,3,5\\},\\{2,4,6\\},\\{1,3,6\\},\\) and \\(\\{1,4,6\\}.\\)\n\nFor \\(\\{1,3,5\\}\\) and \\(\\{2,4,6\\},\\) the remaining seats are mutually non-adjacent, so the blue bead can go in any of the \\(3,\\) giving \\(3+3=6.\\) For \\(\\{1,3,6\\}\\) and \\(\\{1,4,6\\},\\) two remaining seats are adjacent, so the blue must separate the whites, giving \\(2+2=4.\\)\n\nThat is \\(10\\) valid orderings, so the probability is \\(\\tfrac{10}{60}=\\tfrac16.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "basic probability",
+        "multiset permutations",
+        "arrangements with restrictions"
+      ],
+      "sourceDifficulty": 1680,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/22"
+    },
+    {
+      "id": "amc-10-2008b-q23",
+      "number": 23,
+      "question": "A rectangular floor measures \\(a\\) feet by \\(b\\) feet, where \\(a\\) and \\(b\\) are positive integers with \\(b\\gt a.\\) An artist paints a rectangle on the floor with the sides of the rectangle parallel to the sides of the floor. The unpainted part of the floor forms a border of width \\(1\\) foot around the painted rectangle and occupies half the area of the entire floor. How many possibilities are there for the ordered pair \\((a,b)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The painted rectangle measures \\((a-2)\\) by \\((b-2),\\) and its area is half of \\(ab\\)",
+        "From \\(ab=2(a-2)(b-2),\\) rearrange to \\((a-4)(b-4)=8\\)"
+      ],
+      "solution": "The painted rectangle is \\((a-2)\\times(b-2),\\) and it is half the floor, so \\(ab=2(a-2)(b-2).\\)\n\nExpanding gives \\(0=ab-4a-4b+8,\\) and adding \\(8\\) yields \\((a-4)(b-4)=8.\\)\n\nWith \\(b\\gt a\\gt 0,\\) the factorizations \\(8=1\\cdot 8=2\\cdot 4\\) give \\((a,b)=(5,12)\\) and \\((6,8).\\) So there are \\(2\\) possibilities.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "Simon’s Favorite Factoring Trick",
+        "Diophantine Equation",
+        "area"
+      ],
+      "sourceDifficulty": 1580,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/23"
+    },
+    {
+      "id": "amc-10-2008b-q24",
+      "number": 24,
+      "question": "Quadrilateral \\(ABCD\\) has \\(AB=BC=CD,\\) \\(\\angle ABC=70^\\circ,\\) and \\(\\angle BCD=170^\\circ.\\) What is the degree measure of \\(\\angle BAD?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(75\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(80\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(85\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(95\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Build an equilateral triangle \\(BMC\\) on the same side of \\(BC\\) as \\(A\\)",
+        "Show \\(\\triangle ABM\\) and \\(\\triangle MCD\\) are isosceles, then prove \\(M\\) lies on \\(\\overline{AD}\\)"
+      ],
+      "solution": "Let \\(M\\) be the point with \\(\\triangle BMC\\) equilateral, on the same side of \\(BC\\) as \\(A.\\) Then \\(\\angle ABM=70^\\circ-60^\\circ=10^\\circ\\) and \\(\\angle MCD=170^\\circ-60^\\circ=110^\\circ.\\)\n\nSince \\(AB=BM\\) and \\(MC=CD,\\) triangles \\(ABM\\) and \\(MCD\\) are isosceles, giving \\(\\angle AMB=85^\\circ\\) and \\(\\angle CMD=35^\\circ.\\)\n\nThen \\(\\angle AMD=360^\\circ-85^\\circ-60^\\circ\\) \\(-35^\\circ\\) \\(=180^\\circ,\\) so \\(M\\) lies on \\(\\overline{AD}\\) and \\(\\angle BAD=\\angle BAM=85^\\circ.\\)\n\nThus, the correct answer is <b>C</b>.",
+      "sourceConcepts": [
+        "angle chasing",
+        "isosceles triangle",
+        "equilateral triangle"
+      ],
+      "sourceDifficulty": 1860,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/24"
+    },
+    {
+      "id": "amc-10-2008b-q25",
+      "number": 25,
+      "question": "Michael walks at the rate of \\(5\\) feet per second on a long straight path. Trash pails are located every \\(200\\) feet along the path. A garbage truck travels at \\(10\\) feet per second in the same direction as Michael and stops for \\(30\\) seconds at each pail. As Michael passes a pail, he notices the truck ahead of him just leaving the next pail. How many times will Michael and the truck meet?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Number the pails so Michael starts at pail \\(0\\) and the truck at pail \\(1;\\) track arrival times",
+        "Michael reaches pail \\(n\\) at \\(40n\\) seconds; the truck leaves pail \\(n\\) at \\(50(n-1)\\) seconds"
+      ],
+      "solution": "Number the pails so Michael is at pail \\(0\\) and the truck at pail \\(1.\\) Michael reaches pail \\(n\\) at \\(40n\\) seconds. The truck leaves pail \\(n\\) at \\(50(n-1)\\) seconds and arrives there at \\(50(n-1)-30\\) seconds.\n\nMichael and the truck are together at pail \\(n\\) when \\(50(n-1)-30\\le 40n\\) \\(\\le 50(n-1),\\) which simplifies to \\(5\\le n\\le 8.\\)\n\nAt pail \\(5\\) they meet as the truck departs, at pails \\(6\\) and \\(7\\) Michael passes it, and at pail \\(8\\) they meet as the truck arrives. Between pails \\(6\\) and \\(7\\) the truck must overtake Michael once more, so in total they meet \\(5\\) times.\n\nThus, the correct answer is <b>B</b>.",
+      "sourceConcepts": [
+        "distance rate and time",
+        "inequality",
+        "process simulation"
+      ],
+      "sourceDifficulty": 2090,
+      "solveTimeSeconds": 170,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2008B/problem/25"
+    }
+  ]
+}

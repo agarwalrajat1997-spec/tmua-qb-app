@@ -1,0 +1,1025 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2018A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2018a-q1",
+      "number": 1,
+      "question": "What is the value of \\[\\left(\\left((2+1)^{-1}+1\\right)^{-1}+1\\right)^{-1}+1?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{8}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{11}{7}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{8}{5}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{18}{11}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{15}{8}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Work from the innermost reciprocal outward",
+        "After each reciprocal step, simplify before adding the next \\(1\\)"
+      ],
+      "solution": "We can simplify this as follows. \\[ \\begin{aligned} &\\left(\\left((2+1)^{-1}+1\\right)^{-1}+1\\right)^{-1}+1 \\\\ &=\\left(\\left(\\dfrac{1}{3}+1\\right)^{-1}+1\\right)^{-1}+1 \\\\ &=\\left(\\dfrac{3}{4}+1\\right)^{-1}+1 \\\\ &=\\dfrac{4}{7} + 1 \\\\ &=\\dfrac{11}{7} \\end{aligned} \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "fraction",
+        "order of operations"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/1"
+    },
+    {
+      "id": "amc-10-2018a-q2",
+      "number": 2,
+      "question": "Liliane has \\(50\\%\\) more soda than Jacqueline, and Alice has \\(25\\%\\) more soda than Jacqueline. What is the relationship between the amounts of soda that Liliane and Alice have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "Liliane has \\(20\\%\\) more soda than Alice."
+        },
+        {
+          "label": "B",
+          "content": "Liliane has \\(25\\%\\) more soda than Alice."
+        },
+        {
+          "label": "C",
+          "content": "Liliane has \\(45\\%\\) more soda than Alice."
+        },
+        {
+          "label": "D",
+          "content": "Liliane has \\(75\\%\\) more soda than Alice."
+        },
+        {
+          "label": "E",
+          "content": "Liliane has \\(100\\%\\) more soda than Alice."
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Use Jacqueline’s amount as the base variable",
+        "Compare Liliane’s amount directly to Alice’s amount"
+      ],
+      "solution": "Let \\(x\\) be the number of gallons of soda that Jacqueline has. Then Alice has \\(1.25x\\) gallons, and Liliane has \\(1.5x\\) gallons.\n\nTherefore, the relationship can be found by dividing the amount of soda that each has to yield \\(\\dfrac{1.5x}{1.25x}=1.2,\\) which means Liliane has \\(20\\%\\) more soda than Alice.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/2"
+    },
+    {
+      "id": "amc-10-2018a-q3",
+      "number": 3,
+      "question": "A unit of blood expires after \\[10! = 10 \\cdot 9 \\cdot 8 \\cdots 1\\] seconds. Yasin donates a unit of blood at noon on January \\(1.\\) On what day does his unit of blood expire?",
+      "options": [
+        {
+          "label": "A",
+          "content": "January \\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "January \\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "January \\(22\\)"
+        },
+        {
+          "label": "D",
+          "content": "February \\(11\\)"
+        },
+        {
+          "label": "E",
+          "content": "February \\(12\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Convert \\(10!\\) seconds into days",
+        "Use \\(60\\cdot60\\cdot24\\) seconds per day"
+      ],
+      "solution": "We can divide \\(10!\\) by \\(60,\\) \\(60,\\) and \\(24\\) to get the number of days that it takes for a unit of blood to expire.\n\nThe first division cancels a \\(6\\) and \\(10.\\) The second division cancels \\(3, 4,\\) and \\(5.\\) The final division cancels \\(8\\) and turns the \\(9\\) into a \\(3.\\)\n\nThis leaves \\(2, 7,\\) and a \\(3,\\) which multiply to \\(42.\\) There are \\(31\\) days in January, so by February \\(1,\\) the blood only has \\(42 - 31 = 11\\) days left.\n\n\\(11\\) days from February \\(1\\) would make the blood expire on February \\(12.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "factorial",
+        "unit conversion",
+        "date and time"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/3"
+    },
+    {
+      "id": "amc-10-2018a-q4",
+      "number": 4,
+      "question": "How many ways can a student schedule \\(3\\) mathematics courses — algebra, geometry, and number theory — in a \\(6\\)-period day if no two mathematics courses can be taken in consecutive periods?\n\n(What courses the student takes during the other \\(3\\) periods is of no concern here.)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "First choose the three nonconsecutive periods",
+        "After the periods are chosen, arrange the three named courses"
+      ],
+      "solution": "The \\(3\\) classes can occupy the following periods: \\[(1, 3, 5),\\]\\[(1, 3, 6),\\]\\[ (1, 4, 6),\\]\\[ (2, 4, 6).\\]\n\nThis means that there are \\(4\\) ways to choose which periods the mathematics courses occur.\n\nFor each configuration, there are \\(3!\\) ways to determine the order of the courses, for a total of \\(6 \\cdot 4 = 24\\) schedules.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "arrangements with restrictions",
+        "permutations",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/4"
+    },
+    {
+      "id": "amc-10-2018a-q5",
+      "number": 5,
+      "question": "Alice, Bob, and Charlie were on a hike and were wondering how far away the nearest town was. When Alice said, “We are at least \\(6\\) miles away,” Bob replied, “We are at most \\(5\\) miles away.” Charlie then remarked, “Actually the nearest town is at most \\(4\\) miles away.” It turned out that none of the three statements was true. Let \\(d\\) be the distance in miles to the nearest town. Which of the following intervals is the set of all possible values of \\(d?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\((0,4)\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\((4,5)\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\((4,6)\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\((5,6)\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\((5,\\infty)\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Negate each person’s statement",
+        "Intersect the three resulting inequalities for \\(d\\)"
+      ],
+      "solution": "Alice’s statement tells us that \\(d \\lt 6.\\) Bob’s statement tells us that \\(d \\gt 5.\\) Charlie’s statement tells us that \\(d \\gt 4.\\)\n\nCombining all of these tells us that \\(5 \\lt d\\) and \\(d \\lt 6,\\) which means \\(d\\) is in the interval \\((5, 6).\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "logical deduction",
+        "inequality"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/5"
+    },
+    {
+      "id": "amc-10-2018a-q6",
+      "number": 6,
+      "question": "Sangho uploaded a video to a website where viewers can vote that they like or dislike a video. Each video begins with a score of \\(0,\\) and the score increases by \\(1\\) for each like vote and decreases by \\(1\\) for each dislike vote.\n\nAt one point Sangho saw that his video had a score of \\(90,\\) and that \\(65\\%\\) of the votes cast on his video were like votes. How many votes had been cast on Sangho’s video at that point?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(200\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(300\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(400\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(500\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(600\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(N\\) be the total number of votes",
+        "The score is likes minus dislikes"
+      ],
+      "solution": "If \\(65\\%\\) of votes were like votes, then \\(35\\%\\) of votes are dislike votes. Then Sangho’s score is \\(65\\% - 35\\% = 30\\%\\) the total number of votes.\n\nWe know that Sangho’s score is \\(90,\\) so the total number of votes is \\(90 \\div 30\\% = 300.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "linear equation"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/6"
+    },
+    {
+      "id": "amc-10-2018a-q7",
+      "number": 7,
+      "question": "For how many (not necessarily positive) integer values of \\(n\\) is the following value an integer? \\[4000 \\cdot \\left(\\dfrac{2}{5}\\right)^n\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Write \\(4000\\) as \\(2^5\\cdot5^3\\)",
+        "The exponents of \\(2\\) and \\(5\\) must both be nonnegative"
+      ],
+      "solution": "We can rewrite the expression as \\[ (2^5 \\cdot 5^3) \\cdot \\left(\\dfrac{2}{5}\\right)^n = 2^{5 + n} \\cdot 5^{3 - n}. \\]\n\nFor this to be an integer, both exponents must be nonnegative. This means that \\[ \\begin{aligned} 5 + n \\geq 0 &\\Rightarrow n \\geq -5 \\\\ 3 - n \\geq 0 &\\Rightarrow n \\leq 3. \\end{aligned} \\]\n\nThis gives us \\(5 + 3 + 1 = 9\\) values for \\(n.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "exponent",
+        "prime factorization",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/7"
+    },
+    {
+      "id": "amc-10-2018a-q8",
+      "number": 8,
+      "question": "Joe has a collection of \\(23\\) coins, consisting of \\(5\\)-cent coins, \\(10\\)-cent coins, and \\(25\\)-cent coins. He has \\(3\\) more \\(10\\)-cent coins than \\(5\\)-cent coins, and the total value of his collection is \\(320\\) cents. How many more \\(25\\)-cent coins does Joe have than \\(5\\)-cent coins?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let the number of \\(5\\)-cent coins be \\(x\\)",
+        "Use both the total number of coins and total value equations"
+      ],
+      "solution": "Let \\(x\\) be the number of \\(5\\)-cent coins that Joe has. Then the number of \\(10\\)-cent coins he has is \\(x + 3.\\)\n\nTherefore, Joe has \\[ 23 - x - (x + 3) = 20 - 2x \\] \\(25\\)-cent coins.\n\nThe total value of all these coins is \\[ 5x + 10(x + 3) + 25(20 - 2x) \\]\\[= 530 - 35x. \\]\n\nWe know that \\[ 530 - 35x = 320 \\Rightarrow x = 6. \\]\n\nThis means that Joe has \\(20 - 2 \\cdot 6 = 8\\) \\(25\\)-cent coins. Therefore, he has \\(8 - 6 = 2\\) more \\(25\\)-cent coins than \\(5\\)-cent coins.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "money",
+        "system of equations"
+      ],
+      "sourceDifficulty": 1220,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/8"
+    },
+    {
+      "id": "amc-10-2018a-q9",
+      "number": 9,
+      "question": "All of the triangles in the diagram below are similar to isosceles triangle \\(ABC,\\) in which \\(AB=AC.\\) Each of the \\(7\\) smallest triangles has area \\(1,\\) and \\(\\triangle ABC\\) has area \\(40.\\) What is the area of trapezoid \\(DBCE?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2018a/9-457994a554.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(22\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(24\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Area scales as the square of side length for similar triangles",
+        "Find the area of the top triangle and subtract from \\(40\\)"
+      ],
+      "solution": "We know that the side length of the smaller triangles is \\(\\sqrt{\\frac{1}{40}}\\) times the length of the larger triangle from similar triangles.\n\nThen the side length of \\(\\triangle ADE\\) is \\(4\\sqrt{\\frac{1}{40}}\\) times the length of the side length of the larger triangle.\n\nThis makes the ratio of the areas \\[ \\left(4\\sqrt{\\dfrac{1}{40}}\\right)^2 = 16 \\cdot \\dfrac{1}{40} = \\dfrac{2}{5}. \\]\n\nTherefore, the area of \\(\\triangle ADE\\) is \\(\\frac{2}{5} \\cdot 40 = 16.\\) The area of the trapezoid is then \\(40 - 16 = 24.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "similarity",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/9"
+    },
+    {
+      "id": "amc-10-2018a-q10",
+      "number": 10,
+      "question": "Suppose that real number \\(x\\) satisfies \\[\\sqrt{49-x^2}-\\sqrt{25-x^2}=3.\\] What is the value of \\[\\sqrt{49-x^2}+\\sqrt{25-x^2}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\sqrt{33}+3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2\\sqrt{10}+4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(12\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Treat the two radicals as conjugate-like quantities",
+        "Multiply the given difference by the desired sum"
+      ],
+      "solution": "Note that the left hand side of the equation and the desired expression are conjugates. Multiplying them would remove the square roots.\n\nMultiplying them yields \\[ 49 - x^2 - 25 + x^2 = 24. \\]\n\nThis means that the product of the values of the expressions is equal to \\(24.\\) The desired value is therefore \\(24 \\div 3 = 8.\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "radical",
+        "difference of squares",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/10"
+    },
+    {
+      "id": "amc-10-2018a-q11",
+      "number": 11,
+      "question": "When \\(7\\) fair standard \\(6\\)-sided dice are thrown, the probability that the sum of the numbers on the top faces is \\(10\\) can be written as \\[\\dfrac{n}{6^{7}},\\] where \\(n\\) is a positive integer. What is \\(n?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(49\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(56\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(63\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(84\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "List the unordered ways seven positive die rolls can sum to \\(10\\)",
+        "Count the orderings for each listed pattern"
+      ],
+      "solution": "We can use stars and bars to find \\(n.\\) It is the same as finding the number of ways to put \\(10\\) balls into \\(7\\) boxes, where each box has at least one ball.\n\nThe formula for such a scenario is \\[ \\binom{n - 1}{k - 1}, \\] where \\(n\\) is the number of balls and \\(k\\) is the number of boxes.\n\nNo die can exceed \\(4\\) in a sum of \\(10\\) from seven positive rolls, so the upper bound of \\(6\\) creates no additional restriction. The desired answer is therefore \\[ \\binom{9}{6} = \\binom{9}{3} = 84. \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "stars and bars"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/11"
+    },
+    {
+      "id": "amc-10-2018a-q12",
+      "number": 12,
+      "question": "How many ordered pairs of real numbers \\((x,y)\\) satisfy the following system of equations? \\[\\begin{cases} ~x+3y&=3 \\\\ ~\\big||x|-|y|\\big|&=1 \\end{cases}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Replace the absolute-value equation by four linear cases",
+        "Distinct solutions can repeat across cases, so count unique ordered pairs"
+      ],
+      "solution": "The second equation says \\(|x|-|y|=1\\) or \\(|x|-|y|=-1\\), so it is enough to check the four linear possibilities \\(x=y\\pm1\\) and \\(x=-y\\pm1\\).\n\nCombining these with \\(x+3y=3\\) gives \\((x,y)=\\left(\\dfrac32,\\dfrac12\\right)\\), \\((0,1)\\), \\((0,1)\\) again, and \\((-3,2)\\).\n\nThese are three distinct ordered pairs, and each satisfies the original absolute-value equation. Thus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "absolute value",
+        "system of equations",
+        "casework"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/12"
+    },
+    {
+      "id": "amc-10-2018a-q13",
+      "number": 13,
+      "question": "A paper triangle with sides of lengths \\(3,\\) \\(4,\\) and \\(5\\) inches, as shown, is folded so that point \\(A\\) falls on point \\(B.\\) What is the length in inches of the crease?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2018a/13-a948eac45c.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1+\\dfrac{1}{2} \\sqrt{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\sqrt{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{7}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{15}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The crease is the perpendicular bisector of \\(AB\\)",
+        "Use similarity with the original \\(3\\)-\\(4\\)-\\(5\\) triangle"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2018a/13sol-2054062e93.svg\" style=\"max-height: 12rem\"/>\n\nThe crease is the perpendicular bisector of \\(\\overline{AB}.\\) Let \\(\\overline{DE}\\) be the crease.\n\nBy \\(AA\\) similarity, \\(\\triangle ADE\\sim\\triangle ACB.\\) Therefore, \\[\\dfrac{BC}{AC}=\\dfrac{DE}{AD}.\\] Plugging in the side lengths gives \\[\\dfrac34=\\dfrac{DE}{\\frac{5}{2}},\\] so \\(DE=\\dfrac{15}{8}.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "paper folding",
+        "perpendicular bisector",
+        "similarity"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/13"
+    },
+    {
+      "id": "amc-10-2018a-q14",
+      "number": 14,
+      "question": "What is the greatest integer less than or equal to \\[\\dfrac{3^{100}+2^{100}}{3^{96}+2^{96}}?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(80\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(81\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(96\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(97\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(625\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Compare the expression to \\(81\\) first",
+        "Then prove it is still greater than \\(80\\)"
+      ],
+      "solution": "Let \\(a=3^{96}\\) and \\(b=2^{96}\\). The expression is \\(\\dfrac{81a+16b}{a+b}=16+\\dfrac{65a}{a+b}\\), so it is less than \\(16+65=81\\).\n\nTo show the floor is \\(80\\), we also need the expression to be greater than \\(80\\). This is equivalent to \\(81a+16b>80a+80b\\), or \\(a>64b\\).\n\nBecause \\(\\left(\\dfrac32\\right)^2=\\dfrac94>2,\\) we have \\(\\dfrac{a}{b}=\\left(\\dfrac32\\right)^{96}>2^{48}>64.\\) Hence the expression is greater than \\(80\\) and less than \\(81.\\) Thus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "exponent",
+        "floor and ceiling functions",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/14"
+    },
+    {
+      "id": "amc-10-2018a-q15",
+      "number": 15,
+      "question": "Two circles of radius \\(5\\) are externally tangent to each other and are internally tangent to a circle of radius \\(13\\) at points \\(A\\) and \\(B,\\) as shown in the diagram. The distance \\(AB\\) can be written in the form \\(\\frac{m}{n},\\) where \\(m\\) and \\(n\\) are relatively prime positive integers. What is \\(m+n?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2018a/15-edb3bf0c8e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(21\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(29\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(58\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(69\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(93\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Join the three circle centers",
+        "The triangle through tangent points is similar to the triangle through centers"
+      ],
+      "solution": "Let \\(X\\) be the center of the large circle and let \\(Y,Z\\) be the centers of the two smaller circles. Then \\(XY=XZ=13-5=8\\) and \\(YZ=10\\).\n\nThe radii to tangent points make \\(XA\\) collinear with \\(XY\\) and \\(XB\\) collinear with \\(XZ\\), so \\(\\triangle XAB\\sim \\triangle XYZ\\). Thus \\(\\dfrac{AB}{YZ}=\\dfrac{XA}{XY}=\\dfrac{13}{8}\\).\n\nHence \\(AB=10\\cdot\\dfrac{13}{8}=\\dfrac{65}{4}\\), so \\(m+n=65+4=69\\). Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "tangent circles",
+        "similarity"
+      ],
+      "sourceDifficulty": 1820,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/15"
+    },
+    {
+      "id": "amc-10-2018a-q16",
+      "number": 16,
+      "question": "Right triangle \\(ABC\\) has leg lengths \\(AB=20\\) and \\(BC=21.\\) Including \\(\\overline{AB}\\) and \\(\\overline{BC},\\) how many line segments with integer length can be drawn from vertex \\(B\\) to a point on hypotenuse \\(\\overline{AC}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Find the altitude from \\(B\\) to the hypotenuse",
+        "Integer-length segments occur in symmetric pairs around the altitude"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2018a/16sol-fc06628686.svg\" style=\"max-height: 12rem\"/>\n\nLet \\(P\\) be the foot of the altitude from \\(B\\) to \\(\\overline{AC}.\\) The Pythagorean Theorem gives \\(AC=29.\\) Computing the area in two ways gives \\[\\dfrac{29\\cdot PB}{2}=\\dfrac{20\\cdot21}{2},\\] so \\(PB=\\dfrac{420}{29},\\) which lies between \\(14\\) and \\(15.\\)\n\nAs the endpoint moves from \\(A\\) to \\(P,\\) its distance from \\(B\\) decreases continuously from \\(20\\) to \\(PB.\\) Thus there is one segment of each integer length \\(15,16,17,18,19,20.\\) As the endpoint moves from \\(P\\) to \\(C,\\) the distance increases continuously from \\(PB\\) to \\(21,\\) giving one segment of each integer length \\(15,16,17,18,19,20,21.\\) These are \\(6+7=13\\) distinct segments.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "right triangle",
+        "altitude",
+        "counting integers in a range"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/16"
+    },
+    {
+      "id": "amc-10-2018a-q17",
+      "number": 17,
+      "question": "Let \\(S\\) be a set of \\(6\\) integers taken from \\(\\{1,2,\\dots,12\\}\\) with the property that if \\(a\\) and \\(b\\) are elements of \\(S\\) with \\(a &lt; b,\\) then \\(b\\) is not a multiple of \\(a.\\) What is the least possible value of an element in \\(S?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Group numbers so at most one from each group can be chosen",
+        "Try forcing six choices from the divisor chains"
+      ],
+      "solution": "We proceed by casing on possible values for \\(S:\\)\n\n\\(1\\) cannot be the smallest element since that would mean that no other number can be in the set.\n\n\\(2\\) cannot be the smallest element since we would have to include every odd number except \\(1.\\) This would make \\(3\\) and \\(9\\) violate the rule.\n\nLet \\(3\\) be the smallest element. Then we can include \\(7\\) and \\(11.\\) We can finally include either \\(4\\) or \\(8\\) and \\(5\\) or \\(10.\\)\n\nEither way, the maximum number of elements that we can include is \\(5,\\) so \\(3\\) cannot be the smallest element.\n\nStarting with \\(4,\\) we can include \\(6, 7, 9\\) and \\(11.\\) Finally, we can add either \\(5\\) or \\(10,\\) creating a \\(6\\)-element set.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "extremal argument",
+        "casework"
+      ],
+      "sourceDifficulty": 1970,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/17"
+    },
+    {
+      "id": "amc-10-2018a-q18",
+      "number": 18,
+      "question": "How many nonnegative integers can be written in the form \\[a_7\\cdot3^7+a_6\\cdot3^6+a_5\\cdot3^5\\]\\[+a_4\\cdot3^4+a_3\\cdot3^3+a_2\\cdot3^2\\]\\[+a_1\\cdot3^1+a_0\\cdot3^0,\\] where \\(a_i\\in \\{-1,0,1\\}\\) for \\(0\\le i \\le 7?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(512\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(729\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1094\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3281\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(59{,}048\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Think of the expression as balanced ternary",
+        "Positive and negative values pair off symmetrically around \\(0\\)"
+      ],
+      "solution": "Note that every number formed by this sum is either positive, negative, or zero.\n\nThe number of positive numbers equals the number of negative numbers due to symmetry (flip the \\(1\\) s to \\(-1\\) s and \\(-1\\) s to \\(1\\) s).\n\nThe only way for the sum to be \\(0\\) is if all the coefficients are \\(0.\\)\n\nThe total number of numbers is \\(3^8 = 6561.\\) Because each power of \\(3\\) is larger than the sum of all previous powers of three, each combination of coefficients yields a different value. More explicitly, at the highest place where two combinations differ, the difference has magnitude at least \\(3^k,\\) while all lower places together can cancel at most \\(2(1+3+\\cdots+3^{k-1})=3^k-1.\\)\n\nTherefore, there are \\[ \\dfrac{6561 - 1}{2} + 1 = 3281 \\] distinct nonnegative integers.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "number base",
+        "symmetry",
+        "pairing and grouping"
+      ],
+      "sourceDifficulty": 1770,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/18"
+    },
+    {
+      "id": "amc-10-2018a-q19",
+      "number": 19,
+      "question": "A number \\(m\\) is randomly selected from the set \\[\\{11,13,15,17,19\\},\\] and a number \\(n\\) is randomly selected from \\[\\{1999,2000,2001,\\ldots,2018\\}.\\] What is the probability that \\(m^n\\) has a units digit of \\(1?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{3}{10}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{7}{20}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Only units-digit cycles matter",
+        "Average the success counts for bases ending in \\(1,3,5,7,9\\)"
+      ],
+      "solution": "Only the units digit of \\(m\\) matters. Among the \\(20\\) consecutive possible exponents, each residue modulo \\(4\\) occurs \\(5\\) times, and \\(10\\) exponents are even. A base ending in \\(1\\) succeeds for all \\(20\\) exponents; bases ending in \\(3\\) or \\(7\\) succeed for the \\(5\\) exponents divisible by \\(4;\\) a base ending in \\(5\\) never succeeds; and a base ending in \\(9\\) succeeds for the \\(10\\) even exponents.\n\nThus \\(20+5+0+5+10=40\\) of the \\(5\\cdot20=100\\) equally likely pairs work, and the probability is \\(\\dfrac{40}{100}=\\dfrac25.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "units digit",
+        "modular exponentiation",
+        "basic probability",
+        "casework"
+      ],
+      "sourceDifficulty": 1540,
+      "solveTimeSeconds": 90,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/19"
+    },
+    {
+      "id": "amc-10-2018a-q20",
+      "number": 20,
+      "question": "A scanning code consists of a \\(7 \\times 7\\) grid of squares, with some of its squares colored black and the rest colored white. There must be at least one square of each color in this grid of \\(49\\) squares.\n\nA scanning code is called <i>symmetric</i> if its look does not change when the entire square is rotated by a multiple of \\(90^{\\circ}\\) counterclockwise around its center, nor when it is reflected across a line joining opposite corners or a line joining midpoints of opposite sides.\n\nWhat is the total number of possible symmetric scanning codes?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(510\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1022\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8190\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8192\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(65{,}534\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Classify grid squares by symmetry orbits",
+        "Choose one color per orbit, excluding the two constant colorings"
+      ],
+      "solution": "Number rows and columns from \\(-3\\) through \\(3,\\) with the center at \\((0,0).\\) Rotations and reflections can change signs and exchange coordinates, so the orbit of \\((x,y)\\) is determined by the ordered pair obtained by sorting \\((|x|,|y|).\\) These pairs are \\((u,v)\\) with \\(0\\le u\\le v\\le3,\\) of which there are \\(4+3+2+1=10.\\)\n\nOnce one square in each orbit is colored, symmetry forces the colors of all other squares in that orbit.\n\nThere are therefore \\(2^{10}\\) symmetric colorings before the condition about using both colors. The all-black and all-white colorings are not allowed.\n\nThe total number of valid symmetric scanning codes is \\(2^{10}-2=1022\\). Thus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "symmetry",
+        "multiplication principle"
+      ],
+      "sourceDifficulty": 1970,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/20"
+    },
+    {
+      "id": "amc-10-2018a-q21",
+      "number": 21,
+      "question": "Which of the following describes the set of values of \\(a\\) for which the curves \\(x^2+y^2=a^2\\) and \\(y=x^2-a\\) in the real \\(xy\\)-plane intersect at exactly \\(3\\) points?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(a = \\dfrac14\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac14 \\lt a \\lt \\dfrac12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(a \\gt \\dfrac14\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(a = \\dfrac12\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(a \\gt \\dfrac12\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Substitute the parabola equation into the circle equation",
+        "The nonzero roots appear only when \\(2a-1\\) is positive"
+      ],
+      "solution": "Substitute \\(y=x^2-a\\) into \\(x^2+y^2=a^2\\). This gives \\(x^2+(x^2-a)^2=a^2\\), so \\(x^2(x^2-(2a-1))=0\\).\n\nThe factor \\(x^2=0\\) always gives the single point \\((0,-a)\\). The other factor gives two additional real points exactly when \\(2a-1>0\\).\n\nThere are exactly three intersection points when \\(a>\\dfrac12\\). Thus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "parabola",
+        "circle",
+        "substitution"
+      ],
+      "sourceDifficulty": 1820,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/21"
+    },
+    {
+      "id": "amc-10-2018a-q22",
+      "number": 22,
+      "question": "Let \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) be positive integers such that \\[\\gcd(a, b)=24,\\] \\[\\gcd(b, c)=36,\\] \\[\\gcd(c, d)=54,\\] and \\[70 &lt; \\gcd(d, a) &lt; 100.\\] Which of the following must be a divisor of \\(a?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Track the forced powers of \\(2\\) and \\(3\\) in the gcds",
+        "The remaining factor of \\(\\gcd(d,a)\\) must lie between \\(12\\) and \\(17\\)"
+      ],
+      "solution": "From \\(\\gcd(a,b)=24=2^3\\cdot3\\) and \\(\\gcd(b,c)=36=2^2\\cdot3^2\\), the number \\(a\\) is divisible by \\(2^3\\cdot3\\) but not by \\(3^2\\).\n\nFrom \\(\\gcd(b,c)=36\\) and \\(\\gcd(c,d)=54=2\\cdot3^3\\), the number \\(d\\) is divisible by \\(2\\cdot3^3\\) but not by \\(2^2\\). Therefore \\(\\gcd(d,a)=2\\cdot3\\cdot n\\), where \\(n\\) has no factor \\(2\\) or \\(3\\).\n\nSince \\(70&lt;6n&lt;100,\\) the integer \\(n\\) satisfies \\(12\\le n\\le16.\\) The only value in this range with no factor \\(2\\) or \\(3\\) is \\(13,\\) so \\(13\\) must divide \\(a.\\) Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "greatest common divisor",
+        "prime factorization",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 2010,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/22"
+    },
+    {
+      "id": "amc-10-2018a-q23",
+      "number": 23,
+      "question": "Farmer Pythagoras has a field in the shape of a right triangle. The right triangle’s legs have lengths \\(3\\) and \\(4\\) units. In the corner where those sides meet at a right angle, he leaves a small unplanted square \\(S\\) so that from the air it looks like the right angle symbol. The rest of the field is planted. The shortest distance from \\(S\\) to the hypotenuse is \\(2\\) units. What fraction of the field is planted?\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2018a/23-79d8a1650a.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{25}{27}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{26}{27}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{73}{75}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{145}{147}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{74}{75}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Let \\(x\\) be the side length of the unplanted square",
+        "Decompose the triangle into the square, two right triangles, and a triangle of height \\(2\\)"
+      ],
+      "solution": "Let \\(x\\) be the side length of \\(S.\\) Then we can split the field up into the following shapes.\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2018a/23sol-c8a7946847.svg\" style=\"max-height: 12rem\"/>\n\nWe can express the area of the field in two ways: \\[ \\dfrac{3 \\cdot 4}{2} = x^2 + \\dfrac{x(3 - x)}{2}\\]\\[ + \\dfrac{x(4 - x)}{2} + \\dfrac{2 \\cdot 5}{2}. \\]\n\nSimplifying yields \\[ 6 = \\dfrac{7x}{2} + 5 \\]\\[ x = \\dfrac{2}{7}. \\]\n\nThe desired fraction is \\[ \\dfrac{6 - x^2}{6} = \\dfrac{6 - \\frac{4}{49}}{6} = \\dfrac{145}{147}. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "area decomposition",
+        "right triangle"
+      ],
+      "sourceDifficulty": 2150,
+      "solveTimeSeconds": 130,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/23"
+    },
+    {
+      "id": "amc-10-2018a-q24",
+      "number": 24,
+      "question": "Triangle \\(ABC\\) with \\(AB=50\\) and \\(AC=10\\) has area \\(120.\\) Let \\(D\\) be the midpoint of \\(\\overline{AB},\\) and let \\(E\\) be the midpoint of \\(\\overline{AC}.\\) The angle bisector of \\(\\angle BAC\\) intersects \\(\\overline{DE}\\) and \\(\\overline{BC}\\) at \\(F\\) and \\(G,\\) respectively. What is the area of quadrilateral \\(FDBG?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(65\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(70\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(75\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(80\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Use the angle bisector theorem to locate \\(G\\)",
+        "The midsegment \\(DE\\) makes a similar half-height trapezoid"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2018a/24sol-7348828e92.svg\" style=\"max-height: 11rem\"/>\n\nLet \\(BC = a, BG = x, GC = y,\\) and \\(h\\) be the length of the altitude through \\(A.\\)\n\nBy the Angle Bisector Theorem, \\(BG:GC=AB:AC=5:1,\\) so \\(BG=\\dfrac{5a}{6}.\\) Because \\(DE\\) is a midsegment, \\(DE=\\dfrac a2.\\) Applying the same theorem in \\(\\triangle ADE\\) gives \\(DF:FE=AD:AE=5:1,\\) so \\(DF=\\dfrac56DE=\\dfrac{5a}{12}.\\)\n\nThe trapezoid’s height is \\(\\frac{h}{2},\\) and \\(\\frac{ah}{2}=120.\\) Its average base length is \\(\\dfrac12\\left(\\dfrac{5a}{12}+\\dfrac{5a}{6}\\right)=\\dfrac{5a}{8}.\\) Therefore, its area is \\[\\dfrac{5a}{8}\\cdot\\dfrac h2=\\dfrac58\\cdot\\dfrac{ah}{2}=75.\\] Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "angle bisector theorem",
+        "midpoint",
+        "trapezoid",
+        "area ratio"
+      ],
+      "sourceDifficulty": 2040,
+      "solveTimeSeconds": 140,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/24"
+    },
+    {
+      "id": "amc-10-2018a-q25",
+      "number": 25,
+      "question": "For a positive integer \\(n\\) and nonzero digits \\(a,\\) \\(b,\\) and \\(c,\\) let \\(A_n\\) be the \\(n\\)-digit integer each of whose digits is equal to \\(a\\); let \\(B_n\\) be the \\(n\\)-digit integer each of whose digits is equal to \\(b\\); and let \\(C_n\\) be the \\(2n\\)-digit (not \\(n\\)-digit) integer each of whose digits is equal to \\(c.\\) What is the greatest possible value of \\(a + b + c\\) for which there are at least two values of \\(n\\) such that \\[C_n - B_n = A_n^2?\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Write the repeated-digit numbers as geometric sums",
+        "Having two different \\(n\\) values forces the linear equation in \\(10^n\\) to be identically true"
+      ],
+      "solution": "The repeated-digit numbers can be written as \\[\\begin{aligned} A_n&=a\\dfrac{10^n-1}{9},\\\\ B_n&=b\\dfrac{10^n-1}{9},\\\\ C_n&=c\\dfrac{10^{2n}-1}{9}. \\end{aligned}\\]\n\nSubstituting these expressions into \\(C_n-B_n=A_n^2\\) and dividing by \\(\\frac{10^n-1}{9}\\) gives \\[c(10^n+1)-b=a^2\\dfrac{10^n-1}{9}.\\]\n\nRearranging yields \\[(9c-a^2)10^n=9b-9c-a^2.\\] If this holds for two different values of \\(n,\\) subtracting the two equations shows that \\(9c-a^2=0.\\) The displayed equation then also forces \\(9b-9c-a^2=0.\\)\n\nHence \\(c=\\frac{a^2}{9}\\) and \\(b=\\frac{2a^2}{9}.\\) Because \\(a,b,c\\) are nonzero digits, the candidates are \\((a,b,c)=(3,2,1),\\) \\((6,8,4),\\) and \\((9,18,9).\\) The last triple is invalid because \\(18\\) is not a digit. The greatest valid sum is \\(6+8+4=18.\\) Thus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "geometric sequence",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 2390,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2018A/problem/25"
+    }
+  ]
+}

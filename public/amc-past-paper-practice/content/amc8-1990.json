@@ -1,0 +1,1001 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "1990",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/solutions",
+  "problems": [
+    {
+      "id": "amc-8-1990-q1",
+      "number": 1,
+      "question": "What is the smallest sum of two \\(3\\)-digit numbers that can be obtained by placing each of the six digits \\(4,\\) \\(5,\\) \\(6,\\) \\(7,\\) \\(8,\\) \\(9\\) into one of the six boxes of a sum of two \\(3\\)-digit numbers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(947 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1037 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1047 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1056 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1245 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A digit in the hundreds place counts \\(100\\) times, so put the smallest digits there",
+        "Hundreds digits should be \\(4\\) and \\(5\\), tens digits \\(6\\) and \\(7\\), units digits \\(8\\) and \\(9\\)"
+      ],
+      "solution": "To make the sum small, the two smallest digits go in the hundreds places, the next two in the tens places, and the two largest in the units places.\n\nOne such arrangement is \\(468 + 579 = 1047\\), and every arrangement of this type gives the same sum.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "place value",
+        "optimization"
+      ],
+      "sourceDifficulty": 930,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/1"
+    },
+    {
+      "id": "amc-8-1990-q2",
+      "number": 2,
+      "question": "Which digit of \\(0.12345,\\) when changed to \\(9,\\) gives the largest number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Changing a digit in a higher place value raises the number by more",
+        "The leftmost digit \\(1\\) sits in the tenths place, the largest place value shown"
+      ],
+      "solution": "Changing a digit in the tenths place changes the number more than changing any digit farther to the right. The digit in the tenths place is \\(1\\).\n\nChanging it gives \\(0.92345\\), which is the largest possible result.\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "place value",
+        "decimal"
+      ],
+      "sourceDifficulty": 450,
+      "solveTimeSeconds": 20,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/2"
+    },
+    {
+      "id": "amc-8-1990-q3",
+      "number": 3,
+      "question": "What fraction of the square is shaded?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/3-2a2affc929.svg\" style=\"max-height:12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{3} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{2}{5} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{5}{12} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3}{7} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2} \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Reflect the figure across the main diagonal that runs corner to corner",
+        "Each shaded piece on one side of the diagonal matches an unshaded piece of equal area on the other side"
+      ],
+      "solution": "The diagonal from one corner to the opposite corner splits the square into two equal halves. Every shaded piece on one side of the diagonal is the mirror image of an equal unshaded piece on the other side.\n\nSo the shaded and unshaded areas are equal, and exactly \\(\\dfrac12\\) of the square is shaded.\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "area",
+        "symmetry"
+      ],
+      "sourceDifficulty": 730,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/3"
+    },
+    {
+      "id": "amc-8-1990-q4",
+      "number": 4,
+      "question": "Which of the following could <b>not</b> be the units digit [one’s digit] of the square of a whole number?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(8 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "The units digit of a square depends only on the units digit of the number being squared",
+        "Square each of the digits \\(0\\) through \\(9\\) and record only the units digit of each result"
+      ],
+      "solution": "The units digit of a square is determined by the units digit of the number squared. Squaring \\(0\\) through \\(9\\) gives units digits \\(0,\\) \\(1,\\) \\(4,\\) \\(9,\\) \\(6,\\) \\(5,\\) \\(6,\\) \\(9,\\) \\(4,\\) \\(1\\).\n\nSo a square can only end in \\(0,\\) \\(1,\\) \\(4,\\) \\(5,\\) \\(6,\\) or \\(9\\); it can never end in \\(2,\\) \\(3,\\) \\(7,\\) or \\(8\\). Among the choices, only \\(8\\) is impossible.\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "units digit",
+        "perfect square"
+      ],
+      "sourceDifficulty": 800,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/4"
+    },
+    {
+      "id": "amc-8-1990-q5",
+      "number": 5,
+      "question": "Which of the following is closest to the product \\((0.48017)(0.48017)(0.48017)?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0.011 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(0.110 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1.10 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(11.0 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(110 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "\\(0.48017\\) is very close to \\(\\dfrac12\\)",
+        "Estimate the product as \\(\\left(\\dfrac12\\right)^3\\)"
+      ],
+      "solution": "Since \\(0.48017\\) is close to \\(\\dfrac12\\), the product is close to\n\n\\[\\left(\\dfrac12\\right)^3 = \\dfrac18 = 0.125.\\]\n\nThe choice closest to \\(0.125\\) is \\(0.110\\).\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "estimation",
+        "exponent"
+      ],
+      "sourceDifficulty": 800,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/5"
+    },
+    {
+      "id": "amc-8-1990-q6",
+      "number": 6,
+      "question": "Which of these five numbers is the largest?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13579 + \\dfrac{1}{2468} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(13579 - \\dfrac{1}{2468} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13579 \\times \\dfrac{1}{2468} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13579 \\div \\dfrac{1}{2468} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(13579.2468 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Dividing by \\(\\dfrac{1}{2468}\\) is the same as multiplying by \\(2468\\)",
+        "All the other choices stay near \\(13579\\), but one of them becomes thousands of times larger"
+      ],
+      "solution": "Choices A, B, and E are all very close to \\(13579\\), and choice C multiplies \\(13579\\) by a tiny number, making it much smaller.\n\nChoice D divides by \\(\\dfrac{1}{2468}\\), which is the same as multiplying by \\(2468\\). This makes it thousands of times larger than \\(13579\\), so it is the largest.\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "fraction"
+      ],
+      "sourceDifficulty": 730,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/6"
+    },
+    {
+      "id": "amc-8-1990-q7",
+      "number": 7,
+      "question": "When three different numbers from the set \\(\\{ -3, -2, -1, 4, 5 \\}\\) are multiplied, the largest possible product is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(40 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(60 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "A product of three numbers is positive only when none or two of them are negative",
+        "There are only two positive numbers, so use two negatives and the largest positive"
+      ],
+      "solution": "For the product of three numbers to be positive, either all three are positive or exactly two are negative. There are only two positive numbers, so we must use two negatives and one positive.\n\nTo maximize, take the two most negative numbers and the largest positive: \\((-3)(-2)(5) = 30\\).\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "optimization"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/7"
+    },
+    {
+      "id": "amc-8-1990-q8",
+      "number": 8,
+      "question": "A dress originally priced at \\(\\$80\\) was put on sale at \\(25\\%\\) off. If \\(10\\%\\) tax was added to the sale price, then the total selling price of the dress was",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$45\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$52\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$54\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$66\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$68\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A \\(25\\%\\) discount leaves \\(75\\%\\) of the price",
+        "Adding \\(10\\%\\) tax multiplies the sale price by \\(1.1\\)"
+      ],
+      "solution": "The sale price is \\(\\dfrac34 \\cdot \\$80 = \\$60.\\)\n\nThe tax is \\(10\\%\\) of \\(\\$60,\\) which is \\(\\$6,\\) so the total is \\(\\$60 + \\$6 = \\$66.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "percentage"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/8"
+    },
+    {
+      "id": "amc-8-1990-q9",
+      "number": 9,
+      "question": "The grading scale shown is used at Jones Junior High. The fifteen scores in Mr. Freeman’s class were: \\(89,\\) \\(72,\\) \\(54,\\) \\(97,\\) \\(77,\\) \\(92,\\) \\(85,\\) \\(74,\\) \\(75,\\) \\(63,\\) \\(84,\\) \\(78,\\) \\(71,\\) \\(80,\\) \\(90.\\)\n\n<table> <tbody> <tr> <td>A</td> <td>\\(93\\text{--}100\\)</td> </tr> <tr> <td>B</td> <td>\\(85\\text{--}92\\)</td> </tr> <tr> <td>C</td> <td>\\(75\\text{--}84\\)</td> </tr> <tr> <td>D</td> <td>\\(70\\text{--}74\\)</td> </tr> <tr> <td>F</td> <td>\\(0\\text{--}69\\)</td> </tr> </tbody> </table>\n\nIn Mr. Freeman’s class, what percent of the students received a grade of C?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\% \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25\\% \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30\\% \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(33\\dfrac{1}{3}\\% \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(40\\% \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Count how many scores fall in the range \\(75\\text{--}84\\)",
+        "Divide that count by the \\(15\\) students to get the fraction, then convert to a percent"
+      ],
+      "solution": "A grade of C corresponds to scores from \\(75\\) to \\(84\\). The qualifying scores are \\(77,\\) \\(75,\\) \\(84,\\) \\(78,\\) \\(80\\), which is \\(5\\) students.\n\nSo the percent is \\(\\dfrac{5}{15} = \\dfrac13 = 33\\dfrac13\\%.\\)\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "percentage"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/9"
+    },
+    {
+      "id": "amc-8-1990-q10",
+      "number": 10,
+      "question": "On this monthly calendar, the date behind one of the letters is added to the date behind \\(C\\). If this sum equals the sum of the dates behind \\(A\\) and \\(B\\), then the letter is\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/10-04a14ed5c5.svg\" style=\"max-height:12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(P \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(Q \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(R \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(S \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(T \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "On a calendar, moving one column right adds \\(1\\) to the date and moving one row down adds \\(7\\)",
+        "The date behind \\(C\\) is one less than the date behind \\(A\\), so the missing date must be one more than the date behind \\(B\\)"
+      ],
+      "solution": "Moving one column right adds \\(1\\) to the date, and moving one row down adds \\(7\\). Let \\(C\\) have date \\(n\\). Then \\(A\\), one column to the right, is \\(n+1\\). The letter \\(P\\) sits two rows directly below \\(C\\), so \\(P = n+14\\), and \\(B\\), one column left of \\(P\\) in the bottom row, is \\(n+13\\).\n\nWe need a letter whose date \\(d\\) satisfies \\(d + n = (n+1) + (n+13)\\), so \\(d = n + 14\\). That date is behind \\(P\\).\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "date and time"
+      ],
+      "sourceDifficulty": 1090,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/10"
+    },
+    {
+      "id": "amc-8-1990-q11",
+      "number": 11,
+      "question": "The numbers on the faces of this cube are consecutive whole numbers. The sums of the two numbers on each of the three pairs of opposite faces are equal. The sum of the six numbers on this cube is\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/11-fb9db32e00.svg\" style=\"max-height:12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(75 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(76 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(78 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(80 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(81 \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Five of the faces must be \\(11,\\) \\(12,\\) \\(13,\\) \\(14,\\) \\(15\\); the sixth is either \\(10\\) or \\(16\\)",
+        "The three faces \\(11,\\) \\(14,\\) \\(15\\) meet at one corner, so no two of them are opposite; this rules out one of the two possibilities"
+      ],
+      "solution": "The six consecutive numbers include \\(11,\\) \\(14,\\) \\(15\\), so five of the faces are \\(11,\\) \\(12,\\) \\(13,\\) \\(14,\\) \\(15\\) and the sixth is \\(10\\) or \\(16\\).\n\nIf the sixth were \\(10\\), equal opposite sums would force the pairs \\((10,15),\\) \\((11,14),\\) \\((12,13)\\), making \\(11\\) and \\(14\\) opposite. But the figure shows \\(11,\\) \\(14,\\) \\(15\\) meeting at one corner, so no two of them are opposite. Hence the sixth number is \\(16\\), with pairs \\((11,16),\\) \\((12,15),\\) \\((13,14)\\), each summing to \\(27\\).\n\nThe total is \\(3 \\cdot 27 = 81\\).\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "cube geometry",
+        "casework"
+      ],
+      "sourceDifficulty": 1090,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/11"
+    },
+    {
+      "id": "amc-8-1990-q12",
+      "number": 12,
+      "question": "There are twenty-four \\(4\\)-digit whole numbers that use each of the four digits \\(2,\\) \\(4,\\) \\(5,\\) and \\(7\\) exactly once. Listed in numerical order from smallest to largest, the number in the \\(17\\)th position in the list is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(4527 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5724 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5742 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(7245 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7524 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The \\(24\\) numbers split into four blocks of \\(6\\) by their leading digit",
+        "Positions \\(1\\)–\\(6\\) start with \\(2\\), \\(7\\)–\\(12\\) start with \\(4\\), \\(13\\)–\\(18\\) start with \\(5\\); find the \\(5\\)th number starting with \\(5\\)"
+      ],
+      "solution": "Each leading digit accounts for \\(6\\) of the \\(24\\) numbers. Positions \\(1\\)–\\(6\\) begin with \\(2\\), positions \\(7\\)–\\(12\\) begin with \\(4\\), and positions \\(13\\)–\\(18\\) begin with \\(5\\).\n\nSo the \\(17\\)th number is the \\(5\\)th one beginning with \\(5\\): \\(5247,\\) \\(5274,\\) \\(5427,\\) \\(5472,\\) \\(5724\\). The fifth is \\(5724\\).\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "permutations",
+        "systematic listing"
+      ],
+      "sourceDifficulty": 1030,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/12"
+    },
+    {
+      "id": "amc-8-1990-q13",
+      "number": 13,
+      "question": "One proposal for new postage rates for a letter was \\(30\\)¢ for the first ounce and \\(22\\)¢ for each additional ounce (or fraction of an ounce). The postage for a letter weighing \\(4.5\\) ounces was",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(96\\)¢"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$1.07\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$1.18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$1.20\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$1.40\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The first ounce costs \\(30\\)¢; the remaining \\(3.5\\) ounces are billed as full additional ounces",
+        "A fraction of an ounce counts as a whole additional ounce, so \\(3.5\\) ounces beyond the first counts as \\(4\\)"
+      ],
+      "solution": "The first ounce costs \\(30\\)¢. The remaining \\(3.5\\) ounces are charged as \\(4\\) additional ounces, since any fraction rounds up to a full ounce.\n\nThat is \\(4 \\cdot 22\\)¢ \\(= 88\\)¢, so the total is \\(30\\)¢ \\(+ 88\\)¢ \\(= 118\\)¢ \\(= \\$1.18.\\)\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "rate",
+        "floor and ceiling functions"
+      ],
+      "sourceDifficulty": 930,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/13"
+    },
+    {
+      "id": "amc-8-1990-q14",
+      "number": 14,
+      "question": "A bag contains only blue balls and green balls. There are \\(6\\) blue balls. If the probability of drawing a blue ball at random from this bag is \\(\\dfrac14,\\) then the number of green balls in the bag is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(24 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(30 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "If the probability of blue is \\(\\dfrac14,\\) then blue balls are a quarter of the total",
+        "Use \\(6\\) blue balls to find the total, then subtract to get the green balls"
+      ],
+      "solution": "Since blue balls make up \\(\\dfrac14\\) of the bag and there are \\(6\\) of them, the total is \\(6 \\cdot 4 = 24\\) balls.\n\nSo the number of green balls is \\(24 - 6 = 18\\).\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "basic probability",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/14"
+    },
+    {
+      "id": "amc-8-1990-q15",
+      "number": 15,
+      "question": "The area of this figure is \\(100 \\text{ cm}^2.\\) Its perimeter is\n\n(The figure consists of four identical squares.)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/15-64274a4353.svg\" style=\"max-height:11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20 \\text{ cm} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(25 \\text{ cm} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(30 \\text{ cm} \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(40 \\text{ cm} \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(50 \\text{ cm} \\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Each of the four squares has area \\(\\dfrac{100}{4} = 25 \\text{ cm}^2\\)",
+        "Find the side length of one square, then count how many side lengths make up the outline"
+      ],
+      "solution": "Each of the four squares has area \\(\\dfrac{100}{4} = 25 \\text{ cm}^2\\), so each side is \\(5 \\text{ cm}.\\)\n\nThe outline of this staircase shape is made up of \\(10\\) such sides, so the perimeter is \\(10 \\cdot 5 = 50 \\text{ cm}.\\)\n\nThus, the correct answer is <b>E</b> .",
+      "sourceConcepts": [
+        "area",
+        "perimeter"
+      ],
+      "sourceDifficulty": 930,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/15"
+    },
+    {
+      "id": "amc-8-1990-q16",
+      "number": 16,
+      "question": "What is the value of the following expression?\n\n\\[ \\begin{aligned} &1990 - 1980 + 1970 - 1960 \\\\ &\\quad {}+ \\cdots - 20 + 10 \\end{aligned} \\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(-990 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(-10 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(990 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(1000 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1990 \\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Group the terms in pairs: \\((1990 - 1980), (1970 - 1960), \\ldots\\)",
+        "Each pair equals \\(10\\); count the pairs and remember the leftover \\(+10\\) at the end"
+      ],
+      "solution": "Group the terms as \\((1990 - 1980)\\) \\(+ (1970 - 1960)\\) \\(+ \\cdots\\) \\(+ (30 - 20)\\) \\(+ 10.\\) Each parenthesized pair equals \\(10\\).\n\nThe first elements \\(1990, 1970, \\ldots, 30\\) number \\(99\\), so there are \\(99\\) pairs, giving \\(990\\), plus the leftover \\(+10\\) at the end for a total of \\(1000\\).\n\nThus, the correct answer is <b>D</b> .",
+      "sourceConcepts": [
+        "pairing and grouping"
+      ],
+      "sourceDifficulty": 1060,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/16"
+    },
+    {
+      "id": "amc-8-1990-q17",
+      "number": 17,
+      "question": "A straight concrete sidewalk is to be \\(3\\) feet wide, \\(60\\) feet long, and \\(3\\) <b>inches</b> thick. How many cubic yards of concrete must a contractor order for the sidewalk if concrete must be ordered in a whole number of cubic yards?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(5 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(12 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20 \\)"
+        },
+        {
+          "label": "E",
+          "content": "more than \\(20 \\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "First convert \\(3\\) inches to feet: \\(3 \\text{ in} = \\dfrac14 \\text{ ft}\\)",
+        "Find the volume in cubic feet, then divide by \\(27\\) since \\(1\\) cubic yard \\(= 27\\) cubic feet"
+      ],
+      "solution": "The thickness is \\(3\\) inches \\(= \\dfrac14\\) foot, so the volume is \\(3 \\cdot 60 \\cdot \\dfrac14 = 45\\) cubic feet.\n\nSince \\(1\\) cubic yard \\(= 27\\) cubic feet, this is \\(\\dfrac{45}{27} = 1\\dfrac23\\) cubic yards. Rounding up to a whole number, the contractor must order \\(2\\) cubic yards.\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "volume",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/17"
+    },
+    {
+      "id": "amc-8-1990-q18",
+      "number": 18,
+      "question": "Every corner of a rectangular prism is cut off by a straight slice through the three edges meeting at that corner, removing a small triangular piece at each of the eight corners. How many edges does the new figure have?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/18-141ab69feb.svg\" style=\"max-height:12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(24 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(30 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(36 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(42 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(48 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The original rectangular prism has \\(12\\) edges, and none of them disappear",
+        "Each corner cut creates a new triangular face, adding \\(3\\) new edges"
+      ],
+      "solution": "A rectangular prism starts with \\(12\\) edges, and cutting corners only shortens them without removing any.\n\nEach of the \\(8\\) corner cuts creates a small triangular face with \\(3\\) new edges, adding \\(8 \\cdot 3 = 24\\) edges. The total is \\(12 + 24 = 36\\).\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "polyhedron"
+      ],
+      "sourceDifficulty": 1180,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/18"
+    },
+    {
+      "id": "amc-8-1990-q19",
+      "number": 19,
+      "question": "There are \\(120\\) seats in a row. What is the fewest number of seats that must be occupied so the next person to be seated must sit next to someone?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(30 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(40 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(41 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(119 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "To force the next person to sit adjacent to someone, no empty seat may have both neighbors empty",
+        "Seat people so there is exactly one empty seat between occupied ones: occupy every third seat"
+      ],
+      "solution": "To force the next person next to someone, every empty seat must be adjacent to an occupied one. Each occupied seat can account for at most itself and its two neighboring seats, so at least \\(\\frac{120}{3} = 40\\) seats must be occupied.\n\nThis bound is attainable: use a repeating pattern of empty-occupied-empty, filling the middle seat of every group of three. This uses exactly \\(40\\) occupied seats.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "optimization",
+        "pigeonhole principle"
+      ],
+      "sourceDifficulty": 1090,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/19"
+    },
+    {
+      "id": "amc-8-1990-q20",
+      "number": 20,
+      "question": "The annual incomes of \\(1{,}000\\) families range from \\(\\$8200\\) to \\(\\$98{,}000.\\) In error, the largest income was entered on the computer as \\(\\$980{,}000.\\) The difference between the mean of the incorrect data and the mean of the actual data is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$882\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$980\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$1078\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$482{,}000\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$882{,}000\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Only one value changed, so only the total sum changes; the count stays at \\(1000\\)",
+        "Find how much the one wrong entry inflated the total, then divide that by \\(1000\\)"
+      ],
+      "solution": "Only one entry changed. The incorrect total exceeds the actual total by \\(\\$980{,}000 - \\$98{,}000 = \\$882{,}000.\\)\n\nSince this extra amount is spread over \\(1000\\) families, the means differ by \\(\\dfrac{\\$882{,}000}{1000} = \\$882.\\)\n\nThus, the correct answer is <b>A</b> .",
+      "sourceConcepts": [
+        "mean"
+      ],
+      "sourceDifficulty": 1060,
+      "solveTimeSeconds": 50,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/20"
+    },
+    {
+      "id": "amc-8-1990-q21",
+      "number": 21,
+      "question": "A list of \\(8\\) numbers is formed by beginning with two given numbers. Each new number in the list is the product of the two previous numbers. Find the first number if the last three are \\(16,\\) \\(64,\\) \\(1024\\):\n\n\\[?, \\underline{\\phantom{x}}, \\underline{\\phantom{x}}, \\underline{\\phantom{x}}, \\underline{\\phantom{x}}, 16, 64, 1024\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{64} \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{4} \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(4 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "If a term is the product of the two before it, then dividing a term by the one just before it recovers the term two positions back",
+        "Work backwards from the end, filling one earlier term at a time by dividing"
+      ],
+      "solution": "Since each term is the product of the two before it, dividing any term by the term just before it recovers the term two positions earlier. Working backwards from the last three terms \\(16,\\) \\(64,\\) \\(1024\\):\n\n\\[ \\begin{gathered} 64 \\div 16 = 4, \\quad 16 \\div 4 = 4, \\\\ 4 \\div 4 = 1, \\quad 4 \\div 1 = 4, \\\\ 1 \\div 4 = \\dfrac14. \\end{gathered} \\]\n\nThese fill in the earlier terms, giving the full list \\(\\dfrac14,\\) \\(4,\\) \\(1,\\) \\(4,\\) \\(4,\\) \\(16,\\) \\(64,\\) \\(1024\\). The first number is \\(\\dfrac14\\).\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "recursion",
+        "work backwards"
+      ],
+      "sourceDifficulty": 1200,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/21"
+    },
+    {
+      "id": "amc-8-1990-q22",
+      "number": 22,
+      "question": "Several students are seated at a large circular table. They pass around a bag containing \\(100\\) pieces of candy. Each person receives the bag, takes one piece of candy, and then passes the bag to the next person. If Chris takes the first and the last piece of candy, then the number of students at the table could be",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(10 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(11 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(19 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(20 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(25 \\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Chris takes piece \\(1\\) and piece \\(100\\), so after Chris’s first piece, the remaining \\(99\\) pieces bring the bag exactly back to Chris",
+        "The number of students must divide \\(99\\) evenly"
+      ],
+      "solution": "Chris takes the first piece, and then the bag goes around until Chris takes the last (\\(100\\)th) piece. So the \\(99\\) pieces after Chris’s first must be exactly a whole number of trips around the table back to Chris.\n\nThis means the number of students divides \\(99\\). Among the choices, only \\(11\\) divides \\(99\\).\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "divisibility",
+        "factor"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/22"
+    },
+    {
+      "id": "amc-8-1990-q23",
+      "number": 23,
+      "question": "The graph relates the distance traveled (in miles) to the time elapsed (in hours) on a trip taken by an experimental airplane. During which hour was the average speed of this airplane the largest?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/23-790fa7751e.svg\" style=\"max-height:11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "first \\((0\\text{-}1)\\)"
+        },
+        {
+          "label": "B",
+          "content": "second \\((1\\text{-}2)\\)"
+        },
+        {
+          "label": "C",
+          "content": "third \\((2\\text{-}3)\\)"
+        },
+        {
+          "label": "D",
+          "content": "ninth \\((8\\text{-}9)\\)"
+        },
+        {
+          "label": "E",
+          "content": "last \\((11\\text{-}12)\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The average speed during an hour equals the distance covered in that hour, which is how far the curve climbs from the start of the hour to its end",
+        "Find the one-hour interval over which the graph rises the most steeply"
+      ],
+      "solution": "The average speed during any single hour equals the distance the airplane covers in that hour, which on the graph is the vertical rise of the curve over that one-hour interval. So the largest average speed happens during the hour where the curve is steepest.\n\nFrom \\(t=1\\) to \\(t=2\\) the curve climbs from about \\(500\\) miles to about \\(1000\\) miles, a rise of roughly \\(500\\) miles, giving an average speed near \\(500\\) mph. During every other hour the curve rises by less than \\(350\\) miles, so those average speeds are all smaller. The steepest climb, and hence the largest average speed, is during the second hour.\n\nThus, the correct answer is <b>B</b> .",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "slope"
+      ],
+      "sourceDifficulty": 980,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/23"
+    },
+    {
+      "id": "amc-8-1990-q24",
+      "number": 24,
+      "question": "Three triangles and a diamond balance nine dots. Also, one triangle balances a diamond and a dot. How many dots will balance two diamonds?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/1990/24-725047b069.svg\" style=\"max-height:11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(4 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(5 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let a triangle weigh \\(t\\), a diamond \\(d\\), and a dot \\(1\\); write the two balance conditions as equations",
+        "From \\(t = d + 1\\) and \\(3t + d = 9\\), substitute to solve for \\(d\\), then double it"
+      ],
+      "solution": "Let a triangle, diamond, and dot weigh \\(t\\), \\(d\\), and \\(1\\). The conditions give \\(3t + d = 9\\) and \\(t = d + 1\\).\n\nSubstituting, \\(3(d+1) + d = 9\\), so \\(4d + 3 = 9\\) and \\(d = \\dfrac32\\). Then two diamonds weigh \\(2d = 3\\) dots.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "system of equations",
+        "substitution"
+      ],
+      "sourceDifficulty": 1120,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/24"
+    },
+    {
+      "id": "amc-8-1990-q25",
+      "number": 25,
+      "question": "How many different patterns can be made by shading exactly two of the nine unit squares in a \\(3 \\times 3\\) grid? Patterns that can be matched by flips and/or turns are not considered different.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3 \\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6 \\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(8 \\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(12 \\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(18 \\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The nine squares come in three types: \\(4\\) corners, \\(4\\) edge-middles, and \\(1\\) center; describe each pattern by which types its two shaded squares use and how far apart they are",
+        "Split into cases by whether a corner is shaded, being careful that flips and turns merge many placements into one pattern"
+      ],
+      "solution": "Classify the two shaded squares up to rotations and reflections. Patterns that include a corner: two adjacent corners (same edge), two diagonally opposite corners, corner with the center, corner with an adjacent edge-middle, and corner with a far edge-middle. That is \\(5\\) patterns.\n\nPatterns with no corner: two adjacent edge-middles, two opposite edge-middles, and an edge-middle with the center. That is \\(3\\) more.\n\nIn total there are \\(5 + 3 = 8\\) distinct patterns.\n\nThus, the correct answer is <b>C</b> .",
+      "sourceConcepts": [
+        "casework",
+        "symmetry"
+      ],
+      "sourceDifficulty": 1470,
+      "solveTimeSeconds": 100,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/1990/problem/25"
+    }
+  ]
+}

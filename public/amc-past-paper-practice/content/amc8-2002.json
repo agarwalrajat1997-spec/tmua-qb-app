@@ -1,0 +1,1007 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 8",
+  "paper": "2002",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/solutions",
+  "problems": [
+    {
+      "id": "amc-8-2002-q1",
+      "number": 1,
+      "question": "A circle and two distinct lines are drawn on a sheet of paper. What is the largest possible number of points of intersection of these figures?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Count each type of pair of figures separately.",
+        "Each line can meet the circle at most twice, and the two lines can meet once."
+      ],
+      "solution": "A line and a circle can intersect at no more than two points, and two distinct lines can intersect at no more than one point.\n\nArrange the two lines so each meets the circle twice and the two lines meet at a different point. This gives \\[2+2+1=5.\\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "counting intersections",
+        "optimization"
+      ],
+      "sourceDifficulty": 370,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/1"
+    },
+    {
+      "id": "amc-8-2002-q2",
+      "number": 2,
+      "question": "How many different combinations of \\(\\$5\\) bills and \\(\\$2\\) bills can be used to make a total of \\(\\$17?\\) Order does not matter in this problem.",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Because \\(\\$17\\) is odd, the number of \\(\\$5\\) bills must be odd.",
+        "Try the possible odd numbers of \\(\\$5\\) bills before the total goes over \\(\\$17.\\)"
+      ],
+      "solution": "Since the total \\(\\$17\\) is odd, the number of \\(\\$5\\) bills must be odd.\n\nOne \\(\\$5\\) bill leaves \\(\\$12,\\) which is six \\(\\$2\\) bills. Three \\(\\$5\\) bills leave \\(\\$2,\\) which is one \\(\\$2\\) bill. Five \\(\\$5\\) bills is too much.\n\nTherefore, there are \\(2\\) combinations.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "Diophantine Equation",
+        "parity",
+        "casework"
+      ],
+      "sourceDifficulty": 610,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/2"
+    },
+    {
+      "id": "amc-8-2002-q3",
+      "number": 3,
+      "question": "What is the smallest possible average of four distinct positive even integers?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(7\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "To make the average as small as possible, choose the smallest possible integers.",
+        "Use the four smallest distinct positive even integers."
+      ],
+      "solution": "To get the smallest possible average, we want to use the smallest \\(4\\) positive even integers.\n\nThis can be achieved as follows: \\[ \\dfrac{2 + 4 + 6 + 8}{4} = \\dfrac{20}{4}\\]\\[ = 5. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "optimization"
+      ],
+      "sourceDifficulty": 560,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/3"
+    },
+    {
+      "id": "amc-8-2002-q4",
+      "number": 4,
+      "question": "The year \\(2002\\) is a palindrome (a number that reads the same from left to right as it does from right to left). What is the product of the digits of the next year after \\(2002\\) that is a palindrome?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(25\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The next palindrome after \\(2002\\) still starts and ends with \\(2.\\)",
+        "The middle two digits must increase to the smallest matching pair."
+      ],
+      "solution": "We don’t want to increase the thousands digit, so we can keep that as \\(2.\\)\n\nThis means that we have to increase the tens and hundreds digits to \\(1,\\) to yield the next palindrome of \\(2112.\\) The product of its digits is \\(4.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "palindrome",
+        "digits"
+      ],
+      "sourceDifficulty": 660,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/4"
+    },
+    {
+      "id": "amc-8-2002-q5",
+      "number": 5,
+      "question": "Carlos Montado was born on Saturday, November \\(9,\\) \\(2002.\\) On what day of the week will Carlos be \\(706\\) days old?",
+      "options": [
+        {
+          "label": "A",
+          "content": "Monday"
+        },
+        {
+          "label": "B",
+          "content": "Wednesday"
+        },
+        {
+          "label": "C",
+          "content": "Friday"
+        },
+        {
+          "label": "D",
+          "content": "Saturday"
+        },
+        {
+          "label": "E",
+          "content": "Sunday"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Reduce \\(706\\) modulo \\(7.\\)",
+        "\\(700\\) days is an exact number of weeks."
+      ],
+      "solution": "The days of the week cycle every \\(7\\) days. After \\(700\\) days, the day of the week will still be Saturday.\n\nAfter \\(6\\) more days, the day of the week will be Friday.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "modular arithmetic",
+        "date and time"
+      ],
+      "sourceDifficulty": 730,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/5"
+    },
+    {
+      "id": "amc-8-2002-q6",
+      "number": 6,
+      "question": "A birdbath is designed to overflow so that it will be self-cleaning. Water flows in at the rate of \\(20\\) milliliters per minute and drains at the rate of \\(18\\) milliliters per minute. One of these graphs shows the volume of water in the birdbath during the filling time and continuing into the overflow time. Which one is it?",
+      "options": [
+        {
+          "label": "A",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2002/6_A-a9ffe76105.svg\" style=\"max-height: 8rem\"/>"
+        },
+        {
+          "label": "B",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2002/6_B-92640648d5.svg\" style=\"max-height: 8rem\"/>"
+        },
+        {
+          "label": "C",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2002/6_C-ee1b233ff6.svg\" style=\"max-height: 8rem\"/>"
+        },
+        {
+          "label": "D",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2002/6_D-a08fec8575.svg\" style=\"max-height: 8rem\"/>"
+        },
+        {
+          "label": "E",
+          "content": "<img src=\"/amc-past-paper-practice/assets/amc8/2002/6_E-5c7f4f04a1.svg\" style=\"max-height: 8rem\"/>"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Before overflow, the volume rises at a constant positive rate.",
+        "After the birdbath is full, extra water overflows so the volume stays constant."
+      ],
+      "solution": "Before the birdbath overflows, it gains \\(20-18=2\\) milliliters of water per minute, so its volume increases steadily.\n\nOnce the birdbath is full, the incoming extra water overflows, so the volume remains constant. Only graph A shows an increasing line followed by a horizontal line.\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "rate",
+        "data and graph interpretation"
+      ],
+      "sourceDifficulty": 820,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/6"
+    },
+    {
+      "id": "amc-8-2002-q7",
+      "number": 7,
+      "question": "The students in Mrs. Sawyer’s class were asked to do a taste test of five kinds of candy. Each student chose one kind of candy. A bar graph of their preferences is shown. What percent of her class chose candy \\(E?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/7-ddc44d8d15.svg\" style=\"max-height: 15rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(20\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Add the heights of all five bars to get the class size.",
+        "Compare the height of bar \\(E\\) with the total number of students."
+      ],
+      "solution": "There are a total of \\[ 6 + 8 + 4 + 2 + 5 = 25 \\] students in the class. The percent that chose \\(E\\) is \\[ 100 \\cdot \\dfrac{5}{25} = \\dfrac{100}{5} = 20 \\%. \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "percentage"
+      ],
+      "sourceDifficulty": 860,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/7"
+    },
+    {
+      "id": "amc-8-2002-q8",
+      "number": 8,
+      "question": "Problems \\(8,\\) \\(9,\\) and \\(10\\) use the data found in the accompanying paragraph and table.\n\nJuan’s Old Stamping Grounds\n\nJuan organizes the stamps in his collection by country and by the decade in which they were issued. The prices he paid for them at a stamp shop were: Brazil and France, \\(6\\)¢ each, Peru \\(4\\)¢ each, and Spain \\(5\\)¢ each. (Brazil and Peru are South American countries and France and Spain are in Europe.)\n\n<b>Number of Stamps by Decade</b>\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/bg-e7f229d40d.svg\" style=\"max-height: 11rem\"/>\n\nHow many of his European stamps were issued in the ‘\\(80\\)s?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(9\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(42\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "European means France and Spain in the table.",
+        "Use only the entries in the ‘\\(80\\)s column."
+      ],
+      "solution": "Note that France and Spain are the European countries. The number of ‘\\(80\\)s stamps from these countries respectively is \\(15\\) and \\(9\\) for a total of \\[ 15 + 9 = 24 \\] stamps.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "data and graph interpretation"
+      ],
+      "sourceDifficulty": 890,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/8"
+    },
+    {
+      "id": "amc-8-2002-q9",
+      "number": 9,
+      "question": "His South American stamps issued before the ‘\\(70\\)s cost him",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$0.40\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$1.06\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$1.80\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$2.38\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$2.64\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "South American means Brazil and Peru.",
+        "Before the ‘\\(70\\)s means the ‘\\(50\\)s and ‘\\(60\\)s columns."
+      ],
+      "solution": "Brazil and Peru are the South American countries.\n\nBrazil has \\(4+7=11\\) stamps before the ‘\\(70\\)s, costing \\(11\\cdot6=66\\) cents. Peru has \\(6+4=10\\) such stamps, costing \\(10\\cdot4=40\\) cents.\n\nThe total cost is \\(66+40=106\\) cents, or \\(\\$1.06.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "money"
+      ],
+      "sourceDifficulty": 1010,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/9"
+    },
+    {
+      "id": "amc-8-2002-q10",
+      "number": 10,
+      "question": "The average price of his ‘\\(70\\)s stamps is closest to",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3.5\\)¢"
+        },
+        {
+          "label": "B",
+          "content": "\\(4\\)¢"
+        },
+        {
+          "label": "C",
+          "content": "\\(4.5\\)¢"
+        },
+        {
+          "label": "D",
+          "content": "\\(5\\)¢"
+        },
+        {
+          "label": "E",
+          "content": "\\(5.5\\)¢"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Compute the total cost of all ‘\\(70\\)s stamps.",
+        "Divide the total cost by the number of ‘\\(70\\)s stamps, then choose the closest option."
+      ],
+      "solution": "The ‘\\(70\\)s stamps cost \\[ \\begin{aligned} &12\\cdot6+12\\cdot6 \\\\ &\\quad {}+6\\cdot4+13\\cdot5 \\\\ &\\quad {}=72+72+24+65 \\\\ &\\quad {}=233 \\end{aligned} \\] cents.\n\nThere are \\(12+12+6+13=43\\) stamps, so the average cost is \\(233\\div43,\\) a little more than \\(5\\) cents and closest to \\(5.5\\) cents.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "data and graph interpretation",
+        "mean"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/10"
+    },
+    {
+      "id": "amc-8-2002-q11",
+      "number": 11,
+      "question": "A sequence of squares is made of identical square tiles. The edge of each square is one tile length longer than the edge of the previous square. The first three squares are shown. How many more tiles does the seventh square require than the sixth?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/11-7cb0432e73.svg\" style=\"max-height: 8rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The sixth and seventh squares have side lengths \\(6\\) and \\(7.\\)",
+        "Compare \\(7^2\\) and \\(6^2.\\)"
+      ],
+      "solution": "The sixth and seventh squares have side lengths \\(6\\) and \\(7\\) tile lengths.\n\nThey use \\(6^2=36\\) and \\(7^2=49\\) tiles, respectively, so the seventh square requires \\(49-36=13\\) more tiles.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "perfect square",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1060,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/11"
+    },
+    {
+      "id": "amc-8-2002-q12",
+      "number": 12,
+      "question": "A board game spinner is divided into three regions labeled \\(A,\\) \\(B\\) and \\(C.\\) The probability of the arrow stopping on region \\(A\\) is \\(\\frac{1}{3}\\) and on region \\(B\\) is \\(\\frac{1}{2}.\\) The probability of the arrow stopping on region \\(C\\) is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{12}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "The probabilities of \\(A,\\) \\(B,\\) and \\(C\\) add to \\(1.\\)",
+        "Subtract the probabilities for \\(A\\) and \\(B\\) from \\(1.\\)"
+      ],
+      "solution": "The total probability is \\(1.\\) We need to subtract the probability of the spinner landing on \\(B\\) and \\(A\\) to get \\(C,\\) which is \\[ 1 - \\dfrac{1}{3} - \\dfrac{1}{2} = \\dfrac{1}{6}. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "basic probability",
+        "complementary probability"
+      ],
+      "sourceDifficulty": 1090,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/12"
+    },
+    {
+      "id": "amc-8-2002-q13",
+      "number": 13,
+      "question": "For his birthday, Bert gets a box that holds \\(125\\) jellybeans when filled to capacity. A few weeks later, Carrie gets a larger box full of jellybeans. Her box is twice as high, twice as wide and twice as long as Bert’s. Approximately, how many jellybeans did Carrie get?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(250\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(500\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(625\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(750\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1000\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Doubling length, width, and height multiplies volume by \\(2\\cdot2\\cdot2.\\)",
+        "Scale the number of jellybeans by the volume factor."
+      ],
+      "solution": "The larger box will have approximately \\[ 125 \\cdot 2 \\cdot 2 \\cdot 2 = 1000 \\] jellybeans.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "volume",
+        "power scaling of length, area, and volume"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/13"
+    },
+    {
+      "id": "amc-8-2002-q14",
+      "number": 14,
+      "question": "A merchant offers a large group of items at \\(30\\%\\) off. Later, the merchant takes \\(20\\%\\) off these sale prices and claims that the final price of these items is \\(50\\%\\) off the original price. The total discount is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(35\\%\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(44\\%\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(50\\%\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(56\\%\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(60\\%\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "After a \\(30\\%\\) discount, \\(70\\%\\) of the original price remains.",
+        "The second discount is \\(20\\%\\) off the sale price, not the original price."
+      ],
+      "solution": "Let the original price be \\(x.\\) After the \\(30\\%\\) discount, the price is \\(0.70x.\\)\n\nTaking another \\(20\\%\\) off that sale price leaves \\(0.80\\cdot0.70x=0.56x.\\)\n\nThe customer pays \\(56\\%\\) of the original price, so the total discount is \\(44\\%.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage"
+      ],
+      "sourceDifficulty": 1180,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/14"
+    },
+    {
+      "id": "amc-8-2002-q15",
+      "number": 15,
+      "question": "Which of the following polygons has the largest area?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/15-b5a9f752dd.svg\" style=\"max-height: 13rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\text{A}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\text{B}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\text{C}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\text{D}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\text{E}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Break each polygon into unit squares and half-unit triangles.",
+        "Compare the five areas by counting full squares plus half-squares."
+      ],
+      "solution": "The number of boxes enclosed by each polygon can be obtained by dividing the polygon into unit squares and right triangles with sidelength \\(1\\) and adding up their values.\n\nThe unit squares count as \\(1\\) and the triangles count as \\(0.5.\\)\n\n\\(A\\) has a total area of \\(5,\\) \\(B\\) has \\(5,\\) \\(C\\) has \\(5,\\) \\(D\\) has \\(4.5,\\) and \\(E\\) has \\(5.5.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "area",
+        "lattice point"
+      ],
+      "sourceDifficulty": 1290,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/15"
+    },
+    {
+      "id": "amc-8-2002-q16",
+      "number": 16,
+      "question": "Right isosceles triangles are constructed on the sides of a \\(3-4-5\\) right triangle, as shown. A capital letter represents the area of each triangle. Which one of the following is true?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/16-3ab87ec28b.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(X + Z = W + Y\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(W + X = Z\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3X + 4Y = 5Z\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(X + W = \\dfrac{1}{2}(Y + Z)\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(X + Y = Z\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Each right isosceles triangle has area half the square of the side it is built on.",
+        "Compute the areas on the sides \\(3,\\) \\(4,\\) and \\(5.\\)"
+      ],
+      "solution": "For a right isosceles triangle built on a side of length \\(s,\\) the two legs have length \\(s,\\) so its area is \\(\\frac{s^2}{2}.\\)\n\n\\[ \\begin{aligned} &W=\\frac{3\\cdot4}{2}=6, \\\\ &\\quad X=\\frac{3^2}{2}=4.5, \\\\ &\\quad Y=\\frac{4^2}{2}=8, \\\\ &\\quad Z=\\frac{5^2}{2}=12.5. \\end{aligned} \\]\n\nThese values satisfy \\(X+Y=Z,\\) and the other listed equations do not.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "Pythagorean Theorem",
+        "area"
+      ],
+      "sourceDifficulty": 1310,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/16"
+    },
+    {
+      "id": "amc-8-2002-q17",
+      "number": 17,
+      "question": "In a mathematics contest with ten problems, a student gains \\(5\\) points for a correct answer and loses \\(2\\) points for an incorrect answer. If Olivia answered every problem and her score was \\(29,\\) how many correct answers did she have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(8\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(9\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(x\\) be the number of correct answers.",
+        "Then the number of incorrect answers is \\(10-x.\\)"
+      ],
+      "solution": "Let \\(x\\) be the number of correct answers. Then she answered \\(10 - x\\) questions incorrectly.\n\nThis gives her a total score of \\[ 5x - 2(10 - x) = 7x - 20. \\]\n\nWe know that this equals \\(29,\\) and solving yields \\[ 7x - 20 = 29 \\]\\[ x = 7. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation"
+      ],
+      "sourceDifficulty": 1290,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/17"
+    },
+    {
+      "id": "amc-8-2002-q18",
+      "number": 18,
+      "question": "Gage skated \\(1\\) hr \\(15\\) min each day for \\(5\\) days and \\(1\\) hr \\(30\\) min each day for \\(3\\) days. How long would he have to skate the ninth day in order to average \\(85\\) minutes of skating each day for the entire time?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1\\) hr"
+        },
+        {
+          "label": "B",
+          "content": "\\(1\\) hr \\(10\\) min"
+        },
+        {
+          "label": "C",
+          "content": "\\(1\\) hr \\(20\\) min"
+        },
+        {
+          "label": "D",
+          "content": "\\(1\\) hr \\(40\\) min"
+        },
+        {
+          "label": "E",
+          "content": "\\(2\\) hr"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Convert all skating times to minutes.",
+        "Find the total minutes needed for a \\(9\\)-day average of \\(85.\\)"
+      ],
+      "solution": "Gage has skated a total of \\[ 5 \\cdot 75 + 3 \\cdot 90 = 645 \\] minutes.\n\nFor an average of \\(85\\) minutes over \\(9\\) days, Gage must have skated a total of \\[ 85 \\cdot 9 = 765 \\] minutes.\n\nThis means that Gage must skate \\[ 765 - 645 = 120 \\] minutes on the last day. Note that \\(120\\) minutes is the same as \\(2\\) hours.\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 1360,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/18"
+    },
+    {
+      "id": "amc-8-2002-q19",
+      "number": 19,
+      "question": "How many whole numbers between \\(99\\) and \\(999\\) contain exactly one \\(0?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(72\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(90\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(144\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(162\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(180\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The number is a three-digit number.",
+        "The single \\(0\\) can be in the tens place or the ones place, but not the hundreds place."
+      ],
+      "solution": "Note that the \\(0\\) digit can either be the tens or the units digit. This gives us \\(2\\) options for this.\n\nThere are \\(9\\) options for each of the other digits for a total of \\[ 2 \\cdot 9 \\cdot 9 = 162 \\] numbers.\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "casework"
+      ],
+      "sourceDifficulty": 1390,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/19"
+    },
+    {
+      "id": "amc-8-2002-q20",
+      "number": 20,
+      "question": "The area of triangle \\(XYZ\\) is \\(8\\) square inches. Points \\(A\\) and \\(B\\) are midpoints of congruent segments \\(\\overline{XY}\\) and \\(\\overline{XZ}.\\) Altitude \\(\\overline{XC}\\) bisects \\(\\overline{YZ}.\\) The area (in square inches) of the shaded region is\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/20-233951552a.svg\" style=\"max-height: 11rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1 \\frac{1}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2 \\frac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3 \\frac{1}{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The altitude splits the isosceles triangle into two equal halves.",
+        "The segment through the midpoints creates a similar triangle with half the side lengths."
+      ],
+      "solution": "Since \\(XY=XZ\\) and \\(XC\\) bisects \\(YZ,\\) altitude \\(XC\\) splits \\(\\triangle XYZ\\) into two congruent triangles. The left half \\(\\triangle XYC\\) has area \\(4.\\)\n\nIn \\(\\triangle XYC,\\) point \\(A\\) is the midpoint of \\(XY.\\) The horizontal segment through \\(A\\) meets \\(XC\\) halfway up, so the small top triangle is similar to \\(\\triangle XYC\\) with scale factor \\(\\frac{1}{2}.\\) Its area is therefore \\(\\frac{1}{4}\\) of \\(4,\\) or \\(1.\\)\n\nThe shaded region is the rest of the left half, so its area is \\(4-1=3.\\)\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "similarity",
+        "area ratio",
+        "midpoint"
+      ],
+      "sourceDifficulty": 1450,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/20"
+    },
+    {
+      "id": "amc-8-2002-q21",
+      "number": 21,
+      "question": "Harold tosses a nickel four times. The probability that he gets at least as many heads as tails is",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{5}{16}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{3}{8}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{11}{16}\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "At least as many heads as tails means \\(2,\\) \\(3,\\) or \\(4\\) heads.",
+        "Count outcomes by choosing which tosses are heads."
+      ],
+      "solution": "There are \\(2^4=16\\) equally likely outcomes for four coin tosses.\n\nAt least as many heads as tails means getting \\(2,\\) \\(3,\\) or \\(4\\) heads. The number of such outcomes is \\[ \\begin{aligned} &\\binom{4}{2}+\\binom{4}{3}+\\binom{4}{4} \\\\ &\\quad {}=6+4+1=11. \\end{aligned} \\]\n\nThus the probability is \\(\\dfrac{11}{16}.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "binomial probability",
+        "combinations"
+      ],
+      "sourceDifficulty": 1550,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/21"
+    },
+    {
+      "id": "amc-8-2002-q22",
+      "number": 22,
+      "question": "Six cubes, each an inch on an edge, are fastened together, as shown. Find the total surface area in square inches. Include the top, bottom, and sides.\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/22-4857f51414.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(24\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(36\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Start with \\(6\\) separate cubes, each with \\(6\\) exposed faces.",
+        "Each glued pair of faces removes two exposed faces."
+      ],
+      "solution": "We can count the number of unexposed faces to find how many faces contribute to the surface area.\n\nThree cubes have \\(1\\) face unexposed, two cubes have \\(2\\) faces unexposed, and one cube has \\(3\\) faces unexposed.\n\nThis gives us a total of \\[ 3 \\cdot 1 + 2 \\cdot 2 + 1 \\cdot 3 = 10 \\] unexposed faces, which gives us \\[ 6 \\cdot 6 - 10 = 36 - 10 \\]\\[= 26 \\] exposed faces.\n\nEach exposed face contributes \\(1^2 = 1\\) to the surface area, for a total surface area of \\(1 \\cdot 26 = 26.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "surface area",
+        "3D geometry"
+      ],
+      "sourceDifficulty": 1550,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/22"
+    },
+    {
+      "id": "amc-8-2002-q23",
+      "number": 23,
+      "question": "A corner of a tiled floor is shown. If the entire floor is tiled in this way and each of the four corners looks like this one, then what fraction of the tiled floor is made of darker tiles?\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/23-35907cba40.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}3\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{4}9\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5}9\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}8\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Look for a repeating \\(3\\times3\\) block.",
+        "In one block, combine pairs of half dark squares into whole dark squares."
+      ],
+      "solution": "Notice that there are repeating \\(3 \\times 3\\) regions with the same pattern (they might be rotated differently).\n\n<img src=\"/amc-past-paper-practice/assets/amc8/2002/23sol-1b63523163.svg\" style=\"max-height: 12rem\"/>\n\nIn this region, there are three dark unit squares and two dark triangles that combine to form another unit square.\n\nThis makes the area of the darker region \\(4\\) and the whole region \\(9.\\) The desired fraction is then \\(\\dfrac{4}{9}.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "tiling",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1580,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/23"
+    },
+    {
+      "id": "amc-8-2002-q24",
+      "number": 24,
+      "question": "Miki has a dozen oranges of the same size and a dozen pears of the same size. Miki uses her juicer to extract \\(8\\) ounces of pear juice from \\(3\\) pears and \\(8\\) ounces of orange juice from \\(2\\) oranges. She makes a pear-orange juice blend from an equal number of pears and oranges. What percent of the blend is pear juice?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(60\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(70\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Use an equal convenient number of pears and oranges.",
+        "Six pears and six oranges make both juice amounts easy to compute."
+      ],
+      "solution": "Use \\(6\\) pears and \\(6\\) oranges, which is an equal number of each fruit.\n\nSince \\(3\\) pears make \\(8\\) ounces, \\(6\\) pears make \\(16\\) ounces. Since \\(2\\) oranges make \\(8\\) ounces, \\(6\\) oranges make \\(24\\) ounces.\n\nThe blend has \\(16+24=40\\) ounces total, of which \\(16\\) ounces is pear juice. The pear-juice percent is \\(\\frac{16}{40}=40\\%.\\)\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "mixture",
+        "percentage"
+      ],
+      "sourceDifficulty": 1610,
+      "solveTimeSeconds": 65,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/24"
+    },
+    {
+      "id": "amc-8-2002-q25",
+      "number": 25,
+      "question": "Loki, Moe, Nick and Ott are good friends. Ott had no money, but the others did. Moe gave Ott one-fifth of his money, Loki gave Ott one-fourth of his money and Nick gave Ott one-third of his money. Each gave Ott the same amount of money. What fractional part of the group’s money does Ott now have?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{10}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{2}{5}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Assume each friend gives Ott the same convenient amount.",
+        "If each gives Ott \\(\\$1,\\) work backward to each friend’s original amount."
+      ],
+      "solution": "Because only the fractions matter, suppose each person gave Ott \\(\\$1.\\) This means that Moe had \\(\\$5,\\) Loki had \\(\\$4,\\) and Nick had \\(\\$3\\) originally.\n\nThe transfers do not change the group’s total amount of money, which is \\[ \\$5 + \\$4 + \\$3 = \\$12. \\] Ott now has \\(\\$3.\\)\n\nThis means that Ott has \\[ \\dfrac{3}{12} = \\dfrac{1}{4} \\] of the group’s money.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "fraction",
+        "work backwards"
+      ],
+      "sourceDifficulty": 1560,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc8/2002/problem/25"
+    }
+  ]
+}

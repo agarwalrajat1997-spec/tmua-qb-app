@@ -1,0 +1,1021 @@
+{
+  "schemaVersion": 1,
+  "contest": "AMC 10",
+  "paper": "2011A",
+  "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/solutions",
+  "problems": [
+    {
+      "id": "amc-10-2011a-q1",
+      "number": 1,
+      "question": "A cell phone plan costs \\(\\$20\\) each month, plus \\(5\\)¢ per text message sent, plus \\(10\\)¢ for each minute used over \\(30\\) hours. In January Michelle sent \\(100\\) text messages and talked for \\(30.5\\) hours. How much did she have to pay?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\$24.00\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\$24.50\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\$25.50\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\$28.00\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\$30.00\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Convert the texting charge and excess-call charge into dollars",
+        "Only the extra half hour is billed by the minute"
+      ],
+      "solution": "Michelle has to pay \\(\\$20\\) for the monthly fee. Her text messages cost \\[100\\cdot 5=500\\] cents, or \\(\\$5.\\) Finally she talked for \\(0.5\\) hours, \\(30\\) minutes, over \\(30\\) hours.\n\nThis means her extra charge is \\[30\\cdot10=300\\] cents, or \\(\\$3.\\)\n\nHer total cost is \\[ \\$20 + \\$5 + \\$3 = \\$28. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "money",
+        "unit conversion"
+      ],
+      "sourceDifficulty": 720,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/1"
+    },
+    {
+      "id": "amc-10-2011a-q2",
+      "number": 2,
+      "question": "A small bottle of shampoo can hold \\(35\\) milliliters of shampoo, whereas a large bottle can hold \\(500\\) milliliters of shampoo. Jasmine wants to buy the minimum number of small bottles necessary to completely fill a large bottle. How many bottles must she buy?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(15\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Compare multiples of \\(35\\) to \\(500\\)",
+        "The first multiple of \\(35\\) that reaches \\(500\\) gives the number of bottles"
+      ],
+      "solution": "The desired amount is \\[ \\dfrac{500}{35} = \\dfrac{100}{7} = 14 \\dfrac{2}{7}. \\]\n\nThis means that the smallest number of small bottles she must buy is \\(15.\\)\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "divisibility",
+        "estimation"
+      ],
+      "sourceDifficulty": 660,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/2"
+    },
+    {
+      "id": "amc-10-2011a-q3",
+      "number": 3,
+      "question": "Suppose \\([a\\ b]\\) denotes the average of \\(a\\) and \\(b,\\) and \\(\\{a\\ b\\ c\\}\\) denotes the average of \\(a,\\) \\(b,\\) and \\(c.\\) What is the value of the following expression? \\[\\{\\{1 \\ 1 \\ 0\\} \\ [0 \\ 1] \\ 0\\}\\]",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{2}{9}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{5}{18}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{7}{18}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{2}{3}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Evaluate the inner averages first",
+        "Use \\(\\{1\\ 1\\ 0\\}=\\dfrac23\\) and \\([0\\ 1]=\\dfrac12\\)"
+      ],
+      "solution": "We have that \\[ \\{1 \\ 1 \\ 0\\} = \\dfrac{1 + 1 + 0}{3} = \\dfrac{2}{3}. \\]\n\nWe also get that \\[ [0 \\ 1] = \\dfrac{1 + 0}{2} = \\dfrac{1}{2}. \\]\n\nFinally, \\[ \\left\\{\\dfrac{2}{3} \\ \\dfrac{1}{2} \\ 0\\right\\} = \\dfrac{\\dfrac{2}{3} + \\dfrac{1}{2} + 0}{3} = \\dfrac{7}{18}.\\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "custom operation",
+        "mean",
+        "fraction"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/3"
+    },
+    {
+      "id": "amc-10-2011a-q4",
+      "number": 4,
+      "question": "Let \\(X\\) and \\(Y\\) be the following sums of arithmetic sequences: \\[\\begin{aligned} X &= 10+12+14+\\cdots+100,\\\\ Y &= 12+14+16+\\cdots+102. \\end{aligned}\\] What is the value of \\(Y - X?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(92\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(98\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(100\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(102\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(112\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Most terms in the two sums cancel",
+        "Only the first term of \\(X\\) and the last term of \\(Y\\) do not match"
+      ],
+      "solution": "Note that the terms \\(12\\) through \\(100\\) are common to both sums. When we subtract, all these terms cancel out.\n\nThis means that \\[ Y - X = 102 - 10 = 92. \\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "summation"
+      ],
+      "sourceDifficulty": 770,
+      "solveTimeSeconds": 30,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/4"
+    },
+    {
+      "id": "amc-10-2011a-q5",
+      "number": 5,
+      "question": "At an elementary school, the students in third grade, fourth grade, and fifth grade run an average of \\(12,\\) \\(15,\\) and \\(10\\) minutes per day, respectively. There are twice as many third graders as fourth graders, and twice as many fourth graders as fifth graders. What is the average number of minutes run per day by these students?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{37}{3}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{88}{7}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(14\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use a \\(4:2:1\\) ratio for the numbers of third, fourth, and fifth graders",
+        "Compute a weighted average with weights \\(4,2,1\\)"
+      ],
+      "solution": "WLOG, let there be one fifth grader. This then tells us that there are two fourth graders and four third graders.\n\nWe can do this, since we are only interested in the average, which is not impacted by the exact number of students.\n\nThe total number of minutes the students spend running is \\[ 12 \\cdot 4 + 15 \\cdot 2 + 10 = 88 \\] minutes. The total number of students is \\(1 + 2 + 4 = 7.\\) The average is then \\(\\dfrac{88}{7}.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "mean",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 1070,
+      "solveTimeSeconds": 55,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/5"
+    },
+    {
+      "id": "amc-10-2011a-q6",
+      "number": 6,
+      "question": "Set \\(A\\) has \\(20\\) elements, and set \\(B\\) has \\(15\\) elements. What is the smallest possible number of elements in \\(A \\cup B,\\) the union of \\(A\\) and \\(B?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(5\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(35\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(300\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "The union must contain all elements of the larger set",
+        "Make \\(B\\) a subset of \\(A\\) to minimize the union"
+      ],
+      "solution": "To minimize the number of elements in the union, we want to maximize the overlap between the two sets.\n\nWe can then assume that \\(B\\) is contained completely within \\(A,\\) which means that the union is the same as \\(A,\\) which has \\(20\\) elements.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "Venn Diagram",
+        "bounding to limit cases"
+      ],
+      "sourceDifficulty": 660,
+      "solveTimeSeconds": 25,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/6"
+    },
+    {
+      "id": "amc-10-2011a-q7",
+      "number": 7,
+      "question": "Which of the following equations does <u>not</u> have a solution?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\((x + 7)^2 = 0\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(|-3x| + 5 = 0\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\sqrt{-x} - 2 = 0\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\sqrt{x} - 8 = 0\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(|-3x| - 4 = 0\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Check which equation asks a nonnegative expression to be negative",
+        "An absolute value plus \\(5\\) cannot equal \\(0\\)"
+      ],
+      "solution": "<b>A</b> simplifies to \\[ x + 7 = 0 \\]\\[ x = -7, \\] so it has a solution.\n\n<b>B</b> simplifies to \\[ |-3x| = -5, \\] which has no solution since absolute value makes everything positive.\n\nLet us make sure that all the other choices have solutions.\n\n<b>C</b> simplifies to \\[ \\sqrt{-x} = 2 \\]\\[ -x = 4 \\]\\[ x = -4, \\] which is fine.\n\n<b>D</b> simplifies to \\[ \\sqrt{x} = 8 \\]\\[ x = 64, \\] which works.\n\nFinally, <b>E</b> simplifies to \\[ |-3x| = 4 \\]\\[ -3x = \\pm 4 \\] \\[ x = \\pm \\dfrac{4}{3}, \\] which has a solution as well.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "absolute value",
+        "radical"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/7"
+    },
+    {
+      "id": "amc-10-2011a-q8",
+      "number": 8,
+      "question": "Last summer \\(30 \\%\\) of the birds living on Town Lake were geese, \\(25 \\%\\) were swans, \\(10 \\%\\) were herons, and \\(35 \\%\\) were ducks. What percent of the birds that were not swans were geese?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(30\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(40\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(50\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(60\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use the percent that are not swans as the denominator",
+        "The desired percent is \\(\\frac{30}{100-25}\\)"
+      ],
+      "solution": "WLOG, let there be \\(100\\) birds. Then \\(75\\) birds are not swans. The desired percentage is then \\[ \\dfrac{30}{75} \\cdot 100 = 40 \\%. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "percentage",
+        "ratio and proportion"
+      ],
+      "sourceDifficulty": 870,
+      "solveTimeSeconds": 35,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/8"
+    },
+    {
+      "id": "amc-10-2011a-q9",
+      "number": 9,
+      "question": "A rectangular region is bounded by the graphs of the equations \\(y=a,\\) \\(y=-b,\\) \\(x=-c,\\) and \\(x=d,\\) where \\(a,\\) \\(b,\\) \\(c,\\) and \\(d\\) are all positive numbers. Which of the following represents the area of this region?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(ac+ad+bc+bd\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(ac-ad+bc-bd\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(ac+ad-bc-bd\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(-ac-ad+bc+bd\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(ac-ad-bc+bd\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Find the vertical and horizontal side lengths of the rectangle",
+        "The side lengths are \\(a+b\\) and \\(c+d\\)"
+      ],
+      "solution": "Note that the region is a rectangle with side lengths \\[ a - (-b) = a + b \\] and \\[ d - (-c) = c + d. \\] The area is then \\[ (a + b)(c + d) =\\]\\[ ac + ad + bc + bd. \\]\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "coordinate geometry",
+        "rectangle",
+        "distributive property"
+      ],
+      "sourceDifficulty": 900,
+      "solveTimeSeconds": 40,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/9"
+    },
+    {
+      "id": "amc-10-2011a-q10",
+      "number": 10,
+      "question": "A majority of the \\(30\\) students in Ms. Demeanor’s class bought pencils at the school bookstore. Each of these students bought the same number of pencils, and this number was greater than \\(1.\\) The cost of a pencil in cents was greater than the number of pencils each student bought, and the total cost of all the pencils was \\(\\$17.71.\\) What was the cost of a pencil in cents?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(7\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(11\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(23\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(77\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Factor \\(1771\\)",
+        "The number of students is a majority of \\(30\\), so use the factor greater than \\(15\\)"
+      ],
+      "solution": "Let \\(p\\) be the number of pencils that each student bought, \\(s\\) be the number of students that bought pencils, and \\(c\\) be the cost of a pencil.\n\nWe have that \\[ psc = 1771 = 7 \\cdot 11 \\cdot 23. \\]\n\nWe also have the following restrictions: \\[ 30 \\geq s \\gt 15, p \\gt 1, c \\gt p. \\]\n\nFrom the above prime factorization, we have that \\(s = 23\\) is the only value that satisfies the conditions.\n\nFinally, we get that \\(p = 7\\) and \\(c = 11\\) are the only remaining values that satisfy the other conditions.\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "prime factorization",
+        "divisibility"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/10"
+    },
+    {
+      "id": "amc-10-2011a-q11",
+      "number": 11,
+      "question": "Square \\(EFGH\\) has one vertex on each side of square \\(ABCD.\\) Point \\(E\\) is on \\(\\overline{AB}\\) with \\(AE=7\\cdot EB.\\) What is the ratio of the area of \\(EFGH\\) to the area of \\(ABCD?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{49}{64}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{25}{32}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac78\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{5\\sqrt{2}}{8}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{\\sqrt{14}}{4}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Let \\(EB=x\\), so \\(AB=8x\\)",
+        "A side of the inner square is the hypotenuse of a \\(7x\\)-by-\\(x\\) triangle"
+      ],
+      "solution": "Let \\(x = EB.\\) Then \\(AB = 8x.\\) Applying the Pythagorean Theorem to a side of \\(EFGH,\\) we get \\[ \\sqrt{(7x)^2 + x^2} = \\sqrt{50x^2} \\]\n\nThe desired ratio is then \\[ \\dfrac{\\sqrt{50x^2}^2}{(8x)^2} = \\dfrac{50}{64} = \\dfrac{25}{32}. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "square (geometry)",
+        "Pythagorean Theorem",
+        "area ratio"
+      ],
+      "sourceDifficulty": 1420,
+      "solveTimeSeconds": 80,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/11"
+    },
+    {
+      "id": "amc-10-2011a-q12",
+      "number": 12,
+      "question": "The players on a basketball team made some three-point shots, some two-point shots, and some one-point free throws. They scored as many points with two-point shots as with three-point shots. Their number of successful free throws was one more than their number of successful two-point shots. The team’s total score was \\(61\\) points. How many free throws did they make?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(13\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(14\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(15\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(16\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(17\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "Let \\(x\\) be the number of two-point shots",
+        "The points from two-point shots equal the points from three-point shots"
+      ],
+      "solution": "Let \\(x\\) be the number of successful two-point shots. Then we have that \\[ 2x + 2x + (x + 1) = 61, \\] which simplifies to \\[ 5x + 1 = 61 \\]\\[ x = 12. \\]\n\nThe number of successful free throws is then \\(12 + 1 = 13.\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "linear equation"
+      ],
+      "sourceDifficulty": 960,
+      "solveTimeSeconds": 45,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/12"
+    },
+    {
+      "id": "amc-10-2011a-q13",
+      "number": 13,
+      "question": "How many even integers are there between \\(200\\) and \\(700\\) whose digits are all different and come from the set \\(\\{1,2,5,7,8,9\\}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(12\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(20\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(72\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(120\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(200\\)"
+        }
+      ],
+      "answer": "A",
+      "hints": [
+        "The units digit must be \\(2\\) or \\(8\\)",
+        "Case on whether the hundreds digit is \\(2\\) or \\(5\\)"
+      ],
+      "solution": "Since the hundreds digit can only be a \\(2\\) or \\(5,\\) we can case on this value.\n\n<b>Case \\(1:\\)</b> hundreds digit is \\(2\\)\n\nThe only option for the units digit is \\(8,\\) since the number must be even. This leaves \\(4\\) options for the tens digit.\n\nThis gives us \\(1 \\cdot 4 = 4\\) numbers for this case.\n\n<b>Case \\(2:\\)</b> hundreds digit is \\(5\\)\n\nSimilarly to above, \\(2\\) and \\(8\\) are the only options for the units digit, leaving \\(4\\) options for the tens digit.\n\nThis gives us \\(2 \\cdot 4 = 8\\) numbers for this case.\n\nThe total number of integers is then \\(4 + 8 = 12.\\)\n\nThus, <b>A</b> is the correct answer.",
+      "sourceConcepts": [
+        "digits",
+        "casework",
+        "multiplication principle"
+      ],
+      "sourceDifficulty": 1280,
+      "solveTimeSeconds": 70,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/13"
+    },
+    {
+      "id": "amc-10-2011a-q14",
+      "number": 14,
+      "question": "A pair of standard \\(6\\)-sided fair dice is rolled once. The sum of the numbers rolled determines the diameter of a circle. What is the probability that the numerical value of the area of the circle is less than the numerical value of the circle’s circumference?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{36}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{12}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{5}{18}\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Compare \\(\\pi(\\frac{d}{2})^2\\) with \\(\\pi d\\)",
+        "The inequality reduces to \\(d&lt;4\\)"
+      ],
+      "solution": "For the area to be less than the circumference, we must have \\[ \\pi r^2 \\lt 2\\pi r \\]\\[ r \\lt 2. \\]\n\nThis means the diameter must be less than \\(4.\\) There are three possible rolls that satisfy this: \\[ (1, 1), (1, 2), (2, 1). \\]\n\nThe probability is then \\[\\dfrac{3}{36} = \\dfrac{1}{12}.\\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "dice (probability)",
+        "circle area",
+        "inequality"
+      ],
+      "sourceDifficulty": 1140,
+      "solveTimeSeconds": 60,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/14"
+    },
+    {
+      "id": "amc-10-2011a-q15",
+      "number": 15,
+      "question": "Roy bought a new battery-gasoline hybrid car. On a trip the car ran exclusively on its battery for the first \\(40\\) miles, then ran exclusively on gasoline for the rest of the trip, using gasoline at a rate of \\(0.02\\) gallons per mile. On the whole trip he averaged \\(55\\) miles per gallon. How long was the trip in miles?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(140\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(240\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(440\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(640\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(840\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Let \\(x\\) be the gasoline-only distance",
+        "The miles per gallon equation is \\(\\frac{x+40}{0.02x}=55\\)"
+      ],
+      "solution": "Let \\(x\\) be the distance the car drove solely on gasoline. We have that \\[ \\dfrac{40 + x}{0.02x} = 55. \\] Cross-multiplying and simplifying gives \\[ 40 = 0.1x \\]\\[ x = 400. \\] The total length of the trip is then \\(400 + 40 = 440.\\)\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "rate",
+        "linear equation"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/15"
+    },
+    {
+      "id": "amc-10-2011a-q16",
+      "number": 16,
+      "question": "Which of the following is equal to \\(\\sqrt{9-6\\sqrt{2}}+\\sqrt{9+6\\sqrt{2}}?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3\\sqrt2\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2\\sqrt6\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{7\\sqrt2}{2}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3\\sqrt3\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(6\\)"
+        }
+      ],
+      "answer": "B",
+      "hints": [
+        "Square the whole expression",
+        "The product \\((9-6\\sqrt2)(9+6\\sqrt2)\\) is small"
+      ],
+      "solution": "Since we have square roots, we can try to change the inside of each radical to be a perfect square.\n\nNote that we can rewrite the expression as \\[ \\begin{aligned} & \\sqrt{6 - 6\\sqrt2 + 3} \\\\ &{}+ \\sqrt{6 + 6\\sqrt2 + 3}. \\end{aligned} \\]\n\nFactoring and simplifying gives us \\[ \\sqrt{(\\sqrt6 - \\sqrt3)^2} + \\sqrt{(\\sqrt6 + \\sqrt3)^2} \\] \\[ = \\sqrt6 - \\sqrt3 + \\sqrt6 + \\sqrt3 = 2\\sqrt6. \\]\n\nThus, <b>B</b> is the correct answer.",
+      "sourceConcepts": [
+        "radical",
+        "algebraic manipulation"
+      ],
+      "sourceDifficulty": 1480,
+      "solveTimeSeconds": 85,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/16"
+    },
+    {
+      "id": "amc-10-2011a-q17",
+      "number": 17,
+      "question": "In the eight term sequence \\(A,\\) \\(B,\\) \\(C,\\) \\(D,\\) \\(E,\\) \\(F,\\) \\(G,\\) \\(H,\\) the value of \\(C\\) is \\(5\\) and the sum of any three consecutive terms is \\(30.\\) What is \\(A+H?\\)",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(17\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(18\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(25\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(26\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(43\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Compare two consecutive three-term sums",
+        "The sequence repeats every three terms, so \\(A=D=G\\) and \\(C=F\\)"
+      ],
+      "solution": "From the condition about the sequence, we get that \\[ A + B + C = 30 \\]\\[ B = 25 - A. \\] Similarly, we get \\[ B + C + D = 30 \\]\\[ D = A. \\]\n\nPropagating these values through the sequence and repeating the condition for every consecutive triple, we get that \\[ E = 25 - A, F = 5, G = A, \\] and finally, \\(H = 25 - A.\\)\n\nThe desired sum is then \\[ A + 25 - A = 25. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "recursion",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 1370,
+      "solveTimeSeconds": 75,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/17"
+    },
+    {
+      "id": "amc-10-2011a-q18",
+      "number": 18,
+      "question": "Circles \\(A,\\) \\(B,\\) and \\(C\\) each have radius \\(1.\\) Circles \\(A\\) and \\(B\\) share one point of tangency. Circle \\(C\\) has a point of tangency with the midpoint of \\(\\overline{AB}.\\) What is the area inside circle \\(C\\) but outside circle \\(A\\) and circle \\(B?\\)\n\n<img src=\"/amc-past-paper-practice/assets/amc10/2011a/18-7f309b536e.svg\" style=\"max-height: 12rem\"/>",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(3 - \\dfrac{\\pi}{2}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\pi}{2}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{3\\pi}{4}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(1+\\dfrac{\\pi}{2}\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Use the unit squares formed by the centers and intersection points",
+        "Two quarter-circle subtractions plus a semicircle leave a simple area"
+      ],
+      "solution": "<img src=\"/amc-past-paper-practice/assets/amc10/2011a/18sol-32c8295270.svg\" style=\"max-height: 12rem\"/>\n\nThe area of this region is the area of circle \\(C\\) minus the area of the overlapping regions with \\(A\\) and \\(B.\\)\n\nFrom the diagram, we can find the area of half of one of the overlapping regions by finding the area of the sector and subtracting the area of the triangle.\n\nThis area is then \\[ \\dfrac{1}{4} \\pi \\cdot 1^2 - \\dfrac{1}{2} \\cdot 1 \\cdot 1 = \\dfrac{\\pi}{4} - \\dfrac{1}{2}. \\]\n\nThere are four of these that we must subtract, which leaves us with a final answer of \\[ \\pi \\cdot 1^2 - 4(\\dfrac{\\pi}{4} - \\dfrac{1}{2}) = 2. \\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "circle area",
+        "sector",
+        "area decomposition"
+      ],
+      "sourceDifficulty": 1790,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/18"
+    },
+    {
+      "id": "amc-10-2011a-q19",
+      "number": 19,
+      "question": "In \\(1991\\) the population of a town was a perfect square. Ten years later, after an increase of \\(150\\) people, the population was \\(9\\) more than a perfect square. Now, in \\(2011,\\) with an increase of another \\(150\\) people, the population is once again a perfect square. Which of the following is closest to the percent growth of the town’s population during this twenty-year period?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(42\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(47\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(52\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(57\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(62\\)"
+        }
+      ],
+      "answer": "E",
+      "hints": [
+        "Let the \\(1991\\) population be \\(p^2\\)",
+        "Use \\((q-p)(q+p)=141\\) and test the factor pairs"
+      ],
+      "solution": "Let the population in \\(1991\\) be \\(p^2.\\) Then let the population in \\(2001\\) be \\(q^2 + 9.\\)\n\nUsing these values, we have \\[ p^2 + 150 = q^2 + 9 \\] \\[ q^2 - p^2 = 141. \\]\n\nFactoring, we get \\[ (q - p)(q + p) = 141. \\]\n\nAs \\(p\\) and \\(q\\) are integers, we have that the only possible values for \\(q - p\\) and \\(q + p\\) are \\((1, 141)\\) and \\((3, 47).\\)\n\nTrying the first pair, we have \\[q-p=1\\] and \\[q+p=141,\\] which adding together and dividing gives us \\(q = 71\\) and \\(p = 70.\\)\n\nWe have that \\(p^2 + 300\\) is not a square number, which means that this pair is the wrong one.\n\nTrying the other pair and using the same strategy gives us \\(q = 25\\) and \\(p = 22.\\)\n\nNow, \\(p^2 + 300 = 784,\\) which is a perfect square. The percent increase in population is then \\[ \\dfrac{300}{22^2} \\cdot 100 \\% \\approx 62 \\%. \\]\n\nThus, <b>E</b> is the correct answer.",
+      "sourceConcepts": [
+        "difference of squares",
+        "perfect square",
+        "percentage"
+      ],
+      "sourceDifficulty": 1750,
+      "solveTimeSeconds": 120,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/19"
+    },
+    {
+      "id": "amc-10-2011a-q20",
+      "number": 20,
+      "question": "Two points on the circumference of a circle of radius \\(r\\) are selected independently and at random. From each point a chord of length \\(r\\) is drawn in a clockwise direction. What is the probability that the two chords intersect?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{1}{5}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{1}{4}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{3}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{1}{2}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "A chord of length \\(r\\) subtends \\(60^\\circ\\)",
+        "Fix one chord and look for the arc positions from which the second chord crosses it"
+      ],
+      "solution": "A chord of length \\(r\\) in a circle of radius \\(r\\) subtends a \\(60^\\circ\\) arc. Fix the first chord, with endpoints at angles \\(0^\\circ\\) and \\(60^\\circ.\\) If the second chord starts at angle \\(\\theta,\\) its other endpoint is \\(60^\\circ\\) clockwise from there.\n\nThe endpoints of the two chords alternate exactly when \\(\\theta\\) lies in either of the two \\(60^\\circ\\) arcs immediately adjacent to the fixed chord’s endpoints. Thus the favorable starting positions occupy \\(120^\\circ\\) of the circle.\n\nThe desired probability is then \\[ \\dfrac{2}{6} = \\dfrac{1}{3}. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "geometric probability",
+        "chord",
+        "arc"
+      ],
+      "sourceDifficulty": 1840,
+      "solveTimeSeconds": 110,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/20"
+    },
+    {
+      "id": "amc-10-2011a-q21",
+      "number": 21,
+      "question": "Two counterfeit coins of equal weight are mixed with \\(8\\) identical genuine coins. The weight of each of the counterfeit coins is different from the weight of each of the genuine coins. A pair of coins is selected at random without replacement from the \\(10\\) coins. A second pair is selected at random without replacement from the remaining \\(8\\) coins. The combined weight of the first pair is equal to the combined weight of the second pair. What is the probability that all \\(4\\) selected coins are genuine?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{7}{11}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{9}{13}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{11}{15}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{15}{19}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{15}{16}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "Equal pair weights require the same number of counterfeit coins in each pair",
+        "Count the all-genuine case and the one-counterfeit-in-each-pair case"
+      ],
+      "solution": "There are two cases: either both selected pairs contain only genuine coins or each selected pair has one counterfeit coin.\n\nFor the first case, there are \\(\\binom{8}{2} = 28\\) ways to choose the coins for the first pair and \\(\\binom{6}{2} = 15\\) choices for the second pair.\n\nWe also have to divide by \\(2\\) since we can swap the pairs. This gives us \\[ 28 \\cdot 15 \\div 2 = 210 \\] configurations for this case.\n\nFor the second case, there are \\(\\binom{8}{2} = 28\\) ways to choose the non-counterfeit coins. There is only one choice for the counterfeit coins.\n\nThere are two ways to create the two pairs, two choices for which counterfeit coin goes with a genuine coin.\n\nThis means that there are \\(28 \\cdot 2 = 56\\) configurations for this case.\n\nThe desired probability is then \\[ \\dfrac{210}{210 + 56} = \\dfrac{210}{266} = \\dfrac{15}{19}. \\]\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "conditional probability",
+        "combinations",
+        "casework"
+      ],
+      "sourceDifficulty": 1990,
+      "solveTimeSeconds": 150,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/21"
+    },
+    {
+      "id": "amc-10-2011a-q22",
+      "number": 22,
+      "question": "Each vertex of convex pentagon \\(ABCDE\\) is to be assigned a color. There are \\(6\\) colors to choose from, and the ends of each diagonal must have different colors. How many different colorings are possible?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(2520\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(2880\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(3120\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(3250\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(3750\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Case on whether \\(5\\), \\(4\\), or \\(3\\) colors are used",
+        "Repeated colors can occur only on adjacent vertices"
+      ],
+      "solution": "Note that there are only \\(3\\) cases: all the vertices are different, there is one pair of adjacent vertices with the same colors, or there are \\(2\\) pairs (each pair has a different color).\n\nCase \\(1:\\) all vertices have different colors\n\nThis case just gives us \\(6! = 720\\) different colorings.\n\nCase \\(2:\\) one pair of adjacent vertices has the same color\n\nThere are \\[ \\dfrac{6!}{2} = 360 \\] ways to choose the colors for this case. There are then \\(5\\) options for the pair of vertices.\n\nThis gives us a total of \\[ 360 \\cdot 5 = 1800 \\] colorings for this case.\n\nCase \\(3:\\) two pairs of adjacent vertices have the same color\n\nThere are \\(5\\) choices for the vertex that is not in a pair. There are then \\[ 6 \\cdot 5 \\cdot 4 = 120 \\] choices for the colors. There are then a total of \\[ 120 \\cdot 5 = 600 \\] colorings for this case.\n\nThere are a total of \\[ 720 + 1800 + 600 = 3120 \\] colorings for all the cases.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "graph theory",
+        "casework",
+        "permutations"
+      ],
+      "sourceDifficulty": 1840,
+      "solveTimeSeconds": 115,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/22"
+    },
+    {
+      "id": "amc-10-2011a-q23",
+      "number": 23,
+      "question": "Seven students count from \\(1\\) to \\(1000\\) as follows:\n\n• Alice says all the numbers, except she skips the middle number in each consecutive group of three numbers. That is, Alice says \\(1,\\) \\(3,\\) \\(4,\\) \\(6,\\) \\(7,\\) \\(9,\\) \\(\\ldots,\\) \\(997,\\) \\(999,\\) \\(1000.\\)\n\n• Barbara says all of the numbers that Alice doesn’t say, except she also skips the middle number in each consecutive group of three numbers.\n\n• Candice says all of the numbers that neither Alice nor Barbara says, except she also skips the middle number in each consecutive group of three numbers.\n\n• Debbie, Eliza, and Fatima say all of the numbers that none of the students with the first names beginning before theirs in the alphabet say, except each also skips the middle number in each of her consecutive groups of three numbers.\n\n• Finally, George says the only number that no one else says.\n\nWhat number does George say?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(37\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(242\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(365\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(728\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(998\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "Track the first remaining term and the common difference",
+        "Each student triples the common difference and shifts to the middle term"
+      ],
+      "solution": "We can walk through all the iterations to find what is left.\n\nAlice does not say the numbers \\[ 2, 5, 8, 11, 14, 17, \\ldots, 998. \\]\n\nAfter Barbara says her numbers, the remaining ones are \\[ 5, 14, 23, 32, 41, \\ldots, 995. \\]\n\nNote that both of these are arithmetic sequences where the common difference is increased by a multiple of \\(3.\\)\n\nThis pattern continues as the numbers remaining after Candice says hers are \\[ 14, 41, 68, 95, \\ldots, 986. \\]\n\nThen after Debbie, they are \\[ 41, 122, 203, \\ldots, 932 \\] and after Eliza, they are \\[ 122, 365, 608, 851. \\]\n\nFinally, the only number left after Fatima goes is \\(365,\\) which is the number that George will have to say.\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "arithmetic sequence",
+        "process simulation",
+        "pattern recognition"
+      ],
+      "sourceDifficulty": 2110,
+      "solveTimeSeconds": 160,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/23"
+    },
+    {
+      "id": "amc-10-2011a-q24",
+      "number": 24,
+      "question": "Two distinct regular tetrahedra have all their vertices among the vertices of the same unit cube. What is the volume of the region formed by the intersection of the tetrahedra?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(\\dfrac{1}{12}\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(\\dfrac{\\sqrt2}{12}\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(\\dfrac{\\sqrt3}{12}\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(\\dfrac{1}{6}\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(\\dfrac{\\sqrt2}{6}\\)"
+        }
+      ],
+      "answer": "D",
+      "hints": [
+        "The two tetrahedra use the two alternating vertex sets of the cube",
+        "Each face cuts off a half-scale corner tetrahedron from the other tetrahedron"
+      ],
+      "solution": "The two regular tetrahedra use the two alternating sets of four vertices of the cube. Each has edge length \\(\\sqrt2\\), a face diagonal of the cube.\n\nThe volume of a regular tetrahedron with edge length \\(s\\) is \\(\\dfrac{\\sqrt2}{12}s^3\\). Thus one large tetrahedron has volume \\(\\dfrac{\\sqrt2}{12}(\\sqrt2)^3=\\dfrac13\\).\n\nIntersect one tetrahedron with the other. Each face of the first cuts from the second a corner tetrahedron similar to the original with scale factor \\(\\dfrac12\\), so each cut-off piece has \\(\\dfrac18\\) of the large tetrahedron’s volume.\n\nThere are four such corner pieces, so the intersection has \\(1-4\\cdot\\dfrac18=\\dfrac12\\) of the volume of one large tetrahedron. Hence the intersection volume is \\(\\dfrac12\\cdot\\dfrac13=\\dfrac16\\).\n\nThus, <b>D</b> is the correct answer.",
+      "sourceConcepts": [
+        "3D geometry",
+        "volume",
+        "cube geometry",
+        "similarity"
+      ],
+      "sourceDifficulty": 2380,
+      "solveTimeSeconds": 200,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/24"
+    },
+    {
+      "id": "amc-10-2011a-q25",
+      "number": 25,
+      "question": "Let \\(R\\) be a square region and \\(n \\geq 4\\) an integer. A point \\(X\\) in the interior of \\(R\\) is called <i>\\(n\\)-ray partitional</i> if there are \\(n\\) rays emanating from \\(X\\) that divide \\(R\\) into \\(n\\) triangles of equal area. How many points are \\(100\\)-ray partitional but not \\(60\\)-ray partitional?",
+      "options": [
+        {
+          "label": "A",
+          "content": "\\(1500\\)"
+        },
+        {
+          "label": "B",
+          "content": "\\(1560\\)"
+        },
+        {
+          "label": "C",
+          "content": "\\(2320\\)"
+        },
+        {
+          "label": "D",
+          "content": "\\(2480\\)"
+        },
+        {
+          "label": "E",
+          "content": "\\(2500\\)"
+        }
+      ],
+      "answer": "C",
+      "hints": [
+        "An \\(n\\)-ray point lies on an \\((\\frac{n}{2}-1)\\times(\\frac{n}{2}-1)\\) grid",
+        "Subtract the overlap of the \\(49\\times49\\) and \\(29\\times29\\) grids"
+      ],
+      "solution": "Scale the square to have side length \\(1,\\) and write \\(X=(u,v),\\) where \\(u\\) and \\(v\\) are its distances from the left and bottom sides. Every corner must be joined to \\(X\\); otherwise one of the regions containing that corner would not be a triangle.\n\nEach of the \\(n\\) triangles has area \\(\\frac{1}{n}.\\) A triangle whose base lies on the bottom side has height \\(v,\\) so its base has length \\(\\frac{2}{nv}.\\) Therefore the number of triangles along the bottom side is \\(\\frac{nv}{2},\\) which must be a positive integer. Applying the same argument to all four sides shows that \\[\\begin{gathered} \\dfrac{nu}{2},\\quad\\dfrac{n(1-u)}{2},\\\\ \\dfrac{nv}{2},\\quad\\dfrac{n(1-v)}{2} \\end{gathered}\\] are positive integers. Conversely, whenever these four numbers are integers, subdividing each side into the indicated number of equal bases and joining the division points to \\(X\\) produces the required triangles.\n\nFor \\(n=100,\\) this says \\(u=\\frac{i}{50}\\) and \\(v=\\frac{j}{50}\\) for \\(i,j\\in\\{1,2,\\ldots,49\\}.\\) Hence the \\(100\\)-ray points form a \\(49\\times49\\) grid. Similarly, the \\(60\\)-ray points have coordinates \\(u=\\frac{i}{30}\\) and \\(v=\\frac{j}{30}\\) with \\(i,j\\in\\{1,2,\\ldots,29\\}.\\)\n\nA coordinate belongs to both grids exactly when \\(\\frac{i}{50}=\\frac{j}{30},\\) or \\(3i=5j.\\) Thus the common coordinates are \\(\\frac{1}{10},\\frac{2}{10},\\ldots,\\frac{9}{10},\\) giving a \\(9\\times9\\) overlap. The requested number is \\[49^2-9^2=2401-81=2320.\\]\n\nThus, <b>C</b> is the correct answer.",
+      "sourceConcepts": [
+        "area decomposition",
+        "lattice point",
+        "inclusion-exclusion"
+      ],
+      "sourceDifficulty": 2490,
+      "solveTimeSeconds": 300,
+      "sourceUrl": "https://live.poshenloh.com/past-contests/amc10/2011A/problem/25"
+    }
+  ]
+}
