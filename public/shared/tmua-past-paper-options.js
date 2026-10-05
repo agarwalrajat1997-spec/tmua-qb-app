@@ -38,6 +38,14 @@
       element.textContent = "You have " + humanTime(config.seconds) + " for each paper. " +
         "An optional 5-minute break separates the papers. Each paper ends when its timer reaches zero.";
     });
+    document.querySelectorAll('[data-ts-past-score-note]').forEach(function (element) {
+      element.textContent = scoreNote();
+    });
+  }
+
+  function scoreNote() {
+    var multiplier = state ? state.multiplier : choices().multiplier;
+    return window.TS_TEST_OPTIONS ? window.TS_TEST_OPTIONS.scoreNote(multiplier, "TMUA", [20, 20]) : "Original raw marks are retained.";
   }
 
   function mount() {
@@ -60,7 +68,8 @@
       '<span><strong>+25% time</strong><small>93 minutes 45 seconds</small></span></label>' +
       '<label class="ts-past-setting-choice"><input type="radio" name="ts-past-time" value="1.5">' +
       '<span><strong>+50% time</strong><small>112 minutes 30 seconds</small></span></label>' +
-      '</div></fieldset></div><p class="ts-past-settings-note">Your results retain the original question references for the solution booklet.</p>';
+      '</div></fieldset></div><p class="ts-past-settings-note">Your results retain the original question references for the solution booklet.</p>' +
+      '<p class="ts-past-settings-note" data-ts-past-score-note role="status" aria-live="polite"></p>';
     host.addEventListener("change", updateTiming);
     mounted = true;
     updateTiming();
@@ -224,7 +233,11 @@
     durationSeconds: function () { return state ? state.seconds : choices().seconds; },
     formatQuestion: formatQuestion,
     formatAnswer: formatAnswer,
-    summary: summary
+    summary: summary,
+    scoreNote: scoreNote,
+    adjustedRaw: function (raw, count) {
+      return window.TS_TEST_OPTIONS ? window.TS_TEST_OPTIONS.adjustedRaw(raw, count, state ? state.multiplier : choices().multiplier) : raw;
+    }
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, { once: true });
   else mount();

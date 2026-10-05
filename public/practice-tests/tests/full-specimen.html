@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/shared/tmua-past-paper-options.css?v=20260920-1">
-  <script src="/shared/tmua-past-paper-options.js?v=20260920-1" defer></script>
+  <script src="/shared/tmua-past-paper-options.js?v=20261005-2" defer></script>
   <title>TMUA Specimen - Paper 1 and Paper 2</title>
   <script type="text/javascript" async 
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -417,6 +417,8 @@
 }
 </style>
 <!-- /TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
+<!-- TS_TMUA_OFFICIAL_POLICY_V1 -->
+<script src="/shared/practice-test-options.js?v=20261005-1"></script>
 </head>
 <body>
 
@@ -1341,7 +1343,7 @@ async function submitExam() {
       if (isCorrect) paper2Score++;
     }
   }
-let paper1Analysis = "Paper 1 Analysis\n" + window.TS_TMUA_PAST_PAPER.summary() + "\n";
+let paper1Analysis = "Paper 1 Analysis\n" + window.TS_TMUA_PAST_PAPER.summary() + ". " + window.TS_TMUA_PAST_PAPER.scoreNote() + "\n";
 let paper2Analysis = "Paper 2 Analysis\n" + window.TS_TMUA_PAST_PAPER.summary() + "\n";
 
 for (let i = 0; i < 20; i++) {
@@ -1451,7 +1453,7 @@ paper1: paper1Analysis.trim(),
       <div style="text-align: center;">
         <div style="font-size: 160px;">${emoji}</div>
         <h1>Exam Completed</h1>
-        <p>${window.TS_TMUA_PAST_PAPER.summary()}</p>
+        <p>${window.TS_TMUA_PAST_PAPER.summary()}. ${window.TS_TMUA_PAST_PAPER.scoreNote()}</p>
         <p>Question references and answer letters below match the original solution booklet. Randomised attempts also show their displayed numbers and letters.</p>
 
       ${score9Block}
@@ -1911,7 +1913,7 @@ body.ts-exam-done .ts-workspace-btn{
 
 <!-- TS_TMUA_SCORE_CONVERSION_V1_START -->
 <script>window.TS_TMUA_SCORE_PROFILE="specimen-estimate";</script>
-<script src="/shared/tmua-score-conversions.js?v=20260806-1"></script>
+<script src="/shared/tmua-score-conversions.js?v=20261005-1"></script>
 <!-- TS_TMUA_SCORE_CONVERSION_V1_END -->
 </body>
 </html>

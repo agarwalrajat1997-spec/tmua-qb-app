@@ -5,6 +5,7 @@ import {
 } from "./esat-october-2026-tests.ts";
 import type { EsatPredictorTestAttempt } from "./esat-predictor-v1-engine.ts";
 import { estimateEsatTestScores, getEsatTestProfile } from "./esat-score-estimates.ts";
+import { createStandardTimeEstimate, hasStandardTimePolicy, readPracticeResult } from "./practice-standard-time.ts";
 
 type StoredEsatAttempt = {
   id?: unknown;
@@ -12,6 +13,7 @@ type StoredEsatAttempt = {
   answers?: unknown;
   attempt_number?: unknown;
   submitted_at?: unknown;
+  predictor_metadata?: unknown;
 };
 
 /** Re-evaluate saved answers, including historical October attempts. Never use
@@ -41,6 +43,13 @@ export function buildEsatTestEvidence(rows: readonly StoredEsatAttempt[]): EsatP
       (getEsatTestProfile(testId) ? estimateEsatTestScores(testId, sectionScores) : null);
     if (!estimate) return [];
 
+    const practice = readPracticeResult(testId, row.predictor_metadata, submitted, sectionScores.reduce((sum, raw) => sum + raw, 0));
+    if (hasStandardTimePolicy(row.predictor_metadata) && !practice.practice_settings) return [];
+    // Recompute from canonical answers and trusted module curves; a persisted
+    // or browser-supplied adjusted numeric score is never predictor authority.
+    const standardTime = practice.practice_settings
+      ? createStandardTimeEstimate(testId, submitted, practice.practice_settings) : null;
+
     const familyId = getEsatPredictorFamilyId(testId);
     return [{
       testId: familyId,
@@ -52,7 +61,7 @@ export function buildEsatTestEvidence(rows: readonly StoredEsatAttempt[]): EsatP
           ? Number(row.attempt_number) : null,
       evaluatedAt: evaluatedAt.toISOString(),
       predictorEligible: true,
-      predictedCombinedPracticeScore: estimate.predictedCombinedPracticeScore,
+      predictedCombinedPracticeScore: standardTime?.estimated_score ?? estimate.predictedCombinedPracticeScore,
       effectiveWeight: 1.5,
     }];
   });

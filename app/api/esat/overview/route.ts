@@ -286,7 +286,7 @@ async function calculateCurrentUserOverview(admin: ReturnType<typeof adminClient
 
   const [attemptRows, questionRows, qbRows] = await Promise.all([
     readAll((from, to) => admin.from("practice_test_attempts")
-      .select("id,user_id,test_id,answers,attempt_number,submitted_at")
+      .select("id,user_id,test_id,answers,attempt_number,submitted_at,predictor_metadata")
       .eq("user_id", userId)
       .in("test_id", recognisedIds)
       .order("submitted_at", { ascending: true })

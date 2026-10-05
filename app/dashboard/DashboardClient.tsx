@@ -7,6 +7,8 @@ import styles from "./dashboard.module.css";
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
 import ServiceRetry from "../components/ServiceRetry";
 import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
+import PracticeAttemptSettings from "../components/PracticeAttemptSettings";
+import type { PracticeSettings, StandardTimeEstimate } from "@/lib/practice-settings";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
 import { formatTmuaPastPaperSettings, type TmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
@@ -67,6 +69,8 @@ type LatestAttemptSummary = {
   total_attempts?: number;
   incorrect?: any[];
   attempt_settings?: TmuaPastPaperSettings | null;
+  practice_settings?: PracticeSettings | null;
+  standard_time_estimate?: StandardTimeEstimate | null;
 };
 
 type AttemptRow = {
@@ -85,6 +89,8 @@ type AttemptRow = {
   flags: any[];
   attempt_no: number;
   attempt_settings?: TmuaPastPaperSettings | null;
+  practice_settings?: PracticeSettings | null;
+  standard_time_estimate?: StandardTimeEstimate | null;
 };
 
 function getSupabase() {
@@ -808,7 +814,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     const status = attempted
                       ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
-                          latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+                          latest.tmua_score9 != null && (!latest.standard_time_estimate || latest.standard_time_estimate.time_multiplier === 1) ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
                         } · ${fmtDate(latest.submitted_at)}`
                       : "No attempts yet";
 
@@ -840,6 +846,8 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         </div>
 
                         <div className={styles.muted}>{status}</div>
+
+                        <PracticeAttemptSettings settings={latest?.practice_settings} estimate={latest?.standard_time_estimate} />
 
                         {attempted && wrong.length > 0 && (
                           <div className={styles.muted} style={{ marginTop: 6 }}>
@@ -886,7 +894,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     const status = attempted
                       ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
-                          latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+                          latest.tmua_score9 != null && (!latest.standard_time_estimate || latest.standard_time_estimate.time_multiplier === 1) ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
                         } · ${fmtDate(latest.submitted_at)}`
                       : "No attempts yet";
 
@@ -918,6 +926,8 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         </div>
 
                         <div className={styles.muted}>{status}</div>
+
+                        <PracticeAttemptSettings settings={latest?.practice_settings} estimate={latest?.standard_time_estimate} />
 
                         {attempted && wrong.length > 0 && (
                           <div className={styles.muted} style={{ marginTop: 6 }}>
@@ -964,7 +974,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
                     const status = attempted
                       ? `Attempt ${latest.attempt_no ?? "—"} · Score ${latest.score}/${latest.total_questions}${
-                          latest.tmua_score9 != null ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
+                          latest.tmua_score9 != null && (!latest.standard_time_estimate || latest.standard_time_estimate.time_multiplier === 1) ? ` · TMUA ${Number(latest.tmua_score9).toFixed(1)}/9.0` : ""
                         } · ${fmtDate(latest.submitted_at)}`
                       : "No attempts yet";
 
@@ -989,7 +999,8 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                         </div>
 
                         <div className={styles.muted}>{status}</div>
-                        {latest?.attempt_settings && (
+                        <PracticeAttemptSettings settings={latest?.practice_settings} estimate={latest?.standard_time_estimate} />
+                        {latest?.attempt_settings && !latest.practice_settings && (
                           <div className={styles.muted} style={{ marginTop: 4 }}>
                             {formatTmuaPastPaperSettings(latest.attempt_settings)}
                           </div>
@@ -1473,7 +1484,7 @@ src="/tmua-classes/index.html"
                             <b>Attempt {a.attempt_no}</b>
                             <div className={styles.muted} style={{ marginTop: 4 }}>
                               Score: <b>{a.score}</b> / {a.total_questions}
-                              {a.tmua_score9 != null ? (
+                              {a.tmua_score9 != null && (!a.standard_time_estimate || a.standard_time_estimate.time_multiplier === 1) ? (
                                 <>
                                   {" "}
                                   · <b>TMUA {Number(a.tmua_score9).toFixed(1)}/9.0</b>
@@ -1482,15 +1493,16 @@ src="/tmua-classes/index.html"
                               · {fmtDate(a.submitted_at)}
                             </div>
 
-                            {a.attempt_settings && (
+                            <PracticeAttemptSettings settings={a.practice_settings} estimate={a.standard_time_estimate} detailed />
+                            {a.attempt_settings && !a.practice_settings && (
                               <div className={styles.muted} style={{ marginTop: 6 }}>
                                 {formatTmuaPastPaperSettings(a.attempt_settings)}
                               </div>
                             )}
                             {wrong.length > 0 && (
                               <div className={styles.muted} style={{ marginTop: 6 }}>
-                                <b>{a.attempt_settings?.order === "randomised" ? "Original questions wrong:" : "Questions wrong:"}</b>{" "}
-                                {a.attempt_settings?.order === "randomised"
+                                <b>{a.attempt_settings?.order === "randomised" || a.practice_settings?.order === "randomised" ? "Original questions wrong:" : "Questions wrong:"}</b>{" "}
+                                {(a.attempt_settings?.order === "randomised" || a.practice_settings?.order === "randomised") && a.total_questions === 40
                                   ? wrong.map(q => `P${q <= 20 ? 1 : 2} Q${((q - 1) % 20) + 1}`).join(", ")
                                   : wrong.join(", ")}
                               </div>

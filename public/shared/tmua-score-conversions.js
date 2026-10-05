@@ -167,11 +167,24 @@
       : "Estimated TMUA score";
   }
 
+  function practiceMultiplier() {
+    try {
+      if (root.TS_TMUA_ACTIVE_OPTIONS) return root.TS_TMUA_ACTIVE_OPTIONS.metadata().time_multiplier;
+      if (root.TS_TMUA_PAST_PAPER) return root.TS_TMUA_PAST_PAPER.durationSeconds() / 4500;
+    } catch (_) {}
+    return 1;
+  }
+
+  function practiceRaw(raw, count) {
+    return root.TS_TEST_OPTIONS ? root.TS_TEST_OPTIONS.adjustedRaw(raw, count, practiceMultiplier()) : raw;
+  }
+
   function render(profile, overallRaw, p1Raw, p2Raw) {
     const raw = roundedRaw(overallRaw);
     const p1 = Number.isFinite(Number(p1Raw)) ? Math.max(0, Math.round(Number(p1Raw))) : null;
     const p2 = Number.isFinite(Number(p2Raw)) ? Math.max(0, Math.round(Number(p2Raw))) : null;
-    const score = convert(profile, raw);
+    const score = convert(profile, practiceRaw(raw, 40));
+    const practiceNote = root.TS_TEST_OPTIONS ? root.TS_TEST_OPTIONS.scoreNote(practiceMultiplier(), "TMUA", [20, 20]) : "";
     const paperCards = p1 != null && p2 != null
       ? (
           '<div class="ts-score9-card"><h4>Paper 1 raw mark</h4>' +
@@ -186,7 +199,7 @@
     return (
       `<div class="ts-score9-wrap" data-ts-score-profile="${profile}">` +
       '<div class="ts-score9-row"><div>' +
-      `<div class="ts-score9-title">${heading(profile)}</div>` +
+      `<div class="ts-score9-title">${practiceMultiplier() === 1 ? heading(profile) : "Estimated standard-time equivalent"}</div>` +
       '<div class="ts-score9-sub">One combined score from the total raw mark out of 40.</div>' +
       '</div>' +
       `<div class="ts-score9-chip">${score.toFixed(1)} / 9.0</div></div>` +
@@ -196,7 +209,7 @@
       '<div class="ts-score9-small">Paper 1 + Paper 2</div></div>' +
       paperCards +
       '</div>' +
-      `<div class="ts-score9-note"><strong>Scoring note:</strong> ${note(profile)}</div>` +
+      `<div class="ts-score9-note"><strong>Scoring note:</strong> ${note(profile)} ${practiceNote}</div>` +
       '</div>'
     );
   }
@@ -224,7 +237,7 @@
 
   function scoreFromAnyTotal(raw, totalQuestions) {
     const total = Number(totalQuestions);
-    const value = Number(raw);
+    const value = practiceRaw(Number(raw), Number.isFinite(total) && total > 0 ? total : 40);
     if (!Number.isFinite(value)) return convert(profile, 0);
     if (!Number.isFinite(total) || total <= 0 || total === 40) {
       return convert(profile, value);
@@ -251,7 +264,7 @@
   };
 
   root.estimatedTmuaScore = function (raw) {
-    return convert(profile, raw);
+    return convert(profile, practiceRaw(raw, 40));
   };
 
   root.score9Block = function (total, p1, p2) {
@@ -347,7 +360,7 @@
         ) {
           const payload = JSON.parse(init.body);
           const raw = roundedRaw(payload.score);
-          const converted = convert(profile, raw);
+          const converted = convert(profile, practiceRaw(raw, 40));
           const papers = paperScores(payload);
 
           payload.estimated_tmua_score = converted;

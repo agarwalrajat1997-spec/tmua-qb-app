@@ -104,3 +104,6 @@ console.log(
   `Prepared ${testIds.length} recombined ESAT tests (${changedFiles} files updated) ` +
   `with direct 3-section email payloads and fullscreen controller ${fullscreenVersion}.`,
 );
+
+// The committed standalone clients share the current practice settings/deadline contract.
+await import('./prepare-esat-practice-settings.mjs');

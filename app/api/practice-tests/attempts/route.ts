@@ -1,6 +1,8 @@
 ﻿import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { readTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
+import { hasStandardTimePolicy, practiceSpec, readTrustedPracticeResult, type Conversion } from "@/lib/server/practice-standard-time";
+import { TMUA_PREDICTIVE_2026_ID } from "@/lib/server/tmua-predictive-2026";
 
 export const runtime = "nodejs";
 
@@ -17,6 +19,22 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const testId = url.searchParams.get("test_id");
 
+  async function conversionsFor(rows: { test_id: string; predictor_metadata: unknown }[]) {
+    const result = new Map<string, Conversion>();
+    if (!rows.some(row => hasStandardTimePolicy(row.predictor_metadata) && row.test_id !== TMUA_PREDICTIVE_2026_ID &&
+      practiceSpec(row.test_id)?.exam === "tmua" && practiceSpec(row.test_id)?.canonical.expectedQuestions === 40)) return result;
+    const [catalogue, profiles] = await Promise.all([
+      supabase.from("tmua_test_catalog").select("test_id,score_conversion_profile"),
+      supabase.from("tmua_score_conversion_profiles").select("profile,conversion_version,score_values"),
+    ]);
+    if (catalogue.error || profiles.error) return result;
+    for (const test of catalogue.data ?? []) {
+      const profile = (profiles.data ?? []).find(profile => profile.profile === test.score_conversion_profile);
+      if (profile) result.set(test.test_id, profile as Conversion);
+    }
+    return result;
+  }
+
   if (testId) {
     const { data, error } = await supabase
       .from("practice_test_attempts")
@@ -30,9 +48,11 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: error.message, fingerprint: FINGERPRINT }, { status: 500 });
     }
 
+    const conversions = await conversionsFor(data ?? []);
     const attempts = (data ?? []).map(({ predictor_metadata, ...row }, idx) => ({
       ...row,
       attempt_settings: readTmuaPastPaperSettings(row.test_id, predictor_metadata),
+      ...readTrustedPracticeResult(row.test_id, predictor_metadata, row.answers, row.score, conversions.get(row.test_id)),
       attempt_no: idx + 1,
     }));
 
@@ -57,19 +77,35 @@ export async function GET(req: Request) {
   }
 
   const counts: Record<string, number> = {};
-  const latestByTest: Record<string, any> = {};
+  const latestByTest: Record<string, NonNullable<typeof data>[number] & { answers?: unknown }> = {};
 
   for (const row of (data ?? [])) {
     counts[row.test_id] = (counts[row.test_id] ?? 0) + 1;
     if (!latestByTest[row.test_id]) latestByTest[row.test_id] = row;
   }
 
-  const latest = Object.values(latestByTest).map(({ predictor_metadata, ...row }: any) => ({
-    ...row,
-    attempt_settings: readTmuaPastPaperSettings(row.test_id, predictor_metadata),
-    attempt_no: counts[row.test_id] ?? null,
-    total_attempts: counts[row.test_id] ?? 0,
-  }));
+  const latestRows = Object.values(latestByTest);
+  const conversions = await conversionsFor(latestRows);
+  // Only the latest explicitly new-policy rows need canonical answer checks.
+  // Do not expand the legacy 500-row summary into hundreds of answer arrays.
+  const markedIds = latestRows.filter(row => hasStandardTimePolicy(row.predictor_metadata)).map(row => row.id);
+  const canonicalAnswers = new Map<string, unknown>();
+  if (markedIds.length) {
+    const detail = await supabase.from("practice_test_attempts").select("id,answers")
+      .eq("user_id", user.id).in("id", markedIds);
+    if (!detail.error) for (const row of detail.data ?? []) canonicalAnswers.set(row.id, row.answers);
+  }
+  const latest = latestRows.map(({ predictor_metadata, answers, ...row }) => {
+    // Keep detail-only answer arrays out of the lightweight public summary.
+    void answers;
+    return {
+      ...row,
+      attempt_settings: readTmuaPastPaperSettings(row.test_id, predictor_metadata),
+      ...readTrustedPracticeResult(row.test_id, predictor_metadata, canonicalAnswers.get(row.id), row.score, conversions.get(row.test_id)),
+      attempt_no: counts[row.test_id] ?? null,
+      total_attempts: counts[row.test_id] ?? 0,
+    };
+  });
 
   return NextResponse.json({ ok: true, fingerprint: FINGERPRINT, latest, counts });
 }

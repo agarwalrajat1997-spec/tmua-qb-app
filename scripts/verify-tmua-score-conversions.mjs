@@ -42,7 +42,7 @@ const testsRoot = path.join(
 );
 
 const scriptUrl =
-  "/shared/tmua-score-conversions.js?v=20260806-1";
+  "/shared/tmua-score-conversions.js?v=20261005-1";
 
 for (const [relative, profile] of profiles) {
   const file = path.join(testsRoot, ...relative.split("/"));

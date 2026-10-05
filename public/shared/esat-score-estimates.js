@@ -19,19 +19,21 @@
     );
   }
 
-  function render(estimate) {
+  function render(estimate, practice) {
     if (!estimate || !Array.isArray(estimate.modules)) {
       return unavailable();
     }
 
-    var cards = estimate.modules.map(function (item) {
+    var adjusted = practice && practice.settings.metadata().time_multiplier !== 1;
+    var cards = estimate.modules.map(function (item, index) {
       return (
         '<article class="ts-esat-estimate__card">' +
         '<h3>' + escapeHtml(item.module) + '</h3>' +
         '<div class="ts-esat-estimate__score">' +
         Number(item.estimatedScore).toFixed(1) +
         '<span>/9.0</span></div>' +
-        '<p>' + Number(item.raw) + '/27 raw</p>' +
+        '<p>' + Number(adjusted ? practice.rawScores[index] : item.raw) + '/27 raw' +
+        (adjusted ? ' · ' + Number(item.raw) + '/27 adjusted for estimate' : '') + '</p>' +
         '</article>'
       );
     }).join("");
@@ -40,8 +42,8 @@
       '<section class="ts-esat-estimate" data-version="' +
       escapeHtml(estimate.version) + '">' +
       '<div class="ts-esat-estimate__top"><div>' +
-      '<div class="ts-esat-estimate__heading">Predicted ESAT profile</div>' +
-      '<div class="ts-esat-estimate__sub">Evidence-calibrated · ' +
+      '<div class="ts-esat-estimate__heading">' + (adjusted ? 'Estimated standard-time equivalent' : 'Predicted ESAT profile') + '</div>' +
+      '<div class="ts-esat-estimate__sub">' + (adjusted ? 'Provisional practice adjustment · ' : 'Evidence-calibrated · ') +
       escapeHtml(estimate.difficulty) + ' source form</div></div>' +
       '<div class="ts-esat-estimate__average"><span>Predicted combined practice score</span>' +
       '<strong>' + Number(
@@ -52,7 +54,8 @@
       ' <small>/9.0</small></strong></div></div>' +
       '<div class="ts-esat-estimate__grid">' + cards + '</div>' +
       '<div class="ts-esat-estimate__raw">Total raw mark: <strong>' +
-      Number(estimate.rawTotal) + '/81</strong></div>' +
+      Number(adjusted ? practice.rawScores.reduce(function (sum, value) { return sum + value; }, 0) : estimate.rawTotal) + '/81</strong></div>' +
+      (adjusted ? '<p class="ts-esat-estimate__note">' + escapeHtml(practice.settings.scoreNote()) + '</p>' : '') +
       '<p class="ts-esat-estimate__note">' + escapeHtml(estimate.note) + '</p>' +
       '</section>'
     );
@@ -79,7 +82,12 @@
 
   async function fetchAndRender(options) {
     try {
-      return render(await fetchEstimate(options));
+      var settings = root.TS_ESAT_PRACTICE_SETTINGS;
+      var rawScores = Array.isArray(options.rawScores) ? options.rawScores.slice() : [];
+      var request = settings ? Object.assign({}, options, {
+        rawScores: rawScores.map(function (raw) { return settings.adjustedRaw(raw, 27); })
+      }) : options;
+      return render(await fetchEstimate(request), settings ? { settings: settings, rawScores: rawScores } : null);
     } catch (error) {
       console.error("ESAT score estimate failed:", error);
       return unavailable("The ESAT estimate could not be loaded. Your raw marks are shown below.");

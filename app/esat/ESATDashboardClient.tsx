@@ -5,6 +5,8 @@ import { supabaseBrowser } from "@/utils/supabase/browser";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
 import ServiceRetry from "../components/ServiceRetry";
 import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
+import PracticeAttemptSettings from "../components/PracticeAttemptSettings";
+import type { PracticeSettings, StandardTimeEstimate } from "@/lib/practice-settings";
 import styles from "../dashboard/dashboard.module.css";
 import EsatPredictionStrip from "./EsatPredictionStrip";
 
@@ -86,6 +88,8 @@ type AttemptSummary = {
   total_questions?: number | null;
   score?: number | null;
   submitted_at?: string | null;
+  practice_settings?: PracticeSettings | null;
+  standard_time_estimate?: StandardTimeEstimate | null;
 };
 
 type StudentAccessRow = {
@@ -774,6 +778,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                           : attempted
                           ? `Attempt 1 · Score ${score}/${total || 81}${date ? ` · ${date}` : ""}`
                           : "Not attempted yet"}
+                        <PracticeAttemptSettings settings={latest?.practice_settings} estimate={latest?.standard_time_estimate} programme="ESAT" />
                       </div>
 
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -1154,6 +1159,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                       Score {a.score ?? 0}/{a.total_questions || 81}
                       {a.submitted_at ? ` · ${fmtDate(a.submitted_at)}` : ""}
                     </div>
+                    <PracticeAttemptSettings settings={a.practice_settings} estimate={a.standard_time_estimate} detailed programme="ESAT" />
                   </div>
                 ))
               )}

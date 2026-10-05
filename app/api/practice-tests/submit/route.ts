@@ -6,6 +6,7 @@ import { getCanonicalTmuaTest } from "@/lib/server/tmua-canonical-tests";
 import { TMUA_PREDICTIVE_2026_ID, TMUA_PREDICTIVE_2026_CATALOG, evaluateTmuaPredictive2026Attempt } from "@/lib/server/tmua-predictive-2026";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { validateTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
+import { createStandardTimeEstimate, resolvePracticeSettings, type Conversion } from "@/lib/server/practice-standard-time";
 
 export const runtime = "nodejs";
 
@@ -340,6 +341,13 @@ export async function POST(req: Request) {
   const recognisedEsatTest =
     canonicalEsatTest != null;
 
+  let practiceSettings;
+  try {
+    practiceSettings = resolvePracticeSettings(testId, body?.practice_settings, pastPaperSettings);
+  } catch (error) {
+    return badRequest(error instanceof Error ? error.message : "Invalid practice settings.");
+  }
+
   if (canonicalTmuaTest && !catalog) {
     return internalError(
       "Protected TMUA test is missing from the catalogue.",
@@ -649,6 +657,26 @@ export async function POST(req: Request) {
   const submittedAt =
     new Date().toISOString();
 
+  // A separate, versioned practice estimate never changes the actual raw mark
+  // or the historical database conversion/finalisation path.
+  let standardTimeEstimate = null;
+  if (practiceSettings) {
+    let conversion: Conversion | null = null;
+    if (canonicalTmuaTest?.expectedQuestions === 40 && scoreConversionProfile && testId !== TMUA_PREDICTIVE_2026_ID) {
+      const { data, error } = await supabase.from("tmua_score_conversion_profiles")
+        .select("profile,conversion_version,score_values")
+        .eq("profile", scoreConversionProfile).maybeSingle();
+      // A temporary conversion outage must not discard a completed attempt.
+      // Save its canonical raw mark and policy, but never claim a scaled score.
+      conversion = !error && data ? data as Conversion : { profile: scoreConversionProfile, score_values: [] };
+    }
+    try {
+      standardTimeEstimate = createStandardTimeEstimate(testId, answers, practiceSettings, conversion, true);
+    } catch (error) {
+      return internalError(error instanceof Error ? error.message : "The standard-time estimate could not be calculated.");
+    }
+  }
+
   const predictive2026Evaluation = evaluateTmuaPredictive2026Attempt({
     id: "pending-submission", user_id: user.id, test_id: testId, submitted_at: submittedAt,
     answers, time_spent: timeSpent,
@@ -700,6 +728,10 @@ export async function POST(req: Request) {
 
     predictor_metadata: {
       ...(pastPaperSettings ? { tmua_past_paper_settings: pastPaperSettings } : {}),
+      ...(practiceSettings && standardTimeEstimate ? {
+        practice_settings: practiceSettings,
+        standard_time_estimate: standardTimeEstimate,
+      } : {}),
       ...(testId === TMUA_PREDICTIVE_2026_ID ? {
         tmua_predictive_2026_complete: body?.complete !== false,
         tmua_predictive_2026_scale: TMUA_PREDICTIVE_2026_CATALOG.score_conversion_profile,
@@ -895,6 +927,8 @@ export async function POST(req: Request) {
     ok: true,
     fingerprint: FINGERPRINT,
     attempt: finalAttempt,
+    practice_settings: practiceSettings,
+    standard_time_estimate: standardTimeEstimate,
     attempt_no: attemptNumber,
     predictor_evaluation:
       evaluation ?? null,

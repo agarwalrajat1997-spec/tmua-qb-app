@@ -25,6 +25,7 @@ import {
   calculateTmuaPredictorV1,
 } from "@/lib/server/tmua-predictor-v1-engine";
 import { applyTmuaHighScoreEvidenceGate } from "@/lib/server/tmua-predictor-v1_1-policy";
+import { applyStandardTimeTmuaEvaluations } from "@/lib/server/practice-predictor-overlay";
 import {
   TMUA_PREDICTIVE_2026_ID,
   TMUA_PREDICTIVE_2026_CATALOG,
@@ -659,7 +660,7 @@ async function calculateAndPersistPreparationRankV1(
               "tmua_test_catalog",
             )
             .select(
-              "test_id,topic_breadth,predictor_enabled,leaderboard_enabled",
+              "test_id,topic_breadth,predictor_enabled,leaderboard_enabled,score_conversion_profile,base_weight,minimum_partial_answered,minimum_full_weight_answered,minimum_average_seconds",
             )
             .range(
               from,
@@ -804,7 +805,7 @@ async function calculateAndPersistPreparationRankV1(
         "Preparation Rank 2026 predictive attempts",
         (from, to) => admin.from("practice_test_attempts")
           .select("id,user_id,test_id,submitted_at,answers,time_spent,predictor_metadata")
-          .eq("test_id", TMUA_PREDICTIVE_2026_ID)
+          .or(`test_id.eq.${TMUA_PREDICTIVE_2026_ID},predictor_metadata->standard_time_estimate->>policy_version.eq.ts-standard-time-equivalent-v1`)
           .order("submitted_at", { ascending: true }).range(from, to),
       ),
     ]);
@@ -815,6 +816,8 @@ async function calculateAndPersistPreparationRankV1(
   evaluationRows.splice(0, evaluationRows.length,
     ...evaluationRows.filter(row => row.test_id !== TMUA_PREDICTIVE_2026_ID),
     ...predictiveEvaluations);
+  evaluationRows.splice(0, evaluationRows.length,
+    ...applyStandardTimeTmuaEvaluations(evaluationRows, predictiveAttemptRows, conversionRows, catalogRows));
 
   const entitledEmails =
     new Set<string>();
@@ -2322,7 +2325,7 @@ export async function GET() {
                 "tmua_test_catalog",
               )
               .select(
-                "test_id,topic_breadth,predictor_enabled",
+                "test_id,topic_breadth,predictor_enabled,score_conversion_profile,base_weight,minimum_partial_answered,minimum_full_weight_answered,minimum_average_seconds",
               )
               .eq(
                 "predictor_enabled",
@@ -2452,7 +2455,7 @@ export async function GET() {
         readAll((from, to) => admin.from("practice_test_attempts")
           .select("id,user_id,test_id,submitted_at,answers,time_spent,predictor_metadata")
           .eq("user_id", user.id)
-          .eq("test_id", TMUA_PREDICTIVE_2026_ID)
+          .or(`test_id.eq.${TMUA_PREDICTIVE_2026_ID},predictor_metadata->standard_time_estimate->>policy_version.eq.ts-standard-time-equivalent-v1`)
           .order("submitted_at", { ascending: true }).range(from, to)),
       ]);
 
@@ -2460,6 +2463,8 @@ export async function GET() {
     evaluationRows.splice(0, evaluationRows.length,
       ...evaluationRows.filter(row => row.test_id !== TMUA_PREDICTIVE_2026_ID),
       ...buildTmuaPredictive2026Evaluations(predictiveAttemptRows));
+    evaluationRows.splice(0, evaluationRows.length,
+      ...applyStandardTimeTmuaEvaluations(evaluationRows, predictiveAttemptRows, conversionRows, catalogRows));
 
     if (
       conversionRows.length !==

@@ -414,6 +414,8 @@
 }
 </style>
 <!-- /TS_TMUA_SCORE9_BLOCK_CSS_V10 -->
+<script src="/shared/practice-test-options.js?v=20261005-1"></script>
+<script src="/shared/tmua-practice-settings.js?v=20261005-1"></script>
 </head>
 <body>
 
@@ -522,6 +524,13 @@
 
 
 <script>
+/* TS_TMUA_PRACTICE_SETTINGS_V1 */
+const practiceOptions=window.TS_TMUA_PRACTICE.create('full-mock-02-all-topics',[20,20]);
+window.TS_TMUA_PRACTICE.mount(practiceOptions,document.querySelector('#instructions button[onclick="startExam()"]')||document.querySelector('#instructions button'));
+let examStage='instructions',paperDeadline=0,breakDeadline=0;
+let studentEmail='';
+const practicePresentation={durationSeconds:()=>practiceOptions.durationSeconds(),positionOf:index=>practiceOptions.positionOf(index),questionAt:(paper,position)=>practiceOptions.questionAt(paper-1,position),prepare:()=>practiceOptions.start(),decorateQuestion:(container,index)=>window.TS_TMUA_PRACTICE.decorate(practiceOptions,container,index,Math.floor(index/20)+1)};
+
 const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_0d47dc258f4949bd857476204c6a6208.pdf";
 // Placeholder — replace with real data if needed
 const averageScores = {
@@ -544,6 +553,7 @@ let studentName = "";
 let testSession = "";
 let flags = new Array(40).fill(false);
 function toggleFlag() {
+  if (examStage !== "paper") return;
   flags[current] = !flags[current];
   updateFlagButton();
   updateNavigatorButton(current);
@@ -558,64 +568,39 @@ function updateFlagButton() {
   }
 }
 
-function startBreak() {
-  document.getElementById("exam-interface").style.display = "none";
-  document.getElementById("break-screen").style.display = "block";
-  breakInterval = setInterval(updateBreakTimer, 1000);
-}
+function startBreak() { showBreakScreen(); }
 
 function updateBreakTimer() {
-  if (breakMinutes === 0 && breakSeconds === 0) {
-    clearInterval(breakInterval);
-    skipBreak(); // ✅ acts like "Skip Break" button
-    return;
-  }
-
-  if (breakSeconds === 0) {
-    breakMinutes--;
-    breakSeconds = 59;
-  } else {
-    breakSeconds--;
-  }
-
-  const mm = breakMinutes.toString().padStart(2, '0');
-  const ss = breakSeconds.toString().padStart(2, '0');
-  document.getElementById("break-timer").textContent = `${mm}:${ss}`;
+  if (examStage !== "break") return;
+  const remaining = Math.max(0, Math.ceil((breakDeadline - Date.now()) / 1000));
+  breakMinutes = Math.floor(remaining / 60);
+  breakSeconds = remaining % 60;
+  document.getElementById("break-timer").textContent = `${String(breakMinutes).padStart(2, "0")}:${String(breakSeconds).padStart(2, "0")}`;
+  if (remaining === 0) skipBreak();
 }
 
 
 function skipBreak() {
+  if (examStage !== "break") return;
   clearInterval(breakInterval);
-
-  // ✅ Reset timer values for Paper 2
-  minutes = 75;
-  seconds = 0;
-
-  // ✅ Start new timer
-  timerInterval = setInterval(updateTimer, 1000);
-
   paper = 2;
-  current = 20; // Question 21
+  current = practicePresentation.questionAt(2, 0);
+  examStage = "paper";
+  resetPaperTimer();
   renderQuestion();
-
+  generateNavigatorButtons();
   document.getElementById("break-screen").style.display = "none";
   document.getElementById("exam-interface").style.display = "block";
 }
 
 function nextQuestion() {
-  // ⏱️ Record time spent on current question
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-
-  if (current === 19 && paper === 1) {
-    showBreakScreen(); // go to break after Paper 1
-    return; // ✅ stop further execution
-  }
-
-  if (current < questions.length - 1) {
-    current++;
-    lastTimestamp = Date.now(); // ⏱️ Start timing next question
-    renderQuestion();
-  }
+  if (examStage !== "paper") return;
+  if (Date.now() >= paperDeadline) { updateTimer(); return; }
+  const position = practicePresentation.positionOf(current);
+  if (position >= 19) return;
+  recordQuestionTime();
+  current = practicePresentation.questionAt(paper, position + 1);
+  renderQuestion();
 }
 
 
@@ -633,13 +618,13 @@ function closeNavigator() {
 }
 
 function jumpTo(index) {
-timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-current = index;
-lastTimestamp = Date.now();
-renderQuestion();
-closeNavigator();
-updateFlagButton();
-
+  if (examStage !== "paper" || !Number.isInteger(index) ||
+      index < (paper - 1) * 20 || index >= paper * 20) return;
+  if (Date.now() >= paperDeadline) { updateTimer(); return; }
+  recordQuestionTime();
+  current = index;
+  renderQuestion();
+  closeNavigator();
 }
 const nextBtn = document.getElementById("next-btn");
 const prevBtn = document.getElementById("prev-btn");
@@ -647,48 +632,38 @@ const prevBtn = document.getElementById("prev-btn");
 
 function renderQuestion() {
   container.innerHTML = questions[current];
-  counter.textContent = `Q${paper === 1 ? current + 1 : current - 19} of 20 (Paper ${paper})`;
-
-  MathJax.typesetPromise();
+  practicePresentation.decorateQuestion(container, current);
+  const position = practicePresentation.positionOf(current);
+  counter.textContent = `Q${position + 1} of 20 (Paper ${paper})`;
+  if (window.MathJax && typeof MathJax.typesetPromise === "function") {
+    MathJax.typesetPromise([container]).catch(() => {});
+  }
   updateFlagButton();
-
-  const inputs = document.querySelectorAll(`input[name='q${current + 1}']`);
-  inputs.forEach(input => {
-    if (userAnswers[current] === input.value) {
-      input.checked = true;
-    }
-    input.addEventListener('change', () => {
-      userAnswers[current] = input.value;
+  const questionIndex = current;
+  container.querySelectorAll(`input[name='q${questionIndex + 1}']`).forEach(input => {
+    input.checked = userAnswers[questionIndex] === input.value;
+    input.addEventListener("change", () => {
+      if (examStage !== "paper") return;
+      if (Date.now() >= paperDeadline) { updateTimer(); return; }
+      userAnswers[questionIndex] = input.value;
+      updateNavigatorButton(questionIndex);
     });
   });
-
-  if (nextBtn) {
-    nextBtn.disabled = (current === 19 && paper === 1) || current === questions.length - 1;
-  }
-  if (prevBtn) {
-    prevBtn.disabled = (current === 0);
-  }
+  if (nextBtn) nextBtn.disabled = position === 19;
+  if (prevBtn) prevBtn.disabled = position === 0;
 }
 
 
 
 
 function confirmSubmit() {
+  if (examStage !== "paper") return;
   if (paper === 1) {
-    const confirmBox = confirm("You're about to submit Paper 1 and move to Paper 2. Do you want to continue?");
-    if (confirmBox) {
-      // ✅ Save time for last Paper 1 question only if user confirms
-      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-      lastTimestamp = Date.now(); // ✅ Reset for Paper 2
+    if (confirm("You're about to submit Paper 1 and move to Paper 2. Do you want to continue?")) {
       showBreakScreen();
     }
-  } else {
-    const confirmBox = confirm("Are you sure you want to submit the entire test?");
-    if (confirmBox) {
-      // ✅ Save time for last Paper 2 question
-      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-      submitExam();
-    }
+  } else if (confirm("Are you sure you want to submit the entire test?")) {
+    return submitExam();
   }
 }
 
@@ -1551,80 +1526,60 @@ If \\( f'(x) > g'(x) \\) for all real \\( x \\), which of the following is/are <
   ];
 
   function startExam() {
+  if (examStage !== "instructions") return;
   const nameInput = document.getElementById("student-name").value.trim();
-  const testSelect = document.getElementById("test-date").value;
-const emailInput = document.getElementById("student-email").value.trim();
-if (!emailInput) {
-  alert("Please enter your email address.");
-  return;
-}
-studentEmail = emailInput; // define this globally
-
-  if (!nameInput) {
-    alert("Please enter your full name before starting the exam.");
+  const emailInput = document.getElementById("student-email").value.trim();
+  if (!emailInput) { alert("Please enter your email address."); return; }
+  if (!nameInput) { alert("Please enter your full name before starting the exam."); return; }
+  try {
+    practicePresentation.prepare(questions, { testId: "full-official-2022" });
+  } catch (error) {
+    alert("The paper could not be prepared. Please reload and try again. Your test has not started.");
+    console.error("TMUA paper preparation failed:", error);
     return;
   }
-
+  studentEmail = emailInput;
   studentName = nameInput;
-  testSession = testSelect;
-
+  testSession = document.getElementById("test-date").value;
+  paper = 1;
+  current = practicePresentation.questionAt(1, 0);
+  examStage = "paper";
   document.getElementById("instructions").style.display = "none";
   document.getElementById("exam-interface").style.display = "block";
-  timerInterval = setInterval(updateTimer, 1000);
+  resetPaperTimer();
   renderQuestion();
+  generateNavigatorButtons();
 }
 
 
   function updateTimer() {
-  if (minutes === 0 && seconds === 0) {
-    clearInterval(timerInterval);
-
-    // ⏱️ record time spent on the current question before leaving the paper
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-    lastTimestamp = Date.now();
-
-    if (paper === 1) {
-      // ⛔️ Don't submit here — go to the break screen
-      showBreakScreen();
-    } else {
-      // ✅ Paper 2 end: now submit the entire test
-      submitExam();
-    }
-    return;
+  if (examStage !== "paper") return;
+  const remaining = Math.max(0, Math.ceil((paperDeadline - Date.now()) / 1000));
+  minutes = Math.floor(remaining / 60);
+  seconds = remaining % 60;
+  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  if (remaining === 0) {
+    if (paper === 1) showBreakScreen();
+    else return submitExam();
   }
-
-  if (seconds === 0) {
-    minutes--;
-    seconds = 59;
-  } else {
-    seconds--;
-  }
-
-  const mm = minutes.toString().padStart(2, '0');
-  const ss = seconds.toString().padStart(2, '0');
-  timerDisplay.textContent = `${mm}:${ss}`;
 }
 
 
 
 function prevQuestion() {
-  // Prevent moving back from Paper 2 Question 1 to Paper 1
-  if (paper === 2 && current === 20) {
-    return; // Do nothing
-  }
-
-  if (current > 0) {
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000; // ⏱️ record time on current
-    current--;
-    lastTimestamp = Date.now(); // ⏱️ reset for previous question
-    renderQuestion();
-  }
+  if (examStage !== "paper") return;
+  if (Date.now() >= paperDeadline) { updateTimer(); return; }
+  const position = practicePresentation.positionOf(current);
+  if (position <= 0) return;
+  recordQuestionTime();
+  current = practicePresentation.questionAt(paper, position - 1);
+  renderQuestion();
 }
 
 
 
 async function submitExam() {
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  if(examStage!=='paper'||paper!==2)return;recordQuestionTime();examStage='complete';closeNavigator();
   clearInterval(timerInterval);
 
   let paper1Score = 0;
@@ -1645,7 +1600,7 @@ async function submitExam() {
 
     const row = `
       <tr>
-        <td style="border: 1px solid #ccc; padding: 6px;">${(i % 20) + 1}</td>
+        <td style="border: 1px solid #ccc; padding: 6px;">${window.TS_TMUA_PRACTICE.questionLabel(practiceOptions,i)}</td>
         <td style="border: 1px solid #ccc; padding: 6px;">${yourAns}</td>
         <td style="border: 1px solid #ccc; padding: 6px;">${correctAns}</td>
         <td style="border: 1px solid #ccc; padding: 6px;">${mins}m ${secs}s</td>
@@ -1660,8 +1615,8 @@ async function submitExam() {
       if (isCorrect) paper2Score++;
     }
   }
-let paper1Analysis = "Paper 1 Analysis\n";
-let paper2Analysis = "Paper 2 Analysis\n";
+let paper1Analysis = "Paper 1 Analysis\n"+practiceOptions.summary()+". "+practiceOptions.scoreNote()+"\n";
+let paper2Analysis = "Paper 2 Analysis\n"+practiceOptions.summary()+". "+practiceOptions.scoreNote()+"\n";
 
 for (let i = 0; i < 20; i++) {
   const secs = Math.round(timeSpent[i]);
@@ -1702,6 +1657,7 @@ const __tsTestTitle = ((document.getElementById("test-title") || {}).textContent
 try {
   const __tsSaveRes = await window.TS_SAVE_ATTEMPT({
     test_id: "full-mock-02-all-topics",
+    practice_settings:practiceOptions.metadata(),
     test_title: __tsTestTitle,
     paper: "full",
     total_questions: 40,
@@ -1770,7 +1726,7 @@ paper1: paper1Analysis.trim(),
         <div style="font-size: 160px;">${emoji}</div>
         <h1>Exam Completed</h1>
 
-      ${score9Block}
+      ${score9Block}<p>${practiceOptions.summary()}. ${practiceOptions.scoreNote()}</p>
         <table style="border-collapse: collapse; margin: 20px auto; font-size: 18px;">
           <tr style="background: #f9f9f9;">
             <td style="border: 1px solid #ccc; padding: 10px 20px;"><strong>Name</strong></td>
@@ -1810,72 +1766,51 @@ document.getElementById("solution-frame").src = solutionPDF;
 
 
 function generateNavigatorButtons() {
+  if (examStage === "instructions") return;
   const grid = document.getElementById("navigator-grid");
-  grid.innerHTML = ""; // Clear previous buttons
-
-  // ✅ Set heading to Paper 1 or Paper 2
-  document.getElementById("navigator-heading").textContent = (paper === 1) ? "Paper 1" : "Paper 2";
-
-  const offset = (paper === 1) ? 0 : 20;
-
-  for (let i = 0; i < 20; i++) {
-    const actualIndex = offset + i;
-
+  grid.innerHTML = "";
+  document.getElementById("navigator-heading").textContent = "Paper " + paper;
+  for (let position = 0; position < 20; position++) {
+    const originalIndex = practicePresentation.questionAt(paper, position);
     const btn = document.createElement("button");
-    btn.textContent = i + 1;
-    btn.dataset.index = actualIndex;
-    btn.id = `nav-btn-${actualIndex}`;
+    btn.textContent = position + 1;
+    btn.dataset.index = originalIndex;
+    btn.id = `nav-btn-${originalIndex}`;
     btn.style.padding = "10px";
-
-    btn.onclick = function () {
-      jumpTo(actualIndex);
-    };
-
+    btn.onclick = () => jumpTo(originalIndex);
     grid.appendChild(btn);
-  }
-
-  // Update buttons’ flag styling
-  for (let i = 0; i < 20; i++) {
-    updateNavigatorButton(offset + i);
+    updateNavigatorButton(originalIndex);
   }
 }
 
 
 function showBreakScreen() {
+  if (examStage !== "paper" || paper !== 1) return;
+  recordQuestionTime();
+  examStage = "break";
   clearInterval(timerInterval);
-
+  closeNavigator();
   document.getElementById("exam-interface").style.display = "none";
   document.getElementById("break-screen").style.display = "block";
-
   breakMinutes = 5;
   breakSeconds = 0;
-
+  breakDeadline = Date.now() + 300000;
+  document.getElementById("break-timer").textContent = "05:00";
+  clearInterval(breakInterval);
   breakInterval = setInterval(updateBreakTimer, 1000);
 }
 
 
 
 function skipBreak() {
+  if (examStage !== "break") return;
   clearInterval(breakInterval);
-  clearInterval(timerInterval); // stop any previous timer
-
-  // ✅ Reset timer to 75:00
-  minutes = 75;
-  seconds = 0;
-
-  // ✅ Start new 75-minute timer
-  timerInterval = setInterval(updateTimer, 1000);
-
-  // ✅ Switch to Paper 2
   paper = 2;
-  current = 20;
-  lastTimestamp = Date.now(); // ✅ Start time tracking for Paper 2
-
+  current = practicePresentation.questionAt(2, 0);
+  examStage = "paper";
+  resetPaperTimer();
   renderQuestion();
-
-  // ✅ Regenerate navigator buttons for Paper 2
   generateNavigatorButtons();
-
   document.getElementById("break-screen").style.display = "none";
   document.getElementById("exam-interface").style.display = "block";
 }
@@ -1885,17 +1820,11 @@ function skipBreak() {
 
 function updateNavigatorButton(index) {
   const btn = document.getElementById(`nav-btn-${index}`);
-  if (!btn) return;
-
-  if (flags[index]) {
-    btn.style.backgroundColor = "gold";
-    btn.style.fontWeight = "bold";
-    btn.textContent = `⚑ ${parseInt(btn.textContent)}`; // retain 1–20 display
-  } else {
-    btn.style.backgroundColor = "";
-    btn.style.fontWeight = "normal";
-    btn.textContent = btn.textContent.replace("⚑", "").trim();
-  }
+  if (!btn || examStage === "instructions") return;
+  const displayedNumber = practicePresentation.positionOf(index) + 1;
+  btn.textContent = (flags[index] ? "⚑ " : "") + displayedNumber;
+  btn.style.backgroundColor = flags[index] ? "gold" : "";
+  btn.style.fontWeight = flags[index] ? "bold" : "normal";
 }
 
 window.onload = function () {
@@ -1904,7 +1833,23 @@ window.onload = function () {
 };
 
 
-</script>
+
+function recordQuestionTime() {
+  if (examStage !== "paper") return;
+  const now = Math.min(Date.now(), paperDeadline);
+  timeSpent[current] += Math.max(0, (now - lastTimestamp) / 1000);
+  lastTimestamp = now;
+}
+function resetPaperTimer() {
+  clearInterval(timerInterval);
+  const allowed = practicePresentation.durationSeconds();
+  lastTimestamp = Date.now();
+  paperDeadline = lastTimestamp + allowed * 1000;
+  minutes = Math.floor(allowed / 60);
+  seconds = allowed % 60;
+  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  timerInterval = setInterval(updateTimer, 1000);
+}</script>
 <div id="navigator-popup" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
  background:white; border:2px solid #0074c1; border-radius:10px; padding:20px; z-index:9999; width:300px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
 <h3 id="navigator-heading" style="margin-top: 0; color:#0074c1;"></h3>
@@ -2207,6 +2152,7 @@ body.ts-exam-done .ts-workspace-btn{
 
       var payload = {
         test_id: String(opts.test_id || '').trim(),
+        practice_settings:opts.practice_settings,
         test_title: String(opts.test_title || '').trim(),
         paper: String(opts.paper || '').trim(),
         total_questions: totalQuestions,
@@ -2283,7 +2229,7 @@ body.ts-exam-done .ts-workspace-btn{
 
 <!-- TS_TMUA_SCORE_CONVERSION_V1_START -->
 <script>window.TS_TMUA_SCORE_PROFILE="mock2";</script>
-<script src="/shared/tmua-score-conversions.js?v=20260806-1"></script>
+<script src="/shared/tmua-score-conversions.js?v=20261005-1"></script>
 <!-- TS_TMUA_SCORE_CONVERSION_V1_END -->
 </body>
 </html>

@@ -17,17 +17,19 @@
   function emailParams(r, cfg) {
     const analyses = r.modules.map(m => {
       const estimate = !r.incomplete && m.provisionalScore != null && Number.isFinite(Number(m.provisionalScore))
-        ? 'Provisional TS practice score: ' + Number(m.provisionalScore).toFixed(1) + ' / 9.0'
+        ? (r.scoreLabel || 'Provisional TS practice score') + ': ' + Number(m.provisionalScore).toFixed(1) + ' / 9.0'
         : 'Provisional TS practice score: unavailable for this incomplete attempt.';
       return [
         `${m.name} Score: ${m.rawScore} / ${m.questionCount}`,
         estimate,
+        r.practiceSettingsSummary || '',
+        r.practiceSettingsNote || '',
         `Started: ${m.startedAt || 'Not started'}`,
         `Submitted: ${m.submittedAt || 'Not submitted'}`,
         `Module time: ${secondsText(m.elapsedSeconds)} | Review: ${secondsText(m.reviewSeconds)} | Away: ${secondsText(m.awaySeconds)}`,
         '',
         ...m.questions.map(q =>
-          `Q.${q.number} | Correct: ${q.correctAnswer} — ${q.correctAnswerText}` +
+          `${q.reference || 'Q.' + q.number} | Correct: ${q.correctAnswer} — ${q.correctAnswerText}` +
           ` | Yours: ${q.selectedAnswer ? q.selectedAnswer + ' — ' + q.selectedAnswerText : 'Unanswered'}` +
           ` | Result: ${q.correct ? 'Correct' : q.selectedAnswer ? 'Incorrect' : 'Unanswered'}` +
           ` | Time: ${secondsText(q.timeSpentSeconds)}` +
@@ -45,11 +47,13 @@
     const note = baseNote.includes(predictionNote) ? baseNote : baseNote + ' ' + predictionNote;
     const moduleSummary = [
       'MODULE SCORE SUMMARY',
-      ...r.modules.map(m => `${m.name}: ${m.rawScore} / ${m.questionCount} | Provisional TS practice score: ` +
+      ...r.modules.map(m => `${m.name}: ${m.rawScore} / ${m.questionCount} | ${r.scoreLabel || 'Provisional TS practice score'}: ` +
         (!r.incomplete && m.provisionalScore != null && Number.isFinite(Number(m.provisionalScore))
           ? Number(m.provisionalScore).toFixed(1) + ' / 9.0'
           : 'unavailable for this incomplete attempt.')),
       note,
+      r.practiceSettingsSummary || '',
+      r.practiceSettingsNote || '',
       /no overall ESAT scaled score/i.test(note) ? '' : 'There is no overall ESAT scaled score.'
     ].filter(Boolean).join('\n');
     const params = {
@@ -99,7 +103,8 @@
       incorrect: questions.flatMap((q, i) => answer(q.selectedAnswer) && answer(q.selectedAnswer) === answer(q.correctAnswer) ? [] : [i + 1]),
       started_at: r.startedAt,
       student_name: r.student.name,
-      session_label: r.attemptId
+      session_label: r.attemptId,
+      ...(r.practice_settings ? {practice_settings:r.practice_settings} : {})
     };
   }
 

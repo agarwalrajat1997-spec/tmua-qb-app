@@ -508,6 +508,8 @@
 <script>
   var solutionPDF = "https://apps.thrivingscholars.com/tmua-solutions/topic-test-1-solutions.pdf";
 </script>
+<script src="/shared/practice-test-options.js?v=20261005-1"></script>
+<script src="/shared/tmua-practice-settings.js?v=20261005-1"></script>
 </head>
 <body>
 
@@ -515,7 +517,7 @@
     <h1 id="test-title">TMUA Mock Test 1</h1>
     <p class="subtitle">Paper 1 topic test · Algebra, Sequences, Functions &amp; Geometry</p>
 
-    <p><strong>Time allowed:</strong> 1 hour 15 minutes</p>
+    <p><strong>Time allowed:</strong> <span data-tmua-duration="paper">1 hour 15 minutes</span></p>
     <p><strong>Calculators are not permitted.</strong></p>
 
     <div class="candidate-row">
@@ -561,7 +563,7 @@
             </ul>
           </td>
           <td>20</td>
-          <td>75 minutes</td>
+          <td><span data-tmua-duration="paper">75 minutes</span></td>
         </tr>
       </tbody>
     </table>
@@ -651,6 +653,15 @@
   "answer": "B"
 },{"number":14,"section":"Sequences, Series & Algebraic Reasoning","topic":"Sequences & Series","promptHtml":"<p>The function \\(f\\) is defined on the positive integers by \\(f(1)=2\\). For \\(n\\ge1\\),</p>\n\\[\nf(n+1)=5f(n)+1 \\quad\\text{if } f(n)\\text{ is odd},\n\\]\n\\[\nf(n+1)=\\frac12f(n) \\quad\\text{if } f(n)\\text{ is even}.\n\\]\n<p>Find \\(\\sum_{r=1}^{100}f(r)\\).</p>","options":[{"letter":"A","html":"535"},{"letter":"B","html":"546"},{"letter":"C","html":"560"},{"letter":"D","html":"563"}],"answer":"D"},{"number":15,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebra & Functions","promptHtml":"<p>When \\(2x^2+3x-15\\) is multiplied by \\((ax-4)\\), and the resulting product is divided by \\(x+2\\), the remainder is \\(182\\).</p>\n<p>Find \\(a\\).</p>","options":[{"letter":"A","html":"\\(-9\\)"},{"letter":"B","html":"\\(-5\\)"},{"letter":"C","html":"\\(5\\)"},{"letter":"D","html":"\\(9\\)"}],"answer":"C"},{"number":16,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebra & Functions","promptHtml":"<p>Find the non-zero solution of</p>\n\\[\n\\frac{3^{16^x}}{81^{4^x}}=\\frac1{27}.\n\\]","options":[{"letter":"A","html":"\\(\\log_4 3\\)"},{"letter":"B","html":"\\(\\log_{16}3\\)"},{"letter":"C","html":"\\(1\\)"},{"letter":"D","html":"\\(2\\)"}],"answer":"A"},{"number":17,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebraic Reasoning","promptHtml":"<p>Let \\(n\\) be a positive integer. \\(x^2+2\\) is a factor of</p>\n\\[\n(x^4-5)^n-(x^2+1)^{n+1}+(x^2+4)^n(x^2+3)^n\n\\]\n<p>for:</p>","options":[{"letter":"A","html":"odd \\(n\\)"},{"letter":"B","html":"even \\(n\\)"},{"letter":"C","html":"no \\(n\\)"},{"letter":"D","html":"all \\(n\\)"},{"letter":"E","html":"\\(n=1\\)"}],"answer":"E"},{"number":18,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebraic Reasoning","promptHtml":"<p>\\(a\\) and \\(b\\) are non-zero integers.</p>\n<p>When \\(x^2-2ax-a^2\\) is divided by \\(x-b\\), the remainder is \\(1\\).</p>\n<p>The polynomial \\(4bx^2-6x-10\\) has \\(2x-a\\) as a factor.</p>\n<p>It follows that \\(a+b\\) equals:</p>","options":[{"letter":"A","html":"\\(-5\\)"},{"letter":"B","html":"\\(-3\\)"},{"letter":"C","html":"\\(-1\\)"},{"letter":"D","html":"\\(0\\)"}],"answer":"C"},{"number":19,"section":"Sequences, Series & Algebraic Reasoning","topic":"Sequences & Series","promptHtml":"<p>The polynomial \\(p_n\\) is defined by</p>\n\\[\np_n(x)=(x-2n+1)+(2x-2n+3)+(3x-2n+5)+\\cdots+(nx-1).\n\\]\n<p>Given \\(n\\ge2\\), what is the remainder when \\(p_n(x)\\) is divided by \\(p_{n-1}(x)\\)?</p>","options":[{"letter":"A","html":"\\(\\frac{n^2-1}{2}\\)"},{"letter":"B","html":"\\(n\\)"},{"letter":"C","html":"\\(-1\\)"},{"letter":"D","html":"\\(1\\)"}],"answer":"C"},{"number":20,"section":"Sequences, Series & Algebraic Reasoning","topic":"Algebra & Functions","promptHtml":"<p>Given that \\(x,y,z\\) are positive real numbers,</p>\n\\[\n4\\log_zx=y,\\qquad \\log_xz=y,\\qquad x+\\log_yz=0.\n\\]\n<p><strong>Which of the following is true?</strong></p>","options":[{"letter":"A","html":"Unique solution for \\(x\\), but not for \\(y\\) and \\(z\\)."},{"letter":"B","html":"Unique solutions for \\(x\\) and \\(y\\), but infinitely many solutions for \\(z\\)."},{"letter":"C","html":"Unique solutions for \\(x\\) and \\(z\\), but infinitely many solutions for \\(y\\)."},{"letter":"D","html":"Unique solution for \\(x\\), \\(y\\) and \\(z\\)."}],"answer":"D"}]);
     const correctAnswers = Object.freeze(QUESTIONS.map(q => q.answer));
+/* TS_TMUA_PRACTICE_SETTINGS_V1 */
+const practiceOptions=window.TS_TMUA_PRACTICE.create(TEST.id,[20]);
+window.TS_TMUA_PRACTICE.mount(practiceOptions,document.querySelector('#instructions .candidate-row'));
+function practiceQuestionLabel(index){return window.TS_TMUA_PRACTICE.questionLabel(practiceOptions,index);}
+function syncPracticeNavigation(){
+  if(!state.started)return;
+  practiceOptions.sequence().forEach((index,position)=>{const button=document.getElementById('nav-btn-'+index);if(!button)return;button.textContent=(state.flags[index]?'⚑ ':'')+(position+1);button.setAttribute('aria-label','Question '+(position+1)+(state.userAnswers[index]?', answered':', unanswered')+(state.flags[index]?', flagged':''));els.navigatorGrid.appendChild(button);});
+}
+
 
     const state = {
       current: 0,
@@ -706,13 +717,7 @@
       catch (_) { return TEST.solutionUrl; }
     }
 
-    function recordCurrentTime() {
-      if (!state.started || state.submitted || !state.lastQuestionTimestamp) return;
-      const now = performance.now();
-      const elapsed = Math.max(0, (now - state.lastQuestionTimestamp) / 1000);
-      state.timeSpent[state.current] += elapsed;
-      state.lastQuestionTimestamp = now;
-    }
+    function recordCurrentTime(){if(!state.started||state.submitted||!state.lastQuestionTimestamp)return;const now=Math.min(Date.now(),state.timerEndAt);state.timeSpent[state.current]+=Math.max(0,(now-state.lastQuestionTimestamp)/1000);state.lastQuestionTimestamp=now;}
 
     async function safeTypeset(target) {
       try {
@@ -751,33 +756,31 @@
 
       els.question.querySelectorAll('input[type="radio"]').forEach(input => {
         input.addEventListener("change", event => {
-          state.userAnswers[state.current] = event.target.value;
-          updateNavigator();
+          setPracticeAnswer(event.target.value);
         });
       });
 
       updateNavigator();
       safeTypeset(els.question);
       window.scrollTo({ top: 0, behavior: "instant" });
-    }
 
-    function goToQuestion(index) {
+window.TS_TMUA_PRACTICE.decorate(practiceOptions,els.question,state.current,Number(TEST.paper));
+const position=practiceOptions.positionOf(state.current);els.counter.textContent='Question '+(position+1)+' of '+QUESTIONS.length;els.prev.disabled=position===0;els.next.disabled=position===QUESTIONS.length-1;syncPracticeNavigation();
+}
+
+    function goToQuestion(index) {if(!canEditPractice())return;if(!state.started||state.submitted)return;
       if (!Number.isInteger(index) || index < 0 || index >= QUESTIONS.length || index === state.current) return;
       recordCurrentTime();
       state.current = index;
-      state.lastQuestionTimestamp = performance.now();
+      state.lastQuestionTimestamp = Date.now();
       renderQuestion();
     }
 
-    function nextQuestion() {
-      if (state.current < QUESTIONS.length - 1) goToQuestion(state.current + 1);
-    }
+    function nextQuestion(){if(!canEditPractice())return;if(!state.started||state.submitted)return;const position=practiceOptions.positionOf(state.current);if(position<QUESTIONS.length-1)goToQuestion(practiceOptions.questionAt(0,position+1));}
 
-    function prevQuestion() {
-      if (state.current > 0) goToQuestion(state.current - 1);
-    }
+    function prevQuestion(){if(!canEditPractice())return;if(!state.started||state.submitted)return;const position=practiceOptions.positionOf(state.current);if(position>0)goToQuestion(practiceOptions.questionAt(0,position-1));}
 
-    function toggleFlag() {
+    function toggleFlag() {if(!canEditPractice())return;
       state.flags[state.current] = !state.flags[state.current];
       els.flag.classList.toggle("flagged", state.flags[state.current]);
       els.flag.textContent = state.flags[state.current] ? "⚑ Flagged for Review" : "⚑ Flag for Review";
@@ -814,9 +817,11 @@
           `Question ${q.number}${state.userAnswers[index] ? ", answered" : ", unanswered"}${state.flags[index] ? ", flagged" : ""}`
         );
       });
-    }
 
-    function openNavigator() {
+syncPracticeNavigation();
+}
+
+    function openNavigator() {if(!canEditPractice())return;
       els.navigator.style.display = "block";
       const currentButton = document.getElementById(`nav-btn-${state.current}`);
       if (currentButton) currentButton.focus();
@@ -859,9 +864,9 @@
       state.studentName = name;
       state.studentEmail = email;
       state.session = sessionInput.value;
-      state.started = true;
-      state.timerEndAt = Date.now() + TEST.durationSeconds * 1000;
-      state.lastQuestionTimestamp = performance.now();
+      practiceOptions.start();state.current=practiceOptions.questionAt(0,0);state.started=true;
+      state.timerEndAt = Date.now() + practiceOptions.durationSeconds() * 1000;
+      state.lastQuestionTimestamp = Date.now();
 
       els.instructions.style.display = "none";
       els.exam.style.display = "block";
@@ -870,16 +875,16 @@
       renderQuestion();
     }
 
-    function confirmSubmit() {
+    function confirmSubmit() {if(!canEditPractice())return;
       if (state.submitted) return;
       const unanswered = state.userAnswers.filter(answer => answer === null).length;
       const message = unanswered
         ? `You have ${unanswered} unanswered question${unanswered === 1 ? "" : "s"}. Submit the test now?`
         : "Submit the test now?";
-      if (window.confirm(message)) submitExam(false);
+      if(window.confirm(message)&&canEditPractice())submitExam(false);
     }
 
-    function estimateTmuaScore(rawCorrect, totalQuestions = 20, thresholdRaw = 6) {
+    function estimateTmuaScore(rawCorrect, totalQuestions = 20, thresholdRaw = 6) {rawCorrect=practiceOptions.adjustedRaw(rawCorrect,QUESTIONS.length);
       const raw = Number(rawCorrect) || 0;
       const total = Number(totalQuestions) || 20;
       const threshold = Number(thresholdRaw) || 6;
@@ -896,7 +901,7 @@
         const status = yours === "—" ? "—" : (isCorrect ? "✓" : "✗");
         return `
           <tr>
-            <td>${q.number}</td>
+            <td>${practiceQuestionLabel(index)}</td>
             <td>${yours}</td>
             <td>${correct}</td>
             <td>${formatQuestionTime(state.timeSpent[index])}</td>
@@ -906,9 +911,9 @@
     }
 
     function buildPlainTextAnalysis() {
-      return QUESTIONS.map((q, index) => {
+      return practiceOptions.summary()+". "+practiceOptions.scoreNote()+"\n"+QUESTIONS.map((q, index) => {
         const yours = state.userAnswers[index] ?? "-";
-        return `Q.${q.number} Correct: ${q.answer} Yours: ${yours} Time: ${formatQuestionTime(state.timeSpent[index])}`;
+        return `Q.${practiceQuestionLabel(index)} Correct: ${q.answer} Yours: ${yours} Time: ${formatQuestionTime(state.timeSpent[index])}`;
       }).join("\n");
     }
 
@@ -977,7 +982,9 @@
       document.body.classList.add("ts-exam-done");
       window.__TS_EXAM_DONE = true;
       safeTypeset(els.question);
-    }
+
+window.TS_TMUA_PRACTICE.resultNote(practiceOptions,els.question.querySelector('.result-card'));
+}
 
     function setResultStatus(id, kind, message) {
       const node = document.getElementById(id);
@@ -996,7 +1003,7 @@
           headers: { "Content-Type": "application/json" },
           signal: controller.signal,
           body: JSON.stringify({
-            test_id: TEST.id,
+            test_id:TEST.id,practice_settings:practiceOptions.metadata(),
             test_title: TEST.title,
             paper: TEST.paper,
             total_questions: QUESTIONS.length,
@@ -1137,7 +1144,10 @@
     window.toggleFlag = toggleFlag;
     window.openNavigator = openNavigator;
     window.submitExam = submitExam;
-  </script>
+
+function canEditPractice(){if(!state.started||state.submitted)return false;if(Date.now()>=state.timerEndAt){submitExam(true);return false;}return true;}
+function setPracticeAnswer(value){if(!canEditPractice())return false;state.userAnswers[state.current]=value;updateNavigator();return true;}
+</script>
   <script src="/shared/test-fullscreen.js?v=20260805-2" defer></script>
 </body>
 </html>

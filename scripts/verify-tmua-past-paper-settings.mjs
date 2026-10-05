@@ -97,6 +97,7 @@ function load(file) {
 function database() {
   const calls = [], inserted = [], tables = {
     tmua_test_catalog: Object.keys(counts).map(id => ({ test_id: id, title: id, paper: "full", expected_questions: 40, score_conversion_profile: "qa-profile" })),
+    tmua_score_conversion_profiles: [{ profile: "qa-profile", conversion_version: "qa-v1", score_values: Array.from({ length: 41 }, (_, raw) => 1 + raw / 5) }],
     practice_test_attempts: [], tmua_test_attempt_evaluations: [],
   };
   const result = { calls, inserted, tables, from(table) {
@@ -106,6 +107,7 @@ function database() {
     const query = {
       select(columns) { call.columns = columns; return query; },
       eq(key, value) { call.filters.push([key, value]); return query; },
+      in() { return query; },
       order() { return query; }, limit() { return query; },
       insert(value) { inserting = { id: `qa-${inserted.length}`, ...value }; inserted.push(inserting); tables[table].push(inserting); return query; },
       async maybeSingle() { return { data: inserting ?? rows()[0] ?? null, error: null }; },
@@ -138,6 +140,9 @@ for (const id of Object.keys(counts)) {
     assert.equal(saved.predictor_metadata.raw_mark_authority, "server_canonical_key_v1");
     assert.equal(saved.predictor_metadata.client_correct_answers_match_canonical, false);
     assert.deepEqual(saved.predictor_metadata.tmua_past_paper_settings, attemptSettings);
+    assert.equal(response.body.standard_time_estimate.actual_raw, 26);
+    assert.equal(response.body.standard_time_estimate.adjusted_raw, 26 - (multiplier === 1.25 ? 3 : multiplier === 1.5 ? 5 : 0));
+    assert.equal(response.body.practice_settings.time_multiplier, multiplier);
     const history = await GET({ url: `https://qa.invalid/api/practice-tests/attempts?test_id=${id}` });
     assert.equal(history.status, 200);
     assert.deepEqual(copy(history.body.attempts[0].attempt_settings), attemptSettings);
@@ -160,6 +165,7 @@ db = database();
 const legacy = await POST({ json: async () => ({ test_id: testId, answers: getCanonicalTmuaTest(testId).answers }) });
 assert.equal(legacy.status, 200);
 assert.equal(db.inserted[0].predictor_metadata.tmua_past_paper_settings, undefined);
+assert.equal(db.inserted[0].predictor_metadata.standard_time_estimate, undefined);
 authorised = false;
 assert.equal((await POST({ json: async () => ({ test_id: testId }) })).status, 401);
 assert.equal((await GET({ url: "https://qa.invalid/api/practice-tests/attempts" })).status, 401);

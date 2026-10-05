@@ -369,11 +369,13 @@
     }
   </style>
 <link href="/shared/esat-score-estimates.css?v=20260818-1" rel="stylesheet"/>
+<script src="/shared/practice-test-options.js?v=20261005-1"></script>
 </head>
 <body>
 <div id="instructions">
-<h2 id="test-title">ESAT 2024–2025 Recall Mock</h2><p style="margin-top:-8px;font-weight:700;color:#8b1e1e;">Hard · Physics + Biology</p>
-<p><strong>Time allowed:</strong> 2 hours - three sections of 40 minutes each</p>
+<h2 id="test-title">ESAT 2024–2025 Recall Mock</h2>
+<div id="ts-practice-settings"></div><p style="margin-top:-8px;font-weight:700;color:#8b1e1e;">Hard · Physics + Biology</p>
+<p><strong>Time allowed:</strong> <span data-esat-duration="total">120 minutes</span> - three sections of <span data-esat-duration="section">40 minutes</span> each</p>
 <p><strong>Calculators are not permitted.</strong>
 <span id="ts-recall-methodology-v1" role="note" style="display:block;max-width:1080px;margin:14px 0 18px;padding:12px 14px;border-left:4px solid #f4bd42;border-radius:4px;background:#fff8e7;color:#273248;font-size:0.95rem;font-weight:400;line-height:1.45;box-sizing:border-box;">
   <span style="display:block;margin-bottom:4px;"><strong>How this mock was compiled:</strong> The questions were independently written against the published ESAT specification, informed by general topic, format and difficulty recollections that students shared publicly on social media and discussion forums after sitting the test.</span>
@@ -409,7 +411,7 @@
 <th style="border: 1px solid #ccc; padding: 10px;">Time</th>
 </tr>
 </thead>
-<tbody><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">1</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Mathematics 1</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td></tr><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">2</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Physics</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td></tr><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">3</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Biology</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td></tr></tbody>
+<tbody><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">1</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Mathematics 1</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-esat-duration="section">40 minutes</span></td></tr><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">2</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Physics</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-esat-duration="section">40 minutes</span></td></tr><tr><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">3</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Biology</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td><td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-esat-duration="section">40 minutes</span></td></tr></tbody>
 </table>
 <p style="font-size: 16px; margin-top: 20px;">
     Choose the one correct answer for each question. There are <strong>no penalties for incorrect answers</strong> - marks are awarded only for correct responses.
@@ -456,6 +458,26 @@ const sectionNames = ["Mathematics 1", "Physics", "Biology"];
 const sectionKeys = ["mathematics_1", "physics", "biology"];
 const pathwayName = "Physics + Biology";
 const testId = "esat-recall-2024-25-physics-biology";
+
+// TS_ESAT_PRACTICE_SETTINGS_V1: display order never changes canonical answer identities.
+const practiceSettings = window.TS_TEST_OPTIONS.create({testId,sectionSizes:[27,27,27],baseSeconds:2400,programme:"ESAT"});
+window.TS_ESAT_PRACTICE_SETTINGS = practiceSettings;
+practiceSettings.mount("#ts-practice-settings");
+function updatePracticeTiming(){
+  document.querySelectorAll("[data-esat-duration]").forEach(el=>{el.textContent=String(practiceSettings.durationSeconds()/60*(el.dataset.esatDuration==="total"?3:1))+" minutes";});
+}
+document.getElementById("ts-practice-settings").addEventListener("change",updatePracticeTiming);
+updatePracticeTiming();
+function esatQuestionReference(index){
+  const original=index%27+1,shown=practiceSettings.positionOf(index)+1;
+  return practiceSettings.metadata().order==="randomised"?"Original Q"+original+" (shown as Q"+shown+")":"Q"+original;
+}
+function decoratePracticeQuestion(){
+  const heading=container.querySelector(".question-number");
+  if(heading)heading.textContent="Question "+(practiceSettings.positionOf(current)+1)+(practiceSettings.metadata().order==="randomised"?" · Original Q"+(current%27+1):"");
+}
+function practiceResultNote(){return '<p class="ts-practice-result-note">'+practiceSettings.summary()+'</p><p>'+practiceSettings.scoreNote()+'</p>';}
+
 const questions = [
   "<div class=\"question-number\">Question 1</div>\n<p>A tank contains an alloy in which copper and zinc are in the mass ratio \\(5:3\\). Exactly \\(8\\text{ kg}\\) of the well-mixed alloy is removed and replaced by \\(8\\text{ kg}\\) of pure zinc. The new copper-to-zinc ratio is \\(3:2\\).</p>\n<p>What was the original mass of alloy in the tank?</p>\n<div><label><input name=\"q1\" type=\"radio\" value=\"A\"/> \\(80\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"B\"/> \\(192\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"C\"/> \\(200\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"D\"/> \\(\\frac{200}{9}\\text{ kg}\\)</label><br/><label><input name=\"q1\" type=\"radio\" value=\"E\"/> \\(320\\text{ kg}\\)</label><br/></div>",
   "<div class=\"question-number\">Question 2</div>\n<p>For positive integers \\(a\\) and \\(b\\), the highest common factor of \\(a\\) and \\(b\\) is \\(6\\), and their lowest common multiple is \\(180\\).</p>\n<p>How many <em>ordered</em> pairs \\((a,b)\\) satisfy these conditions?</p>\n<div><label><input name=\"q2\" type=\"radio\" value=\"A\"/> \\(8\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"B\"/> \\(4\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"C\"/> \\(6\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"D\"/> \\(3\\)</label><br/><label><input name=\"q2\" type=\"radio\" value=\"E\"/> \\(16\\)</label><br/></div>",
@@ -576,16 +598,27 @@ const sectionChip = document.getElementById("section-chip");
 function formatTime(seconds){ const s=Math.max(0,Math.ceil(Number(seconds)||0)); return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`; }
 function currentSectionStart(){ return sectionIndex*SECTION_SIZE; }
 function currentSectionEnd(){ return currentSectionStart()+SECTION_SIZE-1; }
-function currentQuestionInSection(){ return current-currentSectionStart()+1; }
-function commitVisibleTime(){ const now=Date.now(); if(document.getElementById("exam-interface").style.display!=="none") timeSpent[current]+=(now-lastTimestamp)/1000; lastTimestamp=now; }
-function getRemainingSeconds(deadline){ return deadline ? Math.max(0,Math.ceil((deadline-Date.now())/1000)) : SECTION_SECONDS; }
+function currentQuestionInSection(){ return practiceSettings.positionOf(current)+1; }
+// TS_ESAT_DEADLINE_GUARD_V1: actions sync expiry before changing canonical answers.
+function commitVisibleTime(){
+  const now=Date.now(),end=Math.min(now,sectionDeadline||now);
+  if(!window.__ESAT_SUBMIT_DONE&&!breakDeadline&&document.getElementById("exam-interface").style.display!=="none")timeSpent[current]+=Math.max(0,end-lastTimestamp)/1000;
+  lastTimestamp=now;
+}
+function ensureSectionOpen(){
+  if(window.__ESAT_SUBMIT_DONE||breakDeadline||document.getElementById("exam-interface").style.display==="none")return false;
+  if(Date.now()>=sectionDeadline){updateTimer();return false;}
+  return true;
+}
+function getRemainingSeconds(deadline){ return deadline ? Math.max(0,Math.ceil((deadline-Date.now())/1000)) : practiceSettings.durationSeconds(); }
 
 function getLocalAttemptHistory(){
   try{ const p=JSON.parse(localStorage.getItem(`${testId}::attempt-history`)||"[]"); return Array.isArray(p)?p:[]; }catch(_){ return []; }
 }
 function persistActive(){
+  if(window.__ESAT_SUBMIT_DONE)return;
   try{
-    const state={version:3,testId,studentName,studentEmail,testSession,attemptNumber,sectionIndex,current,userAnswers,flags,timeSpent,sectionDeadline,breakDeadline,savedAt:Date.now()};
+    const state={version:3,testId,practice_settings:practiceSettings.metadata(),studentName,studentEmail,testSession,attemptNumber,sectionIndex,current,userAnswers,flags,timeSpent,sectionDeadline,breakDeadline,savedAt:Date.now()};
     localStorage.setItem(ACTIVE_KEY,JSON.stringify(state));
   }catch(err){ console.warn("Active-attempt autosave unavailable",err); }
 }
@@ -594,65 +627,81 @@ function loadActive(){
 }
 function clearActive(){ try{localStorage.removeItem(ACTIVE_KEY);}catch(_){} }
 function restoreActive(s){
+  practiceSettings.restore(s.practice_settings); updatePracticeTiming();
   studentName=s.studentName||"Student"; studentEmail=s.studentEmail||""; testSession=s.testSession||""; attemptNumber=Number(s.attemptNumber)||1;
   sectionIndex=Math.min(2,Math.max(0,Number(s.sectionIndex)||0)); current=Math.min(totalQuestions-1,Math.max(currentSectionStart(),Number(s.current)||currentSectionStart()));
   for(let i=0;i<totalQuestions;i++){ userAnswers[i]=s.userAnswers[i]??null; flags[i]=Boolean(s.flags&&s.flags[i]); timeSpent[i]=Number(s.timeSpent&&s.timeSpent[i])||0; }
-  sectionDeadline=Number(s.sectionDeadline)||Date.now()+SECTION_SECONDS*1000; breakDeadline=Number(s.breakDeadline)||null;
+  sectionDeadline=Number(s.sectionDeadline)||Date.now()+practiceSettings.durationSeconds()*1000; breakDeadline=Number(s.breakDeadline)||null;
 }
 
 function startExam(){
+  if (window.__ESAT_STARTED) return;
   const enteredName=document.getElementById("student-name").value.trim();
   const enteredEmail=document.getElementById("student-email").value.trim();
   const selectedSession=document.getElementById("test-date").value;
   const saved=loadActive();
   if(saved && confirm("A saved attempt for this test was found. Resume it?")){
-    restoreActive(saved);
+    try{restoreActive(saved);}catch(error){alert(error.message);return;}
   }else{
-    clearActive(); studentName=enteredName||"Student"; studentEmail=enteredEmail; testSession=selectedSession; attemptNumber=getLocalAttemptHistory().length+1;
-    sectionIndex=0; current=0; sectionDeadline=Date.now()+SECTION_SECONDS*1000; breakDeadline=null; lastTimestamp=Date.now();
+    practiceSettings.start(); clearActive(); studentName=enteredName||"Student"; studentEmail=enteredEmail; testSession=selectedSession; attemptNumber=getLocalAttemptHistory().length+1;
+    sectionIndex=0; current=practiceSettings.questionAt(0,0); sectionDeadline=Date.now()+practiceSettings.durationSeconds()*1000; breakDeadline=null; lastTimestamp=Date.now();
   }
+  window.__ESAT_STARTED = true;
   document.getElementById("instructions").style.display="none";
+  // TS_ESAT_RESTORE_BREAK_V1: submitted modules remain locked across a break reload.
+  if(breakDeadline){
+    document.getElementById("exam-interface").style.display="none";
+    document.getElementById("break-screen").style.display="flex";
+    document.getElementById("break-title").textContent=`End of ${sectionNames[sectionIndex]}`;
+    document.getElementById("break-copy").textContent=`You can take a 5-minute break before starting ${sectionNames[sectionIndex+1]}.`;
+    lastTimestamp=Date.now(); clearInterval(breakInterval); updateBreakTimer();
+    if(breakDeadline)breakInterval=setInterval(updateBreakTimer,250);
+    persistActive(); return;
+  }
   document.getElementById("break-screen").style.display="none";
   document.getElementById("exam-interface").style.display="block";
   renderQuestion(); generateNavigatorButtons(); startSectionTimer(); persistActive();
 }
-function startSectionTimer(){ clearInterval(timerInterval); updateTimer(); timerInterval=setInterval(updateTimer,250); }
+function startSectionTimer(){ clearInterval(timerInterval); updateTimer(); if(!breakDeadline&&!window.__ESAT_SUBMIT_DONE)timerInterval=setInterval(updateTimer,250); }
 function updateTimer(){
+  if(window.__ESAT_SUBMIT_DONE||breakDeadline||document.getElementById("exam-interface").style.display==="none")return;
   const left=getRemainingSeconds(sectionDeadline); timerDisplay.textContent=formatTime(left);
   if(left<=0 && !finalisingSection){ clearInterval(timerInterval); commitVisibleTime(); finishCurrentSection(false); }
 }
 function safeTypeset(){ try{ if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise([container]); else if(window.MathJax&&MathJax.Hub) MathJax.Hub.Queue(["Typeset",MathJax.Hub,container]); }catch(e){console.warn(e);} }
 function renderQuestion(){
-  container.innerHTML=questions[current]; sectionChip.textContent=sectionNames[sectionIndex]; counter.textContent=`Q${currentQuestionInSection()} of ${SECTION_SIZE} (${sectionNames[sectionIndex]})`;
+  container.innerHTML=questions[current]; decoratePracticeQuestion(); sectionChip.textContent=sectionNames[sectionIndex]; counter.textContent=`Q${currentQuestionInSection()} of ${SECTION_SIZE} (${sectionNames[sectionIndex]})`;
   const selected=userAnswers[current]; if(selected){ const radio=container.querySelector(`input[type=radio][value="${CSS.escape(selected)}"]`); if(radio) radio.checked=true; }
-  container.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener("change",()=>{userAnswers[current]=r.value; updateNavigatorButton(current); persistActive();}));
-  document.getElementById("prev-btn").disabled=current===currentSectionStart();
-  document.getElementById("next-btn").textContent=current===currentSectionEnd()?"Finish Section →":"Next →";
+  container.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener("change",()=>{if(!ensureSectionOpen())return;userAnswers[current]=r.value; updateNavigatorButton(current); persistActive();}));
+  document.getElementById("prev-btn").disabled=practiceSettings.positionOf(current)===0;
+  document.getElementById("next-btn").textContent=practiceSettings.positionOf(current)===SECTION_SIZE-1?"Finish Section →":"Next →";
   updateFlagButton(); updateNavigatorButton(current); lastTimestamp=Date.now(); safeTypeset(); persistActive();
 }
-function goTo(index){ if(index<currentSectionStart()||index>currentSectionEnd())return; commitVisibleTime(); current=index; renderQuestion(); }
-function prevQuestion(){ if(current>currentSectionStart())goTo(current-1); }
-function nextQuestion(){
-  if(current<currentSectionEnd()){ goTo(current+1); return; }
+function goTo(index){ if(!ensureSectionOpen())return; if(index<currentSectionStart()||index>currentSectionEnd())return; commitVisibleTime(); current=index; renderQuestion(); }
+function prevQuestion(){ if(!ensureSectionOpen())return; if(practiceSettings.positionOf(current)>0)goTo(practiceSettings.questionAt(sectionIndex,practiceSettings.positionOf(current)-1)); }
+function nextQuestion(){ if(!ensureSectionOpen())return;
+  if(practiceSettings.positionOf(current)<SECTION_SIZE-1){ goTo(practiceSettings.questionAt(sectionIndex,practiceSettings.positionOf(current)+1)); return; }
   if(confirm(`Submit ${sectionNames[sectionIndex]}? You will not be able to return to this section.`)){ commitVisibleTime(); finishCurrentSection(true); }
 }
-function toggleFlag(){ flags[current]=!flags[current]; updateFlagButton(); updateNavigatorButton(current); persistActive(); }
+function toggleFlag(){ if(!ensureSectionOpen())return; flags[current]=!flags[current]; updateFlagButton(); updateNavigatorButton(current); persistActive(); }
 function updateFlagButton(){ const b=document.getElementById("flag-btn"); if(!b)return; b.classList.toggle("flagged",flags[current]); b.textContent=flags[current]?"⚑ Flagged for Review":"⚑ Flag for Review"; }
-function openNavigator(){ generateNavigatorButtons(); document.getElementById("navigator-popup").style.display="block"; }
+function openNavigator(){ if(!ensureSectionOpen())return; generateNavigatorButtons(); document.getElementById("navigator-popup").style.display="block"; }
 function closeNavigator(){ document.getElementById("navigator-popup").style.display="none"; }
 function jumpTo(i){ goTo(i); closeNavigator(); }
 function generateNavigatorButtons(){
   const grid=document.getElementById("navigator-grid"); grid.innerHTML=""; document.getElementById("navigator-heading").textContent=sectionNames[sectionIndex];
-  for(let i=0;i<SECTION_SIZE;i++){ const a=currentSectionStart()+i,b=document.createElement("button"); b.textContent=i+1;b.dataset.index=a;b.id=`nav-btn-${a}`;b.style.padding="10px";b.style.border="1px solid #cbd5e1";b.style.borderRadius="6px";b.onclick=()=>jumpTo(a);grid.appendChild(b);updateNavigatorButton(a); }
+  for(let i=0;i<SECTION_SIZE;i++){ const a=practiceSettings.questionAt(sectionIndex,i),b=document.createElement("button"); b.textContent=i+1;b.dataset.index=a;b.id=`nav-btn-${a}`;b.style.padding="10px";b.style.border="1px solid #cbd5e1";b.style.borderRadius="6px";b.onclick=()=>jumpTo(a);grid.appendChild(b);updateNavigatorButton(a); }
 }
-function updateNavigatorButton(i){ const b=document.getElementById(`nav-btn-${i}`); if(!b)return; b.style.background=flags[i]?"#f59e0b":(userAnswers[i]?"#dbeafe":"white"); b.style.color=flags[i]?"#111827":"#0f172a"; b.style.fontWeight=(i===current)?"800":"600"; b.textContent=`${i-currentSectionStart()+1}${flags[i]?" ⚑":""}`; }
-function confirmSubmit(){ if(confirm(`Submit ${sectionNames[sectionIndex]}? You will not be able to return to this section.`)){ commitVisibleTime(); finishCurrentSection(true); } }
+function updateNavigatorButton(i){ const b=document.getElementById(`nav-btn-${i}`); if(!b)return; b.style.background=flags[i]?"#f59e0b":(userAnswers[i]?"#dbeafe":"white"); b.style.color=flags[i]?"#111827":"#0f172a"; b.style.fontWeight=(i===current)?"800":"600"; b.textContent=`${practiceSettings.positionOf(i)+1}${flags[i]?" ⚑":""}`; }
+function confirmSubmit(){ if(!ensureSectionOpen())return; if(confirm(`Submit ${sectionNames[sectionIndex]}? You will not be able to return to this section.`)){ commitVisibleTime(); finishCurrentSection(true); } }
 function finishCurrentSection(manual){
   if(finalisingSection)return; finalisingSection=true; clearInterval(timerInterval); persistActive();
   if(sectionIndex<sectionNames.length-1){ showBreakScreen(); } else { submitExam(); }
   finalisingSection=false;
 }
 function showBreakScreen(){
+  if(breakDeadline||window.__ESAT_SUBMIT_DONE)return;
+  commitVisibleTime();clearInterval(timerInterval);closeNavigator();
   document.getElementById("exam-interface").style.display="none"; document.getElementById("break-screen").style.display="flex";
   document.getElementById("break-title").textContent=`End of ${sectionNames[sectionIndex]}`;
   document.getElementById("break-copy").textContent=`You can take a 5-minute break before starting ${sectionNames[sectionIndex+1]}.`;
@@ -660,29 +709,29 @@ function showBreakScreen(){
 }
 function updateBreakTimer(){ const left=getRemainingSeconds(breakDeadline); document.getElementById("break-timer").textContent=formatTime(left); if(left<=0){clearInterval(breakInterval);beginNextSection();} }
 function skipBreak(){ clearInterval(breakInterval); beginNextSection(); }
-function beginNextSection(){ sectionIndex++;current=currentSectionStart();sectionDeadline=Date.now()+SECTION_SECONDS*1000;breakDeadline=null;document.getElementById("break-screen").style.display="none";document.getElementById("exam-interface").style.display="block";renderQuestion();generateNavigatorButtons();startSectionTimer();persistActive(); }
+function beginNextSection(){ if(!breakDeadline||window.__ESAT_SUBMIT_DONE)return; sectionIndex++;current=practiceSettings.questionAt(sectionIndex,0);sectionDeadline=Date.now()+practiceSettings.durationSeconds()*1000;breakDeadline=null;document.getElementById("break-screen").style.display="none";document.getElementById("exam-interface").style.display="block";renderQuestion();generateNavigatorButtons();startSectionTimer();persistActive(); }
 
 function sectionRows(section){
   const start=section*SECTION_SIZE; let score=0,rows=[];
-  for(let i=start;i<start+SECTION_SIZE;i++){ const good=userAnswers[i]===correctAnswers[i]; if(good)score++; const sec=Math.round(timeSpent[i]||0); rows.push(`<tr><td>${i-start+1}</td><td>${correctAnswers[i]}</td><td>${userAnswers[i]||"–"}</td><td>${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}</td><td>${flags[i]?"Flagged":(good?"Correct":"Incorrect")}</td></tr>`); }
+  for(let i=start;i<start+SECTION_SIZE;i++){ const good=userAnswers[i]===correctAnswers[i]; if(good)score++; const sec=Math.round(timeSpent[i]||0); rows.push(`<tr><td>${esatQuestionReference(i)}</td><td>${correctAnswers[i]}</td><td>${userAnswers[i]||"–"}</td><td>${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}</td><td>${flags[i]?"Flagged":(good?"Correct":"Incorrect")}</td></tr>`); }
   return {score,rows:rows.join("")};
 }
 function buildSectionEmailAnalysis(title,section){
-  const start=section*SECTION_SIZE; let out=`${title} Analysis\n`;
-  for(let i=start;i<start+SECTION_SIZE;i++){const sec=Math.round(timeSpent[i]||0);out+=`Q.${i-start+1} Correct: ${correctAnswers[i]} Yours: ${userAnswers[i]||"-"} Time: ${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}${flags[i]?" Flagged":""}\n`;}
+  const start=section*SECTION_SIZE; let out=`${practiceSettings.summary()}\n${practiceSettings.scoreNote()}\n${title} Analysis\n`;
+  for(let i=start;i<start+SECTION_SIZE;i++){const sec=Math.round(timeSpent[i]||0);out+=`${esatQuestionReference(i)} Correct: ${correctAnswers[i]} Yours: ${userAnswers[i]||"-"} Time: ${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}${flags[i]?" Flagged":""}\n`;}
   return out.trim();
 }
 function saveAttemptSummary(totalScore,scores){
-  const key=`${testId}::attempt-history`; const history=getLocalAttemptHistory(); const payload={testId,attemptNumber,studentName,studentEmail,testSession,totalScore,sectionScores:scores,submittedAt:new Date().toISOString()}; history.push(payload);
+  const key=`${testId}::attempt-history`; const history=getLocalAttemptHistory(); const payload={testId,practice_settings:practiceSettings.metadata(),attemptNumber,studentName,studentEmail,testSession,totalScore,sectionScores:scores,submittedAt:new Date().toISOString()}; history.push(payload);
   try{localStorage.setItem(key,JSON.stringify(history));localStorage.setItem(`${testId}::latest-result`,JSON.stringify(payload));}catch(_){}
 }
 window.TS_BUILD_INCORRECT_LIST=window.TS_BUILD_INCORRECT_LIST||function(ans,key){return key.map((v,i)=>ans[i]===v?null:i+1).filter(Boolean)};
 window.TS_SAVE_ATTEMPT=window.TS_SAVE_ATTEMPT||async function(opts){
-  try{ const payload={test_id:String(opts.test_id||"").trim(),test_title:String(opts.test_title||"").trim(),paper:String(opts.paper||"full"),total_questions:Number(opts.total_questions||81),score:Number(opts.score||0),answers:opts.answers||[],correct_answers:opts.correct_answers||[],time_spent:opts.time_spent||[],flags:opts.flags||[],incorrect:opts.incorrect||[]};
+  try{ const payload={practice_settings:practiceSettings.metadata(),test_id:String(opts.test_id||"").trim(),test_title:String(opts.test_title||"").trim(),paper:String(opts.paper||"full"),total_questions:Number(opts.total_questions||81),score:Number(opts.score||0),answers:opts.answers||[],correct_answers:opts.correct_answers||[],time_spent:opts.time_spent||[],flags:opts.flags||[],incorrect:opts.incorrect||[]};
     const res=await fetch("/api/practice-tests/submit",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); let body={};try{body=await res.json();}catch(_){} return {ok:res.ok,status:res.status,body};
   }catch(err){return {ok:false,error:String(err)}}
 };
-async function saveRemoteAttempt(totalScore){ return window.TS_SAVE_ATTEMPT({test_id:testId,test_title:"ESAT 2024–2025 Recall Mock",paper:"full",total_questions:totalQuestions,score:totalScore,answers:userAnswers,correct_answers:correctAnswers,time_spent:timeSpent,flags,incorrect:window.TS_BUILD_INCORRECT_LIST(userAnswers,correctAnswers)}); }
+async function saveRemoteAttempt(totalScore){ return window.TS_SAVE_ATTEMPT({practice_settings:practiceSettings.metadata(),test_id:testId,test_title:"ESAT 2024–2025 Recall Mock",paper:"full",total_questions:totalQuestions,score:totalScore,answers:userAnswers,correct_answers:correctAnswers,time_spent:timeSpent,flags,incorrect:window.TS_BUILD_INCORRECT_LIST(userAnswers,correctAnswers)}); }
 function sendResultsEmail(totalScore,scores,timestamp){
   if(!studentEmail)return Promise.resolve({ok:false,skipped:true,reason:"no email entered"}); if(!window.emailjs||!emailjs.send)return Promise.resolve({ok:false,skipped:true,reason:"EmailJS unavailable"});
   const emailAnalyses=sectionNames.map((name,i)=>buildSectionEmailAnalysis(name,i));
@@ -707,14 +756,14 @@ function sendResultsEmail(totalScore,scores,timestamp){
 }
 function statusText(r,yes,no){if(!r)return"Not checked";if(r.ok)return yes;if(r.skipped)return`Skipped: ${r.reason||"not available"}`;return no;}
 async function submitExam(){
-  if(window.__ESAT_SUBMIT_DONE)return;window.__ESAT_SUBMIT_DONE=true;clearInterval(timerInterval);clearInterval(breakInterval);commitVisibleTime();
+  if(window.__ESAT_SUBMIT_DONE)return;commitVisibleTime();window.__ESAT_SUBMIT_DONE=true;clearInterval(timerInterval);clearInterval(breakInterval);closeNavigator();
   const sections=sectionNames.map((_,i)=>sectionRows(i));const scores=sections.map(x=>x.score);const totalScore=scores.reduce((a,b)=>a+b,0);const timestamp=new Date().toLocaleString();saveAttemptSummary(totalScore,scores);
   const settled=await Promise.allSettled([saveRemoteAttempt(totalScore),sendResultsEmail(totalScore,scores,timestamp)]);const saveR=settled[0].status==="fulfilled"?settled[0].value:{ok:false,error:String(settled[0].reason)};const mailR=settled[1].status==="fulfilled"?settled[1].value:{ok:false,error:String(settled[1].reason)};
   clearActive();
   const cards=sectionNames.map((n,i)=>`<div class="result-mini"><h3>${n}</h3><div>${scores[i]} / 27</div></div>`).join("");
   const analyses=sectionNames.map((n,i)=>`<h3>${n}</h3><table><thead><tr><th>Question</th><th>Correct</th><th>Your answer</th><th>Time</th><th>Status</th></tr></thead><tbody>${sections[i].rows}</tbody></table>`).join("");
   const solutionBlock=solutionPDF?`<h3 style="margin-top:40px;">📄 View Full Solutions</h3><iframe id="solution-frame" src="${solutionPDF}" width="100%" height="600" style="border:1px solid #ccc;margin-top:10px;"></iframe>`:"";
-  container.innerHTML=`<div class="result-wrap"><div class="result-card"><div style="font-size:120px;">${totalScore>=55?"😊":"😐"}</div><h1>Exam Completed</h1><table style="border-collapse:collapse;margin:20px auto;font-size:18px;"><tr><td><strong>Name</strong></td><td>${studentName}</td></tr><tr><td><strong>Pathway</strong></td><td>${pathwayName}</td></tr><tr><td><strong>Session</strong></td><td>${testSession}</td></tr><tr><td><strong>Attempt</strong></td><td>${attemptNumber}</td></tr><tr><td><strong>Submitted</strong></td><td>${timestamp}</td></tr><tr><td><strong>Attempt Save</strong></td><td>${statusText(saveR,"Saved to attempt history","Could not save to attempt history")}</td></tr><tr><td><strong>Result Email</strong></td><td>${statusText(mailR,"Email sent","Email could not be sent")}</td></tr><tr><td><strong>Total Score</strong></td><td>${totalScore} / ${totalQuestions}</td></tr></table><div class="result-grid">${cards}</div>${analyses}<button onclick="location.reload()" style="margin-top:26px;">Reattempt Test</button>${solutionBlock}</div></div>`;
+  container.innerHTML=`<div class="result-wrap"><div class="result-card"><div style="font-size:120px;">${totalScore>=55?"😊":"😐"}</div><h1>Exam Completed</h1>${practiceResultNote()}<table style="border-collapse:collapse;margin:20px auto;font-size:18px;"><tr><td><strong>Name</strong></td><td>${studentName}</td></tr><tr><td><strong>Pathway</strong></td><td>${pathwayName}</td></tr><tr><td><strong>Session</strong></td><td>${testSession}</td></tr><tr><td><strong>Attempt</strong></td><td>${attemptNumber}</td></tr><tr><td><strong>Submitted</strong></td><td>${timestamp}</td></tr><tr><td><strong>Attempt Save</strong></td><td>${statusText(saveR,"Saved to attempt history","Could not save to attempt history")}</td></tr><tr><td><strong>Result Email</strong></td><td>${statusText(mailR,"Email sent","Email could not be sent")}</td></tr><tr><td><strong>Total Score</strong></td><td>${totalScore} / ${totalQuestions}</td></tr></table><div class="result-grid">${cards}</div>${analyses}<button onclick="location.reload()" style="margin-top:26px;">Reattempt Test</button>${solutionBlock}</div></div>`;
   document.querySelector(".footer").style.display="none";document.querySelector(".header").style.display="none";document.getElementById("exam-interface").style.display="block";document.getElementById("break-screen").style.display="none";safeTypeset();
   try{window.dispatchEvent(new CustomEvent("ts-esat-result",{detail:{testId,pathway:pathwayName,totalScore,scores,sectionNames}}));}catch(_){}
 }
@@ -726,7 +775,7 @@ document.addEventListener("keydown",function(e){
 },true);
 window.addEventListener("contextmenu",e=>e.preventDefault(),true);
 </script>
-<script src="/shared/esat-score-estimates.js?v=20260818-1"></script>
+<script src="/shared/esat-score-estimates.js?v=20261005-1"></script>
 <script src="/shared/esat-score-result-hook.js?v=20260818-1"></script>
 <script src="/shared/test-fullscreen.js?v=20260827-1" defer></script>
 

@@ -86,7 +86,7 @@ function database(attemptRows=[]){
   result.from=table=>{
     const call={table,filters:[],columns:null};calls.push(call);let inserted;
     const rows=()=>{let values=tables[table]??[];for(const [field,value] of call.filters)values=values.filter(r=>r[field]===value);return values;};
-    const q={select(columns){call.columns=columns;return q;},eq(field,value){call.filters.push([field,value]);return q;},in(){return q;},gt(){return q;},lte(){return q;},order(){return q;},range(){return q;},limit(){return q;},
+    const q={select(columns){call.columns=columns;return q;},eq(field,value){call.filters.push([field,value]);return q;},or(){return q;},in(){return q;},gt(){return q;},lte(){return q;},order(){return q;},range(){return q;},limit(){return q;},
       insert(value){inserted=value;inserts.push({table,value});tables[table]??=[];tables[table].push(...(Array.isArray(value)?value:[{id:"qa-inserted",...value}]));return q;},
       async maybeSingle(){return {data:inserted?{id:"qa-inserted",...inserted}:rows()[0]??null,error:null};},
       async single(){return {data:inserted?{id:"qa-inserted",...inserted}:rows()[0]??null,error:null};},

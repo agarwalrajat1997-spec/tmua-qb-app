@@ -383,14 +383,16 @@
     @media(max-width:700px){.container{padding-left:18px;padding-right:18px}.container table{font-size:13px}.container th,.container td{padding:6px}.option{display:flex!important;align-items:flex-start;gap:8px}}
   </style>
 
+<script src="/shared/practice-test-options.js?v=20261005-1"></script>
 </head>
 <body>
 
 <div id="instructions">
   <h2 id="test-title">ESAT Physics + Chemistry — Level 1 Standard</h2>
+<div id="ts-practice-settings"></div>
 
   <div class="test-difficulty-chip">Level 1 · Standard</div>
-  <p><strong>Time allowed:</strong> 2 hours - three sections of 40 minutes each</p>
+  <p><strong>Time allowed:</strong> <span data-esat-duration="total">120 minutes</span> - three sections of <span data-esat-duration="section">40 minutes</span> each</p>
   <p><strong>Calculators are not permitted.</strong></p>
 
   <div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
@@ -429,19 +431,19 @@
         <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Section 1</td>
         <td style="border: 1px solid #ccc; padding: 10px;">Mathematics 1</td>
         <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td>
-        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-esat-duration="section">40 minutes</span></td>
       </tr>
       <tr>
         <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Section 2</td>
         <td style="border: 1px solid #ccc; padding: 10px;">Physics</td>
         <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td>
-        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-esat-duration="section">40 minutes</span></td>
       </tr>
       <tr>
         <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">Section 3</td>
         <td style="border: 1px solid #ccc; padding: 10px;">Chemistry</td>
         <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">27</td>
-        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
+        <td style="border: 1px solid #ccc; padding: 10px; text-align: center;"><span data-esat-duration="section">40 minutes</span></td>
       </tr>
     </tbody>
   </table>
@@ -500,6 +502,26 @@ const SECTION_SECONDS = 40 * 60;
 const BREAK_SECONDS = 5 * 60;
 const sectionNames = ["Mathematics 1", "Physics", "Chemistry"];
 const testId = "esat-physics-chemistry-level-1";
+
+// TS_ESAT_PRACTICE_SETTINGS_V1: display order never changes canonical answer identities.
+const practiceSettings = window.TS_TEST_OPTIONS.create({testId,sectionSizes:[27,27,27],baseSeconds:2400,programme:"ESAT"});
+window.TS_ESAT_PRACTICE_SETTINGS = practiceSettings;
+practiceSettings.mount("#ts-practice-settings");
+function updatePracticeTiming(){
+  document.querySelectorAll("[data-esat-duration]").forEach(el=>{el.textContent=String(practiceSettings.durationSeconds()/60*(el.dataset.esatDuration==="total"?3:1))+" minutes";});
+}
+document.getElementById("ts-practice-settings").addEventListener("change",updatePracticeTiming);
+updatePracticeTiming();
+function esatQuestionReference(index){
+  const original=index%27+1,shown=practiceSettings.positionOf(index)+1;
+  return practiceSettings.metadata().order==="randomised"?"Original Q"+original+" (shown as Q"+shown+")":"Q"+original;
+}
+function decoratePracticeQuestion(){
+  const heading=container.querySelector(".question-number");
+  if(heading)heading.textContent="Question "+(practiceSettings.positionOf(current)+1)+(practiceSettings.metadata().order==="randomised"?" · Original Q"+(current%27+1):"");
+}
+function practiceResultNote(){return '<p class="ts-practice-result-note">'+practiceSettings.summary()+'</p><p>'+practiceSettings.scoreNote()+'</p>';}
+
 </script>
 <script>
 const questions = [
@@ -806,6 +828,7 @@ const answerKeyBySection = {
       var score = Number(opts.score || 0);
 
       var payload = {
+        practice_settings: practiceSettings.metadata(),
         test_id: String(opts.test_id || "").trim(),
         test_title: String(opts.test_title || "").trim(),
         paper: String(opts.paper || "").trim(),
@@ -856,7 +879,7 @@ let testSession = "";
 let flags = new Array(81).fill(false);
 let userAnswers = new Array(81).fill(null);
 let current = 0;
-let secondsRemaining = SECTION_SECONDS;
+let secondsRemaining = practiceSettings.durationSeconds();
 let timerInterval = null;
 let attemptNumber = 1;
 
@@ -876,7 +899,7 @@ function currentSectionEnd() {
 }
 
 function currentQuestionInSection() {
-  return current - currentSectionStart() + 1;
+  return practiceSettings.positionOf(current) + 1;
 }
 
 function formatTime(totalSeconds) {
@@ -892,6 +915,7 @@ function safeTypeset() {
 }
 
 function toggleFlag() {
+  if (!ensureSectionOpen()) return;
   flags[current] = !flags[current];
   updateFlagButton();
   updateNavigatorButton(current);
@@ -908,6 +932,9 @@ function updateFlagButton() {
 }
 
 function startExam() {
+  if (window.__ESAT_STARTED) return;
+  window.__ESAT_STARTED = true;
+  practiceSettings.start();
   studentName = document.getElementById("student-name").value.trim() || "Student";
   studentEmail = document.getElementById("student-email").value.trim();
   testSession = document.getElementById("test-date").value;
@@ -919,20 +946,38 @@ function startExam() {
   document.getElementById("exam-interface").style.display = "block";
 
   sectionIndex = 0;
-  current = 0;
-  secondsRemaining = SECTION_SECONDS;
+  current = practiceSettings.questionAt(0, 0);
+  secondsRemaining = practiceSettings.durationSeconds();
+  timerDisplay.textContent = formatTime(secondsRemaining);
   lastTimestamp = Date.now();
+  sectionDeadline = lastTimestamp + secondsRemaining * 1000;
+  esatStage = "section";
   renderQuestion();
   generateNavigatorButtons();
   clearInterval(timerInterval);
   timerInterval = setInterval(updateTimer, 1000);
 }
 
+// TS_ESAT_DEADLINE_GUARD_V1: timer refresh frequency must never extend the allowance.
+let sectionDeadline = 0;
+let esatStage = "instructions";
+function commitVisibleTime() {
+  const now = Date.now();
+  if (esatStage === "section") timeSpent[current] += Math.max(0, Math.min(now, sectionDeadline) - lastTimestamp) / 1000;
+  lastTimestamp = now;
+}
+function ensureSectionOpen() {
+  if (esatStage !== "section" || window.__ESAT_SUBMIT_DONE) return false;
+  if (Date.now() >= sectionDeadline) { updateTimer(); return false; }
+  return true;
+}
 function updateTimer() {
+  if (esatStage !== "section" || window.__ESAT_SUBMIT_DONE) return;
+  secondsRemaining = Math.max(0, Math.ceil((sectionDeadline - Date.now()) / 1000));
   timerDisplay.textContent = formatTime(secondsRemaining);
   if (secondsRemaining <= 0) {
     clearInterval(timerInterval);
-    timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+    commitVisibleTime();
     if (sectionIndex < sectionNames.length - 1) {
       showBreakScreen();
     } else {
@@ -940,11 +985,11 @@ function updateTimer() {
     }
     return;
   }
-  secondsRemaining--;
+
 }
 
 function renderQuestion() {
-  container.innerHTML = questions[current];
+  container.innerHTML = questions[current]; decoratePracticeQuestion();
   const sectionName = sectionNames[sectionIndex];
   sectionChip.textContent = sectionName;
   counter.textContent = `Q${currentQuestionInSection()} of ${SECTION_SIZE} (${sectionName})`;
@@ -958,26 +1003,28 @@ function renderQuestion() {
       input.checked = true;
     }
     input.addEventListener("change", () => {
+      if (!ensureSectionOpen()) return;
       userAnswers[current] = input.value;
       updateNavigatorButton(current);
     });
   });
 
   if (prevBtn) {
-    prevBtn.disabled = current === currentSectionStart();
+    prevBtn.disabled = practiceSettings.positionOf(current) === 0;
   }
   if (nextBtn) {
     nextBtn.disabled = false;
-    nextBtn.textContent = current === currentSectionEnd()
+    nextBtn.textContent = practiceSettings.positionOf(current) === SECTION_SIZE - 1
       ? (sectionIndex === sectionNames.length - 1 ? "Finish →" : "Finish Section →")
       : "Next →";
   }
 }
 
 function nextQuestion() {
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  if (!ensureSectionOpen()) return;
+  commitVisibleTime();
 
-  if (current === currentSectionEnd()) {
+  if (practiceSettings.positionOf(current) === SECTION_SIZE - 1) {
     if (sectionIndex < sectionNames.length - 1) {
       showBreakScreen();
     } else {
@@ -986,36 +1033,42 @@ function nextQuestion() {
     return;
   }
 
-  current++;
+  current = practiceSettings.questionAt(sectionIndex, practiceSettings.positionOf(current) + 1);
   lastTimestamp = Date.now();
   renderQuestion();
 }
 
 function prevQuestion() {
-  if (current === currentSectionStart()) return;
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
-  current--;
+  if (!ensureSectionOpen()) return;
+  if (practiceSettings.positionOf(current) === 0) return;
+  commitVisibleTime();
+  current = practiceSettings.questionAt(sectionIndex, practiceSettings.positionOf(current) - 1);
   lastTimestamp = Date.now();
   renderQuestion();
 }
 
 function confirmSubmit() {
+  if (!ensureSectionOpen()) return;
   if (sectionIndex < sectionNames.length - 1) {
     const confirmBox = confirm(`You're about to submit ${sectionNames[sectionIndex]} and move to the next section. Do you want to continue?`);
     if (confirmBox) {
-      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+      commitVisibleTime();
       showBreakScreen();
     }
   } else {
     const confirmBox = confirm("Are you sure you want to submit the entire test?");
     if (confirmBox) {
-      timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+      commitVisibleTime();
       submitExam();
     }
   }
 }
 
 function showBreakScreen() {
+  if (esatStage !== "section") return;
+  commitVisibleTime();
+  esatStage = "break";
+  closeNavigator();
   clearInterval(timerInterval);
   document.getElementById("exam-interface").style.display = "none";
   document.getElementById("break-screen").style.display = "block";
@@ -1028,6 +1081,7 @@ function showBreakScreen() {
 }
 
 function updateBreakTimer() {
+  if (esatStage !== "break") return;
   document.getElementById("break-timer").textContent = formatTime(breakRemaining);
   if (breakRemaining <= 0) {
     skipBreak();
@@ -1037,13 +1091,17 @@ function updateBreakTimer() {
 }
 
 function skipBreak() {
+  if (esatStage !== "break" || window.__ESAT_SUBMIT_DONE) return;
   clearInterval(breakInterval);
   clearInterval(timerInterval);
 
   sectionIndex++;
-  current = sectionIndex * SECTION_SIZE;
-  secondsRemaining = SECTION_SECONDS;
+  current = practiceSettings.questionAt(sectionIndex, 0);
+  secondsRemaining = practiceSettings.durationSeconds();
+  timerDisplay.textContent = formatTime(secondsRemaining);
   lastTimestamp = Date.now();
+  sectionDeadline = lastTimestamp + secondsRemaining * 1000;
+  esatStage = "section";
 
   document.getElementById("break-screen").style.display = "none";
   document.getElementById("exam-interface").style.display = "block";
@@ -1054,6 +1112,7 @@ function skipBreak() {
 }
 
 function openNavigator() {
+  if (!ensureSectionOpen()) return;
   document.getElementById("navigator-popup").style.display = "block";
   generateNavigatorButtons();
 }
@@ -1063,8 +1122,9 @@ function closeNavigator() {
 }
 
 function jumpTo(index) {
+  if (!ensureSectionOpen()) return;
   if (index < currentSectionStart() || index > currentSectionEnd()) return;
-  timeSpent[current] += (Date.now() - lastTimestamp) / 1000;
+  commitVisibleTime();
   current = index;
   lastTimestamp = Date.now();
   renderQuestion();
@@ -1078,7 +1138,7 @@ function generateNavigatorButtons() {
 
   const offset = currentSectionStart();
   for (let i = 0; i < SECTION_SIZE; i++) {
-    const actualIndex = offset + i;
+    const actualIndex = practiceSettings.questionAt(sectionIndex, i);
     const btn = document.createElement("button");
     btn.textContent = i + 1;
     btn.dataset.index = actualIndex;
@@ -1097,7 +1157,7 @@ function updateNavigatorButton(index) {
   const btn = document.getElementById(`nav-btn-${index}`);
   if (!btn) return;
   const sectionStart = Math.floor(index / SECTION_SIZE) * SECTION_SIZE;
-  const label = index - sectionStart + 1;
+  const label = practiceSettings.positionOf(index) + 1;
   if (flags[index]) {
     btn.style.backgroundColor = "gold";
     btn.style.fontWeight = "bold";
@@ -1122,7 +1182,7 @@ function buildRows(start, end) {
     const secs = rawTime % 60;
     rows.push(`
       <tr>
-        <td>${i - start + 1}</td>
+        <td>${esatQuestionReference(i)}</td>
         <td>${yourAns}</td>
         <td>${correctAns}</td>
         <td>${mins}m ${secs}s</td>
@@ -1172,6 +1232,7 @@ function saveAttemptSummary(totalScore, sectionScores) {
   const timestampIso = new Date().toISOString();
   const payload = {
     testId,
+    practice_settings: practiceSettings.metadata(),
     attemptNumber,
     studentName,
     studentEmail,
@@ -1192,14 +1253,14 @@ function saveAttemptSummary(totalScore, sectionScores) {
 }
 
 function buildSectionEmailAnalysis(title, start, end) {
-  let out = `${title} Analysis\n`;
+  let out = `${practiceSettings.summary()}\n${practiceSettings.scoreNote()}\n${title} Analysis\n`;
   for (let i = start; i <= end; i++) {
     const secs = Math.round(timeSpent[i] || 0);
     const mm = String(Math.floor(secs / 60)).padStart(2, "0");
     const ss = String(secs % 60).padStart(2, "0");
     const yourAns = userAnswers[i] ?? "-";
     const correctAns = correctAnswers[i];
-    out += `Q.${i - start + 1} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}${flags[i] ? " Flagged" : ""}\n`;
+    out += `${esatQuestionReference(i)} Correct: ${correctAns} Yours: ${yourAns} Time: ${mm}:${ss}${flags[i] ? " Flagged" : ""}\n`;
   }
   return out.trim();
 }
@@ -1210,6 +1271,7 @@ async function saveRemoteAttempt(totalScore) {
   }
   const testTitle = (document.getElementById("test-title")?.textContent || testId).trim();
   return window.TS_SAVE_ATTEMPT({
+    practice_settings: practiceSettings.metadata(),
     test_id: testId,
     test_title: testTitle,
     paper: "full",
@@ -1272,6 +1334,9 @@ function statusText(result, successText, failText) {
 
 async function submitExam() {
   if (window.__ESAT_SUBMIT_DONE) return;
+  commitVisibleTime();
+  esatStage = "complete";
+  closeNavigator();
   window.__ESAT_SUBMIT_DONE = true;
 
   clearInterval(timerInterval);
@@ -1327,7 +1392,7 @@ async function submitExam() {
     <div class="result-wrap">
       <div class="result-card">
         <div style="font-size: 120px;">${totalScore >= 55 ? "😊" : "😐"}</div>
-        <h1>Exam Completed</h1>
+        <h1>Exam Completed</h1>${practiceResultNote()}
         <table style="border-collapse: collapse; margin: 20px auto; font-size: 18px;">
           <tr style="background: #f9f9f9;"><td><strong>Name</strong></td><td>${studentName}</td></tr>
           <tr style="background: #f9f9f9;"><td><strong>Session</strong></td><td>${testSession}</td></tr>
@@ -1367,7 +1432,7 @@ window.addEventListener("contextmenu", function(e) {
   e.preventDefault();
 }, true);
 </script>
-<script src="/shared/esat-score-estimates.js?v=20260818-1"></script>
+<script src="/shared/esat-score-estimates.js?v=20261005-1"></script>
 <script id="ts-hotkeys-v1">
 (function () {
   if (window.__TS_HOTKEYS_V1__) return;
