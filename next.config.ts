@@ -1,6 +1,7 @@
 ﻿import type { NextConfig } from "next";
 
 import { resolvePublicSupabaseConfig } from "./lib/supabase/public-config";
+import { PAST_PAPER_PRACTICE_URL } from "./lib/past-paper-practice";
 
 const publicSupabase = resolvePublicSupabaseConfig(process.env);
 if (publicSupabase.rejectedVariables.length) {
@@ -10,6 +11,28 @@ if (publicSupabase.rejectedVariables.length) {
 }
 
 const nextConfig: NextConfig = {
+  // Next redirects run before authentication, so retired free-resource links
+  // also work for signed-out visitors. All other AMC routes stay protected.
+  async redirects() {
+    return [
+      {
+        source: "/amc",
+        has: [{ type: "query", key: "section", value: "past-papers" }],
+        destination: PAST_PAPER_PRACTICE_URL,
+        permanent: true,
+      },
+      {
+        source: "/amc-past-paper-practice",
+        destination: PAST_PAPER_PRACTICE_URL,
+        permanent: true,
+      },
+      {
+        source: "/amc-past-paper-practice/index.html",
+        destination: PAST_PAPER_PRACTICE_URL,
+        permanent: true,
+      },
+    ];
+  },
   // Next replaces these references in BOTH client and server bundles. Never
   // allow an accidentally uploaded service-role key into browser JavaScript.
   env: {

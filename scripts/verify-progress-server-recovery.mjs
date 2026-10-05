@@ -301,6 +301,7 @@ async function dashboardScenario(failure, accessRows = []) {
     'next/navigation': { useRouter: () => ({ replace: value => redirects.push(value) }) },
     '@/utils/supabase/browser': { supabaseBrowser: () => dashboardDb },
     './dashboard.module.css': { default: {} }, './TmuaPredictionStrip': { default() {} },
+    '../components/PastPaperPracticeLink': { default() {} },
     '../components/ServiceRetry': { default: RetryComponent }, '@/lib/auth/service-recovery': recovery,
     '@/lib/tmua/past-paper-settings': pastPaperSettings
   }, { window: { location: { href: 'https://portal.test/dashboard' }, history: { replaceState() {} } } });

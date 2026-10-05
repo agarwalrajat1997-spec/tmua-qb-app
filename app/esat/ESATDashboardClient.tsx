@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
 import ServiceRetry from "../components/ServiceRetry";
+import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
 import styles from "../dashboard/dashboard.module.css";
 import EsatPredictionStrip from "./EsatPredictionStrip";
 
@@ -951,6 +952,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                     Open ESAT Question Bank
                   </button>
                 </div>
+                <PastPaperPracticeLink />
               </div>
             </>
           ) : active === "resources" ? (

@@ -108,9 +108,6 @@ function assertSafeSvg(file) {
 
 const archive = JSON.parse(read("public/amc-past-paper-practice/archive.json"));
 const html = read("public/amc-past-paper-practice/index.html");
-const dashboard = read("app/dashboard/AMCDashboardClient.tsx");
-const portal = read("app/amc/page.tsx");
-const normalizedDashboard = dashboard.replace(/\s+/g, " ");
 
 const allowedClientTags = html.match(/const ALLOWED_RICH_TAGS = new Set\(\[([\s\S]*?)\]\);/)?.[1] ?? "";
 const clientAllowsAnchors = /["']a["']/.test(allowedClientTags);
@@ -270,16 +267,9 @@ for (const marker of [
 }
 assert(!html.includes("Open question + explanation"), "AMC index must not use the old external-link-only question action");
 
-for (const marker of [
-  "Past Papers",
-  "/amc-past-paper-practice/index.html",
-  "2,325 indexed problems",
-  "Each question, all five answer choices and the worked solution appear together inside the archive",
-]) {
-  assert(normalizedDashboard.includes(marker), `AMC dashboard is missing ${marker}`);
-}
-assert(!dashboard.includes("opens the credited original question"), "AMC dashboard still describes the old external-link-only archive");
-assert(portal.includes('section === "past-papers"'), "AMC portal must accept the past-papers section");
+// The archive remains available independently of the portal navigation.
+// Portal links and the legacy section redirect are checked separately by
+// verify-portal-past-paper-links.mjs.
 
 console.log(
   `AMC past-paper archive verified: ${inlineById.size.toLocaleString("en-GB")} inline questions and solutions, ${manifestFiles.size} papers, ${assetFiles.length} local figures.`,

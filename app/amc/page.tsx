@@ -1,6 +1,7 @@
 import AMCDashboardClient from "@/app/dashboard/AMCDashboardClient";
 import { supabaseServer } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { PAST_PAPER_PRACTICE_URL } from "@/lib/past-paper-practice";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -31,6 +32,9 @@ type Props = {
 
 export default async function AMCPortalPage({ searchParams }: Props) {
   const { section } = await searchParams;
+  // Keep old bookmarks useful without restoring the retired portal embed.
+  if (section === "past-papers") redirect(PAST_PAPER_PRACTICE_URL);
+
   const supabase = await supabaseServer();
   const {
     data: { user },
@@ -64,7 +68,7 @@ export default async function AMCPortalPage({ searchParams }: Props) {
       email={user.email}
       hasTmua={false}
       initialSection={
-        section === "past-papers" || section === "practice-tests" || section === "resources"
+        section === "practice-tests" || section === "resources"
           ? section
           : null
       }

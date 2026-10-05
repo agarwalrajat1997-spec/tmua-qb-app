@@ -6,6 +6,7 @@ import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./dashboard.module.css";
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
 import ServiceRetry from "../components/ServiceRetry";
+import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
 import { formatTmuaPastPaperSettings, type TmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 
@@ -1266,6 +1267,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
                     Open TMUA Question Bank
                   </button>
                 </div>
+                <PastPaperPracticeLink />
               </div>
             </>
                   ) : active === "resources" ? (
