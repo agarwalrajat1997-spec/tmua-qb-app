@@ -241,14 +241,25 @@ async function deliverReports(payload,emailParams){
 
 async function submitExam(){
   if(examSubmitted)return;examSubmitted=true;clearInterval(timerInterval);clearInterval(breakInterval);closeNavigator();
-  let p1=0,p2=0;const rows=[[],[]];
-  for(let i=0;i<40;i++){const yours=userAnswers[i]??'–';const correct=correctAnswers[i];const ok=yours===correct;if(ok){if(i<20)p1++;else p2++;}const totalSeconds=Math.floor(timeSpent[i]||0);const status=yours==='–'?'Not attempted':(ok?'Correct':'Incorrect');rows[i<20?0:1].push(`<tr><td>${window.TS_TMUA_PRACTICE.questionLabel(practiceOptions,i)}</td><td>${yours}</td><td>${correct}</td><td>${Math.floor(totalSeconds/60)}m ${totalSeconds%60}s</td><td>${flags[i]?'⚑ Yes':'No'}</td><td>${status}</td></tr>`);}
+  let p1=0,p2=0;const rows=[[],[]],emailRows=[[],[]];
+  for(let i=0;i<40;i++){
+    const yours=userAnswers[i]??'–';const correct=correctAnswers[i];const ok=yours===correct;
+    if(ok){if(i<20)p1++;else p2++;}
+    const totalSeconds=Math.floor(timeSpent[i]||0);
+    const status=yours==='–'?'Not attempted':(ok?'Correct':'Incorrect');
+    const label=window.TS_TMUA_PRACTICE.questionLabel(practiceOptions,i);
+    const section=i<20?0:1;
+    rows[section].push(`<tr><td>${label}</td><td>${yours}</td><td>${correct}</td><td>${Math.floor(totalSeconds/60)}m ${totalSeconds%60}s</td><td>${flags[i]?'⚑ Yes':'No'}</td><td>${status}</td></tr>`);
+    // The shared email template displays plain-text paper1/paper2, not the on-screen HTML tables.
+    emailRows[section].push(`${label} | Your answer: ${yours} | Correct: ${correct} | Status: ${status} | Time: ${formatClock(totalSeconds)} | Flagged: ${flags[i]?'Yes':'No'}`);
+  }
   const total=p1+p2;const estimate=estimatedTmuaScore(total);const timestamp=new Date().toLocaleString();const title=document.getElementById('test-title').textContent.trim();
   const table=(heading,score,subtitle,body)=>`<section class="analysis-section"><h2>${heading}</h2><table style="border-collapse:collapse;margin-bottom:18px"><tr><td style="border:1px solid #ccc;padding:8px">Raw mark</td><td style="border:1px solid #ccc;padding:8px">${score} / 20</td></tr><tr><td style="border:1px solid #ccc;padding:8px">Paper focus</td><td style="border:1px solid #ccc;padding:8px">${subtitle}</td></tr></table><div class="table-scroll"><table class="analysis-table"><thead><tr><th>Q#</th><th>Your answer</th><th>Correct</th><th>Time</th><th>Flagged</th><th>Status</th></tr></thead><tbody>${body.join('')}</tbody></table></div></section>`;
   container.innerHTML=`<div class="result-wrap"><div class="result-title"><div class="result-icon">${total>=30?'✓':'●'}</div><h1>${automaticSubmission?'Time expired - test submitted':'Test completed'}</h1>${score9Block(total,p1,p2)}<p>${practiceOptions.summary()}. ${practiceOptions.scoreNote()}</p><table class="result-summary"><tr><td><strong>Name</strong></td><td>${escapeHtml(studentName)}</td></tr><tr><td><strong>Total raw score</strong></td><td>${total} / 40</td></tr><tr><td><strong>Completed</strong></td><td>${escapeHtml(timestamp)}</td></tr></table><div class="delivery-status" aria-live="polite"><div><strong>Portal save:</strong> <span id="portal-status" class="status-pending">Checking...</span></div><div><strong>Email report:</strong> <span id="email-status" class="status-pending">Checking...</span></div></div></div>${table('Paper 1 analysis',p1,'Applications of Mathematical Knowledge',rows[0])}${table('Paper 2 analysis',p2,'Mathematical Reasoning',rows[1])}<h3>View full solutions</h3><iframe id="solution-frame" class="solution-frame" title="Full solution book"></iframe><a class="solution-link" href="${solutionPDF}" target="_blank" rel="noopener">Open the solution book in a new tab</a></div>`;
   document.querySelector('.footer').style.display='none';document.querySelector('.header').style.display='none';document.getElementById('exam-interface').style.display='block';document.body.classList.add('ts-exam-done');window.__TS_EXAM_DONE=true;document.getElementById('solution-frame').src=solutionPDF;window.scrollTo(0,0);
   const payload={test_id:TEST_ID,practice_settings:practiceOptions.metadata(),test_title:title,paper:'full',total_questions:40,score:total,answers:[...userAnswers],correct_answers:[...correctAnswers],time_spent:timeSpent.map(x=>Math.round(x*10)/10),flags:[...flags],incorrect:correctAnswers.map((a,i)=>userAnswers[i]===a?null:i+1).filter(Boolean),estimated_tmua_score:estimate};
-  const emailParams={name:studentName,test_title:title,to_email:studentEmail,solution_link:solutionPDF,session:testSession,score:`${total} / 40 (estimated TMUA ${estimate.toFixed(1)} / 9.0)`,timestamp,paper1:`Paper 1: ${p1}/20`,paper2:`Paper 2: ${p2}/20`};
+  const emailSettings=`${practiceOptions.summary()}. ${practiceOptions.scoreNote()}`;
+  const emailParams={name:studentName,test_title:title,to_email:studentEmail,solution_link:solutionPDF,session:testSession,score:`${total} / 40 (estimated TMUA ${estimate.toFixed(1)} / 9.0)`,timestamp,paper1:`Paper 1: ${p1}/20\n${emailSettings}\n\n${emailRows[0].join('\n')}`,paper2:`Paper 2: ${p2}/20\n${emailSettings}\n\n${emailRows[1].join('\n')}`};
   deliverReports(payload,emailParams);
 }
 

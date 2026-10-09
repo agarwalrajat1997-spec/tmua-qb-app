@@ -72,6 +72,30 @@ function fixture(file,storage=new Map()){
   };
 }
 function settings(count,multiplier,order){return{version:1,order,time_multiplier:multiplier,section_sizes:count===40?[20,20]:[20],base_seconds_per_section:4500,question_order:Array.from({length:count},(_,i)=>order==='randomised'?Math.floor(i/20)*20+(i%20+7)%20:i)};}
+function verifyChallengingEmail(h,report){
+  assert.equal(h.emails.length,1,'Challenging mock sends one complete email');
+  const email=h.emails[0];
+  assert.equal(email.to_email,'qa@example.invalid');
+  assert.equal(email.solution_link,h.get('solutionPDF'));
+  assert(email.score.startsWith(`${report.score} / 40`),'Email preserves the actual raw score');
+  for(let section=0;section<2;section++){
+    const text=email[`paper${section+1}`],start=section*20;
+    const mark=report.answers.slice(start,start+20).filter((answer,i)=>answer===report.correct_answers[start+i]).length;
+    assert(text.startsWith(`Paper ${section+1}: ${mark}/20\n`),'Paper summary is retained');
+    assert(text.includes(h.options().summary()),'Email includes the chosen practice settings');
+    assert(text.includes(h.options().scoreNote()),'Email includes the scoring disclaimer');
+    const lines=text.split('\n').filter(line=>/^(?:Q\d+|Original Q\d+)/.test(line));
+    assert.equal(lines.length,20,'Every paper contains all 20 question results');
+    for(let i=0;i<20;i++){
+      const index=start+i,answer=report.answers[index]??'–',correct=report.correct_answers[index];
+      const status=answer==='–'?'Not attempted':answer===correct?'Correct':'Incorrect';
+      const seconds=Math.floor(h.times()[index]||0);
+      const time=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
+      const label=h.context.TS_TMUA_PRACTICE.questionLabel(h.options(),index);
+      assert.equal(lines[i],`${label} | Your answer: ${answer} | Correct: ${correct} | Status: ${status} | Time: ${time} | Flagged: ${report.flags[index]?'Yes':'No'}`);
+    }
+  }
+}
 let completed=0;
 for(const file of files)for(const multiplier of [1,1.25,1.5])for(const order of ['sequential','randomised']){
   const h=fixture(file),count=h.kind==='topic'?20:40,label=`${file}/${multiplier}/${order}`,metadata=settings(count,multiplier,order);
@@ -82,7 +106,7 @@ for(const file of files)for(const multiplier of [1,1.25,1.5])for(const order of 
   if(h.kind==='challenge')assert.equal(h.get('secondsRemaining'),4500*multiplier,label);
   if(h.kind==='predictive')assert.equal(h.context.__flow.snapshot().state.endAt-h.context.Date.now(),4500000*multiplier,label);
   assert.equal(h.times().reduce((a,b)=>a+b,0),0,'Instruction time excluded');
-  const expected=Array(count).fill(null),keys=h.keys(),expectedTimes=Array(count).fill(3),expectedFlags=Array(count).fill(false);
+  const expected=Array(count).fill(null),keys=h.keys(),expectedTimes=Array.from({length:count},(_,i)=>h.kind==='challenge'?[0,59.96,61,90.8][i%4]:3),expectedFlags=Array(count).fill(false);
   for(let section=0;section<count/20;section++){
     for(let position=0;position<20;position++){
       const canonical=metadata.question_order[section*20+position];assert.equal(h.current(),canonical,label);
@@ -90,7 +114,7 @@ for(const file of files)for(const multiplier of [1,1.25,1.5])for(const order of 
       const answer=canonical%3===0?null:canonical%3===1?keys[canonical]:(keys[canonical]==='A'?'B':'A');
       if(answer!==null)h.answer(answer);expected[canonical]=answer;
       if(canonical%7===0){h.flag();expectedFlags[canonical]=true;}
-      h.advance(3);
+      h.advance(expectedTimes[canonical]);
       if(position<19)h.next();
     }
     await h.finishPaper();
@@ -98,8 +122,14 @@ for(const file of files)for(const multiplier of [1,1.25,1.5])for(const order of 
   let report;
   if(h.kind==='predictive')report=clean(h.context.__flow.buildReport());
   else{assert.equal(h.requests.length,1,label);report=h.requests[0].payload;}
-  assert.deepEqual(report.answers,expected,label);assert.deepEqual(report.correct_answers,keys,label);assert.deepEqual(report.flags,expectedFlags,label);assert.deepEqual(report.time_spent,expectedTimes,label);
+  assert.deepEqual(report.answers,expected,label);assert.deepEqual(report.correct_answers,keys,label);assert.deepEqual(report.flags,expectedFlags,label);assert.deepEqual(report.time_spent,expectedTimes.map(value=>Math.round(value*10)/10),label);
   assert.deepEqual(report.practice_settings,metadata,label);assert.equal(report.score,expected.filter((a,i)=>a===keys[i]).length,label);
+  if(h.kind==='challenge'){
+    verifyChallengingEmail(h,report);
+    await h.context.submitExam();
+    assert.equal(h.emails.length,1,'Repeated submission must not resend the report');
+    assert.equal(h.requests.length,1,'Repeated submission must not save twice');
+  }
   assert.equal(h.options().adjustedRaw(count,count),count-Math.round(count*(multiplier===1.25?3:multiplier===1.5?5:0)/40));
   if(h.kind==='predictive')assert.equal(h.context.__flow.prediction().value,h.context.__flow.snapshot().pack.predictor.table[h.options().adjustedRaw(report.score,40)],label);
   completed++;
@@ -124,6 +154,7 @@ for(const file of files)for(const multiplier of [1,1.25,1.5]){
   for(let i=0;i<12;i++)await Promise.resolve();
   const report=h.kind==='predictive'?h.context.__flow.buildReport():h.requests[0]?.payload;
   assert(report,file+': automatic submission produced report');assert.equal(report.score,0);assert.equal(report.time_spent.reduce((a,b)=>a+b,0),duration*(count/20));
+  if(h.kind==='challenge')verifyChallengingEmail(h,report);
   assert.equal(h.intervals.size,0,file+': automatic submission clears timer');expired++;
 }
 // Deliver a user input before any timer callback after expiry. The previous answer must survive.
@@ -139,6 +170,7 @@ for(const file of [...topicFiles,'tmua-2024-2025-challenging-mock/index.html'])f
   }
   for(let i=0;i<12;i++)await Promise.resolve();assert.equal(h.requests.length,1,file+': one automatic submission');
   assert.equal(h.requests[0].payload.answers[first],correct);assert.equal(h.requests[0].payload.time_spent[first],4500*multiplier);guarded++;
+  if(h.kind==='challenge')verifyChallengingEmail(h,h.requests[0].payload);
 }
 // Predictive reload keeps exactly the same permutation, time allowance, canonical answer and timers.
 for(const multiplier of [1,1.25,1.5]){
@@ -149,3 +181,4 @@ for(const multiplier of [1,1.25,1.5]){
   const prior=fixture(file,h.storage);const entry=[...prior.storage.entries()][0];const legacy=JSON.parse(entry[1]);delete legacy.state.practiceSettings;prior.storage.set(entry[0],JSON.stringify(legacy));const old=fixture(file,prior.storage);assert.equal(old.options().metadata().time_multiplier,1,'Historical attempts default to standard time');
 }
 console.log(`TMUA practice settings: ${completed} complete real-controller submissions, ${expired} timer-expiry flows, ${guarded} late-input guards and 3 predictive reloads verified across all 10 new tests.`);
+console.log('Challenging TMUA email: all 40 question results verified across 12 standard/extra-time, sequential/shuffled and expiry flows; no real email sent.');
