@@ -9,6 +9,7 @@ import PracticeAttemptSettings from "../components/PracticeAttemptSettings";
 import type { PracticeSettings, StandardTimeEstimate } from "@/lib/practice-settings";
 import styles from "../dashboard/dashboard.module.css";
 import EsatPredictionStrip from "./EsatPredictionStrip";
+import GoodLuckPopup from "../_components/GoodLuckPopup";
 
 type EsatProduct = "esat-practice-tests" | "esat-question-bank" | "esat-classes";
 type Section = "practice" | "bank" | "classes" | "resources";
@@ -414,6 +415,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
 
   return (
     <div className={styles.page} data-ui={uiMark}>
+      {!showNoAccess && <GoodLuckPopup />}
       <div className={styles.topbar}>
         <div className={styles.brand}>
           <div className={styles.brandName}>Thriving Scholars</div>

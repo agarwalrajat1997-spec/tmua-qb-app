@@ -5,6 +5,7 @@ import DashboardClient from "./DashboardClient";
 import AMCDashboardClient from "./AMCDashboardClient";
 import SATDashboardClient from "./SATDashboardClient";
 import ErasableNotepadPopup from "../_components/ErasableNotepadPopup";
+import GoodLuckPopup from "../_components/GoodLuckPopup";
 import styles from "./dashboard.module.css";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { isMissingSession, withServiceTimeout } from "@/lib/auth/service-recovery";
@@ -218,6 +219,7 @@ export default function DashboardAccessRouterClient() {
       <>
         <DashboardClient uiMark="TS_DASH_PORTAL_20260227142744" />
         <ErasableNotepadPopup forcePortal />
+        <GoodLuckPopup />
       </>
     );
   }
