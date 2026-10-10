@@ -12,7 +12,20 @@ function response(show: boolean, status = 200) {
 
 export async function POST(request: Request) {
   // A cross-site request must not consume someone else's one-time message.
-  if (request.headers.get("origin") !== new URL(request.url).origin) {
+  // Next may construct request.url with an internal hostname behind a proxy.
+  // Compare against the incoming Host, which browsers cannot override, rather
+  // than that internal URL; still require a well-formed HTTP(S) Origin.
+  const origin = request.headers.get("origin");
+  let sameOrigin = false;
+  try {
+    const parsed = new URL(origin || "");
+    const host = request.headers.get("host") || new URL(request.url).host;
+    sameOrigin = (parsed.protocol === "https:" || parsed.protocol === "http:") &&
+      parsed.origin === origin && parsed.host.toLowerCase() === host.toLowerCase();
+  } catch {
+    // Missing or malformed origins are not browser-initiated portal requests.
+  }
+  if (!sameOrigin) {
     return response(false, 403);
   }
   if (!isGoodLuckCampaignActive()) return response(false);

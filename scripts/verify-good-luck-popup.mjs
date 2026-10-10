@@ -57,6 +57,11 @@ assert.equal((await route.POST(request('https://other.test'))).status, 403);
 assert.equal(writes, 0);
 now = campaign.GOOD_LUCK_START - 1;
 assert.deepEqual(await (await route.POST(request())).json(), { show: false });
+const proxied = new Request('http://localhost:3000/api/student/good-luck-popup', {
+  method: 'POST', headers: { origin: 'https://portal.test', host: 'portal.test' },
+});
+assert.equal((await route.POST(proxied)).status, 200, 'Incoming Host must work behind Next/Vercel proxy');
+assert.equal((await route.POST(request('file://portal.test'))).status, 403);
 assert.equal(writes, 0);
 now = campaign.GOOD_LUCK_START;
 user = null;
