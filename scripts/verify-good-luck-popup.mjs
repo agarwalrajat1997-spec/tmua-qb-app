@@ -17,10 +17,6 @@ function load(file, imports = {}) {
   return context.exports;
 }
 const campaign = load('lib/good-luck-popup.ts');
-assert.equal(campaign.isGoodLuckCampaignActive(campaign.GOOD_LUCK_START - 1), false);
-assert.equal(campaign.isGoodLuckCampaignActive(campaign.GOOD_LUCK_START), true);
-assert.equal(campaign.isGoodLuckCampaignActive(campaign.GOOD_LUCK_END - 1), true);
-assert.equal(campaign.isGoodLuckCampaignActive(campaign.GOOD_LUCK_END), false);
 
 const receipts = new Set();
 let user = { id: 'student-a' }, authError = null, databaseError = null, writes = 0;
@@ -28,20 +24,34 @@ const db = {
   auth: { getUser: async () => ({ data: { user }, error: authError }) },
   from(table) {
     assert.equal(table, 'student_popup_receipts');
-    return { upsert(row, options) {
-      writes++;
-      assert.equal(row.user_id, user.id);
-      assert.equal(row.campaign_key, campaign.GOOD_LUCK_CAMPAIGN_KEY);
-      assert.equal(options.onConflict, 'user_id,campaign_key');
-      assert.equal(options.ignoreDuplicates, true);
-      return { select: async () => {
-        if (databaseError) return { data: null, error: databaseError };
-        const key = `${row.user_id}:${row.campaign_key}`;
-        if (receipts.has(key)) return { data: [], error: null };
-        receipts.add(key);
-        return { data: [{ campaign_key: row.campaign_key }], error: null };
-      } };
-    } };
+    return {
+      select(column) {
+        assert.equal(column, 'campaign_key');
+        const filters = {};
+        const query = {
+          eq(key, value) { filters[key] = value; return query; },
+          async maybeSingle() {
+            assert.equal(filters.user_id, user.id);
+            assert.equal(filters.campaign_key, campaign.GOOD_LUCK_CAMPAIGN_KEY);
+            return {
+              data: receipts.has(`${filters.user_id}:${filters.campaign_key}`) ? { campaign_key: filters.campaign_key } : null,
+              error: databaseError,
+            };
+          },
+        };
+        return query;
+      },
+      async upsert(row, options) {
+        writes++;
+        assert.equal(row.user_id, user.id);
+        assert.equal(row.campaign_key, campaign.GOOD_LUCK_CAMPAIGN_KEY);
+        assert.equal(options.onConflict, 'user_id,campaign_key');
+        assert.equal(options.ignoreDuplicates, true);
+        if (databaseError) return { error: databaseError };
+        receipts.add(`${row.user_id}:${row.campaign_key}`);
+        return { error: null };
+      },
+    };
   },
 };
 const route = load('app/api/student/good-luck-popup/route.ts', {
@@ -50,41 +60,59 @@ const route = load('app/api/student/good-luck-popup/route.ts', {
   '@/lib/good-luck-popup': campaign,
   '@/lib/auth/service-recovery': { isMissingSession: error => error?.name === 'AuthSessionMissingError' },
 });
-const request = (origin = 'https://portal.test') => new Request('https://portal.test/api/student/good-luck-popup', {
-  method: 'POST', headers: { origin }, body: JSON.stringify({ user_id: 'spoofed-id' }),
+const request = (origin = 'https://portal.test', body = { action: 'dismiss', user_id: 'spoofed-id' }) => new Request('https://portal.test/api/student/good-luck-popup', {
+  method: 'POST', headers: { origin }, body: body === undefined ? undefined : JSON.stringify(body),
 });
 assert.equal((await route.POST(request('https://other.test'))).status, 403);
+assert.equal((await route.POST(request('file://portal.test'))).status, 403);
+assert.equal((await route.POST(request('null'))).status, 403);
+assert.equal((await route.POST(request('', {}))).status, 403);
+const legacy = new Request('https://portal.test/api/student/good-luck-popup', {
+  method: 'POST', headers: { origin: 'https://portal.test' },
+});
+assert.equal((await route.POST(legacy)).status, 400, 'Legacy display requests must never dismiss');
+assert.equal((await route.POST(request('https://portal.test', { action: 'show' }))).status, 400);
 assert.equal(writes, 0);
-now = campaign.GOOD_LUCK_START - 1;
-assert.deepEqual(await (await route.POST(request())).json(), { show: false });
+user = null;
+for (const call of [() => route.GET(), () => route.POST(request())]) {
+  assert.equal((await call()).status, 401);
+  authError = { name: 'AuthSessionMissingError' };
+  assert.equal((await call()).status, 401);
+  authError = { name: 'AuthRetryableFetchError' };
+  assert.equal((await call()).status, 503);
+  authError = null;
+}
+user = { id: 'student-a' };
+databaseError = { code: '57014' };
+assert.equal((await route.GET()).status, 503);
+const failed = await route.POST(request());
+assert.equal(failed.status, 503);
+assert.equal((await failed.json()).dismissed, false);
+databaseError = null;
+assert.equal(receipts.size, 0);
+const writesBeforeRead = writes;
+for (const date of ['2026-10-10', '2026-10-11', '2026-10-18', '2027-05-01']) {
+  now = Date.parse(`${date}T12:00:00+05:30`);
+  for (let refresh = 0; refresh < 3; refresh++) {
+    const status = await route.GET();
+    assert.equal(status.headers.get('cache-control'), 'private, no-store');
+    assert.deepEqual(await status.json(), { show: true, dismissed: false });
+  }
+}
+assert.equal(writes, writesBeforeRead, 'Viewing, refreshing and future days never persist a dismissal');
 const proxied = new Request('http://localhost:3000/api/student/good-luck-popup', {
   method: 'POST', headers: { origin: 'https://portal.test', host: 'portal.test' },
+  body: JSON.stringify({ action: 'dismiss' }),
 });
-assert.equal((await route.POST(proxied)).status, 200, 'Incoming Host must work behind Next/Vercel proxy');
-assert.equal((await route.POST(request('file://portal.test'))).status, 403);
-assert.equal(writes, 0);
-now = campaign.GOOD_LUCK_START;
-user = null;
-assert.equal((await route.POST(request())).status, 401);
-authError = { name: 'AuthSessionMissingError' };
-assert.equal((await route.POST(request())).status, 401);
-authError = { name: 'AuthRetryableFetchError' };
-assert.equal((await route.POST(request())).status, 503);
-authError = null; user = { id: 'student-a' };
-databaseError = { code: '57014' };
-assert.equal((await route.POST(request())).status, 503);
-databaseError = null;
+assert.deepEqual(await (await route.POST(proxied)).json(), { show: false, dismissed: true });
 const concurrent = await Promise.all([route.POST(request()), route.POST(request())]);
-const shown = await Promise.all(concurrent.map(async response => (await response.json()).show));
-assert.equal(shown.filter(Boolean).length, 1);
+for (const response of concurrent) {
+  assert.deepEqual(await response.json(), { show: false, dismissed: true });
+}
+assert.equal(receipts.size, 1, 'Dismissal is idempotent and uses the signed-in identity');
 for (let device = 0; device < 3; device++) {
-  const response = await route.POST(request());
-  assert.equal(response.headers.get('cache-control'), 'private, no-store');
-  assert.deepEqual(await response.json(), { show: false });
+  assert.deepEqual(await (await route.GET()).json(), { show: false, dismissed: true });
 }
 user = { id: 'student-b' };
-assert.deepEqual(await (await route.POST(request())).json(), { show: true });
-now = campaign.GOOD_LUCK_END;
-user = { id: 'student-c' };
-assert.deepEqual(await (await route.POST(request())).json(), { show: false });
-console.log('PASS: Saturday boundaries, auth/CSRF guards, fail-closed persistence, one receipt per student across requests/devices, and no-store responses.');
+assert.deepEqual(await (await route.GET()).json(), { show: true, dismissed: false });
+console.log('PASS: no date limit, read-only eligibility, persistent explicit dismissal, legacy client guard, account isolation, auth/CSRF, retryable errors and no-store responses.');
