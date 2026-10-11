@@ -34,6 +34,7 @@ const ESAT_QUESTION_COLUMNS = [
   "shortcut_available",
   "nice_tip_html",
   "checker_flags",
+  "source_json",
   "is_active",
   "updated_at",
 ].join(",");

@@ -4741,7 +4741,15 @@ function applyFilters() {
     const a = answerFor(meta);
     const options = Array.isArray(q.options) ? q.options : [];
 
-    box.innerHTML = options.map(function(opt) {
+    const headings = Array.isArray(q.option_table_headers) ? q.option_table_headers : [];
+    const headingText = headings.map(function(header) {
+      return escapeHtml(header.label || "") + (header.unit ? " (" + escapeHtml(header.unit) + ")" : "");
+    }).join("; ");
+    const guide = headingText
+      ? '<p class="small" data-option-headings><strong>Each option lists, in order:</strong> ' + headingText + '.</p>'
+      : "";
+
+    box.innerHTML = guide + options.map(function(opt) {
       const label = String(opt.label || "").trim();
       const checked = a.selected === label ? "checked" : "";
       const selectedClass = a.selected === label ? " selected" : "";
@@ -4835,6 +4843,18 @@ function applyFilters() {
     if (restoredAnswer.checked) {
       restoredAnswer.answer = currentQuestion.answer || currentQuestion.correct_answer || restoredAnswer.answer;
     }
+
+    // Stable identity for bug reports: filtering and chapter ordering change
+    // visible numbers, so never use the position counter as a database key.
+    if (card && card.dataset) card.dataset.reportContext = JSON.stringify({
+      qid: currentQuestion.qid || meta.qid || "",
+      id: currentQuestion.id || meta.id || "",
+      number: meta.global_number || meta.paper_question_number || meta.display_order,
+      display_order: currentQuestion.display_order ?? meta.db_display_order ?? meta.display_order,
+      paper: currentQuestion.paper || meta.paper || "",
+      topic: currentQuestion.topic || meta.topic || "",
+      subtopic: currentQuestion.subtopic || meta.subtopic || ""
+    });
 
     setText("qTitle", "Question " + (meta.global_number || meta.paper_question_number || meta.display_order));
     setText("metaPaper", meta.paper || "");
@@ -5419,6 +5439,8 @@ function applyFilters() {
     const pos = text("posCounter");
     const total = text("posTotal");
     const status = text("metaStatus");
+    let identity = {};
+    try { identity = JSON.parse(el("qCard")?.dataset.reportContext || "{}"); } catch (_) {}
 
     return {
       to_email: BUG_REPORT_TO_EMAIL,
@@ -5426,12 +5448,14 @@ function applyFilters() {
       report_message: "Report a problem in this question.",
       comment: "",
       question_label: qTitle,
-      question_number: pos,
-      display_order: pos,
-      qid: qTitle + " / " + pos + " of " + total,
-      paper: paper,
-      topic: topic,
-      subtopic: "",
+      question_number: String(identity.number || ""),
+      display_order: String(identity.display_order ?? ""),
+      qid: identity.qid || identity.id || "Identity unavailable",
+      question_id: identity.id || identity.qid || "",
+      filtered_position: pos + " of " + total,
+      paper: identity.paper || paper,
+      topic: identity.topic || topic,
+      subtopic: identity.subtopic || "",
       difficulty: difficulty,
       selected_answer: selectedAnswer(),
       checked_status: status || "Not checked",
@@ -5446,6 +5470,7 @@ function applyFilters() {
 
     open: function() {
       const payload = currentPayload();
+      BUG_REPORT._payload = payload;
 
       const label = el("bugQuestionLabel");
       if (label) {
@@ -5524,8 +5549,8 @@ function applyFilters() {
           BUG_REPORT._inited = true;
         }
 
-        const payload = currentPayload();
-        payload.comment = comment;
+        // Keep the report tied to the question visible when it was opened.
+        const payload = { ...(BUG_REPORT._payload || currentPayload()), comment };
 
         if (btn) {
           btn.disabled = true;

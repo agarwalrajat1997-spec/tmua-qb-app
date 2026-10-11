@@ -121,9 +121,17 @@ export function cleanRows(rows: any[]) {
 
 export function normaliseQuestion(row: any, index = 0) {
   const qid = String(row.qid ?? row.id ?? row.question_id ?? index + 1);
+  // Flattened imported options still need their column labels and units.
+  // Expose just the headings, never replace corrected live options with the
+  // historical rows in source_json.
+  const { source_json: source, ...publicRow } = row;
+  const headers = source?.option_table?.headers;
+  const optionTableHeaders = Array.isArray(headers) ? headers
+    .filter((header: any) => header && typeof header.label === "string")
+    .map((header: any) => ({ label: header.label, unit: typeof header.unit === "string" ? header.unit : "" })) : [];
 
   return {
-    ...row,
+    ...publicRow,
     qid,
     id: row.id ?? qid,
     display_order: Number(row.display_order ?? row.original_index ?? index + 1),
@@ -134,6 +142,7 @@ export function normaliseQuestion(row: any, index = 0) {
     difficulty: row.difficulty ?? row.difficulty_level ?? "",
     prompt_html: row.prompt_html ?? row.question_html ?? row.prompt ?? "",
     options: row.options ?? [],
+    option_table_headers: optionTableHeaders,
     answer: row.answer ?? row.correct_answer ?? row.correct_option ?? "",
     solution_html: row.solution_html ?? row.explanation_html ?? row.solution ?? "",
     nice_tip_html: row.nice_tip_html ?? row.hint_html ?? row.tip_html ?? "",
