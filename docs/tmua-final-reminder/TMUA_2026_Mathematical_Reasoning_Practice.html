@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TMUA Mathematical Reasoning Practice - 10 Questions</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm 16mm 16mm;
+  }
+
+  :root {
+    --ink: #111;
+    --muted: #555;
+    --line: #cfcfcf;
+    --soft: #f5f5f5;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: white;
+    color: var(--ink);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .sheet {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 26px 30px 34px;
+  }
+
+  .brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #111;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .brand-name {
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+
+  .paper-code {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    line-height: 1.12;
+    margin: 0 0 7px;
+  }
+
+  .subtitle {
+    margin: 0 0 14px;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .notice {
+    border: 1px solid #111;
+    padding: 10px 12px;
+    margin: 14px 0 18px;
+    font-size: 12.5px;
+  }
+
+  .instructions {
+    background: var(--soft);
+    padding: 11px 13px;
+    margin: 0 0 24px;
+    border-left: 4px solid #111;
+  }
+
+  .instructions strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .question {
+    break-inside: avoid;
+    margin: 0 0 27px;
+    padding-bottom: 23px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .qhead {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .qnum {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    font-weight: 700;
+    min-width: 28px;
+  }
+
+  .qtext {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+  }
+
+  .math {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    text-align: center;
+    margin: 12px 0;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px 22px;
+    margin-top: 13px;
+    padding-left: 38px;
+  }
+
+  .option {
+    min-height: 25px;
+  }
+
+  .letter {
+    font-weight: 700;
+    display: inline-block;
+    width: 24px;
+  }
+
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .answer-box {
+    border: 1px solid #111;
+    text-align: center;
+    padding: 8px 4px;
+    min-height: 40px;
+  }
+
+  .page-break {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    margin: 0 0 8px;
+  }
+
+  .solution {
+    break-inside: avoid;
+    margin: 0 0 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .solution h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    margin: 0 0 7px;
+  }
+
+  .answer {
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .working {
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .footer-note {
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 9px;
+  }
+
+  sup { line-height: 0; }
+
+  @media print {
+    .sheet { padding: 0; max-width: none; }
+    body { font-size: 13px; }
+  }
+
+  @media (max-width: 650px) {
+    .sheet { padding: 18px 16px 28px; }
+    .options { grid-template-columns: 1fr; padding-left: 18px; }
+    .answer-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+
+<body>
+<main class="sheet">
+  <header class="brand">
+    <div>
+      <div class="brand-name">Thriving Scholars</div>
+      <h1>TMUA Mathematical Reasoning Practice</h1>
+      <p class="subtitle">10 challenging questions with worked solutions • 2026 edition</p>
+    </div>
+    <div class="paper-code">
+      Practice Set<br />
+      No calculator
+    </div>
+  </header>
+
+  <div class="notice">
+    <strong>About this set:</strong> A focused practice set to develop accurate calculation, efficient problem-solving
+    and mathematical reasoning. A Thriving Scholars practice resource; not an official TMUA paper or a prediction of exam content.
+  </div>
+
+  <div class="instructions">
+    <strong>Suggested use</strong>
+    Allow about <b>35–40 minutes</b>. If you have made no meaningful progress after roughly 2 minutes, flag the
+    question and move on. Choose one answer, A–E, for each question.
+  </div>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">1</div>
+      <div class="qtext">
+        A real number <i>x</i>, with <i>x</i> ≥ 1, satisfies
+      </div>
+    </div>
+    <div class="math">√(<i>x</i> + 1) + √(<i>x</i> − 1) = √(3<i>x</i> + 1).</div>
+    <div class="qtext" style="padding-left:38px;">
+      What is the value of
+      <span style="white-space:nowrap;">(<i>x</i><sup>2</sup> + 1)/<i>x</i></span>?
+    </div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>29/15</div>
+      <div class="option"><span class="letter">B</span>31/15</div>
+      <div class="option"><span class="letter">C</span>34/15</div>
+      <div class="option"><span class="letter">D</span>37/15</div>
+      <div class="option"><span class="letter">E</span>41/15</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">2</div>
+      <div class="qtext">
+        The quadratic
+        <span style="white-space:nowrap;"><i>x</i><sup>2</sup> − (<i>k</i> + 1)<i>x</i> + 2<i>k</i> + 2 = 0</span>
+        has two distinct positive roots. The larger root is exactly twice the smaller root.
+      </div>
+    </div>
+    <div class="qtext" style="padding-left:38px;">What is <i>k</i>?</div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>−1</div>
+      <div class="option"><span class="letter">B</span>2</div>
+      <div class="option"><span class="letter">C</span>5</div>
+      <div class="option"><span class="letter">D</span>8</div>
+      <div class="option"><span class="letter">E</span>10</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">3</div>
+      <div class="qtext">
+        A circle has centre <i>O</i> and radius 5. A chord <i>AB</i> has length 8.
+        The tangents to the circle at <i>A</i> and <i>B</i> meet at <i>T</i>.
+      </div>
+    </div>
+    <div class="qtext" style="padding-left:38px;">What is the area of triangle <i>ATB</i>?</div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>16</div>
+      <div class="option"><span class="letter">B</span>20</div>
+      <div class="option"><span class="letter">C</span>64/3</div>
+      <div class="option"><span class="letter">D</span>24</div>
+      <div class="option"><span class="letter">E</span>80/3</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">4</div>
+      <div class="qtext">
+        The real numbers <i>x</i> satisfy
+      </div>
+    </div>
+    <div class="math">2 sin 2<i>x</i> cos <i>x</i> = cos <i>x</i>,</div>
+    <div class="qtext" style="padding-left:38px;">
+      where 0 &lt; <i>x</i> &lt; 2π and sin <i>x</i> &gt; 0.
+      What is the sum of all such values of <i>x</i>?
+    </div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>π/2</div>
+      <div class="option"><span class="letter">B</span>2π/3</div>
+      <div class="option"><span class="letter">C</span>5π/6</div>
+      <div class="option"><span class="letter">D</span>π</div>
+      <div class="option"><span class="letter">E</span>7π/6</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">5</div>
+      <div class="qtext">
+        Let <i>f</i>(<i>x</i>) = <i>x</i><sup>3</sup> − 3<i>x</i>.
+        How many distinct real solutions does
+      </div>
+    </div>
+    <div class="math"><i>f</i>(<i>f</i>(<i>x</i>)) = 2</div>
+    <div class="qtext" style="padding-left:38px;">have?</div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>3</div>
+      <div class="option"><span class="letter">B</span>4</div>
+      <div class="option"><span class="letter">C</span>5</div>
+      <div class="option"><span class="letter">D</span>6</div>
+      <div class="option"><span class="letter">E</span>7</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">6</div>
+      <div class="qtext">
+        A five-digit number is formed using five different digits chosen from
+        1, 2, 3, 4, 5, 6, 7. The number is even, and the digits 1 and 2 are not adjacent.
+      </div>
+    </div>
+    <div class="qtext" style="padding-left:38px;">How many such numbers are possible?</div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>720</div>
+      <div class="option"><span class="letter">B</span>792</div>
+      <div class="option"><span class="letter">C</span>840</div>
+      <div class="option"><span class="letter">D</span>876</div>
+      <div class="option"><span class="letter">E</span>912</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">7</div>
+      <div class="qtext">
+        A circle passes through the points
+        <i>A</i> = (0, 0), <i>B</i> = (8, 0), and <i>C</i> = (2, 6).
+        The tangent to the circle at <i>C</i> meets the <i>x</i>-axis at <i>T</i>.
+      </div>
+    </div>
+    <div class="qtext" style="padding-left:38px;">What is <i>AT</i>?</div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>6</div>
+      <div class="option"><span class="letter">B</span>8</div>
+      <div class="option"><span class="letter">C</span>10</div>
+      <div class="option"><span class="letter">D</span>12</div>
+      <div class="option"><span class="letter">E</span>14</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">8</div>
+      <div class="qtext">
+        Let <i>n</i> be an integer. Consider the statements
+      </div>
+    </div>
+    <div style="padding-left:38px; margin:10px 0; font-family:Georgia, 'Times New Roman', serif;">
+      <b>P:</b> 24 divides <i>n</i><sup>2</sup> − 1.<br />
+      <b>Q:</b> <i>n</i> is odd and <i>n</i> is not divisible by 3.
+    </div>
+    <div class="qtext" style="padding-left:38px;">Which statement is correct?</div>
+    <div class="options" style="grid-template-columns:1fr;">
+      <div class="option"><span class="letter">A</span>P is necessary but not sufficient for Q.</div>
+      <div class="option"><span class="letter">B</span>P is sufficient but not necessary for Q.</div>
+      <div class="option"><span class="letter">C</span>P is necessary and sufficient for Q.</div>
+      <div class="option"><span class="letter">D</span>P is neither necessary nor sufficient for Q.</div>
+      <div class="option"><span class="letter">E</span>P and Q cannot both be true.</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">9</div>
+      <div class="qtext">
+        A student claims:
+        “If real numbers <i>a</i> and <i>b</i> have both <i>a</i> + <i>b</i> rational
+        and <i>ab</i> rational, then <i>a</i> and <i>b</i> must both be rational.”
+      </div>
+    </div>
+    <div class="qtext" style="padding-left:38px;">
+      Which pair provides a counterexample to the claim?
+    </div>
+    <div class="options" style="grid-template-columns:1fr;">
+      <div class="option"><span class="letter">A</span><i>a</i> = √2, <i>b</i> = √8</div>
+      <div class="option"><span class="letter">B</span><i>a</i> = √2, <i>b</i> = −√2</div>
+      <div class="option"><span class="letter">C</span><i>a</i> = √2, <i>b</i> = 1/√2</div>
+      <div class="option"><span class="letter">D</span><i>a</i> = √2, <i>b</i> = 2 − √2</div>
+      <div class="option"><span class="letter">E</span><i>a</i> = √3, <i>b</i> = −√2</div>
+    </div>
+  </section>
+
+  <section class="question">
+    <div class="qhead">
+      <div class="qnum">10</div>
+      <div class="qtext">
+        The curve <i>y</i> = <i>x</i><sup>3</sup> − 3<i>x</i> and the line
+        <i>y</i> = <i>mx</i> + 2 meet at exactly two distinct points.
+      </div>
+    </div>
+    <div class="qtext" style="padding-left:38px;">What is <i>m</i>?</div>
+    <div class="options">
+      <div class="option"><span class="letter">A</span>−6</div>
+      <div class="option"><span class="letter">B</span>−3</div>
+      <div class="option"><span class="letter">C</span>0</div>
+      <div class="option"><span class="letter">D</span>3</div>
+      <div class="option"><span class="letter">E</span>6</div>
+    </div>
+  </section>
+
+  <div class="answer-grid">
+    <div class="answer-box"><b>1</b><br />____</div>
+    <div class="answer-box"><b>2</b><br />____</div>
+    <div class="answer-box"><b>3</b><br />____</div>
+    <div class="answer-box"><b>4</b><br />____</div>
+    <div class="answer-box"><b>5</b><br />____</div>
+    <div class="answer-box"><b>6</b><br />____</div>
+    <div class="answer-box"><b>7</b><br />____</div>
+    <div class="answer-box"><b>8</b><br />____</div>
+    <div class="answer-box"><b>9</b><br />____</div>
+    <div class="answer-box"><b>10</b><br />____</div>
+  </div>
+
+  <section class="page-break">
+    <header class="brand">
+      <div>
+        <div class="brand-name">Thriving Scholars</div>
+        <h2>Answers &amp; Solutions</h2>
+      </div>
+      <div class="paper-code">Keep this section<br />at the back</div>
+    </header>
+
+    <div class="solution">
+      <h3>1. Exact algebra</h3>
+      <div class="answer">Answer: C — 34/15</div>
+      <div class="working">
+        Squaring once gives
+        2<i>x</i> + 2√(<i>x</i><sup>2</sup> − 1) = 3<i>x</i> + 1, so
+        2√(<i>x</i><sup>2</sup> − 1) = <i>x</i> + 1.
+        Squaring again:
+        4(<i>x</i><sup>2</sup> − 1) = (<i>x</i> + 1)<sup>2</sup>.
+        Hence 3<i>x</i><sup>2</sup> − 2<i>x</i> − 5 = 0, giving
+        <i>x</i> = 5/3 (the other root is outside the domain).
+        Therefore <i>x</i> + 1/<i>x</i> = 5/3 + 3/5 = 34/15.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>2. Roots and parameters</h3>
+      <div class="answer">Answer: D — 8</div>
+      <div class="working">
+        Let the smaller positive root be <i>r</i>; the other is 2<i>r</i>.
+        Expanding (<i>x</i> − <i>r</i>)(<i>x</i> − 2<i>r</i>) gives
+        <i>x</i><sup>2</sup> − 3<i>r</i><i>x</i> + 2<i>r</i><sup>2</sup>.
+        Comparing coefficients,
+        3<i>r</i> = <i>k</i> + 1 and 2<i>r</i><sup>2</sup> = 2<i>k</i> + 2,
+        so <i>r</i><sup>2</sup> = <i>k</i> + 1.
+        Thus <i>r</i><sup>2</sup> = 3<i>r</i>.
+        Since <i>r</i> &gt; 0, <i>r</i> = 3, so <i>k</i> + 1 = 9 and <i>k</i> = 8.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>3. Circle geometry</h3>
+      <div class="answer">Answer: C — 64/3</div>
+      <div class="working">
+        Let <i>M</i> be the midpoint of chord <i>AB</i>. Then <i>AM</i> = 4 and
+        <i>OM</i> = 3 from the 3–4–5 triangle.
+        Since equal tangents give symmetry, <i>O</i>, <i>M</i>, <i>T</i> are collinear.
+        Right triangles <i>OMA</i> and <i>OAT</i> are similar, so
+        <i>OT</i>/<i>OA</i> = <i>OA</i>/<i>OM</i>.
+        Hence <i>OT</i> = 25/3 and <i>TM</i> = 25/3 − 3 = 16/3.
+        Area = ½ × 8 × 16/3 = 64/3.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>4. Trigonometric structure</h3>
+      <div class="answer">Answer: D — π</div>
+      <div class="working">
+        Rearranging and factorising gives cos <i>x</i>(2 sin 2<i>x</i> − 1) = 0.
+        Since sin <i>x</i> &gt; 0, the permitted interval is 0 &lt; <i>x</i> &lt; π.
+        The cosine factor gives <i>x</i> = π/2. The other factor gives
+        2<i>x</i> = π/6 or 5π/6, so <i>x</i> = π/12 or 5π/12.
+        Their sum is π. No trigonometric addition formula is needed.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>5. Composite functions</h3>
+      <div class="answer">Answer: C — 5</div>
+      <div class="working">
+        Put <i>y</i> = <i>f</i>(<i>x</i>). Then
+        <i>f</i>(<i>y</i>) = 2 gives
+        <i>y</i><sup>3</sup> − 3<i>y</i> − 2 = 0
+        = (<i>y</i> − 2)(<i>y</i> + 1)<sup>2</sup>.
+        So <i>f</i>(<i>x</i>) is either 2 or −1.
+        <br /><br />
+        <i>f</i>(<i>x</i>) = 2 gives
+        (<i>x</i> − 2)(<i>x</i> + 1)<sup>2</sup> = 0: two distinct roots.
+        For <i>f</i>(<i>x</i>) = −1,
+        <i>x</i><sup>3</sup> − 3<i>x</i> + 1 = 0.
+        Write <i>g</i>(<i>x</i>) = <i>x</i><sup>3</sup> − 3<i>x</i> + 1.
+        Its derivative is <i>g</i>′(<i>x</i>) = 3<i>x</i><sup>2</sup> − 3:
+        <i>g</i> increases for <i>x</i> &lt; −1, decreases for −1 &lt; <i>x</i> &lt; 1,
+        and increases for <i>x</i> &gt; 1. Also <i>g</i>(−1) = 3 and <i>g</i>(1) = −1.
+        Together with the cubic's end behaviour, this gives exactly one root in each of these three intervals.
+        None can also satisfy <i>f</i>(<i>x</i>) = 2.
+        Total: 2 + 3 = 5.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>6. Counting with cases</h3>
+      <div class="answer">Answer: D — 876</div>
+      <div class="working">
+        The final digit is 2, 4 or 6.
+        <br /><br />
+        If the final digit is 2: there are 6 × 5 × 4 × 3 = 360 arrangements for the first four positions.
+        The bad cases have 1 immediately before the final 2, giving 5 × 4 × 3 = 60.
+        So this case contributes 300.
+        <br /><br />
+        If the final digit is 4 or 6: for either choice there are again 360 arrangements.
+        To count bad arrangements, place 1 and 2 as an adjacent block among the first four:
+        choose the other two digits in (4 × 3)/2 = 6 ways, order the three objects in 3 × 2 × 1 = 6 ways,
+        and order 1,2 inside the block in 2 ways. This gives 6 × 6 × 2 = 72 bad arrangements.
+        So each of these two final digits contributes 360 − 72 = 288.
+        <br /><br />
+        Total = 300 + 288 + 288 = 876.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>7. Coordinate geometry + tangent</h3>
+      <div class="answer">Answer: C — 10</div>
+      <div class="working">
+        Write the circle as
+        <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + D<i>x</i> + E<i>y</i> = 0.
+        Using <i>B</i> = (8,0) gives D = −8.
+        Using <i>C</i> = (2,6) then gives E = −4.
+        So the centre is (4,2).
+        <br /><br />
+        The radius from (4,2) to (2,6) has slope −2, hence the tangent at C has slope 1/2.
+        Its equation is
+        <i>y</i> − 6 = ½(<i>x</i> − 2).
+        Setting <i>y</i> = 0 gives <i>x</i> = −10.
+        Thus T = (−10,0), so <i>AT</i> = 10.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>8. Necessary and sufficient</h3>
+      <div class="answer">Answer: C — P is necessary and sufficient for Q</div>
+      <div class="working">
+        If Q holds, <i>n</i> − 1 and <i>n</i> + 1 are consecutive even integers:
+        one is divisible by 4 and the other by 2. Their product <i>n</i><sup>2</sup> − 1 is therefore divisible by 8.
+        Among the three consecutive integers <i>n</i> − 1, <i>n</i>, <i>n</i> + 1,
+        one is divisible by 3. Since <i>n</i> is not, the product (<i>n</i> − 1)(<i>n</i> + 1)
+        is divisible by 3. Because 8 and 3 have no common factor greater than 1, the product is divisible by 24.
+        Thus Q implies P.
+        <br /><br />
+        Conversely, if <i>n</i> were even, <i>n</i><sup>2</sup> − 1 would be odd.
+        If <i>n</i> were divisible by 3, <i>n</i><sup>2</sup> − 1 would not be divisible by 3.
+        Either case contradicts P. Thus P implies Q as well.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>9. Counterexample reasoning</h3>
+      <div class="answer">Answer: B — (√2, −√2)</div>
+      <div class="working">
+        Here <i>a</i> + <i>b</i> = 0 and <i>ab</i> = −2, both rational,
+        while neither √2 nor −√2 is rational. One valid counterexample is enough to disprove
+        the universal claim. Option E does not work: its product is −√6, which is irrational.
+      </div>
+    </div>
+
+    <div class="solution">
+      <h3>10. Repeated-root / intersection reasoning</h3>
+      <div class="answer">Answer: C — 0</div>
+      <div class="working">
+        Intersections satisfy
+        <i>x</i><sup>3</sup> − (<i>m</i> + 3)<i>x</i> − 2 = 0.
+        Exactly two distinct intersections means this cubic has two distinct real roots, with one repeated.
+        Write it as (<i>x</i> − <i>t</i>)<sup>2</sup>(<i>x</i> − <i>u</i>).
+        Comparing the coefficients of <i>x</i><sup>2</sup> gives <i>u</i> = −2<i>t</i>.
+        Expanding now gives <i>x</i><sup>3</sup> − 3<i>t</i><sup>2</sup><i>x</i> + 2<i>t</i><sup>3</sup>.
+        <br /><br />
+        Comparing constants gives 2<i>t</i><sup>3</sup> = −2, so <i>t</i> = −1.
+        Comparing the coefficients of <i>x</i> gives <i>m</i> + 3 = 3<i>t</i><sup>2</sup> = 3,
+        hence <i>m</i> = 0.
+        The factorisation (<i>x</i> − 2)(<i>x</i> + 1)<sup>2</sup> confirms exactly two distinct intersections.
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Thriving Scholars • TMUA mathematical reasoning practice • Questions and worked solutions.
+      This is a practice resource, not an official examination paper.
+    </div>
+  </section>
+</main>
+</body>
+</html>

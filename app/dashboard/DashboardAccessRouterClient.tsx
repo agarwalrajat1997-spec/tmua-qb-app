@@ -218,8 +218,9 @@ export default function DashboardAccessRouterClient() {
     return (
       <>
         <DashboardClient uiMark="TS_DASH_PORTAL_20260227142744" />
+        <span hidden data-tmua-reminder-audience="true" />
         <ErasableNotepadPopup forcePortal />
-        <GoodLuckPopup />
+        <GoodLuckPopup programme="tmua" />
       </>
     );
   }

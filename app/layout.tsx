@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import ErasableNotepadPopup from "./_components/ErasableNotepadPopup";
+import TmuaFinalReminderLoader from "./_components/TmuaFinalReminderLoader";
 
 export const metadata: Metadata = {
   title: "Thriving Scholars Apps",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
         <ErasableNotepadPopup />
+        <TmuaFinalReminderLoader />
       </body>
     </html>
   );
