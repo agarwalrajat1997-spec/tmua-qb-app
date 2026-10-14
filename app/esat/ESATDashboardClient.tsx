@@ -415,7 +415,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
 
   return (
     <div className={styles.page} data-ui={uiMark}>
-      {!showNoAccess && <GoodLuckPopup />}
+      {!showNoAccess && <GoodLuckPopup programme="esat" />}
       <div className={styles.topbar}>
         <div className={styles.brand}>
           <div className={styles.brandName}>Thriving Scholars</div>
