@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 
+import ExamCountdown from "@/app/_components/ExamCountdown";
 import styles from "./TmuaPredictionStrip.module.css";
 
 // Internal model identity. Visible student-facing label begins "You rank".
@@ -330,18 +331,6 @@ export default function TmuaPredictionStrip() {
     displayedCohortSize !== null
       ? `#${displayedRank} out of ${displayedCohortSize} active users.`
       : null;
-  const countdownText =
-    countdown
-      ? `${
-          countdown.daysToTmua
-        } ${
-          countdown.daysToTmua ===
-          1
-            ? "day"
-            : "days"
-        } till TMUA`
-      : null;
-
   const preparationMeta =
     rankText
       ? (
@@ -366,19 +355,15 @@ export default function TmuaPredictionStrip() {
           </span>
         );
 
-  const countdownMeta =
-    countdown &&
-    countdownText
-      ? (
-          <span>
-            {countdownText}
-
-            <InfoTooltip label="TMUA countdown">
-              Calendar days remaining until your configured TMUA exam date. The countdown updates automatically each day. Current exam date: {countdown.examDateLabel}.
-            </InfoTooltip>
-          </span>
-        )
-      : null;
+  const countdownMeta = countdown ? (
+    <span className={styles.countdownPill}>
+      <ExamCountdown exam="TMUA" />
+      <InfoTooltip label="TMUA countdown">
+        Live countdown to {countdown.examDateLabel} at midnight (00:00 UK time).
+        Days, hours, minutes and seconds update automatically every second.
+      </InfoTooltip>
+    </span>
+  ) : null;
 
   if (
     predictor.status ===

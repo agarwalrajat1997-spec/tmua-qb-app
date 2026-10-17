@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 
+import ExamCountdown from "@/app/_components/ExamCountdown";
 import styles from "../dashboard/TmuaPredictionStrip.module.css";
 
 const PREPARATION_RANK_MODEL_NAME = "ESAT Preparation Rank";
@@ -199,12 +200,6 @@ export default function EsatPredictionStrip() {
       ? `#${displayedRank} out of ${displayedCohortSize} active users.`
       : null;
 
-  const countdownText = countdown
-    ? `${countdown.daysToEsat} ${
-        countdown.daysToEsat === 1 ? "day" : "days"
-      } till ESAT`
-    : null;
-
   const preparationMeta = rankText
     ? (
         <span>
@@ -228,17 +223,15 @@ export default function EsatPredictionStrip() {
         </span>
       );
 
-  const countdownMeta = countdown && countdownText
-    ? (
-        <span>
-          {countdownText}
-
-          <InfoTooltip label="ESAT countdown">
-            Calendar days remaining until the configured ESAT exam date. The countdown updates automatically each day. Current exam date: {countdown.examDateLabel}.
-          </InfoTooltip>
-        </span>
-      )
-    : null;
+  const countdownMeta = countdown ? (
+    <span className={styles.countdownPill}>
+      <ExamCountdown exam="ESAT" />
+      <InfoTooltip label="ESAT countdown">
+        Live countdown to {countdown.examDateLabel} at midnight (00:00 UK time).
+        Days, hours, minutes and seconds update automatically every second.
+      </InfoTooltip>
+    </span>
+  ) : null;
 
   if (
     predictor.status === "insufficient_evidence" ||

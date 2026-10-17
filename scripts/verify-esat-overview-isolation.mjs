@@ -8,6 +8,7 @@ import * as evidence from "../lib/server/esat-predictor-evidence.ts";
 import * as october from "../lib/server/esat-october-2026-tests.ts";
 import * as preparation from "../lib/server/tmua-preparation-rank-v1-engine.ts";
 import * as recovery from "../lib/auth/service-recovery.ts";
+import * as countdown from "../lib/exam-countdown.ts";
 
 // Execute the production GET handler against an instrumented, in-memory Data
 // API. No live credentials, users, database mutations or network requests.
@@ -119,6 +120,7 @@ function harness(overrides = {}) {
   }
   const exports = {};
   const dependencies = {
+    "@/lib/exam-countdown": countdown,
     "@/app/api/esat/qb/_server": {
       ESAT_TABLE_CANDIDATES: ["esat_qb_questions", "esat_questions"],
       adminClient: () => ({ from, auth: { admin: { listUsers: () => { throw new Error("Auth enumeration is forbidden"); } } } }),

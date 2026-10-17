@@ -84,8 +84,8 @@ for (
     'Preparation Rank current-user Predictor input does not match overview Predictor input',
     'preparationRank:',
     'countdown:',
-    '"2026-10-12"',
-    '"12 October"',
+    'JANUARY_EXAM_DATE',
+    'JANUARY_EXAM_DATE_LABEL',
   ]
 ) {
   requireText(
@@ -102,7 +102,7 @@ for (
     'CountdownOverview',
     'Preparation Rank',
     'daysToTmua',
-    'till TMUA',
+    '<ExamCountdown exam="TMUA" />',
     'examDateLabel',
     'countdown.examDateLabel',
     'recognised test or Question Bank evidence',
@@ -220,5 +220,5 @@ console.log(
 );
 
 console.log(
-  `${checks} invariants verified; the rolling 30-day cohort is server-authoritative; explicit exclusions replace email heuristics; Predictor V1 is recomputed from authoritative evidence for the cohort; Preparation Rank uses the locked engine; run/snapshot writes are append-only and deduplicated; only the current student's rank is returned; no-evidence users receive no synthetic score/rank; and the dashboard includes the factual 12 October countdown.`,
+  `${checks} invariants verified; the rolling 30-day cohort is server-authoritative; explicit exclusions replace email heuristics; Predictor V1 is recomputed from authoritative evidence for the cohort; Preparation Rank uses the locked engine; run/snapshot writes are append-only and deduplicated; only the current student's rank is returned; no-evidence users receive no synthetic score/rank; and the dashboard includes the live 4 January 2027 countdown.`,
 );

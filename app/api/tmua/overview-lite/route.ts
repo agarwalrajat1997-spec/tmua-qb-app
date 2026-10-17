@@ -1,10 +1,11 @@
+import { JANUARY_EXAM_DATE, JANUARY_EXAM_DATE_LABEL, JANUARY_EXAM_TIMESTAMP } from "@/lib/exam-countdown";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const EXAM_DATE = "2026-10-12";
-const EXAM_DATE_LABEL = "12 October";
+const EXAM_DATE = JANUARY_EXAM_DATE;
+const EXAM_DATE_LABEL = JANUARY_EXAM_DATE_LABEL;
 
 function daysToTmua(): number {
   const now = new Date();
@@ -13,7 +14,7 @@ function daysToTmua(): number {
     now.getUTCMonth(),
     now.getUTCDate(),
   );
-  const examUtc = Date.UTC(2026, 9, 12);
+  const examUtc = JANUARY_EXAM_TIMESTAMP;
 
   return Math.max(
     0,

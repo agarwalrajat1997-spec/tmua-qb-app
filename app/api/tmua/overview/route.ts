@@ -1,3 +1,4 @@
+import { JANUARY_EXAM_DATE, JANUARY_EXAM_DATE_LABEL, JANUARY_EXAM_TIMESTAMP } from "@/lib/exam-countdown";
 import {
   createHash as createNodeHash,
   randomUUID as randomNodeUuid,
@@ -222,10 +223,10 @@ const PREPARATION_RANK_WINDOW_MS =
   30 * 24 * 60 * 60 * 1000;
 
 const TMUA_EXAM_DATE =
-  "2026-10-12";
+  JANUARY_EXAM_DATE;
 
 const TMUA_EXAM_DATE_LABEL =
-  "12 October";
+  JANUARY_EXAM_DATE_LABEL;
 
 async function preparationFetchRows(
   label: string,
@@ -524,11 +525,7 @@ function preparationCountdown(
     );
 
   const exam =
-    Date.UTC(
-      2026,
-      9,
-      12,
-    );
+    JANUARY_EXAM_TIMESTAMP;
 
   const daysToTmua =
     Math.max(

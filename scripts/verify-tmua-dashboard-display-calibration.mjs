@@ -22,19 +22,19 @@ function check(value, message) {
 const rankStart = prediction.indexOf("const displayedRank =");
 const cohortStart = prediction.indexOf("const displayedCohortSize =");
 const rankTextStart = prediction.indexOf("const rankText =");
-const countdownStart = prediction.indexOf("const countdownText =");
+const preparationMetaStart = prediction.indexOf("const preparationMeta =");
 
 check(
   rankStart >= 0 &&
     cohortStart > rankStart &&
     rankTextStart > cohortStart &&
-    countdownStart > rankTextStart,
+    preparationMetaStart > rankTextStart,
   "ranking blocks are missing or out of order",
 );
 
 const rankBlock = prediction.slice(rankStart, cohortStart);
 const cohortBlock = prediction.slice(cohortStart, rankTextStart);
-const rankTextBlock = prediction.slice(rankTextStart, countdownStart);
+const rankTextBlock = prediction.slice(rankTextStart, preparationMetaStart);
 
 check(
   prediction.includes("const PREPARATION_RANK_DISPLAY_MULTIPLIER = 2.0000;"),

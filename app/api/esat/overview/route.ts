@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { JANUARY_EXAM_DATE, JANUARY_EXAM_DATE_LABEL, JANUARY_EXAM_TIMESTAMP } from "@/lib/exam-countdown";
 import {
   ESAT_TABLE_CANDIDATES,
   adminClient,
@@ -27,8 +28,8 @@ export const dynamic = "force-dynamic";
 const PAGE_SIZE = 1000;
 const MAX_ROWS = 10000;
 const ESAT_ACTIVE_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
-const ESAT_EXAM_DATE = "2026-10-12";
-const ESAT_EXAM_DATE_LABEL = "12 October";
+const ESAT_EXAM_DATE = JANUARY_EXAM_DATE;
+const ESAT_EXAM_DATE_LABEL = JANUARY_EXAM_DATE_LABEL;
 const ESAT_PREPARATION_RANK_MODEL_VERSION =
   "esat-preparation-rank-v1-20260819";
 const ESAT_ACCESS_PRODUCTS = [
@@ -120,7 +121,7 @@ function londonDayUtc(date: Date): number {
 
 function esatCountdown(asOf: Date) {
   const today = londonDayUtc(asOf);
-  const exam = Date.UTC(2026, 9, 12);
+  const exam = JANUARY_EXAM_TIMESTAMP;
   const daysToEsat = Math.max(
     0,
     Math.round((exam - today) / (24 * 60 * 60 * 1000)),
