@@ -63,7 +63,7 @@ function harness(overrides = {}) {
       email: user.email, product: "esat-question-bank", approved: true, expires_at: null,
     })),
   };
-  const queries = [], snapshots = [], errors = [];
+  const queries = [], snapshots = [], errors = [], rankReads = [], refreshes = [];
   class Clock extends Date {
     constructor(...args) { super(...(args.length ? args : [now])); }
     static now() { return now; }
@@ -120,6 +120,17 @@ function harness(overrides = {}) {
   }
   const exports = {};
   const dependencies = {
+    "@/lib/server/preparation-rank-cache": {
+      requestPreparationRankRefresh: (_admin, programme) => refreshes.push(programme),
+      readPreparationRankSnapshot: async (_admin, userId, programme, verifiedEmail) => {
+        rankReads.push({ userId, programme, verifiedEmail });
+        return state.readyRank ?? {
+          modelVersion: "esat-preparation-rank-v1-20260819", status: "temporarily_unavailable",
+          hasGenuinePreparationEvidence: true, score: 1, rank: null, cohortSize: 0,
+          components: null, calculatedAt: new Date(now).toISOString(),
+        };
+      },
+    },
     "@/lib/exam-countdown": countdown,
     "@/app/api/esat/qb/_server": {
       ESAT_TABLE_CANDIDATES: ["esat_qb_questions", "esat_questions"],
@@ -143,7 +154,7 @@ function harness(overrides = {}) {
     },
     Date: Clock, Response, console: { error: (...args) => errors.push(args) },
   });
-  return { GET: exports.GET, state, tables, queries, snapshots, errors, advance: ms => { now += ms; } };
+  return { GET: exports.GET, state, tables, queries, snapshots, errors, rankReads, refreshes, advance: ms => { now += ms; } };
 }
 function expected(attemptRows, qb) {
   return predictor.calculateEsatPredictorV1({
@@ -187,6 +198,8 @@ assert.equal(h.queries.filter(q => q.table === "esat_qb_questions").length, 1);
 assert.equal(h.snapshots.length, 1, "Concurrent refreshes create one idempotent snapshot write");
 assert.equal(h.queries.filter(q => q.table === "student_access").length, 8, "Do not cache authorization");
 assert.ok(bodyA.preparationRank.score > 0, "Keep own preparation score and components");
+assert.deepEqual(h.rankReads[0], { userId: users.a.id, programme: "esat", verifiedEmail: users.a.email });
+assert.equal(h.refreshes.length, 8, "Each authenticated request schedules a lease-protected background refresh");
 assert.equal(bodyA.predictor.testEvidenceCount, aAttempts.length, "Every registered legacy/recall/October pathway remains evidence");
 const queryCount = h.queries.length;
 assert.equal((await h.GET()).status, 200);
@@ -231,6 +244,14 @@ assert.equal(transient.queries.length, 0);
 const signedOut = harness({ user: null, authError: { name: "AuthSessionMissingError" } });
 assert.equal((await signedOut.GET()).status, 401);
 assert.equal(signedOut.queries.length, 0);
+assert.equal(signedOut.refreshes.length, 0, "Signed-out requests cannot trigger a cohort refresh");
+const ready = harness({ readyRank: {
+  modelVersion: "esat-preparation-rank-v1-20260819", hasGenuinePreparationEvidence: true,
+  score: 65.4, rank: 3, cohortSize: 30, components: null, calculatedAt: new Date(NOW).toISOString(),
+} });
+const readyBody = await (await ready.GET()).json();
+assert.deepEqual(readyBody.preparationRank, ready.state.readyRank, "A complete saved cohort rank replaces the old unavailable placeholder");
+assert.equal(readyBody.predictor.score, expected(aAttempts, aQb).predictedEsatPracticeScore, "Saved rank must not alter the predictor");
 
 const paginated = harness();
 paginated.tables.tmua_qb_attempt_events = Array.from({ length: 1002 }, (_, i) => ({ ...aQb[i % aQb.length], id: `page-${String(i).padStart(5, "0")}` }));

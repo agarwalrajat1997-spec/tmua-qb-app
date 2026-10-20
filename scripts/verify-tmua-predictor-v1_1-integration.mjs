@@ -10,6 +10,10 @@ const route =
     "utf8",
   );
 
+const refresh = fs.readFileSync(
+  "lib/server/tmua-preparation-rank-refresh.ts", "utf8",
+);
+
 const pkg =
   JSON.parse(
     fs.readFileSync(
@@ -42,6 +46,7 @@ function countMatches(
 
 function routeChecks(
   source,
+  cohort,
 ) {
   return {
     currentV11:
@@ -51,43 +56,43 @@ function routeChecks(
 
     cohortV11:
       /const\s+rawPredictorForRank\s*=\s*calculateTmuaPredictorV1\s*\([\s\S]*?\)\s*;\s*const\s+predictor\s*=\s*applyTmuaHighScoreEvidenceGate\s*\(\s*rawPredictorForRank\s*,?\s*\)\s*;\s*const\s+predictorSnapshot\s*=\s*buildTmuaPredictionSnapshotInsert/.test(
-        source,
+        cohort,
       ),
 
     modelGuard:
-      /predictor\.modelVersion\s*!==\s*currentPredictorResult\.modelVersion/.test(
-        source,
+      /buildTmuaPredictionSnapshotInsert\s*\(\s*userId\s*,\s*predictor\s*,\s*asOfIso\s*,?\s*\)/.test(
+        cohort,
       ),
 
     hashGuard:
-      /predictorSnapshot\.inputHash\s*!==\s*currentPredictorSnapshot\.inputHash/.test(
-        source,
+      /predictor_input_hash\s*:\s*record\s*\.predictorSnapshot\s*\.inputHash/.test(
+        cohort,
       ),
 
     scoreGuard:
-      /predictor\.predictedTmuaScore9\s*!==\s*currentPredictorResult\.predictedTmuaScore9/.test(
-        source,
+      /predicted_tmua_score9\s*:\s*record\.predictor\s*\.predictedTmuaScore9/.test(
+        cohort,
       ),
   };
 }
 
 assert(
-  route.includes(
+  [route, refresh].every(source => source.includes(
     'import { applyTmuaHighScoreEvidenceGate } from "@/lib/server/tmua-predictor-v1_1-policy";',
-  ),
-  "Overview must import the V1.1 high-score gate.",
+  )),
+  "Overview and background cohort worker must import the same V1.1 high-score gate.",
 );
 
 assert(
-  countMatches(
-    route,
+  [route, refresh].every(source => countMatches(
+    source,
     /applyTmuaHighScoreEvidenceGate\s*\(/g,
-  ) === 2,
-  "Overview must apply V1.1 exactly twice: current user and Preparation Rank cohort.",
+  ) === 1),
+  "Each path must apply V1.1 exactly once: current-user overview and background Preparation Rank cohort.",
 );
 
 const liveChecks =
-  routeChecks(route);
+  routeChecks(route, refresh);
 
 assert(
   liveChecks.currentV11,
@@ -101,17 +106,17 @@ assert(
 
 assert(
   liveChecks.modelGuard,
-  "Preparation Rank must fail closed if current-user Predictor model versions differ.",
+  "Preparation Rank must build its model identity through the same protected snapshot mapper and gated result.",
 );
 
 assert(
   liveChecks.hashGuard,
-  "Preparation Rank must fail closed if current-user V1.1 input hashes differ.",
+  "Preparation Rank must persist the exact V1.1 predictor snapshot input hash.",
 );
 
 assert(
   liveChecks.scoreGuard,
-  "Preparation Rank must fail closed if current-user V1.1 scores differ.",
+  "Preparation Rank must persist the exact V1.1 predictor score.",
 );
 
 /*
@@ -125,7 +130,7 @@ const crlfRoute =
     .replace(/\n/g, "\r\n");
 
 const crlfChecks =
-  routeChecks(crlfRoute);
+  routeChecks(crlfRoute, refresh.replace(/\r\n/g, "\n").replace(/\n/g, "\r\n"));
 
 assert(
   JSON.stringify(crlfChecks) ===
@@ -134,24 +139,18 @@ assert(
 );
 
 assert(
-  route.includes(
-    "Preparation Rank current-user Predictor input does not match overview Predictor input",
-  ),
-  "Runtime V1.1 hash mismatch error must remain explicit.",
+  route.includes('readPreparationRankSnapshot(admin, user.id, "tmua", user.email)'),
+  "Current-user route must return only its verified identity's complete saved cohort snapshot.",
 );
 
 assert(
-  route.includes(
-    "Preparation Rank current-user Predictor score does not match overview Predictor score",
-  ),
-  "Runtime V1.1 score mismatch error must remain explicit.",
+  refresh.includes("Preparation Rank run is missing an active-user snapshot"),
+  "Background cohort publication must fail closed if any active student's snapshot is missing.",
 );
 
 assert(
-  route.includes(
-    "Preparation Rank current-user Predictor model version does not match overview Predictor model version",
-  ),
-  "Runtime V1.1 model-version mismatch error must remain explicit.",
+  !route.includes("rankPreparationCohort") && !route.includes("listUsers"),
+  "Student overview must never rebuild the cohort while serving its own predictor.",
 );
 
 /*
@@ -273,7 +272,7 @@ console.log(
 console.log(
   String(checks) +
     " invariants verified; current-user and cohort predictors both use V1.1; " +
-    "model version, input hash and score are fail-closed equal for the current user; " +
+    "cohort snapshots preserve the gated model identity, input hash and score; " +
     "identical evidence produces identical V1.1 hash/score in both paths; " +
     "LF and CRLF checkouts are both protected; " +
     "the V1.1 policy and integration checks are protected by prebuild.",

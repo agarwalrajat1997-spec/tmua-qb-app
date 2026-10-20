@@ -282,7 +282,7 @@ export default function EsatPredictionStrip() {
         </span>
 
         <InfoTooltip label="Predicted ESAT practice score">
-          Each recognised paper is re-scored on the server, converted module by module using that paper&apos;s audited difficulty, and then combined with the same retake, evidence-weight, confidence and likely-range rules as the TMUA predictor. Official ESAT reports modules separately; this is not an official UAT-UK combined score.
+          Each recognised ESAT paper is re-scored on the server and converted module by module using that paper&apos;s audited difficulty. The ESAT practice estimate then accounts for retakes and the strength of your test and Question Bank evidence to calculate the score, confidence and likely range. Official ESAT reports modules separately; this is not an official UAT-UK combined score.
         </InfoTooltip>
 
         <strong className={styles.score}>

@@ -21,9 +21,11 @@ import {
 } from "@/lib/server/tmua-preparation-rank-v1-engine";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isMissingSession, withServiceTimeout } from "@/lib/auth/service-recovery";
+import { readPreparationRankSnapshot, requestPreparationRankRefresh } from "@/lib/server/preparation-rank-cache";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 300;
 
 const PAGE_SIZE = 1000;
 const MAX_ROWS = 10000;
@@ -444,7 +446,12 @@ export async function GET() {
     if (accessError) throw accessError;
     if (!accessRows?.length) return json({ ok: false, error: "No ESAT access" }, 403);
 
-    return json(await currentUserOverview(admin, user.id));
+    requestPreparationRankRefresh(admin, "esat");
+    const [overview, preparationRank] = await Promise.all([
+      currentUserOverview(admin, user.id),
+      readPreparationRankSnapshot(admin, user.id, "esat", user.email),
+    ]);
+    return json({ ...overview, preparationRank });
   } catch (error) {
     console.error("ESAT overview failed", error);
     const response = json({

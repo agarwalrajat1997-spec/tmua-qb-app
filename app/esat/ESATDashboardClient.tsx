@@ -424,9 +424,13 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
 
         <div className={styles.right}>
           <div className={styles.pill}>Signed in as {email || "student"}</div>
-          <a className={styles.btn} href="/api/logout">
+          <button
+            type="button"
+            className={`${styles.btn} ${styles.btnPrimary}`}
+            onClick={() => (window.location.href = "/api/logout")}
+          >
             Logout
-          </a>
+          </button>
         </div>
       </div>
 

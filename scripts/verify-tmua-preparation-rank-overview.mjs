@@ -6,6 +6,11 @@ const route =
     "utf8",
   );
 
+const refresh = fs.readFileSync(
+  "lib/server/tmua-preparation-rank-refresh.ts", "utf8",
+);
+const serverImplementation = `${route}\n${refresh}`;
+
 const ui =
   fs.readFileSync(
     "app/dashboard/TmuaPredictionStrip.tsx",
@@ -81,7 +86,10 @@ for (
     'actual_active_cohort_size',
     'distinct_canonical_qb_interactions_30d',
     'independent_recognised_test_families_30d',
-    'Preparation Rank current-user Predictor input does not match overview Predictor input',
+    'refreshTmuaPreparationRank',
+    'readPreparationRankSnapshot',
+    'requestPreparationRankRefresh',
+    'cohortAsOf: asOfIso',
     'preparationRank:',
     'countdown:',
     'JANUARY_EXAM_DATE',
@@ -89,7 +97,7 @@ for (
   ]
 ) {
   requireText(
-    route,
+    serverImplementation,
     required,
     "overview route",
   );
@@ -129,7 +137,7 @@ for (
   ]
 ) {
   forbidText(
-    route,
+    serverImplementation,
     forbidden,
     "overview route",
   );
@@ -185,6 +193,7 @@ const runtimeRefs = [];
 for (
   const file of [
     "app/api/tmua/overview/route.ts",
+    "lib/server/tmua-preparation-rank-refresh.ts",
     "app/dashboard/TmuaPredictionStrip.tsx",
   ]
 ) {
@@ -208,12 +217,19 @@ for (
 if (
   runtimeRefs.length !== 1 ||
   runtimeRefs[0] !==
-    "app/api/tmua/overview/route.ts"
+    "lib/server/tmua-preparation-rank-refresh.ts"
 ) {
   throw new Error(
     `Preparation Rank snapshot runtime boundary is wrong: ${runtimeRefs.join(", ")}`,
   );
 }
+
+for (const forbidden of [
+  "calculateAndPersistPreparationRankV1", "rankPreparationCohort", "listUsers",
+  "TMUA_OVERVIEW_FULL_MODE", "tmua-preparation-rank-lightweight",
+]) forbidText(route, forbidden, "current-user route must not calculate a cohort or silently disable ranking");
+requireText(route, 'readPreparationRankSnapshot(admin, user.id, "tmua", user.email)', "own persisted rank only");
+requireText(refresh, "Preparation Rank run is missing an active-user snapshot", "complete snapshot publication");
 
 console.log(
   "TMUA Preparation Rank overview/dashboard verification passed:",
