@@ -26,12 +26,6 @@ export async function GET(req: Request) {
       ? (requestedType as EmailOtpType)
       : null;
 
-  if (!code && (!tokenHash || !otpType)) {
-    const retryUrl = new URL("/login", url.origin);
-    retryUrl.searchParams.set("e", "invalid_or_consumed_link");
-    return NextResponse.redirect(retryUrl);
-  }
-
   const cookieStore = await cookies();
   const cookieDestination = decodeLoginDestination(
     cookieStore.get(LOGIN_DESTINATION_COOKIE)?.value,
@@ -39,6 +33,19 @@ export async function GET(req: Request) {
   const next = safeLoginDestination(
     url.searchParams.get("next") ?? cookieDestination,
   );
+
+  if (!code && (!tokenHash || !otpType)) {
+    // Server-requested OTP emails may use Supabase's implicit flow. Fragments
+    // are never sent to this handler. A redirect without a fragment preserves
+    // the browser's fragment for the isolated client bridge to consume/clear.
+    const bridgeUrl = new URL("/auth/complete", url.origin);
+    bridgeUrl.searchParams.set("next", next);
+    const bridge = NextResponse.redirect(bridgeUrl);
+    bridge.cookies.delete(LOGIN_DESTINATION_COOKIE);
+    bridge.headers.set("Cache-Control", "private, no-store");
+    bridge.headers.set("Referrer-Policy", "no-referrer");
+    return bridge;
+  }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnon =

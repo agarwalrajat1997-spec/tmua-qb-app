@@ -1,5 +1,7 @@
 ﻿import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { requireESATProductAccess } from "@/app/api/esat/qb/_server";
+import { serviceFetch } from "@/lib/auth/service-recovery";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,7 @@ function getSupabaseAdmin() {
   }
 
   return createClient(url, key, {
+    global: { fetch: serviceFetch },
     auth: {
       persistSession: false,
       autoRefreshToken: false,
@@ -21,6 +24,9 @@ function getSupabaseAdmin() {
 
 export async function GET() {
   try {
+    const access = await requireESATProductAccess("esat-classes");
+    if (!access.ok) return access.response;
+
     const supabase = getSupabaseAdmin();
 
     const { data, error } = await supabase
@@ -28,7 +34,8 @@ export async function GET() {
       .select("id,title,batch_name,description,starts_at,ends_at,timezone,zoom_url,zoom_label,status,recording_url,recording_title,recording_notes,is_visible,sort_order")
       .eq("is_visible", true)
       .order("starts_at", { ascending: true })
-      .order("sort_order", { ascending: true });
+      .order("sort_order", { ascending: true })
+      .retry(false);
 
     if (error) {
       return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
@@ -61,7 +68,7 @@ export async function GET() {
       upcoming,
       recordings,
       all: sessions,
-    });
+    }, { headers: { "Cache-Control": "no-store" } });
   } catch (e: any) {
     return NextResponse.json(
       { ok: false, error: e?.message || "Could not load ESAT classes" },

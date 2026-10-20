@@ -112,7 +112,7 @@ async function checkTmuaAccess() {
 
   const { data, error } = await supabase
     .from("student_access")
-    .select("approved")
+    .select("approved,expires_at")
     .eq("email", email)
     .eq("product", "tmua-question-bank")
     .maybeSingle()
@@ -126,7 +126,15 @@ async function checkTmuaAccess() {
     };
   }
 
-  if (!data?.approved) {
+  // Recheck on every content request: an already-open tab must not retain
+  // access after a trial expires. Null alone means permanent access.
+  const expiresAt = data?.expires_at;
+  const hasCurrentAccess = data?.approved === true && (
+    expiresAt === null ||
+    (typeof expiresAt === "string" && Date.parse(expiresAt) > Date.now())
+  );
+
+  if (!hasCurrentAccess) {
     return {
       ok: false as const,
       response: json({ ok: false, error: "No TMUA Question Bank access" }, 403),

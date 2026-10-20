@@ -11,6 +11,16 @@ if (publicSupabase.rejectedVariables.length) {
 }
 
 const nextConfig: NextConfig = {
+  async headers() {
+    return [{
+      source: "/auth/:path*",
+      headers: [
+        { key: "Referrer-Policy", value: "no-referrer" },
+        { key: "Cache-Control", value: "private, no-store" },
+        { key: "X-Robots-Tag", value: "noindex, nofollow" },
+      ],
+    }];
+  },
   // Next redirects run before authentication, so retired free-resource links
   // also work for signed-out visitors. All other AMC routes stay protected.
   async redirects() {

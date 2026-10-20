@@ -160,15 +160,18 @@ function database() {
       paper: practiceSpec(id).canonical.structure === "full" ? "full" : practiceSpec(id).canonical.structure === "paper1" ? "1" : "2",
       expected_questions: practiceSpec(id).canonical.expectedQuestions, score_conversion_profile: practiceSpec(id).canonical.expectedQuestions === 20 ? null : conversion.profile })),
     tmua_score_conversion_profiles: [copy(conversion)], practice_test_attempts: [], tmua_test_attempt_evaluations: [],
+    student_access: [{ email: "qa@example.invalid", product: "practice-tests", approved: true, expires_at: null }],
   };
   return { inserts, calls, errors, tables, from(table) {
-    const filters = [], call = { table, filters }; calls.push(call); let inserted;
+    const filters = [], call = { table, filters }; calls.push(call); let inserted, singleRow = false;
     const rows = () => (tables[table] ?? []).filter(row => filters.every(([key, values]) => values.includes(row[key])));
     const query = { select(columns) { call.columns = columns; return query; }, eq(key, value) { filters.push([key, [value]]); return query; },
+      ilike(key, value) { filters.push([key, [value.toLowerCase()]]); return query; }, or() { return query; },
+      retry(value) { assert.equal(value, false); return query; },
       in(key, values) { filters.push([key, values]); return query; }, order() { return query; }, limit() { return query; },
       insert(value) { call.insert = true; inserted = { id: `qa-${inserts.length}`, ...value }; inserts.push(inserted); tables[table].push(inserted); return query; },
-      async maybeSingle() { return { data: errors[table] ? null : inserted ?? rows()[0] ?? null, error: errors[table] ?? null }; }, async single() { return { data: inserted ?? rows()[0] ?? null, error: errors[table] ?? null }; },
-      then(resolve, reject) { return Promise.resolve({ data: errors[table] ? null : rows(), count: rows().length, error: errors[table] ?? null }).then(resolve, reject); } };
+      maybeSingle() { singleRow = true; return query; }, async single() { return { data: inserted ?? rows()[0] ?? null, error: errors[table] ?? null }; },
+      then(resolve, reject) { return Promise.resolve({ data: errors[table] ? null : singleRow ? inserted ?? rows()[0] ?? null : rows(), count: rows().length, error: errors[table] ?? null }).then(resolve, reject); } };
     return query;
   } };
 }

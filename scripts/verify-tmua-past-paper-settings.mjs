@@ -99,20 +99,23 @@ function database() {
     tmua_test_catalog: Object.keys(counts).map(id => ({ test_id: id, title: id, paper: "full", expected_questions: 40, score_conversion_profile: "qa-profile" })),
     tmua_score_conversion_profiles: [{ profile: "qa-profile", conversion_version: "qa-v1", score_values: Array.from({ length: 41 }, (_, raw) => 1 + raw / 5) }],
     practice_test_attempts: [], tmua_test_attempt_evaluations: [],
+    student_access: [{ email: "qa@example.invalid", product: "practice-tests", approved: true, expires_at: null }],
   };
   const result = { calls, inserted, tables, from(table) {
     const call = { table, filters: [] }; calls.push(call);
-    let inserting;
+    let inserting, singleRow = false;
     function rows() { return (tables[table] ?? []).filter(row => call.filters.every(([key, value]) => row[key] === value)); }
     const query = {
       select(columns) { call.columns = columns; return query; },
       eq(key, value) { call.filters.push([key, value]); return query; },
+      ilike(key, value) { call.filters.push([key, value.toLowerCase()]); return query; },
+      or() { return query; }, retry(value) { assert.equal(value, false); return query; },
       in() { return query; },
       order() { return query; }, limit() { return query; },
       insert(value) { inserting = { id: `qa-${inserted.length}`, ...value }; inserted.push(inserting); tables[table].push(inserting); return query; },
-      async maybeSingle() { return { data: inserting ?? rows()[0] ?? null, error: null }; },
+      maybeSingle() { singleRow = true; return query; },
       async single() { return { data: inserting ?? rows()[0] ?? null, error: null }; },
-      then(resolve, reject) { return Promise.resolve({ data: rows(), error: null, count: rows().length }).then(resolve, reject); },
+      then(resolve, reject) { return Promise.resolve({ data: singleRow ? inserting ?? rows()[0] ?? null : rows(), error: null, count: rows().length }).then(resolve, reject); },
     };
     return query;
   } };

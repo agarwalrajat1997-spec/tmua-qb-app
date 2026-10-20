@@ -341,6 +341,41 @@ export async function POST(req: Request) {
   const recognisedEsatTest =
     canonicalEsatTest != null;
 
+  // The page gate is not sufficient for a test left open past trial expiry.
+  // Keep historical-result reads unchanged, but require current TMUA access
+  // before producing a new authoritative result or recording an attempt.
+  if (recognisedTmuaTest && !recognisedEsatTest) {
+    if (!user.email) {
+      return NextResponse.json({ error: "No TMUA practice-test access" }, { status: 403 });
+    }
+    const email = user.email.trim().toLowerCase().replace(/[\\%_]/g, "\\$&");
+    const nowIso = new Date().toISOString();
+    try {
+      const { data: access, error: accessError } = await supabase
+        .from("student_access")
+        .select("approved,expires_at")
+        .ilike("email", email)
+        .eq("product", "practice-tests")
+        .eq("approved", true)
+        .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
+        .limit(1)
+        .maybeSingle()
+        .retry(false);
+      if (accessError) throw new Error("Access lookup unavailable");
+      const expiresAt = access?.expires_at;
+      if (access?.approved !== true || !(expiresAt === null ||
+        (typeof expiresAt === "string" && Date.parse(expiresAt) > Date.now()))) {
+        return NextResponse.json({ error: "No TMUA practice-test access" }, {
+          status: 403, headers: { "Cache-Control": "no-store" },
+        });
+      }
+    } catch {
+      return NextResponse.json({ error: "Access service temporarily unavailable" }, {
+        status: 503, headers: { "Cache-Control": "no-store", "Retry-After": "30" },
+      });
+    }
+  }
+
   let practiceSettings;
   try {
     practiceSettings = resolvePracticeSettings(testId, body?.practice_settings, pastPaperSettings);

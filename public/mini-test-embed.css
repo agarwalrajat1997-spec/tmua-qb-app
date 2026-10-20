@@ -1,0 +1,41 @@
+/*
+ * Additive presentation for the public website iframe only.
+ * Standalone tests and fullscreen retain the supplied exam layout.
+ */
+html.ts-mini-embedded:not(.ts-mini-fullscreen),
+html.ts-mini-embedded:not(.ts-mini-fullscreen) body {
+  height: auto;
+  min-height: 0;
+  overflow: visible !important;
+}
+
+html.ts-mini-embedded:not(.ts-mini-fullscreen) .exam {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  min-height: 640px;
+}
+
+html.ts-mini-embedded:not(.ts-mini-fullscreen) .workspace {
+  flex: 1 0 auto;
+  overflow: visible;
+  overscroll-behavior: auto;
+  scrollbar-gutter: auto;
+}
+
+html.ts-mini-embedded:not(.ts-mini-fullscreen) .landing {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+html.ts-mini-embedded:not(.ts-mini-fullscreen) .transition {
+  margin-top: 38px;
+  margin-bottom: 38px;
+}
+
+@media (max-width: 460px) {
+  html.ts-mini-embedded:not(.ts-mini-fullscreen) .exam {
+    min-height: 600px;
+  }
+}

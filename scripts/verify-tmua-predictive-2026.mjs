@@ -93,13 +93,14 @@ function database(attemptRows=[]){
   };
   const result={calls,inserts,tables,auth:{admin:{listUsers:async()=>({data:{users:[{id:"qa-user",email:"qa@example.invalid",last_sign_in_at:new Date(Date.now()-1000).toISOString()}]},error:null})}}};
   result.from=table=>{
-    const call={table,filters:[],orders:[],ranges:[],columns:null};calls.push(call);let inserted;
+    const call={table,filters:[],orders:[],ranges:[],columns:null};calls.push(call);let inserted,singleRow=false;
     const rows=()=>{let values=tables[table]??[];for(const [field,value] of call.filters)values=values.filter(r=>r[field]===value);return values;};
-    const q={select(columns){call.columns=columns;return q;},eq(field,value){call.filters.push([field,value]);return q;},or(){return q;},in(){return q;},gt(){return q;},lte(){return q;},order(field,options){call.orders.push([field,options]);return q;},range(from,to){call.ranges.push([from,to]);return q;},limit(){return q;},
+    const q={select(columns){call.columns=columns;return q;},eq(field,value){call.filters.push([field,value]);return q;},ilike(field,value){call.filters.push([field,value.toLowerCase()]);return q;},or(){return q;},in(){return q;},gt(){return q;},lte(){return q;},order(field,options){call.orders.push([field,options]);return q;},range(from,to){call.ranges.push([from,to]);return q;},limit(){return q;},
+      retry(value){assert.equal(value,false);return q;},
       insert(value){inserted=value;inserts.push({table,value});tables[table]??=[];tables[table].push(...(Array.isArray(value)?value:[{id:"qa-inserted",...value}]));return q;},
-      async maybeSingle(){return {data:inserted?{id:"qa-inserted",...inserted}:rows()[0]??null,error:null};},
+      maybeSingle(){singleRow=true;return q;},
       async single(){return {data:inserted?{id:"qa-inserted",...inserted}:rows()[0]??null,error:null};},
-      then(resolve,reject){return Promise.resolve({data:rows(),error:null,count:rows().length}).then(resolve,reject);}};
+      then(resolve,reject){return Promise.resolve({data:singleRow?(inserted?{id:"qa-inserted",...inserted}:rows()[0]??null):rows(),error:null,count:rows().length}).then(resolve,reject);}};
     return q;
   };return result;
 }

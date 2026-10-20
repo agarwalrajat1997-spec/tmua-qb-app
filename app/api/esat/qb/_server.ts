@@ -25,9 +25,11 @@ export function adminClient() {
   });
 }
 
-export async function requireESATAccess() {
+export type ESATProduct = "esat-question-bank" | "esat-practice-tests" | "esat-classes";
+
+export async function requireESATProductAccess(product: ESATProduct) {
   try {
-    return await checkESATAccess();
+    return await checkESATAccess(product);
   } catch (error) {
     console.error("ESAT access service unavailable", error);
     return {
@@ -37,7 +39,11 @@ export async function requireESATAccess() {
   }
 }
 
-async function checkESATAccess() {
+export async function requireESATAccess() {
+  return requireESATProductAccess("esat-question-bank");
+}
+
+async function checkESATAccess(product: ESATProduct) {
   const supabase = await supabaseServer();
 
   const {
@@ -60,8 +66,8 @@ async function checkESATAccess() {
   const { data, error } = await supabase
     .from("student_access")
     .select("email, product, approved, expires_at")
-    .ilike("email", email)
-    .eq("product", "esat-question-bank")
+    .ilike("email", email.replace(/[\\%_]/g, "\\$&"))
+    .eq("product", product)
     .eq("approved", true)
     .or(`expires_at.is.null,expires_at.gt.${nowIso}`)
     .limit(1)

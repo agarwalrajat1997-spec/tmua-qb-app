@@ -34,6 +34,7 @@ const PRODUCT_GATES: ProductGate[] = [
   // ESAT
   { prefix: "/esat-question-bank", product: "esat-question-bank" },
   { prefix: "/esat-practice-tests", product: "esat-practice-tests" },
+  { prefix: "/esat-classes", product: "esat-classes" },
 ];
 
 function matchProductGate(pathname: string) {
@@ -224,5 +225,6 @@ export const config = {
     "/esat/:path*",
     "/esat-question-bank/:path*",
     "/esat-practice-tests/:path*",
+    "/esat-classes/:path*",
   ],
 };
