@@ -3784,11 +3784,13 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
         <div class="field" id="fCardSort">
           <h4>Sort / Pool</h4>
           <div class="row">
-            <select class="select" id="fSort">
+            <select class="select" id="fSort" aria-label="Sort / Pool" aria-describedby="randomPoolHelp">
               <option value="topic">Sort: Topic</option>
               <option value="difficulty">Sort: Difficulty</option>
+              <option value="random">Random</option>
             </select>
           </div>
+          <div class="small" id="randomPoolHelp">Random mixes questions within your selected filters, without repeats in the pool. Apply Filters again for a fresh shuffle.</div>
         </div>
 
       </div>
@@ -3963,6 +3965,8 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
 
   let allMeta = [];
   let visibleList = [];
+  // Keep random navigation stable during answer saves and cloud restoration.
+  const randomQuestionOrder = new Map();
   let currentIndex = 0;
   let currentQuestion = null;
   let questionCache = new Map();
@@ -4026,6 +4030,9 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("esat-question-bank", "ts_esat_su
     const statuses = ["all", "unseen", "attempted", "correct", "incorrect", "flagged"];
     filters.status = statuses.includes(filters.status) ? filters.status
       : statuses.includes(priorFilters.status) ? priorFilters.status : "all";
+    const sorts = ["topic", "difficulty", "random"];
+    filters.sort = sorts.includes(filters.sort) ? filters.sort
+      : sorts.includes(priorFilters.sort) ? priorFilters.sort : "topic";
     return {
       ...base,
       ...incoming,
@@ -4588,7 +4595,20 @@ function uniqueSorted(arr) {
       });
   }
 
-function applyFilters() {
+  function orderRandomQuestions(questions, reshuffle) {
+    if (reshuffle) randomQuestionOrder.clear();
+    const additions = questions.filter(q => !randomQuestionOrder.has(questionKey(q)));
+    // Fisher–Yates: every matching question appears exactly once, in random order.
+    for (let i = additions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [additions[i], additions[j]] = [additions[j], additions[i]];
+    }
+    additions.forEach(q => randomQuestionOrder.set(questionKey(q), randomQuestionOrder.size));
+    return questions.sort((a, b) =>
+      randomQuestionOrder.get(questionKey(a)) - randomQuestionOrder.get(questionKey(b)));
+  }
+
+function applyFilters(reshuffle = false) {
     visibleList = allMeta.filter(function(q) {
       const a = answerFor(q);
 
@@ -4605,9 +4625,14 @@ function applyFilters() {
       return true;
     });
 
-    visibleList.sort(function(a, b) {
-      return Number(a.global_number || 0) - Number(b.global_number || 0);
-    });
+    if (state.filters.sort === "random") {
+      orderRandomQuestions(visibleList, reshuffle);
+    } else {
+      randomQuestionOrder.clear();
+      visibleList.sort(function(a, b) {
+        return Number(a.global_number || 0) - Number(b.global_number || 0);
+      });
+    }
 
     if (currentIndex >= visibleList.length) currentIndex = 0;
   }
@@ -4947,7 +4972,7 @@ function applyFilters() {
     if (statusSelect) statusSelect.value = state.filters.status || "all";
 
     const sortSelect = el("fSort");
-    if (sortSelect && state.filters.sort) sortSelect.value = state.filters.sort;
+    if (sortSelect) sortSelect.value = state.filters.sort || "topic";
   }
 
   function readFiltersFromUI() {
@@ -5236,7 +5261,7 @@ function applyFilters() {
   const STATE = {
     applyFilters: function() {
       readFiltersFromUI();
-      applyFilters();
+      applyFilters(true);
       currentIndex = 0;
       saveState();
       UI.closeFilters();
@@ -5245,6 +5270,7 @@ function applyFilters() {
     clearFilters: function() {
       state.filters = {
         status: "all",
+        sort: "topic",
         papers: [],
         topics: [],
         difficulties: []
