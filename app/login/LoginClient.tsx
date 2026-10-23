@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import { safeLoginDestination } from "@/lib/auth/login-destination";
 import { loginErrorMessage } from "@/lib/auth/login-error";
+import { JANUARY_TMUA_CHECKOUT, JANUARY_ESAT_CHECKOUT, JANUARY_OFFER_PRICE, JANUARY_USUAL_PRICE, JANUARY_OFFER_LIMIT, JANUARY_OFFER_SITTING } from "@/lib/january-offer";
+import JanuaryAccessOffer from "../components/JanuaryAccessOffer";
 import styles from "./login.module.css";
 
 type Props = { uiMark: string };
@@ -12,10 +14,10 @@ type Props = { uiMark: string };
 const TMUA_LINKS = {
   tests: "https://buy.stripe.com/cNi7sN4I84d06cjbA60oM00",
   bank: "https://buy.stripe.com/7sYfZj7UkcJwcAH7jQ0oM01",
-  both: "https://buy.stripe.com/eVq4gBa2scJw6cj0Vs0oM04",
+  both: JANUARY_TMUA_CHECKOUT,
 };
 
-const ESAT_LINK = "https://buy.stripe.com/00w3cxdeE38Wasz7jQ0oM03";
+const ESAT_LINK = JANUARY_ESAT_CHECKOUT;
 
 const INFO_LINKS = {
   tmua: "https://www.thrivingscholars.com/tmua",
@@ -25,10 +27,10 @@ const INFO_LINKS = {
 const PRICE = {
   tests: 89,
   bank: 89,
-  both: 149,
+  both: JANUARY_OFFER_PRICE,
 };
 
-const ESAT_PRICE = 89;
+const ESAT_PRICE = JANUARY_OFFER_PRICE;
 
 const LOGIN_ERROR_MESSAGES: Record<string, string> = {
   invalid_or_consumed_link:
@@ -58,8 +60,8 @@ export default function LoginClient({ uiMark }: Props) {
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  const [tests, setTests] = useState(false);
-  const [bank, setBank] = useState(false);
+  const [tests, setTests] = useState(true);
+  const [bank, setBank] = useState(true);
 
   const enrollState = useMemo(() => {
     const n = (tests ? 1 : 0) + (bank ? 1 : 0);
@@ -74,13 +76,11 @@ export default function LoginClient({ uiMark }: Props) {
     }
 
     if (n === 2) {
-      const sum = PRICE.tests + PRICE.bank;
-
       return {
         key: "both" as const,
         label: "Bundle selected: Practice Tests + Question Bank",
         price: PRICE.both,
-        save: Math.max(0, sum - PRICE.both),
+        save: JANUARY_USUAL_PRICE - PRICE.both,
       };
     }
 
@@ -212,6 +212,8 @@ export default function LoginClient({ uiMark }: Props) {
         </div>
       </header>
 
+      <JanuaryAccessOffer programme={isEsat ? "esat" : "tmua"} />
+
       <main className={styles.main}>
         <div className={styles.grid}>
           <section className={`${styles.card} ${styles.leftCard}`}>
@@ -296,8 +298,8 @@ export default function LoginClient({ uiMark }: Props) {
                 </>
               ) : (
                 <>
-                  Choose what you want access to, then enroll. Prices shown
-                  in GBP (&pound;).
+                  Prepare for {JANUARY_OFFER_SITTING}: Question Bank and Practice
+                  Test Series together, or choose either resource for &pound;89.
                 </>
               )}
             </p>
@@ -315,7 +317,7 @@ export default function LoginClient({ uiMark }: Props) {
               <>
                 <div className={styles.esatOffer}>
                   <div className={styles.offerBadge}>
-                    INTRODUCTORY OFFER
+                    {JANUARY_OFFER_SITTING.toUpperCase()} OFFER
                   </div>
 
                   <div className={styles.esatOfferTitle}>
@@ -328,18 +330,19 @@ export default function LoginClient({ uiMark }: Props) {
                     </div>
 
                     <div className={styles.esatPriceMeta}>
-                      one-time introductory price
+                      <s>&pound;{JANUARY_USUAL_PRICE}</s> standard price
+                      <br />Save &pound;{JANUARY_USUAL_PRICE - ESAT_PRICE} · one-time payment
                     </div>
                   </div>
 
                   <div className={styles.esatIncludes}>
                     <span>Question Bank</span>
                     <span aria-hidden="true">&bull;</span>
-                    <span>Practice Tests</span>
+                    <span>Practice Test Series</span>
                   </div>
 
                   <div className={styles.esatOfferText}>
-                    Both resources included in one checkout.
+                    First {JANUARY_OFFER_LIMIT} purchases across TMUA and ESAT combined.
                   </div>
                 </div>
 
@@ -400,13 +403,14 @@ export default function LoginClient({ uiMark }: Props) {
                   <div>
                     <div className={styles.price}>
                       &pound;{enrollState.price}
+                      {enrollState.key === "both" ? <span className={styles.usualPrice}><s>&pound;{JANUARY_USUAL_PRICE}</s> standard bundle</span> : null}
                     </div>
 
                     <div className={styles.save}>
                       {enrollState.key === "both" &&
                       enrollState.save > 0 ? (
                         <>
-                          Save &pound;{enrollState.save}
+                          Save &pound;{enrollState.save} on full access
                         </>
                       ) : (
                         <>&mdash;</>
@@ -442,7 +446,8 @@ export default function LoginClient({ uiMark }: Props) {
                 </div>
 
                 <div className={styles.bundleNote}>
-                  Bundle includes both products at a discounted price.
+                  Full access includes the TMUA Question Bank and Practice Test Series.
+                  The &pound;119 offer is for the first {JANUARY_OFFER_LIMIT} purchases across TMUA and ESAT combined.
                 </div>
               </>
             )}

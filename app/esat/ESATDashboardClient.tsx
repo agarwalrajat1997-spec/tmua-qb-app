@@ -5,6 +5,7 @@ import { supabaseBrowser } from "@/utils/supabase/browser";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
 import ServiceRetry from "../components/ServiceRetry";
 import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
+import JanuaryAccessOffer from "../components/JanuaryAccessOffer";
 import PracticeAttemptSettings from "../components/PracticeAttemptSettings";
 import type { PracticeSettings, StandardTimeEstimate } from "@/lib/practice-settings";
 import styles from "../dashboard/dashboard.module.css";
@@ -433,6 +434,8 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
           </button>
         </div>
       </div>
+
+      <JanuaryAccessOffer programme="esat" existingStudent />
 
       <div className={styles.shell}>
         <aside className={styles.sidebar}>

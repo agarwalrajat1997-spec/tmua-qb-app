@@ -7,6 +7,7 @@ import styles from "./dashboard.module.css";
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
 import ServiceRetry from "../components/ServiceRetry";
 import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
+import JanuaryAccessOffer from "../components/JanuaryAccessOffer";
 import PracticeAttemptSettings from "../components/PracticeAttemptSettings";
 import type { PracticeSettings, StandardTimeEstimate } from "@/lib/practice-settings";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
@@ -626,6 +627,8 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
           </button>
         </div>
       </div>
+
+      <JanuaryAccessOffer programme="tmua" existingStudent />
 
       <div className={styles.shell}>
         <aside className={styles.sidebar}>

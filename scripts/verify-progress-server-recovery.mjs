@@ -302,6 +302,7 @@ async function dashboardScenario(failure, accessRows = []) {
     '@/utils/supabase/browser': { supabaseBrowser: () => dashboardDb },
     './dashboard.module.css': { default: {} }, './TmuaPredictionStrip': { default() {} },
     '../components/PastPaperPracticeLink': { default() {} },
+    '../components/JanuaryAccessOffer': { default() {} },
     '../components/PracticeAttemptSettings': { default() {} },
     '../components/ServiceRetry': { default: RetryComponent }, '@/lib/auth/service-recovery': recovery,
     '@/lib/tmua/past-paper-settings': pastPaperSettings
