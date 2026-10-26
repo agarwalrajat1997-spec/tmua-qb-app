@@ -265,5 +265,5 @@ assert.equal((await overflow.GET()).status, 503, "A safety cap must not publish 
 assert.equal(overflow.snapshots.length, 0);
 assert.doesNotMatch(source, /readAuthUsers|listUsers|rankPreparationCohort/);
 const strip = readFileSync("app/esat/EsatPredictionStrip.tsx", "utf8");
-assert.match(strip, /Ranking is temporarily unavailable\. Your practice score still updates\./);
+assert.match(strip, /Ranking is temporarily unavailable\./);
 console.log("ESAT overview isolation verified: exact score/range/hash parity across all papers, current-user queries only, concurrent request coalescing, bounded caches, fresh entitlements, paginated evidence, no truncation, and retryable outages.");

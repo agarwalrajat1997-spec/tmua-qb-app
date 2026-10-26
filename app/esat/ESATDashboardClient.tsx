@@ -876,7 +876,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                     ["2", "Focus the practice", "Narrow the pool by topic, difficulty and status so each session targets a clear weakness rather than a random mix."],
                     ["3", "Set your pace", "Show the per-question timer for paced work, or hide it while you learn a method without pressure."],
                     ["4", "Check and review", "Use hints, worked solutions, Flagged and the Navigator to revisit questions that were slow, uncertain or incorrect."],
-                    ["5", "Follow your progress", "Your answered, correct and accuracy totals are saved. As practice evidence grows, your predicted ESAT practice score updates."],
+                    ["5", "Follow your progress", "Your answered, correct and accuracy totals are saved. As practice evidence grows, your predicted ESAT module scores update."],
                   ].map(([n, title, text]) => (
                     <div key={n} style={{ border: "1px solid rgba(122,31,36,.16)", borderRadius: 14, padding: 14, background: "#FFFDF7" }}>
                       <div style={{ width: 30, height: 30, display: "grid", placeItems: "center", borderRadius: 999, background: "#FEC94F", color: "#7A1F24", fontWeight: 950, marginBottom: 9 }}>
@@ -938,7 +938,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                       { title: "Navigator & Flagged", text: "Jump to a question, flag uncertain work and return to it without moving through the whole bank in order." },
                       { title: "Hints, checks & solutions", text: "Use a hint when needed, check your response, then compare your method with the worked solution." },
                       { title: "Saved progress", text: "Answered, correct and accuracy totals sync to your login, so filters can also isolate unseen, incorrect or flagged questions." },
-                      { title: "Predicted practice score", text: "As your saved Question Bank and test evidence grows, the dashboard refreshes your predicted ESAT practice score." },
+                      { title: "Predicted module scores", text: "As your saved Question Bank and test evidence grows, the dashboard refreshes your predicted ESAT module scores." },
                       { title: "Sort for the session you need", text: "Order the pool by difficulty or use saved status to create a focused correction and re-attempt session." },
                     ].map((item) => (
                       <div key={item.title} style={{ border: "1px solid #E7E7E7", borderRadius: 12, padding: 14, background: "#FFFFFF" }}>
@@ -949,7 +949,7 @@ export default function ESATDashboardClient({ uiMark }: { uiMark: string }) {
                   </div>
 
                   <div style={{ marginTop: 14, borderLeft: "4px solid #FEC94F", borderRadius: 10, padding: "11px 13px", background: "#FFF8E5", color: "#5E5E5E", fontSize: 12, fontWeight: 750, lineHeight: 1.5 }}>
-                    Your predicted ESAT practice score is a preparation estimate based on the evidence available in your account. It is not an official ESAT score.
+                    Your predicted ESAT module scores are preparation estimates based on the evidence for each of your selected subjects. They are not official ESAT results.
                   </div>
                 </div>
               </details>

@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import ExamCountdown from "@/app/_components/ExamCountdown";
+import EsatModulePredictions from "./EsatModulePredictions";
 import styles from "../dashboard/TmuaPredictionStrip.module.css";
 
 const PREPARATION_RANK_MODEL_NAME = "ESAT Preparation Rank";
@@ -73,20 +73,6 @@ type OverviewResponse = {
   error?: string;
 };
 
-function scoreText(value: number): string {
-  return value.toFixed(1);
-}
-
-function confidenceText(
-  value: PredictorOverview["confidence"],
-): string {
-  if (!value) {
-    return "";
-  }
-
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}
-
 type InfoTooltipProps = {
   label: string;
   children: React.ReactNode;
@@ -128,7 +114,6 @@ function InfoTooltip({
 
 export default function EsatPredictionStrip() {
   const [overview, setOverview] = useState<OverviewResponse | null>(null);
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -154,11 +139,6 @@ export default function EsatPredictionStrip() {
       catch {
         // Supplementary dashboard information must never block the workspace.
       }
-      finally {
-        if (!cancelled) {
-          setLoaded(true);
-        }
-      }
     }
 
     void load();
@@ -168,13 +148,7 @@ export default function EsatPredictionStrip() {
     };
   }, []);
 
-  if (!loaded || !overview?.predictor) {
-    return null;
-  }
-
-  const predictor = overview.predictor;
-  const preparationRank = overview.preparationRank ?? null;
-  const countdown = overview.countdown ?? null;
+  const preparationRank = overview?.preparationRank ?? null;
 
   const hasRank =
     preparationRank?.rank !== null &&
@@ -212,7 +186,7 @@ export default function EsatPredictionStrip() {
         </span>
       )
     : preparationRank?.status === "temporarily_unavailable"
-    ? <span>Ranking is temporarily unavailable. Your practice score still updates.</span>
+    ? <span>Ranking is temporarily unavailable.</span>
     : (
         <span>
           Ranking unlocks with recognised test or Question Bank evidence.
@@ -223,93 +197,12 @@ export default function EsatPredictionStrip() {
         </span>
       );
 
-  const countdownMeta = countdown ? (
-    <span className={styles.countdownPill}>
-      <ExamCountdown exam="ESAT" />
-      <InfoTooltip label="ESAT countdown">
-        Live countdown to {countdown.examDateLabel} at midnight (00:00 UK time).
-        Days, hours, minutes and seconds update automatically every second.
-      </InfoTooltip>
-    </span>
-  ) : null;
-
-  if (
-    predictor.status === "insufficient_evidence" ||
-    predictor.score === null ||
-    predictor.score < 3.5
-  ) {
-    return (
-      <section
-        className={styles.strip}
-        aria-label="ESAT preparation overview"
-        data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
-      >
-        <div className={styles.copy}>
-          <span className={styles.label}>
-            Your predicted ESAT practice score
-          </span>
-
-          <InfoTooltip label="Predicted ESAT practice score">
-            Recognised full-paper evidence is the main signal. Retakes are collapsed within each paper family. Verified Question Bank evidence begins after 30 unique first-exposure questions and is capped so that it cannot overpower test evidence. Predictions below 3.5 remain in the building state. Official ESAT results are reported by module, so this combined 1-9 number is a Thriving Scholars practice estimate.
-          </InfoTooltip>
-
-          <strong className={styles.building}>
-            is still building.
-          </strong>
-        </div>
-
-        <div className={styles.meta}>
-          {preparationMeta}
-          {countdownMeta}
-        </div>
-      </section>
-    );
-  }
-
-  const hasRange =
-    predictor.lowerBound !== null &&
-    predictor.upperBound !== null;
-
   return (
-    <section
-      className={styles.strip}
-      aria-label="ESAT preparation overview"
-      data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
-    >
-      <div className={styles.copy}>
-        <span className={styles.label}>
-          Your predicted ESAT practice score is
-        </span>
-
-        <InfoTooltip label="Predicted ESAT practice score">
-          Each recognised ESAT paper is re-scored on the server and converted module by module using that paper&apos;s audited difficulty. The ESAT practice estimate then accounts for retakes and the strength of your test and Question Bank evidence to calculate the score, confidence and likely range. Official ESAT reports modules separately; this is not an official UAT-UK combined score.
-        </InfoTooltip>
-
-        <strong className={styles.score}>
-          {scoreText(predictor.score)}
-        </strong>
-      </div>
-
-      <div className={styles.meta}>
-        {hasRange ? (
-          <span>
-            Likely range{" "}
-            {scoreText(predictor.lowerBound as number)}
-            {"\u2013"}
-            {scoreText(predictor.upperBound as number)}
-          </span>
-        ) : null}
-
-        {predictor.confidence ? (
-          <span>
-            {confidenceText(predictor.confidence)}{" "}
-            confidence
-          </span>
-        ) : null}
-
-        {preparationMeta}
-        {countdownMeta}
-      </div>
-    </section>
+    <>
+      <EsatModulePredictions />
+      {overview && <section className={styles.strip} aria-label="ESAT preparation rank" data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}>
+        <div className={styles.meta}>{preparationMeta}</div>
+      </section>}
+    </>
   );
 }

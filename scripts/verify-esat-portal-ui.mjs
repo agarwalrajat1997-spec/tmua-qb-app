@@ -43,12 +43,12 @@ assert.match(attribute(esatLogout, 'onClick', esat), /window\.location\.href\s*=
 assert.match(esat.text, /import styles from "\.\.\/dashboard\/dashboard\.module\.css"/);
 assert.match(tmua.text, /import styles from "\.\/dashboard\.module\.css"/);
 
-const strip = readTsx('app/esat/EsatPredictionStrip.tsx');
+const strip = readTsx('app/esat/EsatModulePredictions.tsx');
 const visibleText = collect(strip, node => ts.isJsxText(node)).map(node => node.text).join(' ');
 assert.doesNotMatch(visibleText, /\bTMUA\b/i,
   'ESAT predictor explanation must not refer students to a different exam predictor');
 for (const phrase of ['recognised ESAT paper', 'module by module', 'retakes', 'Question Bank evidence',
-  'confidence and likely range', 'not an official UAT-UK combined score']) {
+  'confidence and likely range', 'Official ESAT results are reported separately for each module']) {
   assert.ok(visibleText.includes(phrase), `ESAT explanation preserves: ${phrase}`);
 }
 console.log('PASS: ESAT Logout matches TMUA styling, keeps its logout route, and its predictor explanation is ESAT-specific.');
