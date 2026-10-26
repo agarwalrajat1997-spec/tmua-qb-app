@@ -40,14 +40,14 @@ const Banner = load('app/components/JanuaryAccessOffer.tsx', {
 }).default;
 
 for (const programme of ['tmua', 'esat']) {
-  const html = renderToStaticMarkup(React.createElement(Banner, { programme, existingStudent: true }));
+  const html = renderToStaticMarkup(React.createElement(Banner, { programme }));
   assert.ok(html.includes(`Full ${programme.toUpperCase()} access`));
   assert.match(html, /£119/);
   assert.match(html, /<s>£149<\/s>/);
   assert.match(html, /January 2027/);
   assert.match(html, /First 50 purchases across TMUA and ESAT combined/);
   assert.match(html, /Question Bank \+ Practice Test Series/);
-  assert.match(html, /Your existing access is unchanged/);
+  assert.doesNotMatch(html, /Your existing access is unchanged/);
   assert.ok(html.includes(offer.januaryCheckout(programme).replaceAll('&', '&amp;')));
   assert.doesNotMatch(html, /classes|mandatory|upgrade now|alertdialog/i);
 }
@@ -117,9 +117,9 @@ for (const [file, programme] of [
   ['app/esat/ESATDashboardClient.tsx', 'esat'],
 ]) {
   const source = readFileSync(file, 'utf8');
-  assert.equal((source.match(/<JanuaryAccessOffer /g) || []).length, 1);
-  assert.ok(source.includes(`<JanuaryAccessOffer programme="${programme}" existingStudent />`));
+  assert.doesNotMatch(source, /JanuaryAccessOffer|JANUARY_\w+|&pound;119|£119/,
+    `${programme.toUpperCase()} signed-in workspace must not advertise the acquisition offer`);
 }
 assert.doesNotMatch(readFileSync('app/layout.tsx', 'utf8'), /JanuaryAccessOffer/,
   'Offer is not globally injected into active tests, SAT or AMC');
-console.log('PASS: January offers show £119 / £149, combined 50-purchase terms, isolated exam checkout routes, unchanged £89 standalone products and non-disruptive dashboard banners.');
+console.log('PASS: Login offers retain £119 / £149, combined 50-purchase terms, isolated exam checkout routes and unchanged £89 standalone products; signed-in TMUA and ESAT dashboards have no acquisition offer.');
