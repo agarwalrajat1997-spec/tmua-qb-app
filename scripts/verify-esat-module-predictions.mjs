@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { getCanonicalEsatTest } from "../lib/server/esat-canonical-tests.ts";
 import { calculateEsatModulePredictions, buildEsatModuleTestEvidence, inferEsatPathway } from "../lib/server/esat-module-predictor.ts";
-import { assessEsatResults, esatLockAt, validateEsatModules, ESAT_MODULES } from "../lib/esat-predictions.ts";
+import { assessEsatResults, esatLockAt, validateEsatModules, ESAT_MODULES, areEsatModulePredictionsReady } from "../lib/esat-predictions.ts";
 
 const modules = ["Mathematics 1", "Mathematics 2", "Physics"];
 const asOf = "2026-10-01T00:00:00Z";
@@ -37,7 +37,7 @@ const qbRows = questions.map((q, i) => ({ id: `evt-${i}`, question_id: q.qid, me
 const qb = calculate([], questions, qbRows);
 assert.equal(qb[0].score, null); assert.equal(qb[1].score, null);
 assert.equal(qb[2].qbUniqueQuestions, 30); assert.notEqual(qb[2].score, null); assert.equal(qb[2].confidence, "low");
-assert.equal(calculate([], questions, qbRows.slice(1))[2].score, null);
+assert.equal(calculate([], questions, qbRows.slice(0, 19))[2].score, null);
 const dup = calculate([], questions, [...qbRows, ...qbRows.map(row => ({ ...row, id: `repeat:${row.id}` }))]);
 assert.equal(dup[2].qbUniqueQuestions, 30);
 const future = calculate([attempt("esat-mock-01", [27, 27, 27], "2026-10-02T00:00:00Z")]);
@@ -85,7 +85,36 @@ assert.deepEqual(inferEsatPathway(predictAll([], questions, qbRows)), { status: 
 const chemQuestions = questions.map(q => ({ ...q, qid:q.qid.replace("phy", "chem"), paper:"ESAT Chemistry" }));
 const chemRows = qbRows.map(row => ({ ...row, id:`chem:${row.id}`, question_id:row.question_id.replace("phy", "chem"), metadata:{canonical_qid:row.question_id.replace("phy", "chem")} }));
 assert.deepEqual(inferEsatPathway(predictAll([], [...questions, ...chemQuestions], [...qbRows, ...chemRows])), { status:"inferred", modules:["Mathematics 1", "Physics", "Chemistry"] }, "Question Bank alone can identify both optional modules");
-assert.deepEqual(inferEsatPathway(predictAll([], [...questions, ...chemQuestions], [...qbRows, ...chemRows.slice(1)])), { status:"building", modules:["Mathematics 1", "Physics"] }, "Under-threshold optional modules are not guessed");
+assert.deepEqual(inferEsatPathway(predictAll([], [...questions, ...chemQuestions], [...qbRows, ...chemRows.slice(0, 19)])), { status:"building", modules:["Mathematics 1", "Physics"] }, "Under-threshold optional modules are not guessed");
 const strongEngineering = predictAll([attempt("esat-mock-01"), attempt("esat-mock-03"), attempt("esat-physics-chemistry-level-0")]);
 assert.deepEqual(inferEsatPathway(strongEngineering), { status:"inferred", modules }, "Clear dominant practice wins over one exploratory module");
 console.log("PASS: all six pathways, no setup, QB-only, partial/blank evidence, ambiguity and dominant practice.");
+
+// Exactly 20 eligible unique first exposures per subject can produce the set.
+const twentyQuestions = modules.flatMap(module => Array.from({length:20}, (_,i) => ({qid:`${module}:${i}`,paper:`ESAT ${module}`,topic:`Topic ${i%3}`,answer:"A",is_active:true})));
+const twentyEvents = twentyQuestions.map((q,i) => ({id:`twenty:${i}`,question_id:q.qid,metadata:{canonical_qid:q.qid},source:"qb-progress-trigger-v2",history_quality:"observed",predictor_eligible:true,selected_answer:i%5===0?"B":"A",attempted_at:"2026-09-18T12:00:00Z"}));
+const twenty = predictAll([], twentyQuestions, twentyEvents);
+const selectedTwenty = twenty.filter(p=>modules.includes(p.module));
+assert.ok(selectedTwenty.every(p=>p.qbUniqueQuestions===20 && p.score!==null && p.confidence==="low"));
+assert.deepEqual(inferEsatPathway(twenty), {status:"inferred",modules});
+assert.equal(areEsatModulePredictionsReady(selectedTwenty,"inferred"),true);
+const nineteen = predictAll([], twentyQuestions, twentyEvents.slice(0,-1)).filter(p=>modules.includes(p.module));
+assert.equal(nineteen[2].qbUniqueQuestions,19);
+assert.equal(nineteen[2].score,null);
+assert.equal(areEsatModulePredictionsReady(nineteen,"inferred"),false);
+assert.equal(areEsatModulePredictionsReady(selectedTwenty.slice(0,2),"inferred"),false);
+assert.equal(areEsatModulePredictionsReady(selectedTwenty,"building"),false);
+assert.equal(areEsatModulePredictionsReady([selectedTwenty[0],selectedTwenty[0],selectedTwenty[2]],"inferred"),false);
+assert.equal(areEsatModulePredictionsReady(selectedTwenty.map((p,i)=>i===1?{...p,score:3.4}:p),"inferred"),false);
+const manyQuestions = modules.flatMap(module => Array.from({length:300},(_,i)=>({qid:`many:${module}:${i}`,paper:`ESAT ${module}`,topic:`Topic ${i%3}`,answer:"A",is_active:true})));
+const manyEvents=manyQuestions.map((q,i)=>({...twentyEvents[0],id:`many:${i}`,selected_answer:i%5===0?"B":"A",question_id:q.qid,metadata:{canonical_qid:q.qid}}));
+assert.ok(predictAll([],manyQuestions,manyEvents).filter(p=>modules.includes(p.module)).every(p=>p.confidence==="low"),"QB volume alone cannot unlock Medium or High confidence");
+// Shared engine defaults retain the legacy threshold and hashes for other users.
+const {calculateEsatPredictorV1}=await import("../lib/server/esat-predictor-v1-engine.ts");
+const engineQb=twentyEvents.slice(0,20).map((e,i)=>({id:e.id,source:e.source,historyQuality:e.history_quality,predictorEligible:true,canonicalQid:twentyQuestions[i].qid,canonicalActive:true,selectedAnswer:e.selected_answer,canonicalAnswer:"A",canonicalTopic:twentyQuestions[i].topic,attemptedAt:e.attempted_at}));
+const base={testAttempts:[],qbEvents:engineQb,activeTopics:["Topic 0","Topic 1","Topic 2"]};
+assert.equal(calculateEsatPredictorV1(base).predictedEsatPracticeScore,null);
+assert.notEqual(calculateEsatPredictorV1({...base,qbMinimumUnique:20}).predictedEsatPracticeScore,null);
+assert.equal(calculateEsatPredictorV1(base).inputHash,calculateEsatPredictorV1({...base,qbMinimumUnique:30}).inputHash);
+assert.notEqual(calculateEsatPredictorV1(base).inputHash,calculateEsatPredictorV1({...base,qbMinimumUnique:20}).inputHash);
+console.log("PASS: 19/20 per-subject boundaries, complete three-score gate, QB-only Low confidence and unchanged default policy/hash.");

@@ -1,7 +1,7 @@
 import type { adminClient } from "../../app/api/esat/qb/_server";
 import { ESAT_CANONICAL_TESTS } from "./esat-canonical-tests.ts";
 import { calculateEsatModulePredictions, inferEsatPathway, ESAT_MODULE_MODEL_VERSION, type EvidenceRow } from "./esat-module-predictor.ts";
-import { ESAT_MODULES } from "../esat-predictions.ts";
+import { ESAT_MODULES, areEsatModulePredictionsReady } from "../esat-predictions.ts";
 
 type Admin = ReturnType<typeof adminClient>;
 
@@ -35,9 +35,12 @@ export async function getEsatModuleOverview(admin: Admin, userId: string) {
   ]);
   const allPredictions = calculateEsatModulePredictions({ modules: [...ESAT_MODULES], attempts, questions, qbRows, asOf });
   const pathway = inferEsatPathway(allPredictions);
+  const selected = allPredictions.filter(prediction => pathway.modules.includes(prediction.module));
+  const ready = areEsatModulePredictionsReady(selected, pathway.status);
   return {
     ok: true, modelVersion: ESAT_MODULE_MODEL_VERSION, calculatedAt: asOf, pathway,
-    predictions: allPredictions.filter(prediction => pathway.modules.includes(prediction.module))
+    status: ready ? "predicted" : "building",
+    predictions: (ready ? selected : [])
       .map(({ guaranteeEligible: _guaranteeEligible, inputHash: _inputHash, ...prediction }) => prediction),
   };
 }

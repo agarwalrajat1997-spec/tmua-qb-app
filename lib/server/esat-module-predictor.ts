@@ -1,12 +1,12 @@
 import { createHash } from "node:crypto";
-import { ESAT_MODULES, normaliseEsatModule, qualifiesForEsatGuarantee, type EsatModule, type EsatModulePrediction } from "../esat-predictions.ts";
+import { ESAT_MODULES, ESAT_MODULE_QB_MINIMUM, normaliseEsatModule, qualifiesForEsatGuarantee, type EsatModule, type EsatModulePrediction } from "../esat-predictions.ts";
 import { getCanonicalEsatTest } from "./esat-canonical-tests.ts";
 import { estimateEsatTestScores, getEsatTestProfile } from "./esat-score-estimates.ts";
 import { estimateOctober2026EsatScores } from "./esat-october-2026-tests.ts";
 import { createStandardTimeEstimate, hasStandardTimePolicy, readPracticeResult } from "./practice-standard-time.ts";
 import { calculateEsatPredictorV1, type EsatPredictorTestAttempt, type EsatPredictorQbEvent } from "./esat-predictor-v1-engine.ts";
 
-export const ESAT_MODULE_MODEL_VERSION = "esat-module-predictor-v1-20261027";
+export const ESAT_MODULE_MODEL_VERSION = "esat-module-predictor-v2-20261027";
 export type EvidenceRow = Record<string, unknown>;
 const before = (value: unknown, cutoff: number) => Number.isFinite(Date.parse(String(value))) && Date.parse(String(value)) <= cutoff;
 
@@ -46,9 +46,9 @@ export function buildEsatModuleTestEvidence(rows: EvidenceRow[], cutoff: number)
 /** Infer the practiced pathway without requiring an exam plan or guessing subjects. */
 export function inferEsatPathway(predictions: EsatModulePrediction[]) {
   const optional = predictions.filter(prediction => prediction.module !== "Mathematics 1" &&
-    (prediction.independentTestCount > 0 || prediction.qbUniqueQuestions >= 30));
+    (prediction.independentTestCount > 0 || prediction.qbUniqueQuestions >= ESAT_MODULE_QB_MINIMUM));
   const strength = (prediction: EsatModulePrediction) =>
-    prediction.independentTestCount * 2 + Math.min(prediction.qbUniqueQuestions / 30, 3);
+    prediction.independentTestCount * 2 + Math.min(prediction.qbUniqueQuestions / ESAT_MODULE_QB_MINIMUM, 3);
   optional.sort((a, b) => strength(b) - strength(a) || ESAT_MODULES.indexOf(a.module) - ESAT_MODULES.indexOf(b.module));
   // When several pathways have been explored, require a clear evidence lead.
   // Equal evidence must not silently choose Physics over Chemistry, for example.
@@ -84,7 +84,7 @@ export function calculateEsatModulePredictions(input: {
     });
     // Reuse the established evidence/confidence policy independently per subject.
     // No evidence from another module enters this calculation.
-    const result = calculateEsatPredictorV1({ testAttempts: tests[module], qbEvents, activeTopics });
+    const result = calculateEsatPredictorV1({ testAttempts: tests[module], qbEvents, activeTopics, qbMinimumUnique: ESAT_MODULE_QB_MINIMUM });
     const rawScore = result.predictedEsatPracticeScore;
     const score = rawScore !== null && rawScore >= 3.5 ? Math.round(rawScore * 10) / 10 : null;
     const confidence = score === null ? null : result.confidence;

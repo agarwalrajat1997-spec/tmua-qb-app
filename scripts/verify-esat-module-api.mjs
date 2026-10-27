@@ -15,7 +15,7 @@ function load(path, dependencies) {
 const service = load("lib/server/esat-module-prediction-service.ts", {
   "./esat-canonical-tests.ts": canonical, "./esat-module-predictor.ts": predictor, "../esat-predictions.ts": policy,
 });
-function harness({ signedIn = true, access = true, failEvidence = false } = {}) {
+function harness({ signedIn = true, access = true, failEvidence = false, answers = null, noAttempts = false } = {}) {
   const calls = [];
   const test = canonical.getCanonicalEsatTest("esat-chemistry-biology-level-0");
   const admin = {
@@ -27,7 +27,7 @@ function harness({ signedIn = true, access = true, failEvidence = false } = {}) 
       builder.then = resolve => {
         calls.push({ table, operations });
         const data = table === "student_access" ? (access ? [{ product: "esat-question-bank" }] : [])
-          : table === "practice_test_attempts" ? [{ id: "attempt-1", test_id: test.testId, answers: [...test.answers], submitted_at: "2026-09-01T00:00:00Z" }] : [];
+          : table === "practice_test_attempts" && !noAttempts ? [{ id: "attempt-1", test_id: test.testId, answers: answers ?? [...test.answers], submitted_at: "2026-09-01T00:00:00Z" }] : [];
         return Promise.resolve({ data, error: failEvidence && table === "practice_test_attempts" ? new Error("Evidence unavailable") : null }).then(resolve);
       };
       return builder;
@@ -49,6 +49,8 @@ const response = await valid.GET();
 assert.equal(response.status, 200);
 const body = await response.json();
 assert.deepEqual(body.pathway, { status: "inferred", modules: ["Mathematics 1", "Chemistry", "Biology"] });
+assert.equal(body.status, "predicted");
+assert.equal(body.predictions.length, 3);
 assert.ok(body.predictions.every(item => item.score !== null && item.confidence === "low"));
 assert.equal(body.plan, undefined); assert.equal(body.locked, undefined);
 assert.ok(body.predictions.every(item => item.guaranteeEligible === undefined));
@@ -59,3 +61,11 @@ assert.ok(valid.calls.find(call => call.table === "student_access").operations.s
 assert.equal(valid.PUT, undefined); assert.equal(valid.POST, undefined);
 assert.equal((await harness({ failEvidence: true }).GET()).status, 503);
 console.log("PASS: read-only module API, verified identity/access, pathway inference without setup, no locking/writes, and evidence failures.");
+
+const partialKey=canonical.getCanonicalEsatTest("esat-chemistry-biology-level-0").answers;
+for(const args of [{noAttempts:true},{answers:partialKey.map((a,i)=>i<54?a:null)},{answers:partialKey.map((a,i)=>i<54?a:"Z")}]){
+  const result=await (await harness(args).GET()).json();
+  assert.equal(result.status,"building");
+  assert.deepEqual(result.predictions,[],"No partial numeric predictions are exposed before every subject is ready");
+}
+console.log("PASS: empty, partial and below-threshold module scores remain one building state.");

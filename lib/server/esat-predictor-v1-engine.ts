@@ -36,6 +36,7 @@ export type EsatPredictorInput = {
   testAttempts: EsatPredictorTestAttempt[];
   qbEvents: EsatPredictorQbEvent[];
   activeTopics: string[];
+  qbMinimumUnique?: 20 | 30;
 };
 
 export type EsatPredictorResult = Omit<
@@ -114,6 +115,7 @@ export function calculateEsatPredictorV1(
       activeTopics: input.activeTopics,
       testAttempts,
       qbEvents: input.qbEvents,
+      qbMinimumUnique: input.qbMinimumUnique,
     }),
   );
 

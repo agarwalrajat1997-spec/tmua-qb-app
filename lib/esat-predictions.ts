@@ -1,6 +1,7 @@
 export const ESAT_MODULES = ["Mathematics 1", "Mathematics 2", "Physics", "Chemistry", "Biology"] as const;
 export type EsatModule = typeof ESAT_MODULES[number];
 export type EsatConfidence = "low" | "medium" | "high";
+export const ESAT_MODULE_QB_MINIMUM = 20;
 export const ESAT_GUARANTEE_POLICY = "esat-two-modules-half-point-v1";
 
 export type EsatModulePrediction = {
@@ -15,6 +16,19 @@ export type EsatModulePrediction = {
   guaranteeEligible: boolean;
   inputHash: string;
 };
+
+/** Show a complete inferred pathway together, never a partial set of scores. */
+export function areEsatModulePredictionsReady(
+  predictions: Pick<EsatModulePrediction, "module" | "score" | "confidence">[],
+  pathwayStatus: "inferred" | "building",
+): boolean {
+  return pathwayStatus === "inferred" && predictions.length === 3 &&
+    new Set(predictions.map(item => item.module)).size === 3 &&
+    predictions.some(item => item.module === "Mathematics 1") &&
+    predictions.every(item => ESAT_MODULES.includes(item.module) &&
+      item.score !== null && Number.isFinite(item.score) && item.score >= 3.5 && item.score <= 9 &&
+      (item.confidence === "low" || item.confidence === "medium" || item.confidence === "high"));
+}
 
 export function normaliseEsatModule(value: unknown): EsatModule | null {
   const name = String(value ?? "").trim().replace(/^ESAT\s+/i, "");

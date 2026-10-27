@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import ExamCountdown from "@/app/_components/ExamCountdown";
-import type { EsatModulePrediction, EsatModule } from "@/lib/esat-predictions";
+import { areEsatModulePredictionsReady, type EsatModulePrediction, type EsatModule } from "@/lib/esat-predictions";
 import moduleStyles from "./EsatPredictionStrip.module.css";
 import styles from "../dashboard/TmuaPredictionStrip.module.css";
 
@@ -213,7 +213,7 @@ export default function EsatPredictionStrip() {
         </span>
       );
 
-  const hasEvidence = modules?.predictions.some(item => item.independentTestCount > 0 || item.qbUniqueQuestions >= 30);
+  const ready = modules ? areEsatModulePredictionsReady(modules.predictions, modules.pathway.status) : false;
 
   return (
     <section className={styles.strip} aria-label="ESAT preparation overview" data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}>
@@ -223,15 +223,17 @@ export default function EsatPredictionStrip() {
           <InfoTooltip label="Predicted ESAT module scores">
             Each recognised ESAT paper is re-scored module by module using its audited difficulty.
             Each subject uses only its own tests and Question Bank evidence to calculate its score, confidence and likely range.
-            Repeated papers and retakes count once; verified Question Bank evidence begins after 30 unique first-exposure questions per module.
+            Repeated papers and retakes count once; verified Question Bank evidence begins after 20 unique first-exposure questions per module.
+            All three scores appear together once your pathway is identified and every module has a prediction.
+            Question Bank-only predictions always have Low confidence; recognised paper attempts are needed before confidence can rise.
             Tests taken with 25% extra time use the existing standard-time adjustment.
             Official ESAT results are reported separately for each module. Predictions below 3.5 remain in the building state.
             <span className={moduleStyles.infoDetail}>
-              {modules?.pathway.status === "inferred"
+              {ready && modules?.pathway.status === "inferred"
                 ? `Your practice currently indicates: ${modules.pathway.modules.join(" + ")}. This updates as your practice changes.`
-                : "Your pathway is identified automatically from the subjects you practise. While the evidence is incomplete or mixed, we show the modules with enough evidence without assuming your final pathway."}
+                : "Your pathway is identified automatically from the subjects you practise. Until all three module predictions are ready, your scores are still building."}
             </span>
-            {modules?.predictions.map(item => (
+            {ready && modules?.predictions.map(item => (
               <span className={moduleStyles.infoDetail} key={item.module}>
                 <strong>{item.module}:</strong>{" "}
                 {item.score === null ? "Still building." : `${item.score.toFixed(1)} · ${item.confidence ? item.confidence[0].toUpperCase() + item.confidence.slice(1) : "Building"} confidence.`}
@@ -243,7 +245,7 @@ export default function EsatPredictionStrip() {
         </span>
         {!loaded && !modules ? <strong className={styles.building}>Calculating…</strong>
           : !modules ? <strong className={moduleStyles.unavailable}>Temporarily unavailable.</strong>
-          : !hasEvidence ? <strong className={styles.building}>are still building.</strong>
+          : !ready ? <strong className={styles.building}>Still building.</strong>
           : <span className={moduleStyles.scores}>
               {modules.predictions.map(item => (
                 <span className={moduleStyles.module} key={item.module}>

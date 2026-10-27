@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
+import vm from 'node:vm';
+import * as React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import * as jsxRuntime from 'react/jsx-runtime';
+import * as esatPolicy from '../lib/esat-predictions.ts';
 
 function readTsx(path) {
   const source = readFileSync(path, 'utf8');
@@ -57,3 +62,35 @@ assert.match(strip.text, /<ExamCountdown exam="ESAT"/);
 assert.match(strip.text, /styles\.strip/);
 assert.match(strip.text, /preparationMeta/);
 assert.doesNotMatch(strip.text, /<form|type="date"|actualScores|lock_at/);
+
+// Render the actual strip against ready and partial responses, including older
+// API responses, so neither the strip nor its info tooltip leaks partial scores.
+function renderStrip(predictions, status="inferred") {
+  let index=0;
+  const states=[{ok:true,preparationRank:{rank:4,cohortSize:40}}, {ok:true,pathway:{status,modules:predictions.map(p=>p.module)},predictions},true];
+  const exports={};
+  const css=new Proxy({}, {get:(_,key)=>String(key)});
+  const compiled=ts.transpileModule(strip.text,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+  vm.runInNewContext(compiled,{exports,require:name=>{
+    if(name==="react")return{...React,useEffect:()=>{},useState:()=>[states[index++],()=>{}]};
+    if(name==="react/jsx-runtime")return jsxRuntime;
+    if(name==="@/lib/esat-predictions")return esatPolicy;
+    if(name==="@/app/_components/ExamCountdown")return{default:()=>React.createElement("span",{role:"timer"},"68 days")};
+    if(name.endsWith(".css"))return{default:css};
+    throw new Error(name);
+  }});
+  return renderToStaticMarkup(React.createElement(exports.default));
+}
+const scores=["Mathematics 1","Mathematics 2","Biology"].map(module=>({module,score:6.5,confidence:"low",lowerBound:5,upperBound:8,independentTestCount:0,qbUniqueQuestions:20,qbTopicCoverage:1}));
+for(const [items,status] of [[[],"building"],[scores.slice(0,2),"building"],[scores.map((p,i)=>i===2?{...p,score:null,confidence:null}:p),"inferred"],[scores,"building"]]){
+  const html=renderStrip(items,status);
+  assert.match(html,/>Still building\.</);
+  assert.doesNotMatch(html,/Maths [12]|Biology|6\.5|class="moduleName"/);
+  assert.match(html,/You rank/);
+  assert.match(html,/68 days/);
+}
+const readyHtml=renderStrip(scores);
+assert.match(readyHtml,/Maths 1/); assert.match(readyHtml,/Maths 2/); assert.match(readyHtml,/Biology/);
+assert.match(readyHtml,/Low confidence/);
+assert.doesNotMatch(readyHtml,/>Still building\.</);
+console.log("PASS: one building state until all three scores are ready; module names, scores and confidence appear together; rank/countdown remain visible.");

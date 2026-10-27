@@ -105,6 +105,8 @@ export type TmuaPredictorInput = {
   conversionProfiles: TmuaConversionProfile[];
 
   activeTopics: string[];
+  /** Trusted server policy only; omitted for the unchanged TMUA threshold. */
+  qbMinimumUnique?: 20 | 30;
 };
 
 export type TmuaPredictionStatus =
@@ -1202,6 +1204,7 @@ function isCanonicalCorrect(
 function buildQbSignal(
   events: TmuaPredictorQbEvent[],
   activeTopics: string[],
+  minimumUnique: number,
 ): {
   trustedEventCount: number;
 
@@ -1521,7 +1524,7 @@ function buildQbSignal(
 
   if (
     uniqueQuestions <
-    QB_MINIMUM_UNIQUE
+    minimumUnique
   ) {
     return {
       trustedEventCount:
@@ -2008,6 +2011,7 @@ export function calculateTmuaPredictorV1(
     buildQbSignal(
       input.qbEvents,
       input.activeTopics,
+      input.qbMinimumUnique ?? QB_MINIMUM_UNIQUE,
     );
 
   const qbWeight =
@@ -2163,6 +2167,8 @@ export function calculateTmuaPredictorV1(
 
       conversionSetHash,
       activeTopicSetHash,
+      // Preserve the existing default-policy hashes for TMUA and cohort ranks.
+      ...(input.qbMinimumUnique === 20 ? { qbMinimumUnique: 20 } : {}),
     });
 
   return {
