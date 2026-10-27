@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { getCanonicalEsatTest } from "../lib/server/esat-canonical-tests.ts";
-import { calculateEsatModulePredictions, buildEsatModuleTestEvidence } from "../lib/server/esat-module-predictor.ts";
+import { calculateEsatModulePredictions, buildEsatModuleTestEvidence, inferEsatPathway } from "../lib/server/esat-module-predictor.ts";
 import { assessEsatResults, esatLockAt, validateEsatModules, ESAT_MODULES } from "../lib/esat-predictions.ts";
 
 const modules = ["Mathematics 1", "Mathematics 2", "Physics"];
@@ -68,3 +68,24 @@ assert.throws(() => assessEsatResults(locked, { "Mathematics 1": 5.91, "Mathemat
 assert.throws(() => assessEsatResults(locked, { "Mathematics 1": 5.9, "Mathematics 2": 6 }));
 assert.deepEqual(ESAT_MODULES.length, 5);
 console.log("PASS: ESAT module isolation, per-module QB thresholds, reused papers, timing adjustment, DST cutoffs and guarantee boundaries.");
+
+const predictAll = (attempts = [], qs = [], events = []) => calculate(attempts, qs, events, [...ESAT_MODULES]);
+assert.deepEqual(inferEsatPathway(predictAll()), { status: "building", modules: ["Mathematics 1"] });
+assert.deepEqual(inferEsatPathway(predictAll([attempt("esat-mock-01")])), { status: "inferred", modules });
+for (const [id, expected] of [
+  ["physics-chemistry", ["Mathematics 1", "Physics", "Chemistry"]],
+  ["physics-biology", ["Mathematics 1", "Physics", "Biology"]],
+  ["maths2-chemistry", ["Mathematics 1", "Mathematics 2", "Chemistry"]],
+  ["maths2-biology", ["Mathematics 1", "Mathematics 2", "Biology"]],
+  ["chemistry-biology", ["Mathematics 1", "Chemistry", "Biology"]],
+]) assert.deepEqual(inferEsatPathway(predictAll([attempt(`esat-${id}-level-0`)])), { status: "inferred", modules: expected });
+assert.deepEqual(inferEsatPathway(predictAll([attempt("esat-mock-01", [18,0,0])])), { status: "building", modules: ["Mathematics 1"] }, "Blank sections cannot imply a pathway");
+assert.equal(inferEsatPathway(predictAll([attempt("esat-mock-01"), attempt("esat-chemistry-biology-level-0")])).status, "building", "Mixed pathways remain uncertain");
+assert.deepEqual(inferEsatPathway(predictAll([], questions, qbRows)), { status: "building", modules: ["Mathematics 1", "Physics"] });
+const chemQuestions = questions.map(q => ({ ...q, qid:q.qid.replace("phy", "chem"), paper:"ESAT Chemistry" }));
+const chemRows = qbRows.map(row => ({ ...row, id:`chem:${row.id}`, question_id:row.question_id.replace("phy", "chem"), metadata:{canonical_qid:row.question_id.replace("phy", "chem")} }));
+assert.deepEqual(inferEsatPathway(predictAll([], [...questions, ...chemQuestions], [...qbRows, ...chemRows])), { status:"inferred", modules:["Mathematics 1", "Physics", "Chemistry"] }, "Question Bank alone can identify both optional modules");
+assert.deepEqual(inferEsatPathway(predictAll([], [...questions, ...chemQuestions], [...qbRows, ...chemRows.slice(1)])), { status:"building", modules:["Mathematics 1", "Physics"] }, "Under-threshold optional modules are not guessed");
+const strongEngineering = predictAll([attempt("esat-mock-01"), attempt("esat-mock-03"), attempt("esat-physics-chemistry-level-0")]);
+assert.deepEqual(inferEsatPathway(strongEngineering), { status:"inferred", modules }, "Clear dominant practice wins over one exploratory module");
+console.log("PASS: all six pathways, no setup, QB-only, partial/blank evidence, ambiguity and dominant practice.");

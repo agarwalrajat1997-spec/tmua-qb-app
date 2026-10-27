@@ -2,54 +2,60 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
+import * as predictor from "../lib/server/esat-module-predictor.ts";
 import * as policy from "../lib/esat-predictions.ts";
+import * as canonical from "../lib/server/esat-canonical-tests.ts";
 
-const source = fs.readFileSync("app/api/esat/module-predictions/route.ts", "utf8");
-const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
-const modules = ["Mathematics 1", "Mathematics 2", "Physics"];
-const predictions = modules.map((module, i) => ({ module, score: 6.5, confidence: i === 2 ? "low" : "high", guaranteeEligible: i !== 2 }));
-function harness({ signedIn = true, access = true } = {}) {
+function load(path, dependencies) {
+  const compiled = ts.transpileModule(fs.readFileSync(path, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
+  const exports = {};
+  vm.runInNewContext(compiled, { exports, require: name => { assert.ok(dependencies[name], name); return dependencies[name]; }, Response, Date, console });
+  return exports;
+}
+const service = load("lib/server/esat-module-prediction-service.ts", {
+  "./esat-canonical-tests.ts": canonical, "./esat-module-predictor.ts": predictor, "../esat-predictions.ts": policy,
+});
+function harness({ signedIn = true, access = true, failEvidence = false } = {}) {
   const calls = [];
+  const test = canonical.getCanonicalEsatTest("esat-chemistry-biology-level-0");
   const admin = {
     from(table) {
+      assert.ok(["student_access", "practice_test_attempts", "esat_qb_questions", "tmua_qb_attempt_events"].includes(table), "No exam plan, lock, result or other student data may be accessed");
       const operations = [];
       const builder = {};
-      for (const method of ["select","ilike","in","eq","or","limit","retry","upsert"]) builder[method] = (...args) => { operations.push([method,...args]); return builder; };
-      builder.then = resolve => { calls.push({ table, operations }); return Promise.resolve({ data: table === "student_access" ? (access ? [{ product:"esat-question-bank" }] : []) : null, error:null }).then(resolve); };
+      for (const method of ["select", "ilike", "in", "eq", "or", "limit", "retry", "lte", "order", "range"]) builder[method] = (...args) => { operations.push([method, ...args]); return builder; };
+      builder.then = resolve => {
+        calls.push({ table, operations });
+        const data = table === "student_access" ? (access ? [{ product: "esat-question-bank" }] : [])
+          : table === "practice_test_attempts" ? [{ id: "attempt-1", test_id: test.testId, answers: [...test.answers], submitted_at: "2026-09-01T00:00:00Z" }] : [];
+        return Promise.resolve({ data, error: failEvidence && table === "practice_test_attempts" ? new Error("Evidence unavailable") : null }).then(resolve);
+      };
       return builder;
     },
-    async rpc(name, args) { calls.push({name,args}); return {data:null,error:null}; },
+    rpc() { assert.fail("No locking or persistence RPC is allowed"); },
   };
-  const dependencies = {
-    "@/app/api/esat/qb/_server": { adminClient:()=>admin,json:(body,status=200)=>Response.json(body,{status}) },
-    "@/lib/supabase/server": { createSupabaseServerClient:async()=>({auth:{getUser:async()=>({data:{user:signedIn?{id:"verified-user",email:"student_a@example.com"}:null},error:null})}}) },
-    "@/lib/auth/service-recovery": { isMissingSession:()=>false,withServiceTimeout:promise=>promise },
-    "@/lib/esat-predictions": policy,
-    "@/lib/server/esat-module-prediction-service": {
-      getEsatModuleOverview:async(_,userId)=>{calls.push({overviewUser:userId});return{ok:true,predictions};},
-      readEsatPredictionPlan:async(_,userId)=>{calls.push({lockUser:userId});return{plan:{exam_date:"2026-01-01"},lock:{predictions}};},
-    },
-  };
-  const exports={}; vm.runInNewContext(compiled,{exports,require:name=>{assert.ok(dependencies[name],name);return dependencies[name];},Response,Request,URL,Date,Intl,console});
-  return{...exports,calls};
+  const route = load("app/api/esat/module-predictions/route.ts", {
+    "@/app/api/esat/qb/_server": { adminClient: () => admin, json: (body, status = 200) => Response.json(body, { status }) },
+    "@/lib/supabase/server": { createSupabaseServerClient: async () => ({ auth: { getUser: async () => ({ data: { user: signedIn ? { id: "verified-user", email: "student_a@example.com" } : null }, error: null }) } }) },
+    "@/lib/auth/service-recovery": { isMissingSession: () => false, withServiceTimeout: promise => promise },
+    "@/lib/server/esat-module-prediction-service": service,
+  });
+  return { ...route, calls };
 }
-const request = (method, body, origin="https://apps.thrivingscholars.com") => new Request("https://apps.thrivingscholars.com/api/esat/module-predictions",{method,headers:{"content-type":"application/json",origin},body:JSON.stringify(body)});
-assert.equal((await harness({signedIn:false}).GET()).status,401);
-assert.equal((await harness({access:false}).GET()).status,403);
-assert.equal((await harness().PUT(request("PUT",{},"https://unrelated.example"))).status,403);
-const valid=harness();
-assert.equal((await valid.PUT(request("PUT",{userId:"forged-user",modules,examDate:"2099-01-10",predictions:[{score:9}]}))).status,200);
-const rpc=valid.calls.find(call=>call.name==="esat_save_exam_plan");
-assert.equal(rpc.args.p_user_id,"verified-user"); assert.equal(rpc.args.p_predictions,undefined);
-assert.ok(valid.calls.find(call=>call.table==="student_access").operations.some(op=>op[0]==="ilike" && op[2]==="student\\_a@example.com"));
-assert.equal((await harness().PUT(request("PUT",{modules:["Mathematics 1","Physics","Physics"],examDate:"2099-01-10"}))).status,400);
-assert.equal((await harness().PUT(request("PUT",{modules,examDate:"2020-01-01"}))).status,400);
-const result=harness();
-assert.equal((await result.POST(request("POST",{userId:"forged-user",predictions:[{score:9}],actualScores:{"Mathematics 1":5.9,"Mathematics 2":6,Physics:1}}))).status,200);
-const written=result.calls.find(call=>call.table==="esat_result_submissions").operations.find(op=>op[0]==="upsert")[1];
-assert.equal(written.user_id,"verified-user"); assert.equal(written.verification_status,"pending");
-assert.equal(written.assessment.missedCount,1); assert.equal(written.assessment.meetsScoreCondition,false);
-const eligible=harness();
-assert.equal((await eligible.POST(request("POST",{actualScores:{"Mathematics 1":5.9,"Mathematics 2":5.9,Physics:8}}))).status,200);
-assert.equal(eligible.calls.find(call=>call.table==="esat_result_submissions").operations.find(op=>op[0]==="upsert")[1].assessment.meetsScoreCondition,true);
-console.log("PASS: module API authentication, entitlements, request origin, server-owned identity/predictions and locked-score result evaluation.");
+assert.equal((await harness({ signedIn: false }).GET()).status, 401);
+assert.equal((await harness({ access: false }).GET()).status, 403);
+const valid = harness();
+const response = await valid.GET();
+assert.equal(response.status, 200);
+const body = await response.json();
+assert.deepEqual(body.pathway, { status: "inferred", modules: ["Mathematics 1", "Chemistry", "Biology"] });
+assert.ok(body.predictions.every(item => item.score !== null && item.confidence === "low"));
+assert.equal(body.plan, undefined); assert.equal(body.locked, undefined);
+assert.ok(body.predictions.every(item => item.guaranteeEligible === undefined));
+for (const table of ["practice_test_attempts", "tmua_qb_attempt_events"]) {
+  assert.ok(valid.calls.find(call => call.table === table).operations.some(op => op[0] === "eq" && op[1] === "user_id" && op[2] === "verified-user"));
+}
+assert.ok(valid.calls.find(call => call.table === "student_access").operations.some(op => op[0] === "ilike" && op[2] === "student\\_a@example.com"));
+assert.equal(valid.PUT, undefined); assert.equal(valid.POST, undefined);
+assert.equal((await harness({ failEvidence: true }).GET()).status, 503);
+console.log("PASS: read-only module API, verified identity/access, pathway inference without setup, no locking/writes, and evidence failures.");

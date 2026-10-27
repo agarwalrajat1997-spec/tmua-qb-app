@@ -6,7 +6,7 @@ import { estimateOctober2026EsatScores } from "./esat-october-2026-tests.ts";
 import { createStandardTimeEstimate, hasStandardTimePolicy, readPracticeResult } from "./practice-standard-time.ts";
 import { calculateEsatPredictorV1, type EsatPredictorTestAttempt, type EsatPredictorQbEvent } from "./esat-predictor-v1-engine.ts";
 
-export const ESAT_MODULE_MODEL_VERSION = "esat-module-predictor-v1-20261026";
+export const ESAT_MODULE_MODEL_VERSION = "esat-module-predictor-v1-20261027";
 export type EvidenceRow = Record<string, unknown>;
 const before = (value: unknown, cutoff: number) => Number.isFinite(Date.parse(String(value))) && Date.parse(String(value)) <= cutoff;
 
@@ -25,6 +25,9 @@ export function buildEsatModuleTestEvidence(rows: EvidenceRow[], cutoff: number)
     if (hasStandardTimePolicy(row.predictor_metadata) && !practice.practice_settings) continue;
     const standard = practice.practice_settings ? createStandardTimeEstimate(testId, answers, practice.practice_settings) : null;
     estimate.modules.forEach((module, index) => {
+      const [start, end] = canonical.sectionRanges[index];
+      // A blank section is not evidence that the student is taking that module.
+      if (!answers.slice(start, end).some(Boolean)) return;
       const score = standard ? standard.units[index].estimated_score : module.estimatedScore;
       if (score == null) return;
       // Recombined pathways reuse module papers. Count their shared source once,
@@ -38,6 +41,22 @@ export function buildEsatModuleTestEvidence(rows: EvidenceRow[], cutoff: number)
     });
   }
   return evidence;
+}
+
+/** Infer the practiced pathway without requiring an exam plan or guessing subjects. */
+export function inferEsatPathway(predictions: EsatModulePrediction[]) {
+  const optional = predictions.filter(prediction => prediction.module !== "Mathematics 1" &&
+    (prediction.independentTestCount > 0 || prediction.qbUniqueQuestions >= 30));
+  const strength = (prediction: EsatModulePrediction) =>
+    prediction.independentTestCount * 2 + Math.min(prediction.qbUniqueQuestions / 30, 3);
+  optional.sort((a, b) => strength(b) - strength(a) || ESAT_MODULES.indexOf(a.module) - ESAT_MODULES.indexOf(b.module));
+  // When several pathways have been explored, require a clear evidence lead.
+  // Equal evidence must not silently choose Physics over Chemistry, for example.
+  const inferred = optional.length === 2 ||
+    (optional.length > 2 && strength(optional[1]) > strength(optional[2]) * 1.25);
+  const selected = inferred ? optional.slice(0, 2) : optional;
+  const modules = ESAT_MODULES.filter(module => module === "Mathematics 1" || selected.some(item => item.module === module));
+  return { status: inferred ? "inferred" as const : "building" as const, modules };
 }
 
 export function calculateEsatModulePredictions(input: {
