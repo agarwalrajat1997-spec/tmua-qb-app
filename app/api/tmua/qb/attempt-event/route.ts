@@ -1,3 +1,4 @@
+import { canonicalQuestionState } from "@/lib/qb/question-identities";
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseServer } from "@/utils/supabase/server";
@@ -65,7 +66,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
+    const body = canonicalQuestionState(await request.json());
     const incoming: IncomingEvent[] = Array.isArray(body?.events)
       ? body.events
       : [body];

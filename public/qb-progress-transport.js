@@ -24,7 +24,7 @@
   }
   function removeRecord(key) { memory.delete(key); localStorage.removeItem(key); }
   function randomId() { return window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2); }
-  function parse(raw) { try { return JSON.parse(raw); } catch (_) { return null; } }
+  function parse(raw) { try { var value = JSON.parse(raw); return window.TSQuestionIdentities ? window.TSQuestionIdentities.normalize(value) : value; } catch (_) { return null; } }
   function accountChanged() {
     paused = true; reads.clear();
     status("Your sign-in has changed. Your work is retained on this device. Reload this page before continuing.");

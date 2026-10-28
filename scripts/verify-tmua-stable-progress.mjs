@@ -1,3 +1,4 @@
+import * as questionIdentities from "../lib/qb/question-identities.ts";
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -236,7 +237,7 @@ const db={auth:{getUser:async()=>({data:{user:{id:'student-test',email:'student@
   from:table=>({upsert:async rows=>{written.push({table,rows});return {error:null};}})};
 const adminDb={from:()=>({select:()=>({in:(_column,values)=>({retry:async enabled=>{assert.equal(enabled,false);return {data:values.filter(qid=>String(qid).startsWith('ESAT-')).map(qid=>({qid})),error:null};}})})})};
 const api=vm.createContext({exports:{},process:{env:{}},console,Date,
-  require:name=>name==='next/server'?{NextResponse:{json:(body,options)=>({body,status:options?.status||200})}}:
+  require:name=>name==='@/lib/qb/question-identities'?questionIdentities:name==='next/server'?{NextResponse:{json:(body,options)=>({body,status:options?.status||200})}}:
     name==='@supabase/ssr'?{createServerClient:()=>db}:
     name==='next/headers'?{cookies:async()=>({get(){},set(){}})}:
     name==='@/lib/auth/service-recovery'?{withServiceTimeout:p=>p,isMissingSession:e=>e?.name==='AuthSessionMissingError',serviceFetch:()=>{throw new Error('Unexpected network')}}:

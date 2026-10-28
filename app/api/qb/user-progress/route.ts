@@ -1,4 +1,5 @@
-﻿import { NextRequest } from "next/server";
+import { canonicalQuestionState } from "@/lib/qb/question-identities";
+import { NextRequest } from "next/server";
 import { supabaseServer } from "@/utils/supabase/server";
 import { compactProgressState, progressStateFromEnvelope } from "@/lib/qb/compact-progress";
 import { isMissingSession, withServiceTimeout } from "@/lib/auth/service-recovery";
@@ -126,7 +127,7 @@ async function postProgress(req: NextRequest) {
     return json({ ok: false, error: "Not signed in" }, 401);
   }
 
-  const body = await req.json().catch(() => null);
+  const body = canonicalQuestionState(await req.json().catch(() => null));
 
   // An offline write belongs to the account that created it, even if another
   // person has since signed in on this browser. Legacy clients omit this field.

@@ -1,3 +1,4 @@
+import * as questionIdentities from "../lib/qb/question-identities.ts";
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -10,6 +11,7 @@ function moduleAt(file, imports = {}, overrides = {}) {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React }
   }).outputText;
   const context = vm.createContext({ exports: {}, require(name) {
+    if (name === "@/lib/qb/question-identities") return questionIdentities;
     if (!(name in imports)) throw new Error(`Unexpected import ${name}`);
     return imports[name];
   }, console: { error() {} }, process: { env: {

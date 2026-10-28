@@ -1,3 +1,4 @@
+import { canonicalQuestionIdentity } from "@/lib/qb/question-identities";
 import {
   ESAT_TABLE_CANDIDATES,
   adminClient,
@@ -68,11 +69,11 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
 
-  const identity = (
+  const identity = canonicalQuestionIdentity((
     searchParams.get("qid") ||
     searchParams.get("id") ||
     ""
-  ).trim();
+  ).trim());
 
   if (!identity) {
     return json(

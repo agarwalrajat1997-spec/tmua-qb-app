@@ -1,4 +1,5 @@
-﻿import { adminClient, json, requireTmuaAccess } from "../_server";
+import { canonicalQuestionIdentity } from "@/lib/qb/question-identities";
+import { adminClient, json, requireTmuaAccess } from "../_server";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -9,7 +10,7 @@ export async function POST(req: Request) {
 
   const body = await req.json().catch(() => null);
 
-  const qid = String(body?.qid || "").trim();
+  const qid = canonicalQuestionIdentity(String(body?.qid || "").trim());
   const selected = String(body?.selected || "").trim();
 
   if (!qid || !selected) {

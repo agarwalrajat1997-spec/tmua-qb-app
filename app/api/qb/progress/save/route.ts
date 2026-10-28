@@ -1,3 +1,4 @@
+import { canonicalQuestionState } from "@/lib/qb/question-identities";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { NextResponse } from "next/server";
@@ -203,7 +204,7 @@ export async function POST(req: Request) {
     if (authErr && !isMissingSession(authErr)) return jsonErr(503, "Progress service temporarily unavailable");
     if (authErr || !auth?.user) return jsonErr(401, "Not authenticated");
 
-    const body = await req.json().catch(() => null);
+    const body = canonicalQuestionState(await req.json().catch(() => null));
     if (body?.expected_user_id !== undefined && body.expected_user_id !== auth.user.id) {
       return NextResponse.json({ ok: false, error: "ACCOUNT_CHANGED", code: "ACCOUNT_CHANGED" },
         { status: 409, headers: { "Cache-Control": "no-store" } });

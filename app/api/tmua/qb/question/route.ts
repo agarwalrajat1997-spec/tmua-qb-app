@@ -1,4 +1,5 @@
-﻿import { adminClient, json, requireTmuaAccess } from "../_server";
+import { canonicalQuestionIdentity } from "@/lib/qb/question-identities";
+import { adminClient, json, requireTmuaAccess } from "../_server";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -8,7 +9,7 @@ export async function GET(req: Request) {
   if (!access.ok) return access.response;
 
   const { searchParams } = new URL(req.url);
-  const qid = searchParams.get("qid");
+  const qid = canonicalQuestionIdentity(searchParams.get("qid") || "");
 
   if (!qid) {
     return json({ ok: false, error: "Missing qid" }, 400);

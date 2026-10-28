@@ -1,3 +1,4 @@
+import * as questionIdentities from "../lib/qb/question-identities.ts";
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
@@ -17,7 +18,7 @@ for (const answer of Object.values(small.answers)) delete answer.solution_html;
 // Execute real TS route handlers with a scoped Supabase double.
 function moduleAt(file,imports={}) {
   const code=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
-  const ctx=vm.createContext({exports:{},require:name=>{if(!(name in imports))throw Error(name);return imports[name];},
+  const ctx=vm.createContext({exports:{},require:name=>{if(name==="@/lib/qb/question-identities")return questionIdentities;if(!(name in imports))throw Error(name);return imports[name];},
     console:{error(){}},process:{env:{}},Response,Request,URL,Date,JSON,AbortSignal,DOMException,fetch,setTimeout,clearTimeout});
   vm.runInContext(code,ctx);return ctx.exports;
 }
