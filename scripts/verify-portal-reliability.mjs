@@ -26,7 +26,8 @@ const recoveryModule=moduleAt('lib/auth/service-recovery.ts');
 const compactModule=moduleAt('lib/qb/compact-progress.ts');
 assert.deepEqual(plain(compactModule.compactProgressState(rich)),plain(small));
 let authError=null,accessError=null,allowed=true,rpcArgs;
-const db={auth:{getUser:async()=>({data:{user:{id:'isolated-user',email:'student@example.test'}},error:authError})},
+let authUser={id:'isolated-user',email:'student@example.test'};
+const db={auth:{getUser:async()=>({data:{user:authUser},error:authError})},
   from:table=>{
     const q={select:()=>q,ilike:()=>q,eq:()=>q,or:()=>q,
       limit:()=>({retry:async enabled=>{assert.equal(enabled,false);return {data:allowed?[{approved:true}]:[],error:accessError};}}),
@@ -71,4 +72,17 @@ assert.equal((await proxy.proxy(proxyRequest('/esat-question-bank/index.html')))
 allowed=true;
 assert.equal((await proxy.proxy(proxyRequest('/esat-question-bank/index.html'))).kind,'next');
 assert.equal((await proxy.proxy(proxyRequest('/practice-tests/solutions/test.pdf'))).kind,'next');
+
+// IB uses the existing verified session, never an unrelated programme purchase.
+allowed=false;
+assert.equal((await proxy.proxy(proxyRequest('/ib?subject=physics-hl&view=mocks'))).kind,'next');
+authUser=null;
+routed=await proxy.proxy(proxyRequest('/ib?subject=physics-hl&view=mocks'));
+assert.equal(routed.url.pathname,'/ib-login');
+assert.equal(routed.url.searchParams.get('next'),'/ib?subject=physics-hl&view=mocks');
+assert.equal((await proxy.proxy(proxyRequest('/ib/private-question'))).url.pathname,'/ib-login');
+authError={name:'AuthRetryableFetchError'};
+assert.equal((await proxy.proxy(proxyRequest('/ib'))).status,503);
+assert.ok(proxy.config.matcher.includes('/ib/:path*'));
+assert.ok(!proxy.config.matcher.includes('/ib-login/:path*'));
 console.log('PASS: Compact deltas preserve answers/flags/timers; slow reads and offline reloads preserve new work; sync is serialized, deduplicated and backed off; transient access errors are 503, genuine denials remain 403.');

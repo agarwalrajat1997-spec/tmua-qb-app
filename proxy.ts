@@ -59,6 +59,8 @@ function loginRedirect(req: NextRequest) {
     req.nextUrl.pathname.startsWith("/sat-")
   ) {
     url.pathname = "/sat-login";
+  } else if (req.nextUrl.pathname === "/ib" || req.nextUrl.pathname.startsWith("/ib/")) {
+    url.pathname = "/ib-login";
   } else {
     url.pathname = "/login";
   }
@@ -223,6 +225,7 @@ export const config = {
     "/group-sessions/:path*",
 
     "/esat/:path*",
+    "/ib/:path*",
     "/esat-question-bank/:path*",
     "/esat-practice-tests/:path*",
     "/esat-classes/:path*",

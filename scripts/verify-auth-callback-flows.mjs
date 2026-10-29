@@ -74,6 +74,17 @@ assert.equal(new URL(response.headers.get('location')).searchParams.get('e'), 'i
 assert.doesNotMatch(response.headers.get('location'), /synthetic/);
 modeError = null;
 
+// IB returns to its own portal and keeps the selected subject on an expired link.
+intent = encodeURIComponent('/ib?subject=physics-hl&view=mocks');
+response = await runCallback('/auth/callback?code=synthetic-ib-code');
+assert.equal(response.headers.get('location'), 'https://apps.thrivingscholars.com/ib?subject=physics-hl&view=mocks');
+modeError = { message: 'synthetic provider error' };
+response = await runCallback('/auth/callback?code=expired-ib-code');
+assert.equal(new URL(response.headers.get('location')).pathname, '/ib-login');
+assert.equal(new URL(response.headers.get('location')).searchParams.get('next'), '/ib?subject=physics-hl&view=mocks');
+modeError = null;
+intent = null;
+
 // The server never receives fragments; no-query requests preserve them through
 // a redirect whose Location has no fragment (HTTP fragment inheritance).
 const authCalls = exchanges.length + verifications.length;
@@ -154,7 +165,7 @@ for (const hash of ['', '#access_token=synthetic-access', '#refresh_token=synthe
   assert.deepEqual(events.map(event => event[0]), ['clear']);
   assert.doesNotMatch(destination, /PRIVATE|synthetic|access_token|refresh_token/);
 }
-for (const [next, login] of [['/amc', '/amc-login'], ['/sat', '/sat-login'], ['/dashboard', '/login']]) {
+for (const [next, login] of [['/amc', '/amc-login'], ['/sat', '/sat-login'], ['/ib?subject=physics-hl', '/ib-login'], ['/dashboard', '/login']]) {
   reset(`?next=${encodeURIComponent(next)}`, '');
   assert.equal(new URL(await bridgeModule().completeImplicitLogin(), 'https://portal.invalid').pathname, login);
 }

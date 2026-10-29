@@ -33,6 +33,14 @@ export async function GET(req: Request) {
   const next = safeLoginDestination(
     url.searchParams.get("next") ?? cookieDestination,
   );
+  const destinationPath = new URL(next, url.origin).pathname;
+  const isIb = destinationPath === "/ib" || destinationPath.startsWith("/ib/");
+  function retryUrl(error: string) {
+    const retry = new URL(isIb ? "/ib-login" : "/login", url.origin);
+    retry.searchParams.set("e", error);
+    if (isIb) retry.searchParams.set("next", next);
+    return retry;
+  }
 
   if (!code && (!tokenHash || !otpType)) {
     // Server-requested OTP emails may use Supabase's implicit flow. Fragments
@@ -53,7 +61,7 @@ export async function GET(req: Request) {
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (!supabaseUrl || !supabaseAnon) {
-    return NextResponse.redirect(new URL("/login?e=missing_env", url.origin));
+    return NextResponse.redirect(retryUrl("missing_env"));
   }
 
   // IMPORTANT: We must return a response object that receives set-cookie updates
@@ -86,9 +94,7 @@ export async function GET(req: Request) {
       });
 
   if (error) {
-    const retryUrl = new URL("/login", url.origin);
-    retryUrl.searchParams.set("e", "invalid_or_consumed_link");
-    return NextResponse.redirect(retryUrl);
+    return NextResponse.redirect(retryUrl("invalid_or_consumed_link"));
   }
 
   res.cookies.delete(LOGIN_DESTINATION_COOKIE);

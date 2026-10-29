@@ -8,6 +8,8 @@ const accepted = [
   "/dashboard",
   "/dashboard?view=tmua",
   "/esat",
+  "/ib",
+  "/ib?subject=physics-hl&view=mocks",
   "/esat-practice-tests/tests/esat-mock-01/index.html",
   "/tmua-question-bank?page=2",
 ];
@@ -24,6 +26,9 @@ const rejected = [
   "/auth/callback",
   "/login?next=/esat",
   "/unknown",
+  "/ib-login",
+  "/ib-evil",
+  "/ib/../auth/callback",
   "/esat\\..\\dashboard",
 ];
 

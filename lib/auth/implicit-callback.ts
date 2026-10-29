@@ -5,7 +5,8 @@ function retryDestination(next: string) {
   const path = new URL(next, "https://apps.thrivingscholars.com").pathname;
   const login = path === "/amc" || path.startsWith("/amc/") || path.startsWith("/amc-")
     ? "/amc-login"
-    : path === "/sat" || path.startsWith("/sat/") || path.startsWith("/sat-") ? "/sat-login" : "/login";
+    : path === "/sat" || path.startsWith("/sat/") || path.startsWith("/sat-") ? "/sat-login"
+    : path === "/ib" || path.startsWith("/ib/") ? "/ib-login" : "/login";
   return `${login}?e=invalid_or_consumed_link&next=${encodeURIComponent(next)}`;
 }
 

@@ -21,6 +21,7 @@ const ALLOWED_DESTINATION_PREFIXES = [
   "/esat",
   "/esat-question-bank",
   "/esat-practice-tests",
+  "/ib",
 ] as const;
 
 export function safeLoginDestination(value: unknown): string {
