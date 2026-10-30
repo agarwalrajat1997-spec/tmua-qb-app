@@ -10,6 +10,9 @@ const accepted = [
   "/esat",
   "/ib",
   "/ib?subject=physics-hl&view=mocks",
+  "/ib/question-bank/functions?difficulty=hard&calculator=no&page=2",
+  "/ib/questions/ib-aa-fn-001",
+  "/ib/mark-scheme/ib-aa-fn-001",
   "/esat-practice-tests/tests/esat-mock-01/index.html",
   "/tmua-question-bank?page=2",
 ];

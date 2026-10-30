@@ -18,6 +18,7 @@ export default function IBPortalClient({ email, summary }: { email: string; summ
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
+  const collections = counts.collections.filter(c => `${c.title} ${c.subtopics.join(" ")}`.toLowerCase().includes(normalizedQuery));
   const topics = course.topics.filter(t => `${t.title} ${t.subtopics.join(" ")}`.toLowerCase().includes(normalizedQuery));
 
   async function logout() {
@@ -60,13 +61,16 @@ export default function IBPortalClient({ email, summary }: { email: string; summ
         {view === "questions" ? <>
           <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>START WITH A TOPIC</span><h2>Explore {course.title.toLowerCase()}</h2></div><label className={styles.search}><span aria-hidden="true">⌕</span><span className={styles.srOnly}>Search topics</span><input type="search" placeholder="Search topics or subtopics" value={query} onChange={event => setQuery(event.target.value)} /></label></div>
           <div className={styles.topicGrid} key={subject}>
-            {topics.map(topic => <details className={styles.topicCard} key={topic.id}>
+            {subject === "math-aa-hl" && counts.questions > 0 ? collections.map(collection => <div className={styles.topicCard} key={collection.id}>
+              <Link href={`/ib/question-bank/${collection.id}`} prefetch={false} className={styles.collectionLink}><div className={styles.cardTop}><span className={styles.topicNumber}>{collection.code}</span><span className={styles.topicCount}>{collection.count} questions</span></div><h3>{collection.title}</h3><p>{collection.description}</p><div className={styles.cardBottom}><span>{collection.subtopics.length} subtopics</span><span className={styles.cardAction}>Open question bank ↗</span></div></Link>
+              <details className={styles.collectionSubtopics}><summary>Browse subtopics</summary><ul>{collection.subtopics.map(subtopic => <li key={subtopic}><Link href={`/ib/question-bank/${collection.id}?subtopic=${encodeURIComponent(subtopic)}`} prefetch={false}>{subtopic} ↗</Link></li>)}</ul></details>
+            </div>) : topics.map(topic => <details className={styles.topicCard} key={topic.id}>
               <summary><div className={styles.cardTop}><span className={styles.topicNumber}>{topic.code}</span><span className={styles.topicCount}>{counts.topics[topic.id] ?? 0} questions</span></div><h3>{topic.title}</h3><p>{topic.description}</p><div className={styles.cardBottom}><span>{topic.subtopics.length} subtopics</span><span className={styles.cardAction}>Explore topic <span aria-hidden="true">↗</span></span></div></summary>
               <div className={styles.subtopics}><ul>{topic.subtopics.map(subtopic => <li key={subtopic}>{subtopic}</li>)}</ul><p>Questions and written mark schemes will appear here when released.</p></div>
             </details>)}
-            {!normalizedQuery ? <div className={styles.comingCard}><span className={styles.comingIcon} aria-hidden="true">✦</span><h3>Good things are taking shape.</h3><p>Your question bank is on its way. Browse the topics while we prepare your first questions and written mark schemes.</p><span className={styles.comingBadge}>CONTENT COMING SOON</span></div> : null}
+            {!normalizedQuery && counts.questions === 0 ? <div className={styles.comingCard}><span className={styles.comingIcon} aria-hidden="true">✦</span><h3>Good things are taking shape.</h3><p>Your question bank is on its way. Browse the topics while we prepare your first questions and written mark schemes.</p><span className={styles.comingBadge}>CONTENT COMING SOON</span></div> : null}
           </div>
-          {topics.length === 0 ? <div className={styles.emptySearch} role="status"><h3>No matching topics</h3><p>Try a different topic or subtopic.</p><button className={styles.secondaryButton} onClick={() => setQuery("")}>Clear search</button></div> : null}
+          {(subject === "math-aa-hl" && counts.questions > 0 ? collections.length === 0 : topics.length === 0) ? <div className={styles.emptySearch} role="status"><h3>No matching topics</h3><p>Try a different topic or subtopic.</p><button className={styles.secondaryButton} onClick={() => setQuery("")}>Clear search</button></div> : null}
         </> : <section className={styles.mockEmpty}><div className={styles.mockIcon} aria-hidden="true">◷</div><span className={styles.eyebrow}>{course.label.toUpperCase()} · MOCK TESTS</span><h2>Your next challenge is on its way.</h2><p>Mock tests and their written mark schemes will be available here once released. In the meantime, explore the topics in your question bank.</p><Link className={styles.primaryButton} href={ibHref(subject)}>Explore question bank <span aria-hidden="true">↗</span></Link><span className={styles.emptyCaption}>No mock tests published yet</span></section>}
         <footer className={styles.footer}><span>THRIVING SCHOLARS</span><span>Learn with purpose. Practise with confidence.</span></footer>
       </main>

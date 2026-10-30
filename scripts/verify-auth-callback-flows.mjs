@@ -85,6 +85,19 @@ assert.equal(new URL(response.headers.get('location')).searchParams.get('next'),
 modeError = null;
 intent = null;
 
+// A question/solution tab survives sign-in and an expired-link retry intact.
+for (const next of ['/ib/mark-scheme/ib-aa-fn-001', '/ib/question-bank/functions?difficulty=hard&calculator=no&page=2']) {
+  intent = encodeURIComponent(next);
+  response = await runCallback('/auth/callback?code=synthetic-deep-link');
+  assert.equal(response.headers.get('location'), `https://apps.thrivingscholars.com${next}`);
+  modeError = { message: 'synthetic expired link' };
+  response = await runCallback('/auth/callback?code=expired-deep-link');
+  assert.equal(new URL(response.headers.get('location')).pathname, '/ib-login');
+  assert.equal(new URL(response.headers.get('location')).searchParams.get('next'), next);
+  modeError = null;
+}
+intent = null;
+
 // The server never receives fragments; no-query requests preserve them through
 // a redirect whose Location has no fragment (HTTP fragment inheritance).
 const authCalls = exchanges.length + verifications.length;

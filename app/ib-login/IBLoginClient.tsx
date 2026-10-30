@@ -14,9 +14,10 @@ export default function IBLoginClient() {
   const search = useSearchParams();
   const safeNext = safeLoginDestination(search.get("next"));
   const parsed = new URL(safeNext, "https://apps.thrivingscholars.com");
-  const subject = ibSubject(search.get("subject") ?? (parsed.pathname === "/ib" ? parsed.searchParams.get("subject") : null));
-  const view = ibView(parsed.pathname === "/ib" ? parsed.searchParams.get("view") : null);
-  const next = ibHref(subject, view);
+  const isIbDestination = parsed.pathname === "/ib" || parsed.pathname.startsWith("/ib/");
+  const subject = ibSubject(search.get("subject") ?? (isIbDestination ? parsed.searchParams.get("subject") : null));
+  const view = ibView(isIbDestination ? parsed.searchParams.get("view") : null);
+  const next = isIbDestination && !search.has("subject") ? safeNext : ibHref(subject, view);
   const supabase = useMemo(() => supabaseBrowser(), []);
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
@@ -60,7 +61,7 @@ export default function IBLoginClient() {
   return <div className={styles.app}>
     <header className={styles.topbar}><Link href="/ib-login" className={styles.brandLink} aria-label="Thriving Scholars IB home"><IbBrand /></Link><span className={styles.loginHeaderTag}>YOUR NEXT CHAPTER STARTS HERE</span></header>
     <main className={styles.loginMain}>
-      <section className={styles.loginIntro}><span className={styles.eyebrow}>IB DIPLOMA PROGRAMME · HIGHER LEVEL</span><h1>Big ideas.<br />Steady progress.<br /><span>Your IB journey.</span></h1><p>A dedicated space for Maths AA HL and Physics HL. Get ready to build understanding, question by question.</p><div className={styles.loginFeatures}><div><span aria-hidden="true">▤</span><strong>Topic by topic</strong><p>A clear path through your question bank.</p></div><div><span aria-hidden="true">✎</span><strong>Every step matters</strong><p>Written mark schemes for deeper understanding.</p></div></div><div className={styles.loginStatus}><span className={styles.statusDot} /><span>Portal open · Questions and mock tests coming soon</span></div></section>
+      <section className={styles.loginIntro}><span className={styles.eyebrow}>IB DIPLOMA PROGRAMME · HIGHER LEVEL</span><h1>Big ideas.<br />Steady progress.<br /><span>Your IB journey.</span></h1><p>A dedicated space for Maths AA HL and Physics HL. Build understanding, question by question.</p><div className={styles.loginFeatures}><div><span aria-hidden="true">▤</span><strong>Topic by topic</strong><p>A clear path through your question bank.</p></div><div><span aria-hidden="true">✎</span><strong>Every step matters</strong><p>Written mark schemes for deeper understanding.</p></div></div><div className={styles.loginStatus}><span className={styles.statusDot} /><span>Maths AA HL question bank · Physics content coming soon</span></div></section>
       <section className={styles.loginCard} aria-labelledby="signin-title"><span className={styles.cardEyebrow}>WELCOME TO YOUR LEARNING SPACE</span><h2 id="signin-title">Let’s get started<span className={styles.headingDot}>.</span></h2><p>Choose your subject and sign in with your email.</p><nav className={styles.subjectSwitch} aria-label="Subject">{(Object.keys(IB_COURSES) as IbSubject[]).map(id => <Link key={id} href={`/ib-login?next=${encodeURIComponent(ibHref(id, view))}`} prefetch={false} aria-current={subject === id ? "page" : undefined} className={id === subject ? styles.subjectActive : ""}><span aria-hidden="true">{IB_COURSES[id].symbol}</span>{IB_COURSES[id].label}</Link>)}</nav>
         <form onSubmit={sendLink}><label className={styles.emailLabel} htmlFor="ib-email">Email address</label><input id="ib-email" className={styles.emailInput} type="email" autoComplete="email" inputMode="email" required maxLength={254} placeholder="you@example.com" value={email} onChange={event => setEmail(event.target.value)} disabled={busy} /><button className={styles.primaryButton} type="submit" disabled={busy || cooldown}>{busy ? "Sending your link…" : cooldown ? "Link sent — check your inbox" : sentTo ? "Send a new sign-in link" : "Email me a sign-in link"}<span aria-hidden="true">↗</span></button></form>
         {error ? <p role="alert" className={styles.error}>{error}</p> : callbackError && !sentTo ? <p role="alert" className={styles.error}>{callbackError === "missing_env" ? "Sign-in is temporarily unavailable. Please try again shortly." : "That link has expired or has already been used. Request a new sign-in link below."}</p> : null}

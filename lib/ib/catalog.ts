@@ -37,4 +37,4 @@ export function ibView(value: unknown): IbView {
 export function ibHref(subject: IbSubject, view: IbView = "questions") {
   return `/ib?subject=${subject}&view=${view}`;
 }
-export type IbSummary = Record<IbSubject, { questions: number; mocks: number; topics: Record<string, number> }>;
+export type IbSummary = Record<IbSubject, { questions: number; mocks: number; topics: Record<string, number>; collections: import("./question").IbCollectionSummary[] }>;
