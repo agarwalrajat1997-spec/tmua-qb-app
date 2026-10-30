@@ -20,6 +20,18 @@ const levels={},slCoverage={};
 const errors=[],ids=new Set(),fingerprints=new Map(),counts={},coverage={},difficulty={},types={};
 let questions=0,formulae=0,questionDiagrams=0,solutionDiagrams=0,rasterDiagrams=0,marks=0;
 function mathCheck(source,label){
+ // GFM silently discards extra table cells, so trailing instructions need a paragraph break.
+ let tableColumns;
+ for(const line of source.split(/\r?\n/)){
+  if(line.startsWith('|')){
+   const cells=line.replace(/^\|/,'').replace(/\|\s*$/,'').split(/(?<!\\)\|/).length;
+   if(tableColumns===undefined)tableColumns=cells;
+   else if(cells!==tableColumns)errors.push(label+': table row has '+cells+' cells; expected '+tableColumns+' (possible hidden instructions)');
+  }else{
+   if(tableColumns!==undefined&&line.trim())errors.push(label+': separate the paragraph after a table with a blank line');
+   tableColumns=undefined;
+  }
+ }
  if(/[\u0000-\u0009\u000b-\u001f]/.test(source))errors.push(label+': control character, possibly an escaped LaTeX command');
  if(/\\\\[A-Za-z]/.test(source))errors.push(label+': doubled LaTeX command escape');
  if(/\\n\\n/.test(source))errors.push(label+': literal escaped newlines');

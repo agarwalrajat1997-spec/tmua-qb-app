@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import React from 'react';
 import {renderToStaticMarkup as render} from 'react-dom/server';
 import {ibHarness} from './ib-component-harness.mjs';
@@ -79,4 +80,13 @@ const target={baseURI:'https://apps.thrivingscholars.com/ib/questions/synthetic'
 raster.props.onError({currentTarget:target});raster.props.onError({currentTarget:target});
 assert.equal(requests,1,'A failed relative raster fallback must not trigger an endless retry');
 assert.equal(resolvedSrc,'https://apps.thrivingscholars.com/ib-assets/biology/synthetic.png');
+// Instructions following a GFM table must survive the actual Markdown renderer.
+const statistics=JSON.parse(readFileSync('content/ib/biology/continuity-change.json','utf8')).filter(q=>['ib-bio-d-127','ib-bio-d-128'].includes(q.id));
+const QuestionBody=h.load('app/ib/components/QuestionBody.tsx').default;
+for(const q of statistics){
+ const rendered=render(React.createElement(QuestionBody,{question:h.model.questionPrompt(h.model.ibQuestionSchema.parse(q))}));
+ assert.match(rendered,/The 5% critical value for one degree of freedom is 3.84/);
+ assert.ok(rendered.indexOf('</table>')<rendered.indexOf('The 5% critical value'),'Statistical instructions must be outside the data table');
+ assert.match(rendered,/class="katex"/);
+}
 console.log('IB Biology portal passed: four themes, 40 HL / 34 SL subtopics, canonical shared records, AHL denial in SL, authenticated routes, course-preserving filters and pagination, written schemes in separate tabs, private solution separation and Biology sign-in returns.');
