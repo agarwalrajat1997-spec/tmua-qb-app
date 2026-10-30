@@ -1,4 +1,5 @@
-export type IbSubject = "math-aa-hl" | "physics-hl" | "chemistry" | "biology";
+export type IbMathSubject = "math-aa-sl" | "math-ai-sl" | "math-aa-hl";
+export type IbSubject = IbMathSubject | "physics-hl" | "chemistry" | "biology";
 export type IbCourseLevel = "sl" | "hl";
 export type IbView = "questions" | "mocks";
 export type IbTopic = { id: string; code: string; title: string; description: string; subtopics: string[] };
@@ -7,6 +8,26 @@ export type IbCourse = { id: IbSubject; label: string; title: string; subtitle: 
 // Maths: current course (final assessment November 2028).
 // Physics: first assessment 2025. Keep IDs stable when content is imported.
 export const IB_COURSES: Record<IbSubject, IbCourse> = {
+  "math-aa-sl": {
+    id: "math-aa-sl", label: "Maths AA SL", title: "Mathematics", subtitle: "Analysis & Approaches · Standard Level", symbol: "ƒ",
+    topics: [
+      { id: "number-algebra", code: "01", title: "Number & algebra", description: "Sequences, powers, logarithms and binomial expansion.", subtopics: ["Sequences and series", "Exponents and logarithms", "Financial mathematics", "Binomial theorem", "Mathematical proof"] },
+      { id: "functions", code: "02", title: "Functions", description: "Graphs, inverses, transformations and equations.", subtopics: ["Function notation and inverses", "Graph transformations", "Quadratic functions", "Rational functions", "Exponential and logarithmic functions"] },
+      { id: "geometry-trigonometry", code: "03", title: "Geometry & trigonometry", description: "Triangles, circular measure and trigonometric models.", subtopics: ["Geometry and measurement", "Trigonometric ratios", "Radians and circular measure", "Trigonometric identities and equations", "Sinusoidal models"] },
+      { id: "statistics-probability", code: "04", title: "Statistics & probability", description: "Data, regression, probability and distributions.", subtopics: ["Descriptive statistics", "Correlation and regression", "Probability and conditional probability", "Discrete random variables", "Binomial and normal distributions"] },
+      { id: "calculus", code: "05", title: "Calculus", description: "Differentiation, integration, motion and optimisation.", subtopics: ["Differentiation", "Tangents and normals", "Optimisation", "Integration and area", "Kinematics"] },
+    ],
+  },
+  "math-ai-sl": {
+    id: "math-ai-sl", label: "Maths AI SL", title: "Mathematics", subtitle: "Applications & Interpretation · Standard Level", symbol: "ƒ",
+    topics: [
+      { id: "number-algebra", code: "01", title: "Number & algebra", description: "Numerical reasoning, sequences and financial mathematics.", subtopics: ["Accuracy and approximation", "Sequences and series", "Compound interest and depreciation", "Annuities and loans", "Systems of equations"] },
+      { id: "functions", code: "02", title: "Functions", description: "Use graphs and functions to model real situations.", subtopics: ["Linear models", "Quadratic models", "Exponential models", "Sinusoidal models", "Model interpretation and limitations"] },
+      { id: "geometry-trigonometry", code: "03", title: "Geometry & trigonometry", description: "Measurement, bearings and Voronoi diagrams.", subtopics: ["Geometry and measurement", "Trigonometry and bearings", "Voronoi diagrams", "Perpendicular bisectors", "Modelling with geometry"] },
+      { id: "statistics-probability", code: "04", title: "Statistics & probability", description: "Analyse data, uncertainty and statistical evidence.", subtopics: ["Sampling and descriptive statistics", "Correlation and regression", "Probability", "Binomial and normal distributions", "Hypothesis testing"] },
+      { id: "calculus", code: "05", title: "Calculus", description: "Rates of change, optimisation and accumulated quantities.", subtopics: ["Gradients and rates of change", "Polynomial differentiation", "Optimisation", "Definite integration", "Trapezoidal rule"] },
+    ],
+  },
   "math-aa-hl": {
     id: "math-aa-hl", label: "Maths AA HL", title: "Mathematics", subtitle: "Analysis & Approaches · Higher Level", symbol: "ƒ",
     topics: [
@@ -50,10 +71,28 @@ export const IB_COURSES: Record<IbSubject, IbCourse> = {
 };
 
 export function ibSubject(value: unknown): IbSubject {
-  return value === "biology" ? "biology" : value === "chemistry" ? "chemistry" : value === "physics-hl" ? "physics-hl" : "math-aa-hl";
+  return typeof value === "string" && Object.hasOwn(IB_COURSES, value) ? value as IbSubject : "math-aa-hl";
+}
+export const IB_MATH_SUBJECTS: IbMathSubject[] = ["math-aa-sl", "math-ai-sl", "math-aa-hl"];
+export function ibIsMathSubject(subject: IbSubject): subject is IbMathSubject {
+  return subject === "math-aa-sl" || subject === "math-ai-sl" || subject === "math-aa-hl";
+}
+/** Keep one Maths entry in the subject navigation while retaining the selected course. */
+export function ibNavigationSubjects(subject: IbSubject): IbSubject[] {
+  return [ibIsMathSubject(subject) ? subject : "math-aa-hl", "physics-hl", "chemistry", "biology"];
+}
+export function ibSubjectLabel(subject: IbSubject) {
+  return ibIsMathSubject(subject) ? "Maths" : IB_COURSES[subject].label;
+}
+export function ibMathCourseHref(subject: IbMathSubject, topicId?: string) {
+  if (!topicId) return ibHref(subject);
+  const collection = subject === "math-aa-hl" ? topicId === "calculus" ? "calculus-1" : topicId : `${subject === "math-aa-sl" ? "aa-sl" : "ai-sl"}-${topicId}`;
+  return `/ib/question-bank/${collection}`;
 }
 /** Identify the subject of an authenticated deep link without importing question content into the client. */
 export function ibSubjectForPath(pathname: string): IbSubject {
+  if (/^\/ib\/(?:question-bank\/aa-sl-|(?:questions|mark-scheme)\/ib-aasl-)/.test(pathname)) return "math-aa-sl";
+  if (/^\/ib\/(?:question-bank\/ai-sl-|(?:questions|mark-scheme)\/ib-aisl-)/.test(pathname)) return "math-ai-sl";
   if (/^\/ib\/(?:question-bank\/biology-|(?:questions|mark-scheme)\/ib-bio-)/.test(pathname)) return "biology";
   if (/^\/ib\/(?:question-bank\/chemistry-|(?:questions|mark-scheme)\/ib-chem-)/.test(pathname)) return "chemistry";
   if (/^\/ib\/(?:question-bank\/physics-|(?:questions|mark-scheme)\/ib-phy-)/.test(pathname)) return "physics-hl";
@@ -69,7 +108,7 @@ export function ibCourseLabel(subject: IbSubject, course: IbCourseLevel = "hl") 
   return ibHasCourseChoice(subject) ? `${IB_COURSES[subject].label} ${course.toUpperCase()}` : IB_COURSES[subject].label;
 }
 export function ibQualification(subject: IbSubject, course: IbCourseLevel = "hl") {
-  return ibHasCourseChoice(subject) && course === "sl" ? "Standard Level" : "Higher Level";
+  return subject === "math-aa-sl" || subject === "math-ai-sl" || ibHasCourseChoice(subject) && course === "sl" ? "Standard Level" : "Higher Level";
 }
 /** Preserve existing Math/Physics URLs; Chemistry and Biology have a course choice. */
 export function ibCourseHref(pathname: string, subject: IbSubject, course: IbCourseLevel = "hl") {

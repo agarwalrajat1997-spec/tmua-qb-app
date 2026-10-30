@@ -11,7 +11,7 @@ import { ibQuestionSchema, questionPrompt, safeDiagram } from '../lib/ib/questio
 
 const directory = resolve(process.argv.slice(2).find(arg => !arg.startsWith('--')) || 'content/ib/math-aa-hl');
 const parser = unified().use(remarkParse).use(remarkGfm).use(remarkMath);
-const expected = {'number-algebra':229,functions:129,'geometry-trigonometry':182,'statistics-probability':149,'calculus-1':126,'calculus-2':147};
+const expected = {'number-algebra':249,functions:149,'geometry-trigonometry':202,'statistics-probability':169,'calculus-1':146,'calculus-2':167};
 let count=0, formulae=0, diagrams=0, drafts=0;
 const errors=[], identifiers=new Set(), prompts=new Map(), counts={}, numbers={};
 function checkMath(markdown, label) {

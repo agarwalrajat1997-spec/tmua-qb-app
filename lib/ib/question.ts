@@ -8,6 +8,13 @@ export const IB_COLLECTIONS = [
   { id: "statistics-probability", subject: "math-aa-hl", topicId: "statistics-probability", code: "04", title: "Statistics & probability", description: "Data, probability, random variables and statistical distributions." },
   { id: "calculus-1", subject: "math-aa-hl", topicId: "calculus", code: "05A", title: "Calculus I", description: "Differentiation, tangents, optimisation, related rates and limits." },
   { id: "calculus-2", subject: "math-aa-hl", topicId: "calculus", code: "05B", title: "Calculus II", description: "Integration, areas, volumes, differential equations and series." },
+  ...(["aa-sl", "ai-sl"] as const).flatMap(course => [
+    { id: `${course}-number-algebra` as const, subject: course === "aa-sl" ? "math-aa-sl" as const : "math-ai-sl" as const, topicId: "number-algebra" as const, code: "01", title: "Number & algebra", description: course === "aa-sl" ? "Sequences, logarithms, binomial expansion and mathematical reasoning." : "Sequences, estimation, financial mathematics and numerical models." },
+    { id: `${course}-functions` as const, subject: course === "aa-sl" ? "math-aa-sl" as const : "math-ai-sl" as const, topicId: "functions" as const, code: "02", title: "Functions", description: course === "aa-sl" ? "Graphs, transformations, inverses and equations." : "Linear, quadratic, exponential and sinusoidal models in context." },
+    { id: `${course}-geometry-trigonometry` as const, subject: course === "aa-sl" ? "math-aa-sl" as const : "math-ai-sl" as const, topicId: "geometry-trigonometry" as const, code: "03", title: "Geometry & trigonometry", description: course === "aa-sl" ? "Triangles, radians, circular measure, identities and trigonometric equations." : "Measurement, trigonometry, bearings and Voronoi diagrams." },
+    { id: `${course}-statistics-probability` as const, subject: course === "aa-sl" ? "math-aa-sl" as const : "math-ai-sl" as const, topicId: "statistics-probability" as const, code: "04", title: "Statistics & probability", description: course === "aa-sl" ? "Data, regression, probability, random variables and distributions." : "Data analysis, probability, distributions and hypothesis testing." },
+    { id: `${course}-calculus` as const, subject: course === "aa-sl" ? "math-aa-sl" as const : "math-ai-sl" as const, topicId: "calculus" as const, code: "05", title: "Calculus", description: course === "aa-sl" ? "Differentiation, integration, optimisation and kinematics." : "Rates of change, polynomial differentiation, optimisation and integration." },
+  ]),
   { id: "physics-space-time-motion", subject: "physics-hl", topicId: "space-time-motion", code: "A", title: "Space, time & motion", description: "Kinematics, forces, momentum, energy, rigid bodies and relativity." },
   { id: "physics-particulate-matter", subject: "physics-hl", topicId: "particulate-matter", code: "B", title: "The particulate nature of matter", description: "Thermal transfers, the greenhouse effect, gas laws, thermodynamics and circuits." },
   { id: "physics-wave-behaviour", subject: "physics-hl", topicId: "wave-behaviour", code: "C", title: "Wave behaviour", description: "Oscillations, wave models, interference, standing waves and the Doppler effect." },
@@ -69,6 +76,22 @@ const mathsQuestion = commonQuestion.extend({
   subject: z.literal("math-aa-hl"),
   topicId: z.enum(["number-algebra", "functions", "geometry-trigonometry", "statistics-probability", "calculus"]),
   collectionId: z.enum(["number-algebra", "functions", "geometry-trigonometry", "statistics-probability", "calculus-1", "calculus-2"]),
+  syllabusCode: z.string().regex(/^[1-5]\.\d{1,2}$/).optional(), level: z.enum(["sl", "ahl"]).optional(),
+  examStyle: z.enum(["short-response", "extended-response", "problem-solving"]).optional(),
+});
+const mathsSlFields = {
+  topicId: z.enum(["number-algebra", "functions", "geometry-trigonometry", "statistics-probability", "calculus"]),
+  syllabusCode: z.string().regex(/^[1-5]\.\d{1,2}$/), level: z.literal("sl"),
+  examStyle: z.enum(["short-response", "extended-response"]),
+  source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
+};
+const mathsAaSlQuestion = commonQuestion.extend({ ...mathsSlFields,
+  id: z.string().regex(/^ib-aasl-(?:na|fn|gt|sp|ca)-\d{3}$/), subject: z.literal("math-aa-sl"),
+  collectionId: z.enum(["aa-sl-number-algebra", "aa-sl-functions", "aa-sl-geometry-trigonometry", "aa-sl-statistics-probability", "aa-sl-calculus"]),
+});
+const mathsAiSlQuestion = commonQuestion.extend({ ...mathsSlFields,
+  id: z.string().regex(/^ib-aisl-(?:na|fn|gt|sp|ca)-\d{3}$/), subject: z.literal("math-ai-sl"), calculator: z.literal(true),
+  collectionId: z.enum(["ai-sl-number-algebra", "ai-sl-functions", "ai-sl-geometry-trigonometry", "ai-sl-statistics-probability", "ai-sl-calculus"]),
 });
 const physicsQuestion = commonQuestion.extend({
   id: z.string().regex(/^ib-phy-[abcde]-\d{3}$/),
@@ -99,12 +122,12 @@ const biologyQuestion = commonQuestion.extend({
   options: z.array(z.object({ label: optionLabel, text })).length(4).optional(), correctOption: optionLabel.optional(),
   source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
 });
-export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, physicsQuestion, chemistryQuestion, biologyQuestion]).superRefine((q, ctx) => {
+export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, mathsAaSlQuestion, mathsAiSlQuestion, physicsQuestion, chemistryQuestion, biologyQuestion]).superRefine((q, ctx) => {
   const fail = (message: string) => ctx.addIssue({ code: "custom", message });
   const collection = getIbCollection(q.collectionId);
   if (collection?.topicId !== q.topicId || collection?.subject !== q.subject) fail("Collection and syllabus topic disagree");
   if (q.number !== q.source.question) fail("Question numbering must retain its reference mapping");
-  if (q.subject !== "math-aa-hl") {
+  if (q.subject === "physics-hl" || q.subject === "chemistry" || q.subject === "biology") {
     const syllabus = ibSyllabusSubtopics(q.subject, q.topicId).find(item => item.code === q.syllabusCode);
     if (!syllabus) fail("Syllabus code must belong to the question's subject and theme");
     if (syllabus?.additionalHlOnly && q.level !== "ahl") fail("This syllabus subtopic is additional HL only");
@@ -115,6 +138,14 @@ export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, 
       if (!q.options || q.options.map(option => option.label).join("") !== "ABCD" || !q.correctOption) fail("Multiple-choice questions require options A–D in order and a private correct option");
       if (q.markScheme.length !== 1 || q.markScheme[0].steps.length !== 1 || q.markScheme[0].steps[0].code !== "A1") fail("Multiple-choice schemes require a single A1 step with the correct choice and its scientific reasoning");
     } else if (q.options !== undefined || q.correctOption !== undefined) fail("Only multiple-choice questions may define options or a correct option");
+  } else {
+    const topicNumber = { "number-algebra": 1, functions: 2, "geometry-trigonometry": 3, "statistics-probability": 4, calculus: 5 }[q.topicId];
+    // Legacy HL collections include mixed-topic problems, such as optimisation in geometry.
+    if (q.subject !== "math-aa-hl" && q.syllabusCode && !q.syllabusCode.startsWith(topicNumber + ".")) fail("Maths syllabus code must belong to its topic");
+    const suffix = q.collectionId === "calculus-1" ? "c1" : q.collectionId === "calculus-2" ? "c2" : ({ "number-algebra": "na", functions: "fn", "geometry-trigonometry": "gt", "statistics-probability": "sp", calculus: "ca" }[q.topicId]);
+    const prefix = q.subject === "math-aa-sl" ? "ib-aasl-" : q.subject === "math-ai-sl" ? "ib-aisl-" : "ib-aa-";
+    if (q.id !== prefix + suffix + "-" + String(q.number).padStart(3, "0")) fail("Maths ID must match its course, topic and number");
+    if (q.examStyle === "problem-solving" && !q.calculator) fail("AA HL Paper 3 problem solving requires a calculator");
   }
   const stepTotal = q.markScheme.reduce((total, group) => total + group.steps.reduce((sum, step) => sum + markValue(step.code), 0), 0);
   if (stepTotal !== q.marks) fail("Scheme awards " + stepTotal + ", question awards " + q.marks);
@@ -135,6 +166,9 @@ export function questionAvailableForCourse(q: IbQuestion, course: IbCourseLevel 
 }
 type PromptOnly<T> = T extends unknown ? Omit<T, "markScheme" | "markSchemeDiagramSvg" | "markSchemeDiagramUrl" | "markSchemeDiagramCaption" | "answerSummary" | "source" | "verification" | "correctOption"> : never;
 export type IbQuestionPrompt = PromptOnly<IbQuestion>;
+export function isScienceQuestion(q: IbQuestion | IbQuestionPrompt): q is Extract<IbQuestion | IbQuestionPrompt, { subject: "physics-hl" | "chemistry" | "biology" }> {
+  return q.subject === "physics-hl" || q.subject === "chemistry" || q.subject === "biology";
+}
 /** An explicit allowlist keeps solutions and private authoring metadata out of question views. */
 export function questionPrompt(q: IbQuestion): IbQuestionPrompt {
   const prompt = { id: q.id, topicId: q.topicId, collectionId: q.collectionId, number: q.number,
@@ -146,5 +180,10 @@ export function questionPrompt(q: IbQuestion): IbQuestionPrompt {
     calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
   if (q.subject === "biology") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
     calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
-  return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId };
+  if (q.subject === "math-aa-sl") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
+    syllabusCode: q.syllabusCode, level: q.level, examStyle: q.examStyle };
+  if (q.subject === "math-ai-sl") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
+    calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, examStyle: q.examStyle };
+  return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
+    syllabusCode: q.syllabusCode, level: q.level, examStyle: q.examStyle };
 }

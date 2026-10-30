@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
 import { ibHref, ibHasCourseChoice, ibSyllabusSubtopics, ibCourseLevel, ibCourseLabel, ibCourseHref } from "@/lib/ib/catalog";
 import { getIbQuestions } from "@/lib/ib/content";
-import { IB_COLLECTIONS, getIbCollection, questionPrompt } from "@/lib/ib/question";
+import { variedPracticeOrder } from "@/lib/ib/practice-order";
+import { IB_COLLECTIONS, getIbCollection, questionPrompt, isScienceQuestion } from "@/lib/ib/question";
 import ExamShell from "../../components/ExamShell";
 import ExamInstructions from "../../components/ExamInstructions";
 import QuestionBody, { QuestionBadges } from "../../components/QuestionBody";
@@ -26,7 +27,7 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const courseLevel = ibCourseLevel(single(raw.course));
   const courseLabel = ibCourseLabel(collection.subject, courseLevel);
   const paramsForLogin = new URLSearchParams();
-  for (const key of ["q", "difficulty", "calculator", "subtopic", "syllabus", "level", "type", "page"]) {
+  for (const key of ["q", "difficulty", "calculator", "subtopic", "syllabus", "level", "type", "style", "page"]) {
     if (single(raw[key])) paramsForLogin.set(key, single(raw[key]).slice(0, 160));
   }
   if (courseChoice) paramsForLogin.set("course", courseLevel);
@@ -43,37 +44,41 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const syllabus = syllabusTopics.some(topic => topic.code === single(raw.syllabus)) ? single(raw.syllabus) : "";
   const allowedLevels = courseChoice ? courseLevel === "sl" ? ["sl"] : ["sl", "ahl"] : physics ? ["core", "ahl"] : [];
   const level = allowedLevels.includes(single(raw.level)) ? single(raw.level) : "";
+  const allowedStyles = collection.subject === "math-aa-hl" ? ["short-response", "extended-response", "problem-solving"] : ["short-response", "extended-response"];
+  const style = !science && allowedStyles.includes(single(raw.style)) ? single(raw.style) : "";
   const type = science && ["multiple-choice", "structured", "data-based"].includes(single(raw.type)) ? single(raw.type) : "";
-  const matches = all.filter(q => {
+  const filtered = all.filter(q => {
     if (difficulty && q.difficulty !== difficulty) return false;
+    if (!isScienceQuestion(q) && style && q.examStyle !== style) return false;
     if (calculator && q.calculator !== (calculator === "yes")) return false;
     if (subtopic && q.subtopic !== subtopic) return false;
-    if (q.subject !== "math-aa-hl" && ((syllabus && q.syllabusCode !== syllabus) || (level && q.level !== level) || (type && q.questionType !== type))) return false;
-    const scienceTerms = q.subject !== "math-aa-hl" ? q.syllabusCode + " " + (q.options?.map(option => option.text).join(" ") ?? "") : "";
+    if (isScienceQuestion(q) && ((syllabus && q.syllabusCode !== syllabus) || (level && q.level !== level) || (type && q.questionType !== type))) return false;
+    const scienceTerms = isScienceQuestion(q) ? q.syllabusCode + " " + (q.options?.map(option => option.text).join(" ") ?? "") : q.syllabusCode ?? "";
     return !search || [q.number, q.id, q.title, q.subtopic, q.stem, q.parts.map(p => p.prompt).join(" "), scienceTerms].join(" ").toLowerCase().includes(search.toLowerCase());
   });
+  const matches = collection.subject === "math-aa-sl" || collection.subject === "math-ai-sl" ? variedPracticeOrder(filtered) : filtered;
   const pages = Math.max(1, Math.ceil(matches.length / PAGE_SIZE));
   const requestedPage = Number(single(raw.page) || 1);
   const page = Number.isSafeInteger(requestedPage) ? Math.min(pages, Math.max(1, requestedPage)) : 1;
   const visible = matches.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   function filterHref(overrides: Record<string, string>) {
     const query = new URLSearchParams();
-    for (const [key, value] of Object.entries({ ...(courseChoice ? { course: courseLevel } : {}), q: search, difficulty, calculator, subtopic, syllabus, level, type, ...overrides })) if (value) query.set(key, value);
+    for (const [key, value] of Object.entries({ ...(courseChoice ? { course: courseLevel } : {}), q: search, difficulty, calculator, subtopic, syllabus, level, type, style, ...overrides })) if (value) query.set(key, value);
     return pathname + (query.size ? "?" + query : "");
   }
 
-  return <ExamShell email={user.email} subject={collection.subject} courseLevel={courseLevel} courseLinks={{ sl: filterHref({ course: "sl", level: level === "ahl" ? "" : level, syllabus: syllabusTopics.find(topic => topic.code === syllabus)?.additionalHlOnly ? "" : syllabus }), hl: filterHref({ course: "hl" }) }}>
+  return <ExamShell email={user.email} subject={collection.subject} courseLevel={courseLevel} mathsTopicId={collection.topicId} courseLinks={{ sl: filterHref({ course: "sl", level: level === "ahl" ? "" : level, syllabus: syllabusTopics.find(topic => topic.code === syllabus)?.additionalHlOnly ? "" : syllabus }), hl: filterHref({ course: "hl" }) }}>
     <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href={ibHref(collection.subject, "questions", courseLevel)}>Question bank</Link><span>/</span><span>{collection.title}</span></nav>
-    {science ? <nav className={styles.themeNav} aria-label={`${courseLabel.replace(/ (SL|HL)$/, "")} themes`}>{IB_COLLECTIONS.filter(item => item.subject === collection.subject).map(item => <Link key={item.id} href={ibCourseHref("/ib/question-bank/" + item.id, collection.subject, courseLevel)} prefetch={false} aria-current={item.id === id ? "page" : undefined}><b>{item.code}</b> {item.title}</Link>)}</nav> : null}
+    <nav className={styles.themeNav} aria-label={`${courseLabel.replace(/ (SL|HL)$/, "")} ${science ? "themes" : "topics"}`}>{IB_COLLECTIONS.filter(item => item.subject === collection.subject).map(item => <Link key={item.id} href={ibCourseHref("/ib/question-bank/" + item.id, collection.subject, courseLevel)} prefetch={false} aria-current={item.id === id ? "page" : undefined}><b>{item.code}</b> {item.title}</Link>)}</nav>
     <div className={styles.bankHeading}><div><span className={styles.overline}>IB {courseLabel.toUpperCase()} · {science ? "THEME" : "TOPIC"} {collection.code}</span><h1>{collection.title}{!/[.!?]$/.test(collection.title) ? <span>.</span> : null}</h1><p>{collection.description}</p></div><div className={styles.bankCount}><strong>{all.length}</strong><span>questions</span></div></div>
     <ExamInstructions subject={collection.subject} />
     {science ? <nav className={styles.syllabusNav} aria-label="Syllabus subtopics"><Link href={filterHref({ syllabus: "", subtopic: "" })} aria-current={!syllabus ? "page" : undefined} prefetch={false}>All subtopics</Link>{syllabusTopics.map(topic => <Link key={topic.code} href={filterHref({ syllabus: topic.code, subtopic: "" })} aria-current={syllabus === topic.code ? "page" : undefined} prefetch={false}><b>{topic.code}</b> {topic.title}{topic.additionalHlOnly ? <small>Additional HL</small> : null}</Link>)}</nav> : null}
-    <form key={filterHref({})} className={styles.filters + (science ? " " + styles.physicsFilters : "")} method="GET" action={pathname}>
+    <form key={filterHref({})} className={`${styles.filters} ${styles.physicsFilters}`} method="GET" action={pathname}>
       {courseChoice ? <input type="hidden" name="course" value={courseLevel} /> : null}
       <label className={styles.searchFilter}>Search questions<input name="q" type="search" defaultValue={search} placeholder="Keyword or question number" maxLength={160} /></label>
       {science ? <label>Syllabus subtopic<select name="syllabus" defaultValue={syllabus}><option value="">All subtopics</option>{syllabusTopics.map(topic => <option value={topic.code} key={topic.code}>{topic.code} {topic.title}</option>)}</select></label> : <label>Subtopic<select name="subtopic" defaultValue={subtopic}><option value="">All subtopics</option>{subtopics.map(s => <option key={s}>{s}</option>)}</select></label>}
       <label>Difficulty<select name="difficulty" defaultValue={difficulty}><option value="">All difficulties</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
-      {science ? <><label>Course content<select name="level" defaultValue={level}><option value="">{courseChoice ? courseLevel === "sl" ? "All SL content" : "SL + additional HL" : "Core + additional HL"}</option><option value={courseChoice ? "sl" : "core"}>{courseChoice ? "SL content" : "Core"}</option>{!courseChoice || courseLevel === "hl" ? <option value="ahl">Additional HL</option> : null}</select></label><label>Question type<select name="type" defaultValue={type}><option value="">All question types</option><option value="multiple-choice">Multiple choice</option><option value="structured">Structured</option><option value="data-based">Data-based</option></select></label></> : <label>Calculator<select name="calculator" defaultValue={calculator}><option value="">All questions</option><option value="no">No calculator</option><option value="yes">Calculator</option></select></label>}
+      {science ? <><label>Course content<select name="level" defaultValue={level}><option value="">{courseChoice ? courseLevel === "sl" ? "All SL content" : "SL + additional HL" : "Core + additional HL"}</option><option value={courseChoice ? "sl" : "core"}>{courseChoice ? "SL content" : "Core"}</option>{!courseChoice || courseLevel === "hl" ? <option value="ahl">Additional HL</option> : null}</select></label><label>Question type<select name="type" defaultValue={type}><option value="">All question types</option><option value="multiple-choice">Multiple choice</option><option value="structured">Structured</option><option value="data-based">Data-based</option></select></label></> : <><label>Response style<select name="style" defaultValue={style}><option value="">All response styles</option><option value="short-response">Short response</option><option value="extended-response">Extended response</option>{collection.subject === "math-aa-hl" ? <option value="problem-solving">Problem solving</option> : null}</select></label><label>Calculator<select name="calculator" defaultValue={calculator}><option value="">All questions</option><option value="no">No calculator</option><option value="yes">Calculator</option></select></label></>}
       <div className={styles.filterActions}><button type="submit">Apply filters</button><Link href={baseHref} className={styles.reset}>Reset</Link></div>
     </form>
     <div className={styles.resultsLine}><span>{matches.length ? ((page - 1) * PAGE_SIZE + 1) + "–" + Math.min(page * PAGE_SIZE, matches.length) + " of " + matches.length + " questions" : "No matching questions"}</span><span>Mark schemes open in a new tab ↗</span></div>

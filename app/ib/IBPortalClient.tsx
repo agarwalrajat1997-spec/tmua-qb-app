@@ -4,10 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
-import { IB_COURSES, ibHasCourseChoice, ibSubject, ibView, ibHref, ibCourseLevel, ibCourseLabel, ibQualification, ibCourseHref, type IbSubject, type IbSummary } from "@/lib/ib/catalog";
+import { IB_COURSES, ibHasCourseChoice, ibSubject, ibView, ibHref, ibCourseLevel, ibCourseLabel, ibQualification, ibCourseHref, ibIsMathSubject, ibNavigationSubjects, ibSubjectLabel, type IbSummary } from "@/lib/ib/catalog";
 import styles from "./ib.module.css";
 import IbBrand from "./IbBrand";
 import ChemistryCourseSwitch from "./components/ChemistryCourseSwitch";
+import MathsCourseSwitch from "./components/MathsCourseSwitch";
 
 export default function IBPortalClient({ email, summary }: { email: string; summary: IbSummary }) {
   const search = useSearchParams();
@@ -51,17 +52,17 @@ export default function IBPortalClient({ email, summary }: { email: string; summ
           <Link className={`${styles.navItem} ${view === "mocks" ? styles.navActive : ""}`} href={ibHref(subject, "mocks", courseLevel)} prefetch={false} aria-current={view === "mocks" ? "page" : undefined}><span className={styles.navIcon} aria-hidden="true">◷</span><span>Mock tests<small>Put your learning into practice</small></span><span className={styles.navArrow} aria-hidden="true">↗</span></Link>
         </nav>
         <div className={styles.sidebarNote}><span className={styles.noteRule} /><strong>A little practice.<br />A lot of possibility.</strong><p>Your space to work through ideas, one question at a time.</p></div>
-        <div className={styles.sidebarFooter}><span className={styles.statusDot} /> IB Diploma Programme<small>Maths AA HL · Physics HL · Chemistry & Biology SL/HL</small></div>
+        <div className={styles.sidebarFooter}><span className={styles.statusDot} /> IB Diploma Programme<small>Maths AA SL/HL & AI SL · Physics HL · Chemistry & Biology SL/HL</small></div>
       </aside>
       <main id="ib-main" className={styles.main}>
-        <div className={styles.courseBar}><span className={styles.eyebrow}>CHOOSE YOUR SUBJECT</span><nav className={styles.subjectSwitch} aria-label="Subject">{(Object.keys(IB_COURSES) as IbSubject[]).map(id => <Link key={id} href={ibHref(id, view, courseLevel)} prefetch={false} onClick={() => setQuery("")} aria-current={subject === id ? "page" : undefined} className={subject === id ? styles.subjectActive : ""}><span aria-hidden="true">{IB_COURSES[id].symbol}</span>{IB_COURSES[id].label}</Link>)}</nav></div>
-        {ibHasCourseChoice(subject) ? <ChemistryCourseSwitch subject={subject} course={courseLevel} links={{ sl: ibHref(subject, view, "sl"), hl: ibHref(subject, view, "hl") }} /> : null}
+        <div className={styles.courseBar}><span className={styles.eyebrow}>CHOOSE YOUR SUBJECT</span><nav className={styles.subjectSwitch} aria-label="Subject">{ibNavigationSubjects(subject).map(id => <Link key={id} href={ibHref(id, view, courseLevel)} prefetch={false} onClick={() => setQuery("")} aria-current={subject === id ? "page" : undefined} className={subject === id ? styles.subjectActive : ""}><span aria-hidden="true">{IB_COURSES[id].symbol}</span>{ibSubjectLabel(id)}</Link>)}</nav></div>
+        {ibIsMathSubject(subject) ? <MathsCourseSwitch key={subject} subject={subject} links={{ "math-aa-sl": ibHref("math-aa-sl", view), "math-ai-sl": ibHref("math-ai-sl", view), "math-aa-hl": ibHref("math-aa-hl", view) }} /> : ibHasCourseChoice(subject) ? <ChemistryCourseSwitch subject={subject} course={courseLevel} links={{ sl: ibHref(subject, view, "sl"), hl: ibHref(subject, view, "hl") }} /> : null}
         {error ? <p role="alert" className={styles.error}>{error}</p> : null}
         <section className={styles.hero} aria-labelledby="course-heading">
           <div><span className={styles.heroLabel}>IB {courseLabel.toUpperCase()} <span>{qualification.toUpperCase()}</span></span><h1 id="course-heading">{view === "questions" ? "Question bank" : "Mock tests"}<span className={styles.headingDot}>.</span></h1><p>{ibHasCourseChoice(subject) ? `${course.subtitle} · ${qualification}` : course.subtitle}</p></div>
           <div className={styles.heroArt} aria-hidden="true"><span className={styles.artRing} /><span className={styles.artRingTwo} /><span className={styles.artSymbol}>{course.symbol}</span><span className={styles.artSpark}>✦</span></div>
         </section>
-        <div className={styles.stats}><div><strong>{view === "questions" ? counts.questions : counts.mocks}</strong><span>{view === "questions" ? "Questions available" : "Mock tests available"}</span></div><div><strong>{course.topics.length}</strong><span>{subject !== "math-aa-hl" ? "Syllabus themes" : "Core topics"}</span></div><div><strong className={styles.statText}>{ibHasCourseChoice(subject) ? courseLevel.toUpperCase() : "HL"}</strong><span>{qualification}</span></div></div>
+        <div className={styles.stats}><div><strong>{view === "questions" ? counts.questions : counts.mocks}</strong><span>{view === "questions" ? "Questions available" : "Mock tests available"}</span></div><div><strong>{course.topics.length}</strong><span>{ibIsMathSubject(subject) ? "Core topics" : "Syllabus themes"}</span></div><div><strong className={styles.statText}>{qualification === "Standard Level" ? "SL" : "HL"}</strong><span>{qualification}</span></div></div>
         {view === "questions" ? <>
           <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>START WITH A TOPIC</span><h2>Explore {course.title.toLowerCase()}</h2></div><label className={styles.search}><span aria-hidden="true">⌕</span><span className={styles.srOnly}>Search topics</span><input type="search" placeholder="Search topics or subtopics" value={query} onChange={event => setQuery(event.target.value)} /></label></div>
           <div className={styles.topicGrid} key={subject}>
