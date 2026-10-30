@@ -19,6 +19,10 @@ export const IB_COLLECTIONS = [
   { id: "chemistry-reactivity-1", subject: "chemistry", topicId: "reactivity-1", code: "R1", title: "What drives chemical reactions?", description: "Enthalpy changes, energy cycles, fuels, entropy and spontaneity." },
   { id: "chemistry-reactivity-2", subject: "chemistry", topicId: "reactivity-2", code: "R2", title: "How much, how fast and how far?", description: "Amounts of chemical change, reaction rates and equilibrium." },
   { id: "chemistry-reactivity-3", subject: "chemistry", topicId: "reactivity-3", code: "R3", title: "What are the mechanisms of chemical change?", description: "Proton transfer, electron transfer, electron sharing and reaction mechanisms." },
+  { id: "biology-unity-diversity", subject: "biology", topicId: "unity-diversity", code: "A", title: "Unity and diversity", description: "Molecules, cells, organisms and the origins of biological diversity." },
+  { id: "biology-form-function", subject: "biology", topicId: "form-function", code: "B", title: "Form and function", description: "Structure and function from biological molecules to ecological niches." },
+  { id: "biology-interaction-interdependence", subject: "biology", topicId: "interaction-interdependence", code: "C", title: "Interaction and interdependence", description: "Metabolism, signalling, body systems and ecological interactions." },
+  { id: "biology-continuity-change", subject: "biology", topicId: "continuity-change", code: "D", title: "Continuity and change", description: "Inheritance, reproduction, homeostasis, selection and environmental change." },
 ] as const;
 export type IbCollectionId = typeof IB_COLLECTIONS[number]["id"];
 export type IbCollectionSummary = {
@@ -56,7 +60,7 @@ const commonQuestion = z.object({
   difficulty: z.enum(["easy", "medium", "hard"]), calculator: z.boolean(), marks: z.number().int().min(1).max(60), stem: text,
   parts: z.array(z.object({ label: text, prompt: text, marks: z.number().int().positive() })),
   markScheme: z.array(z.object({ part: z.string(), steps: z.array(z.object({ code: z.string().regex(/^(?:[MAR][1-9]|AG)$/), text })).min(1) })).min(1),
-  diagramSvg: diagram, markSchemeDiagramSvg: diagram, diagramUrl, markSchemeDiagramUrl: diagramUrl, answerSummary: z.string().optional(),
+  diagramSvg: diagram, markSchemeDiagramSvg: diagram, diagramUrl, markSchemeDiagramUrl: diagramUrl, diagramCaption: text.optional(), markSchemeDiagramCaption: text.optional(), answerSummary: z.string().optional(),
   source: z.object({ document: text, question: z.number().int().positive() }),
   verification: z.object({ method: text, notes: text }), status: z.enum(["draft", "published"]),
 });
@@ -86,16 +90,25 @@ const chemistryQuestion = commonQuestion.extend({
   options: z.array(z.object({ label: optionLabel, text })).length(4).optional(), correctOption: optionLabel.optional(),
   source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
 });
-export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, physicsQuestion, chemistryQuestion]).superRefine((q, ctx) => {
+const biologyQuestion = commonQuestion.extend({
+  id: z.string().regex(/^ib-bio-[abcd]-\d{3}$/), subject: z.literal("biology"),
+  topicId: z.enum(["unity-diversity", "form-function", "interaction-interdependence", "continuity-change"]),
+  collectionId: z.enum(["biology-unity-diversity", "biology-form-function", "biology-interaction-interdependence", "biology-continuity-change"]),
+  syllabusCode: z.string().regex(/^[A-D][1-4]\.[1-3]$/), level: z.enum(["sl", "ahl"]),
+  questionType: z.enum(["multiple-choice", "structured", "data-based"]), calculator: z.literal(true),
+  options: z.array(z.object({ label: optionLabel, text })).length(4).optional(), correctOption: optionLabel.optional(),
+  source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
+});
+export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, physicsQuestion, chemistryQuestion, biologyQuestion]).superRefine((q, ctx) => {
   const fail = (message: string) => ctx.addIssue({ code: "custom", message });
   const collection = getIbCollection(q.collectionId);
   if (collection?.topicId !== q.topicId || collection?.subject !== q.subject) fail("Collection and syllabus topic disagree");
   if (q.number !== q.source.question) fail("Question numbering must retain its reference mapping");
-  if (q.subject === "physics-hl" || q.subject === "chemistry") {
+  if (q.subject !== "math-aa-hl") {
     const syllabus = ibSyllabusSubtopics(q.subject, q.topicId).find(item => item.code === q.syllabusCode);
     if (!syllabus) fail("Syllabus code must belong to the question's subject and theme");
     if (syllabus?.additionalHlOnly && q.level !== "ahl") fail("This syllabus subtopic is additional HL only");
-    const prefix = q.subject === "chemistry" ? "ib-chem-" : "ib-phy-";
+    const prefix = q.subject === "biology" ? "ib-bio-" : q.subject === "chemistry" ? "ib-chem-" : "ib-phy-";
     if (q.id !== prefix + collection?.code.toLowerCase() + "-" + String(q.number).padStart(3, "0")) fail("Question ID must match its theme and question number");
     if (q.questionType === "multiple-choice") {
       if (q.marks !== 1 || q.parts.length) fail("Multiple-choice questions award exactly one mark and have no parts");
@@ -118,18 +131,20 @@ export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, 
 });
 export type IbQuestion = z.infer<typeof ibQuestionSchema>;
 export function questionAvailableForCourse(q: IbQuestion, course: IbCourseLevel = "hl") {
-  return q.subject !== "chemistry" || course === "hl" || q.level === "sl";
+  return (q.subject !== "chemistry" && q.subject !== "biology") || course === "hl" || q.level === "sl";
 }
-type PromptOnly<T> = T extends unknown ? Omit<T, "markScheme" | "markSchemeDiagramSvg" | "markSchemeDiagramUrl" | "answerSummary" | "source" | "verification" | "correctOption"> : never;
+type PromptOnly<T> = T extends unknown ? Omit<T, "markScheme" | "markSchemeDiagramSvg" | "markSchemeDiagramUrl" | "markSchemeDiagramCaption" | "answerSummary" | "source" | "verification" | "correctOption"> : never;
 export type IbQuestionPrompt = PromptOnly<IbQuestion>;
 /** An explicit allowlist keeps solutions and private authoring metadata out of question views. */
 export function questionPrompt(q: IbQuestion): IbQuestionPrompt {
   const prompt = { id: q.id, topicId: q.topicId, collectionId: q.collectionId, number: q.number,
     title: q.title, subtopic: q.subtopic, difficulty: q.difficulty, calculator: q.calculator, marks: q.marks,
-    stem: q.stem, parts: q.parts, diagramSvg: q.diagramSvg, diagramUrl: q.diagramUrl, status: q.status };
+    stem: q.stem, parts: q.parts, diagramSvg: q.diagramSvg, diagramUrl: q.diagramUrl, diagramCaption: q.diagramCaption, status: q.status };
   if (q.subject === "physics-hl") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
     calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
   if (q.subject === "chemistry") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
+    calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
+  if (q.subject === "biology") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
     calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
   return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId };
 }

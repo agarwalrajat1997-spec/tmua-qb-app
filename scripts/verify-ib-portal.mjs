@@ -6,6 +6,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ibHarness } from './ib-component-harness.mjs';
 import './verify-ib-chemistry-portal.mjs';
+import './verify-ib-biology-portal.mjs';
 
 const base={id:'ib-aa-na-001',subject:'math-aa-hl',topicId:'number-algebra',collectionId:'number-algebra',number:1,title:'Expand a binomial',subtopic:'Binomial theorem',difficulty:'easy',calculator:false,marks:2,stem:'Expand $(x+3)^2$.',parts:[],markScheme:[{part:'',steps:[{code:'M1',text:'Use the binomial theorem.'},{code:'A1',text:'SECRET-SOLUTION-CANARY $x^2+6x+9$.'}]}],source:{document:'Synthetic test only',question:1},verification:{method:'symbolic',notes:'Synthetic fixture'},status:'published'};
 const other={...base,id:'ib-aa-na-002',number:2,title:'A logarithm',subtopic:'Logarithms',difficulty:'hard',calculator:true,stem:'Find $\\log_3 7$.',source:{...base.source,question:2}};

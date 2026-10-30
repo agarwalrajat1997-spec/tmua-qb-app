@@ -17,13 +17,17 @@ import chemistryS3 from "@/content/ib/chemistry/structure-3.json";
 import chemistryR1 from "@/content/ib/chemistry/reactivity-1.json";
 import chemistryR2 from "@/content/ib/chemistry/reactivity-2.json";
 import chemistryR3 from "@/content/ib/chemistry/reactivity-3.json";
+import biologyA from "@/content/ib/biology/unity-diversity.json";
+import biologyB from "@/content/ib/biology/form-function.json";
+import biologyC from "@/content/ib/biology/interaction-interdependence.json";
+import biologyD from "@/content/ib/biology/continuity-change.json";
 import { IB_COURSES, ibSyllabusSubtopics, type IbCourseLevel, type IbSubject, type IbSummary } from "./catalog";
 import { IB_COLLECTIONS, ibQuestionSchema, questionAvailableForCourse, type IbQuestion } from "./question";
 
 // Validation fails closed. Drafts never reach any student route or count.
 const allQuestions: IbQuestion[] = [...algebra, ...functions, ...geometry, ...statistics, ...calculus1, ...calculus2,
   ...physicsA, ...physicsB, ...physicsC, ...physicsD, ...physicsE,
-  ...chemistryS1, ...chemistryS2, ...chemistryS3, ...chemistryR1, ...chemistryR2, ...chemistryR3]
+  ...chemistryS1, ...chemistryS2, ...chemistryS3, ...chemistryR1, ...chemistryR2, ...chemistryR3, ...biologyA, ...biologyB, ...biologyC, ...biologyD]
   .map(value => ibQuestionSchema.parse(value));
 const published = allQuestions.filter(q => q.status === "published");
 const byId = new Map(published.map(q => [q.id, q]));

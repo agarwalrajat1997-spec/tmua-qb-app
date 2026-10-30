@@ -1,4 +1,4 @@
-export type IbSubject = "math-aa-hl" | "physics-hl" | "chemistry";
+export type IbSubject = "math-aa-hl" | "physics-hl" | "chemistry" | "biology";
 export type IbCourseLevel = "sl" | "hl";
 export type IbView = "questions" | "mocks";
 export type IbTopic = { id: string; code: string; title: string; description: string; subtopics: string[] };
@@ -38,13 +38,23 @@ export const IB_COURSES: Record<IbSubject, IbCourse> = {
       { id: "reactivity-3", code: "R3", title: "What are the mechanisms of chemical change?", description: "Proton transfer, electron transfer and reaction mechanisms.", subtopics: ["Proton transfer reactions", "Electron transfer reactions", "Electron sharing reactions", "Electron-pair sharing reactions"] },
     ],
   },
+  biology: {
+    id: "biology", label: "Biology", title: "Biology", subtitle: "Diploma Programme", symbol: "✿",
+    topics: [
+      { id: "unity-diversity", code: "A", title: "Unity and diversity", description: "Molecules, cells, organisms and the origins of biological diversity.", subtopics: ["Water", "Nucleic acids", "Origins of cells", "Cell structure", "Viruses", "Diversity of organisms", "Classification and cladistics", "Evolution and speciation", "Conservation of biodiversity"] },
+      { id: "form-function", code: "B", title: "Form and function", description: "Structure and function from biological molecules to ecological niches.", subtopics: ["Carbohydrates and lipids", "Proteins", "Membranes and membrane transport", "Organelles and compartmentalization", "Cell specialization", "Gas exchange", "Transport", "Muscle and motility", "Adaptation to environment", "Ecological niches"] },
+      { id: "interaction-interdependence", code: "C", title: "Interaction and interdependence", description: "Metabolism, signalling, body systems and ecological interactions.", subtopics: ["Enzymes and metabolism", "Cell respiration", "Photosynthesis", "Chemical signalling", "Neural signalling", "Integration of body systems", "Defence against disease", "Populations and communities", "Transfers of energy and matter"] },
+      { id: "continuity-change", code: "D", title: "Continuity and change", description: "Inheritance, reproduction, homeostasis, selection and environmental change.", subtopics: ["DNA replication", "Protein synthesis", "Mutation and gene editing", "Cell and nuclear division", "Gene expression", "Water potential", "Reproduction", "Inheritance", "Homeostasis", "Natural selection", "Stability and change", "Climate change"] },
+    ],
+  },
 };
 
 export function ibSubject(value: unknown): IbSubject {
-  return value === "chemistry" ? "chemistry" : value === "physics-hl" ? "physics-hl" : "math-aa-hl";
+  return value === "biology" ? "biology" : value === "chemistry" ? "chemistry" : value === "physics-hl" ? "physics-hl" : "math-aa-hl";
 }
 /** Identify the subject of an authenticated deep link without importing question content into the client. */
 export function ibSubjectForPath(pathname: string): IbSubject {
+  if (/^\/ib\/(?:question-bank\/biology-|(?:questions|mark-scheme)\/ib-bio-)/.test(pathname)) return "biology";
   if (/^\/ib\/(?:question-bank\/chemistry-|(?:questions|mark-scheme)\/ib-chem-)/.test(pathname)) return "chemistry";
   if (/^\/ib\/(?:question-bank\/physics-|(?:questions|mark-scheme)\/ib-phy-)/.test(pathname)) return "physics-hl";
   return "math-aa-hl";
@@ -52,15 +62,18 @@ export function ibSubjectForPath(pathname: string): IbSubject {
 export function ibCourseLevel(value: unknown): IbCourseLevel {
   return value === "sl" ? "sl" : "hl";
 }
+export function ibHasCourseChoice(subject: IbSubject) {
+  return subject === "chemistry" || subject === "biology";
+}
 export function ibCourseLabel(subject: IbSubject, course: IbCourseLevel = "hl") {
-  return subject === "chemistry" ? `Chemistry ${course.toUpperCase()}` : IB_COURSES[subject].label;
+  return ibHasCourseChoice(subject) ? `${IB_COURSES[subject].label} ${course.toUpperCase()}` : IB_COURSES[subject].label;
 }
 export function ibQualification(subject: IbSubject, course: IbCourseLevel = "hl") {
-  return subject === "chemistry" && course === "sl" ? "Standard Level" : "Higher Level";
+  return ibHasCourseChoice(subject) && course === "sl" ? "Standard Level" : "Higher Level";
 }
-/** Preserve existing Math/Physics URLs; only Chemistry has a course choice. */
+/** Preserve existing Math/Physics URLs; Chemistry and Biology have a course choice. */
 export function ibCourseHref(pathname: string, subject: IbSubject, course: IbCourseLevel = "hl") {
-  if (subject !== "chemistry") return pathname;
+  if (!ibHasCourseChoice(subject)) return pathname;
   const [path, query = ""] = pathname.split("?");
   const params = new URLSearchParams(query);
   params.set("course", course);
@@ -82,7 +95,7 @@ export function chemistrySyllabusSubtopics(topicId?: string, course: IbCourseLev
     })).filter(topic => course === "hl" || !topic.additionalHlOnly);
 }
 export function ibSyllabusSubtopics(subject: IbSubject, topicId?: string, course: IbCourseLevel = "hl") {
-  return subject === "chemistry" ? chemistrySyllabusSubtopics(topicId, course) : subject === "physics-hl" ? physicsSyllabusSubtopics(topicId) : [];
+  return subject === "biology" ? biologySyllabusSubtopics(topicId, course) : subject === "chemistry" ? chemistrySyllabusSubtopics(topicId, course) : subject === "physics-hl" ? physicsSyllabusSubtopics(topicId) : [];
 }
 export type IbSyllabusSubtopic = { code: string; title: string; additionalHlOnly: boolean };
 const PHYSICS_AHL_ONLY = new Set(["A.4", "A.5", "B.4", "D.4", "E.2"]);
@@ -94,4 +107,65 @@ export function physicsSyllabusSubtopics(topicId?: string): IbSyllabusSubtopic[]
       return { code, title, additionalHlOnly: PHYSICS_AHL_ONLY.has(code) };
     }));
 }
+
+const BIOLOGY_AHL_ONLY = new Set(["A2.1", "A2.3", "A3.2", "B3.3", "C2.1", "D2.2"]);
+const BIOLOGY_SUBTOPICS: Record<string, string[]> = {
+  "unity-diversity": [
+    "A1.1",
+    "A1.2",
+    "A2.1",
+    "A2.2",
+    "A2.3",
+    "A3.1",
+    "A3.2",
+    "A4.1",
+    "A4.2"
+  ],
+  "form-function": [
+    "B1.1",
+    "B1.2",
+    "B2.1",
+    "B2.2",
+    "B2.3",
+    "B3.1",
+    "B3.2",
+    "B3.3",
+    "B4.1",
+    "B4.2"
+  ],
+  "interaction-interdependence": [
+    "C1.1",
+    "C1.2",
+    "C1.3",
+    "C2.1",
+    "C2.2",
+    "C3.1",
+    "C3.2",
+    "C4.1",
+    "C4.2"
+  ],
+  "continuity-change": [
+    "D1.1",
+    "D1.2",
+    "D1.3",
+    "D2.1",
+    "D2.2",
+    "D2.3",
+    "D3.1",
+    "D3.2",
+    "D3.3",
+    "D4.1",
+    "D4.2",
+    "D4.3"
+  ]
+};
+/** Biology first assessment 2025: codes combine theme and level of organisation. */
+export function biologySyllabusSubtopics(topicId?: string, course: IbCourseLevel = "hl"): IbSyllabusSubtopic[] {
+  return IB_COURSES.biology.topics.filter(topic => !topicId || topic.id === topicId)
+    .flatMap(topic => topic.subtopics.map((title, index) => {
+      const code = BIOLOGY_SUBTOPICS[topic.id][index];
+      return { code, title, additionalHlOnly: BIOLOGY_AHL_ONLY.has(code) };
+    })).filter(topic => course === "hl" || !topic.additionalHlOnly);
+}
+
 export type IbSummary = Record<IbSubject, { questions: number; mocks: number; topics: Record<string, number>; collections: import("./question").IbCollectionSummary[] }>;
