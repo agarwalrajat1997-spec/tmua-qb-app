@@ -1,26 +1,35 @@
-import type { IbQuestionPrompt } from "@/lib/ib/question";
+import { safeDiagram, safeDiagramUrl, type IbQuestionPrompt } from "@/lib/ib/question";
+import { diagramUrlForSvg } from "@/lib/ib/diagram-assets";
 import MathContent from "./MathContent";
+import DiagramImage from "./DiagramImage";
 import styles from "../questions.module.css";
 
-export function QuestionDiagram({ svg, caption }: { svg?: string; caption: string }) {
-  if (!svg) return null;
+export function QuestionDiagram({ svg, url, caption }: { svg?: string; url?: string; caption: string }) {
   // SVG loaded as an image is isolated from the page's DOM and script context.
-  const src = `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+  const fallback = svg && safeDiagram(svg) ? `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}` : undefined;
+  const candidate = url || diagramUrlForSvg(svg);
+  const src = candidate && safeDiagramUrl(candidate) ? candidate : fallback;
+  if (!src) return null;
   return <figure className={styles.diagram}>
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={src} alt={caption} />
+    <DiagramImage src={src} fallback={fallback} caption={caption} />
   </figure>;
 }
 
 export function QuestionBadges({ question: q }: { question: IbQuestionPrompt }) {
-  return <div className={styles.badges}><span className={styles[q.difficulty]}>{q.difficulty}</span><span>{q.calculator ? "Calculator" : "No calculator"}</span><span>{q.marks} marks</span></div>;
+  const difficulty = { easy: { label: "Easy", bars: 1 }, medium: { label: "Medium", bars: 2 }, hard: { label: "Hard", bars: 3 } }[q.difficulty];
+  return <div className={styles.badges}>
+    <span className={`${styles.difficultyBadge} ${styles[q.difficulty]}`}><span className={styles.difficultyBars} aria-hidden="true">{[1, 2, 3].map(bar => <i key={bar} data-active={bar <= difficulty.bars ? "true" : "false"} />)}</span><span className={styles.srOnly}>Difficulty: </span>{difficulty.label}</span>
+    {q.subject === "physics-hl" ? <><span>{q.syllabusCode} · {q.level === "ahl" ? "Additional HL" : "Core"}</span><span>{{ "multiple-choice": "Multiple choice", structured: "Structured", "data-based": "Data-based" }[q.questionType]}</span></> : null}
+    <span>{q.calculator ? "Calculator" : "No calculator"}</span><span>{q.marks} {q.marks === 1 ? "mark" : "marks"}</span>
+  </div>;
 }
 
 export default function QuestionBody({ question: q }: { question: IbQuestionPrompt }) {
   return <div className={styles.questionBody}>
     <p className={styles.maximum}>[Maximum mark: {q.marks}]</p>
     <MathContent>{q.stem}</MathContent>
-    <QuestionDiagram svg={q.diagramSvg} caption={`Diagram for question ${q.number}: ${q.title}`} />
+    <QuestionDiagram svg={q.diagramSvg} url={q.diagramUrl} caption={`Diagram for question ${q.number}: ${q.title}`} />
+    {q.subject === "physics-hl" && q.questionType === "multiple-choice" ? <ol className={styles.options} aria-label="Multiple-choice options">{q.options?.map(option => <li key={option.label}><span className={styles.optionLabel}>{option.label}</span><MathContent>{option.text}</MathContent></li>)}</ol> : null}
     {q.parts.length ? <ol className={styles.parts}>{q.parts.map(part => <li key={part.label}>
       <span className={styles.partLabel}>({part.label})</span><MathContent>{part.prompt}</MathContent><span className={styles.partMarks}>[{part.marks}]</span>
     </li>)}</ol> : null}

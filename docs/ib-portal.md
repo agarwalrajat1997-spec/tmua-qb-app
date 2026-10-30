@@ -20,7 +20,7 @@ is November 2028. Physics uses the five themes of the course first assessed in
 reference numbers. Sources:
 - https://www.ibo.org/programmes/diploma-programme/curriculum/mathematics/
 - https://www.ibo.org/globalassets/new-structure/university-admission/pdfs/subject-guides/mathematics-analysis-approaches-guide.pdf
-- https://www.ibo.org/globalassets/new-structure/university-admission/pdfs/subject-guides/physics-guide.pdf
+- https://xmltwo.ibo.org/publications/EAD/2026_EN/GR4/GR4-Physics_EN.pdf
 
 ## Authentication
 
@@ -78,7 +78,9 @@ independent IB-style practice, not an official IB or Revision Village product.
 
 ## Future content
 
-Physics HL and mock-test views retain honest empty states. The versioned mock
+Physics HL now has 640 original questions across all five themes and 24 subtopics;
+see [Physics bank documentation](ib-physics-question-bank.md) for content, diagrams,
+Cloudflare delivery and review records. Mock-test views retain honest empty states. The versioned mock
 manifest is `content/ib/catalog.json`; no upload/admin page is exposed. There is
 no attempt-history or scoring database in this release. Keep stable question IDs
 if these features are added. Add a separately approved IB entitlement if

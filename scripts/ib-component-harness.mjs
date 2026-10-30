@@ -27,9 +27,11 @@ export function ibHarness({ questions=[], user={email:'review@example.invalid'},
       require(name){
         if(name in mocks)return mocks[name];
         if(name.endsWith('.css'))return {__esModule:true,default:new Proxy({},{get:(_t,p)=>String(p)})};
+        if(name.startsWith('@/') && name.endsWith('.json'))return require(resolve(name.slice(2)));
         if(name.startsWith('@/'))return load(resolve(name.slice(2))+ (name.endsWith('.ts')||name.endsWith('.tsx')?'':'.ts'));
         if(name.startsWith('.')) {
           const path=resolve(dirname(absolute),name);
+          if(/\.tsx?$/.test(path))return load(path);
           if(/\.[cm]?jsx?$/.test(path))return require(path);
           for(const ext of ['.tsx','.ts']){try{return load(path+ext);}catch(error){if(error.code!=='ENOENT')throw error;}}
         }

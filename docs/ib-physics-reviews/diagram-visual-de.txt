@@ -1,0 +1,420 @@
+Fields and nuclear/quantum diagram visual review
+
+Reviewer: Theme A author, also the independent Theme D subject reviewer.
+This is a separate visual pass on both D and E. The Theme E author and the root
+reviewer performed the E subject/numerical reviews; this document does not claim
+another independent full subject review of E.
+
+Coverage and rendering
+Inspected all 12 baseline contact sheets, sheet-01.png through sheet-12.png,
+from work/physics-de-qa/sheets. This is all 137 unique SVGs and
+176 question/solution uses across the current D100 and E100 banks.
+Each sheet was opened with view_image and detail='original'. The image transport
+displays large contact sheets scaled down; readable labels, curves, and arrows
+were checked on the rendered diagrams, together with the exact SVG coordinates
+and associated question/marking text for the cases needing correction.
+
+After correction, independently rendered every changed SVG from the regenerated
+JSON into work/physics-a/visual-de-changes/sheets. Inspected all 3 follow-up sheets,
+covering 34 changed unique SVGs and
+47 uses. The other 103 unique SVGs retain
+the exact baseline hash already visually reviewed. The final current inventory
+still contains 137 unique SVGs and 176 uses. The full hash and use ledgers below
+make the baseline and follow-up coverage explicit.
+
+Checks performed
+- Label margins, title/axis/legend collisions, clipped text, and arrowhead clearance.
+- Graph axis quantities, units, scales, curve shape, endpoint positions, and legends.
+- Field and velocity directions, charge-dependent curvature, coil normal/plane angles,
+  open versus closed rod circuits, resistor presence, induction field/current context.
+- Nuclear centre-to-centre dimensions, photon scattering angles and arrow tangents,
+  level-transition arrows, decay curves, reactor flow arrows, parallax geometry,
+  Hertzsprung-Russell axis orientation, and stellar-evolution box connections.
+- Question diagrams checked for avoidable answers or method cues; explanatory
+  solution diagrams remain labelled with the physics they are intended to explain.
+
+Corrections made, in both builder and regenerated JSON
+D018/D048 question and D019/D049 solution: neutral charged-sphere caption, without
+stating the surface-charge result in a question figure.
+D021/D051 question: replaced charged plates and an E-direction arrow with two
+labelled equipotential lines, a separation line, and no solved field direction.
+D030/D060 question: removed induced surface-charge signs and the explanatory
+redistribution caption; retained the applied external field and solid/cavity geometry.
+Magnetic-field figures: removed the one background cross beneath the incoming
+velocity arrow, leaving a clear field grid and uninterrupted arrow.
+D063/D083 solution: moved force labels away from their opposing arrowheads.
+D064/D084 question: separated the electric-field label and initial-velocity label
+from the crossing arrows and plate edges.
+D071/D091 question: separated plane-angle, normal-angle, and edge-view labels
+from the coil plane and area-normal arrows.
+D073/D093 and D074/D094 question: separated the rod-length label from the field cross.
+D079/D099 question: moved the linked-field label above the coil windings.
+E013-E016 question: the dashed distance now ends at the target nuclear centre,
+with distinct turning-position and nuclear-centre markers and an explicit label.
+E013-E016 solution: added a colour legend for potential energy and incident kinetic
+energy; plotted the inverse-distance curve densely instead of joining a few samples.
+E025-E028 question: used a fixed, clear scattered-photon legend, avoiding the
+60/90/120-degree arrowhead collisions with the title/caption area.
+E040 solution: labelled the central, steepest, and shallowest fits and reduced line
+width so the small endpoint differences remain visible.
+E093-E096 solution: corrected singular/plural solar-mass titles and integer formatting.
+
+Verification and outcome
+Both D and E builders regenerated successfully with their numerical assertions
+passing (20 D author checks; 145 E author checks). The independent D checker again
+passed 104 recomputed outcomes across 64 numerical records. The complete physics
+validator passed all 640 questions, exact mark allocations, MCQ/options/privacy,
+safe SVGs, and all 3053 Markdown/KaTeX formulae. No question input, numerical final
+answer, MCQ key, or mark allocation was changed during this visual pass.
+
+No clipping, overlapping labels, wrong graph units/shapes, incorrect arrow tangents,
+or circuit inconsistency remained in the inspected final D/E diagrams. Schematic
+figures are identified as schematic where physical scaling would be misleading.
+This is an author/reviewer visual QA record, not IB moderation or proof against
+every possible rendering/browser issue. It covers local inline SVG rendering;
+the root reviewer separately handles final asset staging, upload and live UI QA.
+No upload code or final asset manifest was changed by this reviewer.
+
+Baseline coverage ledger (all entries inspected)
+
+sheet-01.png
+ffdcf4651920001c7cc89a82ac20e7ae783792ed8aa54c2c061343a733b37559 | ib-phy-d-002 question; ib-phy-d-032 question
+1145f2697532f91ae15579a194e30c0458fb639a173c53eb9b85b2851920c52f | ib-phy-d-003 question
+486f46e0e27c3e1543dcf781691f815f6aa7d8e2b3e5aa8f5f370c821aaa31ac | ib-phy-d-004 question
+f3118aeecd3e54d25e636d9b7c6fd0f8e5203d9f5d858805cf3b02f1f1e843f3 | ib-phy-d-004 scheme
+0786767cb54472bd2321fc35c01b69ac865206e8a7c7f50d732e044dfdc23c5b | ib-phy-d-006 question; ib-phy-d-008 question; ib-phy-d-036 question; ib-phy-d-038 question
+82faa1f712fe08158e52d208433d109e97f69cd1a21ee2c5d5e3775a35ab8267 | ib-phy-d-007 question; ib-phy-d-013 question; ib-phy-d-037 question; ib-phy-d-043 question
+13e2163d0c4d33245a45a68e4358fb56e7e454f5a63e76a468d42bf7aa0b4e96 | ib-phy-d-010 question
+d94fd519aa69894b2fba386401db491de4ee389f37a8ebded612dbedb910519c | ib-phy-d-011 question; ib-phy-d-041 question
+ccbbb312d261040a3ee8d30bf593068794c47903f0c7d1fd8a09db187a81aa1d | ib-phy-d-012 question
+0937e5b54900da2f80268f80e7de18598081e679466a1e1e5c6ad31d62f875f0 | ib-phy-d-015 question
+e8d4c044714dde13ab79ea25b610b58f6211222746161228aa79bdcd69ae96fc | ib-phy-d-016 question
+1091321bf6be23e8432c89e787da88c2fd6f0292a91e8da1357025db35c5fb9c | ib-phy-d-016 scheme; ib-phy-d-046 scheme
+
+sheet-02.png
+96ebf89bf8bad3a8127b7260efd6ba3132a470cd1d30a99fd3484d31487c53b9 | ib-phy-d-018 question; ib-phy-d-019 scheme; ib-phy-d-048 question; ib-phy-d-049 scheme
+bba6fe5becd69820b9eba496bcc2812bc19675683e76daca2a5b9c86de811eca | ib-phy-d-019 question
+c9872c34407a761a60bffbef34cc7ed266ac5ff1bba28ddaccf337fae13485e2 | ib-phy-d-020 question
+c36006e0537992034e9ebbe28a5f941396cd0c37329e84ab2243da11a9f5e3e3 | ib-phy-d-021 question
+4f7f78ff3556793936aa7678302d6cb2fa8e948b4362e1c88163ae95e4469212 | ib-phy-d-022 question; ib-phy-d-052 question
+3695b76c78b776d0a577983308726f14b406197fd65685d4765b6f3ec0295670 | ib-phy-d-024 question; ib-phy-d-054 question
+f7da530883c26b6602bf26769d78827eb486d06be0a572766d1294e47490739b | ib-phy-d-025 question; ib-phy-d-055 question
+ee1dc8a5d598f2d84ef5f1657cbb56e83d404605bccc659d74a68bc774a01713 | ib-phy-d-026 question
+7824e2178d39961cd42f4082fca481ff48a37b158cf42b4a7902222489ce2919 | ib-phy-d-027 question; ib-phy-d-057 question
+5da2db3782a3e7c270d361c0b4a50acf45cc5b66c3dbb101a0e76e4d89eb4659 | ib-phy-d-028 question
+27d44b51798c41c876c0d0498e9db466b96ba451241e5bf34f0cc7470b672a5c | ib-phy-d-029 question
+4613d9d893e8100990780453a6073f44f793a36abfc7b1180cd6b764d926203e | ib-phy-d-030 question
+
+sheet-03.png
+1b61ff85573244153845a4a9092a18e5f48891a9fe13fd21fff802ab4e8697cc | ib-phy-d-033 question
+1d14571c4224f4316a7a52f8c9cd66267a032ef166ea22097cd6f2e531c9ff23 | ib-phy-d-034 question
+fdd3a23313eaccf51fa311dccfe0fb4d885d63a14dc9e74bda4af9e725419496 | ib-phy-d-034 scheme
+df6ce165c4f38cb68cca1518dec9b8a4909763f6d6ae4fd89f2f48d0c51c06d8 | ib-phy-d-040 question
+1f23d0a82c86742c417fa461cbb88da6e191bb233b1cba1b1f92fb1f753d8b99 | ib-phy-d-042 question
+051a3195391d5467ff82097d8d82da78d1d7b1f17393832289349a802ba4adfd | ib-phy-d-045 question
+bd4ac73a1b3589f9ed1a711f26bd6faa0cde3500969c6abc161985f7b4417b28 | ib-phy-d-046 question
+3b6a820855ee0c9e9227bf2ef8afba6bd49bfa32262c17bbd873c1d8ea7b7fab | ib-phy-d-049 question
+07c174e4e03900017be80b2b14045155566c68aead33999eb142ff5594cdf57b | ib-phy-d-050 question
+1f83face8c16bda95ac9b10e07656982d95e2ed581873b4c3172c4b6440942e4 | ib-phy-d-051 question
+24f457da50494b22baec87b4d8a87ab753b0574d32b8a226c958c84000ca8675 | ib-phy-d-056 question
+94d33cca274692b2a462e2240e6c5f167752da2163e5c8bbf82325dbd0c38643 | ib-phy-d-058 question
+
+sheet-04.png
+d8531d7af4a9e2164db9ec5980c25807911aed25b56e374ee625fb775f798ffb | ib-phy-d-059 question
+b10f8aae58ffd1aa50646e6ee7bacb1d9a466332fe656409b2dc895151e412ed | ib-phy-d-060 question
+a5f3beaf53bb39d9cbad2c2a2e789dbb6e1dc7e4be9d16e915cde0a1c83866f1 | ib-phy-d-061 question; ib-phy-d-062 question; ib-phy-d-063 question; ib-phy-d-081 question; ib-phy-d-082 question; ib-phy-d-083 question
+5b7c94cb7907e8ca59ef61163a2e5eafa864f779a876ea13088721d2d58e255f | ib-phy-d-063 scheme; ib-phy-d-083 scheme
+bdcc9a38e67572dfa45cec47dd54db8b4a474b55a2b26d9827caaaa461cb9e8b | ib-phy-d-064 question
+199f17ea6a5383211f6a89a7fa8cdfc2cbc639e4f382f25d00c58620d329b4b9 | ib-phy-d-065 question; ib-phy-d-066 question; ib-phy-d-085 question
+9b10512f61230056953ac8b53df3f7971e139fcfc9342520f7dd4f2f627cac68 | ib-phy-d-068 question
+668aa711fe0fc01722314a822f8eaa2ad8d0c43db63d6df70afdf957b3fce996 | ib-phy-d-071 question
+2988f002e51eb4c47283ab2d6058c67733cadf96fb5239ff9d6e63a338c2a5b7 | ib-phy-d-072 question
+73e0327ee7e472777b4255d5351290e30b2c9650463472561ea597c37ea01a63 | ib-phy-d-073 question; ib-phy-d-093 question
+6bc7d75ee5cdcefb4fd5ac01e6282a7352788a257a8d928159da11df2ca27f83 | ib-phy-d-074 question; ib-phy-d-094 question
+97d340d78c56a006d89e11deb3305e299ef23f858b2619b2dcfbfe9cf5c02fed | ib-phy-d-074 scheme; ib-phy-d-094 scheme
+
+sheet-05.png
+50945cfaea6093a9699cfbf4ba6f498601a790e856ace7bf0cad4785828a232e | ib-phy-d-075 question
+43890c2c467b5cd1145970b54ee4152f2c784c49a7449c525f71fa8b53955153 | ib-phy-d-076 question
+56c19e39d1bdfe207d073c261667340868633bc4d8ec9577fbb7b89a6ca322ab | ib-phy-d-076 scheme
+71392cfa560aed7e76d8ed5e7566db655087118ec65607e999a2e39005d541c4 | ib-phy-d-077 question; ib-phy-d-097 question
+664f376dd784b6ed6c0e8adc3f2c2dcebf9e7d3845262c3765c47de029f892dc | ib-phy-d-077 scheme
+061b29ddf9667e2b677f95c3bc500921d81c58e4a9800d87934fd813c59108a6 | ib-phy-d-078 question; ib-phy-d-098 question
+e8a9b9957d77693ce197f3003ee7e30f296b2e6d2f47cab9439e83c6f000b14d | ib-phy-d-079 question
+0626510454614220047761ca9373f2ffa2fc162b725d5e83a692eec1530051a8 | ib-phy-d-084 question
+5f3deec4cf62760be96cf1d216d5d059ac10809e040860cce991edac606d0d95 | ib-phy-d-086 question
+fae44960a4de35c49df85d795eef910d814d4af8a2edcfd185c571f33804e5d0 | ib-phy-d-088 question
+af45cb522df90755a3738ef1bea5ba395e9791f15dba154b965b9592315efe99 | ib-phy-d-091 question
+874aa9346102ef3ad288cef55aba2ef32f81cce863904e4cbaf64d7fb8b9a3b1 | ib-phy-d-092 question
+
+sheet-06.png
+4bb0beb43d75577d1ae7fbbf59dca03d754f2ca25742c8627a10927ca013ab9e | ib-phy-d-095 question
+95a4175ed490fa4e2adc5443199d4db7f1be2e53c576e1e72aaaede23083992c | ib-phy-d-096 question
+f07fec662f2e4d6f3be18fbfaa1aade137f2551a9c5029533739e85a6e78af94 | ib-phy-d-096 scheme
+7eb0a594585f87c154fe44c88e4fa8675e01a6a842be20838d661803eabadf0a | ib-phy-d-097 scheme
+a4295fbd4fbe17c2e74ed0e2590bc552cf536256a39614448f4b09505e58e1da | ib-phy-d-099 question
+3bcae972cff61330600094645f1e9adb7d1bf93102c6dc1a2ad8258db74b3279 | ib-phy-e-005 question
+f13b672ba726cef15a516a782deaa24b144bce4be8dfd2bee8562f7c6d416730 | ib-phy-e-006 question
+1f37e166c02f928286c54dedef06a61aa609a73be0734485abba32a016e19853 | ib-phy-e-007 question
+42d51e657fb8af92b7a7fa57d382a383633d196c2d717e0363eedf53f97ff292 | ib-phy-e-008 question
+ba1e15429aca5f6b2866b3b40c15a66d0aadf2d3f467ed27afd0fc4617ab4220 | ib-phy-e-013 question
+0237f0a02a4c09b97f2aeda48d8201e24e106701fb4d13ff0060ca469f0ef7c7 | ib-phy-e-013 scheme
+3f647058d2652fa7b747b1cdf9720cafd240d1d13d75964e64cf98a86dfd0ac7 | ib-phy-e-014 question
+
+sheet-07.png
+112e2c81fe9a31be416d3f81cb29db7e8387b8735c62e98b3bd70d9c46615d2b | ib-phy-e-014 scheme
+3c886ba63afc4a33d96fabcd84b4318de39a5a13a77d123c0c48abd0354e45bb | ib-phy-e-015 question
+aa194e0663de887af2b685a3cabdf94b020e01ce662a8158cc42fa8be8214feb | ib-phy-e-015 scheme
+63b3a5d81981f170cf175195f34b858335f97df852950b4054fc94f8db7c2771 | ib-phy-e-016 question
+e97212208ccc809f0caa74c7b2aff69bcf8980ac8200b2de17c165da8cb1f63b | ib-phy-e-016 scheme
+6d0a9959a7fb56345c10cec25993c52a9210b84f01dce885af9cf8282fa855c2 | ib-phy-e-017 question
+9d7e6aa819f877e4b66a1703120fe667f8c89256467643e4b305683ee4e5243a | ib-phy-e-018 question
+de5a53a56351236dad6deafcdde0d6b8fff891fcc2d4c14a169b06dbd2d17234 | ib-phy-e-019 question
+8a38185c89c088cbf8694f43c0fdc6c40bfed973f10f688d91e36b9a34bb9a44 | ib-phy-e-020 question
+aca877211dd834038154a75c61d32d1e12e91d1d44e4741360f6eba11b942c80 | ib-phy-e-020 scheme
+af46b2d46fc2293846cb4bc870a6859bfb1aeaf2f6c9c1fccd3a90a87c6dba28 | ib-phy-e-025 question
+5716b331b06007a9695b6c07a54c214557e2fcf183de0b22327cf98fb94fa9b3 | ib-phy-e-026 question
+
+sheet-08.png
+583e2f7a75e518a66657ae96ce60319c9ddc2d868baecdde74d14750ffb1fb9d | ib-phy-e-027 question
+1f7aa2d44d6af1af86dafe155624b9c6c576b136099db4eced85e705d0641ebf | ib-phy-e-028 question
+57851eea57a99b7992f0b1667e5fd03e8ae5633c8fda8fcdabe9723215613b68 | ib-phy-e-029 question; ib-phy-e-030 question; ib-phy-e-031 question; ib-phy-e-032 question
+e06b98bc5fca8f54a7c443c9c80c20f5dc5ffce09505fd1c7bdb664a2cfb48eb | ib-phy-e-033 scheme
+e6044214eb498a95427ad8b10b7afec9260b9f75a85b649707ce0c4a7aa5f96b | ib-phy-e-034 scheme
+806f682d868056a6cf03c68c4227376be6f8bf023b16bb533fb0d101507d9419 | ib-phy-e-035 scheme
+16a5eb5aa3b6cde840b8f8019ff054ae7eb54af33d3012ee906b0a54849fc99b | ib-phy-e-036 scheme
+99b64d658dd6fbcaef9b75faad99c9588c1f74b3369560362c07fc2962b90683 | ib-phy-e-037 question
+5d2aa286924332e548ba3650410ae591c64bb2b49edbeaf20ba6a63c6ac4f315 | ib-phy-e-038 question
+b2204476d466c24626b15a493d42fceb3e9df67671e78e14f6f191ac1949ccd2 | ib-phy-e-039 question
+35277545682976f0eae80ba868a98d8a955a195697f7793cfaea8552b33f66a9 | ib-phy-e-040 question
+1a5d823e639639c12aa256ad0f047e7d70220ff06c0fade6e124e24eeb97f370 | ib-phy-e-040 scheme
+
+sheet-09.png
+5e6439ac1f6cbb5c5035b9257119090b1953dbd5dfcdbd96b5aa3e2cf4ef1138 | ib-phy-e-053 question
+400c54e9706c5f6f798860d16254c39c8ce1da035bc6e3ec4c7cb9fd1df17412 | ib-phy-e-053 scheme
+1b38e25edcd8154816ea0e0201289b02a8a6c122815a2619af9d0b9b14e29194 | ib-phy-e-054 question
+ed025bcb2141a7329ba9bcd27dde09329584cfc03b94d5e10a790a8c3ef224c5 | ib-phy-e-054 scheme
+77f9a42e9418ee7bde9dcc1233b7e5c2c2e968336a5ae328b0179a31ff1d213d | ib-phy-e-055 question
+551244b3965d876161af20ff70ac56df42aa809a6c4fb123c6b63c25cf5773ba | ib-phy-e-055 scheme
+dde74539cea3e4f97ba5a6953fc5f81e5c26bf1b80425d0c65d9e7160bf0735b | ib-phy-e-056 question
+2160082b00c40dd22fb2799429861fe7d4d0f8d671cdfc7b2ef9b2db5ab295bc | ib-phy-e-056 scheme
+ba87bd50f7969741da68cb30938c4213ddc206caf189ba81cab332c481da465d | ib-phy-e-057 question
+5a36948047916a8782b2090197a98783b988a8bf5d37f4c079bad141db3213f8 | ib-phy-e-058 question
+2abb9035e3d0ee15afa96b8289e56658b2aa0764ecf8c8b539376d2522018549 | ib-phy-e-059 question
+d973ac69b11d4fd8a9b5f570a7f3bf5eb0e27e6cd0507be1456736726ec1329c | ib-phy-e-060 question
+
+sheet-10.png
+1de2fc02476074c00a7dee0c1627bcceaed47b8e6879ce2f03ae15673b39e5b0 | ib-phy-e-060 scheme
+f07abaa705fd0c71d90ebc4ef589d0d8f0a69450d5d80e92e987f189479f25ab | ib-phy-e-063 question
+e43c6214cdd6d5b6da01973295441c50c696a7ce361ae8e8cc9d3213ba0ca0e3 | ib-phy-e-069 question
+d15d3ff02cfdc23da79ed07acd2d87f64d21ea50c512dfd818a0a22a3093d28a | ib-phy-e-070 question
+ca6f1b1b517d91e40d4f7ff2bdc77480c923e711ea84992292bde3ae2d9e0528 | ib-phy-e-071 question
+17af426eae713fbea27726706ec6f5d1efb73a9ac1ec62fe5402b5ae804a4ac5 | ib-phy-e-072 question
+ac13489580c4f045ce4509f7d8316de568e09762a665b974b8f1c8573cff8202 | ib-phy-e-073 scheme
+544408e03dcaf25ecef3ee4d7a59bc7fb5e4dbc72d2e7ac8b0f0d1ede43a06f8 | ib-phy-e-074 scheme
+52e1fc7d79bfba3ae7a020a89a6e7efe635d6f9b3710defa2b6af74a53f80905 | ib-phy-e-075 scheme
+398dbf564889c8da3792534e882ff409bcdb4bea5c9790104183dc7739909f94 | ib-phy-e-076 scheme
+f1e53e9a0a2f30c75c84c13598a4df2be89e5b712ae35dfe28d484e504d92db8 | ib-phy-e-077 question
+dad8187e0e113dd47072d77b6616e00c678371b3fcaa0f79ed25502f06386842 | ib-phy-e-078 question
+
+sheet-11.png
+a6134f8f6e28d2ebf396601d44b68b4ce1ed9623db307c532c507e50c9df1340 | ib-phy-e-079 question
+5e767eccf83d3064175ae1192e30ed08c11598dcdde1d18721e2ae2dfdd7ab28 | ib-phy-e-080 scheme
+7f55fe9a0cac3c882f75f088f62769066229d886201c829cb63319ee8a581062 | ib-phy-e-085 question; ib-phy-e-086 question; ib-phy-e-087 question; ib-phy-e-088 question; ib-phy-e-099 question
+a62702e36ddd67ba32b238552502fedaed3e46863390001fc6a03612ada59444 | ib-phy-e-089 question
+1b8cd5295a143381142699f2f35a98c6e88b59bc56865a80d436ab9f38c176c0 | ib-phy-e-090 question
+400a6ac50fcb3d07100b866e0c09db4f99cc3ff0f402c8421c0d456f2fce8559 | ib-phy-e-091 question
+e78b6ff8686c2b438ea0d0ff9c2cf9372a2ff20ed9625a665439ba478c459295 | ib-phy-e-092 question
+9bcc71062dee6e120791df3a978efa008ac2a472c0d90a94f6d65a3b92824e06 | ib-phy-e-093 question; ib-phy-e-094 question; ib-phy-e-095 question; ib-phy-e-096 question
+5448d3171e6a83ced01d6903a252a6c7e3c71b39e139e593ee0cda4956f99526 | ib-phy-e-093 scheme
+740654a2c156ac04a3b30271009c40f6affa40dee3407f16931fc93b5429f1b6 | ib-phy-e-094 scheme
+dbc3cb338e921c1d233d9a50ac5c049e45fd5541fee148bd631bbeb0d7ea73b6 | ib-phy-e-095 scheme
+2a20f95be1eaafca8f4c2fadea528a40b155339bd90d82855256f2a5426bfb2d | ib-phy-e-096 scheme
+
+sheet-12.png
+a11ec55e719f14e1dea71a1de120317203658b2ff473bd8e685daee1b93f886a | ib-phy-e-097 question
+dacc7f360f9ad07f6145ee9abc2839c7ac5f77e1376a7aac5b6e755694290a63 | ib-phy-e-098 question
+01ba9a20292cb6d63e5898de1feeb8e1bf36c2e0710dacce2dc59f5e0596fb10 | ib-phy-e-099 scheme
+fef1b5face525b635130a755fe76c26050b04fe5cd10d966ca2c88e088e07c0d | ib-phy-e-100 question
+8f31f4a60bcad07b894e0af528214a3163315374f82c707bf29b6b9d433a0e21 | ib-phy-e-100 scheme
+
+Follow-up coverage ledger (all changed entries rendered and inspected)
+
+sheet-01.png
+72147296b590840fe62226f39fbdc2bad59711a2a6ad5adfe852c42a49ca5819 | ib-phy-d-018 question; ib-phy-d-019 solution; ib-phy-d-048 question; ib-phy-d-049 solution
+0879982a27ecfe84b1c51659d6388e96523986a5393dae97fd6311c0e863b7bd | ib-phy-d-021 question
+98130b468a08295f2dc0bd6c94e7167688567b9e43e4658fb6ead14b0fe95450 | ib-phy-d-030 question
+96b6243c56a91b518a83508b8357125b0d419fbd11bc6b20b6f1dcb584b02e4a | ib-phy-d-051 question
+c21b9abb85f7d61642e309a0bb1ebe3b2ce45dc42f26c83ad0dd626bb9297173 | ib-phy-d-060 question
+9340bd0218a7c41f8fb0ad98300f69f72be7513685a8e924f3868f60c90d5ea1 | ib-phy-d-061 question; ib-phy-d-062 question; ib-phy-d-063 question; ib-phy-d-081 question; ib-phy-d-082 question; ib-phy-d-083 question
+3328a85e9be711b4a6cf85b9afc8e742f97434f23c5651930da00b1ea1ba6646 | ib-phy-d-063 solution; ib-phy-d-083 solution
+ffe9389265c679aca95e2cb4c998e60cf2f260c9d127395046f2c8bdebc6ae84 | ib-phy-d-064 question
+c4a539d3be4c56736eeb61cc0791340406ee27329f5f89f1985ad0b4b476c254 | ib-phy-d-065 question; ib-phy-d-066 question; ib-phy-d-085 question
+ca879e470548381ae7e7acabf95dcdf82411189d926bb6391973c3ba930cb185 | ib-phy-d-071 question
+c9e5128b45516b4f84108a7088c46d117f31a8a01d550731723819dee1ac9347 | ib-phy-d-073 question; ib-phy-d-093 question
+692de55ef8b8612d3edf94f5723e002dc005aba11e627772472806f88bc61090 | ib-phy-d-074 question; ib-phy-d-094 question
+
+sheet-02.png
+bd4fd084648d95be5c168a1af9f599885afdc013489f54d7ba54a30cbc9233ba | ib-phy-d-079 question
+362fd3d5fe76f15a555caf6bfecb6db7193a2381ba31bcbc85208682f72ec990 | ib-phy-d-084 question
+cce8f8de215dd0cfe46a0e3e7baaa681a1e0bce0361b1d89291055291e79d3d8 | ib-phy-d-086 question
+1508f513065065ff9b69f6e97e7577433ee18f318b9dd3ee28df8375b097207f | ib-phy-d-091 question
+a4db10963b30488d66fb484ecbd23d6e9b9f704ecb690490c3946f3482a7e70f | ib-phy-d-099 question
+a87c44ee4b4a2ad8ea6b71fbbba7e365908c8c87f73f74b851b0a756a9c8b9e1 | ib-phy-e-013 question
+618c25a74e2deabe4bb9b3182fe3b9985fe8d2fe8e1b5c1ff85cdcbf19441900 | ib-phy-e-013 solution
+075eb0092b4f8eff1a105509e8af709ad160daf5a3e291035e2c9f869237ada2 | ib-phy-e-014 question
+34fb7328a4212ee825e489ec994f9427302448dccc9df0ce225a8737d39a1e97 | ib-phy-e-014 solution
+3f7a49eaa42bb2732718b8565dc20b7aab4b08d7888e38c021ff7ca9179f9be8 | ib-phy-e-015 question
+9f8ac39974d313c4b57dfa1782b60f3ca4aadfd5d72aa971529871cd32ad68ff | ib-phy-e-015 solution
+8306af3d867e1f06205876170bd2277597311e990ac5e2524bbe5fcbcc7dcd88 | ib-phy-e-016 question
+
+sheet-03.png
+7dc4922b1505dbb7d21cb346e2938612fae72879c01853fa7f756dc6cbdd2973 | ib-phy-e-016 solution
+2b0d426fa50965b256a924313a2c41ad8f92278badb7fd4644b1f6f6ebae30d3 | ib-phy-e-025 question
+b28ae39041c2ebf0b9a330e2bf089d5434b4d9bcb18c67cd578733876cf329c7 | ib-phy-e-026 question
+d8b5d8d9e1e1ce950bce6cb5a5ee7bea37bdc7d7350ca931c6789ad312d8a50e | ib-phy-e-027 question
+00e337e722a6c5965557e049d8ab3488030e389cfdb20719674dd8bfe2233cf4 | ib-phy-e-028 question
+a6b600cbc6b70b22b3f4eb1f506f032f5721aa17fada5608691492bbb5b96e8a | ib-phy-e-040 solution
+c3d1ccf909d9fafc64433b5fa5fcccf7fee3e1708dfd95f3c7415838d34719b6 | ib-phy-e-093 solution
+122fe57cb34fcbe8bd496b080f1ff9f75310bc72fb619ca4a74e528e11e92938 | ib-phy-e-094 solution
+c9b983d5b0613607a216e7744b528d43e55d3a8d483a496ae648ed670be266e4 | ib-phy-e-095 solution
+29d8edeaa7de64111ae034cf620fd05d9b8fe26b9ec8ff54c8f12961e5838060 | ib-phy-e-096 solution
+
+Final current SVG hashes (including unchanged reviewed baseline entries)
+ffdcf4651920001c7cc89a82ac20e7ae783792ed8aa54c2c061343a733b37559 | ib-phy-d-002 question; ib-phy-d-032 question
+1145f2697532f91ae15579a194e30c0458fb639a173c53eb9b85b2851920c52f | ib-phy-d-003 question
+486f46e0e27c3e1543dcf781691f815f6aa7d8e2b3e5aa8f5f370c821aaa31ac | ib-phy-d-004 question
+f3118aeecd3e54d25e636d9b7c6fd0f8e5203d9f5d858805cf3b02f1f1e843f3 | ib-phy-d-004 solution
+0786767cb54472bd2321fc35c01b69ac865206e8a7c7f50d732e044dfdc23c5b | ib-phy-d-006 question; ib-phy-d-008 question; ib-phy-d-036 question; ib-phy-d-038 question
+82faa1f712fe08158e52d208433d109e97f69cd1a21ee2c5d5e3775a35ab8267 | ib-phy-d-007 question; ib-phy-d-013 question; ib-phy-d-037 question; ib-phy-d-043 question
+13e2163d0c4d33245a45a68e4358fb56e7e454f5a63e76a468d42bf7aa0b4e96 | ib-phy-d-010 question
+d94fd519aa69894b2fba386401db491de4ee389f37a8ebded612dbedb910519c | ib-phy-d-011 question; ib-phy-d-041 question
+ccbbb312d261040a3ee8d30bf593068794c47903f0c7d1fd8a09db187a81aa1d | ib-phy-d-012 question
+0937e5b54900da2f80268f80e7de18598081e679466a1e1e5c6ad31d62f875f0 | ib-phy-d-015 question
+e8d4c044714dde13ab79ea25b610b58f6211222746161228aa79bdcd69ae96fc | ib-phy-d-016 question
+1091321bf6be23e8432c89e787da88c2fd6f0292a91e8da1357025db35c5fb9c | ib-phy-d-016 solution; ib-phy-d-046 solution
+72147296b590840fe62226f39fbdc2bad59711a2a6ad5adfe852c42a49ca5819 | ib-phy-d-018 question; ib-phy-d-019 solution; ib-phy-d-048 question; ib-phy-d-049 solution
+bba6fe5becd69820b9eba496bcc2812bc19675683e76daca2a5b9c86de811eca | ib-phy-d-019 question
+c9872c34407a761a60bffbef34cc7ed266ac5ff1bba28ddaccf337fae13485e2 | ib-phy-d-020 question
+0879982a27ecfe84b1c51659d6388e96523986a5393dae97fd6311c0e863b7bd | ib-phy-d-021 question
+4f7f78ff3556793936aa7678302d6cb2fa8e948b4362e1c88163ae95e4469212 | ib-phy-d-022 question; ib-phy-d-052 question
+3695b76c78b776d0a577983308726f14b406197fd65685d4765b6f3ec0295670 | ib-phy-d-024 question; ib-phy-d-054 question
+f7da530883c26b6602bf26769d78827eb486d06be0a572766d1294e47490739b | ib-phy-d-025 question; ib-phy-d-055 question
+ee1dc8a5d598f2d84ef5f1657cbb56e83d404605bccc659d74a68bc774a01713 | ib-phy-d-026 question
+7824e2178d39961cd42f4082fca481ff48a37b158cf42b4a7902222489ce2919 | ib-phy-d-027 question; ib-phy-d-057 question
+5da2db3782a3e7c270d361c0b4a50acf45cc5b66c3dbb101a0e76e4d89eb4659 | ib-phy-d-028 question
+27d44b51798c41c876c0d0498e9db466b96ba451241e5bf34f0cc7470b672a5c | ib-phy-d-029 question
+98130b468a08295f2dc0bd6c94e7167688567b9e43e4658fb6ead14b0fe95450 | ib-phy-d-030 question
+1b61ff85573244153845a4a9092a18e5f48891a9fe13fd21fff802ab4e8697cc | ib-phy-d-033 question
+1d14571c4224f4316a7a52f8c9cd66267a032ef166ea22097cd6f2e531c9ff23 | ib-phy-d-034 question
+fdd3a23313eaccf51fa311dccfe0fb4d885d63a14dc9e74bda4af9e725419496 | ib-phy-d-034 solution
+df6ce165c4f38cb68cca1518dec9b8a4909763f6d6ae4fd89f2f48d0c51c06d8 | ib-phy-d-040 question
+1f23d0a82c86742c417fa461cbb88da6e191bb233b1cba1b1f92fb1f753d8b99 | ib-phy-d-042 question
+051a3195391d5467ff82097d8d82da78d1d7b1f17393832289349a802ba4adfd | ib-phy-d-045 question
+bd4ac73a1b3589f9ed1a711f26bd6faa0cde3500969c6abc161985f7b4417b28 | ib-phy-d-046 question
+3b6a820855ee0c9e9227bf2ef8afba6bd49bfa32262c17bbd873c1d8ea7b7fab | ib-phy-d-049 question
+07c174e4e03900017be80b2b14045155566c68aead33999eb142ff5594cdf57b | ib-phy-d-050 question
+96b6243c56a91b518a83508b8357125b0d419fbd11bc6b20b6f1dcb584b02e4a | ib-phy-d-051 question
+24f457da50494b22baec87b4d8a87ab753b0574d32b8a226c958c84000ca8675 | ib-phy-d-056 question
+94d33cca274692b2a462e2240e6c5f167752da2163e5c8bbf82325dbd0c38643 | ib-phy-d-058 question
+d8531d7af4a9e2164db9ec5980c25807911aed25b56e374ee625fb775f798ffb | ib-phy-d-059 question
+c21b9abb85f7d61642e309a0bb1ebe3b2ce45dc42f26c83ad0dd626bb9297173 | ib-phy-d-060 question
+9340bd0218a7c41f8fb0ad98300f69f72be7513685a8e924f3868f60c90d5ea1 | ib-phy-d-061 question; ib-phy-d-062 question; ib-phy-d-063 question; ib-phy-d-081 question; ib-phy-d-082 question; ib-phy-d-083 question
+3328a85e9be711b4a6cf85b9afc8e742f97434f23c5651930da00b1ea1ba6646 | ib-phy-d-063 solution; ib-phy-d-083 solution
+ffe9389265c679aca95e2cb4c998e60cf2f260c9d127395046f2c8bdebc6ae84 | ib-phy-d-064 question
+c4a539d3be4c56736eeb61cc0791340406ee27329f5f89f1985ad0b4b476c254 | ib-phy-d-065 question; ib-phy-d-066 question; ib-phy-d-085 question
+9b10512f61230056953ac8b53df3f7971e139fcfc9342520f7dd4f2f627cac68 | ib-phy-d-068 question
+ca879e470548381ae7e7acabf95dcdf82411189d926bb6391973c3ba930cb185 | ib-phy-d-071 question
+2988f002e51eb4c47283ab2d6058c67733cadf96fb5239ff9d6e63a338c2a5b7 | ib-phy-d-072 question
+c9e5128b45516b4f84108a7088c46d117f31a8a01d550731723819dee1ac9347 | ib-phy-d-073 question; ib-phy-d-093 question
+692de55ef8b8612d3edf94f5723e002dc005aba11e627772472806f88bc61090 | ib-phy-d-074 question; ib-phy-d-094 question
+97d340d78c56a006d89e11deb3305e299ef23f858b2619b2dcfbfe9cf5c02fed | ib-phy-d-074 solution; ib-phy-d-094 solution
+50945cfaea6093a9699cfbf4ba6f498601a790e856ace7bf0cad4785828a232e | ib-phy-d-075 question
+43890c2c467b5cd1145970b54ee4152f2c784c49a7449c525f71fa8b53955153 | ib-phy-d-076 question
+56c19e39d1bdfe207d073c261667340868633bc4d8ec9577fbb7b89a6ca322ab | ib-phy-d-076 solution
+71392cfa560aed7e76d8ed5e7566db655087118ec65607e999a2e39005d541c4 | ib-phy-d-077 question; ib-phy-d-097 question
+664f376dd784b6ed6c0e8adc3f2c2dcebf9e7d3845262c3765c47de029f892dc | ib-phy-d-077 solution
+061b29ddf9667e2b677f95c3bc500921d81c58e4a9800d87934fd813c59108a6 | ib-phy-d-078 question; ib-phy-d-098 question
+bd4fd084648d95be5c168a1af9f599885afdc013489f54d7ba54a30cbc9233ba | ib-phy-d-079 question
+362fd3d5fe76f15a555caf6bfecb6db7193a2381ba31bcbc85208682f72ec990 | ib-phy-d-084 question
+cce8f8de215dd0cfe46a0e3e7baaa681a1e0bce0361b1d89291055291e79d3d8 | ib-phy-d-086 question
+fae44960a4de35c49df85d795eef910d814d4af8a2edcfd185c571f33804e5d0 | ib-phy-d-088 question
+1508f513065065ff9b69f6e97e7577433ee18f318b9dd3ee28df8375b097207f | ib-phy-d-091 question
+874aa9346102ef3ad288cef55aba2ef32f81cce863904e4cbaf64d7fb8b9a3b1 | ib-phy-d-092 question
+4bb0beb43d75577d1ae7fbbf59dca03d754f2ca25742c8627a10927ca013ab9e | ib-phy-d-095 question
+95a4175ed490fa4e2adc5443199d4db7f1be2e53c576e1e72aaaede23083992c | ib-phy-d-096 question
+f07fec662f2e4d6f3be18fbfaa1aade137f2551a9c5029533739e85a6e78af94 | ib-phy-d-096 solution
+7eb0a594585f87c154fe44c88e4fa8675e01a6a842be20838d661803eabadf0a | ib-phy-d-097 solution
+a4db10963b30488d66fb484ecbd23d6e9b9f704ecb690490c3946f3482a7e70f | ib-phy-d-099 question
+3bcae972cff61330600094645f1e9adb7d1bf93102c6dc1a2ad8258db74b3279 | ib-phy-e-005 question
+f13b672ba726cef15a516a782deaa24b144bce4be8dfd2bee8562f7c6d416730 | ib-phy-e-006 question
+1f37e166c02f928286c54dedef06a61aa609a73be0734485abba32a016e19853 | ib-phy-e-007 question
+42d51e657fb8af92b7a7fa57d382a383633d196c2d717e0363eedf53f97ff292 | ib-phy-e-008 question
+a87c44ee4b4a2ad8ea6b71fbbba7e365908c8c87f73f74b851b0a756a9c8b9e1 | ib-phy-e-013 question
+618c25a74e2deabe4bb9b3182fe3b9985fe8d2fe8e1b5c1ff85cdcbf19441900 | ib-phy-e-013 solution
+075eb0092b4f8eff1a105509e8af709ad160daf5a3e291035e2c9f869237ada2 | ib-phy-e-014 question
+34fb7328a4212ee825e489ec994f9427302448dccc9df0ce225a8737d39a1e97 | ib-phy-e-014 solution
+3f7a49eaa42bb2732718b8565dc20b7aab4b08d7888e38c021ff7ca9179f9be8 | ib-phy-e-015 question
+9f8ac39974d313c4b57dfa1782b60f3ca4aadfd5d72aa971529871cd32ad68ff | ib-phy-e-015 solution
+8306af3d867e1f06205876170bd2277597311e990ac5e2524bbe5fcbcc7dcd88 | ib-phy-e-016 question
+7dc4922b1505dbb7d21cb346e2938612fae72879c01853fa7f756dc6cbdd2973 | ib-phy-e-016 solution
+6d0a9959a7fb56345c10cec25993c52a9210b84f01dce885af9cf8282fa855c2 | ib-phy-e-017 question
+9d7e6aa819f877e4b66a1703120fe667f8c89256467643e4b305683ee4e5243a | ib-phy-e-018 question
+de5a53a56351236dad6deafcdde0d6b8fff891fcc2d4c14a169b06dbd2d17234 | ib-phy-e-019 question
+8a38185c89c088cbf8694f43c0fdc6c40bfed973f10f688d91e36b9a34bb9a44 | ib-phy-e-020 question
+aca877211dd834038154a75c61d32d1e12e91d1d44e4741360f6eba11b942c80 | ib-phy-e-020 solution
+2b0d426fa50965b256a924313a2c41ad8f92278badb7fd4644b1f6f6ebae30d3 | ib-phy-e-025 question
+b28ae39041c2ebf0b9a330e2bf089d5434b4d9bcb18c67cd578733876cf329c7 | ib-phy-e-026 question
+d8b5d8d9e1e1ce950bce6cb5a5ee7bea37bdc7d7350ca931c6789ad312d8a50e | ib-phy-e-027 question
+00e337e722a6c5965557e049d8ab3488030e389cfdb20719674dd8bfe2233cf4 | ib-phy-e-028 question
+57851eea57a99b7992f0b1667e5fd03e8ae5633c8fda8fcdabe9723215613b68 | ib-phy-e-029 question; ib-phy-e-030 question; ib-phy-e-031 question; ib-phy-e-032 question
+e06b98bc5fca8f54a7c443c9c80c20f5dc5ffce09505fd1c7bdb664a2cfb48eb | ib-phy-e-033 solution
+e6044214eb498a95427ad8b10b7afec9260b9f75a85b649707ce0c4a7aa5f96b | ib-phy-e-034 solution
+806f682d868056a6cf03c68c4227376be6f8bf023b16bb533fb0d101507d9419 | ib-phy-e-035 solution
+16a5eb5aa3b6cde840b8f8019ff054ae7eb54af33d3012ee906b0a54849fc99b | ib-phy-e-036 solution
+99b64d658dd6fbcaef9b75faad99c9588c1f74b3369560362c07fc2962b90683 | ib-phy-e-037 question
+5d2aa286924332e548ba3650410ae591c64bb2b49edbeaf20ba6a63c6ac4f315 | ib-phy-e-038 question
+b2204476d466c24626b15a493d42fceb3e9df67671e78e14f6f191ac1949ccd2 | ib-phy-e-039 question
+35277545682976f0eae80ba868a98d8a955a195697f7793cfaea8552b33f66a9 | ib-phy-e-040 question
+a6b600cbc6b70b22b3f4eb1f506f032f5721aa17fada5608691492bbb5b96e8a | ib-phy-e-040 solution
+5e6439ac1f6cbb5c5035b9257119090b1953dbd5dfcdbd96b5aa3e2cf4ef1138 | ib-phy-e-053 question
+400c54e9706c5f6f798860d16254c39c8ce1da035bc6e3ec4c7cb9fd1df17412 | ib-phy-e-053 solution
+1b38e25edcd8154816ea0e0201289b02a8a6c122815a2619af9d0b9b14e29194 | ib-phy-e-054 question
+ed025bcb2141a7329ba9bcd27dde09329584cfc03b94d5e10a790a8c3ef224c5 | ib-phy-e-054 solution
+77f9a42e9418ee7bde9dcc1233b7e5c2c2e968336a5ae328b0179a31ff1d213d | ib-phy-e-055 question
+551244b3965d876161af20ff70ac56df42aa809a6c4fb123c6b63c25cf5773ba | ib-phy-e-055 solution
+dde74539cea3e4f97ba5a6953fc5f81e5c26bf1b80425d0c65d9e7160bf0735b | ib-phy-e-056 question
+2160082b00c40dd22fb2799429861fe7d4d0f8d671cdfc7b2ef9b2db5ab295bc | ib-phy-e-056 solution
+ba87bd50f7969741da68cb30938c4213ddc206caf189ba81cab332c481da465d | ib-phy-e-057 question
+5a36948047916a8782b2090197a98783b988a8bf5d37f4c079bad141db3213f8 | ib-phy-e-058 question
+2abb9035e3d0ee15afa96b8289e56658b2aa0764ecf8c8b539376d2522018549 | ib-phy-e-059 question
+d973ac69b11d4fd8a9b5f570a7f3bf5eb0e27e6cd0507be1456736726ec1329c | ib-phy-e-060 question
+1de2fc02476074c00a7dee0c1627bcceaed47b8e6879ce2f03ae15673b39e5b0 | ib-phy-e-060 solution
+f07abaa705fd0c71d90ebc4ef589d0d8f0a69450d5d80e92e987f189479f25ab | ib-phy-e-063 question
+e43c6214cdd6d5b6da01973295441c50c696a7ce361ae8e8cc9d3213ba0ca0e3 | ib-phy-e-069 question
+d15d3ff02cfdc23da79ed07acd2d87f64d21ea50c512dfd818a0a22a3093d28a | ib-phy-e-070 question
+ca6f1b1b517d91e40d4f7ff2bdc77480c923e711ea84992292bde3ae2d9e0528 | ib-phy-e-071 question
+17af426eae713fbea27726706ec6f5d1efb73a9ac1ec62fe5402b5ae804a4ac5 | ib-phy-e-072 question
+ac13489580c4f045ce4509f7d8316de568e09762a665b974b8f1c8573cff8202 | ib-phy-e-073 solution
+544408e03dcaf25ecef3ee4d7a59bc7fb5e4dbc72d2e7ac8b0f0d1ede43a06f8 | ib-phy-e-074 solution
+52e1fc7d79bfba3ae7a020a89a6e7efe635d6f9b3710defa2b6af74a53f80905 | ib-phy-e-075 solution
+398dbf564889c8da3792534e882ff409bcdb4bea5c9790104183dc7739909f94 | ib-phy-e-076 solution
+f1e53e9a0a2f30c75c84c13598a4df2be89e5b712ae35dfe28d484e504d92db8 | ib-phy-e-077 question
+dad8187e0e113dd47072d77b6616e00c678371b3fcaa0f79ed25502f06386842 | ib-phy-e-078 question
+a6134f8f6e28d2ebf396601d44b68b4ce1ed9623db307c532c507e50c9df1340 | ib-phy-e-079 question
+5e767eccf83d3064175ae1192e30ed08c11598dcdde1d18721e2ae2dfdd7ab28 | ib-phy-e-080 solution
+7f55fe9a0cac3c882f75f088f62769066229d886201c829cb63319ee8a581062 | ib-phy-e-085 question; ib-phy-e-086 question; ib-phy-e-087 question; ib-phy-e-088 question; ib-phy-e-099 question
+a62702e36ddd67ba32b238552502fedaed3e46863390001fc6a03612ada59444 | ib-phy-e-089 question
+1b8cd5295a143381142699f2f35a98c6e88b59bc56865a80d436ab9f38c176c0 | ib-phy-e-090 question
+400a6ac50fcb3d07100b866e0c09db4f99cc3ff0f402c8421c0d456f2fce8559 | ib-phy-e-091 question
+e78b6ff8686c2b438ea0d0ff9c2cf9372a2ff20ed9625a665439ba478c459295 | ib-phy-e-092 question
+9bcc71062dee6e120791df3a978efa008ac2a472c0d90a94f6d65a3b92824e06 | ib-phy-e-093 question; ib-phy-e-094 question; ib-phy-e-095 question; ib-phy-e-096 question
+c3d1ccf909d9fafc64433b5fa5fcccf7fee3e1708dfd95f3c7415838d34719b6 | ib-phy-e-093 solution
+122fe57cb34fcbe8bd496b080f1ff9f75310bc72fb619ca4a74e528e11e92938 | ib-phy-e-094 solution
+c9b983d5b0613607a216e7744b528d43e55d3a8d483a496ae648ed670be266e4 | ib-phy-e-095 solution
+29d8edeaa7de64111ae034cf620fd05d9b8fe26b9ec8ff54c8f12961e5838060 | ib-phy-e-096 solution
+a11ec55e719f14e1dea71a1de120317203658b2ff473bd8e685daee1b93f886a | ib-phy-e-097 question
+dacc7f360f9ad07f6145ee9abc2839c7ac5f77e1376a7aac5b6e755694290a63 | ib-phy-e-098 question
+01ba9a20292cb6d63e5898de1feeb8e1bf36c2e0710dacce2dc59f5e0596fb10 | ib-phy-e-099 solution
+fef1b5face525b635130a755fe76c26050b04fe5cd10d966ca2c88e088e07c0d | ib-phy-e-100 question
+8f31f4a60bcad07b894e0af528214a3163315374f82c707bf29b6b9d433a0e21 | ib-phy-e-100 solution

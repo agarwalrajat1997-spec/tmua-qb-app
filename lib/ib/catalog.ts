@@ -37,4 +37,14 @@ export function ibView(value: unknown): IbView {
 export function ibHref(subject: IbSubject, view: IbView = "questions") {
   return `/ib?subject=${subject}&view=${view}`;
 }
+export type IbSyllabusSubtopic = { code: string; title: string; additionalHlOnly: boolean };
+const PHYSICS_AHL_ONLY = new Set(["A.4", "A.5", "B.4", "D.4", "E.2"]);
+/** The numbered Physics subtopics follow the course first assessed in 2025. */
+export function physicsSyllabusSubtopics(topicId?: string): IbSyllabusSubtopic[] {
+  return IB_COURSES["physics-hl"].topics.filter(topic => !topicId || topic.id === topicId)
+    .flatMap(topic => topic.subtopics.map((title, index) => {
+      const code = `${topic.code}.${index + 1}`;
+      return { code, title, additionalHlOnly: PHYSICS_AHL_ONLY.has(code) };
+    }));
+}
 export type IbSummary = Record<IbSubject, { questions: number; mocks: number; topics: Record<string, number>; collections: import("./question").IbCollectionSummary[] }>;

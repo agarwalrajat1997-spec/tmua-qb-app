@@ -1,0 +1,313 @@
+FINAL THEME B/C DIAGRAM VISUAL QA
+
+Coverage and evidence
+All 156 references were inspected visually at original image detail: Theme B 64 (32 question, 32 worked), Theme C 92 (56 question, 36 worked). This was a full review, not a sample.
+First pass: every B/C image on physics-abc-qa/sheets/sheet-06.png through sheet-18.png, using that folder's index.json to account for deduplicated references. These represented 142 unique SVGs.
+Second pass after corrections: all 12 complete sheets in work/physics-e/bc-final-visual/sheets, representing 139 unique final SVGs and all 156 references. Every sheet was opened with view_image at original detail. Content hashes in the final rendered index were checked against the current JSON.
+
+Observed issues and corrections
+1. Shared B/C quantitative plots: removed crowded redundant coordinate text, gave scales rounded numerical ticks, placed ticks on the frame axes, and added light zero reference lines for signed quantities. Exact source data remain in the question tables; worked values remain in written marking schemes. Curves and plotted data retain their physical values.
+2. B013-016 worked conduction plots: removed dense circles from the smooth inverse curve.
+3. B081-084 cycles: moved bottom vertex labels below the loop so vertical segments do not pass through text; checked clockwise and counterclockwise arrows against the signed-work solutions.
+4. B109-112 dividers: separated resistor labels from component boxes and moved the worked current arrow and I label above the top wire. Battery connections, junctions, output lead and reference terminal were visually checked in all variants.
+5. C037-040 snapshots: separated P from the curve, moved the particle-motion caption clear of the wave, and put the position scale on a visible bottom axis. The zero-displacement reference and both wave/particle directions remain explicit.
+6. C061-064 question diagrams: replaced the computed grating spacing with d = ?, since that spacing is requested in part (a). All four references now share one appropriate schematic.
+7. C065-068: moved the computed intensity patterns into worked solutions. Question figures now show only the supplied slit geometry; the numerical envelope width, missing orders and visible peak count are no longer supplied by a calculated answer figure.
+8. C083-084 string diagrams use fixed/free end labels; C095-096 pipe diagrams use closed/open labels. The two physical cases no longer share ambiguous combined labels.
+9. C089-092 resonance figures: added a solid-X/dashed-Y legend and visible points on both curves, removed crowded coordinate labels, and checked the lower/broader stronger-damping response. Both curves still use the same oscillator and driving-force model.
+10. C109-112 wavefronts: reduced the schematic circles to keep the outer front clear of the footer; moved source and motion labels outside the fronts with a leader to the current source position. Approaching/receding observer placement was checked in both shared diagrams.
+
+No unresolved clipping, label overlap, unintended circuit gap, incorrect travel-direction arrow, or explicit answer annotation was found in the final standalone sheets. The original one-layer radiation budgets were visually checked in every variant, including both infrared directions and the infrared-to-space path, and required no further change.
+
+Validation after corrections
+Both deterministic builders regenerated their JSON. Independent B checks passed: 256 numerical/conceptual checks and 64 SVGs. Independent C checks passed: 344 numerical/conceptual/plotted-ordinate checks and 92 SVGs. The full Physics validator passed 640 question sets, 2,163 marks, 3,053 formulae, 264 question diagrams and 131 worked diagrams. No numerical solution, part mark, difficulty or syllabus allocation was changed by this visual pass.
+
+Scope
+This records rendered standalone diagram QA and editorial physics review, not official IB moderation. Live portal layout, mobile zoom behaviour and deployed asset delivery are separate integration checks. The final diagram hashes below identify the reviewed asset versions; pre-correction hashes are historical.
+
+Changed references: 118 of 156; final unique SVGs: 139.
+
+Complete final visual ledger (all entries inspected at original detail):
+
+sheet-01.png
+  Cell 1, SHA256 702e21d6d462dc36853a55f1af4754d7b73f8e4b49179f5694cffb9c0c0dd250: ib-phy-b-009 question — inspected and accepted.
+  Cell 2, SHA256 5f0603bde4455896fb6a42de8fd35f3b899a7c7dabed39cec8e96324bdc1aeb2: ib-phy-b-009 scheme — inspected and accepted.
+  Cell 3, SHA256 237db617188e4812e00932cff9e3ffd56bbfe6e3acf1666511e78c6ff00c3c49: ib-phy-b-010 question — inspected and accepted.
+  Cell 4, SHA256 6b294ce64b60d061e77710e827360d35729cf7ff8af978d547f1299f51b7e2e7: ib-phy-b-010 scheme — inspected and accepted.
+  Cell 5, SHA256 0f98f05d50215b3b204fb4f659f73ed2a297c9662d989cda7023dc2fbd6a5266: ib-phy-b-011 question — inspected and accepted.
+  Cell 6, SHA256 c61593fdcc3f2e576ae152ea84e5f287fb11b99c879fcce086524c09788ddac1: ib-phy-b-011 scheme — inspected and accepted.
+  Cell 7, SHA256 bd6317b5bff02ad1d2ff3fb4b0f5eebbd83d5548682fe1a5eb06fdf28d125151: ib-phy-b-012 question — inspected and accepted.
+  Cell 8, SHA256 787522c19d9500b75741877993563b16e67bf3460cb83960d3b6eecd87e98e34: ib-phy-b-012 scheme — inspected and accepted.
+  Cell 9, SHA256 381ba5fd07ddaf6a67319bfb05d63aa3031c1565478e78a16059a98e52b0b822: ib-phy-b-013 question — inspected and accepted.
+  Cell 10, SHA256 fff2d50b7f82ad9477e543bf0218508b83fd902cbda7d36dae4f9360ac8149f4: ib-phy-b-013 scheme — inspected and accepted.
+  Cell 11, SHA256 3cfa775f0f64878340a8714bc20caccbbd2f5e76bb901c467111a9b2ed2c60bd: ib-phy-b-014 question — inspected and accepted.
+  Cell 12, SHA256 f4c8d50344c86de27f5d7d8837adcd4185dd11c61a05a50ee7687a9dc1742be7: ib-phy-b-014 scheme — inspected and accepted.
+
+sheet-02.png
+  Cell 1, SHA256 9ef9ba3abf9121cba997a5798dbbe648f8705135d1ffb683e4be6fc5cc27fbba: ib-phy-b-015 question — inspected and accepted.
+  Cell 2, SHA256 a2faead833788bab96029335554b5a9a6284d9faa866b05b8625a24b1b8d254b: ib-phy-b-015 scheme — inspected and accepted.
+  Cell 3, SHA256 78f59b6f27a87a8c07bcbb870efc08ce7a674dd58f8f9273939f77bb62d16117: ib-phy-b-016 question — inspected and accepted.
+  Cell 4, SHA256 18bad535e023832e54d1ddcf923a506f621a3872a7660fce13c68fc97d346937: ib-phy-b-016 scheme — inspected and accepted.
+  Cell 5, SHA256 5930a0154b1b9eac4c0510e28fbd8e97873b9381915c60d433edecf4e266a423: ib-phy-b-021 question — inspected and accepted.
+  Cell 6, SHA256 294a4623f6dc65ccc24158c36eaf78c926b5880fb7ffeff8ef6803888b6be0cf: ib-phy-b-021 scheme — inspected and accepted.
+  Cell 7, SHA256 07da84e1fa97fcac916349944da950f3130b6bf6224bdb6a65b8bf8e6fc24258: ib-phy-b-022 question — inspected and accepted.
+  Cell 8, SHA256 d326a23d4f568816745c0a2edd132d128f6da31d3d6b570536a1af9f3b15f257: ib-phy-b-022 scheme — inspected and accepted.
+  Cell 9, SHA256 ae18662748eb0c113e918357bf1320efe5bb0064a1daf23b90e9e33f1141a703: ib-phy-b-023 question — inspected and accepted.
+  Cell 10, SHA256 6901000ece77f779491ff9eea38a6921d9459e56a70caf56165d5d3f6bd42348: ib-phy-b-023 scheme — inspected and accepted.
+  Cell 11, SHA256 279b99251567fe0b0d62ac32429a84754724f9fd30bf8af098a0d35ae0510660: ib-phy-b-024 question — inspected and accepted.
+  Cell 12, SHA256 c077972bcb0a712e1d190c5056a8eaa5061f83b78b86d19c59d7fe0d7375662d: ib-phy-b-024 scheme — inspected and accepted.
+
+sheet-03.png
+  Cell 1, SHA256 43b0f8836e4726a0f38cc92aeda3438310c789598afc9597af279b59d57ce634: ib-phy-b-037 question, ib-phy-b-038 question, ib-phy-b-039 question, ib-phy-b-040 question — inspected and accepted.
+  Cell 2, SHA256 9a112b58f57635de2271f0a586100501728187d961fb24f561b556e6b3f40006: ib-phy-b-037 scheme — inspected and accepted.
+  Cell 3, SHA256 f7b433a40b35c4270a0e4aa3aaa01ed11a8cb0de1c5b7748568fb221dad9fe32: ib-phy-b-038 scheme — inspected and accepted.
+  Cell 4, SHA256 f2fc28b717d670a13db93f03c49c2a109b2f7e6de67dfba810913c8fb73ce5e9: ib-phy-b-039 scheme — inspected and accepted.
+  Cell 5, SHA256 2e592106ca0c5b42d3091a3bdc13b8d18b705c87598e45bcea9f2daf65a54b27: ib-phy-b-040 scheme — inspected and accepted.
+  Cell 6, SHA256 48ccb8007c6da370723b35fc207a122788690d87ae01057434cb41cc62168826: ib-phy-b-069 question — inspected and accepted.
+  Cell 7, SHA256 6ba89d2a3e9fd87ba60e806780a48d3c86255c7fc79d43f3e12d7f4d0b900b0e: ib-phy-b-069 scheme — inspected and accepted.
+  Cell 8, SHA256 001aa006dc77ab6b23809d39a7c9008fdc144e322a61fdf96e85107936d01184: ib-phy-b-070 question — inspected and accepted.
+  Cell 9, SHA256 4207974c85feca60f8735de6ef895342293950900933f3fda19b8f5d3500a747: ib-phy-b-070 scheme — inspected and accepted.
+  Cell 10, SHA256 96a18497af147ef19de8515dce1220c4b083a14c57c799cfe0f641948c95c624: ib-phy-b-071 question — inspected and accepted.
+  Cell 11, SHA256 5bc963715024c033a53932f1b595bbd1b9ba1a3baba69190f3f5f941833793e6: ib-phy-b-071 scheme — inspected and accepted.
+  Cell 12, SHA256 24c7c4f1fa0864ac3715294a108b3852217b5ec36d6ba8d765d05eb4c6880d9d: ib-phy-b-072 question — inspected and accepted.
+
+sheet-04.png
+  Cell 1, SHA256 bd3bf90b581bda30c5815d48105a7c9e35c768f1106228a324845302ebac6b98: ib-phy-b-072 scheme — inspected and accepted.
+  Cell 2, SHA256 a5cb07e2fe0b346f8fc629db0bdeff41e3899b8a95c65ade199179128c68f1cb: ib-phy-b-081 question, ib-phy-b-081 scheme — inspected and accepted.
+  Cell 3, SHA256 5ea7a03f5848f63aaffbb544b4346f4327032995290739d8eef5d37915125750: ib-phy-b-082 question, ib-phy-b-082 scheme — inspected and accepted.
+  Cell 4, SHA256 f42aa952b43bd24f657c039fc29ba11f2640283048cb07ca8c00a7c475c88458: ib-phy-b-083 question, ib-phy-b-083 scheme — inspected and accepted.
+  Cell 5, SHA256 e5c890e91d89c637870e8d58d95cf11d8d45a3865f8ca43ced4410851afab12a: ib-phy-b-084 question, ib-phy-b-084 scheme — inspected and accepted.
+  Cell 6, SHA256 3c4f706c83581503115ca744226d7570e09c1631985327145d4027e5f5bd86b4: ib-phy-b-109 question — inspected and accepted.
+  Cell 7, SHA256 d5774a1c74d51a61d89e1561c567e311b48cb7cc787750978b15e63a8fbcb32e: ib-phy-b-109 scheme — inspected and accepted.
+  Cell 8, SHA256 306dc7d021827e1ec045c8db55d360440dd43df5752b4b36f29836b3e90981bd: ib-phy-b-110 question — inspected and accepted.
+  Cell 9, SHA256 d863b65ffe01d056683e8e0a9e23a59cc32d97c8a950bfbacc1e3a2343dd475f: ib-phy-b-110 scheme — inspected and accepted.
+  Cell 10, SHA256 f000590c15031430f3ee6f81fc64b655402e81178a5cb3d2d36d92abe65cc61c: ib-phy-b-111 question — inspected and accepted.
+  Cell 11, SHA256 954d564a9e3d6785af9665008f4c86fb318aacfe71c43b0c09c89f4a26b97a02: ib-phy-b-111 scheme — inspected and accepted.
+  Cell 12, SHA256 5598f6e50b3c84798c5e8a22b28816ca1d9b7aa44f459b2f6284bdc0cb05cde3: ib-phy-b-112 question — inspected and accepted.
+
+sheet-05.png
+  Cell 1, SHA256 daf8997eb87035deb3fcd803da46543b4844b4a3f9d78b17a3e3b9fd89518fec: ib-phy-b-112 scheme — inspected and accepted.
+  Cell 2, SHA256 1be4ac47bb8c63015bd34ca734ac21c29f320401870d01b11fdf564ca9d5ca5a: ib-phy-b-117 question — inspected and accepted.
+  Cell 3, SHA256 4ffaf40e8e68d605e23a8fd7210bef38e40f1e585f75aad175461540e42c79de: ib-phy-b-117 scheme — inspected and accepted.
+  Cell 4, SHA256 8bd7def6c4a41ca511face72db886130ab6b159912fce61292a1b3595b546088: ib-phy-b-118 question — inspected and accepted.
+  Cell 5, SHA256 009f0bd077c5a0685056c1816bd6825f4ce536870b10dcbbffb767a334390d31: ib-phy-b-118 scheme — inspected and accepted.
+  Cell 6, SHA256 d5c4cb5d44bae8c3e4931cc78507d3628a916a7dfc628a6a371b0f8a250a6272: ib-phy-b-119 question — inspected and accepted.
+  Cell 7, SHA256 04399dcb67372458594e74dfdf003b85025822b367012c0f54f604cb6d2bbfb0: ib-phy-b-119 scheme — inspected and accepted.
+  Cell 8, SHA256 0a884fc22914bc5b5d5a66f01d5332e2edb0f1cbda28c04ec7f25dc33d5a4882: ib-phy-b-120 question — inspected and accepted.
+  Cell 9, SHA256 7b0ece08c530d83bfc0e2f5bf31865e07a6319913d68e6510557d84dfe9e65a6: ib-phy-b-120 scheme — inspected and accepted.
+  Cell 10, SHA256 2775a4859b4cce28539b453a7c5647e1fed1db4102608ade93e809bf208845e8: ib-phy-c-009 question — inspected and accepted.
+  Cell 11, SHA256 c4b0239e70793c9732613d6b374fd5add04c1729d89bc3821860375bae9649a3: ib-phy-c-010 question — inspected and accepted.
+  Cell 12, SHA256 695c5b70900c957096e047ed4d7772c8c092495bc4e3e49acf34a484b8131bc3: ib-phy-c-011 question — inspected and accepted.
+
+sheet-06.png
+  Cell 1, SHA256 4c6c9be2762e7e63e3f4f53500c37c95c3d30635b5426dbdeb83f172d509745f: ib-phy-c-012 question — inspected and accepted.
+  Cell 2, SHA256 32b597bc210f326f4647eb7495d514dd19d6cb395062ca85f422b44052e4e7fb: ib-phy-c-017 question, ib-phy-c-018 question, ib-phy-c-019 question, ib-phy-c-020 question — inspected and accepted.
+  Cell 3, SHA256 1e61bf45dc047ea40b23c18235b17bb62d52fb897b447ee701e75aeafdd3023f: ib-phy-c-017 scheme — inspected and accepted.
+  Cell 4, SHA256 94c277d65f27f2e20c9706cfbc5f4973927fb1a6a149737e7e24a7a61435f018: ib-phy-c-018 scheme — inspected and accepted.
+  Cell 5, SHA256 b1c5a9ea765fd309209d1e3c1df7a6993e8da5b81000498a8dfacdedd7bc675b: ib-phy-c-019 scheme — inspected and accepted.
+  Cell 6, SHA256 8118d7a66a9aa1f63cad612e35fb13d2d0e833dbd4d82cf8d65d22381e68e0d4: ib-phy-c-020 scheme — inspected and accepted.
+  Cell 7, SHA256 55cee7b43512d5b4a3a3b7df702cbbae0bd43b7d17b86cf4a912dc7d22bf49de: ib-phy-c-021 question — inspected and accepted.
+  Cell 8, SHA256 7d9085903567b043b0d3d283dcc8fc70ce24a9532ab09fafd7e9eadaf0c78a6b: ib-phy-c-021 scheme — inspected and accepted.
+  Cell 9, SHA256 d253430ca988c7ab7c02cfa6bd4a850b2b8636f5366adfc14846b8e1f019bc9f: ib-phy-c-022 question — inspected and accepted.
+  Cell 10, SHA256 527d0cbf828f534e400b199eeb440ffb4d654a81efd70cb2f95343893c89c9c9: ib-phy-c-022 scheme — inspected and accepted.
+  Cell 11, SHA256 f750580bdfd6a835ed882bfb809d241cc26ee1ba0a5db2825386fa2dfd0d744f: ib-phy-c-023 question — inspected and accepted.
+  Cell 12, SHA256 b9ccb1f425c712f00f983344d9238541e282b55710ac9ba5402c20680193c94c: ib-phy-c-023 scheme — inspected and accepted.
+
+sheet-07.png
+  Cell 1, SHA256 2f98f84613c09b289443318711e2748e625d0cf05d2109455f5173435cf3461b: ib-phy-c-024 question — inspected and accepted.
+  Cell 2, SHA256 a9a29a42164226acd657749049f027fd29410ef8b957dcf28560dc4df32e01ea: ib-phy-c-024 scheme — inspected and accepted.
+  Cell 3, SHA256 fa5cf492d387e266a2c13ff4a819275f8701162c97d963dcb4f0e157938d8608: ib-phy-c-037 question — inspected and accepted.
+  Cell 4, SHA256 537a7c9dad7d701aab96892e486c51729f064758a5b059a5624018769de4ee14: ib-phy-c-037 scheme — inspected and accepted.
+  Cell 5, SHA256 1b37eead9a9e9801172ed36b48501a9e3b00e972ba6a6e012f0f5ae864e4ad5f: ib-phy-c-038 question — inspected and accepted.
+  Cell 6, SHA256 cb68d97a692242f35a0761996a77074c3c7af5c4ac6efd44bafe19e250a63dcd: ib-phy-c-038 scheme — inspected and accepted.
+  Cell 7, SHA256 11cb87586176c05114ae257c28ab30497ffb0c33cbb5ae9aafe7f3b56456fce8: ib-phy-c-039 question — inspected and accepted.
+  Cell 8, SHA256 83f61e2e4a0c676e84856f20575b26d5aecd87002a9b9e42010e8543eb7bd902: ib-phy-c-039 scheme — inspected and accepted.
+  Cell 9, SHA256 50e6ad55a56ddacd800054eecb6fac8ce3e32e4bf1f3876ac4bca52bfc4e3865: ib-phy-c-040 question — inspected and accepted.
+  Cell 10, SHA256 d73753929ca89f93f92a96d319425a479ac92b6d1795aba4c94b45432a38cd1d: ib-phy-c-040 scheme — inspected and accepted.
+  Cell 11, SHA256 772b3cdcd0493cc2895aaaf12d4a77169f8ea7383c17405fb675740d7f10bead: ib-phy-c-045 question — inspected and accepted.
+  Cell 12, SHA256 275656ef9ab3fe119c36890838e8f6bcee125ee07828ad3973fc31942431e385: ib-phy-c-045 scheme — inspected and accepted.
+
+sheet-08.png
+  Cell 1, SHA256 e8299d493f2774f002d798522ddf4efb7c14066bf9d62c03eda3ce060157f52c: ib-phy-c-046 question — inspected and accepted.
+  Cell 2, SHA256 b040cb4a10a4eeab0da00d0fcaac8fc74930647130faceb15de4406bda5b86b6: ib-phy-c-046 scheme — inspected and accepted.
+  Cell 3, SHA256 e988e8786de83b345f100e71175e4066616d00b0e17a78de34230eb5d677e09c: ib-phy-c-047 question — inspected and accepted.
+  Cell 4, SHA256 e71ac2a28a5307d67448331efc990ae0f116c70ea91d509b6b134a7cb617a365: ib-phy-c-047 scheme — inspected and accepted.
+  Cell 5, SHA256 9c86dc7dd19623cca2d01d3d9204944be8b962667ddbf38f69f66e29546c3fe3: ib-phy-c-048 question — inspected and accepted.
+  Cell 6, SHA256 14c14f07a38e7a5de4c9406097ceafc89754d50086904b30827c87bf48712c27: ib-phy-c-048 scheme — inspected and accepted.
+  Cell 7, SHA256 1a32e5b7d405b2e70420ca128debcc7bcf99269026bbf25da140ff70e75d04ec: ib-phy-c-057 question — inspected and accepted.
+  Cell 8, SHA256 a5b78ad4a3bf3dc6278762d83aaf6d7168a6bf29bfd91766af626471e7d1aca9: ib-phy-c-058 question — inspected and accepted.
+  Cell 9, SHA256 a4c21a3e0e983d5761a756dce49497f7fa3481cd69578436988db219bdc67033: ib-phy-c-059 question — inspected and accepted.
+  Cell 10, SHA256 04a232864430ae2895fddfcd607155c6304fcb05d92fa1791cfa625c06a52248: ib-phy-c-060 question — inspected and accepted.
+  Cell 11, SHA256 63028443f188a7868d3803c846ea464ce62b4e8b9a5b487c6978a39395bfd0e6: ib-phy-c-061 question, ib-phy-c-062 question, ib-phy-c-063 question, ib-phy-c-064 question — inspected and accepted.
+  Cell 12, SHA256 f990b818b70bc1058d3785162af2998319e0d4ff80fb57c0ffd7dda5298c7e71: ib-phy-c-065 question — inspected and accepted.
+
+sheet-09.png
+  Cell 1, SHA256 b6930cd72d0d6917c9be47cec4a40462c4dad217036aa05cd86a2d5409bd0f4d: ib-phy-c-065 scheme — inspected and accepted.
+  Cell 2, SHA256 00a21bdb8c6c949d5f1cbfb0e56e2206e23be699b5cf32f470a75a5d97f979eb: ib-phy-c-066 question — inspected and accepted.
+  Cell 3, SHA256 bfd4da76ae9c4ad2c9ef7a3560f359f093d95a6de9a71c61df9f48e6ab97c8c2: ib-phy-c-066 scheme — inspected and accepted.
+  Cell 4, SHA256 a0a07de1b334b4f103dbbc04275f3d3b7b3ff4b3e9e5598ef6cbd7d231c8023a: ib-phy-c-067 question — inspected and accepted.
+  Cell 5, SHA256 a3011ebfd33a3ae2a4958e0327f3fb87dc82307f6710389560dad123ca1c8703: ib-phy-c-067 scheme — inspected and accepted.
+  Cell 6, SHA256 3d556129258ec13693f6b32abb07938b5353aff51ce58606776f5050d20eb305: ib-phy-c-068 question — inspected and accepted.
+  Cell 7, SHA256 10b9e2ab60051afc753b748decdb6e4aea4867e7c30159774a4fb0ad660960c0: ib-phy-c-068 scheme — inspected and accepted.
+  Cell 8, SHA256 22b06cd5560256d843e153071a6c26bfd80f7219edc111b87e79892b2c95b0ca: ib-phy-c-069 question — inspected and accepted.
+  Cell 9, SHA256 b01326c93dccb8f7ee7f614a0bb4979e89d723104293fc1a5bc88c33ed40bafa: ib-phy-c-069 scheme — inspected and accepted.
+  Cell 10, SHA256 25eb45711e79f46944b71542324ea9b3fc04e3a4c68e3b5759d77f6f234ec6be: ib-phy-c-070 question — inspected and accepted.
+  Cell 11, SHA256 e85326c28409fbbbae462a43263c0e6d6ebdf4068c81d665c3d175618ae8e82a: ib-phy-c-070 scheme — inspected and accepted.
+  Cell 12, SHA256 82e3471bc422da5667defb475fb6c718c4341a47b350ffb2612ec54de11785e8: ib-phy-c-071 question — inspected and accepted.
+
+sheet-10.png
+  Cell 1, SHA256 3a47f7f29c805ebb38646fe5cbcad214d5f87314788cee8fe59041d4c702aadc: ib-phy-c-071 scheme — inspected and accepted.
+  Cell 2, SHA256 efb7e58b6f4e277825b73864e7488c9f09dec8508fc4fc6b8877ede235bb8729: ib-phy-c-072 question — inspected and accepted.
+  Cell 3, SHA256 81b35ee368ae99928a49f094e44dce184bde6b86fa87f54b552ffd60afa7cd4f: ib-phy-c-072 scheme — inspected and accepted.
+  Cell 4, SHA256 081a5cb771c47ab14208eca1a148cb676b23c309382e7915a58920628b8b2b23: ib-phy-c-081 question — inspected and accepted.
+  Cell 5, SHA256 1ab1c8cfdb2d0203bcbcd787be8275a4ecf4b7ad168224f219456a3c3cb35228: ib-phy-c-081 scheme — inspected and accepted.
+  Cell 6, SHA256 53b968f78b158c63b8786db975a7bd591cbfce6dbfc4414471c7fc34f021ce7d: ib-phy-c-082 question — inspected and accepted.
+  Cell 7, SHA256 2800ffa520e17a10a7d0613a60f7fc902459792cf7d33c968d3c05298f11bb60: ib-phy-c-082 scheme — inspected and accepted.
+  Cell 8, SHA256 7fa4f6bc7cc640993ba0df592ddd945158cc787417c1f7634d42c06da43dde3c: ib-phy-c-083 question — inspected and accepted.
+  Cell 9, SHA256 ab5c3a35cf55a689d781387539625619e70d795d0e3add89a23c2e108ad08e46: ib-phy-c-083 scheme — inspected and accepted.
+  Cell 10, SHA256 725beb32c1c521f7b019172996c4a07e1f0ce736fc9b497147cff98431919e21: ib-phy-c-084 question — inspected and accepted.
+  Cell 11, SHA256 cf21cd6d62a10fc2ee6077655812bb717827a0bbdd1ac55420b74cab5e15f42b: ib-phy-c-084 scheme — inspected and accepted.
+  Cell 12, SHA256 452baf9653884f29f4d45add1fefc2e2c3bc34e7505a345548892c3d7b3c578a: ib-phy-c-085 question — inspected and accepted.
+
+sheet-11.png
+  Cell 1, SHA256 49a583f3b42e6947f44d405167f9a306b9d861920c9d2a439fbc027748656146: ib-phy-c-085 scheme — inspected and accepted.
+  Cell 2, SHA256 ef181ca8cb2bef5d2a35c3c7455da86c55201a7af4b796266fc25a44ebd24d4c: ib-phy-c-086 question — inspected and accepted.
+  Cell 3, SHA256 817b3e8d29f3f1772ff8a085f08060fd176970061a2c89f973e2dbf0ea7fa13d: ib-phy-c-086 scheme — inspected and accepted.
+  Cell 4, SHA256 071d593f0561c985ac721d63f0bffbcb700415401bed8b43cc2a5acd04f96158: ib-phy-c-087 question — inspected and accepted.
+  Cell 5, SHA256 ff5d11bda04ba0d9c693ae911e175b7941d4183e872702f7dd6c743cd6787b00: ib-phy-c-087 scheme — inspected and accepted.
+  Cell 6, SHA256 3ed973a9a0e2b54ffa662dfc229a9abfd76ffa66607b94fa7a9c5ef33177e26e: ib-phy-c-088 question — inspected and accepted.
+  Cell 7, SHA256 bde027140cb6f3fe188dcb4579455079db8ac01b4eef92f04df8134ff9c25850: ib-phy-c-088 scheme — inspected and accepted.
+  Cell 8, SHA256 8a87b5ca02ee4e8b800ee671bcc98fe6f1443d03b087744b4cbed1bc11e9c0bc: ib-phy-c-089 question — inspected and accepted.
+  Cell 9, SHA256 c8d437eb141216694e654a801474543cc313c6c1a149d3e570191904a1bc6189: ib-phy-c-090 question — inspected and accepted.
+  Cell 10, SHA256 f7bab04acc16557b52cbbb4b2a3a0567b998298d4735b86521fb4d187fd5c6e6: ib-phy-c-091 question — inspected and accepted.
+  Cell 11, SHA256 b8e2c88e03f67dae7e1ca554dc28447dc638d5ae0b6ab96015218d62fca7714a: ib-phy-c-092 question — inspected and accepted.
+  Cell 12, SHA256 0dd1385a301bd5ea43ff8d5a85583219c7195d493d934cd8fafcfca50eea2f41: ib-phy-c-093 question — inspected and accepted.
+
+sheet-12.png
+  Cell 1, SHA256 8c3a22cfa4be4295698906bdbeae5391771973e456dd09b514f19ea52ad7f1b2: ib-phy-c-093 scheme, ib-phy-c-094 scheme — inspected and accepted.
+  Cell 2, SHA256 533e26d5b76f71ad2caa853b6d539c75b02d4cc10164f32e8ea0f829bb16909d: ib-phy-c-094 question — inspected and accepted.
+  Cell 3, SHA256 abbaa03ff95f3281de7a143a7dc40376c303ba5714cd0fd18191206eb34660b0: ib-phy-c-095 question — inspected and accepted.
+  Cell 4, SHA256 fcfd1b404674d9782916a6c648e07affc91142964fc7457365eb0a314a4772c9: ib-phy-c-095 scheme, ib-phy-c-096 scheme — inspected and accepted.
+  Cell 5, SHA256 f451ed4e8fcab3a999c6694d61c1122e59a52d2aa2cbd27c2d1fcc201517fabd: ib-phy-c-096 question — inspected and accepted.
+  Cell 6, SHA256 b6d392e3fd0338240910f860c7d42a101cc9336601af2ccef5cc79341c2c0209: ib-phy-c-109 question, ib-phy-c-111 question — inspected and accepted.
+  Cell 7, SHA256 8094846d61eb4755abbba8b347c9c7ef6972b002d24600b8f32f9887f1d65bbf: ib-phy-c-110 question, ib-phy-c-112 question — inspected and accepted.
+
+Changed-reference ledger:
+ib-phy-b-009 markSchemeDiagramSvg: 74bb1330e05f412931023a06a196386590934e6195cd14fae06c42a0716ec34e -> 5f0603bde4455896fb6a42de8fd35f3b899a7c7dabed39cec8e96324bdc1aeb2
+ib-phy-b-010 markSchemeDiagramSvg: c36daf5de6756c86b027fb6c963c8259e86a72c13474becc5095dc6488332e4d -> 6b294ce64b60d061e77710e827360d35729cf7ff8af978d547f1299f51b7e2e7
+ib-phy-b-011 markSchemeDiagramSvg: 198f78d07940be52cc119e05e5222e47fc82e00486e0e5f3d6498dc04b0d0831 -> c61593fdcc3f2e576ae152ea84e5f287fb11b99c879fcce086524c09788ddac1
+ib-phy-b-012 markSchemeDiagramSvg: 72e6dfc6b456b31775a7f083e8ab75a5726f1585db3fe7c4e688ddcf07df82ed -> 787522c19d9500b75741877993563b16e67bf3460cb83960d3b6eecd87e98e34
+ib-phy-b-013 markSchemeDiagramSvg: 8991d2b891b75d1dac7d9b3eef04cf20dc55b625792801423b72906819b305b9 -> fff2d50b7f82ad9477e543bf0218508b83fd902cbda7d36dae4f9360ac8149f4
+ib-phy-b-014 markSchemeDiagramSvg: 09fa05c448bc287fa3126a6958fd537b376a198ab13abbc241c72ca710763277 -> f4c8d50344c86de27f5d7d8837adcd4185dd11c61a05a50ee7687a9dc1742be7
+ib-phy-b-015 markSchemeDiagramSvg: 3d0574a68148724ceea7f8c7a4f35c8815061ed003125a154065ce2fe5a8e808 -> a2faead833788bab96029335554b5a9a6284d9faa866b05b8625a24b1b8d254b
+ib-phy-b-016 markSchemeDiagramSvg: a6ff63417e489668b43094d07767f362a623ad4ecd38afac281f75661d708553 -> 18bad535e023832e54d1ddcf923a506f621a3872a7660fce13c68fc97d346937
+ib-phy-b-021 diagramSvg: f48b690bdcc44d05fbf16e04c7681b88a71bc43ec00f2bcc8924dbd65892a10e -> 5930a0154b1b9eac4c0510e28fbd8e97873b9381915c60d433edecf4e266a423
+ib-phy-b-021 markSchemeDiagramSvg: 1b855dd61a14e90486dbe2be69d964c17dda3691c18157f3b6620f4208e588df -> 294a4623f6dc65ccc24158c36eaf78c926b5880fb7ffeff8ef6803888b6be0cf
+ib-phy-b-022 diagramSvg: 898c3ebe336d60b539f6c691b223e4d59ed2c3513f87b7b54e06639653fb8868 -> 07da84e1fa97fcac916349944da950f3130b6bf6224bdb6a65b8bf8e6fc24258
+ib-phy-b-022 markSchemeDiagramSvg: 6d5968a5d92b9d5620c7e433392d546b5b89a6724a11d70c6de371138bf39a30 -> d326a23d4f568816745c0a2edd132d128f6da31d3d6b570536a1af9f3b15f257
+ib-phy-b-023 diagramSvg: ce2c7c67935cd5e68eabf9fcbb923a621d62aaaedbcc44382eebc5194b626cee -> ae18662748eb0c113e918357bf1320efe5bb0064a1daf23b90e9e33f1141a703
+ib-phy-b-023 markSchemeDiagramSvg: 07bc0a23ff695d3b0d1a8d0dd04e1ba39404c5ae5c61461f409d89fce7afde0a -> 6901000ece77f779491ff9eea38a6921d9459e56a70caf56165d5d3f6bd42348
+ib-phy-b-024 diagramSvg: 674ee1378d106594d51644dc61859df9aeaab0fb49ee7cd37cdb50038f9e1325 -> 279b99251567fe0b0d62ac32429a84754724f9fd30bf8af098a0d35ae0510660
+ib-phy-b-024 markSchemeDiagramSvg: f8ab082473dcd884c4db3ea79afb4944932a8d708fa6e3b54cab9f80502e37de -> c077972bcb0a712e1d190c5056a8eaa5061f83b78b86d19c59d7fe0d7375662d
+ib-phy-b-069 diagramSvg: 24b7d3356bd7377b79965a1f25fca7d6d91ea0bd7f60c008facd3ff957ea4f0d -> 48ccb8007c6da370723b35fc207a122788690d87ae01057434cb41cc62168826
+ib-phy-b-069 markSchemeDiagramSvg: a28a64e17a802ae2f926565b940e404abc7b7ebddd58c5643299e29c44c2aa27 -> 6ba89d2a3e9fd87ba60e806780a48d3c86255c7fc79d43f3e12d7f4d0b900b0e
+ib-phy-b-070 diagramSvg: b44284a04af2dd719080c24f0850b6e88fce211041e68f76132cf5e3f0f39381 -> 001aa006dc77ab6b23809d39a7c9008fdc144e322a61fdf96e85107936d01184
+ib-phy-b-070 markSchemeDiagramSvg: 90542550345157094f30e4f2b9cf4c9450659f97a9742d6575e0bdf681d73222 -> 4207974c85feca60f8735de6ef895342293950900933f3fda19b8f5d3500a747
+ib-phy-b-071 diagramSvg: a081ff89284620ede0c9d642c88f060fb9cb7d152c94a7edc4490ebaa43cf1aa -> 96a18497af147ef19de8515dce1220c4b083a14c57c799cfe0f641948c95c624
+ib-phy-b-071 markSchemeDiagramSvg: a04a8cf6db1de2455d95c322c4f9adb9e27425a4f3bde7965105426e42977f1d -> 5bc963715024c033a53932f1b595bbd1b9ba1a3baba69190f3f5f941833793e6
+ib-phy-b-072 diagramSvg: 5fdf6afb132e9a121292d85b6ffb3fb4ea3e1c63461c268f4bdcb80edf46a4db -> 24c7c4f1fa0864ac3715294a108b3852217b5ec36d6ba8d765d05eb4c6880d9d
+ib-phy-b-072 markSchemeDiagramSvg: a7583464e97be70cdc2d88e3bb88d2b86fd407116a6692be97eb24c7eb28a607 -> bd3bf90b581bda30c5815d48105a7c9e35c768f1106228a324845302ebac6b98
+ib-phy-b-081 diagramSvg: 3fb75ef50db01d8d1dbf9f83a648f5285377835c5d143bc68f5fa78277674166 -> a5cb07e2fe0b346f8fc629db0bdeff41e3899b8a95c65ade199179128c68f1cb
+ib-phy-b-081 markSchemeDiagramSvg: 3fb75ef50db01d8d1dbf9f83a648f5285377835c5d143bc68f5fa78277674166 -> a5cb07e2fe0b346f8fc629db0bdeff41e3899b8a95c65ade199179128c68f1cb
+ib-phy-b-082 diagramSvg: ad60d537b7b4cc88bfaf4e9ec8d2b8e9b238fbce8befa8d3ba830f3f20eee7dd -> 5ea7a03f5848f63aaffbb544b4346f4327032995290739d8eef5d37915125750
+ib-phy-b-082 markSchemeDiagramSvg: ad60d537b7b4cc88bfaf4e9ec8d2b8e9b238fbce8befa8d3ba830f3f20eee7dd -> 5ea7a03f5848f63aaffbb544b4346f4327032995290739d8eef5d37915125750
+ib-phy-b-083 diagramSvg: 32340786f1b861375b9de4ab6efb6711aefe9b172455f5ee1a087f80ae7a9b59 -> f42aa952b43bd24f657c039fc29ba11f2640283048cb07ca8c00a7c475c88458
+ib-phy-b-083 markSchemeDiagramSvg: 32340786f1b861375b9de4ab6efb6711aefe9b172455f5ee1a087f80ae7a9b59 -> f42aa952b43bd24f657c039fc29ba11f2640283048cb07ca8c00a7c475c88458
+ib-phy-b-084 diagramSvg: 26d5b2d2aa35862ff5cd54ec6277eedb19e647dfaa09a13a4f222675f9af4941 -> e5c890e91d89c637870e8d58d95cf11d8d45a3865f8ca43ced4410851afab12a
+ib-phy-b-084 markSchemeDiagramSvg: 26d5b2d2aa35862ff5cd54ec6277eedb19e647dfaa09a13a4f222675f9af4941 -> e5c890e91d89c637870e8d58d95cf11d8d45a3865f8ca43ced4410851afab12a
+ib-phy-b-109 diagramSvg: 46f8d65bd8dd627024ae58c810c6388f9a3c8f7179ef1d02605b9d8de8b3a137 -> 3c4f706c83581503115ca744226d7570e09c1631985327145d4027e5f5bd86b4
+ib-phy-b-109 markSchemeDiagramSvg: 2e8f52f351462fee267568d20b4498677fdc274317adbe1ec7fb8146ae31172f -> d5774a1c74d51a61d89e1561c567e311b48cb7cc787750978b15e63a8fbcb32e
+ib-phy-b-110 diagramSvg: 6fd77bc56bfebb7256120c69abb2efa5cb30b11410989f27ab4ef808f7d5a666 -> 306dc7d021827e1ec045c8db55d360440dd43df5752b4b36f29836b3e90981bd
+ib-phy-b-110 markSchemeDiagramSvg: 801e109e58791d4adff7b51237e3da3433d22f58d0d4823ab044c9808bfbf587 -> d863b65ffe01d056683e8e0a9e23a59cc32d97c8a950bfbacc1e3a2343dd475f
+ib-phy-b-111 diagramSvg: 3a78671f31fd6adb06dbee400cfe68e51e08a368535446899fbb1fbcf6a35065 -> f000590c15031430f3ee6f81fc64b655402e81178a5cb3d2d36d92abe65cc61c
+ib-phy-b-111 markSchemeDiagramSvg: a758cbe1165399c243742dd78c0c3c41c0e90df6f1ed9d73ed3dd93ccc042250 -> 954d564a9e3d6785af9665008f4c86fb318aacfe71c43b0c09c89f4a26b97a02
+ib-phy-b-112 diagramSvg: c8bc7fc1e268916395e46252e784483a41c5d0ed5bc686562cc612522f897614 -> 5598f6e50b3c84798c5e8a22b28816ca1d9b7aa44f459b2f6284bdc0cb05cde3
+ib-phy-b-112 markSchemeDiagramSvg: e0ff78beefd759c5d58fa676a97df0c9306ddf831527ac2e9693fe72d3505b36 -> daf8997eb87035deb3fcd803da46543b4844b4a3f9d78b17a3e3b9fd89518fec
+ib-phy-b-117 diagramSvg: b7856786b93028a4502267ba8634227a43d25884ceff675c544f5df9ee201ce9 -> 1be4ac47bb8c63015bd34ca734ac21c29f320401870d01b11fdf564ca9d5ca5a
+ib-phy-b-117 markSchemeDiagramSvg: 9a1b32878bacd533b9927b1598224f9f29f4c3236e94a44eee0bface29c35883 -> 4ffaf40e8e68d605e23a8fd7210bef38e40f1e585f75aad175461540e42c79de
+ib-phy-b-118 diagramSvg: 848a942b4b5f20d07b82a3f6cf0b4e06e1fded0f9655fbfb1a73d53942c92d4d -> 8bd7def6c4a41ca511face72db886130ab6b159912fce61292a1b3595b546088
+ib-phy-b-118 markSchemeDiagramSvg: 24537391e39cbf18b68f446ef88f6619b30d5cf3e8921d88fe7ccbb69319ac88 -> 009f0bd077c5a0685056c1816bd6825f4ce536870b10dcbbffb767a334390d31
+ib-phy-b-119 diagramSvg: fab1f83fcc2c5a5a85351317dce0de8529724ab0496a0f6b97ead3dc48dc4bf9 -> d5c4cb5d44bae8c3e4931cc78507d3628a916a7dfc628a6a371b0f8a250a6272
+ib-phy-b-119 markSchemeDiagramSvg: 4a22bf6c955952692a5d60eeb47cdf3b3aec440d2a29f3542788feae62842ac0 -> 04399dcb67372458594e74dfdf003b85025822b367012c0f54f604cb6d2bbfb0
+ib-phy-b-120 diagramSvg: 3c78777637b18b389a55c1da49d83078b025a382a7404b08255f7ffd4e098884 -> 0a884fc22914bc5b5d5a66f01d5332e2edb0f1cbda28c04ec7f25dc33d5a4882
+ib-phy-b-120 markSchemeDiagramSvg: ae15f33edb08d339912c9cd8fd35d0f66c6da4b382086b4e328e43fc68b9e00f -> 7b0ece08c530d83bfc0e2f5bf31865e07a6319913d68e6510557d84dfe9e65a6
+ib-phy-c-009 diagramSvg: 658ce506f55876f0a804a42bc2a25ad9df29d6c9493df68c9b3a195452105d25 -> 2775a4859b4cce28539b453a7c5647e1fed1db4102608ade93e809bf208845e8
+ib-phy-c-010 diagramSvg: fb0fa7690bb4f49f42754d12f6955835af613b21c4a511f6ea83f9df0611a691 -> c4b0239e70793c9732613d6b374fd5add04c1729d89bc3821860375bae9649a3
+ib-phy-c-011 diagramSvg: 216708ede39e5a580634cc38e4122ce6759c14245d3a681113fc55212a9cbc71 -> 695c5b70900c957096e047ed4d7772c8c092495bc4e3e49acf34a484b8131bc3
+ib-phy-c-012 diagramSvg: 6de4aa66cafc6c5d067a330a6523f009dc32dd55ab749f8f06a2cc56f2bc800e -> 4c6c9be2762e7e63e3f4f53500c37c95c3d30635b5426dbdeb83f172d509745f
+ib-phy-c-017 diagramSvg: 9cbd3477d382c8a98bae5f1d7351082b2a1d92422d69dfc6cb605ed83feb546d -> 32b597bc210f326f4647eb7495d514dd19d6cb395062ca85f422b44052e4e7fb
+ib-phy-c-017 markSchemeDiagramSvg: 57ed147681e737c38ee3c8d66274bc5ecf96f62505d4e38ac2aeb79395e964d0 -> 1e61bf45dc047ea40b23c18235b17bb62d52fb897b447ee701e75aeafdd3023f
+ib-phy-c-018 diagramSvg: 9cbd3477d382c8a98bae5f1d7351082b2a1d92422d69dfc6cb605ed83feb546d -> 32b597bc210f326f4647eb7495d514dd19d6cb395062ca85f422b44052e4e7fb
+ib-phy-c-018 markSchemeDiagramSvg: 7b9ea7deac3cfa7fe3a0888633993600dc80705394b502a5775e0cbe8c5f6231 -> 94c277d65f27f2e20c9706cfbc5f4973927fb1a6a149737e7e24a7a61435f018
+ib-phy-c-019 diagramSvg: 9cbd3477d382c8a98bae5f1d7351082b2a1d92422d69dfc6cb605ed83feb546d -> 32b597bc210f326f4647eb7495d514dd19d6cb395062ca85f422b44052e4e7fb
+ib-phy-c-019 markSchemeDiagramSvg: fe673b4f3490009da0c2d66b2ebcb4d4c96b4bdee5fa03d2cae09ead383735b5 -> b1c5a9ea765fd309209d1e3c1df7a6993e8da5b81000498a8dfacdedd7bc675b
+ib-phy-c-020 diagramSvg: 9cbd3477d382c8a98bae5f1d7351082b2a1d92422d69dfc6cb605ed83feb546d -> 32b597bc210f326f4647eb7495d514dd19d6cb395062ca85f422b44052e4e7fb
+ib-phy-c-020 markSchemeDiagramSvg: acfed921658467e2e29e538a446ef35d2a5827473cd0310e565fb09c7dcb5b97 -> 8118d7a66a9aa1f63cad612e35fb13d2d0e833dbd4d82cf8d65d22381e68e0d4
+ib-phy-c-021 diagramSvg: 200cf677063cc8fc29e2b4b138808b9496e6721240b063f5ca0c43b942642818 -> 55cee7b43512d5b4a3a3b7df702cbbae0bd43b7d17b86cf4a912dc7d22bf49de
+ib-phy-c-021 markSchemeDiagramSvg: 71a0f41dd73ed16376e24881905d31da62dc0fad2bf66c7d0c68e59f1a67e1bd -> 7d9085903567b043b0d3d283dcc8fc70ce24a9532ab09fafd7e9eadaf0c78a6b
+ib-phy-c-022 diagramSvg: ba85572608ebc824cb3ac0111bb10d0ae25b89a3aca4cc88257e30bcb197c5a8 -> d253430ca988c7ab7c02cfa6bd4a850b2b8636f5366adfc14846b8e1f019bc9f
+ib-phy-c-022 markSchemeDiagramSvg: 76cde7a73de7f5a0e8fc9d652b50f3ab13f18df1cba392e6b09910ab9dd96026 -> 527d0cbf828f534e400b199eeb440ffb4d654a81efd70cb2f95343893c89c9c9
+ib-phy-c-023 diagramSvg: 6719fc2998aa1f62dfaf15b542d994f9faf0815970132d2a756dc22505e16cb0 -> f750580bdfd6a835ed882bfb809d241cc26ee1ba0a5db2825386fa2dfd0d744f
+ib-phy-c-023 markSchemeDiagramSvg: 4818e0102939e6ad83aab2863fea1a2206fd2fa295c5103f5f8609667716beb9 -> b9ccb1f425c712f00f983344d9238541e282b55710ac9ba5402c20680193c94c
+ib-phy-c-024 diagramSvg: afe907da316830bbabeca2657a2a472261900ade5e97092b246dbb19e12716e7 -> 2f98f84613c09b289443318711e2748e625d0cf05d2109455f5173435cf3461b
+ib-phy-c-024 markSchemeDiagramSvg: eedfa6cdc7e02d2d45e74eaad285cefcb38a269452a2a605096b2780d5b95e34 -> a9a29a42164226acd657749049f027fd29410ef8b957dcf28560dc4df32e01ea
+ib-phy-c-037 diagramSvg: be1c486ecd7b4f40ec8fb71ffafff11880d0fa94a446c33d6a79813216387b0d -> fa5cf492d387e266a2c13ff4a819275f8701162c97d963dcb4f0e157938d8608
+ib-phy-c-037 markSchemeDiagramSvg: 42940884427839d03baea51db4a6fcd509d829a418b47884bf4b09f52bf01206 -> 537a7c9dad7d701aab96892e486c51729f064758a5b059a5624018769de4ee14
+ib-phy-c-038 diagramSvg: a4c5e6a7a0d8b125fdd261339a9a039398f43c6fd1c9e476a2d5e71dcb622f05 -> 1b37eead9a9e9801172ed36b48501a9e3b00e972ba6a6e012f0f5ae864e4ad5f
+ib-phy-c-038 markSchemeDiagramSvg: 0719be4a519139209b4c58112a9de3fe4a9f3d8c3f5b4f6858697c7be06b2e04 -> cb68d97a692242f35a0761996a77074c3c7af5c4ac6efd44bafe19e250a63dcd
+ib-phy-c-039 diagramSvg: d60aac1faafacfc97765cd7a0bc84abd49cacb5316de62f9569de6379e0c9880 -> 11cb87586176c05114ae257c28ab30497ffb0c33cbb5ae9aafe7f3b56456fce8
+ib-phy-c-039 markSchemeDiagramSvg: e54900797e0fe51cbe8000303a18ffdda15ed64afc9a22702a1e9d2cef558214 -> 83f61e2e4a0c676e84856f20575b26d5aecd87002a9b9e42010e8543eb7bd902
+ib-phy-c-040 diagramSvg: 2de8eb1cee1e22bd14da5fbcf08c52a5ed84c83cbf1c92705140227f0cd1f853 -> 50e6ad55a56ddacd800054eecb6fac8ce3e32e4bf1f3876ac4bca52bfc4e3865
+ib-phy-c-040 markSchemeDiagramSvg: 7777fac50e82f4dada763a0090d8e8e1395dcba7d49ab63dc42d372747394e1d -> d73753929ca89f93f92a96d319425a479ac92b6d1795aba4c94b45432a38cd1d
+ib-phy-c-045 diagramSvg: 8ec57460d2bcdae94e8bb293c6ef8ca159519216677d2bc308401b587cf6d5e0 -> 772b3cdcd0493cc2895aaaf12d4a77169f8ea7383c17405fb675740d7f10bead
+ib-phy-c-045 markSchemeDiagramSvg: 1fe709b73a8d9b8adeb79097ceee20be18850a49af371b26d4dad18e2de99e74 -> 275656ef9ab3fe119c36890838e8f6bcee125ee07828ad3973fc31942431e385
+ib-phy-c-046 diagramSvg: 1d42eefd7746419d5138935ec976cfb8d34c7e962a58f06c2a41f9c3d8cd1590 -> e8299d493f2774f002d798522ddf4efb7c14066bf9d62c03eda3ce060157f52c
+ib-phy-c-046 markSchemeDiagramSvg: 4783df3c3d3cfa306f923f1fca70f5dd8475da32ba3d0d5500e5c62e2f1c2b3b -> b040cb4a10a4eeab0da00d0fcaac8fc74930647130faceb15de4406bda5b86b6
+ib-phy-c-047 diagramSvg: 151e26232b955a966d5a27060d5f34567b579db6d559ae1dc903f994dc02cb34 -> e988e8786de83b345f100e71175e4066616d00b0e17a78de34230eb5d677e09c
+ib-phy-c-047 markSchemeDiagramSvg: 8eae08a94233c03ec6df59eab8511c273a261f6f615e9f55e360287817982c0b -> e71ac2a28a5307d67448331efc990ae0f116c70ea91d509b6b134a7cb617a365
+ib-phy-c-048 diagramSvg: ef64e29f5ea70a1c67e644b204988f8eba1e118f932ae03a4c1d78677951c2c1 -> 9c86dc7dd19623cca2d01d3d9204944be8b962667ddbf38f69f66e29546c3fe3
+ib-phy-c-048 markSchemeDiagramSvg: d6151588436a67659f1fea8c821434a9e0750abfbd6032b3d32d9294cbf1a91e -> 14c14f07a38e7a5de4c9406097ceafc89754d50086904b30827c87bf48712c27
+ib-phy-c-061 diagramSvg: 8084dcca6b49c6b941b213b6c2c2f7567d690a0a11ac1608dba0c2e49d6a2648 -> 63028443f188a7868d3803c846ea464ce62b4e8b9a5b487c6978a39395bfd0e6
+ib-phy-c-062 diagramSvg: 2005f86857ccea0dfb1ef03cb8e8a25e3a022a134521265b5b27430710c3abca -> 63028443f188a7868d3803c846ea464ce62b4e8b9a5b487c6978a39395bfd0e6
+ib-phy-c-063 diagramSvg: 27ae4daf1b728058c283abbab12a8159f660fa8ff4334b06de800bcd1faab7a7 -> 63028443f188a7868d3803c846ea464ce62b4e8b9a5b487c6978a39395bfd0e6
+ib-phy-c-064 diagramSvg: 2cb5531e6f420df0ca853bb7ffc9ef12fcc2352e1fce1b3fa4fb3a6351a3b21f -> 63028443f188a7868d3803c846ea464ce62b4e8b9a5b487c6978a39395bfd0e6
+ib-phy-c-065 diagramSvg: 59cd6fe4f4c6ab57ea7fd94985f0b250f4fe7e615d9227cf5f5df539e92fc227 -> f990b818b70bc1058d3785162af2998319e0d4ff80fb57c0ffd7dda5298c7e71
+ib-phy-c-065 markSchemeDiagramSvg: e39601f12041edf483381ba59f77ba6684181df7defef0a3c382b7451648d9c9 -> b6930cd72d0d6917c9be47cec4a40462c4dad217036aa05cd86a2d5409bd0f4d
+ib-phy-c-066 diagramSvg: 241a4ceee83e9987aebd3d3edd9e092c3c53f63d1092904dd7348a832f54123c -> 00a21bdb8c6c949d5f1cbfb0e56e2206e23be699b5cf32f470a75a5d97f979eb
+ib-phy-c-066 markSchemeDiagramSvg: c73a04675d77a084db78f273a66f521db146b24863caf79aeb9102d7bfb7b917 -> bfd4da76ae9c4ad2c9ef7a3560f359f093d95a6de9a71c61df9f48e6ab97c8c2
+ib-phy-c-067 diagramSvg: e6a7c6cbc17cf23621827b91897c19d6eba83e47560a4b76561e1ced33ed5d89 -> a0a07de1b334b4f103dbbc04275f3d3b7b3ff4b3e9e5598ef6cbd7d231c8023a
+ib-phy-c-067 markSchemeDiagramSvg: b34bf4d44a399e108f76e5d8b6664a0efb90063d4fdcc148df872212e2dca6f6 -> a3011ebfd33a3ae2a4958e0327f3fb87dc82307f6710389560dad123ca1c8703
+ib-phy-c-068 diagramSvg: 8d6df75292f263e4f1b1fa6ab164080427693bf22efd9e948ec98a847360a18c -> 3d556129258ec13693f6b32abb07938b5353aff51ce58606776f5050d20eb305
+ib-phy-c-068 markSchemeDiagramSvg: fde15a3eb2130dfb6f7c33e5f10119ae1c3bede1b79aadf39404ac2a599b25be -> 10b9e2ab60051afc753b748decdb6e4aea4867e7c30159774a4fb0ad660960c0
+ib-phy-c-069 diagramSvg: b5edbafa603609492b3dab49542d1b3132a58d9597ec333856dc626b1bdd0ea5 -> 22b06cd5560256d843e153071a6c26bfd80f7219edc111b87e79892b2c95b0ca
+ib-phy-c-070 diagramSvg: 896735122db9518512f9d0c0e03b2a456710e2fe0a9fa31d2b9c43eae53cd460 -> 25eb45711e79f46944b71542324ea9b3fc04e3a4c68e3b5759d77f6f234ec6be
+ib-phy-c-071 diagramSvg: dc4c56e9e57ce5799038468285bf74d07c75e2dfa87fc762c758c4ac6e1402c8 -> 82e3471bc422da5667defb475fb6c718c4341a47b350ffb2612ec54de11785e8
+ib-phy-c-072 diagramSvg: a216b54aeb2280d9045f039d32a3af75361840b3c07ab4db99b683ca9f7ca6d1 -> efb7e58b6f4e277825b73864e7488c9f09dec8508fc4fc6b8877ede235bb8729
+ib-phy-c-083 diagramSvg: e476218c4b98d21110a18c3b7e44a4fe595e45d8825ab3c2fa5623e3aa020a4e -> 7fa4f6bc7cc640993ba0df592ddd945158cc787417c1f7634d42c06da43dde3c
+ib-phy-c-083 markSchemeDiagramSvg: 102a20bde63097093f1bb24fdeaba154051d6a41d56ea87e37054e5bd17f944b -> ab5c3a35cf55a689d781387539625619e70d795d0e3add89a23c2e108ad08e46
+ib-phy-c-084 diagramSvg: 184e7ffe0fd6c88cf1ed33d9df0670b351e16a56950beee140f5f4189b6b6e08 -> 725beb32c1c521f7b019172996c4a07e1f0ce736fc9b497147cff98431919e21
+ib-phy-c-084 markSchemeDiagramSvg: 65cb6e5358ee1c88c6c8c67f9b3df2b1fc216943ae23d69e13d0eecd1daecd7f -> cf21cd6d62a10fc2ee6077655812bb717827a0bbdd1ac55420b74cab5e15f42b
+ib-phy-c-089 diagramSvg: 94f58c4a2551f5e9a8e8e178e0a19d119c49e79c907c23b9e9246ed68841f2a8 -> 8a87b5ca02ee4e8b800ee671bcc98fe6f1443d03b087744b4cbed1bc11e9c0bc
+ib-phy-c-090 diagramSvg: 64034e76ecd017ad1359a5ed8bd61dda2a586f6722a659abf763c9ec16eb53be -> c8d437eb141216694e654a801474543cc313c6c1a149d3e570191904a1bc6189
+ib-phy-c-091 diagramSvg: 6c8cc95f7cdce40bcac1442b7f1108b4d7fa5443721227f756290e35c15b83b1 -> f7bab04acc16557b52cbbb4b2a3a0567b998298d4735b86521fb4d187fd5c6e6
+ib-phy-c-092 diagramSvg: 5b550bc8a1aead0fb1e3e86964fd74aa143bc8d94fcf74e9d348aa9b4b3afcde -> b8e2c88e03f67dae7e1ca554dc28447dc638d5ae0b6ab96015218d62fca7714a
+ib-phy-c-093 diagramSvg: 44bd8e4f9baa99c3502dc65d85255b09e4938f292bed49ff7b286a0cf52af722 -> 0dd1385a301bd5ea43ff8d5a85583219c7195d493d934cd8fafcfca50eea2f41
+ib-phy-c-094 diagramSvg: 74372cf05e2bede1f8c4396c51e52066890b059496670519af5d55522d38ca7b -> 533e26d5b76f71ad2caa853b6d539c75b02d4cc10164f32e8ea0f829bb16909d
+ib-phy-c-095 diagramSvg: e36922d643dc19308cb87c15c0566beba7217477202876a0632a629347aac976 -> abbaa03ff95f3281de7a143a7dc40376c303ba5714cd0fd18191206eb34660b0
+ib-phy-c-095 markSchemeDiagramSvg: 242835d48da88260fd9f70f5bce681ff0b00223a8419ffd9e2708e3e4ed66b9c -> fcfd1b404674d9782916a6c648e07affc91142964fc7457365eb0a314a4772c9
+ib-phy-c-096 diagramSvg: c39766f323c5c8c33f157cf2172ebc391501dc182705bc9901785b8ab56b9ac2 -> f451ed4e8fcab3a999c6694d61c1122e59a52d2aa2cbd27c2d1fcc201517fabd
+ib-phy-c-096 markSchemeDiagramSvg: 242835d48da88260fd9f70f5bce681ff0b00223a8419ffd9e2708e3e4ed66b9c -> fcfd1b404674d9782916a6c648e07affc91142964fc7457365eb0a314a4772c9
+ib-phy-c-109 diagramSvg: 0972fd0426d0f996f9545f91edf8fb92edb1a5264f87f677ee3cc6b6132e28e1 -> b6d392e3fd0338240910f860c7d42a101cc9336601af2ccef5cc79341c2c0209
+ib-phy-c-110 diagramSvg: e9aa004d994aecc142ba7fadd19f31a4d8eaa08d44c754a948f85101b9d01a8c -> 8094846d61eb4755abbba8b347c9c7ef6972b002d24600b8f32f9887f1d65bbf
+ib-phy-c-111 diagramSvg: 0972fd0426d0f996f9545f91edf8fb92edb1a5264f87f677ee3cc6b6132e28e1 -> b6d392e3fd0338240910f860c7d42a101cc9336601af2ccef5cc79341c2c0209
+ib-phy-c-112 diagramSvg: e9aa004d994aecc142ba7fadd19f31a4d8eaa08d44c754a948f85101b9d01a8c -> 8094846d61eb4755abbba8b347c9c7ef6972b002d24600b8f32f9887f1d65bbf
