@@ -61,11 +61,22 @@ an obsolete manifest cannot silently ship after a correction.
 
 After the final corrections, all five independent checkers passed again (1,014
 comparisons). The final content gate passed for all 640 questions, 2,163 marks,
-3,053 mathematical expressions and 395 diagram placements, with verified CDN
+3,587 mathematical expressions and 395 diagram placements, with verified CDN
 coverage required. All 339 current public images passed hash and content-type
 verification. Final production compilation, TypeScript, public authentication
 configuration checks and the scan of 32 generated browser files passed; no
 Supabase server keys were exposed.
 
-Live browser verification is the postdeployment gate, recorded in the release
-handoff. No automated check sends email or modifies student records.
+Live checks passed for all five themes, separate-tab schemes, individual
+questions, question-ID search, difficulty/type/Additional HL filters, pagination,
+Cloudflare images and mobile layout. The initial live review found stale
+uncontrolled filter selections after subtopic navigation; the filter form now
+remounts for a changed route/filter set. The correction was rechecked live,
+including C.3 selection, preserved pagination filters and cross-theme resets.
+
+The last notation pass formatted subscripts and fractional powers in 298 text
+fields across 121 B/C questions. A separate before/after comparison confirmed
+identical numerical tokens, mark codes and all nontext fields; diagram hashes
+remained unchanged. Both affected independent checkers and strict content/CDN
+validation passed again. No automated check sends email or modifies student
+records.

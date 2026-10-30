@@ -29,6 +29,34 @@ def p(prompt, *steps):
 def step(text, code='A1'):
     return (code, text)
 
+def format_literal_subscripts(value):
+    """Format only literal underscore identifiers outside existing dollar math."""
+    # These supplied fractional powers use explicit math rather than caret prose.
+    for plain, maths in {
+        '2^(1/4)': r'$2^{1/4}$',
+        '(0.5)^(1/4)': r'$(0.5)^{1/4}$',
+        '(0.80/0.50)^(1/4)': r'$(0.80/0.50)^{1/4}$',
+        'flux^(1/4)': r'$\text{flux}^{1/4}$',
+        'distance^(−1/2)': r'$\text{distance}^{−1/2}$',
+        'T = (F_surface/σ)^(1/4)': r'$T = (F_{\mathrm{surface}}/\sigma)^{1/4}$',
+        'T = [(1 − a)S/(4eσ)]^(1/4)': r'$T = [(1 − a)S/(4eσ)]^{1/4}$',
+        'T_eff = (F_out/σ)^(1/4)': r'$T_{\mathrm{eff}} = (F_{\mathrm{out}}/\sigma)^{1/4}$',
+        'PV^(5/3)': r'$PV^{5/3}$',
+        'TV^(2/3)': r'$TV^{2/3}$',
+    }.items():
+        value=value.replace(plain, maths)
+    value=re.sub(r'T_f = ([0-9.]+)\(V_i/V_f\)\^\(2/3\)',
+                 lambda m:r'$T_{\mathrm{f}} = '+m[1]+r'(V_{\mathrm{i}}/V_{\mathrm{f}})^{2/3}$',value)
+    greek={'Δ':r'\Delta ','θ':r'\theta ','λ':r'\lambda ','ρ':r'\rho ','η':r'\eta ','ε':r'\varepsilon ','Ω':r'\Omega '}
+    identifier=re.compile(r'([A-Za-z0-9ΔθλρηεΩ]+)_([A-Za-z0-9]+(?:[-,][A-Za-z0-9]+)?)')
+    def replacement(match):
+        base=''.join(greek.get(char,char) for char in match[1]).rstrip()
+        suffix=match[2]
+        sub=suffix if suffix.isdigit() else (r'\text{'+suffix+'}' if '-' in suffix else r'\mathrm{'+suffix+'}')
+        return '$'+base+'_{'+sub+'}$'
+    return ''.join(piece if piece.startswith('$') else identifier.sub(replacement,piece)
+                   for piece in re.split(r'(\$\$[\s\S]*?\$\$|\$(?:\\.|[^$\n])+\$)',value))
+
 def numeric(correct, distractors, unit=''):
     vals = [correct] + list(distractors)
     assert len(vals) == 4 and all(math.isfinite(x) for x in vals)
@@ -167,6 +195,11 @@ def add(family, sub, variant, kind, title, stem, *, opts=None, reasoning='', par
     if diagram:q['diagramSvg']=diagram
     if worked:q['markSchemeDiagramSvg']=worked
     if summary:q['answerSummary']=summary
+    q['stem']=format_literal_subscripts(q['stem'])
+    for part in q['parts']:part['prompt']=format_literal_subscripts(part['prompt'])
+    for option in q.get('options',[]):option['text']=format_literal_subscripts(option['text'])
+    for group in q['markScheme']:
+        for point in group['steps']:point['text']=format_literal_subscripts(point['text'])
     Q.append(q);FAMILIES.append(family)
 
 # B.1 -- six distinct skill families.

@@ -68,7 +68,7 @@ for q in qs:
         product=sum(a*b for a,b in records)/len(records);n_est=product*.001/(8.31*(300+20*v))
         expect(q,[n_est],'Amount recomputed using all rounded pressure-volume products; raw question plot no longer reveals requested linearization.')
     elif family==19:mcq(q,[320,400,-200,150][v])
-    elif family==20:concept(q,['positive total entropy','at least as large','Zero.','Q/T_c'][v])
+    elif family==20:concept(q,['positive total entropy','at least as large','Zero.',r'Q/$T_{\mathrm{c}}$'][v])
     elif family==21:
         work=(120+10*v)*(3+v)*(1 if v%2==0 else -1)
         expect(q,[work],'Signed p-V area checked against all cycle arrow directions; cyclic internal-energy and heat relation reviewed.')

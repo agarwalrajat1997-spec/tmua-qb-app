@@ -48,7 +48,7 @@ for q in qs:
         expect(q,[omega,2*math.pi/omega],'Angular frequency and period inferred from all displayed linear data; sensor-offset effect checked.')
     elif family==7:concept(q,['Transverse.','oscillate parallel','Visible electromagnetic','transfers energy'][v])
     elif family==8:mcq(q,[4,1.2,.00025,6e14][v])
-    elif family==9:concept(q,['Frequency stays fixed; wavelength becomes 0.75','It halves.','Snapshot repeat distance','f_X/f_Y = 1/3'][v])
+    elif family==9:concept(q,['Frequency stays fixed; wavelength becomes 0.75','It halves.','Snapshot repeat distance',r'$f_{\mathrm{X}}$/$f_{\mathrm{Y}}$ = 1/3'][v])
     elif family==10:
         a=.02+.01*v;wavelength=.4+.2*v;frequency=3+v
         expect(q,[a,wavelength,wavelength*frequency,1/(4*frequency)],'Snapshot amplitude/wavelength/speed and quarter-period recomputed; particle-motion sign checked for left and right travel.')

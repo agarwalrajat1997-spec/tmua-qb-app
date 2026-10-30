@@ -16,6 +16,18 @@ C=3.00e8
 def f(x,sig=3):return format(x,f'.{sig}g')
 def p(prompt,*steps):return prompt,list(steps)
 def step(text,code='A1'):return code,text
+def format_literal_subscripts(value):
+    """Format only literal underscore identifiers outside existing dollar math."""
+    greek={'Δ':r'\Delta ','θ':r'\theta ','λ':r'\lambda ','ρ':r'\rho ','η':r'\eta ','ε':r'\varepsilon ','Ω':r'\Omega '}
+    identifier=re.compile(r'([A-Za-z0-9ΔθλρηεΩ]+)_([A-Za-z0-9]+(?:[-,][A-Za-z0-9]+)?)')
+    def replacement(match):
+        base=''.join(greek.get(char,char) for char in match[1]).rstrip()
+        suffix=match[2]
+        sub=suffix if suffix.isdigit() else (r'\text{'+suffix+'}' if '-' in suffix else r'\mathrm{'+suffix+'}')
+        return '$'+base+'_{'+sub+'}$'
+    return ''.join(piece if piece.startswith('$') else identifier.sub(replacement,piece)
+                   for piece in re.split(r'(\$\$[\s\S]*?\$\$|\$(?:\\.|[^$\n])+\$)',value))
+
 def numeric(good,bad,unit=''):
     vals=[good]+list(bad);assert len(vals)==4 and all(math.isfinite(x)for x in vals)
     labels=[f(x)+(' '+unit if unit else '')for x in vals];assert len(set(labels))==4,labels
@@ -135,6 +147,11 @@ def add(family,sub,variant,kind,title,stem,*,opts=None,reasoning='',parts=None,l
     if diagram:q['diagramSvg']=diagram
     if worked:q['markSchemeDiagramSvg']=worked
     if summary:q['answerSummary']=summary
+    q['stem']=format_literal_subscripts(q['stem'])
+    for part in q['parts']:part['prompt']=format_literal_subscripts(part['prompt'])
+    for option in q.get('options',[]):option['text']=format_literal_subscripts(option['text'])
+    for group in q['markScheme']:
+        for point in group['steps']:point['text']=format_literal_subscripts(point['text'])
     Q.append(q);FAMILIES.append(family)
 
 # C.1: SHM condition, period, phase, energy and measured restoring acceleration.
