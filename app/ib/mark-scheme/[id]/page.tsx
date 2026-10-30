@@ -27,7 +27,7 @@ export default async function MarkScheme({ params }: { params: Promise<{ id: str
       <section className={styles.schemeSolution}><h2>Worked solution & mark allocation</h2>
         <div className={styles.markLegend}><span><b>M</b> Method</span><span><b>A</b> Accuracy</span><span><b>R</b> Reasoning</span></div>
         {q.markScheme.map(group => <section className={styles.schemePart} key={group.part || "whole"}>
-          {group.part ? <h3>Part ({group.part})<span>[{q.parts.find(p => p.label === group.part)?.marks} marks]</span></h3> : null}
+          {group.part ? <h3>Part ({group.part})<span>[{q.parts.find(p => p.label === group.part)?.marks} {q.parts.find(p => p.label === group.part)?.marks === 1 ? "mark" : "marks"}]</span></h3> : null}
           <ol className={styles.markSteps}>{group.steps.map((step, index) => <li key={index}><MathContent>{step.text}</MathContent><strong className={styles.markCode}>{step.code}</strong></li>)}</ol>
         </section>)}
         <QuestionDiagram svg={q.markSchemeDiagramSvg} url={q.markSchemeDiagramUrl} caption={`Worked solution diagram for question ${q.number}`} />
