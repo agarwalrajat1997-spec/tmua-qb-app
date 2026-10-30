@@ -1,4 +1,4 @@
-# IB portal and Maths AA HL question bank
+# IB portal and subject question banks
 
 Entry point: `https://apps.thrivingscholars.com/ib`.
 Dedicated sign-in: `/ib-login`.
@@ -10,9 +10,11 @@ is required for the question bank. Existing programme gates are unchanged.
 ## Navigation
 
 `/ib?subject=math-aa-hl&view=questions` is the default.
-`subject=physics-hl` switches subject; `view=mocks` opens mock tests.
-Subject and view survive refresh, deep links, login, and expired-link retries.
-Both pages are responsive and intentionally excluded from indexing.
+`subject=physics-hl` switches to Physics. `subject=chemistry&course=sl` selects
+Chemistry SL; `course=hl` selects shared plus additional HL Chemistry content.
+`view=mocks` opens mock tests. Subject, view and Chemistry course survive refresh,
+deep links, login and expired-link retries. The pages are responsive and excluded
+from indexing.
 
 The five Maths topic groups describe the current AA course, whose final assessment
 is November 2028. Physics uses the five themes of the course first assessed in
@@ -21,6 +23,11 @@ reference numbers. Sources:
 - https://www.ibo.org/programmes/diploma-programme/curriculum/mathematics/
 - https://www.ibo.org/globalassets/new-structure/university-admission/pdfs/subject-guides/mathematics-analysis-approaches-guide.pdf
 - https://xmltwo.ibo.org/publications/EAD/2026_EN/GR4/GR4-Physics_EN.pdf
+- https://xmltwo.ibo.org/publications/EAD/2026_EN/GR4/GR4-Chemistry_EN.pdf
+
+Chemistry has 407 shared SL questions and 193 additional HL questions across six
+themes and 22 subtopics. See [Chemistry bank documentation](ib-chemistry-question-bank.md)
+for course boundaries, original diagrams, written schemes and full review records.
 
 ## Authentication
 

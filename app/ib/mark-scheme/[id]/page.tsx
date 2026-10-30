@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
-import { IB_COURSES, ibHref } from "@/lib/ib/catalog";
+import { ibHref, ibCourseLevel, ibCourseHref, ibCourseLabel } from "@/lib/ib/catalog";
 import { getIbQuestion } from "@/lib/ib/content";
 import { getIbCollection, questionPrompt } from "@/lib/ib/question";
 import ExamShell from "../../components/ExamShell";
@@ -12,16 +12,19 @@ import PrintButton from "../../components/PrintButton";
 import styles from "../../questions.module.css";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "IB HL Mark Scheme | Thriving Scholars", robots: { index: false, follow: false } };
-export default async function MarkScheme({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const user = await requireIbUser(`/ib/mark-scheme/${encodeURIComponent(id)}`);
-  const q = getIbQuestion(id);
+export const metadata: Metadata = { title: "IB Mark Scheme | Thriving Scholars", robots: { index: false, follow: false } };
+export default async function MarkScheme({ params, searchParams }: { params: Promise<{ id: string }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }) {
+  const [{ id }, raw] = await Promise.all([params, searchParams]);
+  const courseLevel = ibCourseLevel(raw?.course);
+  const pathname = `/ib/mark-scheme/${encodeURIComponent(id)}`;
+  const user = await requireIbUser(ibCourseHref(pathname, id.startsWith("ib-chem-") ? "chemistry" : "math-aa-hl", courseLevel));
+  const q = getIbQuestion(id, courseLevel);
   if (!q) notFound();
   const collection = getIbCollection(q.collectionId)!;
-  return <ExamShell email={user.email} subject={q.subject}>
-    <div className={styles.schemeToolbar}><nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href={ibHref(q.subject)}>Question bank</Link><span>/</span><Link href={`/ib/question-bank/${collection.id}`}>{collection.title}</Link><span>/</span><Link href={`/ib/questions/${q.id}`}>Question {q.number}</Link></nav><PrintButton /></div>
-    <header className={styles.schemeTitle}><div><span className={styles.overline}>IB {IB_COURSES[q.subject].label.toUpperCase()} · {collection.title.toUpperCase()}</span><h1>Question {q.number} — Mark scheme</h1></div><QuestionBadges question={questionPrompt(q)} /></header>
+  const bankPath = `/ib/question-bank/${collection.id}`;
+  return <ExamShell email={user.email} subject={q.subject} courseLevel={courseLevel} courseLinks={{ sl: ibCourseHref(q.subject === "chemistry" && q.level === "ahl" ? bankPath : pathname, q.subject, "sl"), hl: ibCourseHref(pathname, q.subject, "hl") }}>
+    <div className={styles.schemeToolbar}><nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href={ibHref(q.subject, "questions", courseLevel)}>Question bank</Link><span>/</span><Link href={ibCourseHref(bankPath, q.subject, courseLevel)}>{collection.title}</Link><span>/</span><Link href={ibCourseHref(`/ib/questions/${q.id}`, q.subject, courseLevel)}>Question {q.number}</Link></nav><PrintButton /></div>
+    <header className={styles.schemeTitle}><div><span className={styles.overline}>IB {ibCourseLabel(q.subject, courseLevel).toUpperCase()} · {collection.title.toUpperCase()}</span><h1>Question {q.number} — Mark scheme</h1></div><QuestionBadges question={questionPrompt(q)} /></header>
     <div className={styles.schemeColumns}>
       <section className={styles.schemeQuestion}><h2>Question</h2><QuestionBody question={questionPrompt(q)} /></section>
       <section className={styles.schemeSolution}><h2>Worked solution & mark allocation</h2>
@@ -32,9 +35,9 @@ export default async function MarkScheme({ params }: { params: Promise<{ id: str
         </section>)}
         <QuestionDiagram svg={q.markSchemeDiagramSvg} url={q.markSchemeDiagramUrl} caption={`Worked solution diagram for question ${q.number}`} />
         <div className={styles.schemeTotal}>Total <strong>{q.marks} {q.marks === 1 ? "mark" : "marks"}</strong></div>
-        <p className={styles.markNote}>{q.subject === "physics-hl"
-          ? q.questionType === "multiple-choice" ? "Award one mark for the correct option. The explanation develops the physics behind the choice and does not earn additional marks."
-            : "Accept equivalent physics reasoning and valid alternative methods unless a method is specified. Award the separate marking points up to the stated maximum. Apply error carried forward, unit requirements and significant-figure penalties only where the individual marking note states them."
+        <p className={styles.markNote}>{q.subject !== "math-aa-hl"
+          ? q.questionType === "multiple-choice" ? `Award one mark for the correct option. The explanation develops the ${q.subject === "chemistry" ? "chemistry" : "physics"} behind the choice and does not earn additional marks.`
+            : `Accept equivalent ${q.subject === "chemistry" ? "chemical" : "physics"} reasoning and valid alternative methods unless a method is specified. Award the separate marking points up to the stated maximum. Apply error carried forward, unit requirements and significant-figure penalties only where the individual marking note states them.`
           : "Accept equivalent exact forms and valid alternative methods unless a method is specified. Accuracy marks depend on the relevant method where indicated. Follow-through is awarded only where stated. AG indicates an answer given in the question and earns no marks."}</p>
       </section>
     </div>

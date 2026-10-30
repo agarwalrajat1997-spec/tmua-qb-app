@@ -5,6 +5,7 @@ import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ibHarness } from './ib-component-harness.mjs';
+import './verify-ib-chemistry-portal.mjs';
 
 const base={id:'ib-aa-na-001',subject:'math-aa-hl',topicId:'number-algebra',collectionId:'number-algebra',number:1,title:'Expand a binomial',subtopic:'Binomial theorem',difficulty:'easy',calculator:false,marks:2,stem:'Expand $(x+3)^2$.',parts:[],markScheme:[{part:'',steps:[{code:'M1',text:'Use the binomial theorem.'},{code:'A1',text:'SECRET-SOLUTION-CANARY $x^2+6x+9$.'}]}],source:{document:'Synthetic test only',question:1},verification:{method:'symbolic',notes:'Synthetic fixture'},status:'published'};
 const other={...base,id:'ib-aa-na-002',number:2,title:'A logarithm',subtopic:'Logarithms',difficulty:'hard',calculator:true,stem:'Find $\\log_3 7$.',source:{...base.source,question:2}};
@@ -165,7 +166,7 @@ try {
   const event={currentTarget:{src:trusted}};imageElement.props.onError(event);assert.equal(event.currentTarget.src,fallback);
   imageElement.props.onError(event);assert.equal(event.currentTarget.src,fallback);
   const MathContent=physicsHarness.load('app/ib/components/MathContent.tsx').default;
-  html=renderToStaticMarkup(React.createElement(MathContent,{children:'![External](https://untrusted.example.invalid/a.svg)'}));
+  html=renderToStaticMarkup(React.createElement(MathContent,null,'![External](https://untrusted.example.invalid/a.svg)'));
   assert.doesNotMatch(html,/untrusted.example.invalid|<img/);
 } finally { if(originalOrigin===undefined)delete process.env.IB_DIAGRAM_CDN_ORIGIN;else process.env.IB_DIAGRAM_CDN_ORIGIN=originalOrigin; }
 console.log('IB portal passed: Maths regressions; five Physics themes and 24 syllabus destinations; filters/pagination; MCQ one-mark validation; accessible difficulty bars; real Markdown/KaTeX; independent authorization; private-answer and solution-image separation; draft/unknown IDs withheld; trusted-CDN restriction with SVG fallback. Synthetic fixtures only; no emails or database writes.');

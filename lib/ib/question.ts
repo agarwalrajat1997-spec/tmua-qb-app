@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { physicsSyllabusSubtopics, type IbSubject, type IbSyllabusSubtopic } from "./catalog.ts";
+import { ibSyllabusSubtopics, type IbCourseLevel, type IbSubject, type IbSyllabusSubtopic } from "./catalog.ts";
 
 export const IB_COLLECTIONS = [
   { id: "number-algebra", subject: "math-aa-hl", topicId: "number-algebra", code: "01", title: "Number & algebra", description: "Sequences, logarithms, binomial expansion, complex numbers and proof." },
@@ -13,6 +13,12 @@ export const IB_COLLECTIONS = [
   { id: "physics-wave-behaviour", subject: "physics-hl", topicId: "wave-behaviour", code: "C", title: "Wave behaviour", description: "Oscillations, wave models, interference, standing waves and the Doppler effect." },
   { id: "physics-fields", subject: "physics-hl", topicId: "fields", code: "D", title: "Fields", description: "Gravitational, electric and magnetic fields, charged-particle motion and induction." },
   { id: "physics-nuclear-quantum", subject: "physics-hl", topicId: "nuclear-quantum", code: "E", title: "Nuclear & quantum physics", description: "Atomic structure, quantum physics, radioactivity, fission, fusion and stars." },
+  { id: "chemistry-structure-1", subject: "chemistry", topicId: "structure-1", code: "S1", title: "Models of the particulate nature of matter", description: "Particles, atoms, electron configurations, the mole and ideal gases." },
+  { id: "chemistry-structure-2", subject: "chemistry", topicId: "structure-2", code: "S2", title: "Models of bonding and structure", description: "Ionic, covalent and metallic models, molecular shapes and materials." },
+  { id: "chemistry-structure-3", subject: "chemistry", topicId: "structure-3", code: "S3", title: "Classification of matter", description: "Periodic patterns, functional groups and the classification of organic compounds." },
+  { id: "chemistry-reactivity-1", subject: "chemistry", topicId: "reactivity-1", code: "R1", title: "What drives chemical reactions?", description: "Enthalpy changes, energy cycles, fuels, entropy and spontaneity." },
+  { id: "chemistry-reactivity-2", subject: "chemistry", topicId: "reactivity-2", code: "R2", title: "How much, how fast and how far?", description: "Amounts of chemical change, reaction rates and equilibrium." },
+  { id: "chemistry-reactivity-3", subject: "chemistry", topicId: "reactivity-3", code: "R3", title: "What are the mechanisms of chemical change?", description: "Proton transfer, electron transfer, electron sharing and reaction mechanisms." },
 ] as const;
 export type IbCollectionId = typeof IB_COLLECTIONS[number]["id"];
 export type IbCollectionSummary = {
@@ -70,20 +76,31 @@ const physicsQuestion = commonQuestion.extend({
   options: z.array(z.object({ label: optionLabel, text })).length(4).optional(), correctOption: optionLabel.optional(),
   source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
 });
-export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, physicsQuestion]).superRefine((q, ctx) => {
+const chemistryQuestion = commonQuestion.extend({
+  id: z.string().regex(/^ib-chem-[sr][1-3]-\d{3}$/),
+  subject: z.literal("chemistry"),
+  topicId: z.enum(["structure-1", "structure-2", "structure-3", "reactivity-1", "reactivity-2", "reactivity-3"]),
+  collectionId: z.enum(["chemistry-structure-1", "chemistry-structure-2", "chemistry-structure-3", "chemistry-reactivity-1", "chemistry-reactivity-2", "chemistry-reactivity-3"]),
+  syllabusCode: z.string().regex(/^[SR][1-3]\.[1-5]$/), level: z.enum(["sl", "ahl"]),
+  questionType: z.enum(["multiple-choice", "structured", "data-based"]), calculator: z.literal(true),
+  options: z.array(z.object({ label: optionLabel, text })).length(4).optional(), correctOption: optionLabel.optional(),
+  source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
+});
+export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, physicsQuestion, chemistryQuestion]).superRefine((q, ctx) => {
   const fail = (message: string) => ctx.addIssue({ code: "custom", message });
   const collection = getIbCollection(q.collectionId);
   if (collection?.topicId !== q.topicId || collection?.subject !== q.subject) fail("Collection and syllabus topic disagree");
   if (q.number !== q.source.question) fail("Question numbering must retain its reference mapping");
-  if (q.subject === "physics-hl") {
-    const syllabus = physicsSyllabusSubtopics(q.topicId).find(item => item.code === q.syllabusCode);
-    if (!syllabus) fail("Syllabus code must belong to the question's Physics theme");
+  if (q.subject === "physics-hl" || q.subject === "chemistry") {
+    const syllabus = ibSyllabusSubtopics(q.subject, q.topicId).find(item => item.code === q.syllabusCode);
+    if (!syllabus) fail("Syllabus code must belong to the question's subject and theme");
     if (syllabus?.additionalHlOnly && q.level !== "ahl") fail("This syllabus subtopic is additional HL only");
-    if (q.id !== "ib-phy-" + collection?.code.toLowerCase() + "-" + String(q.number).padStart(3, "0")) fail("Physics ID must match its theme and question number");
+    const prefix = q.subject === "chemistry" ? "ib-chem-" : "ib-phy-";
+    if (q.id !== prefix + collection?.code.toLowerCase() + "-" + String(q.number).padStart(3, "0")) fail("Question ID must match its theme and question number");
     if (q.questionType === "multiple-choice") {
       if (q.marks !== 1 || q.parts.length) fail("Multiple-choice questions award exactly one mark and have no parts");
       if (!q.options || q.options.map(option => option.label).join("") !== "ABCD" || !q.correctOption) fail("Multiple-choice questions require options A–D in order and a private correct option");
-      if (q.markScheme.length !== 1 || q.markScheme[0].steps.length !== 1 || q.markScheme[0].steps[0].code !== "A1") fail("Multiple-choice schemes require a single A1 step with the correct choice and its physics reasoning");
+      if (q.markScheme.length !== 1 || q.markScheme[0].steps.length !== 1 || q.markScheme[0].steps[0].code !== "A1") fail("Multiple-choice schemes require a single A1 step with the correct choice and its scientific reasoning");
     } else if (q.options !== undefined || q.correctOption !== undefined) fail("Only multiple-choice questions may define options or a correct option");
   }
   const stepTotal = q.markScheme.reduce((total, group) => total + group.steps.reduce((sum, step) => sum + markValue(step.code), 0), 0);
@@ -100,6 +117,9 @@ export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, 
   } else if (q.markScheme.length !== 1 || q.markScheme[0].part !== "") fail("Unparted question requires one unlabelled scheme group");
 });
 export type IbQuestion = z.infer<typeof ibQuestionSchema>;
+export function questionAvailableForCourse(q: IbQuestion, course: IbCourseLevel = "hl") {
+  return q.subject !== "chemistry" || course === "hl" || q.level === "sl";
+}
 type PromptOnly<T> = T extends unknown ? Omit<T, "markScheme" | "markSchemeDiagramSvg" | "markSchemeDiagramUrl" | "answerSummary" | "source" | "verification" | "correctOption"> : never;
 export type IbQuestionPrompt = PromptOnly<IbQuestion>;
 /** An explicit allowlist keeps solutions and private authoring metadata out of question views. */
@@ -108,6 +128,8 @@ export function questionPrompt(q: IbQuestion): IbQuestionPrompt {
     title: q.title, subtopic: q.subtopic, difficulty: q.difficulty, calculator: q.calculator, marks: q.marks,
     stem: q.stem, parts: q.parts, diagramSvg: q.diagramSvg, diagramUrl: q.diagramUrl, status: q.status };
   if (q.subject === "physics-hl") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
+    calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
+  if (q.subject === "chemistry") return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
     calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, questionType: q.questionType, options: q.options };
   return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId };
 }

@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "reviewedQuestions": 192,
+  "numericChecks": 322,
+  "equationBalanceChecks": 56,
+  "mathExpressionsRendered": 1189,
+  "svgFieldsReviewed": 24,
+  "uniqueSvgHashesReviewed": 17,
+  "reproduceFromRepositoryRoot": [
+    "python scripts/ib-chemistry-review/audit_reactivity12.py",
+    "node --experimental-strip-types scripts/ib-chemistry-review/review-r12-presentation.mjs",
+    "python scripts/ib-chemistry-review/verify-r12-visual-review.py"
+  ],
+  "independence": "Models parse displayed JSON question inputs and never import the authors' calculation modules. Every question has a scientific/scope review and a full-record hash. Visual approval is stored by exact SVG hash; the verifier cannot approve new images.",
+  "source": "https://xmltwo.ibo.org/publications/EAD/2026_EN/GR4/GR4-Chemistry_EN.pdf",
+  "constantsSource": "https://www.ibchem.com/root_pdf/DataBook2025.pdf",
+  "constants": {"R_J_mol_K":8.31,"waterSpecificHeat_J_g_K":4.18,"STP_T_K":273.15,"STP_p_kPa":100,"STP_molarVolume_dm3_mol":22.7},
+  "scope": {
+    "R1.1": "Shared SL/HL: all content; calorimetry, heat direction, standard enthalpy and profiles",
+    "R1.2": "Shared: bond-enthalpy estimates and Hess manipulation. HL: formation/combustion standard-data sums and Born-Haber calculations; no full cycle construction required",
+    "R1.3": "Shared SL/HL: all content, including hydrogen/methanol fuel-cell half-equations; proton-exchange membrane detail excluded",
+    "R1.4": "HL only: entropy, Gibbs, spontaneity, Q and K",
+    "R2.1": "Shared SL/HL: all content; stoichiometry, limiting reactants, percentage yield, atom economy",
+    "R2.2": "Shared statements1-5: rates, collision theory, conditions, Maxwell-Boltzmann, catalysts. HL statements6-13: mechanisms, transition states, rate law, molecularity, Arrhenius and factor A",
+    "R2.3": "Shared statements1-4: dynamic equilibrium, K expression/magnitude/reversal and qualitative Le Chatelier. HL statements5-7: Q, composition calculation, small-K approximation, Gibbs link; quadratic solutions not expected"
+  },
+  "independentModels": [
+    "Calorimetry: q(solution)=mcΔT, q(reaction)=-q(surroundings), ΔH=q(reaction)/reacting amount; include calorimeter heat where given",
+    "Bonds: ΣD(broken)-ΣD(formed), accounting for all stoichiometric bonds and gas-phase assumption",
+    "Hess: reverse changes sign; scale changes magnitude; cancel chemical species before adding energy",
+    "Formation: ΣνΔHf(products)-ΣνΔHf(reactants); combustion-data route uses reactant combustion minus product combustion",
+    "Born-Haber: explicit signed state path and lattice convention, including second ionization/electron affinity where required",
+    "Fuel metrics: complete/incomplete atom balance, energy per mass, CO2 per energy; fuel-cell half-equations balance atoms and charge in stated electrolyte",
+    "Entropy/Gibbs: ΔS products minus reactants; ΔG=ΔH-TΔS after J/kJ conversion; T in kelvin; spontaneous iff actual ΔG<0",
+    "Nonstandard thermodynamics: ΔG=ΔG°+RT lnQ; ΔG°=-RT lnK; actual ΔG=0 at equilibrium even if ΔG° is nonzero",
+    "Stoichiometry: reactant extent n/ν, limiting minimum, theoretical product, percentage yield and atom economy with the balanced formula",
+    "Rates: signed species change/time, tangent slopes, stoichiometric rate ratios, experimental order, k units and multistep barrier references",
+    "Arrhenius: ln(k2/k1)=Ea/R(1/T1-1/T2), ln k intercept=ln A, slope=-Ea/R",
+    "Equilibrium: K and Q exponents from balanced stoichiometry, pure phases excluded as appropriate, direction from Q versus K, extent and changing total volume handled explicitly"
+  ],
+  "svgHelperReview": "common.py emits explicit polygon arrowheads and escapes text content; no external references, marker URLs, active content or unsupported image embeds. Actual generated SVG fields require schema validation and visual inspection."
+}
