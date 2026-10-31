@@ -99,6 +99,12 @@ function withSessionCookies(response: NextResponse, sessionResponse: NextRespons
 }
 
 export async function proxy(req: NextRequest) {
+  // Read-only Studio development preview. Production always keeps the normal gate.
+  if (process.env.NODE_ENV !== "production" && process.env.DEV_BYPASS_TMUA_ACCESS === "1" &&
+      ["localhost", "127.0.0.1"].includes(req.nextUrl.hostname) &&
+      (req.nextUrl.pathname === "/tmua-question-bank" || req.nextUrl.pathname === "/tmua-question-bank/studio")) {
+    return NextResponse.next();
+  }
   // TS_PUBLIC_SAT_TEST_4
   // This standalone test must remain accessible without authentication.
   if (

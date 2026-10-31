@@ -11,6 +11,7 @@ if (publicSupabase.rejectedVariables.length) {
 }
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: { "/api/tmua/studio": ["./content/tmua-studio/**/*"] },
   async headers() {
     return [{
       source: "/auth/:path*",
@@ -25,6 +26,9 @@ const nextConfig: NextConfig = {
   // also work for signed-out visitors. All other AMC routes stay protected.
   async redirects() {
     return [
+      { source: "/tmua-question-bank/index.html", destination: "/tmua-question-bank", permanent: false },
+      { source: "/question-bank-tmua", destination: "/tmua-question-bank", permanent: false },
+      { source: "/question-bank-tmua/index.html", destination: "/tmua-question-bank", permanent: false },
       {
         source: "/amc",
         has: [{ type: "query", key: "section", value: "past-papers" }],

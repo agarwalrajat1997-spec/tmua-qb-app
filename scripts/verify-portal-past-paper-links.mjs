@@ -9,6 +9,8 @@ const expectedUrl =
 const destination = read("lib/past-paper-practice.ts");
 const link = read("app/components/PastPaperPracticeLink.tsx");
 const amc = read("app/dashboard/AMCDashboardClient.tsx");
+const tmua = read("app/dashboard/DashboardClient.tsx");
+const tmuaBank = read("app/tmua-question-bank/QuestionBank.tsx");
 const amcRoute = read("app/amc/page.tsx");
 const nextConfig = read("next.config.ts");
 
@@ -54,7 +56,6 @@ function questionBankCard(source, buttonLabel, portalName) {
 
 for (const portal of [
   { name: "AMC", file: "app/dashboard/AMCDashboardClient.tsx", button: "Open {activePaper?.paper} Question Bank" },
-  { name: "TMUA", file: "app/dashboard/DashboardClient.tsx", button: "Open TMUA Question Bank" },
   { name: "ESAT", file: "app/esat/ESATDashboardClient.tsx", button: "Open ESAT Question Bank" },
 ]) {
   const source = read(portal.file);
@@ -66,6 +67,22 @@ for (const portal of [
     `${portal.name} must place the practice link with its question-bank entry button.`,
   );
 }
+
+// TMUA now opens its actual bank inside the dashboard instead of an entry card.
+// The public practice link remains in that same bank, including the standalone
+// route, rather than disappearing or moving into another dashboard section.
+assert.ok(/import\s+QuestionBank\s+from\s+["'][^"']*\/tmua-question-bank\/QuestionBank["']/.test(tmua)
+  || /const\s+QuestionBank\s*=\s*dynamic\(\s*\(\)\s*=>\s*import\(["'][^"']*\/tmua-question-bank\/QuestionBank["']\)/.test(tmua),
+  "The TMUA dashboard must import the live question-bank component.");
+assert.ok(/active\s*===\s*["']bank["']\s*\?\s*\(\s*<QuestionBank\s+embedded\s*\/>\s*\)/.test(tmua),
+  "The TMUA bank section must render the embedded question bank.");
+assert.match(tmuaBank, /import\s+PastPaperPracticeLink\s+from\s+["'][^"']*\/PastPaperPracticeLink["']/);
+assert.equal((tmuaBank.match(/<PastPaperPracticeLink\b/g) ?? []).length, 1,
+  "TMUA must render one shared practice link in the actual question bank.");
+assert.equal((tmua.match(/<PastPaperPracticeLink\b/g) ?? []).length, 0,
+  "The dashboard must not duplicate the TMUA bank's shared practice link.");
+assert.ok(/<footer\s+className=["']bank-past-paper-link["']\s*>\s*<PastPaperPracticeLink\s*\/>\s*<\/footer>\s*<\/main>/.test(tmuaBank),
+  "The TMUA practice link must remain in the bank footer after its question content.");
 
 assert.doesNotMatch(amc, /["']Past Papers["']|["']past-papers["']|>\s*(?:AMC\s+)?Past Papers\s*</, "AMC must not retain its removed Past Papers view or navigation.");
 assert.doesNotMatch(amc, /amc-past-paper-practice|pastPaperFrame|<iframe\b/, "AMC must not retain the embedded archive section.");
@@ -109,4 +126,4 @@ for (const [, source] of redirects.matchAll(/source\s*:\s*["']([^"']+)["']/g)) {
   }
 }
 
-console.log("Portal past-paper links verified: all three question-bank cards, AMC navigation removal and public legacy redirect.");
+console.log("Portal past-paper links verified: AMC/ESAT entry cards, embedded and standalone TMUA bank footer, AMC navigation removal and public legacy redirect.");

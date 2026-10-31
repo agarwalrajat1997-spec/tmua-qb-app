@@ -8,5 +8,6 @@ export default function TmuaFinalReminderLoader() {
   useEffect(() => {
     window.dispatchEvent(new Event("tmua-reminder-route"));
   }, [pathname]);
+  if (pathname === "/tmua-question-bank/studio") return null;
   return <Script src="/tmua-final-reminder.js" strategy="afterInteractive" />;
 }

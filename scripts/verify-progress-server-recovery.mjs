@@ -300,6 +300,9 @@ async function dashboardScenario(failure, accessRows = []) {
   } };
   const component = moduleAt('app/dashboard/DashboardClient.tsx', {
     react: { __esModule: true, default: react, ...react },
+    // Exercise the dashboard's auth/retry state without mounting its separately
+    // tested, lazily imported bank. The loader remains deferred as in Next.
+    'next/dynamic': { default: loader => { assert.equal(typeof loader, 'function'); return function LazyQuestionBank() {}; } },
     'next/navigation': { useRouter: () => ({ replace: value => redirects.push(value) }) },
     '@/utils/supabase/browser': { supabaseBrowser: () => dashboardDb },
     './dashboard.module.css': { default: {} }, './TmuaPredictionStrip': { default() {} },

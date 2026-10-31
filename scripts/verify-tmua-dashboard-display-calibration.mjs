@@ -12,6 +12,10 @@ const dashboard = fs.readFileSync(
   path.join(root, "app", "dashboard", "DashboardClient.tsx"),
   "utf8",
 );
+const bank = fs.readFileSync(
+  path.join(root, "app", "tmua-question-bank", "QuestionBank.tsx"),
+  "utf8",
+);
 
 function check(value, message) {
   if (!value) {
@@ -91,23 +95,31 @@ check(
   "stale scaled/benchmark wording must stay removed",
 );
 
+// The October bank release replaces the old entry-card roadmap/how-to with the
+// actual topic browser. Score/rank checks above remain unchanged.
 check(
-  dashboard.includes(
-    '<div className={styles.cardTitle}>Roadmap</div>',
-  ),
-  'Question Bank heading must remain "Roadmap"',
+  /active\s*===\s*["']bank["']\s*\?\s*\(\s*<QuestionBank\s+embedded\s*\/>\s*\)/.test(dashboard)
+    && bank.includes('<h1>QUESTION BANK</h1>') && bank.includes('className="topic-overview-grid"'),
+  "The dashboard must embed the live question bank with its topic overview",
 );
 
 check(
-  dashboard.includes("TS_QB_HOWTO_TOGGLE_V3") &&
-    dashboard.includes('<details className={styles.card}>') &&
-    dashboard.includes("<summary"),
-  "How to Use the Question Bank must remain collapsible",
+  bank.includes('aria-label="Filter questions"') && bank.includes('htmlFor="bank-topic"')
+    && bank.includes('htmlFor="bank-level"') && bank.includes('aria-label="Question pages"')
+    && bank.includes('>All topics</button>'),
+  "The topic browser must retain labelled topic/difficulty filters, back navigation and pagination",
 );
 
+const solutionDialogOpen = bank.match(/<dialog\s+ref=\{solutionDialog\}([\s\S]*?)<header/)?.[1] ?? "";
+const studioDialogOpen = bank.match(/<dialog\s+ref=\{studioDialog\}([\s\S]*?)<header/)?.[1] ?? "";
 check(
-  dashboard.includes("Alt + N") && dashboard.includes("Alt + P"),
-  "Question Bank keyboard shortcuts must remain present",
+  solutionDialogOpen.includes('aria-labelledby="bank-solution-title"')
+    && studioDialogOpen.includes('aria-labelledby="bank-studio-title"')
+    && bank.includes('solutionDialog.current?.showModal()')
+    && bank.includes('studioDialog.current?.showModal()')
+    && bank.includes('aria-label="Close solution"') && bank.includes('aria-label="Close Study Studio"')
+    && !solutionDialogOpen.includes('onCancel=') && !studioDialogOpen.includes('onCancel='),
+  "Solution and Studio must use labelled native dialogs with explicit close controls and default Escape dismissal",
 );
 
 console.log("TMUA dashboard display verifier passed.");

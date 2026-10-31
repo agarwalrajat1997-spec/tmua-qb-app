@@ -8,5 +8,6 @@ export default function EsatFinalReminderLoader() {
   useEffect(() => {
     window.dispatchEvent(new Event("esat-reminder-route"));
   }, [pathname]);
+  if (pathname === "/tmua-question-bank/studio") return null;
   return <Script src="/esat-final-reminder.js" strategy="afterInteractive" />;
 }

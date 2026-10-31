@@ -16,6 +16,13 @@
 }
 .shell{ min-height:calc(100vh - 84px); display:grid; grid-template-columns:360px 1fr;
 }
+.bankShell{grid-template-columns:200px minmax(0,1fr)}
+.bankShell .sideTitle{font-size:20px;padding:0 18px 18px}
+.bankShell .navBtn{gap:10px;padding:12px 14px;border-left-width:3px}
+.bankShell .step{width:27px;height:27px;border-width:1px;font-size:11px}
+.bankShell .navLabel{font-size:13px}
+.bankShell .main{min-width:0;padding:24px}
+@media(max-width:720px){.bankShell{grid-template-columns:60px minmax(0,1fr)}.bankShell .sidebar{display:block;padding:16px 0}.bankShell .sideTitle{font-size:0;padding:4px}.bankShell .sideTitle:before{content:'TMUA';font-size:10px}.bankShell .navLabel{display:none}.bankShell .navBtn{justify-content:center;padding:12px 0}.bankShell .main{padding:15px 12px}.bankShell .sidebar>div:not(.sideTitle){display:none}}
 .sidebar{ background:var(--ts-panel); border-right:1px solid var(--ts-border); padding:22px 0;
 }
 .sideTitle{ padding:0 22px 12px; font-weight:950; text-transform:uppercase; letter-spacing:-.02em; font-size:30px; line-height:1.05; color:rgba(20,20,20,.85);

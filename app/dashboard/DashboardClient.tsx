@@ -4,9 +4,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./dashboard.module.css";
+import dynamic from "next/dynamic";
+const QuestionBank = dynamic(() => import("../tmua-question-bank/QuestionBank"), { loading: () => <p>Loading your question bank…</p> });
 import TmuaPredictionStrip from "./TmuaPredictionStrip";
 import ServiceRetry from "../components/ServiceRetry";
-import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
 import PracticeAttemptSettings from "../components/PracticeAttemptSettings";
 import type { PracticeSettings, StandardTimeEstimate } from "@/lib/practice-settings";
 import { isMissingSession, withServiceTimeout, SERVICE_RETRY_MESSAGE } from "@/lib/auth/service-recovery";
@@ -470,7 +471,11 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
 
   useEffect(() => {
     if (accessLoading) return;
-    if (hasPractice) setActive("practice");
+    const section = new URLSearchParams(window.location.search).get("section");
+    if (section === "resources") setActive("resources");
+    else if (section === "bank" && hasBank) setActive("bank");
+    else if (section === "classes" && hasClasses) setActive("classes");
+    else if (hasPractice) setActive("practice");
     else if (hasBank) setActive("bank");
     else if (hasClasses) setActive("classes");
     else setActive("practice");
@@ -627,7 +632,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         </div>
       </div>
 
-      <div className={styles.shell}>
+      <div className={`${styles.shell} ${active === "bank" ? styles.bankShell : ""}`}>
         <aside className={styles.sidebar}>
           <div className={styles.sideTitle}>
             Your TMUA
@@ -1042,245 +1047,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
               </div>
             </>
           ) : active === "bank" ? (
-            <>
-              <div className={styles.h1}>Question Bank</div>
-
-              <div className={styles.metaRow}>
-                <div className={styles.meta}>
-                  <span className={styles.dot} /> TMUA Question Bank
-                </div>
-                <div className={styles.meta}>Filter · Bookmark · Solutions</div>
-              </div>
-              {/* TS_QB_RECOMMENDED_PATH_V2 */}
-              <div className={styles.card}>
-                <div className={styles.cardTitle}>Roadmap</div>
-                <div className={styles.muted} style={{ marginTop: 6, marginBottom: 14, lineHeight: 1.55 }}>
-                  Use the Question Bank in a deliberate cycle: learn a topic, secure accuracy, increase the challenge,
-                  review weak questions, then mix topics so you can recognise methods quickly under exam pressure.
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
-                  {[
-                    ["1", "Choose one topic", "Start focused. Use the topic filter and begin with questions that let you establish the core method."],
-                    ["2", "Secure accuracy", "Work until the method feels repeatable. Prioritise correct reasoning before trying to become faster."],
-                    ["3", "Increase difficulty", "Move into harder questions once the standard methods are secure and note where your approach breaks down."],
-                    ["4", "Review weak questions", "Bookmark useful questions and flag anything uncertain, slow or guessed. Re-attempt these before reading the solution."],
-                    ["5", "Mix and repeat", "Use mixed filters to practise switching between methods. Revisit flagged questions until the weakness is genuinely resolved."],
-                  ].map(([n, title, text]) => (
-                    <div key={n} style={{ border: "1px solid rgba(122,31,36,.16)", borderRadius: 14, padding: 14, background: "#FFFDF7" }}>
-                      <div style={{ width: 30, height: 30, display: "grid", placeItems: "center", borderRadius: 999, background: "#FEC94F", color: "#7A1F24", fontWeight: 950, marginBottom: 9 }}>
-                        {n}
-                      </div>
-                      <div style={{ color: "#141414", fontWeight: 900, fontSize: 14, marginBottom: 5 }}>{title}</div>
-                      <div style={{ color: "#667085", fontSize: 12, lineHeight: 1.5, fontWeight: 650 }}>{text}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* TS_QB_HOWTO_TOGGLE_V3 */}
-              <details className={styles.card}>
-                <summary
-                  style={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: 14,
-                    listStyle: "none",
-                  }}
-                >
-                  <div>
-                    <div className={styles.cardTitle}>How to Use the Question Bank</div>
-                    <div
-                      className={styles.muted}
-                      style={{
-                        marginTop: 5,
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      Open the guide for filters, navigation, review tools, solutions and keyboard shortcuts.
-                    </div>
-                  </div>
-
-                  <span
-                    style={{
-                      flex: "0 0 auto",
-                      padding: "8px 11px",
-                      borderRadius: 999,
-                      border: "1px solid rgba(122,31,36,.18)",
-                      background: "#FFFDF7",
-                      color: "#7A1F24",
-                      fontSize: 12,
-                      fontWeight: 900,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    Open guide
-                  </span>
-                </summary>
-
-                <div
-                  style={{
-                    marginTop: 16,
-                    paddingTop: 16,
-                    borderTop: "1px solid #ECECEC",
-                  }}
-                >
-                  <div
-                    className={styles.muted}
-                    style={{
-                      marginBottom: 14,
-                      maxWidth: 920,
-                      lineHeight: 1.55,
-                    }}
-                  >
-                    The Question Bank is designed for focused practice, review and quick navigation.
-                    Use these controls to decide exactly what to practise and to return efficiently
-                    to questions that need another attempt.
-                  </div>
-
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                      gap: 10,
-                    }}
-                  >
-                    {[
-                      {
-                        title: "Topic & difficulty filters",
-                        text: "Narrow the bank to the exact topic and level you want to practise.",
-                      },
-                      {
-                        title: "Question Navigator",
-                        text: "Jump directly to a question number instead of moving through every question in sequence.",
-                      },
-                      {
-                        title: "Bookmark",
-                        text: "Save high-value questions that you want to revisit later.",
-                      },
-                      {
-                        title: "Flag for Review",
-                        text: "Mark questions that were uncertain, slow or guessed so they become a focused revision list.",
-                      },
-                      {
-                        title: "Check Answer & Solution",
-                        text: "Check your response, then compare your reasoning with the worked solution rather than only noting the final answer.",
-                      },
-                      {
-                        title: "Keyboard navigation",
-                        text: "Use Alt + N for the next question and Alt + P for the previous question. Shortcuts are ignored while typing in an input or editable field.",
-                      },
-                    ].map((item) => (
-                      <div
-                        key={item.title}
-                        style={{
-                          border: "1px solid #E7E7E7",
-                          borderRadius: 12,
-                          padding: 14,
-                          background: "#FFFFFF",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#7A1F24",
-                            fontWeight: 900,
-                            fontSize: 13,
-                            marginBottom: 5,
-                          }}
-                        >
-                          {item.title}
-                        </div>
-
-                        <div
-                          style={{
-                            color: "#667085",
-                            fontWeight: 650,
-                            fontSize: 12,
-                            lineHeight: 1.5,
-                          }}
-                        >
-                          {item.text}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div
-                    style={{
-                      marginTop: 14,
-                      display: "flex",
-                      gap: 10,
-                      flexWrap: "wrap",
-                      alignItems: "center",
-                    }}
-                  >
-                    <span
-                      style={{
-                        padding: "8px 11px",
-                        borderRadius: 9,
-                        background: "#141414",
-                        color: "#FFFFFF",
-                        fontSize: 12,
-                        fontWeight: 900,
-                      }}
-                    >
-                      Alt + N
-                    </span>
-
-                    <span
-                      style={{
-                        color: "#667085",
-                        fontSize: 13,
-                        fontWeight: 750,
-                      }}
-                    >
-                      Next question
-                    </span>
-
-                    <span
-                      style={{
-                        padding: "8px 11px",
-                        borderRadius: 9,
-                        background: "#141414",
-                        color: "#FFFFFF",
-                        fontSize: 12,
-                        fontWeight: 900,
-                        marginLeft: 6,
-                      }}
-                    >
-                      Alt + P
-                    </span>
-
-                    <span
-                      style={{
-                        color: "#667085",
-                        fontSize: 13,
-                        fontWeight: 750,
-                      }}
-                    >
-                      Previous question
-                    </span>
-                  </div>
-                </div>
-              </details>
-
-              <div className={styles.card}>
-                <div className={styles.cardTitle}>Open the Question Bank</div>
-                <div className={styles.muted}>Your access is enabled. Click below to open the TMUA Question Bank.</div>
-
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12 }}>
-                  <button
-                    className={`${styles.btn} ${styles.btnPrimary}`}
-                    onClick={() => (window.location.href = "/tmua-question-bank")}
-                  >
-                    Open TMUA Question Bank
-                  </button>
-                </div>
-                <PastPaperPracticeLink />
-              </div>
-            </>
+            <QuestionBank embedded />
                   ) : active === "resources" ? (
             <>
               <div className={styles.h1}>Resources</div>
