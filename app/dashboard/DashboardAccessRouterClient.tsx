@@ -37,6 +37,7 @@ type RouteState =
   | {
       mode: "none";
       email?: string | null;
+      programme?: "TMUA";
       error?: string;
     };
 
@@ -104,6 +105,15 @@ export default function DashboardAccessRouterClient() {
         ];
         const hasESAT = products.some((p) => esatProducts.includes(p));
 
+        // An explicit TMUA link must never open another programme's resources.
+        // Keep access checks intact and explain missing TMUA access instead.
+        if (requestedView === "tmua") {
+          setState(hasTMUA
+            ? { mode: "tmua", email: user.email }
+            : { mode: "none", email: user.email, programme: "TMUA" });
+          return;
+        }
+
         // The Supabase Site URL historically points at /dashboard. If an
         // ESAT-only login ever lands here, send it to the ESAT portal instead
         // of showing the TMUA dashboard's false "No products enabled" state.
@@ -126,11 +136,6 @@ export default function DashboardAccessRouterClient() {
 
         if (requestedView === "amc" && hasAMC) {
           setState({ mode: "amc", email: user.email, hasTmua: hasTMUA });
-          return;
-        }
-
-        if (requestedView === "tmua" && hasTMUA) {
-          setState({ mode: "tmua", email: user.email });
           return;
         }
 
@@ -236,9 +241,9 @@ export default function DashboardAccessRouterClient() {
 
       <div className={styles.main}>
         <div className={styles.card}>
-          <div className={styles.cardTitle}>No products enabled</div>
+          <div className={styles.cardTitle}>{state.programme ? "TMUA access not enabled" : "No products enabled"}</div>
           <div className={styles.muted}>
-            Signed in as <b>{state.email || "—"}</b>, but no active product access was found.
+            Signed in as <b>{state.email || "—"}</b>, but no active {state.programme || "product"} access was found.
             <br />
             {state.error ? (
               <>
