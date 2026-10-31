@@ -13,6 +13,10 @@ const accepted = [
   "/ib/question-bank/functions?difficulty=hard&calculator=no&page=2",
   "/ib/questions/ib-aa-fn-001",
   "/ib/mark-scheme/ib-aa-fn-001",
+  "/ib?subject=math-ai-hl&view=questions",
+  "/ib/question-bank/physics-fields?course=sl&syllabus=D.3&difficulty=hard&page=2",
+  "/ib/mark-scheme/ib-econ-gl-001?course=sl",
+  "/ib/questions/ib-bm-u3-001?course=hl",
   "/esat-practice-tests/tests/esat-mock-01/index.html",
   "/tmua-question-bank?page=2",
 ];

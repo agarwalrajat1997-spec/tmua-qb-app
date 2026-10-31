@@ -1,4 +1,4 @@
-import { safeDiagram, safeDiagramUrl, isScienceQuestion, type IbQuestionPrompt } from "@/lib/ib/question";
+import { safeDiagram, safeDiagramUrl, isScienceQuestion, isHumanitiesQuestion, type IbQuestionPrompt } from "@/lib/ib/question";
 import { diagramUrlForSvg, diagramFallbackForUrl } from "@/lib/ib/diagram-assets";
 import MathContent from "./MathContent";
 import DiagramImage from "./DiagramImage";
@@ -20,7 +20,7 @@ export function QuestionBadges({ question: q }: { question: IbQuestionPrompt }) 
   const difficulty = { easy: { label: "Easy", bars: 1 }, medium: { label: "Medium", bars: 2 }, hard: { label: "Hard", bars: 3 } }[q.difficulty];
   return <div className={styles.badges}>
     <span className={`${styles.difficultyBadge} ${styles[q.difficulty]}`}><span className={styles.difficultyBars} aria-hidden="true">{[1, 2, 3].map(bar => <i key={bar} data-active={bar <= difficulty.bars ? "true" : "false"} />)}</span><span className={styles.srOnly}>Difficulty: </span>{difficulty.label}</span>
-    {isScienceQuestion(q) ? <><span>{q.syllabusCode} · {q.level === "ahl" ? "Additional HL" : q.subject !== "physics-hl" ? "SL content" : "Core"}</span><span>{{ "multiple-choice": "Multiple choice", structured: "Structured", "data-based": "Data-based" }[q.questionType]}</span></> : q.examStyle ? <span>{{ "short-response": "Short response", "extended-response": "Extended response", "problem-solving": "Problem solving" }[q.examStyle]}</span> : null}
+    {isScienceQuestion(q) ? <><span>{q.syllabusCode} · {q.level === "ahl" ? "Additional HL" : "SL content"}</span><span>{{ "multiple-choice": "Multiple choice", structured: "Structured", "data-based": "Data-based" }[q.questionType]}</span></> : isHumanitiesQuestion(q) ? <><span>{q.syllabusCode} · {q.level === "ahl" ? "Additional HL" : "SL content"}</span><span>{q.examStyle.replace("paper-", "Paper ")}</span></> : q.examStyle ? <span>{{ "short-response": "Short response", "extended-response": "Extended response", "problem-solving": "Problem solving" }[q.examStyle]}</span> : null}
     <span>{q.calculator ? "Calculator" : "No calculator"}</span><span>{q.marks} {q.marks === 1 ? "mark" : "marks"}</span>
   </div>;
 }

@@ -15,7 +15,7 @@ for(const item of [base,ai,second,draft]) assert.equal(harness.model.ibQuestionS
 for(const bad of [{...ai,calculator:false},{...base,subject:'math-ai-sl'},{...base,level:'ahl'},{...base,syllabusCode:'3.1'},{...base,examStyle:'problem-solving'},{...base,collectionId:'number-algebra'}]) assert.equal(harness.model.ibQuestionSchema.safeParse(bad).success,false);
 for(const subject of ['math-aa-sl','math-ai-sl','math-aa-hl']) {
   assert.equal(catalog.ibSubject(subject),subject);
-  assert.equal(catalog.ibNavigationSubjects(subject).length,4);
+  assert.equal(catalog.ibNavigationSubjects(subject).length,6);
   assert.equal(catalog.ibNavigationSubjects(subject)[0],subject);
   assert.equal(catalog.ibSubjectLabel(subject),'Maths');
 }

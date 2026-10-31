@@ -10,12 +10,13 @@ import katex from 'katex';
 import {ibQuestionSchema,questionPrompt,safeDiagram} from '../lib/ib/question.ts';
 import {physicsSyllabusSubtopics} from '../lib/ib/catalog.ts';
 
-const expected={'space-time-motion':200,'particulate-matter':120,'wave-behaviour':120,fields:100,'nuclear-quantum':100};
+const expected={'space-time-motion':220,'particulate-matter':140,'wave-behaviour':140,fields:120,'nuclear-quantum':120};
 const directory=resolve('content/ib/physics-hl');
 const parser=unified().use(remarkParse).use(remarkGfm).use(remarkMath);
 const complete=process.argv.includes('--complete');
 const requireCdn=process.argv.includes('--require-cdn');
 const cdnManifest=JSON.parse(readFileSync(resolve('content/ib/physics-diagram-manifest.json'),'utf8'));
+const expansionManifest=JSON.parse(readFileSync('content/ib/expansion-diagram-manifest.json','utf8'));
 const errors=[],ids=new Set(),fingerprints=new Map(),counts={},coverage={},difficulty={},types={};
 let questions=0,formulae=0,questionDiagrams=0,solutionDiagrams=0,marks=0;
 function mathCheck(source,label){
@@ -52,7 +53,7 @@ for(const [name,total] of Object.entries(expected)){
   coverage[q.syllabusCode]=(coverage[q.syllabusCode]||0)+1;
   difficulty[q.difficulty]=(difficulty[q.difficulty]||0)+1;types[q.questionType]=(types[q.questionType]||0)+1;
   const prompt=q.stem+'\n'+q.parts.map(p=>p.prompt).join('\n')+'\n'+(q.options||[]).map(o=>o.text).join('\n');
-  const fingerprint=createHash('sha256').update(prompt).digest('hex');
+  const fingerprint=createHash('sha256').update(prompt+'\n'+(q.diagramSvg??'')).digest('hex');
   if(fingerprints.has(fingerprint))errors.push(q.id+': exact duplicate of '+fingerprints.get(fingerprint));fingerprints.set(fingerprint,q.id);
   mathCheck(q.stem,q.id+' stem');q.parts.forEach(p=>mathCheck(p.prompt,q.id+' part '+p.label));
   q.markScheme.forEach(g=>g.steps.forEach((s,i)=>mathCheck(s.text,q.id+' scheme '+g.part+'/'+i)));
@@ -66,8 +67,8 @@ for(const [name,total] of Object.entries(expected)){
    if(!safeDiagram(q[key]))errors.push(q.id+': unsafe '+key);
    if(requireCdn){
     const hash=createHash('sha256').update(q[key]).digest('hex');
-    const asset=cdnManifest.assets?.[hash];
-    if(cdnManifest.origin!=='https://media.thrivingscholars.com'||!asset||asset.key!==`ib/physics-hl/2026-10-30/${hash}.svg`||asset.bytes!==Buffer.byteLength(q[key]))errors.push(q.id+': missing or stale verified Cloudflare '+key);
+    const asset=cdnManifest.assets?.[hash]??expansionManifest.assets?.[hash];
+    if(cdnManifest.origin!=='https://media.thrivingscholars.com'||!asset||!([`ib/physics-hl/2026-10-30/${hash}.svg`,`ib/expansion/2026-10-31/${hash}.svg`].includes(asset.key))||asset.bytes!==Buffer.byteLength(q[key]))errors.push(q.id+': missing or stale verified Cloudflare '+key);
    }
    if(key==='diagramSvg')questionDiagrams++;else solutionDiagrams++;
   }

@@ -1,0 +1,28 @@
+# Economics author review — 31 October 2026
+
+The frozen authored snapshot contains 360 original practice records: introduction 40, microeconomics 120, macroeconomics 100 and global economy 100. There are 122 deliberately designed families, each with two or three variants. Qualitative variants add economic evidence that changes the required application or judgement; numerical variants vary displayed inputs. The bank contains 256 common-content records and 104 AHL records.
+
+## Assessment and source control
+
+The primary scope authority is the [IB Economics guide, first assessment 2024, official 2026 publication](https://xmltwo.ibo.org/publications/EAD/2026_EN/GR3/GR3-Econ_EN_24.pdf). Current marking practice was checked against the [2027 Economics examiner instructions](https://ibpublishing.ibo.org/exinst/apps/exinst/index.html?chapter=3&doc=EX_instructions_2027_e&part=10). The [SL brief](https://www.ibo.org/globalassets/new-structure/programmes/dp/pdfs/sl-economics-en.pdf) and [HL brief](https://www.ibo.org/globalassets/new-structure/programmes/dp/pdfs/hl-economics-en.pdf) provide the course overview.
+
+The 2024 guide and 2027 instructions control the shared Paper 2: no AHL extension content is required. The older IB-authored [2022 specimen pack, public mirror](https://rodrisy.github.io/ibresources/docs/econspec2022.pdf) was inspected for format only after original authoring; its separate HL/SL Paper 2 treatment was not adopted. The official-host [May 2025 shared Paper 2 markscheme](https://ibo.org/globalassets/new-structure/university-admission/pdfs/subject-guides-documents/sl-and-hl-mark-scheme-paper-2--economics.pdf) corroborates the current combined paper. None of these examination files or their questions, stimuli, diagrams, or model text is redistributed in the content bank.
+
+There are 54 complete Paper 1 style questions, each with a 10-mark explanation and 15-mark evaluation, and no calculator. Part (b) explicitly asks for actual examples studied by the candidate: a fictional illustration is not presented as real-world evidence. There are 54 complete common-content Paper 2 cases, each with seven groups totalling 40 marks: 4, 5, 4, 4, 4, 4, 15. Groups (a) and (b) explicitly contain their subparts. The 38 HL Paper 3 style cases each contain 20 analytic marks and a 10-mark recommendation. Calculators are allowed on Papers 2 and 3. The remaining 214 records are shorter structured practice, not represented as complete examination questions.
+
+## Scope and marking review
+
+Whole AHL topics 2.4, 2.10, 2.11 and 2.12 are excluded from SL. Numerical consumer/producer surplus, tax/subsidy/price-control stakeholder effects, externality welfare triangles, construction from Lorenz quintiles, weighted price indices, debt, multipliers, comparative advantage and numerical tariff welfare are confined to AHL records. Common Paper 2 numerical parts require controlled PED percentage calculations, real GDP and per-capita conversion, or balance-of-payments component totals. SL structured calculations also cover the permitted YED/PES, GDP/GNI, inflation, unemployment, real-interest and currency-conversion demands.
+
+Long answers use original best-fit bands and zero-value IND guidance. Essay explanation bands cover 0–10; evaluative bands cover 0–15; recommendations cover 0–10. Four-mark AO2 explanations within full HL policy cases use short best-fit explanation bands, as required by current examiner guidance. Point schemes remain for definitions, calculations and genuinely separable short requirements. Model reasoning identifies causal mechanisms, case evidence, assumptions, adverse effects and alternative justified judgements. No particular country, policy or conclusion is mandatory. A sound alternative explanation or diagram is credited.
+
+All empirical-looking datasets are explicitly constructed. No actual current financial or policy recommendation is given. Paper 1 examples are supplied by the student; the solution guidance explains what developed application must establish and does not invent historical outcomes.
+
+## Verification evidence
+
+- `economics-audit.json`: every serialized record checked for identifiers, topic totals, exact part allocations, contiguous non-overlapping bands, format, calculator condition, AHL flags, SVG safety and snapshot hash. Current root Zod schema also passed all 360 records with zero errors.
+- `economics-ledger.json`: a hash and family/scope/reasoning/markband entry for every record. All 267 listed arithmetic expressions are independently replayed with rational arithmetic.
+- `economics-numeric-replay.json`: 216 further numerical results independently reconstructed from serialized displayed tables and inverse equations, including every full Paper 2 numerical part, the tax/subsidy/ceiling/externality model cases, the discrete monopoly table and tariff welfare cases. This review does not claim every explanatory sentence was independently reviewed by a second economist.
+- The 148 private solution sketches contain 21 distinct geometric designs. They were rendered with Sharp and visually inspected, including the ceiling shortage, fixed-rate intervention, subsidy, exact quintile Lorenz curves, negative consumption externality and sector-specific PPC rotation. They remain in `markSchemeDiagramSvg`; no solution sketch is supplied in the public prompt field.
+
+The arithmetic replay is independent of the authoring imports. Rebuild with `economics_build.py`, then run `economics_validate.py` to refresh the reviewed snapshot. The generated review hashes must match the serialized content before release. Changes after this review require another validation and relevant semantic review.

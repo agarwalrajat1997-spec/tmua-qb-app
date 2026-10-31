@@ -7,8 +7,8 @@ export default function MathsCourseSwitch({ subject, topicId, links }: { subject
     <div><span className={styles.eyebrow}>MATHEMATICS COURSE</span><p>Choose the course you study</p></div>
     <nav aria-label="Mathematics course" className={`${styles.courseSwitch} ${styles.mathsCourseSwitch}`}>
       {IB_MATH_SUBJECTS.map(id => <Link key={id} href={links?.[id] ?? ibMathCourseHref(id, topicId)} prefetch={false} aria-current={id === subject ? "page" : undefined}>
-        <strong>{id === "math-ai-sl" ? "AI SL" : id === "math-aa-sl" ? "AA SL" : "AA HL"}</strong>
-        <span>{id === "math-ai-sl" ? "Applications & Interpretation" : "Analysis & Approaches"}</span>
+        <strong>{id.startsWith("math-ai-") ? "AI" : "AA"} {id.endsWith("-sl") ? "SL" : "HL"}</strong>
+        <span>{id.startsWith("math-ai-") ? "Applications & Interpretation" : "Analysis & Approaches"}</span>
       </Link>)}
     </nav>
   </div>;

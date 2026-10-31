@@ -1,0 +1,54 @@
+"""Reproducible essential fixes identified by independent serialized-content review."""
+from pathlib import Path
+import json
+ROOT=Path(__file__).resolve().parents[2]
+base=ROOT/'scripts/ib-expansion-authoring'
+changes=[]
+def edit(file,old,new,reason):
+    p=base/file;s=p.read_text(encoding='utf8')
+    if old not in s:
+        assert new in s,(file,old)
+        return
+    count=s.count(old);p.write_text(s.replace(old,new),encoding='utf8',newline='\n')
+    changes.append({'source':file,'occurrences':count,'before':old,'after':new,'reason':reason})
+
+edit('econ_variants.py','Answer the preceding parts using the initial scenario. For the final application part only, consider the following additional evidence, which may change an initial assumption.','Answer parts (a)–(c) using the initial scenario. For part (d) only, consider the following additional evidence, which may change an initial assumption.','Unambiguous staging prevents changed assumptions from contradicting earlier marked parts.')
+edit('econ_variants.py','For this variant, the illustration also specifies: ','For part (b) only, consider this further case condition. If it differs from the initial illustration, use it in place of the initial condition: ','Essay variants can relax or replace a baseline constraint; state the precedence explicitly.')
+edit('econ_variants.py',"this illustration\\'s additional constraint qualifies your judgement","this case condition qualifies your judgement",'A case condition may relax a constraint rather than add one.')
+edit('econ_variants.py','FDI entry does not imply all its spending or value added remains domestic; linkages affect development benefits.','FDI entry does not imply all its spending purchases domestic output or all factor income accrues to domestic residents; imports and profit repatriation affect the domestic benefit.','Domestic value added is counted in GDP; distinguish imported spending and residents\' income.')
+edit('econ_macro.py',"('M1','GDP=C+I+G+(X−M).')","('M1','Exclude pension transfers from final-output expenditure and subtract imported output already included in C, I or G.')",'A formula alone is not valid working; reward correct data selection separately from arithmetic.')
+edit('econ_macro.py',"('M1','GNI=GDP+net factor income from abroad.')","('M1',f'Net factor income received from abroad={inn}−{out}={inn-out} billion crowns.')",'Compute the signed net income flow as a distinct intermediate step.')
+edit('econ_macro.py',"('M1','Real GDP=nominal GDP/deflator×100.')","('M1',f'Convert the deflator to a price-level ratio: {defl}/100={fmt(Fraction(defl,100))}.')",'Separate numerical conversion of the index from deflation; do not award a bare formula.')
+edit('econ_macro.py',"('M1','Unemployment rate=unemployed/labour force×100.')","('M1',f'Use {u} thousand actively seeking unemployed and the stated {lf} thousand labour force; exclude the {20+v} thousand discouraged workers from the measure.')",'Reward correct labour-force selection, not a repeated formula.')
+edit('econ_macro.py',"('M1','Inflation=(new CPI−old CPI)/old CPI×100.')","('M1',f'Index-point change={fmt(new)}−{cpi}={fmt(new-cpi)}.')",'Index-point difference is distinct from the subsequent relative percentage change.')
+edit('econ_macro.py','Calculate the average tax rate.','Calculate the average tax rate and distinguish it from the marginal tax rate.','The prompt must request the conceptual distinction already allocated its own mark.')
+edit('econ_macro.py','Calculate the total change in equilibrium real output.','Calculate the total change in equilibrium real output and state whether it includes the initial spending increase.','Make the separately marked interpretation explicit.')
+edit('econ_macro.py','A diagram should label interest rate, quantity of money, MS1/MS2 and MD if used.','At the original interest rate, excess money balances encourage bond purchases; higher bond prices lower yields.','Replace an optional-diagram instruction masquerading as a fixed awarded criterion with a distinct causal mechanism.')
+edit('econ_macro.py','Visitor demand recovers rapidly after a quiet period.','Overseas visitor demand recovers rapidly after a quiet period.','The answer classifies visitor spending as service exports, so foreign visitors must be specified.')
+edit('econ_macro.py','Calculate the autonomous spending increase needed to close the gap in this model.','Calculate the autonomous spending increase needed to close the gap and state one assumption needed for this model result.','The third mark concerns an assumption; explicitly ask for it.')
+edit('econ_macro.py',"('A1','Before:5%,15%,30%,55%.'),('A1','After:8%,20%,37%,62%.'),('A1','Both curves also pass through(0,0) and(100,100).'),('R1','Order households by income and cumulate the quintile shares, not the population shares.')","('A1','At 20% of population: before 5%, after 8% of income.'),('A1','At 40%: before 15%, after 20%.'),('A1','At 60%: before 30%, after 37%.'),('A1','At 80%: before 55%, after 62%.')",'Four distinct requested quintile-pair results earn four marks; remove credit for unasked endpoints and method.')
+edit('econ_macro.py','Construct and explain the two Lorenz curves.','(i) Construct the two Lorenz curves, including the equality line. [2]\\n\\n(ii) Explain the indicated change in income inequality. [2]','Make the construction/explanation allocation explicit instead of treating this as a pure four-mark AO2 question.')
+edit('econ_macro.py','expected inflation for the interest calculation is4%.','expected inflation for the interest calculation is4%. Use the approximate relation: real interest rate = nominal rate minus expected inflation.','Distinguish the intended approximation from an exact Fisher calculation.')
+edit('econ_micro.py','Calculate consumer surplus.','Calculate consumer surplus and explain what it measures.','The third mark is a separately requested interpretation, not repeated triangle arithmetic.')
+edit('econ_micro.py','Calculate producer surplus.','Calculate producer surplus and explain what it measures.','The third mark interprets surplus and distinguishes it from profit.')
+edit('econ_micro.py','Calculate daily government tax revenue.','Calculate daily government tax revenue and explain why revenue is not itself a net welfare gain.','Replace duplicated post-tax-quantity credit with a distinct requested economic interpretation.')
+edit('econ_micro.py','The tax applies to post-tax sales, not the initial quantity.','Tax revenue transfers purchasing power to government; it is not newly created resources, so other stakeholder effects must also be counted.','Revenue arithmetic and welfare interpretation are independent criteria.')
+edit('econ_micro.py','Calculate the daily loss of total surplus caused by this tax if there are no externalities.','Calculate the daily loss of total surplus if there are no externalities and explain why tax revenue is excluded from that loss.','Explicitly request the independently scored transfer/loss distinction.')
+edit('econ_micro.py','Calculate total daily subsidy spending.','Calculate total daily subsidy spending and state why spending alone does not establish a welfare benefit.','The extra mark must assess an explicit distinct requirement.')
+edit('econ_micro.py','The government pays on every subsidized unit sold.','The payment uses public resources; expenditure alone is not the net social benefit, which requires comparison with benefits, distortions and opportunity cost.','Avoid crediting the multiplication twice.')
+edit('econ_micro.py','Calculate the daily welfare loss of the unregulated market.','Calculate the daily welfare loss of the unregulated market and explain why the stated external-cost wedge is used.','Make the separately marked explanation explicit.')
+edit('econ_global.py','Convert the export receipt to crowns.','Convert the export receipt to crowns and explain why the quoted rate is used as a divisor.','Currency conversion and dimensional interpretation are separate requested criteria.')
+edit('econ_global.py',"('M1','CA=goods balance+net services+net income+net transfers.')","('M1',f'Combine the non-goods entries: {s}+({inc})+{trans}={s+inc+trans} billion crowns.')",'Compute an intermediate component subtotal instead of rewarding a bare formula.')
+edit('econ_global.py',"('M1',f'CA={x-m}+{services}+({income})+{transfers}.'),('A1',f'{ca} billion crowns.'),('A1',f'A deficit of {abs(ca)} billion crowns.')","('M1',f'Non-goods subtotal={services}+({income})+{transfers}={services+income+transfers}.'),('M1',f'CA={x-m}+{services+income+transfers}.'),('A1',f'{ca} billion crowns; a deficit of {abs(ca)} billion crowns.')",'A signed negative balance and the same amount called a deficit are one accuracy criterion, not two.')
+edit('econ_global.py','Home has comparative advantage in food, with lower cloth opportunity cost.','Home has comparative advantage in food: its cost is 0.50 cloth per food, compared with 1 cloth per food for Partner.','Remove ambiguity between the cost of cloth and a food cost measured in cloth.')
+edit('econ_global.py',"Calculate Home\\'s consumption after specialization and the specified trade.","Calculate Home\\'s consumption after specialization and trade, and state whether the quantities alone establish that Home is better off.",'Explicitly request the already-scored distinction between potential trade gains and this consumption allocation.')
+edit('econ_global.py','This is the stated trade allocation; it need not give Home more of both goods than its initial half-resource bundle.','This allocation need not give Home more of both goods than its initial bundle; whether Home prefers it depends on preferences, so these quantities alone do not establish higher welfare.','Interpret the actual bundle without assuming every terms-of-trade allocation raises utility.')
+edit('econ_global.py','Apply the Marshall-Lerner condition and explain why it is not an exact forecasting formula here.','(i) Calculate the sum of the two PED estimates and state whether the standard Marshall-Lerner condition is met. [2]\\n\\n(ii) Explain why this is not an exact forecasting formula for the stated scenario. [2]','Separate the numeric application and the two-mark explanation explicitly.')
+edit('econ_global.py','atUS$','at US$','Restore currency spacing after USD normalization.')
+edit('econ_global.py','remainUS$','remain US$','Restore currency spacing after USD normalization.')
+edit('econ_global.py',"'a surplus/balanced budget.'","'a balanced budget.' if total==budget else 'a surplus.'",'Zero is a balanced budget, not a positive surplus.')
+
+out=ROOT/'docs/ib-expansion-reviews/economics-independent-fixes.json'
+previous=json.loads(out.read_text(encoding='utf8')) if out.exists() else []
+out.write_text(json.dumps(previous+changes,ensure_ascii=False,indent=2)+'\n',encoding='utf8',newline='\n')
+print(f'Applied {len(changes)} targeted source fixes.')

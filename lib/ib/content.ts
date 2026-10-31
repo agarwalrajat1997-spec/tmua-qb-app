@@ -16,6 +16,20 @@ import aislFn from "@/content/ib/math-ai-sl/functions.json";
 import aislGt from "@/content/ib/math-ai-sl/geometry-trigonometry.json";
 import aislSp from "@/content/ib/math-ai-sl/statistics-probability.json";
 import aislCa from "@/content/ib/math-ai-sl/calculus.json";
+import aihl0 from "@/content/ib/math-ai-hl/calculus.json";
+import aihl1 from "@/content/ib/math-ai-hl/functions.json";
+import aihl2 from "@/content/ib/math-ai-hl/geometry-trigonometry.json";
+import aihl3 from "@/content/ib/math-ai-hl/number-algebra.json";
+import aihl4 from "@/content/ib/math-ai-hl/statistics-probability.json";
+import econ0 from "@/content/ib/economics/global-economy.json";
+import econ1 from "@/content/ib/economics/introduction.json";
+import econ2 from "@/content/ib/economics/macroeconomics.json";
+import econ3 from "@/content/ib/economics/microeconomics.json";
+import bm0 from "@/content/ib/business-management/finance-accounts.json";
+import bm1 from "@/content/ib/business-management/human-resources.json";
+import bm2 from "@/content/ib/business-management/introduction-business.json";
+import bm3 from "@/content/ib/business-management/marketing.json";
+import bm4 from "@/content/ib/business-management/operations-management.json";
 import physicsA from "@/content/ib/physics-hl/space-time-motion.json";
 import physicsB from "@/content/ib/physics-hl/particulate-matter.json";
 import physicsC from "@/content/ib/physics-hl/wave-behaviour.json";
@@ -37,6 +51,7 @@ import { IB_COLLECTIONS, ibQuestionSchema, questionAvailableForCourse, type IbQu
 // Validation fails closed. Drafts never reach any student route or count.
 const allQuestions: IbQuestion[] = [...algebra, ...functions, ...geometry, ...statistics, ...calculus1, ...calculus2,
   ...aaslNa, ...aaslFn, ...aaslGt, ...aaslSp, ...aaslCa, ...aislNa, ...aislFn, ...aislGt, ...aislSp, ...aislCa,
+  ...aihl0, ...aihl1, ...aihl2, ...aihl3, ...aihl4, ...econ0, ...econ1, ...econ2, ...econ3, ...bm0, ...bm1, ...bm2, ...bm3, ...bm4,
   ...physicsA, ...physicsB, ...physicsC, ...physicsD, ...physicsE,
   ...chemistryS1, ...chemistryS2, ...chemistryS3, ...chemistryR1, ...chemistryR2, ...chemistryR3, ...biologyA, ...biologyB, ...biologyC, ...biologyD]
   .map(value => ibQuestionSchema.parse(value));

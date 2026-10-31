@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
-import { ibHref, ibHasCourseChoice, ibSyllabusSubtopics, ibCourseLevel, ibCourseLabel, ibCourseHref } from "@/lib/ib/catalog";
+import { ibHref, ibHasCourseChoice, ibCoreLevel, ibIsHumanitiesSubject, ibSyllabusSubtopics, ibCourseLevel, ibCourseLabel, ibCourseHref } from "@/lib/ib/catalog";
 import { getIbQuestions } from "@/lib/ib/content";
 import { variedPracticeOrder } from "@/lib/ib/practice-order";
-import { IB_COLLECTIONS, getIbCollection, questionPrompt, isScienceQuestion } from "@/lib/ib/question";
+import { IB_COLLECTIONS, getIbCollection, questionPrompt, isScienceQuestion, isHumanitiesQuestion } from "@/lib/ib/question";
 import ExamShell from "../../components/ExamShell";
 import ExamInstructions from "../../components/ExamInstructions";
 import QuestionBody, { QuestionBadges } from "../../components/QuestionBody";
@@ -24,6 +24,8 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const physics = collection.subject === "physics-hl";
   const courseChoice = ibHasCourseChoice(collection.subject);
   const science = physics || courseChoice;
+  const humanities = ibIsHumanitiesSubject(collection.subject);
+  const coreLevel = ibCoreLevel(collection.subject);
   const courseLevel = ibCourseLevel(single(raw.course));
   const courseLabel = ibCourseLabel(collection.subject, courseLevel);
   const paramsForLogin = new URLSearchParams();
@@ -42,17 +44,17 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const calculator = !science && ["yes", "no"].includes(single(raw.calculator)) ? single(raw.calculator) : "";
   const subtopic = subtopics.includes(single(raw.subtopic)) ? single(raw.subtopic) : "";
   const syllabus = syllabusTopics.some(topic => topic.code === single(raw.syllabus)) ? single(raw.syllabus) : "";
-  const allowedLevels = courseChoice ? courseLevel === "sl" ? ["sl"] : ["sl", "ahl"] : physics ? ["core", "ahl"] : [];
+  const allowedLevels = courseChoice ? courseLevel === "sl" ? [coreLevel] : [coreLevel, "ahl"] : [];
   const level = allowedLevels.includes(single(raw.level)) ? single(raw.level) : "";
-  const allowedStyles = collection.subject === "math-aa-hl" ? ["short-response", "extended-response", "problem-solving"] : ["short-response", "extended-response"];
-  const style = !science && allowedStyles.includes(single(raw.style)) ? single(raw.style) : "";
+  const allowedStyles = humanities ? courseLevel === "sl" ? ["paper-1", "paper-2"] : ["paper-1", "paper-2", "paper-3"] : collection.subject === "math-aa-hl" || collection.subject === "math-ai-hl" ? ["short-response", "extended-response", "problem-solving"] : ["short-response", "extended-response"];
+  const style = (!science || humanities) && allowedStyles.includes(single(raw.style)) ? single(raw.style) : "";
   const type = science && ["multiple-choice", "structured", "data-based"].includes(single(raw.type)) ? single(raw.type) : "";
   const filtered = all.filter(q => {
     if (difficulty && q.difficulty !== difficulty) return false;
     if (!isScienceQuestion(q) && style && q.examStyle !== style) return false;
     if (calculator && q.calculator !== (calculator === "yes")) return false;
     if (subtopic && q.subtopic !== subtopic) return false;
-    if (isScienceQuestion(q) && ((syllabus && q.syllabusCode !== syllabus) || (level && q.level !== level) || (type && q.questionType !== type))) return false;
+    if ((isScienceQuestion(q) || isHumanitiesQuestion(q)) && ((syllabus && q.syllabusCode !== syllabus) || (level && q.level !== level) || (type && q.questionType !== type))) return false;
     const scienceTerms = isScienceQuestion(q) ? q.syllabusCode + " " + (q.options?.map(option => option.text).join(" ") ?? "") : q.syllabusCode ?? "";
     return !search || [q.number, q.id, q.title, q.subtopic, q.stem, q.parts.map(p => p.prompt).join(" "), scienceTerms].join(" ").toLowerCase().includes(search.toLowerCase());
   });
@@ -78,7 +80,7 @@ export default async function QuestionBank({ params, searchParams }: { params: P
       <label className={styles.searchFilter}>Search questions<input name="q" type="search" defaultValue={search} placeholder="Keyword or question number" maxLength={160} /></label>
       {science ? <label>Syllabus subtopic<select name="syllabus" defaultValue={syllabus}><option value="">All subtopics</option>{syllabusTopics.map(topic => <option value={topic.code} key={topic.code}>{topic.code} {topic.title}</option>)}</select></label> : <label>Subtopic<select name="subtopic" defaultValue={subtopic}><option value="">All subtopics</option>{subtopics.map(s => <option key={s}>{s}</option>)}</select></label>}
       <label>Difficulty<select name="difficulty" defaultValue={difficulty}><option value="">All difficulties</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></label>
-      {science ? <><label>Course content<select name="level" defaultValue={level}><option value="">{courseChoice ? courseLevel === "sl" ? "All SL content" : "SL + additional HL" : "Core + additional HL"}</option><option value={courseChoice ? "sl" : "core"}>{courseChoice ? "SL content" : "Core"}</option>{!courseChoice || courseLevel === "hl" ? <option value="ahl">Additional HL</option> : null}</select></label><label>Question type<select name="type" defaultValue={type}><option value="">All question types</option><option value="multiple-choice">Multiple choice</option><option value="structured">Structured</option><option value="data-based">Data-based</option></select></label></> : <><label>Response style<select name="style" defaultValue={style}><option value="">All response styles</option><option value="short-response">Short response</option><option value="extended-response">Extended response</option>{collection.subject === "math-aa-hl" ? <option value="problem-solving">Problem solving</option> : null}</select></label><label>Calculator<select name="calculator" defaultValue={calculator}><option value="">All questions</option><option value="no">No calculator</option><option value="yes">Calculator</option></select></label></>}
+      {science ? <><label>Course content<select name="level" defaultValue={level}><option value="">{courseChoice ? courseLevel === "sl" ? "All SL content" : "SL + additional HL" : "Core + additional HL"}</option><option value={coreLevel}>{courseChoice ? "SL content" : "Core"}</option>{!courseChoice || courseLevel === "hl" ? <option value="ahl">Additional HL</option> : null}</select></label>{humanities ? <label>Exam paper<select name="style" defaultValue={style}><option value="">All papers</option><option value="paper-1">Paper 1</option><option value="paper-2">Paper 2</option>{courseLevel === "hl" ? <option value="paper-3">Paper 3</option> : null}</select></label> : <label>Question type<select name="type" defaultValue={type}><option value="">All question types</option><option value="multiple-choice">Multiple choice</option><option value="structured">Structured</option><option value="data-based">Data-based</option></select></label>}</> : <><label>Response style<select name="style" defaultValue={style}><option value="">All response styles</option><option value="short-response">Short response</option><option value="extended-response">Extended response</option>{(collection.subject === "math-aa-hl" || collection.subject === "math-ai-hl") ? <option value="problem-solving">Problem solving</option> : null}</select></label><label>Calculator<select name="calculator" defaultValue={calculator}><option value="">All questions</option><option value="no">No calculator</option><option value="yes">Calculator</option></select></label></>}
       <div className={styles.filterActions}><button type="submit">Apply filters</button><Link href={baseHref} className={styles.reset}>Reset</Link></div>
     </form>
     <div className={styles.resultsLine}><span>{matches.length ? ((page - 1) * PAGE_SIZE + 1) + "–" + Math.min(page * PAGE_SIZE, matches.length) + " of " + matches.length + " questions" : "No matching questions"}</span><span>Mark schemes open in a new tab ↗</span></div>
