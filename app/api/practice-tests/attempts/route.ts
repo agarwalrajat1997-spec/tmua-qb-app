@@ -3,6 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { readTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 import { hasStandardTimePolicy, practiceSpec, readTrustedPracticeResult, type Conversion } from "@/lib/server/practice-standard-time";
 import { TMUA_PREDICTIVE_2026_ID } from "@/lib/server/tmua-predictive-2026";
+import { readPredictiveAttemptId } from "@/lib/tmua/attempt-identity";
 
 export const runtime = "nodejs";
 
@@ -18,6 +19,27 @@ export async function GET(req: Request) {
 
   const url = new URL(req.url);
   const testId = url.searchParams.get("test_id");
+  const recoveryId = url.searchParams.get("client_attempt_id");
+  // A retry checks the authenticated student's exact saved report, not a
+  // similar answer array or the first 50 historical attempts. No writes occur.
+  if (recoveryId !== null) {
+    try {
+      if (testId !== TMUA_PREDICTIVE_2026_ID || !readPredictiveAttemptId(recoveryId)) throw new Error("Invalid predictive recovery request.");
+    } catch {
+      return NextResponse.json({ error: "Invalid predictive recovery request." }, { status: 400 });
+    }
+    const { data, error } = await supabase.from("practice_test_attempts")
+      .select("id,test_id,submitted_at,score,total_questions")
+      .eq("user_id", user.id).eq("test_id", testId)
+      .eq("predictor_metadata->>tmua_predictive_client_attempt_id", recoveryId)
+      .order("submitted_at", { ascending: false }).limit(1).maybeSingle().retry(false);
+    if (error) return NextResponse.json({ error: "Saved report lookup is temporarily unavailable." }, {
+      status: 503, headers: { "Cache-Control": "no-store", "Retry-After": "30" },
+    });
+    return NextResponse.json({ ok: true, saved: !!data, client_attempt_id: recoveryId, attempt: data ?? null }, {
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
 
   async function conversionsFor(rows: { test_id: string; predictor_metadata: unknown }[]) {
     const result = new Map<string, Conversion>();

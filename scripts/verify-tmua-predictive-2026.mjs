@@ -94,7 +94,7 @@ function database(attemptRows=[]){
   const result={calls,inserts,tables,auth:{admin:{listUsers:async()=>({data:{users:[{id:"qa-user",email:"qa@example.invalid",last_sign_in_at:new Date(Date.now()-1000).toISOString()}]},error:null})}}};
   result.from=table=>{
     const call={table,filters:[],orders:[],ranges:[],columns:null};calls.push(call);let inserted,singleRow=false;
-    const rows=()=>{let values=tables[table]??[];for(const [field,value] of call.filters)values=values.filter(r=>r[field]===value);return values;};
+    const rows=()=>{let values=tables[table]??[];for(const [field,value] of call.filters)values=values.filter(r=>(field.startsWith('predictor_metadata->>')?r.predictor_metadata?.[field.split('->>')[1]]:r[field])===value);return values;};
     const q={select(columns){call.columns=columns;return q;},eq(field,value){call.filters.push([field,value]);return q;},ilike(field,value){call.filters.push([field,value.toLowerCase()]);return q;},or(){return q;},in(){return q;},gt(){return q;},lte(){return q;},order(field,options){call.orders.push([field,options]);return q;},range(from,to){call.ranges.push([from,to]);return q;},limit(){return q;},
       retry(value){assert.equal(value,false);return q;},
       insert(value){inserted=value;inserts.push({table,value});tables[table]??=[];tables[table].push(...(Array.isArray(value)?value:[{id:"qa-inserted",...value}]));return q;},
@@ -107,13 +107,35 @@ function database(attemptRows=[]){
 
 const {POST}=load("app/api/practice-tests/submit/route.ts");
 db=database();
-const submitted=await POST({json:async()=>({test_id:ID,score:40,correct_answers:Array(40).fill("H"),answers:answersFor(33),time_spent:Array(40).fill(150),complete:true})});
+const recoveryId="5a336ae4-5678-4123-8912-0123456789ab";
+const submitted=await POST({json:async()=>({test_id:ID,attemptId:recoveryId,score:40,correct_answers:Array(40).fill("H"),answers:answersFor(33),time_spent:Array(40).fill(150),complete:true})});
 assert.equal(submitted.status,200);
 const saved=db.inserts.find(i=>i.table==="practice_test_attempts").value;
 assert.equal(saved.score,33);assert.equal(saved.tmua_score9,7);assert.equal(saved.is_full_timed_attempt,true);
 assert.equal(saved.correct_answers.join(""),sourceAnswers.join(""));
 assert.equal(saved.predictor_metadata.client_correct_answers_match_canonical,false);
 assert.equal(saved.predictor_metadata.client_score_matches_authoritative,false);
+assert.equal(saved.predictor_metadata.tmua_predictive_client_attempt_id,recoveryId);
+const beforeInvalid=db.inserts.length;
+for(const attemptId of ["", "other-owner", "x".repeat(81), {}, "attempt-123-not-hex"]){
+  assert.equal((await POST({json:async()=>({test_id:ID,attemptId,answers:answersFor(33)})})).status,400);
+}
+assert.equal(db.inserts.length,beforeInvalid,"Invalid correlation IDs cannot produce an attempt.");
+const {GET:GET_ATTEMPTS}=load("app/api/practice-tests/attempts/route.ts");
+const recoveryUrl="https://portal.test/api/practice-tests/attempts?test_id="+ID+"&client_attempt_id="+recoveryId;
+db=database([{...row(),predictor_metadata:{tmua_predictive_client_attempt_id:recoveryId}},
+  {...row(),id:"other-student",user_id:"other-user",predictor_metadata:{tmua_predictive_client_attempt_id:recoveryId}}]);
+let recovered=await GET_ATTEMPTS({url:recoveryUrl});
+assert.equal(recovered.status,200);assert.equal(recovered.body.saved,true);assert.notEqual(recovered.body.attempt.id,"other-student");
+assert.ok(db.calls.every(c=>c.filters.some(([field,value])=>field==="user_id"&&value==="qa-user")));
+assert.ok(db.calls.every(c=>c.filters.some(([field,value])=>field==="predictor_metadata->>tmua_predictive_client_attempt_id"&&value===recoveryId)));
+assert.equal(db.inserts.length,0,"Recovery is read-only.");
+db=database([{...row(),id:"other-student",user_id:"other-user",predictor_metadata:{tmua_predictive_client_attempt_id:recoveryId}},row()]);
+recovered=await GET_ATTEMPTS({url:recoveryUrl});assert.equal(recovered.body.saved,false);assert.equal(recovered.body.attempt,null,"Another owner or old untagged report cannot satisfy recovery.");
+assert.equal((await GET_ATTEMPTS({url:recoveryUrl.replace(recoveryId,"invalid")})).status,400);
+assert.equal((await GET_ATTEMPTS({url:recoveryUrl.replace(ID,"full-official-2016")})).status,400);
+authorised=false;assert.equal((await GET_ATTEMPTS({url:recoveryUrl})).status,401);authorised=true;
+await import("./verify-tmua-predictive-portal-save.mjs");
 
 const {GET}=load("app/api/tmua/overview/route.ts");
 db=database([row(),row(40,{id:"other-user-attempt",user_id:"other-user"})]);

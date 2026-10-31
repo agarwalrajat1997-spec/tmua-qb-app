@@ -7,6 +7,7 @@ import { TMUA_PREDICTIVE_2026_ID, TMUA_PREDICTIVE_2026_CATALOG, evaluateTmuaPred
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { validateTmuaPastPaperSettings } from "@/lib/tmua/past-paper-settings";
 import { createStandardTimeEstimate, resolvePracticeSettings, type Conversion } from "@/lib/server/practice-standard-time";
+import { readPredictiveAttemptId } from "@/lib/tmua/attempt-identity";
 
 export const runtime = "nodejs";
 
@@ -296,6 +297,13 @@ export async function POST(req: Request) {
 
   if (!testId) {
     return badRequest("test_id is required");
+  }
+
+  let predictiveAttemptId: string | null = null;
+  try {
+    if (testId === TMUA_PREDICTIVE_2026_ID) predictiveAttemptId = readPredictiveAttemptId(body?.attemptId);
+  } catch (error) {
+    return badRequest(error instanceof Error ? error.message : "Invalid predictive attempt identifier.");
   }
 
   // Presentation metadata must never change canonical answer identity or scoring.
@@ -768,6 +776,7 @@ export async function POST(req: Request) {
         standard_time_estimate: standardTimeEstimate,
       } : {}),
       ...(testId === TMUA_PREDICTIVE_2026_ID ? {
+        ...(predictiveAttemptId ? { tmua_predictive_client_attempt_id: predictiveAttemptId } : {}),
         tmua_predictive_2026_complete: body?.complete !== false,
         tmua_predictive_2026_scale: TMUA_PREDICTIVE_2026_CATALOG.score_conversion_profile,
         tmua_predictive_2026_scale_calibrated: false,

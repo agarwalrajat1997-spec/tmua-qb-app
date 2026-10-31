@@ -275,7 +275,7 @@ window.addEventListener('keydown',e=>{
 },true);
 document.addEventListener('contextmenu',e=>e.preventDefault(),true);
 window.__TS_EXAM_DONE=false;
-document.getElementById('tsWorkspaceBtn').addEventListener('click',e=>{e.preventDefault();if(window.__TS_EXAM_DONE||confirm('Return to the TMUA workspace? Current test progress will be lost.'))location.href='https://apps.thrivingscholars.com/dashboard';});
+document.getElementById('tsWorkspaceBtn').addEventListener('click',e=>{e.preventDefault();if(window.__TS_EXAM_DONE||confirm('Return to the TMUA workspace? Current test progress will be lost.'))location.href='https://apps.thrivingscholars.com/dashboard?view=tmua&section=practice';});
 window.addEventListener('beforeunload',e=>{if(window.__TS_EXAM_DONE||document.getElementById('instructions').style.display!=='none')return;e.preventDefault();e.returnValue='';});
 
 function expirePracticePaper(){if(!isExamActive())return;recordCurrentTime();clearInterval(timerInterval);secondsRemaining=0;renderTimer();if(paper===1)showBreakScreen(true);else{automaticSubmission=true;submitExam();}}
