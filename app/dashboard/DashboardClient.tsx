@@ -735,11 +735,11 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
             </li>
 </ul>
 
-          <div className={styles.card} style={{ margin: "16px 18px 0" }}>
+          <div className={`${styles.card} ${styles.supportCard}`}>
             <div className={styles.muted}>
-              Support: <b>outreach@thrivingscholars.com</b>
-              <br />
-              WhatsApp: <b>+44 7459 070019</b>
+              <strong>Support</strong>
+              <a href="mailto:outreach@thrivingscholars.com">outreach@<wbr/>thrivingscholars.com</a>
+              <a href="https://wa.me/447459070019">WhatsApp: +44 7459 070019</a>
             </div>
           </div>
 

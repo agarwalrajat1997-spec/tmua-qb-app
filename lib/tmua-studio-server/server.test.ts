@@ -4,7 +4,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { catalogue, questionGuide, resolveQuestion, publicQuestion } from "./catalogue";
 import { assertOrigin, assertViewer, isDevelopmentPreview, StudioError } from "./http";
 import { loadNotebook, saveNotebook } from "./notebooks";
-import { tutorConfig } from "./tutor";
+import { tutorConfig, startBackgroundReview, TutorError } from "./tutor";
+import { API_QUOTA_ERROR_MESSAGE, classifyProviderError } from "./provider-errors";
 import { ReviewRequest } from "./contracts";
 import { startReview, reviewStatus } from "./reviews";
 import { readFileSync } from "node:fs";
@@ -133,6 +134,51 @@ test("ambiguous provider failure is durable and never automatically retried",asy
     const input=ReviewRequest.parse({exam:"tmua",qid:q.qid,contentVersion:q.content_version,requestId:crypto.randomUUID(),revision:0,note:"x=2",structure:{steps:[]}});
     await assert.rejects(()=>startReview(db,user,input,q),StudioError);
     assert.equal((await reviewStatus(db,user,input.requestId)).status,"failed");
+    const failed=await reviewStatus(db,user,input.requestId);assert.ok(failed.status==="failed");assert.equal(failed.retryable,false);
     assert.equal((await startReview(db,user,input,q)).httpStatus,409);assert.equal(posts,1);
+  }finally{globalThis.fetch=oldFetch;if(oldKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=oldKey;if(oldEnable===undefined)delete process.env.ENABLE_AI;else process.env.ENABLE_AI=oldEnable;}
+});
+test("billing, spend limits, throttling and model access have distinct messages",()=>{
+  const generic=classifyProviderError("insufficient_quota","insufficient_quota",429)!;
+  assert.equal(generic.code,"quota");assert.equal(generic.message,API_QUOTA_ERROR_MESSAGE);assert.doesNotMatch(generic.message,/exhausted|no available credit/);
+  assert.equal(classifyProviderError("credit_balance_exhausted","insufficient_quota",429)?.code,"credit_balance_exhausted");
+  for(const code of ["project_spend_limit_exceeded","organization_spend_limit_exceeded","organization_usage_limit_exceeded"])assert.equal(classifyProviderError(code,"insufficient_quota",429)?.code,code);
+  for(const code of ["rate_limit_exceeded","slow_down"])assert.equal(classifyProviderError(code,"rate_limit_error",429)?.code,"rate_limit");
+  assert.equal(classifyProviderError("model_not_found","invalid_request_error",404)?.code,"model_unavailable");
+  assert.equal(classifyProviderError("server_is_overloaded","service_unavailable_error",503)?.code,"provider_overloaded");
+});
+test("explicit quota rejection captures safe diagnostics without provider text or credentials",async()=>{
+  const q=resolveQuestion(catalogue[0].qid)!;
+  const input=ReviewRequest.parse({exam:"tmua",qid:q.qid,contentVersion:q.content_version,requestId:crypto.randomUUID(),revision:0,note:"x=2",structure:{steps:[]}});
+  const config=tutorConfig({OPENAI_API_KEY:"test-only-never-sent"},q);
+  await assert.rejects(()=>startBackgroundReview(input,q,config,async()=>Response.json({error:{code:"insufficient_quota",type:"insufficient_quota",message:"PRIVATE_PROVIDER_TEXT"}},{status:429})),error=>{
+    assert.ok(error instanceof TutorError);assert.equal(error.code,"quota");
+    assert.equal(error.diagnostics?.providerErrorCode,"insufficient_quota");assert.equal(error.diagnostics?.providerErrorType,"insufficient_quota");
+    assert.equal(error.diagnostics?.httpStatus,429);assert.equal(error.diagnostics?.requestRejected,true);
+    assert.doesNotMatch(JSON.stringify(error),/PRIVATE_PROVIDER_TEXT|test-only-never-sent/);return true;
+  });
+});
+test("legacy saved quota failure can be retried explicitly without changing or resending its job",async()=>{
+  const {db,rows}=fakeReviewDb(),user={id:"alice",email:"alice@example.com"},requestId=crypto.randomUUID();
+  rows.push({id:crypto.randomUUID(),user_id:user.id,request_id:requestId,status:"failed",error_code:"quota",result:{error:"The OpenAI API project has no available credit."},provider_id:"resp_legacy",model:"gpt-6.1-terra",created_at:new Date().toISOString()});
+  const result=await reviewStatus(db,user,requestId);
+  assert.ok(result.status==="failed");assert.equal(result.retryable,true);assert.equal(result.error,API_QUOTA_ERROR_MESSAGE);
+  assert.equal(rows.length,1);assert.equal(rows[0].result.error,"The OpenAI API project has no available credit.");
+});
+test("terminal provider failure enables only a deliberate new-request retry and preserves diagnostics",async()=>{
+  const oldFetch=globalThis.fetch,oldKey=process.env.OPENAI_API_KEY,oldEnable=process.env.ENABLE_AI;
+  process.env.OPENAI_API_KEY="test-only-never-sent";process.env.ENABLE_AI="true";let posts=0;
+  globalThis.fetch=async()=>{posts++;return Response.json({id:"resp_failed",status:"failed",error:{code:"project_spend_limit_exceeded",type:"insufficient_quota",message:"PRIVATE_PROVIDER_TEXT"}});};
+  try{
+    const {db,rows}=fakeReviewDb(),user={id:"alice",email:"alice@example.com"},q=resolveQuestion(catalogue[0].qid)!;
+    const input=ReviewRequest.parse({exam:"tmua",qid:q.qid,contentVersion:q.content_version,requestId:crypto.randomUUID(),revision:0,note:"x=2",structure:{steps:[]}});
+    await assert.rejects(()=>startReview(db,user,input,q),StudioError);
+    const saved=await reviewStatus(db,user,input.requestId);
+    assert.ok(saved.status==="failed");assert.equal(saved.retryable,true);assert.equal(posts,1);
+    assert.equal(rows[0].result.diagnostics.providerErrorCode,"project_spend_limit_exceeded");assert.equal(rows[0].result.diagnostics.providerStatus,"failed");
+    assert.doesNotMatch(JSON.stringify(rows),/PRIVATE_PROVIDER_TEXT|test-only-never-sent/);
+    assert.equal((await startReview(db,user,input,q)).httpStatus,409);assert.equal(posts,1);
+    await assert.rejects(()=>startReview(db,user,{...input,requestId:crypto.randomUUID()},q),StudioError);
+    assert.equal(posts,2);assert.equal(rows.length,2);
   }finally{globalThis.fetch=oldFetch;if(oldKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=oldKey;if(oldEnable===undefined)delete process.env.ENABLE_AI;else process.env.ENABLE_AI=oldEnable;}
 });

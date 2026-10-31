@@ -18,6 +18,14 @@ const guideFiles = read<Record<string,string>>("guide-index.json");
 const active = new Set(eligibility.active_audit_ids);
 export const canonicalQid = (qid: string) => eligibility.bank_aliases[qid] ?? qid;
 const byCanonical = new Map(main.map(q => [canonicalQid(q.qid), q]));
+// Historical paper numbers were reused. Only aliases proved against both
+// immutable source banks are eligible; excluded questions remain excluded.
+const legacyIds = new Map<string,string[]>();
+for (const [alias, qid] of Object.entries(read<Record<string,string>>("legacy-identities.json"))) {
+  const canonical = canonicalQid(qid);
+  if (!/^PAPER[12]-Q[1-9]\d*$/.test(alias)) throw new Error("Invalid legacy question identity");
+  if (byCanonical.has(canonical)) legacyIds.set(canonical, [...(legacyIds.get(canonical) ?? []), alias]);
+}
 const byVersion = new Map(versions.map(q => [JSON.stringify([canonicalQid(q.qid), q.content_version]), q]));
 if (main.length !== 2178 || active.size !== 2178 || eligibility.excluded_ids.length !== 22 || byCanonical.size !== main.length || main.some(q => !active.has(q.qid) || !guideFiles[q.content_version])) {
   throw new Error("TMUA release completeness validation failed");
@@ -32,6 +40,7 @@ export function questionMetadata(q: ReleasedQuestion) {
   return {
     exam: "tmua" as const, qid: canonicalQid(q.qid), bank_qid: canonicalQid(q.qid), audit_qid: q.qid,
     display_order: Number(q.app_question_id), app_question_id: q.app_question_id,
+    legacy_ids: legacyIds.get(canonicalQid(q.qid)) ?? [],
     paper: q.paper, topic: q.topic, subtopic: q.subtopic, difficulty: q.difficulty,
     tags: q.tags ?? [], content_version: q.content_version, source_sha256: q.source_sha256,
     skill_search: q.skill_search ?? "", audited: true, answer_verified: true,

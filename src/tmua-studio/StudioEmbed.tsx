@@ -13,6 +13,7 @@ import {
 import { resumeCloudSync } from "./lib/cloud-storage";
 import { readLocal } from "./lib/storage";
 import { consumeStudioOpen, type EmbedOpenHistory } from "./lib/embed-session";
+import { studentErrorMessage } from "./lib/student-content";
 import { cleanTopic, questionKey, type Progress, type Question, type StoredSolution } from "./types";
 
 function tellParent(message: Record<string, unknown>) {
@@ -192,9 +193,9 @@ export default function StudioEmbed() {
       <div><strong>Study Studio</strong><span>Write, think, understand.</span></div>
       {!online && <span role="status" className="studio-connection">Offline · writing stays saved on this device</span>}
     </header>
-    {notice && <div className="studio-embed-notice" role="status">{notice}<button aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
+    {notice && <div className="studio-embed-notice" role="status">{studentErrorMessage(notice)}<button aria-label="Dismiss message" onClick={() => setNotice("")}>×</button></div>}
     {loading ? <div className="studio-embed-empty" role="status">Opening your question and saved working…</div> :
-      error ? <div className="studio-embed-empty" role="alert"><p>{error}</p><button className="secondary" onClick={() => setSelection((previous) => previous ? { ...previous } : undefined)}>Try again</button></div> :
+      error ? <div className="studio-embed-empty" role="alert"><p>{studentErrorMessage(error)}</p><button className="secondary" onClick={() => setSelection((previous) => previous ? { ...previous } : undefined)}>Try again</button></div> :
       question && loaded ? <div className="workbench">
         <section className="question-panel" aria-label="Question">
           <div className="question-content">
@@ -225,14 +226,13 @@ export default function StudioEmbed() {
             {question.audited && <QuestionGuide key={questionKey(question)} question={question}
               submitted={!!current.submitted} selected={current.selected} questions={[]}
               progress={progress} onNext={openQuestion} />}
-            <div className="question-id">{question.qid}</div>
           </div>
         </section>
         <section className="writing-panel" aria-label="Your working">
           <div className="writing-heading"><div><span className="small-dot" /><strong>Your working</strong><span className="writing-subtitle">Think it through, one line at a time.</span></div><small>{saveStatus}</small></div>
           <NotebookWorkspace key={`${scope}:visit:${visit}`} scope={scope} question={question} isMock={false} readOnly={false}
             online={online} aiReady={loaded.configured}
-            onConnect={() => setNotice("The tutor connection is not configured yet. Your working is saved; you can keep writing and use the audited hints and solutions.")}
+            onConnect={() => setNotice("Feedback is temporarily unavailable. Your working is saved. You can keep writing and use the hints and solutions. Please contact your teacher if this continues.")}
             onStatus={setSaveStatus} questions={questions} progress={progress} onNextQuestion={openQuestion}
             onReviewComplete={(feedback) => {
               if (!feedback) return;

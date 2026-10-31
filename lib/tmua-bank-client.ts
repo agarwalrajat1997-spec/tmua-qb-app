@@ -2,6 +2,8 @@
 export type BankQuestion = {
   qid: string;
   audit_qid?: string;
+  /** Only immutable, collision-checked historical IDs supplied by the catalogue. */
+  legacy_ids?: string[];
   display_order: number;
   paper: string;
   topic: string;
@@ -98,16 +100,24 @@ function finiteOrNull(value: unknown) {
 }
 function normalize(value: unknown): QuestionProgress {
   if (!object(value)) return {};
-  let status = typeof value.status === "string" ? value.status : undefined;
+  let status = typeof value.status === "string" ? value.status.trim().toLowerCase() : undefined;
   if (status === "incorrect") status = "wrong";
   if (status === "right") status = "correct";
-  if (value.checked === true) status = value.isCorrect === true ? "correct" : "wrong";
-  const selected = value.selected_answer ?? value.selected;
-  if (!status && selected) status = "attempted";
+  if (status === "answered" || status === "submitted") status = "attempted";
+  if (!["correct", "wrong", "attempted", "seen", "unattempted"].includes(status ?? "")) status = undefined;
+  // `answer` is the old bank's answer KEY, not the student's selection.
+  // An explicit null selection/unchecked retry must not resurrect an older mark.
+  const selected = value.selected_answer !== undefined ? value.selected_answer : value.selected;
+  const hasSelection = selected !== null && selected !== undefined && String(selected).trim() !== "";
+  if (value.checked === true) status = typeof value.isCorrect === "boolean"
+    ? (value.isCorrect ? "correct" : "wrong") : "attempted";
+  else if (value.checked === false) status = hasSelection ? "attempted" : "unattempted";
+  else if ((!status || status === "seen" || status === "unattempted") && hasSelection) status = "attempted";
   const result: QuestionProgress = {};
   if (status) result.status = status;
   if (selected !== undefined) result.selected_answer = selected === null ? null : String(selected);
   if (typeof value.flagged === "boolean") result.flagged = value.flagged;
+  else if (typeof value.saved === "boolean") result.flagged = value.saved;
   for (const key of ["updated_at", "last_seen_at", "answer_submitted_at", "submission_id"] as const) {
     if (typeof value[key] === "string" || value[key] === null) result[key] = value[key] as string | null;
   }
@@ -130,10 +140,14 @@ export function sortQuestions<T extends BankQuestion>(questions: readonly T[]): 
 
 function aliases(questions: readonly BankQuestion[]) {
   const map = new Map<string, BankQuestion>();
+  const ambiguous = new Set<string>();
   for (const q of questions) {
     if (!Number.isSafeInteger(q.display_order) || q.display_order <= 0) throw new Error("A question is missing its stable progress identifier.");
-    for (const key of [q.qid, q.audit_qid, String(q.display_order), `SB-${q.display_order}`]) {
-      if (key) map.set(canonical(key), q);
+    for (const key of [q.qid, q.audit_qid, String(q.display_order), `SB-${q.display_order}`, ...(q.legacy_ids ?? [])]) {
+      if (!key) continue;
+      const id = canonical(key), prior = map.get(id);
+      if (prior && prior.qid !== q.qid) { map.delete(id); ambiguous.add(id); }
+      else if (!ambiguous.has(id)) map.set(id, q);
     }
   }
   return map;
@@ -283,34 +297,48 @@ export async function loadProgress(viewerId: string, questions: readonly BankQue
   if (!fullyLoaded) warnings.push("Some saved progress could not be loaded. Your local work is retained; retry when connected.");
   if (results.some(result => result.status === "fulfilled")) verifiedViewers.add(viewerId);
   const progress = mergeProgressSources(questions, rows, envelope);
+  const oldScope = `${STORAGE_KEY}__account_v3:${viewerId}:`;
+  // The earlier account-scoped full state is useful during an outage or when no
+  // cloud app_state exists. It is a read-only fallback, never an unsent delta:
+  // another device may already have saved a newer answer or removed a bookmark.
+  if (results[1].status === "rejected" || envelope === null || envelope === undefined) {
+    const oldState = parsed(oldScope + "state"), oldAck = parsed(oldScope + "ack");
+    const fallback = mergeProgressSources(questions, {}, { parsed: object(oldState) ? oldState : oldAck });
+    for (const [qid, value] of Object.entries(fallback)) if (!progress[qid]) progress[qid] = value;
+  }
   for (const [key, value] of Object.entries(answersFromEnvelope(envelope))) {
     const q = known.get(canonical(key));
     if (q && object(value)) legacyAnswers.set(`${viewerId}:${q.qid}`, value);
   }
   for (const q of questions) {
     const cached = normalize(parsed(prefix(viewerId) + "question:" + q.qid));
-    if (Object.keys(cached).length && (!progress[q.qid]
-      || (rowTime(progress[q.qid]) > 0 && rowTime(cached) > rowTime(progress[q.qid])))) {
+    if (Object.keys(cached).length && ((!fullyLoaded && !progress[q.qid])
+      || (progress[q.qid] && rowTime(progress[q.qid]) > 0 && rowTime(cached) > rowTime(progress[q.qid])))) {
       progress[q.qid] = { ...progress[q.qid], ...cached };
     }
   }
   // Recover only explicitly owned legacy browser journals; unowned global keys
   // are deliberately left untouched for manual recovery.
-  const oldScope = `${STORAGE_KEY}__account_v3:${viewerId}:`;
-  for (const key of storageKeys().filter(key => key.startsWith(oldScope + "pending:"))) {
-    const journal = parsed(key);
+  const oldJournals = storageKeys().filter(key => key.startsWith(oldScope + "pending:"))
+    .map(key => ({ key, journal: parsed(key) }))
+    .sort((a, b) => Number(object(a.journal) ? a.journal.at : 0) - Number(object(b.journal) ? b.journal.at : 0)
+      || a.key.localeCompare(b.key));
+  for (const { key, journal } of oldJournals) {
     if (!object(journal) || !object(journal.patch) || !object(journal.patch.answers)) continue;
     const local = mergeProgressSources(questions, {}, { parsed: journal.patch });
     for (const [qid, value] of Object.entries(local)) {
       const q = known.get(qid), at = Number(journal.at ?? 0);
       if (!q || !Number.isFinite(at) || at <= 0 || (progress[qid] && at <= rowTime(progress[qid]))) continue;
+      const id = `legacy-${encodeURIComponent(key)}-${at}-${encodeURIComponent(qid)}`;
+      const marker = prefix(viewerId) + "imported:" + id;
+      // Once acknowledged, the retained original is an archive, not a fresh
+      // edit. Any still-pending imported journal is applied separately below.
+      if (read(marker)) continue;
       const merged = { ...progress[qid], ...value, updated_at: new Date(at).toISOString() };
       progress[qid] = merged;
       // Import an explicitly owned old journal once. Keep the original intact;
       // rollback to the earlier UI remains possible without assigning its data
       // to any other account.
-      const id = `legacy-${encodeURIComponent(key)}-${at}-${encodeURIComponent(qid)}`;
-      const marker = prefix(viewerId) + "imported:" + id;
       if (!read(marker)) {
         merged.submission_id ??= `tmua-stable-v1|${q.display_order}|${id}`;
         write(prefix(viewerId) + "pending:" + id, { id, qid, displayOrder: q.display_order, at,

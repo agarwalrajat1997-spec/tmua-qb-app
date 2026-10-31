@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
 
 const source = pathToFileURL(resolve('lib/tmua-bank-client.ts')).href;
 let instance = 0;
@@ -51,6 +52,64 @@ const removedBookmark = api.mergeProgressSources(questions, {
   'TMUA-TS-A-P1-Q6': { selected: 'NEW', flagged: false }, 'TMUA-JZ-A-P1-Q6': { selected: 'OLD', flagged: true } } } });
 assert.equal(removedBookmark['TMUA-P1-EASY'].flagged, false);
 assert.equal(removedBookmark['TMUA-TS-A-P1-Q6'].selected_answer, 'NEW');
+
+// Real older app_state records use selected/checked/isCorrect; a stored answer
+// letter is the answer key. Retry states must not become a wrong checked result.
+const realistic = api.mergeProgressSources(questions, {}, { parsed: { answers: {
+  397: { selected: 'C', checked: false, isCorrect: false, locked: false, answer: 'B' },
+  1824: { checked: true, selected: 'A', answer: 'B', saved: true },
+  2074: { status: ' ANSWERED ', flagged: false, saved: true },
+} } });
+assert.equal(realistic['TMUA-P1-HARD'].status, 'attempted');
+assert.equal(realistic['TMUA-P1-EASY'].status, 'attempted'); // Unknown correctness remains unknown.
+assert.equal(realistic['TMUA-P1-EASY'].flagged, true);
+assert.equal(realistic['TMUA-TS-A-P1-Q6'].status, 'attempted'); // No selected letter is required.
+assert.equal(realistic['TMUA-TS-A-P1-Q6'].flagged, false);
+assert.equal(realistic['TMUA-TS-A-P1-Q6'].selected_answer, undefined);
+const retry = api.mergeProgressSources(questions, {}, { parsed: { answers: {
+  397: { checked: false, status: 'correct', selected_answer: null, selected: 'OLD', answer: 'B' },
+  1824: null, 2074: ['bad row'],
+} } });
+assert.equal(retry['TMUA-P1-HARD'].status, 'unattempted');
+assert.equal(retry['TMUA-P1-HARD'].selected_answer, null);
+assert.equal(retry['TMUA-P1-EASY'], undefined);
+
+// PAPER aliases are supplied only after comparison of immutable historical
+// datasets. A similar label, paper number, or colliding alias proves nothing.
+const identified = questions.map(x => ({ ...x }));
+identified[0].legacy_ids = ['PAPER1-Q400'];
+const named = api.mergeProgressSources(identified, {
+  'PAPER1-Q400': { status: 'answered', selected_answer: 'D' },
+  'PAPER2-Q400': { status: 'correct', selected_answer: 'H' },
+}, {});
+assert.equal(named['TMUA-P1-HARD'].selected_answer, 'D');
+assert.equal(named['TMUA-P1-HARD'].status, 'attempted');
+assert.equal(Object.keys(named).length, 1);
+identified[1].legacy_ids = ['PAPER1-Q400'];
+assert.deepEqual(api.mergeProgressSources(identified, { 'PAPER1-Q400': { status: 'answered' } }, {}), {});
+
+// Exercise the real server catalogue, not a duplicated client-side reconstruction.
+// All released aliases reach the adapter; excluded versions cannot reappear.
+const { catalogue, canonicalQid } = await import(pathToFileURL(resolve('lib/tmua-studio-server/catalogue.ts')).href);
+const historicalIds = JSON.parse(readFileSync('content/tmua-studio/legacy-identities.json', 'utf8'));
+assert.equal(Object.keys(historicalIds).length, 1363);
+assert.equal(historicalIds['PAPER1-Q1'], undefined); // Reused for different prompts in the two originals.
+const released = new Map(catalogue.map(question => [question.qid, question]));
+const realLegacyRows = {};
+for (const [alias, qid] of Object.entries(historicalIds)) {
+  const target = released.get(canonicalQid(qid));
+  if (target) {
+    assert.ok(target.legacy_ids.includes(alias));
+    realLegacyRows[alias] = { status: 'answered', selected_answer: 'A', flagged: false };
+  } else assert.ok(catalogue.every(question => !question.legacy_ids.includes(alias)));
+}
+const restoredCatalogue = api.mergeProgressSources(catalogue, realLegacyRows, {});
+for (const alias of Object.keys(realLegacyRows)) {
+  const target = canonicalQid(historicalIds[alias]);
+  assert.equal(restoredCatalogue[target].status, 'attempted');
+  assert.equal(restoredCatalogue[target].selected_answer, 'A');
+}
+assert.equal(Object.keys(restoredCatalogue).length, new Set(Object.keys(realLegacyRows).map(alias => canonicalQid(historicalIds[alias]))).size);
 
 // Writes use 1824 rather than the first card's position or qid; the compact delta
 // updates one answer and retains unrelated older fields without solution blobs.
@@ -143,6 +202,37 @@ assert.equal(legacy.progress['TMUA-P1-HARD'], undefined);
 assert.equal(storage.get(oldKey), unowned);
 assert.equal(imported[0].updates[0].question_id, '1824');
 assert.equal(imported.length, 2); await api.loadProgress('A', questions); assert.equal(imported.length, 2);
+// Retaining the old journal for rollback must not replay it over a later cloud
+// answer, including the old cloud shape without per-question timestamps.
+globalThis.fetch = async (_url, init) => {
+  assert.equal(init?.body, undefined);
+  return json({ ok: true, user_id: 'A', progress: {}, data: { parsed: { answers: {
+    1824: { selected: 'NEW', checked: true, isCorrect: false, flagged: false },
+  } } } });
+};
+assert.equal((await api.loadProgress('A', questions)).progress['TMUA-P1-EASY'].selected_answer, 'NEW');
+
+// Account-scoped v3 full state/ack is a read-only outage fallback, never a full
+// history rewrite. Successful empty/cloud records remain authoritative.
+storage.clear(); api = await fresh();
+const ownedCache = oldKey + '__account_v3:A:state';
+storage.set(ownedCache, JSON.stringify({ answers: { 397: { selected: 'CACHE', checked: true, isCorrect: true } } }));
+storage.set(oldKey + '__account_v3:B:state', JSON.stringify({ answers: { 1824: { selected: 'OTHER' } } }));
+globalThis.fetch = async () => { throw new Error('offline'); };
+const cachedOnly = await api.loadProgress('A', questions);
+assert.equal(cachedOnly.syncState, 'offline');
+assert.equal(cachedOnly.progress['TMUA-P1-HARD'].status, 'correct');
+assert.equal(cachedOnly.progress['TMUA-P1-EASY'], undefined);
+globalThis.fetch = async (_url, init) => { assert.equal(init?.body, undefined); return emptyNetwork(_url, init); };
+assert.deepEqual((await api.loadProgress('A', questions)).progress, {});
+assert.ok(storage.has(ownedCache));
+storage.clear(); api = await fresh();
+storage.set(oldKey + '__account_v3:A:ack', JSON.stringify({ answers: { 397: { selected: 'ACK', checked: false } } }));
+globalThis.fetch = async (_url, init) => {
+  assert.equal(init?.body, undefined);
+  return json({ ok: true, user_id: 'A', progress: {}, data: null });
+};
+assert.equal((await api.loadProgress('A', questions)).progress['TMUA-P1-HARD'].status, 'attempted');
 
 // A blocked/full browser store does not break online saving and is never
 // described as a durable on-device copy.

@@ -52,6 +52,7 @@ import {
 import { BoardAnnotations } from "./BoardAnnotations";
 import type { PlacedAnnotation, Annotation } from "../lib/annotations";
 import { FeedbackDetail } from "./FeedbackDetail";
+import { studentErrorMessage } from "../lib/student-content";
 export type BoardHandle = {
   snapshot: () => Promise<PreparedBoard>;
   freeze: () => Promise<PreparedBoard>;
@@ -727,7 +728,7 @@ export const InkBoard = forwardRef<BoardHandle, Props>(function InkBoard(
                 : "Reviewing your complete working…"}
           </span>
         ) : reviewError ? (
-          <span className="review-error">{reviewError}</span>
+          <span className="review-error">{studentErrorMessage(reviewError)}</span>
         ) : review && review.revision !== board.revision ? (
           <span>Working changed · submit again for updated notes.</span>
         ) : (
@@ -749,7 +750,7 @@ export const InkBoard = forwardRef<BoardHandle, Props>(function InkBoard(
       </div>
       {error && (
         <div role="alert" className="inline-error">
-          {error}
+          {studentErrorMessage(error)}
         </div>
       )}
       <div className="canvas-stage">

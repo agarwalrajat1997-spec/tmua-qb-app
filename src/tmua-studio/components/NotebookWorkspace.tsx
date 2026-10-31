@@ -23,6 +23,9 @@ import { InkBoard, type BoardHandle } from "./InkBoard";
 import { MathHtml, MathText } from "./MathHtml";
 import { scheduleFeedbackWarmup } from "../lib/warm-feedback";
 import { ThinkingBrand } from "./ThinkingBrand";
+import { UsefulMethods } from "./UsefulMethods";
+import { loadGuide } from "../lib/audited-content";
+import { studentMethods, studentErrorMessage, type StudentMethod } from "../lib/student-content";
 import { recommendNext } from "../lib/next-question";
 import {
   subscribeSync,
@@ -63,6 +66,7 @@ export function NotebookWorkspace({
   const entry = useRef(crypto.randomUUID()),
     board = useRef<BoardHandle>(null);
   const [error, setError] = useState("");
+  const [methods, setMethods] = useState<StudentMethod[]>([]);
   const [reviewAction, setReviewAction] = useState<"check" | "retry" | null>(
     null,
   );
@@ -73,6 +77,14 @@ export function NotebookWorkspace({
   const read = useCallback(() => notebooks.get(scope), [scope]);
   const notebook = useSyncExternalStore(subscribe, read, () => undefined);
   useEffect(() => (isMock ? undefined : scheduleFeedbackWarmup()), [isMock]);
+  useEffect(() => {
+    let active = true;
+    setMethods([]);
+    if (question.audited) void loadGuide(question).then((guide) => {
+      if (active) setMethods(studentMethods(guide.enrichment.shortcut_assessments));
+    }).catch(() => {});
+    return () => { active = false; };
+  }, [question]);
   useEffect(() => {
     void notebooks
       .open(scope, entry.current, {
@@ -232,7 +244,10 @@ export function NotebookWorkspace({
             key={p.id}
             role="tab"
             aria-selected={!solutionActive && pad.id === p.id}
-            aria-label={`Pad ${i + 1}${p.status === "draft" ? "" : `, ${p.status}`}`}
+            aria-label={`Pad ${i + 1}${p.status === "draft" ? "" : `, ${{
+              preparing: "preparing", queued: "waiting", reviewing: "reviewing",
+              complete: "feedback ready", failed: "needs attention",
+            }[p.status]}`}`}
             className={!solutionActive && pad.id === p.id ? "selected" : ""}
             onClick={() => run(notebooks.select(scope, p.id))}
           >
@@ -268,14 +283,14 @@ export function NotebookWorkspace({
       </div>
       {error && (
         <div className="inline-error" role="alert">
-          {error}
+          {studentErrorMessage(error)}
         </div>
       )}
       {solutionActive ? (
         <section
           className="solution-pad"
           role="tabpanel"
-          aria-label="Stored worked solution"
+          aria-label="Worked solution"
         >
           <div className="solution-paper">
             <span className="solution-eyebrow">
@@ -288,12 +303,7 @@ export function NotebookWorkspace({
                   Answer <MathText text={notebook.solution.answer} />
                 </p>
                 <MathHtml html={notebook.solution.solutionHtml} />
-                {notebook.solution.shortcuts.map((s, i) => (
-                  <section className="stored-shortcut" key={i}>
-                    <h3>{s.title}</h3>
-                    <MathHtml html={s.html} />
-                  </section>
-                ))}
+                <UsefulMethods methods={methods} />
                 <p className="solution-provenance">
                   From the question bank. Return to a numbered pad for feedback
                   on your own working.
@@ -301,7 +311,7 @@ export function NotebookWorkspace({
               </>
             ) : notebook.solutionError ? (
               <>
-                <p role="alert">{notebook.solutionError}</p>
+                <p role="alert">{studentErrorMessage(notebook.solutionError)}</p>
                 <button
                   className="secondary"
                   onClick={() =>
@@ -315,11 +325,11 @@ export function NotebookWorkspace({
                     )
                   }
                 >
-                  Load stored solution
+                  Load solution
                 </button>
               </>
             ) : (
-              <p role="status">Loading the stored solution…</p>
+              <p role="status">Loading the solution…</p>
             )}
           </div>
         </section>
@@ -386,7 +396,7 @@ export function NotebookWorkspace({
             {locked ? <LockKeyhole size={15} /> : <Sparkles size={17} />}{" "}
             {pending
               ? pad.status === "queued"
-                ? "Queued…"
+                ? "Waiting…"
                 : "Reviewing…"
               : locked
                 ? "Submitted"
@@ -429,15 +439,13 @@ export function NotebookWorkspace({
                   : "Retry review"}
               </button>
               <small>
-                Retry uses API tokens only after the previous review is
-                confirmed failed. Your saved working stays unchanged.
+                Try again when you’re ready. Your saved working stays unchanged.
               </small>
             </>
           )}
           {!retryConfirmed && (
             <small>
-              Checking reads saved status only. Another review is available only
-              after the current request is confirmed to have failed safely.
+              Check whether your feedback is ready before starting another review.
             </small>
           )}
         </div>
@@ -449,9 +457,9 @@ export function NotebookWorkspace({
             {pad.recovery.previousReview.summary
               ? `An earlier saved review said: ${pad.recovery.previousReview.summary}`
               : pad.recovery.previousReview.error
-                ? `Earlier review: ${pad.recovery.previousReview.error}`
+                ? studentErrorMessage(pad.recovery.previousReview.error)
                 : "The earlier review has no saved feedback yet."}{" "}
-            This does not confirm the outcome of the latest request.
+            Check your latest review for the most recent feedback.
           </div>
         )}
       <div className="cloud-detail" role="status">

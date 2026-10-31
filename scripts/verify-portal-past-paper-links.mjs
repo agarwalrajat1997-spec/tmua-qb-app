@@ -81,8 +81,8 @@ assert.equal((tmuaBank.match(/<PastPaperPracticeLink\b/g) ?? []).length, 1,
   "TMUA must render one shared practice link in the actual question bank.");
 assert.equal((tmua.match(/<PastPaperPracticeLink\b/g) ?? []).length, 0,
   "The dashboard must not duplicate the TMUA bank's shared practice link.");
-assert.ok(/<footer\s+className=["']bank-past-paper-link["']\s*>\s*<PastPaperPracticeLink\s*\/>\s*<\/footer>\s*<\/main>/.test(tmuaBank),
-  "The TMUA practice link must remain in the bank footer after its question content.");
+assert.ok(/\{!loading\s*&&\s*<footer\s+className=["']bank-past-paper-link["']\s*>\s*<PastPaperPracticeLink\s*\/>\s*<\/footer>\s*\}\s*<\/main>/.test(tmuaBank),
+  "After loading, the TMUA practice link must remain in the bank footer after its question content.");
 
 assert.doesNotMatch(amc, /["']Past Papers["']|["']past-papers["']|>\s*(?:AMC\s+)?Past Papers\s*</, "AMC must not retain its removed Past Papers view or navigation.");
 assert.doesNotMatch(amc, /amc-past-paper-practice|pastPaperFrame|<iframe\b/, "AMC must not retain the embedded archive section.");

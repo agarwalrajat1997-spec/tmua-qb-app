@@ -5,6 +5,7 @@ import type { Board } from "../types";
 import { strokePath } from "../lib/ink";
 import { MathText } from "./MathHtml";
 import { TutorDiagram } from "./TutorDiagram";
+import { studentErrorMessage } from "../lib/student-content";
 export function FeedbackDetail({
   annotation: a,
   board,
@@ -121,7 +122,7 @@ export function FeedbackDetail({
             Your ink stays unchanged. The tutor will reassess the complete
             attempt with this clarification.
           </small>
-          {error && <p role="alert">{error}</p>}
+          {error && <p role="alert">{studentErrorMessage(error)}</p>}
           <button
             className="primary"
             type="submit"

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
@@ -15,6 +16,9 @@ registerHooks({
     return next(specifier, context);
   },
   load(url, context, next) {
+    if (url.includes('/tmua-studio/') && url.endsWith('.json')) {
+      return { format: 'module', source: `export default ${readFileSync(new URL(url), 'utf8')};`, shortCircuit: true };
+    }
     if (url.includes('/tmua-studio/') && url.endsWith('.ts')) {
       const source = ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
         compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
@@ -27,6 +31,45 @@ registerHooks({
 });
 
 const api = await import('./lib/api.ts');
+const { studentMethods, studentText, studentErrorMessage } = await import('./lib/student-content.ts');
+const allowed = [
+  { shortcut_id: 'SC03', classification: 'useful_ordinary_method', method_here: 'SC03 — Choose Your Own Numbers: set x = 1.', conditions_checked: ['x = 1 must satisfy the given domain.'] },
+  { shortcut_id: 'SC06', classification: 'material_shortcut', method_here: 'Use the bound to eliminate every other answer.' },
+];
+const excluded = ['not_applicable', 'unsafe_here', 'insufficient_information', 'rejected', 'unknown', undefined]
+  .map(classification => ({ shortcut_id: 'SC01', classification, method_here: 'There is no applicable method.' }));
+excluded.push({ ...allowed[0], status: 'rejected' }, { ...allowed[0], applicable: false }, { ...allowed[0], method_here: '' });
+const methodsInput = [...allowed, ...excluded];
+const methodsBefore = JSON.stringify(methodsInput);
+const visibleMethods = studentMethods(methodsInput);
+assert.equal(visibleMethods.length, 2);
+assert.deepEqual(visibleMethods.map(method => method.label), ['Useful method', 'Shortcut']);
+assert.ok(!visibleMethods.some(method => /SC\d{2}/.test(method.title + method.explanation)));
+assert.equal(studentText('SC03 — Choose Your Own Numbers:'), 'Choose Your Own Numbers:');
+assert.equal(studentText('This is the same numerical check as SC01, not a separate saving.'),
+  'This is the same numerical check as Small n, Big Cut, not a separate saving.');
+assert.equal(studentText('Keep \\(x^2 + 1\\) unchanged.'), 'Keep \\(x^2 + 1\\) unchanged.');
+assert.equal(JSON.stringify(methodsInput), methodsBefore, 'Student filtering must not alter the audit data');
+const creditError = 'The OpenAI API project has no available credit. Add API credit, then retry this review. Your working is saved.';
+const studentError = studentErrorMessage(creditError);
+assert.ok(!/OpenAI|API|credit|quota|billing/i.test(studentError));
+assert.match(studentError, /working is saved/);
+assert.match(studentError, /teacher/);
+assert.equal(studentErrorMessage('Device storage is unavailable. Export your work before leaving.'), 'Device storage is unavailable. Export your work before leaving.');
+const guideRoot = new URL('../../content/tmua-studio/', import.meta.url);
+const guideIndex = JSON.parse(readFileSync(new URL('guide-index.json', guideRoot), 'utf8'));
+let actualMethods = 0, actualShortcuts = 0;
+for (const file of Object.values(guideIndex)) {
+  const guide = JSON.parse(gunzipSync(readFileSync(new URL(`guides/${file}`, guideRoot))).toString());
+  const original = JSON.stringify(guide);
+  const visible = studentMethods(guide.enrichment.shortcut_assessments);
+  actualMethods += visible.length;
+  actualShortcuts += visible.filter(method => method.label === 'Shortcut').length;
+  assert.ok(visible.every(method => !/SC\d{2}/.test(method.title + method.explanation)));
+  assert.equal(JSON.stringify(guide), original, 'The original guide remains intact');
+}
+assert.equal(actualMethods, 1413, 'Only positively assessed useful methods are displayed');
+assert.equal(actualShortcuts, 5, 'Ordinary methods must not be promoted to shortcuts');
 const { consumeStudioOpen } = await import('./lib/embed-session.ts');
 let history = { received: false };
 let opened = consumeStudioOpen(history, 'q1', 'opening-one', 'tmua:q1@v1');
@@ -150,4 +193,4 @@ const erased = eraseInk([stroke], [160,90,.5], [160,110,.5], 4);
 assert.deepEqual(stroke, original, 'Erasing does not modify the saved original stroke');
 assert.ok(strokeGeometry(erased[0]).length >= 2, 'Precise erasing retains both sides of a line');
 
-console.log(`Studio verification passed: ${assetManifest.assets.length} complete assets, real animation containers/types, eligible-bank manifest, iframe handshake, cookie transport, identity binding, review recovery, duplicate prevention, notebook separation, saved pads, precise erasing. No live API calls.`);
+console.log(`Studio verification passed: student wording/filter across 2,178 guides (${actualMethods} useful methods, ${actualShortcuts} shortcuts), ${assetManifest.assets.length} complete assets, real animation containers/types, eligible-bank manifest, iframe handshake, cookie transport, identity binding, review recovery, duplicate prevention, notebook separation, saved pads, precise erasing. No live API calls.`);

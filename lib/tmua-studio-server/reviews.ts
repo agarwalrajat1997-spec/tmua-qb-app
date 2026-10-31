@@ -4,6 +4,7 @@ import { z } from "zod/v3";
 import { ReviewRequest } from "./contracts";
 import { canonicalQid, type ReleasedQuestion } from "./catalogue";
 import { StudioError } from "./http";
+import { API_QUOTA_ERROR_MESSAGE, failureIsSafeToRetry } from "./provider-errors";
 import {
   buildReviewPayload, startBackgroundReview, pollBackgroundReview, deleteProviderReview,
   PROMPT_VERSION, tutorConfig, TutorError, type PendingReview,
@@ -12,6 +13,10 @@ import {
 const table="tmua_studio_review_jobs";
 type User={id:string;email:string};
 type Job={id:string;request_id:string;status:"reserved"|"pending"|"complete"|"failed";provider_id:string|null;review_context:PendingReview["context"];result:any;model:string;created_at:string;error_code:string|null};
+type ReviewState=
+  | {status:"pending"|"missing";requestId:string}
+  | {status:"complete";requestId:string;feedback:unknown}
+  | {status:"failed";requestId:string;error:string;code:string;retryable:boolean};
 const selection="id,request_id,status,provider_id,review_context,result,model,created_at,error_code";
 export function isConfigured(){return !!process.env.OPENAI_API_KEY?.trim() && process.env.ENABLE_AI!=="false";}
 async function load(db:SupabaseClient,userId:string,requestId:string):Promise<Job|null>{
@@ -19,9 +24,15 @@ async function load(db:SupabaseClient,userId:string,requestId:string):Promise<Jo
   if(error)throw new StudioError(503,"Your saved review is temporarily unavailable. No new review was sent.");
   return data as Job|null;
 }
-const pending=(id:string)=>({status:"pending",requestId:id});
-const failed=(job:Job)=>({status:"failed",requestId:job.request_id,error:job.result?.error??"This review could not be completed. Your working is saved.",code:job.error_code??"review_failed"});
-const view=(job:Job)=>job.status==="complete"?{status:"complete",requestId:job.request_id,feedback:job.result}:job.status==="failed"?failed(job):pending(job.request_id);
+const pending=(id:string)=>({status:"pending" as const,requestId:id});
+const failed=(job:Job)=>({status:"failed" as const,requestId:job.request_id,
+  // Older records merged two billing codes into `quota`. Do not claim a zero balance.
+  error:job.error_code==="quota"&&!job.result?.diagnostics?API_QUOTA_ERROR_MESSAGE:job.result?.error??"This review could not be completed. Your working is saved.",
+  code:job.error_code??"review_failed",
+  // A manual retry creates a new request ID; status checks never resend paid work.
+  retryable:job.result?.safeToRetry===true||failureIsSafeToRetry(job.result?.diagnostics)||(!job.result?.diagnostics&&["quota","invalid_key","permission_denied"].includes(job.error_code??"")),
+});
+const view=(job:Job):ReviewState=>job.status==="complete"?{status:"complete",requestId:job.request_id,feedback:job.result}:job.status==="failed"?failed(job):pending(job.request_id);
 function failure(error:unknown){
   return error instanceof TutorError ? {error:error.message,code:error.code,usage:error.usage??null,diagnostics:error.diagnostics??null} : {
     error:"The review connection was interrupted. Your working is saved. No automatic paid retry was sent.",code:"review_uncertain",usage:null,diagnostics:null,
@@ -29,7 +40,7 @@ function failure(error:unknown){
 }
 async function finishFailure(db:SupabaseClient,userId:string,id:string,error:unknown){
   const value=failure(error);
-  const {error:saveError}=await db.from(table).update({status:"failed",result:{error:value.error,code:value.code},error_code:value.code,usage:value.usage,completed_at:new Date().toISOString(),...(value.diagnostics?.responseId?{provider_id:value.diagnostics.responseId}:{})}).eq("id",id).eq("user_id",userId).in("status",["reserved","pending"]).retry(false);
+  const {error:saveError}=await db.from(table).update({status:"failed",result:{error:value.error,code:value.code,diagnostics:value.diagnostics,safeToRetry:failureIsSafeToRetry(value.diagnostics)},error_code:value.code,usage:value.usage,completed_at:new Date().toISOString(),...(value.diagnostics?.responseId?{provider_id:value.diagnostics.responseId}:{})}).eq("id",id).eq("user_id",userId).in("status",["reserved","pending"]).retry(false);
   if(saveError)throw new StudioError(503,"The review status could not be saved. Reopen this saved review later; no automatic paid retry was sent.");
   return value;
 }
@@ -40,7 +51,7 @@ async function finish(db:SupabaseClient,userId:string,id:string,result:Awaited<R
   if(error)throw new StudioError(503,"Your review finished but could not be saved yet. Reopen this saved review later; no new paid request was sent.");
   return feedback;
 }
-export async function reviewStatus(db:SupabaseClient,user:User,id:unknown){
+export async function reviewStatus(db:SupabaseClient,user:User,id:unknown):Promise<ReviewState>{
   const requestId=z.string().uuid().parse(id);const job=await load(db,user.id,requestId);
   if(!job)return {status:"missing",requestId};
   if(job.status==="complete"||job.status==="failed")return view(job);
