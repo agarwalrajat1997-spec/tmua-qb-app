@@ -334,6 +334,7 @@ const submission = moduleAt('app/api/practice-tests/submit/route.ts', {
   '@/lib/server/tmua-predictive-2026': { TMUA_PREDICTIVE_2026_ID: 'predictive-tmua' },
   '@/lib/supabase/server': { createSupabaseServerClient: async () => tmuaDb },
   '@/lib/tmua/past-paper-settings': { validateTmuaPastPaperSettings() {} },
+  '@/lib/tmua/attempt-identity': moduleAt('lib/tmua/attempt-identity.ts'),
   '@/lib/server/practice-standard-time': { resolvePracticeSettings() {
     reachedScoringValidation++;
     throw new Error('Isolated test stops before scoring and persistence');
