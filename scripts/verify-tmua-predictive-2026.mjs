@@ -55,6 +55,7 @@ assert.equal(predicted.testWeight,0.95);
 // No requests, emails, database writes, or deployment are performed.
 const require = createRequire(import.meta.url), ts=require("typescript"), cwd=process.cwd();
 let db, authorised=true;
+let adminClientCreations=0, rankSnapshotReads=0;
 const scheduledRefreshes=[];
 const environment={NEXT_PUBLIC_SUPABASE_URL:"https://qa.invalid",SUPABASE_SERVICE_ROLE_KEY:"qa-in-memory"};
 const cache=new Map();
@@ -66,6 +67,7 @@ function load(file){
     if(id==="@/lib/server/preparation-rank-cache")return {
       requestPreparationRankRefresh:(_admin,programme)=>scheduledRefreshes.push(programme),
       readPreparationRankSnapshot:async(_admin,userId,programme,verifiedEmail)=>{
+        rankSnapshotReads++;
         assert.equal(userId,"qa-user");assert.equal(programme,"tmua");
         assert.equal(verifiedEmail,"qa@example.invalid");
         return {score:null,rank:null,cohortSize:0,status:"temporarily_unavailable"};
@@ -73,7 +75,7 @@ function load(file){
     };
     if(id==="next/server")return {NextResponse:{json:(body,options={})=>({body,status:options.status??200})}};
     if(id==="@/lib/supabase/server")return {createSupabaseServerClient:async()=>({auth:{getUser:async()=>({data:{user:authorised?{id:"qa-user",email:"qa@example.invalid"}:null},error:null})},from:(...args)=>db.from(...args)})};
-    if(id==="@supabase/supabase-js")return {createClient:()=>db};
+    if(id==="@supabase/supabase-js")return {createClient:()=>{adminClientCreations++;return db;}};
     const resolved=id.startsWith("@/")?path.join(cwd,id.slice(2)):id.startsWith(".")?path.resolve(path.dirname(filename),id):null;
     if(resolved)return load(resolved.endsWith(".ts")?resolved:resolved+".ts");
     return require(id);
@@ -141,6 +143,7 @@ const {GET}=load("app/api/tmua/overview/route.ts");
 db=database([row(),row(40,{id:"other-user-attempt",user_id:"other-user"})]);
 const overview=await GET();
 assert.equal(overview.status,200);
+assert.equal(overview.body.viewerId,"qa-user","Legacy no-argument requests still identify the authenticated owner.");
 assert.equal(overview.body.predictor.independentTestCount,1);
 assert.equal(overview.body.predictor.score,6.75,"Existing one-paper high-score gate is preserved.");
 assert.equal(overview.body.preparationRank.score,null,"Missing persisted rank must not fabricate a ranking.");
@@ -149,7 +152,28 @@ assert.equal(db.calls.some(c=>["student_access","tmua_preparation_rank_exclusion
 for(const call of db.calls.filter(c=>["practice_test_attempts","tmua_test_attempt_evaluations","tmua_qb_attempt_events"].includes(c.table))){
   assert.ok(call.filters.some(([field,value])=>field==="user_id"&&value==="qa-user"),`${call.table} must stay current-user scoped`);
 }
-authorised=false;db=database();const unauthorised=await GET();assert.equal(unauthorised.status,401);assert.equal(db.calls.length,0);authorised=true;
+const overviewActivity=()=>({adminClients:adminClientCreations,rankReads:rankSnapshotReads,refreshes:scheduledRefreshes.length});
+db=database();
+const beforeRejectedOverview=overviewActivity();
+for(const expectedUserId of ["other-user",""]){
+  const rejected=await GET(new Request("https://portal.test/api/tmua/overview?expectedUserId="+encodeURIComponent(expectedUserId)));
+  assert.equal(rejected.status,409);
+  assert.equal(JSON.stringify(rejected.body),JSON.stringify({ok:false,code:"ACCOUNT_CHANGED",error:"ACCOUNT_CHANGED"}));
+  assert.equal(db.calls.length,0,"Wrong-account request must not read evidence or write snapshots.");
+  assert.equal(db.inserts.length,0);
+  assert.deepEqual(overviewActivity(),beforeRejectedOverview,"Reject before admin creation, rank reads or background work.");
+}
+authorised=false;
+const unauthorised=await GET(new Request("https://portal.test/api/tmua/overview?expectedUserId=qa-user"));
+assert.equal(unauthorised.status,401);assert.equal(db.calls.length,0);assert.equal(db.inserts.length,0);
+assert.deepEqual(overviewActivity(),beforeRejectedOverview,"Anonymous requests must not start privileged work.");
+authorised=true;
+db=database([row()]);
+const ownerOverview=await GET(new Request("https://portal.test/api/tmua/overview?expectedUserId=qa-user"));
+assert.equal(ownerOverview.status,200);assert.equal(ownerOverview.body.viewerId,"qa-user");
+assert.equal(ownerOverview.body.predictor.score,overview.body.predictor.score,"Owner binding must not change score policy.");
+assert.equal(db.inserts.filter(i=>i.table==="tmua_prediction_snapshots").length,1);
+assert.equal(db.inserts.find(i=>i.table==="tmua_prediction_snapshots").value.user_id,"qa-user");
 
 // Scheduled maintenance uses exactly the same evidence and cannot double-count
 // a stale database evaluation for this code-owned paper.

@@ -37,6 +37,7 @@ type Pending = {
   id: string; qid: string; displayOrder: number; at: number;
   progress: QuestionProgress; legacy: JsonObject;
   canonicalSaved: boolean; compactSaved: boolean;
+  predictionEvidence?: boolean; predictionNotified?: boolean;
 };
 
 const PRODUCT = "tmua-question-bank";
@@ -260,6 +261,15 @@ async function flushUnlocked(viewerId: string) {
       });
       item.canonicalSaved = true; write(key, item);
     }
+    // Prediction evidence already exists once qb_progress acknowledges the
+    // checked attempt, even when its separate compact dashboard mirror fails.
+    // Historical restores/bookmarks have no new checked-action marker.
+    if (item.predictionEvidence && !item.predictionNotified) {
+      item.predictionNotified = true; write(key, item);
+      if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("ts-tmua-attempt-saved", {
+        detail: { viewerId, submissionId: item.progress.submission_id },
+      }));
+    }
     if (!item.compactSaved) {
       await request(viewerId, "/api/qb/user-progress", {
         product: PRODUCT, key: "app_state", expected_user_id: viewerId, version: 2,
@@ -340,7 +350,10 @@ export async function loadProgress(viewerId: string, questions: readonly BankQue
       // rollback to the earlier UI remains possible without assigning its data
       // to any other account.
       if (!read(marker)) {
-        merged.submission_id ??= `tmua-stable-v1|${q.display_order}|${id}`;
+        // An old compact journal proves a pending progress edit, but does not
+        // prove a newly observed timed answer. Preserve an original stable
+        // attempt ID where present; never manufacture a historical exposure.
+        if (!merged.submission_id?.startsWith(`tmua-stable-v1|${q.display_order}|`)) merged.submission_id = null;
         write(prefix(viewerId) + "pending:" + id, { id, qid, displayOrder: q.display_order, at,
           progress: merged, legacy: makeLegacy(merged, legacyAnswers.get(`${viewerId}:${qid}`) ?? {}),
           canonicalSaved: false, compactSaved: false } satisfies Pending);
@@ -365,18 +378,29 @@ export async function saveQuestionProgress(
   if (blocked.has(viewerId)) throw new AccountChangedError();
   if (!Number.isSafeInteger(question.display_order) || question.display_order <= 0) throw new Error("A stable question identifier is required.");
   const now = new Date().toISOString();
-  const progress = { ...sessionProgress.get(viewerId)?.[question.qid], ...normalize(patch), updated_at: now };
+  const previous = sessionProgress.get(viewerId)?.[question.qid];
+  const freshStableId = typeof patch.submission_id === "string"
+    && patch.submission_id.startsWith(`tmua-stable-v1|${question.display_order}|`)
+    && patch.submission_id !== previous?.submission_id;
+  const checkedAction = (patch.status === "correct" || patch.status === "wrong")
+    && typeof patch.selected_answer === "string" && patch.selected_answer.trim() !== ""
+    && (freshStableId || (timestamp(patch.answer_submitted_at) > 0
+      && patch.answer_submitted_at !== previous?.answer_submitted_at));
+  const progress = { ...previous, ...normalize(patch), updated_at: now };
   progress.last_seen_at ??= now;
-  // A bookmark cannot discard the prior answer's identity or timing. Fresh
-  // checked attempts receive a submission ID supplied by the UI or generated here.
-  if (!progress.submission_id || !progress.submission_id.startsWith(`tmua-stable-v1|${question.display_order}|`)) {
+  // Only a new checked action can mint an observed attempt. In particular,
+  // bookmarking a restored answer must not manufacture its first exposure.
+  if (checkedAction && !freshStableId) {
     progress.submission_id = `tmua-stable-v1|${question.display_order}|${crypto.randomUUID()}`;
+  } else if (!progress.submission_id?.startsWith(`tmua-stable-v1|${question.display_order}|`)) {
+    progress.submission_id = null;
   }
   const legacy = makeLegacy(progress, legacyAnswers.get(`${viewerId}:${question.qid}`) ?? {});
   legacyAnswers.set(`${viewerId}:${question.qid}`, legacy);
   const id = `${String(Date.now()).padStart(15, "0")}-${String(++sequence).padStart(8, "0")}-${crypto.randomUUID()}`;
   write(prefix(viewerId) + "pending:" + id, { id, qid: question.qid, displayOrder: question.display_order,
-    at: Date.now(), progress, legacy, canonicalSaved: false, compactSaved: false } satisfies Pending);
+    at: Date.now(), progress, legacy, canonicalSaved: false, compactSaved: false,
+    predictionEvidence: checkedAction, predictionNotified: false } satisfies Pending);
   remember(viewerId, question.qid, progress);
   const syncState = await flushPendingProgress(viewerId);
   return { progress, syncState, warnings: storageUnavailable

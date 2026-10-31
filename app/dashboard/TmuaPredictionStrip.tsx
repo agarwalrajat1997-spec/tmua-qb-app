@@ -124,6 +124,7 @@ type CountdownOverview = {
 };
 
 type OverviewResponse = {
+  viewerId?: string;
   ok:
     boolean;
 
@@ -200,6 +201,157 @@ function InfoTooltip({
     </span>
   );
 }
+type OverviewRefreshDependencies = {
+  fetcher: typeof fetch;
+  schedule: (callback: () => void, delay: number) => number;
+  cancel: (timer: number) => void;
+  now: () => number;
+  onOverview: (overview: OverviewResponse | null) => void;
+  onSettled: () => void;
+};
+
+// One controller owns the current viewer and request generation. A saved answer
+// invalidates an older read, even when that read cannot be cancelled in time.
+export function createTmuaOverviewRefresh(deps: OverviewRefreshDependencies) {
+  let disposed = false, blocked = false, started = false;
+  let viewerId: string | null = null;
+  let revision = 0, pending = false, dueAt = 0;
+  let timer: number | null = null;
+  let active: AbortController | null = null;
+  let cancelActive: (() => void) | null = null;
+  let lastFocusRefresh = Number.NEGATIVE_INFINITY;
+  let unverifiedSaveSequence = 0;
+  const seen = new Set<string>();
+  const unverifiedSaves = new Map<string, number>();
+
+  function remember(set: Set<string>, value: string) {
+    set.add(value);
+    if (set.size > 128) set.delete(set.values().next().value as string);
+  }
+  function clearTimer() {
+    if (timer !== null) deps.cancel(timer);
+    timer = null;
+  }
+  function queue(delay = 500) {
+    if (disposed || blocked) return;
+    pending = true;
+    dueAt = deps.now() + delay;
+    clearTimer();
+    timer = deps.schedule(() => { timer = null; void run(); }, delay);
+  }
+  function accountChanged() {
+    blocked = true;
+    pending = false;
+    clearTimer();
+    unverifiedSaves.clear();
+    deps.onOverview(null);
+  }
+  async function run() {
+    if (disposed || blocked || active || !pending) return;
+    pending = false;
+    const requestRevision = revision;
+    const expectedViewer = viewerId;
+    const unverifiedAtStart = new Map(unverifiedSaves);
+    const request = new AbortController();
+    active = request;
+    let deadline: number | null = null;
+    let rejectDeadline: (error: Error) => void = () => {};
+    const deadlineFailure = new Promise<never>((_resolve, reject) => {
+      rejectDeadline = reject;
+      deadline = deps.schedule(() => {
+        deadline = null;
+        request.abort();
+        reject(new Error("Overview request timed out"));
+      }, 30_000);
+    });
+    cancelActive = () => {
+      if (deadline !== null) deps.cancel(deadline);
+      deadline = null;
+      request.abort();
+      rejectDeadline(new Error("Overview request cancelled"));
+    };
+    try {
+      const query = expectedViewer ? `?expectedUserId=${encodeURIComponent(expectedViewer)}` : "";
+      const endpoint = "/api/tmua/overview";
+      const read = (async () => {
+        const response = await deps.fetcher(endpoint + query, {
+          method: "GET", cache: "no-store", credentials: "same-origin", signal: request.signal,
+        });
+        return { response, body: response.ok ? await response.json() as OverviewResponse : null };
+      })();
+      // Bound both response headers and body decoding, even if fetch ignores abort.
+      const { response, body } = await Promise.race([read, deadlineFailure]);
+      if (disposed) return;
+      if ([401, 403, 409].includes(response.status)) { accountChanged(); return; }
+      if (!response.ok) return;
+      if (disposed || blocked) return;
+      if (!body?.ok || !body.predictor || typeof body.viewerId !== "string" || !body.viewerId) return;
+      if (expectedViewer && body.viewerId !== expectedViewer) { accountChanged(); return; }
+      viewerId = body.viewerId;
+      const savedDuringVerification = (unverifiedSaves.get(viewerId) ?? 0) > (unverifiedAtStart.get(viewerId) ?? 0);
+      // A first verified response can dismiss a queued notification for a
+      // different viewer, while preserving focus refreshes or matching saves.
+      if (!expectedViewer && !savedDuringVerification && unverifiedSaves.size > 0 && requestRevision === revision) {
+        pending = false;
+        clearTimer();
+      }
+      unverifiedSaves.clear();
+      if (savedDuringVerification) { revision += 1; queue(); }
+      if (requestRevision === revision) deps.onOverview(body);
+    } catch {
+      // Keep the last verified overview during a temporary network failure.
+      // No timer retries or polling: the next saved answer/focus can retry.
+    } finally {
+      if (deadline !== null) deps.cancel(deadline);
+      if (active === request) { active = null; cancelActive = null; }
+      if (!disposed) {
+        deps.onSettled();
+        if (pending && !blocked) queue(Math.max(0, dueAt - deps.now()));
+      }
+    }
+  }
+  return {
+    start() {
+      if (started || disposed || blocked) return;
+      started = true;
+      lastFocusRefresh = deps.now();
+      pending = true;
+      void run();
+    },
+    saved(detail: unknown) {
+      if (disposed || blocked || !detail || typeof detail !== "object") return;
+      const event = detail as { viewerId?: unknown; submissionId?: unknown };
+      if (typeof event.viewerId !== "string" || !event.viewerId || event.viewerId.length > 128 ||
+          typeof event.submissionId !== "string" || !event.submissionId || event.submissionId.length > 256) return;
+      if (viewerId && event.viewerId !== viewerId) return;
+      const identity = `${event.viewerId}:${event.submissionId}`;
+      if (seen.has(identity)) return;
+      remember(seen, identity);
+      if (!viewerId) {
+        unverifiedSaves.set(event.viewerId, ++unverifiedSaveSequence);
+        if (unverifiedSaves.size > 128) unverifiedSaves.delete(unverifiedSaves.keys().next().value as string);
+        queue();
+        return;
+      }
+      revision += 1;
+      queue();
+    },
+    refresh() {
+      if (disposed || blocked || deps.now() - lastFocusRefresh < 15_000) return;
+      lastFocusRefresh = deps.now();
+      revision += 1;
+      queue();
+    },
+    dispose() {
+      disposed = true;
+      pending = false;
+      clearTimer();
+      cancelActive?.();
+      unverifiedSaves.clear();
+    },
+  };
+}
+
 export default function TmuaPredictionStrip() {
   const [
     overview,
@@ -218,68 +370,26 @@ export default function TmuaPredictionStrip() {
 
   useEffect(
     () => {
-      let cancelled =
-        false;
-
-      async function load() {
-        try {
-          const response =
-            await fetch(
-              "/api/tmua/overview",
-              {
-                method:
-                  "GET",
-
-                cache:
-                  "no-store",
-
-                credentials:
-                  "same-origin",
-              },
-            );
-
-          if (
-            !response.ok
-          ) {
-            return;
-          }
-
-          const body =
-            (
-              await response.json()
-            ) as
-              OverviewResponse;
-
-          if (
-            !cancelled &&
-            body.ok &&
-            body.predictor
-          ) {
-            setOverview(
-              body,
-            );
-          }
-        }
-        catch {
-          // Supplementary dashboard information must never
-          // break the existing workspace.
-        }
-        finally {
-          if (
-            !cancelled
-          ) {
-            setLoaded(
-              true,
-            );
-          }
-        }
-      }
-
-      void load();
+      const controller = createTmuaOverviewRefresh({
+        fetcher: fetch,
+        schedule: (callback, delay) => window.setTimeout(callback, delay),
+        cancel: timer => window.clearTimeout(timer),
+        now: Date.now,
+        onOverview: setOverview,
+        onSettled: () => setLoaded(true),
+      });
+      const saved = (event: Event) => controller.saved((event as CustomEvent).detail);
+      const refresh = () => { if (!document.hidden) controller.refresh(); };
+      window.addEventListener("ts-tmua-attempt-saved", saved);
+      window.addEventListener("focus", refresh);
+      document.addEventListener("visibilitychange", refresh);
+      controller.start();
 
       return () => {
-        cancelled =
-          true;
+        controller.dispose();
+        window.removeEventListener("ts-tmua-attempt-saved", saved);
+        window.removeEventListener("focus", refresh);
+        document.removeEventListener("visibilitychange", refresh);
       };
     },
     [],

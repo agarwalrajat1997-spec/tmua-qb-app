@@ -302,7 +302,7 @@ function preparationCountdown(
   };
 }
 
-export async function GET() {
+export async function GET(request?: Request) {
   try {
     // Authentication uses the existing user session.
     const supabase =
@@ -332,6 +332,13 @@ export async function GET() {
         },
         401,
       );
+    }
+
+    const expectedUserId = request
+      ? new URL(request.url).searchParams.get("expectedUserId")
+      : null;
+    if (expectedUserId !== null && expectedUserId !== user.id) {
+      return json({ ok: false, code: "ACCOUNT_CHANGED", error: "ACCOUNT_CHANGED" }, 409);
     }
 
     // All authority-sensitive reads and snapshot insertion
@@ -897,6 +904,7 @@ export async function GET() {
 
     return json({
       ok: true,
+      viewerId: user.id,
 
       predictor: {
         modelVersion:

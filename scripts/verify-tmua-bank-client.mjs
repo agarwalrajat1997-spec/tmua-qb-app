@@ -244,4 +244,60 @@ const noStorage = await api.saveQuestionProgress('A', questions[1], { flagged: f
 assert.equal(noStorage.syncState, 'synced'); assert.match(noStorage.warnings.join(' '), /cannot keep a durable offline copy/);
 globalThis.localStorage.setItem = originalSet;
 
-console.log('PASS: TMUA difficulty ordering, stable aliases, ambiguous legacy isolation, preserved history, per-account outbox, offline reload, partial acknowledgements, in-flight edits and account changes.');
+// Prediction refresh follows the canonical checked-attempt acknowledgement,
+// not the optimistic UI or the independently retried compact mirror.
+const notifications = [], predictionWrites = [];
+globalThis.window = { addEventListener() {}, dispatchEvent(event) { notifications.push({ type:event.type, detail:event.detail }); return true; } };
+storage.clear(); api = await fresh(); let canonicalDown = true, compactDown = true;
+globalThis.fetch = async (url, init) => {
+  if (!init?.body) return emptyNetwork(url, init);
+  const body=JSON.parse(init.body);predictionWrites.push({url,body});
+  if (url.endsWith('/progress/save')) return canonicalDown ? json({error:'offline'},503) : json({ok:true});
+  return compactDown ? json({error:'mirror offline'},503) : json({ok:true,saved:{user_id:'A'}});
+};
+await api.loadProgress('A',questions);
+const checkedPatch={status:'correct',selected_answer:'B',submission_id:'tmua-stable-v1|1824|new-checked',answer_elapsed_seconds:31,answer_submitted_at:'2026-10-31T15:00:00Z'};
+await api.saveQuestionProgress('A',questions[1],checkedPatch);
+assert.equal(notifications.length,0,'A failed canonical save cannot refresh prediction.');
+canonicalDown=false;api=await fresh();
+assert.equal((await api.loadProgress('A',questions)).syncState,'offline');
+assert.deepEqual(notifications,[{type:'ts-tmua-attempt-saved',detail:{viewerId:'A',submissionId:checkedPatch.submission_id}}]);
+assert.equal(pendingKeys().length,1,'The compact mirror remains independently pending.');
+api=await fresh();await api.loadProgress('A',questions);assert.equal(notifications.length,1,'Reloading a partial acknowledgement cannot notify twice.');
+compactDown=false;await api.flushPendingProgress('A');assert.equal(pendingKeys().length,0);assert.equal(notifications.length,1);
+const retained=(await api.saveQuestionProgress('A',questions[1],{...checkedPatch,flagged:true})).progress;
+assert.equal(retained.submission_id,checkedPatch.submission_id);assert.equal(notifications.length,1,'Bookmark preserves the original checked identity without new evidence.');
+await api.saveQuestionProgress('A',questions[1],{...checkedPatch,status:'wrong',selected_answer:'C',submission_id:'tmua-stable-v1|1824|next-checked'});
+assert.equal(notifications.length,2);assert.equal(notifications[1].detail.submissionId,'tmua-stable-v1|1824|next-checked');
+
+// A legacy checked answer can have valid-looking time but no stable observed
+// attempt identity. Bookmarking it (the UI sends its complete merged state)
+// must not manufacture an eligible or ineligible first exposure in the trigger.
+storage.clear();api=await fresh();notifications.length=0;predictionWrites.length=0;
+globalThis.fetch=async(url,init)=>{
+  if(init?.body){predictionWrites.push({url,body:JSON.parse(init.body)});return json({ok:true,saved:{user_id:'A'}});}
+  return json({ok:true,user_id:'A',progress:{},data:{parsed:{answers:{1824:{selected:'B',checked:true,isCorrect:true,answer_elapsed_seconds:40,answer_submitted_at:'2026-10-01T12:00:00Z',submission_id:'unversioned-old-id'}}}}});
+};
+const restoredTimed=(await api.loadProgress('A',questions)).progress['TMUA-P1-EASY'];
+assert.equal(notifications.length,0);assert.equal(predictionWrites.length,0);
+await api.saveQuestionProgress('A',questions[1],{...restoredTimed,flagged:true});
+assert.equal(predictionWrites[0].body.updates[0].submission_id,null);
+assert.equal(predictionWrites[0].body.updates[0].selected_answer,'B');
+assert.equal(predictionWrites[0].body.updates[0].answer_elapsed_seconds,40);
+assert.equal(notifications.length,0);
+
+// Old compact journals restore progress but do not invent an observed attempt
+// or issue a prediction notification merely because they contain checked data.
+storage.clear();api=await fresh();predictionWrites.length=0;
+storage.set(oldKey+'__account_v3:A:pending:historical',JSON.stringify({at:Date.now(),patch:{answers:{1824:{selected:'B',checked:true,isCorrect:true,answer_elapsed_seconds:40}}}}));
+globalThis.fetch=async(url,init)=>{if(init?.body)predictionWrites.push({url,body:JSON.parse(init.body)});return emptyNetwork(url,init);};
+await api.loadProgress('A',questions);
+assert.equal(predictionWrites[0].body.updates[0].submission_id,null);
+assert.equal(notifications.length,0);
+storage.clear();api=await fresh();
+globalThis.fetch=async()=>json({ok:false,code:'ACCOUNT_CHANGED'},409);
+await assert.rejects(api.saveQuestionProgress('A',questions[1],checkedPatch),error=>error.code==='ACCOUNT_CHANGED');
+assert.equal(notifications.length,0,'Account-change rejection must not notify any viewer.');
+delete globalThis.window;
+
+console.log('PASS: TMUA difficulty ordering, stable aliases, preserved history, owner-scoped outbox/recovery, checked-attempt-only prediction notifications after canonical acknowledgement, and no artificial bookmark/history exposures.');
