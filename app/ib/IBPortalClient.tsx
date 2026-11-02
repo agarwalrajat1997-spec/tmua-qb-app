@@ -1,25 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import Link from "@/app/ib/components/IbLink";
 import { supabaseBrowser } from "@/utils/supabase/browser";
-import { IB_COURSES, ibHasCourseChoice, ibSubject, ibView, ibHref, ibCourseLevel, ibCourseLabel, ibQualification, ibCourseHref, ibIsMathSubject, ibNavigationSubjects, ibSubjectLabel, type IbSummary } from "@/lib/ib/catalog";
+import { IB_COURSES, ibHasCourseChoice, ibHref, ibCourseLabel, ibQualification, ibCourseHref, ibIsMathSubject, ibNavigationSubjects, ibSubjectLabel, type IbSummary, type IbSubject, type IbView, type IbCourseLevel } from "@/lib/ib/catalog";
 import styles from "./ib.module.css";
 import IbBrand from "./IbBrand";
 import ChemistryCourseSwitch from "./components/ChemistryCourseSwitch";
 import MathsCourseSwitch from "./components/MathsCourseSwitch";
 import PhysicsMockList from "./components/PhysicsMockList";
 
-export default function IBPortalClient({ email, summary }: { email: string; summary: IbSummary }) {
-  const search = useSearchParams();
-  const subject = ibSubject(search.get("subject"));
-  const view = ibView(search.get("view"));
-  const courseLevel = ibCourseLevel(search.get("course"));
+export default function IBPortalClient({ email, summary: counts, subject, view, courseLevel }: { email: string; summary: IbSummary[IbSubject]; subject: IbSubject; view: IbView; courseLevel: IbCourseLevel }) {
   const course = IB_COURSES[subject];
   const courseLabel = ibCourseLabel(subject, courseLevel);
   const qualification = ibQualification(subject, courseLevel);
-  const counts = summary[subject];
   const [query, setQuery] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -49,14 +43,14 @@ export default function IBPortalClient({ email, summary }: { email: string; summ
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeading}>YOUR LEARNING SPACE</div>
         <nav aria-label="IB portal">
-          <Link className={`${styles.navItem} ${view === "questions" ? styles.navActive : ""}`} href={ibHref(subject, "questions", courseLevel)} prefetch={false} aria-current={view === "questions" ? "page" : undefined}><span className={styles.navIcon} aria-hidden="true">▤</span><span>Question bank<small>Build understanding by topic</small></span><span className={styles.navArrow} aria-hidden="true">↗</span></Link>
-          <Link className={`${styles.navItem} ${view === "mocks" ? styles.navActive : ""}`} href={ibHref(subject, "mocks", courseLevel)} prefetch={false} aria-current={view === "mocks" ? "page" : undefined}><span className={styles.navIcon} aria-hidden="true">◷</span><span>Mock tests<small>Put your learning into practice</small></span><span className={styles.navArrow} aria-hidden="true">↗</span></Link>
+          <Link className={`${styles.navItem} ${view === "questions" ? styles.navActive : ""}`} href={ibHref(subject, "questions", courseLevel)} aria-current={view === "questions" ? "page" : undefined}><span className={styles.navIcon} aria-hidden="true">▤</span><span>Question bank<small>Build understanding by topic</small></span><span className={styles.navArrow} aria-hidden="true">↗</span></Link>
+          <Link className={`${styles.navItem} ${view === "mocks" ? styles.navActive : ""}`} href={ibHref(subject, "mocks", courseLevel)} aria-current={view === "mocks" ? "page" : undefined}><span className={styles.navIcon} aria-hidden="true">◷</span><span>Mock tests<small>Put your learning into practice</small></span><span className={styles.navArrow} aria-hidden="true">↗</span></Link>
         </nav>
         <div className={styles.sidebarNote}><span className={styles.noteRule} /><strong>A little practice.<br />A lot of possibility.</strong><p>Your space to work through ideas, one question at a time.</p></div>
         <div className={styles.sidebarFooter}><span className={styles.statusDot} /> IB Diploma Programme<small>Maths AA & AI SL/HL · Physics, Chemistry, Biology, Economics & Business SL/HL</small></div>
       </aside>
       <main id="ib-main" className={styles.main}>
-        <div className={styles.courseBar}><span className={styles.eyebrow}>CHOOSE YOUR SUBJECT</span><nav className={styles.subjectSwitch} aria-label="Subject">{ibNavigationSubjects(subject).map(id => <Link key={id} href={ibHref(id, view, courseLevel)} prefetch={false} onClick={() => setQuery("")} aria-current={subject === id ? "page" : undefined} className={subject === id ? styles.subjectActive : ""}><span aria-hidden="true">{IB_COURSES[id].symbol}</span>{ibSubjectLabel(id)}</Link>)}</nav></div>
+        <div className={styles.courseBar}><span className={styles.eyebrow}>CHOOSE YOUR SUBJECT</span><nav className={styles.subjectSwitch} aria-label="Subject">{ibNavigationSubjects(subject).map(id => <Link key={id} href={ibHref(id, view, courseLevel)} onClick={() => setQuery("")} aria-current={subject === id ? "page" : undefined} className={subject === id ? styles.subjectActive : ""}><span aria-hidden="true">{IB_COURSES[id].symbol}</span>{ibSubjectLabel(id)}</Link>)}</nav></div>
         {ibIsMathSubject(subject) ? <MathsCourseSwitch key={subject} subject={subject} links={{ "math-aa-sl": ibHref("math-aa-sl", view), "math-ai-sl": ibHref("math-ai-sl", view), "math-aa-hl": ibHref("math-aa-hl", view), "math-ai-hl": ibHref("math-ai-hl", view) }} /> : ibHasCourseChoice(subject) ? <ChemistryCourseSwitch subject={subject} course={courseLevel} links={{ sl: ibHref(subject, view, "sl"), hl: ibHref(subject, view, "hl") }} /> : null}
         {error ? <p role="alert" className={styles.error}>{error}</p> : null}
         <section className={styles.hero} aria-labelledby="course-heading">
@@ -68,8 +62,8 @@ export default function IBPortalClient({ email, summary }: { email: string; summ
           <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>START WITH A TOPIC</span><h2>Explore {course.title.toLowerCase()}</h2></div><label className={styles.search}><span aria-hidden="true">⌕</span><span className={styles.srOnly}>Search topics</span><input type="search" placeholder="Search topics or subtopics" value={query} onChange={event => setQuery(event.target.value)} /></label></div>
           <div className={styles.topicGrid} key={subject}>
             {collections.map(collection => <div className={styles.topicCard} key={collection.id}>
-              <Link href={ibCourseHref(`/ib/question-bank/${collection.id}`, subject, courseLevel)} prefetch={false} className={styles.collectionLink}><div className={styles.cardTop}><span className={styles.topicNumber}>{collection.code}</span><span className={styles.topicCount}>{collection.count} questions</span></div><h3>{collection.title}</h3><p>{collection.description}</p><div className={styles.cardBottom}><span>{collection.groups.length} study categories</span><span className={styles.cardAction}>Open question bank ↗</span></div></Link>
-              <details className={styles.collectionSubtopics}><summary>Browse study categories</summary><ul>{collection.groups.map(group => <li key={group.id}><Link href={ibCourseHref(`/ib/question-bank/${collection.id}?category=${encodeURIComponent(group.id)}`, subject, courseLevel)} prefetch={false}>{group.title} <span className={styles.subtopicCount}>{group.count} questions ↗</span></Link></li>)}</ul></details>
+              <Link href={ibCourseHref(`/ib/question-bank/${collection.id}`, subject, courseLevel)} className={styles.collectionLink}><div className={styles.cardTop}><span className={styles.topicNumber}>{collection.code}</span><span className={styles.topicCount}>{collection.count} questions</span></div><h3>{collection.title}</h3><p>{collection.description}</p><div className={styles.cardBottom}><span>{collection.groups.length} study categories</span><span className={styles.cardAction}>Open question bank ↗</span></div></Link>
+              <details className={styles.collectionSubtopics}><summary>Browse study categories</summary><ul>{collection.groups.map(group => <li key={group.id}><Link href={ibCourseHref(`/ib/question-bank/${collection.id}?category=${encodeURIComponent(group.id)}`, subject, courseLevel)}>{group.title} <span className={styles.subtopicCount}>{group.count} questions ↗</span></Link></li>)}</ul></details>
             </div>)}
             {!normalizedQuery && counts.questions === 0 ? <div className={styles.comingCard}><span className={styles.comingIcon} aria-hidden="true">✦</span><h3>Good things are taking shape.</h3><p>Your question bank is on its way. Browse the topics while we prepare your first questions and written mark schemes.</p><span className={styles.comingBadge}>CONTENT COMING SOON</span></div> : null}
           </div>

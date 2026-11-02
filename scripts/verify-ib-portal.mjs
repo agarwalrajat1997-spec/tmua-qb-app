@@ -139,7 +139,7 @@ assert.match(html,/Page 2 of 2/);assert.match(html,/Question 9</);assert.match(h
 const courses=physicsHarness.load('lib/ib/catalog.ts');
 const summary=Object.fromEntries(Object.keys(courses.IB_COURSES).map(subject=>[subject,{questions:subject==='physics-hl'?7:1,mocks:0,topics:{},collections:physicsHarness.model.IB_COLLECTIONS.filter(c=>c.subject===subject).map(c=>({...c,count:1,subtopics:[],groups:physicsHarness.load('lib/ib/topic-groups.ts').ibTopicGroups(c,[],'hl'),...(subject==='physics-hl'?{syllabus:courses.physicsSyllabusSubtopics(c.topicId).map(s=>({...s,count:1}))}:{})}))}]));
 const overview=ibHarness({query:'subject=physics-hl'}).load('app/ib/IBPortalClient.tsx').default;
-html=renderToStaticMarkup(React.createElement(overview,{email:'synthetic@example.invalid',summary}));
+html=renderToStaticMarkup(React.createElement(overview,{email:'synthetic@example.invalid',summary:summary['physics-hl'],subject:'physics-hl',view:'questions',courseLevel:'hl'}));
 for(const collection of physicsThemes) assert.ok(html.includes('href="/ib/question-bank/'+collection.id+'"'));
 assert.equal((html.match(/\?category=/g)||[]).length,12);assert.doesNotMatch(html,/CONTENT COMING SOON|Questions and written mark schemes will appear/);
 

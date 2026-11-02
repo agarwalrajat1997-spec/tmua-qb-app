@@ -1,89 +1,35 @@
 import "server-only";
-import { ibTopicGroups } from "./topic-groups";
-import manifest from "@/content/ib/catalog.json";
-import physicsMocks from "@/content/ib/physics-mocks.json";
-import algebra from "@/content/ib/math-aa-hl/number-algebra.json";
-import functions from "@/content/ib/math-aa-hl/functions.json";
-import geometry from "@/content/ib/math-aa-hl/geometry-trigonometry.json";
-import statistics from "@/content/ib/math-aa-hl/statistics-probability.json";
-import calculus1 from "@/content/ib/math-aa-hl/calculus-1.json";
-import calculus2 from "@/content/ib/math-aa-hl/calculus-2.json";
-import aaslNa from "@/content/ib/math-aa-sl/number-algebra.json";
-import aaslFn from "@/content/ib/math-aa-sl/functions.json";
-import aaslGt from "@/content/ib/math-aa-sl/geometry-trigonometry.json";
-import aaslSp from "@/content/ib/math-aa-sl/statistics-probability.json";
-import aaslCa from "@/content/ib/math-aa-sl/calculus.json";
-import aislNa from "@/content/ib/math-ai-sl/number-algebra.json";
-import aislFn from "@/content/ib/math-ai-sl/functions.json";
-import aislGt from "@/content/ib/math-ai-sl/geometry-trigonometry.json";
-import aislSp from "@/content/ib/math-ai-sl/statistics-probability.json";
-import aislCa from "@/content/ib/math-ai-sl/calculus.json";
-import aihl0 from "@/content/ib/math-ai-hl/calculus.json";
-import aihl1 from "@/content/ib/math-ai-hl/functions.json";
-import aihl2 from "@/content/ib/math-ai-hl/geometry-trigonometry.json";
-import aihl3 from "@/content/ib/math-ai-hl/number-algebra.json";
-import aihl4 from "@/content/ib/math-ai-hl/statistics-probability.json";
-import econ0 from "@/content/ib/economics/global-economy.json";
-import econ1 from "@/content/ib/economics/introduction.json";
-import econ2 from "@/content/ib/economics/macroeconomics.json";
-import econ3 from "@/content/ib/economics/microeconomics.json";
-import bm0 from "@/content/ib/business-management/finance-accounts.json";
-import bm1 from "@/content/ib/business-management/human-resources.json";
-import bm2 from "@/content/ib/business-management/introduction-business.json";
-import bm3 from "@/content/ib/business-management/marketing.json";
-import bm4 from "@/content/ib/business-management/operations-management.json";
-import physicsA from "@/content/ib/physics-hl/space-time-motion.json";
-import physicsB from "@/content/ib/physics-hl/particulate-matter.json";
-import physicsC from "@/content/ib/physics-hl/wave-behaviour.json";
-import physicsD from "@/content/ib/physics-hl/fields.json";
-import physicsE from "@/content/ib/physics-hl/nuclear-quantum.json";
-import chemistryS1 from "@/content/ib/chemistry/structure-1.json";
-import chemistryS2 from "@/content/ib/chemistry/structure-2.json";
-import chemistryS3 from "@/content/ib/chemistry/structure-3.json";
-import chemistryR1 from "@/content/ib/chemistry/reactivity-1.json";
-import chemistryR2 from "@/content/ib/chemistry/reactivity-2.json";
-import chemistryR3 from "@/content/ib/chemistry/reactivity-3.json";
-import biologyA from "@/content/ib/biology/unity-diversity.json";
-import biologyB from "@/content/ib/biology/form-function.json";
-import biologyC from "@/content/ib/biology/interaction-interdependence.json";
-import biologyD from "@/content/ib/biology/continuity-change.json";
-import { IB_COURSES, ibIsMathSubject, ibSyllabusSubtopics, type IbCourseLevel, type IbSubject, type IbSummary } from "./catalog";
-import { IB_COLLECTIONS, ibQuestionSchema, questionAvailableForCourse, type IbQuestion } from "./question";
+import { IB_BANK_LOADERS } from "./bank-loaders";
+import { collectionForQuestion } from "./content-index";
+import { ibQuestionSchema, questionAvailableForCourse, type IbQuestion } from "./question";
+import type { IbCourseLevel } from "./catalog";
+export { getIbSummary } from "./content-index";
 
-// Validation fails closed. Drafts never reach any student route or count.
-const allQuestions: IbQuestion[] = [...algebra, ...functions, ...geometry, ...statistics, ...calculus1, ...calculus2,
-  ...aaslNa, ...aaslFn, ...aaslGt, ...aaslSp, ...aaslCa, ...aislNa, ...aislFn, ...aislGt, ...aislSp, ...aislCa,
-  ...aihl0, ...aihl1, ...aihl2, ...aihl3, ...aihl4, ...econ0, ...econ1, ...econ2, ...econ3, ...bm0, ...bm1, ...bm2, ...bm3, ...bm4,
-  ...physicsA, ...physicsB, ...physicsC, ...physicsD, ...physicsE,
-  ...chemistryS1, ...chemistryS2, ...chemistryS3, ...chemistryR1, ...chemistryR2, ...chemistryR3, ...biologyA, ...biologyB, ...biologyC, ...biologyD]
-  .map(value => ibQuestionSchema.parse(value));
-const published = allQuestions.filter(q => q.status === "published");
-const byId = new Map(published.map(q => [q.id, q]));
-if (new Set(allQuestions.map(q => q.id)).size !== allQuestions.length) throw new Error("Duplicate IB question IDs");
-
-export function getIbQuestions(collectionId?: string, course: IbCourseLevel = "hl") {
-  return published.filter(q => (!collectionId || q.collectionId === collectionId) && questionAvailableForCourse(q, course));
-}
-export function getIbQuestion(id: string, course: IbCourseLevel = "hl") {
-  const question = byId.get(id);
-  return question && questionAvailableForCourse(question, course) ? question : undefined;
-}
-export function getIbSummary(course: IbCourseLevel = "hl"): IbSummary {
-  const summary = {} as IbSummary;
-  for (const subject of Object.keys(IB_COURSES) as IbSubject[]) {
-    const questions = published.filter(q => q.subject === subject && questionAvailableForCourse(q, course));
-    summary[subject] = {
-      questions: questions.length,
-      mocks: subject === "physics-hl" ? physicsMocks.filter(t => t.course === course && t.status === "published").length : (manifest.mockTests as {subject: string; status: string}[]).filter(t => t.subject === subject && t.status === "published").length,
-      topics: Object.fromEntries(IB_COURSES[subject].topics.map(topic => [topic.id, questions.filter(q => q.topicId === topic.id).length])),
-      collections: IB_COLLECTIONS.filter(collection => collection.subject === subject).map(collection => {
-        const items = questions.filter(q => q.collectionId === collection.id);
-        return { ...collection, groups: ibTopicGroups(collection, items, course), count: items.length, subtopics: [...new Set(items.map(q => q.subtopic))].sort(),
-          ...(!ibIsMathSubject(subject) ? { syllabus: ibSyllabusSubtopics(subject, collection.topicId, course).map(subtopic => ({
-            ...subtopic, count: items.filter(q => q.syllabusCode === subtopic.code).length,
-          })) } : {}) };
-      }),
-    };
+type Bank = { hl: IbQuestion[]; sl: IbQuestion[]; byId: Map<string, IbQuestion> };
+// Immutable, deployment-bundled content only. No sessions or student data are cached.
+const banks = new Map<string, Promise<Bank>>();
+const empty: IbQuestion[] = [];
+function loadBank(id: string): Promise<Bank> | undefined {
+  if (!Object.hasOwn(IB_BANK_LOADERS, id)) return undefined;
+  let promise = banks.get(id);
+  if (!promise) {
+    promise = IB_BANK_LOADERS[id as keyof typeof IB_BANK_LOADERS]().then(module => {
+      const all = module.default.map(value => ibQuestionSchema.parse(value));
+      if (all.some(q => q.collectionId !== id) || new Set(all.map(q => q.id)).size !== all.length) throw new Error("Invalid IB bank identity");
+      const hl = all.filter(q => q.status === "published");
+      return { hl, sl: hl.filter(q => questionAvailableForCourse(q, "sl")), byId: new Map(hl.map(q => [q.id, q])) };
+    }).catch(error => { banks.delete(id); throw error; });
+    banks.set(id, promise);
   }
-  return summary;
+  return promise;
+}
+export async function getIbQuestions(collectionId?: string, course: IbCourseLevel = "hl"): Promise<IbQuestion[]> {
+  if (!collectionId) return (await Promise.all(Object.keys(IB_BANK_LOADERS).map(id => getIbQuestions(id, course)))).flat();
+  return (await loadBank(collectionId))?.[course] ?? empty;
+}
+export async function getIbQuestion(id: string, course: IbCourseLevel = "hl") {
+  const collectionId = collectionForQuestion(id);
+  if (!collectionId) return undefined;
+  const question = (await loadBank(collectionId))?.byId.get(id);
+  return question && questionAvailableForCourse(question, course) ? question : undefined;
 }

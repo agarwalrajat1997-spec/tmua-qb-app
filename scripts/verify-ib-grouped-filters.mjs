@@ -36,6 +36,7 @@ for(const subject of Object.keys(catalog.IB_COURSES))for(const course of catalog
     assert.deepEqual(inputValues(html,'category'),Array.from(chosen,g=>g.id));
     assert.deepEqual(inputValues(html,'difficulty'),['easy','hard']);
     assert.equal(elements(html,node=>node.name==='select').length,0,'no single-select filters');
+    assert.ok(!html.includes('Apply filters'),'all courses apply filters automatically');
     if(expected.length>8){
       const link=elements(html,node=>node.name==='a'&&node.attribs.href?.includes('page=2'))[0];assert.ok(link,'pagination');
       const url=new URL(link.attribs.href,'https://example.invalid');assert.deepEqual(url.searchParams.getAll('category'),query.category);assert.deepEqual(url.searchParams.getAll('difficulty'),query.difficulty);

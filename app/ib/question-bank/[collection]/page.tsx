@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/ib/components/IbLink";
 import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
 import { ibHref, ibHasCourseChoice, ibCoreLevel, ibIsHumanitiesSubject, ibSyllabusSubtopics, ibCourseLevel, ibCourseLabel, ibCourseHref } from "@/lib/ib/catalog";
 import { getIbQuestions } from "@/lib/ib/content";
 import { ibTopicGroups, questionInTopicGroup } from "@/lib/ib/topic-groups";
 import { ibFilterHref, queryValues, selectedValues, singleQueryValue as single, type IbFilterQuery as Query } from "@/lib/ib/question-filters";
+import AutoFilterForm, { AutoSearchInput } from "../../components/AutoFilterForm";
 import MultiSelectFilter from "../../components/MultiSelectFilter";
 import { variedPracticeOrder } from "@/lib/ib/practice-order";
 import { IB_COLLECTIONS, getIbCollection, questionPrompt, isScienceQuestion, isHumanitiesQuestion } from "@/lib/ib/question";
@@ -37,7 +38,7 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const pathname = "/ib/question-bank/" + collection.id;
   const baseHref = ibCourseHref(pathname, collection.subject, courseLevel);
   const user = await requireIbUser(pathname + (paramsForLogin.size ? "?" + paramsForLogin : ""));
-  const all = getIbQuestions(id, courseLevel);
+  const [all, slQuestions, hlQuestions] = await Promise.all([getIbQuestions(id, courseLevel), getIbQuestions(id, "sl"), getIbQuestions(id, "hl")]);
   const subtopics = [...new Set(all.map(q => q.subtopic))].sort();
   const syllabusTopics = ibSyllabusSubtopics(collection.subject, collection.topicId, courseLevel);
   const groups = ibTopicGroups(collection, all, courseLevel);
@@ -81,11 +82,10 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   function filterHref(overrides: Query) {
     return ibFilterHref(pathname, { ...(courseChoice ? { course: courseLevel } : {}), q: search, difficulty, calculator, subtopic, syllabus, level, type, style, category, ...overrides });
   }
-  const slQuestions = courseLevel === "sl" ? all : getIbQuestions(id, "sl");
   const slGroups = ibTopicGroups(collection, slQuestions, "sl");
   const slCodes = ibSyllabusSubtopics(collection.subject, collection.topicId, "sl").map(topic => topic.code);
   function categoriesForCourse(target: "sl" | "hl") {
-    const targetQuestions = target === "sl" ? slQuestions : getIbQuestions(id, "hl");
+    const targetQuestions = target === "sl" ? slQuestions : hlQuestions;
     const targetGroups = target === "sl" ? slGroups : ibTopicGroups(collection!, targetQuestions, "hl");
     const targetCodes = ibSyllabusSubtopics(collection!.subject, collection!.topicId, target).map(topic => topic.code);
     return [...new Set([
@@ -97,13 +97,13 @@ export default async function QuestionBank({ params, searchParams }: { params: P
 
   return <ExamShell email={user.email} subject={collection.subject} courseLevel={courseLevel} mathsTopicId={collection.topicId} courseLinks={{ sl: filterHref({ course: "sl", level: level.filter(value => value !== "ahl"), syllabus: syllabus.filter(code => slCodes.includes(code)), subtopic: subtopic.filter(title => slQuestions.some(q => q.subtopic === title)), category: categoriesForCourse("sl"), style: slStyles }), hl: filterHref({ course: "hl", category: categoriesForCourse("hl") }) }}>
     <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href={ibHref(collection.subject, "questions", courseLevel)}>Question bank</Link><span>/</span><span>{collection.title}</span></nav>
-    <nav className={styles.themeNav} aria-label={`${courseLabel.replace(/ (SL|HL)$/, "")} ${science ? "themes" : "topics"}`}>{IB_COLLECTIONS.filter(item => item.subject === collection.subject).map(item => <Link key={item.id} href={ibCourseHref("/ib/question-bank/" + item.id, collection.subject, courseLevel)} prefetch={false} aria-current={item.id === id ? "page" : undefined}><b>{item.code}</b> {item.title}</Link>)}</nav>
+    <nav className={styles.themeNav} aria-label={`${courseLabel.replace(/ (SL|HL)$/, "")} ${science ? "themes" : "topics"}`}>{IB_COLLECTIONS.filter(item => item.subject === collection.subject).map(item => <Link key={item.id} href={ibCourseHref("/ib/question-bank/" + item.id, collection.subject, courseLevel)} aria-current={item.id === id ? "page" : undefined}><b>{item.code}</b> {item.title}</Link>)}</nav>
     <div className={styles.bankHeading}><div><span className={styles.overline}>IB {courseLabel.toUpperCase()} · {science ? "THEME" : "TOPIC"} {collection.code}</span><h1>{collection.title}{!/[.!?]$/.test(collection.title) ? <span>.</span> : null}</h1><p>{collection.description}</p></div><div className={styles.bankCount}><strong>{all.length}</strong><span>questions</span></div></div>
     <ExamInstructions subject={collection.subject} />
     <p className={styles.filterHint}>Choose one or more options in each filter. Related subtopics are grouped into {groups.length} study categories.</p>
-    <form key={filterHref({})} className={`${styles.filters} ${styles.physicsFilters}`} method="GET" action={pathname}>
+    <AutoFilterForm key={collection.id + courseLevel} className={`${styles.filters} ${styles.physicsFilters}`} action={pathname}>
       {courseChoice ? <input type="hidden" name="course" value={courseLevel} /> : null}
-      <label className={styles.searchFilter}>Search questions<input name="q" type="search" defaultValue={search} placeholder="Keyword or question number" maxLength={160} /></label>
+      <label className={styles.searchFilter}>Search questions<AutoSearchInput search={search} /></label>
       <MultiSelectFilter name="category" label="Study categories" options={categoryOptions} selected={selectedCategories} allLabel="All categories" wide />
       <MultiSelectFilter name="difficulty" label="Difficulty" selected={difficulty} allLabel="All difficulties" options={[{ value: "easy", label: "Easy" }, { value: "medium", label: "Medium" }, { value: "hard", label: "Hard" }]} />
       {science ? <>
@@ -113,22 +113,22 @@ export default async function QuestionBank({ params, searchParams }: { params: P
         <MultiSelectFilter name="style" label="Response style" selected={style} allLabel="All response styles" options={allowedStyles.map(value => ({ value, label: ({ "short-response": "Short response", "extended-response": "Extended response", "problem-solving": "Problem solving" } as Record<string, string>)[value] }))} />
         <MultiSelectFilter name="calculator" label="Calculator" selected={calculator} allLabel="All questions" options={[{ value: "no", label: "No calculator" }, { value: "yes", label: "Calculator" }]} />
       </>}
-      <div className={styles.filterActions}><button type="submit">Apply filters</button><Link href={baseHref} className={styles.reset}>Reset</Link></div>
-    </form>
+      <div className={styles.filterActions}><Link href={baseHref} className={styles.reset}>Reset</Link></div>
+    </AutoFilterForm>
     {selectedCategories.length || difficulty.length || level.length || type.length || style.length || calculator.length ? <div className={styles.activeFilters} aria-label="Applied filters">
       {[...categoryOptions.filter(option => selectedCategories.includes(option.value)).map(option => ({ key: "category", value: option.value, label: option.label })),
         ...Object.entries({ difficulty, level, type, style, calculator }).flatMap(([key, values]) => values.map(value => ({ key, value, label: `${key === "style" ? "Response" : key === "level" ? "Content" : key.charAt(0).toUpperCase() + key.slice(1)}: ${value === "ahl" ? "Additional HL" : value.replaceAll("-", " ")}` })))
-      ].map(item => <Link key={`${item.key}:${item.value}`} href={filterHref(item.key === "category" ? { category: selectedCategories.filter(value => value !== item.value), syllabus: [], subtopic: [] } : { [item.key]: ({ difficulty, level, type, style, calculator } as Record<string, string[]>)[item.key].filter(value => value !== item.value) })} prefetch={false} aria-label={`Remove ${item.label}`}>{item.label} <span aria-hidden="true">×</span></Link>)}
+      ].map(item => <Link key={`${item.key}:${item.value}`} href={filterHref(item.key === "category" ? { category: selectedCategories.filter(value => value !== item.value), syllabus: [], subtopic: [] } : { [item.key]: ({ difficulty, level, type, style, calculator } as Record<string, string[]>)[item.key].filter(value => value !== item.value) })} aria-label={`Remove ${item.label}`}>{item.label} <span aria-hidden="true">×</span></Link>)}
     </div> : null}
     <div className={styles.resultsLine}><span>{matches.length ? ((page - 1) * PAGE_SIZE + 1) + "–" + Math.min(page * PAGE_SIZE, matches.length) + " of " + matches.length + " questions" : "No matching questions"}</span><span>Mark schemes open in a new tab ↗</span></div>
     <div className={styles.questionList}>{visible.map(question => {
       const q = questionPrompt(question);
       return <article className={styles.questionCard} id={q.id} key={q.id}>
-        <header className={styles.questionHeader}><div><Link href={ibCourseHref("/ib/questions/" + q.id, q.subject, courseLevel)} prefetch={false} className={styles.questionNumber}>Question {q.number}</Link><span className={styles.subtopic}>{q.subtopic}</span></div><QuestionBadges question={q} /></header>
-        <div className={styles.questionContent}><QuestionBody question={q} /><aside className={styles.questionActions}><Link href={ibCourseHref("/ib/mark-scheme/" + q.id, q.subject, courseLevel)} target="_blank" rel="noopener noreferrer" prefetch={false} className={styles.schemeButton}>Mark scheme <span aria-hidden="true">↗</span><span className={styles.srOnly}> for question {q.number} (opens in a new tab)</span></Link><span>Written solution<br />with mark allocations</span></aside></div>
+        <header className={styles.questionHeader}><div><Link href={ibCourseHref("/ib/questions/" + q.id, q.subject, courseLevel)} className={styles.questionNumber}>Question {q.number}</Link><span className={styles.subtopic}>{q.subtopic}</span></div><QuestionBadges question={q} /></header>
+        <div className={styles.questionContent}><QuestionBody question={q} /><aside className={styles.questionActions}><Link href={ibCourseHref("/ib/mark-scheme/" + q.id, q.subject, courseLevel)} target="_blank" rel="noopener noreferrer" className={styles.schemeButton}>Mark scheme <span aria-hidden="true">↗</span><span className={styles.srOnly}> for question {q.number} (opens in a new tab)</span></Link><span>Written solution<br />with mark allocations</span></aside></div>
       </article>;
     })}</div>
     {!matches.length ? <section className={styles.noResults}><h2>No questions match these filters.</h2><p>Try another keyword, difficulty or category.</p><Link href={baseHref}>Clear filters</Link></section> : null}
-    {pages > 1 ? <nav className={styles.pagination} aria-label="Question pages">{page > 1 ? <Link href={filterHref({ page: String(page - 1) })} prefetch={false}>← Previous</Link> : <span /> }<span>Page {page} of {pages}</span>{page < pages ? <Link href={filterHref({ page: String(page + 1) })} prefetch={false}>Next →</Link> : <span />}</nav> : null}
+    {pages > 1 ? <nav className={styles.pagination} aria-label="Question pages">{page > 1 ? <Link href={filterHref({ page: String(page - 1) })}>← Previous</Link> : <span /> }<span>Page {page} of {pages}</span>{page < pages ? <Link href={filterHref({ page: String(page + 1) })}>Next →</Link> : <span />}</nav> : null}
   </ExamShell>;
 }
