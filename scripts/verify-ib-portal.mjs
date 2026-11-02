@@ -135,13 +135,13 @@ assert.doesNotMatch(html,/Question 9</);
 html=renderToStaticMarkup(await paging(physicsRequest({syllabus:'A.1',page:'999'})));
 assert.match(html,/Page 2 of 2/);assert.match(html,/Question 9</);assert.match(html,/Question 10</);
 
-// All five overview cards and all 24 syllabus links are real destinations.
+// All five overview cards and all 12 grouped category links are real destinations.
 const courses=physicsHarness.load('lib/ib/catalog.ts');
-const summary=Object.fromEntries(Object.keys(courses.IB_COURSES).map(subject=>[subject,{questions:subject==='physics-hl'?7:1,mocks:0,topics:{},collections:physicsHarness.model.IB_COLLECTIONS.filter(c=>c.subject===subject).map(c=>({...c,count:1,subtopics:[],...(subject==='physics-hl'?{syllabus:courses.physicsSyllabusSubtopics(c.topicId).map(s=>({...s,count:1}))}:{})}))}]));
+const summary=Object.fromEntries(Object.keys(courses.IB_COURSES).map(subject=>[subject,{questions:subject==='physics-hl'?7:1,mocks:0,topics:{},collections:physicsHarness.model.IB_COLLECTIONS.filter(c=>c.subject===subject).map(c=>({...c,count:1,subtopics:[],groups:physicsHarness.load('lib/ib/topic-groups.ts').ibTopicGroups(c,[],'hl'),...(subject==='physics-hl'?{syllabus:courses.physicsSyllabusSubtopics(c.topicId).map(s=>({...s,count:1}))}:{})}))}]));
 const overview=ibHarness({query:'subject=physics-hl'}).load('app/ib/IBPortalClient.tsx').default;
 html=renderToStaticMarkup(React.createElement(overview,{email:'synthetic@example.invalid',summary}));
 for(const collection of physicsThemes) assert.ok(html.includes('href="/ib/question-bank/'+collection.id+'"'));
-assert.equal((html.match(/\?syllabus=/g)||[]).length,24);assert.doesNotMatch(html,/CONTENT COMING SOON|Questions and written mark schemes will appear/);
+assert.equal((html.match(/\?category=/g)||[]).length,12);assert.doesNotMatch(html,/CONTENT COMING SOON|Questions and written mark schemes will appear/);
 
 // CDN images are opt-in, origin-restricted, and retain the authenticated SVG fallback.
 const originalOrigin=process.env.IB_DIAGRAM_CDN_ORIGIN;
@@ -171,4 +171,4 @@ try {
   html=renderToStaticMarkup(React.createElement(MathContent,null,'![External](https://untrusted.example.invalid/a.svg)'));
   assert.doesNotMatch(html,/untrusted.example.invalid|<img/);
 } finally { if(originalOrigin===undefined)delete process.env.IB_DIAGRAM_CDN_ORIGIN;else process.env.IB_DIAGRAM_CDN_ORIGIN=originalOrigin; }
-console.log('IB portal passed: Maths regressions; five Physics themes and 24 syllabus destinations; filters/pagination; MCQ one-mark validation; accessible difficulty bars; real Markdown/KaTeX; independent authorization; private-answer and solution-image separation; draft/unknown IDs withheld; trusted-CDN restriction with SVG fallback. Synthetic fixtures only; no emails or database writes.');
+console.log('IB portal passed: Maths regressions; five Physics themes and 12 grouped destinations; filters/pagination; MCQ one-mark validation; accessible difficulty bars; real Markdown/KaTeX; independent authorization; private-answer and solution-image separation; draft/unknown IDs withheld; trusted-CDN restriction with SVG fallback. Synthetic fixtures only; no emails or database writes.');
