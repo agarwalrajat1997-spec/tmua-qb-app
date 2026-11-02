@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styles from "./erasable-notepad-popup.module.css";
 import { isTmuaFinalReminderActive } from "@/lib/tmua-final-reminder";
@@ -7,10 +8,22 @@ import { isEsatFinalReminderActive } from "@/lib/esat-final-reminder";
 import { ERASABLE_NOTEPAD_AMAZON_URL } from "@/lib/erasable-notepad-popup";
 
 const PROMO_IMAGE_URL =
-  "/announcements/erasable-notepad-amazon-announcement.webp?v=20261102-image-refresh";
+  "/announcements/erasable-notepad-amazon-announcement.webp?v=20261102-image-refresh-v2";
+
+const PORTAL_ROUTE_PREFIXES = [
+  "/esat",
+  "/esat-question-bank",
+  "/esat-practice-tests",
+  "/tmua-question-bank",
+  "/question-bank-tmua",
+  "/practice-tests",
+  "/classes",
+  "/tmua-classes",
+  "/group-sessions",
+] as const;
 
 type Props = {
-  /** Mount only after TMUA access has been confirmed by the dashboard router. */
+  /** Mount after the mixed dashboard router has confirmed TMUA access. */
   forcePortal?: boolean;
 };
 
@@ -21,7 +34,24 @@ type PopupPayload = {
   remaining?: number;
 };
 
+function matchesPrefix(
+  pathname: string,
+  prefix: string,
+) {
+  return (
+    pathname === prefix ||
+    pathname.startsWith(`${prefix}/`)
+  );
+}
+
+function isEligiblePortalRoute(pathname: string) {
+  return PORTAL_ROUTE_PREFIXES.some(
+    (prefix) => matchesPrefix(pathname, prefix),
+  );
+}
+
 export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
+  const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dismissedThisViewRef = useRef(false);
   const savingRef = useRef(false);
@@ -30,24 +60,40 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
   const [saveError, setSaveError] = useState(false);
 
   useEffect(() => {
-    if (!forcePortal) return;
+    const eligibleRoute =
+      forcePortal ||
+      isEligiblePortalRoute(pathname || "");
+
+    if (!eligibleRoute) {
+      setVisible(false);
+      return;
+    }
 
     let cancelled = false;
+    let inFlight = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
 
     async function check() {
       if (
         cancelled ||
+        inFlight ||
         dismissedThisViewRef.current ||
         document.visibilityState !== "visible"
       ) {
         return;
       }
 
-      // Exam reminders take priority while they are active.
-      if (isTmuaFinalReminderActive() || isEsatFinalReminderActive()) return;
+      // Exam reminders take priority while they are active. Recheck rather than
+      // permanently suppressing this campaign for the current page visit.
+      if (isTmuaFinalReminderActive() || isEsatFinalReminderActive()) {
+        timer = setTimeout(() => {
+          void check();
+        }, 30_000);
+        return;
+      }
 
-      // Do not put a product announcement over another open modal.
+      // Do not put a product announcement over another open modal. Keep
+      // checking after the higher-priority modal has been closed.
       const otherModal = Array.from(
         document.querySelectorAll("dialog[open], [aria-modal='true']"),
       ).some((modal) => modal !== dialogRef.current);
@@ -59,6 +105,9 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
         return;
       }
 
+      inFlight = true;
+      let shouldRetry = false;
+
       try {
         const result = await fetch("/api/student/erasable-notepad-popup", {
           method: "GET",
@@ -67,7 +116,10 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
           signal: AbortSignal.timeout(15_000),
         });
 
-        if (!result.ok) return;
+        if (!result.ok) {
+          shouldRetry = true;
+          return;
+        }
 
         const payload = (await result.json()) as PopupPayload;
         if (!cancelled && !dismissedThisViewRef.current) {
@@ -75,18 +127,46 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
         }
       } catch {
         // An optional announcement must never block the portal.
+        shouldRetry = true;
+      } finally {
+        inFlight = false;
+
+        if (
+          shouldRetry &&
+          !cancelled &&
+          !dismissedThisViewRef.current
+        ) {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            void check();
+          }, 30_000);
+        }
       }
     }
 
-    timer = setTimeout(() => {
-      void check();
-    }, 650);
+    function schedule() {
+      clearTimeout(timer);
+      if (cancelled || dismissedThisViewRef.current) return;
+
+      // Let the dashboard and any higher-priority announcement settle first.
+      timer = setTimeout(() => {
+        void check();
+      }, 1100);
+    }
+
+    schedule();
+    window.addEventListener("focus", schedule);
+    window.addEventListener("online", schedule);
+    document.addEventListener("visibilitychange", schedule);
 
     return () => {
       cancelled = true;
       clearTimeout(timer);
+      window.removeEventListener("focus", schedule);
+      window.removeEventListener("online", schedule);
+      document.removeEventListener("visibilitychange", schedule);
     };
-  }, [forcePortal]);
+  }, [forcePortal, pathname]);
 
   useEffect(() => {
     if (!visible) return;
