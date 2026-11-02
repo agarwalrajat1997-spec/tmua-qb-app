@@ -118,7 +118,7 @@ for(const course of ['sl','hl']){
   const summary=content.getIbSummary(course);
   html=renderToStaticMarkup(React.createElement(overview,{email:'review@example.invalid',summary}));
   for(const collection of collections)assert.ok(html.includes('href="/ib/question-bank/'+collection.id+'?course='+course+'"'));
-  assert.equal((html.match(/\?syllabus=/g)||[]).length,course==='sl'?21:22);
+  assert.equal((html.match(/\?category=/g)||[]).length,10);
   assert.match(html,new RegExp('IB CHEMISTRY '+course.toUpperCase()));
   assert.match(html,course==='sl'?/STANDARD LEVEL/:/HIGHER LEVEL/);
   assert.match(html,new RegExp('<strong>'+(course==='sl'?7:9)+'</strong><span>Questions available'));
@@ -138,4 +138,4 @@ for(const path of ['/ib/question-bank/chemistry-structure-1','/ib/questions/ib-c
   assert.match(html,/aria-current="page" class="subjectActive"[^>]*>.*Chemistry/);
   assert.doesNotMatch(html,/Physics content coming soon|Both IB subjects/);
 }
-console.log('IB Chemistry portal passed: six themes and 22 syllabus destinations; real per-course counts; shared SL/HL records; authenticated AHL denial in SL mode; course-preserving filters, pagination and sign-in returns; private answer separation; written-only schemes; accessible course controls. Synthetic fixtures only; no emails or database writes.');
+console.log('IB Chemistry portal passed: six themes and 10 grouped destinations; real per-course counts; shared SL/HL records; authenticated AHL denial in SL mode; course-preserving filters, pagination and sign-in returns; private answer separation; written-only schemes; accessible course controls. Synthetic fixtures only; no emails or database writes.');

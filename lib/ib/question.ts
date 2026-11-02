@@ -43,6 +43,7 @@ export const IB_COLLECTIONS = [
 export type IbCollectionId = typeof IB_COLLECTIONS[number]["id"];
 export type IbCollectionSummary = {
   id: string; subject: IbSubject; title: string; code: string; description: string; count: number; subtopics: string[];
+  groups: import("./topic-groups").IbTopicGroup[];
   syllabus?: (IbSyllabusSubtopic & { count: number })[];
 };
 export function getIbCollection(id: string) {

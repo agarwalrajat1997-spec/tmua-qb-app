@@ -43,7 +43,7 @@ for(const course of ['sl','hl']){
  const overview=ibHarness({questions,useContentModule:true,query:'subject=biology&course='+course});
  html=render(React.createElement(overview.load('app/ib/IBPortalClient.tsx').default,{email:'review@example.invalid',summary:content.getIbSummary(course)}));
  assert.match(html,new RegExp('<strong>'+(course==='sl'?5:6)+'</strong><span>Questions available'));
- assert.equal((html.match(/\?syllabus=/g)||[]).length,course==='sl'?34:40);
+ assert.equal((html.match(/\?category=/g)||[]).length,course==='sl'?17:20);
 }
 let html=render(await bank(bankArgs({course:'hl',level:'ahl',difficulty:'hard',syllabus:'A2.1'})));
 assert.match(html,/id="ib-bio-a-002"/);assert.doesNotMatch(html,/id="ib-bio-a-001"/);
@@ -89,4 +89,4 @@ for(const q of statistics){
  assert.ok(rendered.indexOf('</table>')<rendered.indexOf('The 5% critical value'),'Statistical instructions must be outside the data table');
  assert.match(rendered,/class="katex"/);
 }
-console.log('IB Biology portal passed: four themes, 40 HL / 34 SL subtopics, canonical shared records, AHL denial in SL, authenticated routes, course-preserving filters and pagination, written schemes in separate tabs, private solution separation and Biology sign-in returns.');
+console.log('IB Biology portal passed: four themes, 20 HL / 17 SL study categories, canonical shared records, AHL denial in SL, authenticated routes, course-preserving filters and pagination, written schemes in separate tabs, private solution separation and Biology sign-in returns.');

@@ -1,4 +1,5 @@
 import "server-only";
+import { ibTopicGroups } from "./topic-groups";
 import manifest from "@/content/ib/catalog.json";
 import physicsMocks from "@/content/ib/physics-mocks.json";
 import algebra from "@/content/ib/math-aa-hl/number-algebra.json";
@@ -77,7 +78,7 @@ export function getIbSummary(course: IbCourseLevel = "hl"): IbSummary {
       topics: Object.fromEntries(IB_COURSES[subject].topics.map(topic => [topic.id, questions.filter(q => q.topicId === topic.id).length])),
       collections: IB_COLLECTIONS.filter(collection => collection.subject === subject).map(collection => {
         const items = questions.filter(q => q.collectionId === collection.id);
-        return { ...collection, count: items.length, subtopics: [...new Set(items.map(q => q.subtopic))].sort(),
+        return { ...collection, groups: ibTopicGroups(collection, items, course), count: items.length, subtopics: [...new Set(items.map(q => q.subtopic))].sort(),
           ...(!ibIsMathSubject(subject) ? { syllabus: ibSyllabusSubtopics(subject, collection.topicId, course).map(subtopic => ({
             ...subtopic, count: items.filter(q => q.syllabusCode === subtopic.code).length,
           })) } : {}) };
