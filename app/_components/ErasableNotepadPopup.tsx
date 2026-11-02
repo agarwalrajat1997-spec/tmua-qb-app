@@ -6,9 +6,11 @@ import styles from "./erasable-notepad-popup.module.css";
 import { isTmuaFinalReminderActive } from "@/lib/tmua-final-reminder";
 import { isEsatFinalReminderActive } from "@/lib/esat-final-reminder";
 import { ERASABLE_NOTEPAD_AMAZON_URL } from "@/lib/erasable-notepad-popup";
-
-const PROMO_IMAGE_URL =
-  "/announcements/erasable-notepad-amazon-announcement.webp?v=20261102-image-refresh-v2";
+import {
+  ERASABLE_NOTEPAD_IMAGE_DATA_URL,
+  ERASABLE_NOTEPAD_IMAGE_HEIGHT,
+  ERASABLE_NOTEPAD_IMAGE_WIDTH,
+} from "@/lib/erasable-notepad-image";
 
 const PORTAL_ROUTE_PREFIXES = [
   "/dashboard",
@@ -262,12 +264,12 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.mainImage}
-            src={PROMO_IMAGE_URL}
+            src={ERASABLE_NOTEPAD_IMAGE_DATA_URL}
             alt="Comparison of an official exam erasable booklet and the Thriving Scholars erasable mock-practice notepad"
-            width={500}
-            height={500}
+            width={ERASABLE_NOTEPAD_IMAGE_WIDTH}
+            height={ERASABLE_NOTEPAD_IMAGE_HEIGHT}
             loading="eager"
-            decoding="async"
+            decoding="sync"
           />
         </div>
 
