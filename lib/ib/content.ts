@@ -1,5 +1,6 @@
 import "server-only";
 import manifest from "@/content/ib/catalog.json";
+import physicsMocks from "@/content/ib/physics-mocks.json";
 import algebra from "@/content/ib/math-aa-hl/number-algebra.json";
 import functions from "@/content/ib/math-aa-hl/functions.json";
 import geometry from "@/content/ib/math-aa-hl/geometry-trigonometry.json";
@@ -72,7 +73,7 @@ export function getIbSummary(course: IbCourseLevel = "hl"): IbSummary {
     const questions = published.filter(q => q.subject === subject && questionAvailableForCourse(q, course));
     summary[subject] = {
       questions: questions.length,
-      mocks: (manifest.mockTests as {subject: string; status: string}[]).filter(t => t.subject === subject && t.status === "published").length,
+      mocks: subject === "physics-hl" ? physicsMocks.filter(t => t.course === course && t.status === "published").length : (manifest.mockTests as {subject: string; status: string}[]).filter(t => t.subject === subject && t.status === "published").length,
       topics: Object.fromEntries(IB_COURSES[subject].topics.map(topic => [topic.id, questions.filter(q => q.topicId === topic.id).length])),
       collections: IB_COLLECTIONS.filter(collection => collection.subject === subject).map(collection => {
         const items = questions.filter(q => q.collectionId === collection.id);

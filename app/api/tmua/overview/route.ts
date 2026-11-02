@@ -302,7 +302,7 @@ function preparationCountdown(
   };
 }
 
-export async function GET(request?: Request) {
+export async function GET(request: Request) {
   try {
     // Authentication uses the existing user session.
     const supabase =

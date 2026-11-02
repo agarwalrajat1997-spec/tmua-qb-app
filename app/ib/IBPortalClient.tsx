@@ -9,6 +9,7 @@ import styles from "./ib.module.css";
 import IbBrand from "./IbBrand";
 import ChemistryCourseSwitch from "./components/ChemistryCourseSwitch";
 import MathsCourseSwitch from "./components/MathsCourseSwitch";
+import PhysicsMockList from "./components/PhysicsMockList";
 
 export default function IBPortalClient({ email, summary }: { email: string; summary: IbSummary }) {
   const search = useSearchParams();
@@ -73,7 +74,7 @@ export default function IBPortalClient({ email, summary }: { email: string; summ
             {!normalizedQuery && counts.questions === 0 ? <div className={styles.comingCard}><span className={styles.comingIcon} aria-hidden="true">✦</span><h3>Good things are taking shape.</h3><p>Your question bank is on its way. Browse the topics while we prepare your first questions and written mark schemes.</p><span className={styles.comingBadge}>CONTENT COMING SOON</span></div> : null}
           </div>
           {collections.length === 0 ? <div className={styles.emptySearch} role="status"><h3>No matching topics</h3><p>Try a different topic or subtopic.</p><button className={styles.secondaryButton} onClick={() => setQuery("")}>Clear search</button></div> : null}
-        </> : <section className={styles.mockEmpty}><div className={styles.mockIcon} aria-hidden="true">◷</div><span className={styles.eyebrow}>{courseLabel.toUpperCase()} · MOCK TESTS</span><h2>Your next challenge is on its way.</h2><p>Mock tests and their written mark schemes will be available here once released. In the meantime, explore the topics in your question bank.</p><Link className={styles.primaryButton} href={ibHref(subject, "questions", courseLevel)}>Explore question bank <span aria-hidden="true">↗</span></Link><span className={styles.emptyCaption}>No mock tests published yet</span></section>}
+        </> : subject === "physics-hl" ? <PhysicsMockList course={courseLevel} /> : <section className={styles.mockEmpty}><div className={styles.mockIcon} aria-hidden="true">◷</div><span className={styles.eyebrow}>{courseLabel.toUpperCase()} · MOCK TESTS</span><h2>Your next challenge is on its way.</h2><p>Mock tests and their written mark schemes will be available here once released. In the meantime, explore the topics in your question bank.</p><Link className={styles.primaryButton} href={ibHref(subject, "questions", courseLevel)}>Explore question bank <span aria-hidden="true">↗</span></Link><span className={styles.emptyCaption}>No mock tests published yet</span></section>}
         <footer className={styles.footer}><span>THRIVING SCHOLARS</span><span>Learn with purpose. Practise with confidence.</span></footer>
       </main>
     </div>
