@@ -22,8 +22,8 @@ const h=ibHarness({questions,useContentModule:true,onAuth:next=>auth.push(next)}
 for(const q of questions)assert.equal(h.model.ibQuestionSchema.safeParse(q).success,true,q.id);
 for(const q of [{...ahl,level:'sl'},{...shared,calculator:false},{...shared,id:'ib-bio-b-001'},{...shared,syllabusCode:'C1.1'},{...shared,level:'core'},{...shared,correctOption:undefined},{...shared,marks:2}])assert.equal(h.model.ibQuestionSchema.safeParse(q).success,false);
 assert.equal(content.getIbSummary('hl').biology.questions,6);assert.equal(content.getIbSummary('sl').biology.questions,5);
-assert.equal(content.getIbQuestion(ahl.id,'sl'),undefined);assert.equal(content.getIbQuestion(draft.id),undefined);
-assert.equal(content.getIbQuestion(shared.id,'sl'),content.getIbQuestion(shared.id,'hl'));
+assert.equal((await content.getIbQuestion(ahl.id,'sl')),undefined);assert.equal((await content.getIbQuestion(draft.id)),undefined);
+assert.equal((await content.getIbQuestion(shared.id,'sl')),(await content.getIbQuestion(shared.id,'hl')));
 const bank=h.load('app/ib/question-bank/[collection]/page.tsx').default;
 const qpage=h.load('app/ib/questions/[id]/page.tsx').default,scheme=h.load('app/ib/mark-scheme/[id]/page.tsx').default;
 const bankArgs=(query={},collection=shared.collectionId)=>({params:Promise.resolve({collection}),searchParams:Promise.resolve(query)});
@@ -41,7 +41,7 @@ for(const course of ['sl','hl']){
  html=render(await scheme(detail(shared.id,course)));assert.match(html,/BIOLOGY-SOLUTION-CANARY/);assert.match(html,/biology behind the choice/);assert.doesNotMatch(html,/PRIVATE-BIOLOGY/);
  assert.equal(auth.at(-1),`/ib/mark-scheme/${shared.id}?course=${course}`);
  const overview=ibHarness({questions,useContentModule:true,query:'subject=biology&course='+course});
- html=render(React.createElement(overview.load('app/ib/IBPortalClient.tsx').default,{email:'review@example.invalid',summary:content.getIbSummary(course)}));
+ html=render(React.createElement(overview.load('app/ib/IBPortalClient.tsx').default,{email:'review@example.invalid',summary:content.getIbSummary(course).biology,subject:'biology',view:'questions',courseLevel:course}));
  assert.match(html,new RegExp('<strong>'+(course==='sl'?5:6)+'</strong><span>Questions available'));
  assert.equal((html.match(/\?category=/g)||[]).length,course==='sl'?17:20);
 }

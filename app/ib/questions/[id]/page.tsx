@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/ib/components/IbLink";
 import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
 import { ibHref, ibHasCourseChoice, ibSubjectForPath, ibCourseLevel, ibCourseHref } from "@/lib/ib/catalog";
@@ -17,7 +17,7 @@ export default async function QuestionPage({ params, searchParams }: { params: P
   const courseLevel = ibCourseLevel(raw?.course);
   const pathname = `/ib/questions/${encodeURIComponent(id)}`;
   const user = await requireIbUser(ibCourseHref(pathname, ibSubjectForPath(pathname), courseLevel));
-  const stored = getIbQuestion(id, courseLevel);
+  const stored = await getIbQuestion(id, courseLevel);
   if (!stored) notFound();
   const q = questionPrompt(stored);
   const collection = getIbCollection(q.collectionId)!;
@@ -25,6 +25,6 @@ export default async function QuestionPage({ params, searchParams }: { params: P
   return <ExamShell email={user.email} subject={q.subject} courseLevel={courseLevel} mathsTopicId={q.topicId} courseLinks={{ sl: ibCourseHref(ibHasCourseChoice(q.subject) && q.level === "ahl" ? bankPath : pathname, q.subject, "sl"), hl: ibCourseHref(pathname, q.subject, "hl") }}>
     <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href={ibHref(q.subject, "questions", courseLevel)}>Question bank</Link><span>/</span><Link href={ibCourseHref(bankPath, q.subject, courseLevel)}>{collection.title}</Link><span>/</span><span>Question {q.number}</span></nav>
     <ExamInstructions subject={q.subject} />
-    <article className={styles.questionCard}><header className={styles.questionHeader}><div><h1 className={styles.questionNumber}>Question {q.number}</h1><span className={styles.subtopic}>{q.subtopic}</span></div><QuestionBadges question={q} /></header><div className={styles.questionContent}><QuestionBody question={q} /><aside className={styles.questionActions}><Link href={ibCourseHref(`/ib/mark-scheme/${q.id}`, q.subject, courseLevel)} target="_blank" rel="noopener noreferrer" prefetch={false} className={styles.schemeButton}>Mark scheme ↗<span className={styles.srOnly}> (opens in a new tab)</span></Link><span>Written solution<br />with mark allocations</span></aside></div></article>
+    <article className={styles.questionCard}><header className={styles.questionHeader}><div><h1 className={styles.questionNumber}>Question {q.number}</h1><span className={styles.subtopic}>{q.subtopic}</span></div><QuestionBadges question={q} /></header><div className={styles.questionContent}><QuestionBody question={q} /><aside className={styles.questionActions}><Link href={ibCourseHref(`/ib/mark-scheme/${q.id}`, q.subject, courseLevel)} target="_blank" rel="noopener noreferrer" className={styles.schemeButton}>Mark scheme ↗<span className={styles.srOnly}> (opens in a new tab)</span></Link><span>Written solution<br />with mark allocations</span></aside></div></article>
   </ExamShell>;
 }

@@ -28,7 +28,7 @@ for(const subject of ['physics-hl','economics','business-management']){
  assert.equal(catalog.ibQualification(subject,'sl'),'Standard Level');
  assert.match(catalog.ibHref(subject,'questions','sl'),/course=sl/);
  const sl=questions.find(q=>q.subject===subject&&q.level!=='ahl'),hl=questions.find(q=>q.subject===subject&&q.level==='ahl');
- assert.ok(content.getIbQuestion(sl.id,'sl'));assert.equal(content.getIbQuestion(hl.id,'sl'),undefined);
+ assert.ok((await content.getIbQuestion(sl.id,'sl')));assert.equal((await content.getIbQuestion(hl.id,'sl')),undefined);
  assert.equal(content.getIbSummary('sl')[subject].questions,1);assert.equal(content.getIbSummary('hl')[subject].questions,2);
  let html=render(await bank(args(sl,'sl')));
  assert.match(html,/Standard Level/);assert.match(html,/name="course" value="sl"/);assert.match(html,/target="_blank" rel="noopener noreferrer"/);assert.match(html,/difficultyBars/);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/app/ib/components/IbLink";
 import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
 import { ibHref, ibHasCourseChoice, ibSubjectForPath, ibCourseLevel, ibCourseHref, ibCourseLabel } from "@/lib/ib/catalog";
@@ -19,7 +19,7 @@ export default async function MarkScheme({ params, searchParams }: { params: Pro
   const courseLevel = ibCourseLevel(raw?.course);
   const pathname = `/ib/mark-scheme/${encodeURIComponent(id)}`;
   const user = await requireIbUser(ibCourseHref(pathname, ibSubjectForPath(pathname), courseLevel));
-  const q = getIbQuestion(id, courseLevel);
+  const q = await getIbQuestion(id, courseLevel);
   if (!q) notFound();
   const collection = getIbCollection(q.collectionId)!;
   const bankPath = `/ib/question-bank/${collection.id}`;

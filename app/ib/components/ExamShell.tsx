@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "./IbLink";
 import { IB_COURSES, ibHasCourseChoice, ibHref, ibCourseLabel, ibIsMathSubject, ibNavigationSubjects, ibSubjectLabel, type IbCourseLevel, type IbSubject } from "@/lib/ib/catalog";
 import ChemistryCourseSwitch, { type ChemistryCourseLinks } from "./ChemistryCourseSwitch";
 import MathsCourseSwitch from "./MathsCourseSwitch";

@@ -156,6 +156,14 @@ export async function proxy(req: NextRequest) {
   );
 
   try {
+    if (req.nextUrl.pathname === "/ib" || req.nextUrl.pathname.startsWith("/ib/")) {
+      // Verify/refresh the signed token here. Each IB page still calls getUser()
+      // before serving content, so this avoids a duplicate remote user lookup.
+      const { data, error } = await withServiceTimeout(supabase.auth.getClaims());
+      if (error && !isMissingSession(error)) return withSessionCookies(unavailableResponse(req), res);
+      if (!data?.claims?.sub || !data.claims.email) return withSessionCookies(loginRedirect(req), res);
+      return res;
+    }
     const { data: { user }, error: authError } = await withServiceTimeout(supabase.auth.getUser());
     if (authError && !isMissingSession(authError)) return withSessionCookies(unavailableResponse(req), res);
 

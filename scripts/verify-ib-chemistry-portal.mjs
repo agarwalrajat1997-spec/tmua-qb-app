@@ -36,11 +36,11 @@ const bankRequest=(query={},collection=chemistry.collectionId)=>({params:Promise
 const detailRequest=(id,course)=>({params:Promise.resolve({id}),searchParams:Promise.resolve(course?{course}:{})});
 assert.equal(content.getIbSummary('hl').chemistry.questions,9);
 assert.equal(content.getIbSummary('sl').chemistry.questions,7);
-assert.equal(content.getIbQuestions(chemistry.collectionId,'hl').length,3);
-assert.equal(content.getIbQuestions(chemistry.collectionId,'sl').length,2);
-assert.equal(content.getIbQuestion(ahl.id,'sl'),undefined);
-assert.equal(content.getIbQuestion(chemistry.id,'sl'),content.getIbQuestion(chemistry.id,'hl'));
-assert.equal(content.getIbQuestion(draft.id),undefined);
+assert.equal((await content.getIbQuestions(chemistry.collectionId,'hl')).length,3);
+assert.equal((await content.getIbQuestions(chemistry.collectionId,'sl')).length,2);
+assert.equal((await content.getIbQuestion(ahl.id,'sl')),undefined);
+assert.equal((await content.getIbQuestion(chemistry.id,'sl')),(await content.getIbQuestion(chemistry.id,'hl')));
+assert.equal((await content.getIbQuestion(draft.id)),undefined);
 const slR1=content.getIbSummary('sl').chemistry.collections.find(c=>c.id==='chemistry-reactivity-1');
 assert.equal(slR1.count,1);
 assert.equal(slR1.syllabus.length,3);
@@ -116,7 +116,7 @@ for(const course of ['sl','hl']){
   const overviewHarness=ibHarness({questions,useContentModule:true,query:'subject=chemistry&course='+course});
   const overview=overviewHarness.load('app/ib/IBPortalClient.tsx').default;
   const summary=content.getIbSummary(course);
-  html=renderToStaticMarkup(React.createElement(overview,{email:'review@example.invalid',summary}));
+  html=renderToStaticMarkup(React.createElement(overview,{email:'review@example.invalid',summary:summary.chemistry,subject:'chemistry',view:'questions',courseLevel:course}));
   for(const collection of collections)assert.ok(html.includes('href="/ib/question-bank/'+collection.id+'?course='+course+'"'));
   assert.equal((html.match(/\?category=/g)||[]).length,10);
   assert.match(html,new RegExp('IB CHEMISTRY '+course.toUpperCase()));
