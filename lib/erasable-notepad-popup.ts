@@ -2,8 +2,8 @@ export const ERASABLE_NOTEPAD_AMAZON_URL =
   "https://www.amazon.co.uk/dp/B0HN2QBGL4";
 
 export const ERASABLE_NOTEPAD_CAMPAIGN_KEYS = [
-  "erasable-notepad-amazon-image-refresh-2026-11-dismissal-1",
-  "erasable-notepad-amazon-image-refresh-2026-11-dismissal-2",
+  "erasable-notepad-amazon-popup-reset-v2-2026-11-dismissal-1",
+  "erasable-notepad-amazon-popup-reset-v2-2026-11-dismissal-2",
 ] as const;
 
 export const ERASABLE_NOTEPAD_MAX_DISMISSALS =
