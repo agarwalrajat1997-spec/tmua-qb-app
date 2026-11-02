@@ -46,7 +46,8 @@ const collectionLookupAverageMs=(performance.now()-timer)/1000;
 let total=0;
 for(const collection of h.model.IB_COLLECTIONS){
  const file=`content/ib/${collection.subject}/${collection.subject==='math-aa-hl'?collection.id:collection.topicId}.json`;
- const expected=JSON.parse(readFileSync(file,'utf8')).filter(q=>q.status==='published');
+ const enrichment=['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync('content/ib/math-2026-expansion/'+course+'.json','utf8'))).filter(q=>q.collectionId===collection.id);
+ const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment].filter(q=>q.status==='published');
  const actual=await content.getIbQuestions(collection.id,'hl');
  assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'question order preserved');
  assert.deepEqual(Array.from(await content.getIbQuestions(collection.id,'sl'),q=>q.id),expected.filter(q=>h.model.questionAvailableForCourse(q,'sl')).map(q=>q.id));
@@ -54,7 +55,7 @@ for(const collection of h.model.IB_COLLECTIONS){
  total+=actual.length;
 }
 assert.equal(bankImports().length,45,'each bank loaded only once');
-assert.equal(total,5122);
+assert.equal(total,5522);
 
 // A failed load must not poison the cache for the lifetime of the server.
 let attempts=0;

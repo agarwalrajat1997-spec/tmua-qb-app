@@ -33,6 +33,8 @@ export function ibHarness({ questions=[], user={email:'review@example.invalid'},
         if(name.endsWith('.css'))return {__esModule:true,default:new Proxy({},{get:(_t,p)=>String(p)})};
         if(name.startsWith('@/') && name.endsWith('.json')) {
           if(useContentModule && name==='@/content/ib/content-index.json')return load('lib/ib/build-content-index.ts').buildIbContentIndex(questions);
+          // Fixture questions are supplied by the ordinary bank mock below.
+          if(useContentModule && name.startsWith('@/content/ib/math-2026-expansion/by-collection/'))return [];
           const bank=name.match(/^@\/content\/ib\/([^/]+)\/([^/]+)\.json$/);
           if(useContentModule&&bank)return questions.filter(q=>q.subject===bank[1]&&(q.collectionId===bank[2]||q.topicId===bank[2]));
           return require(resolve(name.slice(2)));

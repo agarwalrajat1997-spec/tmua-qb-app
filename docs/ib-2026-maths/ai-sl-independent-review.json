@@ -1,0 +1,3049 @@
+{
+  "status": "passed",
+  "questions": 100,
+  "reviewer": "Independent AI reviewer distinct from the AI SL author",
+  "reviewScope": "All100 complete prompts, all solution steps, exact and rounded numerical outputs, admissible domains, branch choices, finance timing, interpretation, currentSL scope, additive marks and SVG constructions. This is not human IB examiner moderation.",
+  "officialGuide": "https://ibo.org/globalassets/new-structure/university-admission/pdfs/dp-mathematics-applications-and-interpretation-guide-en.pdf",
+  "scopeEvidence": "Official guide SL4.2 excludes frequency-density histograms; SL4.8 includes binomial mean/variance; AHL5.10 introduces second derivatives. These boundaries were explicitly checked and used in corrections.",
+  "sha256": "7585c556397a50340881a397556d4e4725b569418bdc2cfa839cc7003bbc8371",
+  "independentNumericalChecks": 333,
+  "svgCount": 100,
+  "mathematicalGraphGeometryChartCount": 90,
+  "timelineFlowCount": 10,
+  "svgTableCount": 0,
+  "correctedFindings": [
+    {
+      "id": "shared plot helper",
+      "issue": "Wide scientific-notation tick labels could touch rotated axis labels.",
+      "resolution": "Increased the left plot margin and separated all tick and axis-label regions; no mathematical coordinates or data changed."
+    },
+    {
+      "id": "ib-aisl-na-708",
+      "issue": "Floating-point floor returned 2343749 although the exact quotient is integer2343750.",
+      "resolution": "Exact integer/fraction boundary and an added author assertion."
+    },
+    {
+      "id": "ib-aisl-fn-713",
+      "issue": "The additional revenue line extended beyond plot auto-range.",
+      "resolution": "Plot auto-range now includes every extra curve endpoint."
+    },
+    {
+      "id": "ib-aisl-sp-701",
+      "issue": "Frequency-density histogram is explicitly outside currentSL4.2.",
+      "resolution": "Reauthored as cumulative-frequency, quartile, IQR and grouped-mean task within currentSL scope."
+    },
+    {
+      "id": "ib-aisl-ca-705",
+      "issue": "Optional second-derivative argument introduced AHL-only notation.",
+      "resolution": "First-derivative sign justification replaces it."
+    },
+    {
+      "id": "ib-aisl-gt-707",
+      "issue": "Whole rings and central solid radii did not depict the annular-sector boundary.",
+      "resolution": "Actual two arcs and two radial edges now drawn, with dashed construction radii in the removed hole."
+    },
+    {
+      "id": "ib-aisl-gt-708",
+      "issue": "Chord route was implicit rather than visible.",
+      "resolution": "Added labelled endpoints and dashed chord."
+    },
+    {
+      "id": "ib-aisl-sp-709",
+      "issue": "A sequential flow strip could be misread as serial events.",
+      "resolution": "Replaced by a genuine two-stage supplier/fault probability tree."
+    },
+    {
+      "id": "ib-aisl-ca-707",
+      "issue": "A truncated plot frame at−2 obscured the actual zero-rate crossings.",
+      "resolution": "Added explicit labelled zero-level reference line."
+    },
+    {
+      "id": "ib-aisl-na-714",
+      "issue": "A rounded displayed payment was labelled before-rounding.",
+      "resolution": "Exact threshold formula, six-decimal value and greatest whole-cent payment separated."
+    },
+    {
+      "id": "ib-aisl-na-720",
+      "issue": "Rounded minimum costs were described as before upward-cent rounding.",
+      "resolution": "Unrounded thresholds separated from actual minimum whole-cent payments."
+    },
+    {
+      "id": "ib-aisl-na-716",
+      "issue": "Plot title named two balances but only original schedule was supplied.",
+      "resolution": "Title now accurately describes the single original-payment curve."
+    }
+  ],
+  "records": [
+    {
+      "id": "ib-aisl-na-701",
+      "verdict": "passed",
+      "calculation": "Arithmetic differences give d=3; direct term sums independently verify both capacities and the certificate failure.",
+      "independentChecks": [
+        {
+          "actual": 930,
+          "expected": 930,
+          "passed": true
+        },
+        {
+          "actual": 1089,
+          "expected": 1089,
+          "passed": true
+        },
+        {
+          "actual": 75,
+          "expected": 75,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "9eabb8bb3cc45877fc9112d07d8beb676c9050746889f1ac81a813c4cfb0e1c8",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-702",
+      "verdict": "passed",
+      "calculation": "Seven cycles remain above 80; eight below; the amount removed is initial minus final, not eight identical removals.",
+      "independentChecks": [
+        {
+          "actual": 80.24490403430397,
+          "expected": 80.244904,
+          "passed": true
+        },
+        {
+          "actual": 742.2236690953011,
+          "expected": 742.224469,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "d51d4b4272a64a0226886474d1be7e02aca52e617b46b55370ad491b4d04c30c",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-703",
+      "verdict": "passed",
+      "calculation": "Independent accumulation by 60 monthly and five yearly factors verifies effective rate, maturity balances, and fee comparison using unrounded values.",
+      "independentChecks": [
+        {
+          "actual": 4.907020753480573,
+          "expected": 4.90702,
+          "passed": true
+        },
+        {
+          "actual": 8894.485030963775,
+          "expected": 8894.49,
+          "passed": true
+        },
+        {
+          "actual": 8933.970937500002,
+          "expected": 8933.97,
+          "passed": true
+        },
+        {
+          "actual": 39.48590653622705,
+          "expected": 39.49,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "ecaff32e68ae7c1ab80647d0a23d8dddfde54f80222a8ab98b968ccf3dd3505d",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-704",
+      "verdict": "passed",
+      "calculation": "Payment obtained from the present-value sum; a month-by-month balance recurrence checks settlement immediately after payment 12 and saved future interest.",
+      "independentChecks": [
+        {
+          "actual": 657.5808133421957,
+          "expected": 657.58,
+          "passed": true
+        },
+        {
+          "actual": 21615.349594001036,
+          "expected": 21615.35,
+          "passed": true
+        },
+        {
+          "actual": 2057.559686318011,
+          "expected": 2057.56,
+          "passed": true
+        },
+        {
+          "actual": -1.000444171950221e-11,
+          "expected": 0,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "cf3f5ee9900f1588ddd2880ac7d2f6bb229aaf602f231a8e22f039c402f6922d",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-705",
+      "verdict": "passed",
+      "calculation": "Eight end-year deposits have powers 0 through 7; direct summation checks the annuity timing and ceiling of required standing order.",
+      "independentChecks": [
+        {
+          "actual": 11057.071512158209,
+          "expected": 11057.07,
+          "passed": true
+        },
+        {
+          "actual": 1627.9174807006934,
+          "expected": 1627.92,
+          "passed": true
+        },
+        {
+          "actual": 1628,
+          "expected": 1628,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "68d4dbbb1487b32d02dd1a2cf11c483920f677aa41420c3280bcaae9f3c2cda4",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-706",
+      "verdict": "passed",
+      "calculation": "Rates apply sequentially; years 12 and 13 bracket the strict replacement threshold.",
+      "independentChecks": [
+        {
+          "actual": 22108.499999999996,
+          "expected": 22108.5,
+          "passed": true
+        },
+        {
+          "actual": 15838.37375616,
+          "expected": 15838.37,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4783c8dfe9ff1bb3f516362397fc7c71442b9272e1fc87dafd5d20ea111deab8",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-707",
+      "verdict": "passed",
+      "calculation": "Positive dimension bounds multiply; upper area exceeds 235, so six tins are necessary for a guarantee. Upper area endpoint remains open.",
+      "independentChecks": [
+        {
+          "actual": 232.12750000000003,
+          "expected": 232.1275,
+          "passed": true
+        },
+        {
+          "actual": 235.23749999999998,
+          "expected": 235.2375,
+          "passed": true
+        },
+        {
+          "actual": 235,
+          "expected": 235,
+          "passed": true
+        },
+        {
+          "actual": 282,
+          "expected": 282,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "f64ebddc611d538f6f5cfd417e4a17fb94eff5f02a303e536637e1e32159fe15",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-708",
+      "verdict": "passed",
+      "calculation": "Exact fractions establish 33,177,600 J daily and an exact maximum of 2,343,750 sensors; repaired the binary-float floor off-by-one.",
+      "independentChecks": [
+        {
+          "actual": 33177600,
+          "expected": 33177600,
+          "passed": true
+        },
+        {
+          "actual": 2343750,
+          "expected": 2343750,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "a5e78b416e02581226ff71e8a429e75c30f667cd010e3e9bf0ee3aec03f8452f",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-709",
+      "verdict": "passed",
+      "calculation": "The recovered prices satisfy all three independent equations; the fourth bill is inconsistent by two units.",
+      "independentChecks": [
+        {
+          "actual": 79,
+          "expected": 79,
+          "passed": true
+        },
+        {
+          "actual": 70,
+          "expected": 70,
+          "passed": true
+        },
+        {
+          "actual": 80,
+          "expected": 80,
+          "passed": true
+        },
+        {
+          "actual": 50,
+          "expected": 50,
+          "passed": true
+        },
+        {
+          "actual": 42,
+          "expected": 42,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "1ab0e89c04edd61cddebe67deb0daa13766e44f66f48b754f2d1d310756f12ca",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-710",
+      "verdict": "passed",
+      "calculation": "Convert levels to linear intensity before adding; identical-source increase is 10 log10(2).",
+      "independentChecks": [
+        {
+          "actual": 71.19331048066095,
+          "expected": 71.1933,
+          "passed": true
+        },
+        {
+          "actual": 73.01029995663981,
+          "expected": 73.0103,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "35bf14d1b496de489bd0dad7d91d9adaf6018562b990b4ef536293be517859cc",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-711",
+      "verdict": "passed",
+      "calculation": "Direct annual totals bracket 180000 at seven/eight completed years and imply 6000 extra for the eighth.",
+      "independentChecks": [
+        {
+          "actual": 157500,
+          "expected": 157500,
+          "passed": true
+        },
+        {
+          "actual": 186000,
+          "expected": 186000,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "c2cb38957b3bbc1d9ca19bac14598df1d789d370c41d971ee49dd360e616cacb",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-712",
+      "verdict": "passed",
+      "calculation": "Use n has n−1 recoveries; uses 9 and 10 bracket 100 litres. Reused volume is counted on each pass.",
+      "independentChecks": [
+        {
+          "actual": 185.36992159999994,
+          "expected": 185.37,
+          "passed": true
+        },
+        {
+          "actual": 2395.977690733442,
+          "expected": 2395.98,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "585c16adeeeb93d43924f93dda4dc2ef9e0313a48d712ba81c1a211e4f453746",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-713",
+      "verdict": "passed",
+      "calculation": "Initial concentration is 60 g/L; complete mixing retains 80% salt each cycle. Cycles 11/12 bracket strict threshold.",
+      "independentChecks": [
+        {
+          "actual": 15.728640000000006,
+          "expected": 15.7286,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "cfc6c54604b55d044aecd7d019e4eaab2743d0b297f2f33672e42084f3eb0d62",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-714",
+      "verdict": "passed",
+      "calculation": "Present value is recomputed as a discounted payment sum; exact limit differs from the largest admissible whole-cent instalment.",
+      "independentChecks": [
+        {
+          "actual": 1980,
+          "expected": 1980,
+          "passed": true
+        },
+        {
+          "actual": 1898.8351037029506,
+          "expected": 1898.84,
+          "passed": true
+        },
+        {
+          "actual": 65.67281376097937,
+          "expected": 65.672814,
+          "passed": true
+        },
+        {
+          "actual": 65.67,
+          "expected": 65.67,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "eb99786781d2cebeca2128858cb223cc4653e6bd0911b6e5985bf0e9f3d69b0d",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-715",
+      "verdict": "passed",
+      "calculation": "Expenditure shares weight current basket changes; nominal equal weighting overstates the new monthly cost by 10.",
+      "independentChecks": [
+        {
+          "actual": 1.0725,
+          "expected": 1.0725,
+          "passed": true
+        },
+        {
+          "actual": 2574,
+          "expected": 2574,
+          "passed": true
+        },
+        {
+          "actual": 2088,
+          "expected": 2088,
+          "passed": true
+        },
+        {
+          "actual": 10,
+          "expected": 10,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "06b1aefa0ece1d9e36cb58ef2ce50cf1b2e87d4da1968971a1f874da51980284",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-716",
+      "verdict": "passed",
+      "calculation": "Independent month-by-month payoff loop finds 29 full increased payments and a smaller 30th payment; compares actual paid totals.",
+      "independentChecks": [
+        {
+          "actual": 371.6234661431596,
+          "expected": 371.62,
+          "passed": true
+        },
+        {
+          "actual": 446.6234661431596,
+          "expected": 446.62,
+          "passed": true
+        },
+        {
+          "actual": 30,
+          "expected": 30,
+          "passed": true
+        },
+        {
+          "actual": 173.10873899819958,
+          "expected": 173.11,
+          "passed": true
+        },
+        {
+          "actual": 253.25552400391643,
+          "expected": 253.26,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "fcd201055856e960eec6a96052d28079a140bc06ccfb77fab40174e6ca0e2bd4",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-717",
+      "verdict": "passed",
+      "calculation": "Withdrawal calculated by discounted sum and fund balance checked recursively; year-12 real value discounts twelve inflation periods.",
+      "independentChecks": [
+        {
+          "actual": 9313.555433737309,
+          "expected": 9313.56,
+          "passed": true
+        },
+        {
+          "actual": 56948.144314060635,
+          "expected": 56948.14,
+          "passed": true
+        },
+        {
+          "actual": 6925.148953451088,
+          "expected": 6925.15,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "79047cd239d7c170f702e59cea2bc955d53243e1ba9e4e93289cb36da4b03fc1",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-718",
+      "verdict": "passed",
+      "calculation": "Six annual multipliers reproduce 400; year 9 reaches doubling; year-12 linear and geometric predictions differ.",
+      "independentChecks": [
+        {
+          "actual": 8.148374712019901,
+          "expected": 8.14837,
+          "passed": true
+        },
+        {
+          "actual": 9,
+          "expected": 9,
+          "passed": true
+        },
+        {
+          "actual": 640.0000000000005,
+          "expected": 640,
+          "passed": true
+        },
+        {
+          "actual": 550,
+          "expected": 550,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "f955df11d6d8f1b0f5ff5b8809c5b2b9b7039568952eb4d8ce66eb7341e7615d",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-719",
+      "verdict": "passed",
+      "calculation": "Profit endpoints are excluded because one bound in each extremal subtraction is strict; relative error approaches but cannot attain 25%.",
+      "independentChecks": [
+        {
+          "actual": 4,
+          "expected": 4,
+          "passed": true
+        },
+        {
+          "actual": 6,
+          "expected": 6,
+          "passed": true
+        },
+        {
+          "actual": 25,
+          "expected": 25,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "d27ac42b0aeb7f95bc0dd165b34984bc1d07dfdf9ce3b61620bb1f8c891ae545",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-na-720",
+      "verdict": "passed",
+      "calculation": "Currency fees are applied in the stated units and order; equality and minimum target funding checked before upward cent rounding.",
+      "independentChecks": [
+        {
+          "actual": 458,
+          "expected": 458,
+          "passed": true
+        },
+        {
+          "actual": 526.28,
+          "expected": 526.28,
+          "passed": true
+        },
+        {
+          "actual": 859.4576271186442,
+          "expected": 859.457627,
+          "passed": true
+        },
+        {
+          "actual": 866.3793103448277,
+          "expected": 866.37931,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "345e3d9a24809a3e1e7fc0097cf4aae1549d5691ef1ba333ef153599cad2fa0b",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-701",
+      "verdict": "passed",
+      "calculation": "Line through both calibration points checked; implied 49.1% lies outside the stipulated 5–45% domain.",
+      "independentChecks": [
+        {
+          "actual": 0.22,
+          "expected": 0.22,
+          "passed": true
+        },
+        {
+          "actual": 27.5,
+          "expected": 27.5,
+          "passed": true
+        },
+        {
+          "actual": 49.09090909090909,
+          "expected": 49.090909,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "483fc4099e30407a17be9dd9248524ee99a66d706f67f0fab57eec01f0b6f599",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-702",
+      "verdict": "passed",
+      "calculation": "Upper vehicle corners, rather than the arch apex, determine physical and safety clearance.",
+      "independentChecks": [
+        {
+          "actual": -0.5,
+          "expected": -0.5,
+          "passed": true
+        },
+        {
+          "actual": 6.875,
+          "expected": 6.875,
+          "passed": true
+        },
+        {
+          "actual": 2.8284271247461903,
+          "expected": 2.828427,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "afaf4d5374b317db320238119427230f47848d88ddde2de02fb7a17f29b9d1bb",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-703",
+      "verdict": "passed",
+      "calculation": "Background temperature is subtracted before logarithmic fitting; exponential remains positive at every finite time.",
+      "independentChecks": [
+        {
+          "actual": -0.05108256237659907,
+          "expected": -0.0510826,
+          "passed": true
+        },
+        {
+          "actual": 35.075755519438474,
+          "expected": 35.0758,
+          "passed": true
+        },
+        {
+          "actual": 56,
+          "expected": 56,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "f9dedce5d7211161a57c30efa9d753423943d5c843770a2285116d839e03c77a",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-704",
+      "verdict": "passed",
+      "calculation": "The two daily safe windows repeat after 12 hours; 06:30 misses the first, while 13:00 permits the required 90 minutes.",
+      "independentChecks": [
+        {
+          "actual": 12,
+          "expected": 12,
+          "passed": true
+        },
+        {
+          "actual": 5,
+          "expected": 5,
+          "passed": true
+        },
+        {
+          "actual": 5,
+          "expected": 5,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "350358ca37f10f6c9d376a5090c65e314a3071a4b088bb734aa6418c06461aac",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-705",
+      "verdict": "passed",
+      "calculation": "Quadratic vertex and target roots checked; capacity intersects the unconstrained target interval at price 12.",
+      "independentChecks": [
+        {
+          "actual": 4500,
+          "expected": 4500,
+          "passed": true
+        },
+        {
+          "actual": 4000,
+          "expected": 4000,
+          "passed": true
+        },
+        {
+          "actual": 4000,
+          "expected": 4000,
+          "passed": true
+        },
+        {
+          "actual": 12,
+          "expected": 12,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "499ca3b3b6d95c1612b5fa240d93ecf6b7fbe640bbee01500253206bda06de10",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-706",
+      "verdict": "passed",
+      "calculation": "The flat-branch equality is inadmissible; the upper-branch candidate is negative and difference .7x+4 is positive. No valid cost intersection.",
+      "independentChecks": [
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "dbe80c7df2ebaa6c5e52a25b3cd10e093f530f77eb52e5c06f43db0235a46a0f",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-707",
+      "verdict": "passed",
+      "calculation": "Inverse-square scaling checked; adding the second lamp gives exactly 125 lux at the largest distance 3 m.",
+      "independentChecks": [
+        {
+          "actual": 720,
+          "expected": 720,
+          "passed": true
+        },
+        {
+          "actual": 80,
+          "expected": 80,
+          "passed": true
+        },
+        {
+          "actual": 0.25,
+          "expected": 0.25,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "a69c010e18f68dccf12d4372b5b3660d7b2ff00e5344ceab25a2f5d79cd92a83",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-708",
+      "verdict": "passed",
+      "calculation": "Cubic coefficients satisfy both observations; derivative t(30−4.5t) stays positive on the allowed interval, so maximum is the endpoint.",
+      "independentChecks": [
+        {
+          "actual": 168,
+          "expected": 168,
+          "passed": true
+        },
+        {
+          "actual": 264,
+          "expected": 264,
+          "passed": true
+        },
+        {
+          "actual": 336,
+          "expected": 336,
+          "passed": true
+        },
+        {
+          "actual": 4.807151241922057,
+          "expected": 4.80715,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "937ac1ff796695e2ccbf6a64c9c3a282d97620bafbb491caa458cc615ea4bb4a",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-709",
+      "verdict": "passed",
+      "calculation": "Residuals use observed minus predicted; direct sum of squared residuals supports the exponential only on the observed interval.",
+      "independentChecks": [
+        {
+          "actual": -3,
+          "expected": -3,
+          "passed": true
+        },
+        {
+          "actual": 0.48399999999999466,
+          "expected": 0.484,
+          "passed": true
+        },
+        {
+          "actual": 18,
+          "expected": 18,
+          "passed": true
+        },
+        {
+          "actual": 0.27843950239999354,
+          "expected": 0.27844,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "c6741e8d4ddd6a0aba30a3d69ce71cea13628dbd90972e49b43d117f27802775",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-710",
+      "verdict": "passed",
+      "calculation": "Half-life and threshold separately solved; hour 9 fails while hour 10 succeeds, so ceiling is required.",
+      "independentChecks": [
+        {
+          "actual": 3.4927886207911554,
+          "expected": 3.49279,
+          "passed": true
+        },
+        {
+          "actual": 9.23443081465342,
+          "expected": 9.23443,
+          "passed": true
+        },
+        {
+          "actual": 6.872401566798025,
+          "expected": 6.8724,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "9a08e5fa049bfb7db1ba9de42091941e3e3f5c7e64a53aaf2c1d249c356e828f",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-711",
+      "verdict": "passed",
+      "calculation": "Capacity and depth-2 volume checked; depth inverse is unique because volume increases strictly between empty and full.",
+      "independentChecks": [
+        {
+          "actual": 113.09733552923255,
+          "expected": 113.097,
+          "passed": true
+        },
+        {
+          "actual": 29.321531433504735,
+          "expected": 29.3215,
+          "passed": true
+        },
+        {
+          "actual": 3.852356261137877,
+          "expected": 3.85236,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "8c70a54cad5bed027c785083459f1fef5d74c784d5a1853f39227a2c7af3e3e6",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-712",
+      "verdict": "passed",
+      "calculation": "Degree-based sine crossings are in the stated annual domain; continuous duration differs from calendar-day counting.",
+      "independentChecks": [
+        {
+          "actual": 110.41666666666667,
+          "expected": 110.416667,
+          "passed": true
+        },
+        {
+          "actual": 232.08333333333334,
+          "expected": 232.083333,
+          "passed": true
+        },
+        {
+          "actual": 121.66666666666667,
+          "expected": 121.666667,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "5e5ebfd63a4b680b5438cf5abe38ec3eb13f2c3fc6646866f260a3244cde5aa7",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-713",
+      "verdict": "passed",
+      "calculation": "Both integer constraints checked. Revenue curve was previously clipped; auto range now includes its endpoint at 1200.",
+      "independentChecks": [
+        {
+          "actual": 109,
+          "expected": 109,
+          "passed": true
+        },
+        {
+          "actual": 137,
+          "expected": 137,
+          "passed": true
+        },
+        {
+          "actual": 237.60000000000002,
+          "expected": 237.6,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "b257035d7f0848eaa7623399bda18304adc86b85c9e78ac868e16aa24a1b49e0",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-714",
+      "verdict": "passed",
+      "calculation": "All five observations satisfy the fitted quadratic; algebraic usable interval is intersected with measured 0–4 domain.",
+      "independentChecks": [
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": 1.2679491924311228,
+          "expected": 1.267949,
+          "passed": true
+        },
+        {
+          "actual": 21,
+          "expected": 21,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "ad398b6cb9a09ffba06412f396b2b94eef685c7dfb668c8be35c3188a70af4e7",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-715",
+      "verdict": "passed",
+      "calculation": "Nonzero numerical crossing and integer year-ends 10/11 checked independently.",
+      "independentChecks": [
+        {
+          "actual": 440.79842304000016,
+          "expected": 440.798,
+          "passed": true
+        },
+        {
+          "actual": 10.153388370652209,
+          "expected": 10.1534,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4e5b037891698e9d008be1c6f95beb43711abe2c4598ac37bdcca87009789103",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-716",
+      "verdict": "passed",
+      "calculation": "Strict safety interval endpoints excluded; a uniform .8 m vertical raise removes it everywhere.",
+      "independentChecks": [
+        {
+          "actual": 7.08,
+          "expected": 7.08,
+          "passed": true
+        },
+        {
+          "actual": 6.324555320336759,
+          "expected": 6.324555,
+          "passed": true
+        },
+        {
+          "actual": 0.7999999999999998,
+          "expected": 0.8,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "eaf355e196486ac75e9e96071dc0093f2d8d11072fff90d67e98367799ec00fd",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-717",
+      "verdict": "passed",
+      "calculation": "Joining conditions fit the two affine branches; select the second branch for 60 degrees. This is numerical matching, not AHL continuity analysis.",
+      "independentChecks": [
+        {
+          "actual": 1.5,
+          "expected": 1.5,
+          "passed": true
+        },
+        {
+          "actual": 15,
+          "expected": 15,
+          "passed": true
+        },
+        {
+          "actual": 30,
+          "expected": 30,
+          "passed": true
+        },
+        {
+          "actual": 10,
+          "expected": 10,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "484a522dd8c6e52595babc95e86ad4041a31f8ce83ac6363c6e69a72b9c5716e",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-718",
+      "verdict": "passed",
+      "calculation": "Both output-27 times and the afternoon output-20 solution substituted; inverse discussion remains informal and graphical.",
+      "independentChecks": [
+        {
+          "actual": 27,
+          "expected": 27,
+          "passed": true
+        },
+        {
+          "actual": 27,
+          "expected": 27,
+          "passed": true
+        },
+        {
+          "actual": 20,
+          "expected": 20,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "37af9e4aa443c9f816045988ab3c1b000bc22a3ac2f0c28e0f082bf814f4fb39",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-719",
+      "verdict": "passed",
+      "calculation": "Yield optimum differs from return optimum because water has a marginal cost; both vertices are within the given domain.",
+      "independentChecks": [
+        {
+          "actual": 50,
+          "expected": 50,
+          "passed": true
+        },
+        {
+          "actual": 46.25,
+          "expected": 46.25,
+          "passed": true
+        },
+        {
+          "actual": 0.5625,
+          "expected": 0.5625,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "d123cd21c3b967b7dfd7b0dc5ef6a0ece307861fe01aa67e3497546801c7d332",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-fn-720",
+      "verdict": "passed",
+      "calculation": "Explicit clock shift t=u−3 prevents a three-hour timing error; creation estimate is backward extrapolation.",
+      "independentChecks": [
+        {
+          "actual": 170.8272594752186,
+          "expected": 170.827,
+          "passed": true
+        },
+        {
+          "actual": 9.476464216380036,
+          "expected": 9.47646,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "0ae1a1aabfb8b29a713d3a6abdc1700efd3d7f7ce9d7670595c78bc822bdcba7",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-701",
+      "verdict": "passed",
+      "calculation": "Cosine-rule length, determinant area and external-boundary fencing cost independently recomputed.",
+      "independentChecks": [
+        {
+          "actual": 90.38153669316556,
+          "expected": 90.3815,
+          "passed": true
+        },
+        {
+          "actual": 4235.925505221147,
+          "expected": 4235.93,
+          "passed": true
+        },
+        {
+          "actual": 6623.3515783937455,
+          "expected": 6623.35,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "345f8c8804027b4832f8cc893aa1b44de152e0bc123a6e7aeffaf534e60b7cfb",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-702",
+      "verdict": "passed",
+      "calculation": "Coordinates obey north-up bearings; quadrant-aware angle and reversed bearing checked. Legs happen to be perpendicular.",
+      "independentChecks": [
+        {
+          "actual": 13.599283977987277,
+          "expected": 13.5993,
+          "passed": true
+        },
+        {
+          "actual": 0.24387555445042697,
+          "expected": 0.243876,
+          "passed": true
+        },
+        {
+          "actual": 13.601470508735442,
+          "expected": 13.6015,
+          "passed": true
+        },
+        {
+          "actual": 88.9726266148964,
+          "expected": 88.9726,
+          "passed": true
+        },
+        {
+          "actual": 268.9726266148964,
+          "expected": 268.973,
+          "passed": true
+        },
+        {
+          "actual": 5.398529491264558,
+          "expected": 5.39853,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "e6b17d80931030a7d1c3b2e914eb163ae0f8eb4afff7f8ec35874c5173cac79d",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-703",
+      "verdict": "passed",
+      "calculation": "Both elevation rays meet the same height; common instrument height changes only vertical offset.",
+      "independentChecks": [
+        {
+          "actual": 82.34844398779006,
+          "expected": 82.3484,
+          "passed": true
+        },
+        {
+          "actual": 79.52296798183794,
+          "expected": 79.523,
+          "passed": true
+        },
+        {
+          "actual": 81.02296798183794,
+          "expected": 81.023,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "3a3d8dc446b3a29f187a67349bd8be0e2381cb0ba2a49d1f7849bf5515318f42",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-704",
+      "verdict": "passed",
+      "calculation": "Spatial diagonal plus two allowances is rounded upward once; unused length excludes both allowances.",
+      "independentChecks": [
+        {
+          "actual": 10.44030650891055,
+          "expected": 10.4403,
+          "passed": true
+        },
+        {
+          "actual": 16.69924423399362,
+          "expected": 16.6992,
+          "passed": true
+        },
+        {
+          "actual": 13,
+          "expected": 13,
+          "passed": true
+        },
+        {
+          "actual": 0.9596934910894492,
+          "expected": 0.959693,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "42513bd15982966a6c1ffe8806ae2e258e813707b7c6deb40793ff2dd55686ef",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-705",
+      "verdict": "passed",
+      "calculation": "Cylinder/cone volumes, half-cone occupancy and exposed areas checked; base and internal join excluded.",
+      "independentChecks": [
+        {
+          "actual": 176.71458676442586,
+          "expected": 176.715,
+          "passed": true
+        },
+        {
+          "actual": 94.44444444444444,
+          "expected": 94.4444,
+          "passed": true
+        },
+        {
+          "actual": 156.33448489925473,
+          "expected": 156.334,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "61f474a2bc5562e2a9d9ecb7ae5bee662949de58944b5812affe6b02e042286d",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-706",
+      "verdict": "passed",
+      "calculation": "Offset stadium retains straight lengths and increases both semicircle radii; strip area includes both straight strips.",
+      "independentChecks": [
+        {
+          "actual": 285.66370614359175,
+          "expected": 285.664,
+          "passed": true
+        },
+        {
+          "actual": 7.5398223686155035,
+          "expected": 7.53982,
+          "passed": true
+        },
+        {
+          "actual": 347.3203407934794,
+          "expected": 347.32,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "fcbebdb89d23b06064fc1ee199c7041a1dd3b5afe6c9f525b4e9580920e76c5a",
+      "diagramType": "stadium",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-707",
+      "verdict": "passed",
+      "calculation": "Annular-sector boundary includes two arcs and two radial joins only; repaired SVG to show the actual sector instead of whole rings.",
+      "independentChecks": [
+        {
+          "actual": 37.43731245527837,
+          "expected": 37.4373,
+          "passed": true
+        },
+        {
+          "actual": 30.958208303518912,
+          "expected": 30.9582,
+          "passed": true
+        },
+        {
+          "actual": 16,
+          "expected": 16,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "c79f5ea56bdf52f30f3a36b265c93af2cdba5f603a8c1f5cf2dd76f3f556c956",
+      "diagramType": "circlefig",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-708",
+      "verdict": "passed",
+      "calculation": "Arc/chord distances checked by two independent triangle representations; ferry waiting time included.",
+      "independentChecks": [
+        {
+          "actual": 7.853981633974483,
+          "expected": 7.85398,
+          "passed": true
+        },
+        {
+          "actual": 7.305137148104648,
+          "expected": 7.30514,
+          "passed": true
+        },
+        {
+          "actual": 42.72209386717056,
+          "expected": 42.7221,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "dddb61925c4768f48c706d89ad314ac1a782a38e984713457eff1c7ce5e2de03",
+      "diagramType": "circlefig",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-709",
+      "verdict": "passed",
+      "calculation": "Filled depth is below full height and reproduces 12 m³; proportional volume scales cubically. Former over-capacity 20 m³ value had already been corrected by author.",
+      "independentChecks": [
+        {
+          "actual": 3.578800915758598,
+          "expected": 3.5788,
+          "passed": true
+        },
+        {
+          "actual": 0.42119908424140196,
+          "expected": 0.421199,
+          "passed": true
+        },
+        {
+          "actual": 12,
+          "expected": 12,
+          "passed": true
+        },
+        {
+          "actual": 0.125,
+          "expected": 0.125,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "603d4e2b5798607ca5b8153ccaf1cfab3fd68ba3b8694395c227412916106502",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-710",
+      "verdict": "passed",
+      "calculation": "Frustum formula and slant geometry checked; only one circular base coated, no lid.",
+      "independentChecks": [
+        {
+          "actual": 79.58701389094142,
+          "expected": 79.587,
+          "passed": true
+        },
+        {
+          "actual": 77.33196233143512,
+          "expected": 77.332,
+          "passed": true
+        },
+        {
+          "actual": 8,
+          "expected": 8,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "212cd0315fe2eb554d02935a5e50d8f498233dee3f6e0e8a78c02c7865cf5e94",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-711",
+      "verdict": "passed",
+      "calculation": "Midpoint coordinates (5,5,3) and direct/surface-constrained distances verified.",
+      "independentChecks": [
+        {
+          "actual": 10.770329614269007,
+          "expected": 10.77033,
+          "passed": true
+        },
+        {
+          "actual": 5.830951894845301,
+          "expected": 5.830952,
+          "passed": true
+        },
+        {
+          "actual": 2.1690481051546993,
+          "expected": 2.16905,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "22275bb5b0f1126160735c3c481b8958e1713d83d8b79b10c4397848ce117f7b",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-712",
+      "verdict": "passed",
+      "calculation": "Half-roof run is 4 m; both roof rectangles and packwise upward rounding checked.",
+      "independentChecks": [
+        {
+          "actual": 4.664761515876241,
+          "expected": 4.66476,
+          "passed": true
+        },
+        {
+          "actual": 30.96375653207352,
+          "expected": 30.9638,
+          "passed": true
+        },
+        {
+          "actual": 111.95427638102979,
+          "expected": 111.954,
+          "passed": true
+        },
+        {
+          "actual": 34,
+          "expected": 34,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "777fa569010fe8e812fbb35070834d48a8e3208fa093145edc2bea64fb0e17b4",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-713",
+      "verdict": "passed",
+      "calculation": "Two triangles lie on opposite sides of the same internal diagonal; outer perimeter excludes that diagonal.",
+      "independentChecks": [
+        {
+          "actual": 4833.193514763817,
+          "expected": 4833.19,
+          "passed": true
+        },
+        {
+          "actual": 85.6527555778457,
+          "expected": 85.6528,
+          "passed": true
+        },
+        {
+          "actual": 72.79725549375163,
+          "expected": 72.7973,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "115351e421dfe09504e583320e439e7da1953e832a7aec23b241e3711f9605a1",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-714",
+      "verdict": "passed",
+      "calculation": "Given slope rule, not external legal assumptions, determines run and allowed rise; landing is horizontal.",
+      "independentChecks": [
+        {
+          "actual": 8.64,
+          "expected": 8.64,
+          "passed": true
+        },
+        {
+          "actual": 4.763641690726177,
+          "expected": 4.76364,
+          "passed": true
+        },
+        {
+          "actual": 10.14,
+          "expected": 10.14,
+          "passed": true
+        },
+        {
+          "actual": 0.7083333333333334,
+          "expected": 0.708333,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "726cb2a0292e180b39f9783104866ca12c3a0852260f2457cff6accd6b2d5f3e",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-715",
+      "verdict": "passed",
+      "calculation": "Perpendicular bisector y=−2x+16 clipped to district at (3,10),(8,0); B-side trapezium area 65.",
+      "independentChecks": [
+        {
+          "actual": 61,
+          "expected": 61,
+          "passed": true
+        },
+        {
+          "actual": 5,
+          "expected": 5,
+          "passed": true
+        },
+        {
+          "actual": 65,
+          "expected": 65,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "2152e27d057e17eb4a66951850943e37eb4504d85ff33bb8246500a8b055cb38",
+      "diagramType": "vor",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-716",
+      "verdict": "passed",
+      "calculation": "Vertex equations yield x=6,y=11/3; all three station distances agree.",
+      "independentChecks": [
+        {
+          "actual": 18.77777777777778,
+          "expected": 18.77777777777778,
+          "passed": true
+        },
+        {
+          "actual": 18.77777777777778,
+          "expected": 18.77777777777778,
+          "passed": true
+        },
+        {
+          "actual": 4.333333333333333,
+          "expected": 4.333333333333333,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "22d8f2165a8e9b77ac04585a7c34e35eb72a805eeb7e9ff59f3f442ae84aff2b",
+      "diagramType": "vor",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-717",
+      "verdict": "passed",
+      "calculation": "Resident originally lies on the A/B tie, then D serves it; C–D edge lies on y=6 and is clipped by the other cells.",
+      "independentChecks": [
+        {
+          "actual": 4.123105625617661,
+          "expected": 4.123106,
+          "passed": true
+        },
+        {
+          "actual": 5,
+          "expected": 5,
+          "passed": true
+        },
+        {
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        },
+        {
+          "actual": 3.1231056256176606,
+          "expected": 3.123106,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "8a3006c832fd0d476d97209417c34b21ea6d2b2c7878c51add9a6ade7c7228e5",
+      "diagramType": "vor",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-718",
+      "verdict": "passed",
+      "calculation": "Voronoi widths from perpendicular bisectors give the correct area weights before and after the new station.",
+      "independentChecks": [
+        {
+          "actual": 54,
+          "expected": 54,
+          "passed": true
+        },
+        {
+          "actual": 63,
+          "expected": 63,
+          "passed": true
+        },
+        {
+          "actual": 96,
+          "expected": 96,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "184e892a883498b54d97084450618556cfa8f6eb897a7b15fc9a13b106802c39",
+      "diagramType": "vor",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-719",
+      "verdict": "passed",
+      "calculation": "Both candidate vertices have equal nearest-site distance; fourth-site checks do not invalidate either nearest-neighbour radius.",
+      "independentChecks": [
+        {
+          "actual": 4.333333333333333,
+          "expected": 4.333333333333333,
+          "passed": true
+        },
+        {
+          "actual": 4.333333333333333,
+          "expected": 4.333333333333333,
+          "passed": true
+        },
+        {
+          "actual": 4.333333333333333,
+          "expected": 4.333333333333333,
+          "passed": true
+        },
+        {
+          "actual": 4.333333333333333,
+          "expected": 4.333333333333333,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "ec20f935496a9adc1e7ec545f17c1b96a68b01f79ace75def7fb675bd0327434",
+      "diagramType": "vor",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-gt-720",
+      "verdict": "passed",
+      "calculation": "Moving B changes midpoint boundary by 1 km, not 2; customer changes assigned hub but its nearest distance increases.",
+      "independentChecks": [
+        {
+          "actual": 8,
+          "expected": 8,
+          "passed": true
+        },
+        {
+          "actual": 5.315072906367325,
+          "expected": 5.31507,
+          "passed": true
+        },
+        {
+          "actual": 6.020797289396148,
+          "expected": 6.0208,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "86cbc757bc5c9a678eb39a3d2ab93db1e0c12bcd1ba89f295e06c9dffcf7a464",
+      "diagramType": "vor",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-701",
+      "verdict": "passed",
+      "calculation": "Replaced out-of-scope unequal-density histogram with current-SL cumulative graph; median 10, IQR7.5, and at-least-10 fraction .5 follow from supplied cumulative counts.",
+      "independentChecks": [
+        {
+          "actual": 6.25,
+          "expected": 6.25,
+          "passed": true
+        },
+        {
+          "actual": 13.75,
+          "expected": 13.75,
+          "passed": true
+        },
+        {
+          "actual": 10,
+          "expected": 10,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "e459640a35a6cb4b6b0d3772a96a6476cea29796fedac31095fdb394e555a0e6",
+      "diagramType": "waiting_cumulative",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-702",
+      "verdict": "passed",
+      "calculation": "Proportional sample and poststratified support recomputed; weighting cannot correct within-stratum volunteer bias.",
+      "independentChecks": [
+        {
+          "actual": 42,
+          "expected": 42,
+          "passed": true
+        },
+        {
+          "actual": 30,
+          "expected": 30,
+          "passed": true
+        },
+        {
+          "actual": 18,
+          "expected": 18,
+          "passed": true
+        },
+        {
+          "actual": 0.6111111111111112,
+          "expected": 0.611111,
+          "passed": true
+        },
+        {
+          "actual": 0.5533333333333333,
+          "expected": 0.553333,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "074005e0d37d663dae14c04d21920d914f97c27e7b2337afdba0a2de6002bd2b",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-703",
+      "verdict": "passed",
+      "calculation": "Affine scale shifts centre and scales spread; whole-score distinction threshold is exactly 60.",
+      "independentChecks": [
+        {
+          "actual": 65.6,
+          "expected": 65.6,
+          "passed": true
+        },
+        {
+          "actual": 9,
+          "expected": 9,
+          "passed": true
+        },
+        {
+          "actual": 60,
+          "expected": 60,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "81346d028f0452723d2c4640726d5d8a440345ad0cf31d22543016698e7849dd",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-704",
+      "verdict": "passed",
+      "calculation": "Upper fences classify 49 differently; boxplot medians cannot establish an ordering of means.",
+      "independentChecks": [
+        {
+          "actual": 12,
+          "expected": 12,
+          "passed": true
+        },
+        {
+          "actual": 8,
+          "expected": 8,
+          "passed": true
+        },
+        {
+          "actual": 52,
+          "expected": 52,
+          "passed": true
+        },
+        {
+          "actual": 44,
+          "expected": 44,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "063862f19db2ee8fbe5ed9166de0ef3ecc02b072c17e6cf1f4b3a0028629810a",
+      "diagramType": "boxplot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-705",
+      "verdict": "passed",
+      "calculation": "Regression computed from centred sums; prediction residual uses observed minus predicted, with extrapolation/causation limits retained.",
+      "independentChecks": [
+        {
+          "actual": 2.342857142857143,
+          "expected": 2.34286,
+          "passed": true
+        },
+        {
+          "actual": 9.799999999999999,
+          "expected": 9.8,
+          "passed": true
+        },
+        {
+          "actual": 0.9900378412534052,
+          "expected": 0.990038,
+          "passed": true
+        },
+        {
+          "actual": 20.34285714285714,
+          "expected": 20.3429,
+          "passed": true
+        },
+        {
+          "actual": -1.3428571428571416,
+          "expected": -1.34286,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "c24066e17129a49fb84337b2785a424b3bb3707cfd1800b8fadde9ceea6bf61a",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-706",
+      "verdict": "passed",
+      "calculation": "Response-variable direction determines which supplied regression to use; they are not inverse functions.",
+      "independentChecks": [
+        {
+          "actual": 14.1,
+          "expected": 14.1,
+          "passed": true
+        },
+        {
+          "actual": 26.7,
+          "expected": 26.7,
+          "passed": true
+        },
+        {
+          "actual": 27.142857142857146,
+          "expected": 27.142857,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "b8b53ba77a508bcdaf761b5a9ce3164dd155c43d672cde1ae1611704f3c8f3da",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-707",
+      "verdict": "passed",
+      "calculation": "Ties use average rank and Spearman is Pearson on ranks; not the no-tie shortcut and not a proportion of matching ranks.",
+      "independentChecks": [
+        {
+          "actual": 0.8406680016960503,
+          "expected": 0.840668,
+          "passed": true
+        },
+        {
+          "actual": 2.5,
+          "expected": 2.5,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "7344172649098ba440fce5fc1f4db5e5da2a07cf72032d19017554f5f5ede2dc",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-708",
+      "verdict": "passed",
+      "calculation": "Region counts and both conditioning denominators checked; .441176 differs from marginal .45, so dependent.",
+      "independentChecks": [
+        {
+          "actual": 38,
+          "expected": 38,
+          "passed": true
+        },
+        {
+          "actual": 24,
+          "expected": 24,
+          "passed": true
+        },
+        {
+          "actual": 28,
+          "expected": 28,
+          "passed": true
+        },
+        {
+          "actual": 0.4411764705882353,
+          "expected": 0.4411764705882353,
+          "passed": true
+        },
+        {
+          "actual": 0.5555555555555556,
+          "expected": 0.5555555555555556,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "a40f566576f6bc91014ea00a0aa63e9c7ed459b8e20bc65ecff9dd0d0222dd93",
+      "diagramType": "venn",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-709",
+      "verdict": "passed",
+      "calculation": "Disjoint supplier/fault branches and posterior ratio checked; repaired sequential flow into a genuine probability tree.",
+      "independentChecks": [
+        {
+          "actual": 0.038,
+          "expected": 0.038,
+          "passed": true
+        },
+        {
+          "actual": 0.6315789473684211,
+          "expected": 0.631579,
+          "passed": true
+        },
+        {
+          "actual": 240,
+          "expected": 240,
+          "passed": true
+        },
+        {
+          "actual": 140,
+          "expected": 140,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "5931679e0a46f17d75f2dc86e3d94e8f1f119cdf519e6ad6065387065efa19f5",
+      "diagramType": "supplier_tree",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-710",
+      "verdict": "passed",
+      "calculation": "Ordered without-replacement colour pairs checked exactly for both bag sizes.",
+      "independentChecks": [
+        {
+          "actual": 0.3111111111111111,
+          "expected": 0.3111111111111111,
+          "passed": true
+        },
+        {
+          "actual": 0.7142857142857143,
+          "expected": 0.7142857142857143,
+          "passed": true
+        },
+        {
+          "actual": 0.37373737373737376,
+          "expected": 0.37373737373737376,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "cf15174d972c9c3d1f250a82ab1a93e0f753730abecac9cd954cb81e4808d62e",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-711",
+      "verdict": "passed",
+      "calculation": "Gross prize expectation determines a fair fee and organiser profit; finite batches do not guarantee expectation.",
+      "independentChecks": [
+        {
+          "actual": 2.8000000000000003,
+          "expected": 2.8,
+          "passed": true
+        },
+        {
+          "actual": 175.00000000000006,
+          "expected": 175,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "8f7ae8e1325cdd12a7e70d6ae47231c8a1c0b5b0a436bf75531d66c87e474486",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-712",
+      "verdict": "passed",
+      "calculation": "Binomial moments (permitted SL4.8) recover n,p; upper tail recomputed by direct summation.",
+      "independentChecks": [
+        {
+          "actual": 0.75,
+          "expected": 0.75,
+          "passed": true
+        },
+        {
+          "actual": 16,
+          "expected": 16,
+          "passed": true
+        },
+        {
+          "actual": 0.19711104989983141,
+          "expected": 0.197111,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "7248e50478e5f0dde53b3cd4e44683e8807c213c354c4b291b914550d3326dbc",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-713",
+      "verdict": "passed",
+      "calculation": "Two levels of independent group events checked; a total repair-count threshold is not equivalent to any one group escalating.",
+      "independentChecks": [
+        {
+          "actual": 0.2480369026793472,
+          "expected": 0.248037,
+          "passed": true
+        },
+        {
+          "actual": 0.6802679941507517,
+          "expected": 0.680268,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4744bbb5399d898480757d29d936176fef1427f3fb33fcc06298da34d37773dc",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-714",
+      "verdict": "passed",
+      "calculation": "Normal threshold and tails computed independently with NormalDist; percentile is kept unrounded during probability work.",
+      "independentChecks": [
+        {
+          "actual": 82.2524125243568,
+          "expected": 82.2524,
+          "passed": true
+        },
+        {
+          "actual": 0.6826894921370856,
+          "expected": 0.682689,
+          "passed": true
+        },
+        {
+          "actual": 38.077260943549724,
+          "expected": 38.0773,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "b704b828040ba75af3c98f2b79d4a8efe18af00e921a38d9c3a37dfb47885810",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-715",
+      "verdict": "passed",
+      "calculation": "Both component thresholds happen to be one standard deviation above their respective means; mixture handled by weighted component tails.",
+      "independentChecks": [
+        {
+          "actual": 0.15865525393145719,
+          "expected": 0.158655,
+          "passed": true
+        },
+        {
+          "actual": 0.15865525393145719,
+          "expected": 0.158655,
+          "passed": true
+        },
+        {
+          "actual": 0.4,
+          "expected": 0.4,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "3c76e7e2de61ba06c0185c75e03c879c2ff7453358c6ce414709213a05e984b7",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-716",
+      "verdict": "passed",
+      "calculation": "Contingency expected counts and df independently checked; all expected counts ≥10 and p>.05.",
+      "independentChecks": [
+        {
+          "actual": 4,
+          "expected": 4,
+          "passed": true
+        },
+        {
+          "actual": 2,
+          "expected": 2,
+          "passed": true
+        },
+        {
+          "actual": 0.1353352832366127,
+          "expected": 0.135335,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4bdad7d7f8a4cd31dd30e844b396d1340963169853abb6eb4e3f0b141920536d",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-717",
+      "verdict": "passed",
+      "calculation": "Four-category goodness of fit has df=3; chi-square upper tail checked through the explicit df=3 survival formula.",
+      "independentChecks": [
+        {
+          "actual": 6.64,
+          "expected": 6.64,
+          "passed": true
+        },
+        {
+          "actual": 0.08430178511453806,
+          "expected": 0.0843018,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "c7f111331f2acf7da800a9eb14fb69f308122106ccac821691e99d1980b89da3",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-718",
+      "verdict": "passed",
+      "calculation": "Sample centred sums establish pooled variance2, df10; one-sided t probability independently integrated. Independent groups must not be treated as paired.",
+      "independentChecks": [
+        {
+          "actual": 2,
+          "expected": 2,
+          "passed": true
+        },
+        {
+          "actual": 3.6742346141747673,
+          "expected": 3.67423,
+          "passed": true
+        },
+        {
+          "actual": 0.0021435070955879154,
+          "expected": 0.00214351,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "ff0a55eb8039d6455047e483a02dd5331dac224923bddc11f67c5582769519ba",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-719",
+      "verdict": "passed",
+      "calculation": "A fixed p=.032 passes 5% but not1%; the report is conditional on H0, not a posterior probability that H0 is true.",
+      "independentChecks": [
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "c02b0d156212a979d1b8b9303a1aa78b915d08e150eca0ab89539b2435d02016",
+      "diagramType": "bars",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-sp-720",
+      "verdict": "passed",
+      "calculation": "Probabilities normalize after a=.15; conditional denominator .65 and promise failure checked.",
+      "independentChecks": [
+        {
+          "actual": 3.8,
+          "expected": 3.8,
+          "passed": true
+        },
+        {
+          "actual": 0.6499999999999999,
+          "expected": 0.65,
+          "passed": true
+        },
+        {
+          "actual": 0.5384615384615384,
+          "expected": 0.5384615384615384,
+          "passed": true
+        },
+        {
+          "actual": 0.6499999999999999,
+          "expected": 0.65,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "f7202cf3769dfc77cfc1de90b948a8c4fc5404e58a6d6ab20a6bc28289d8f0b8",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-701",
+      "verdict": "passed",
+      "calculation": "Derivative, secant slope and their equality time computed separately with litre/minute units.",
+      "independentChecks": [
+        {
+          "actual": 42,
+          "expected": 42,
+          "passed": true
+        },
+        {
+          "actual": 36,
+          "expected": 36,
+          "passed": true
+        },
+        {
+          "actual": 3,
+          "expected": 3,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "6c30670efe8e1dfdeeaa490c9d81c8e54830f88fb52641ffc82d69d1dd57cfef",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-702",
+      "verdict": "passed",
+      "calculation": "Normal passes through (4,3) with perpendicular slope; its ground intercept lies beyond model domain.",
+      "independentChecks": [
+        {
+          "actual": 3,
+          "expected": 3,
+          "passed": true
+        },
+        {
+          "actual": 0.8,
+          "expected": 0.8,
+          "passed": true
+        },
+        {
+          "actual": -1.25,
+          "expected": -1.25,
+          "passed": true
+        },
+        {
+          "actual": 6.4,
+          "expected": 6.4,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "57c465575e3283fa6fd531c3281ca782940f4b5da775fe8722306f65fa71fca0",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-703",
+      "verdict": "passed",
+      "calculation": "Three fenced sides give y=120−2x; the extra gate supplies4m of total boundary, so new optimum uses124m.",
+      "independentChecks": [
+        {
+          "actual": 1800,
+          "expected": 1800,
+          "passed": true
+        },
+        {
+          "actual": 1922,
+          "expected": 1922,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "188900a42ced46eb211c286c1016befa911171166d06541c7ceef128cdcbd8ed",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-704",
+      "verdict": "passed",
+      "calculation": "Expanded cubic derivative checked, inadmissible stationary root rejected; percent improvement relative to the 1cm-cut volume.",
+      "independentChecks": [
+        {
+          "actual": 2.1132486540518713,
+          "expected": 2.11325,
+          "passed": true
+        },
+        {
+          "actual": 192.45008972987526,
+          "expected": 192.45,
+          "passed": true
+        },
+        {
+          "actual": 33.64589564574671,
+          "expected": 33.6459,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "f44d1ccf13d2d09ee534430f3be92c96d0f683c06d2311b5edba182411143cb1",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-705",
+      "verdict": "passed",
+      "calculation": "Fixed volume and integer-power area derivative give h=r; first derivative changes negative to positive, avoiding an AHL second-derivative requirement.",
+      "independentChecks": [
+        {
+          "actual": 5.41926070139289,
+          "expected": 5.41926,
+          "passed": true
+        },
+        {
+          "actual": 5.419260701392891,
+          "expected": 5.41926,
+          "passed": true
+        },
+        {
+          "actual": 276.79052229660425,
+          "expected": 276.791,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "70c239b4b119479afc12e14730016378f44c6a40a79a85eb6be7023b7c41d09a",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-706",
+      "verdict": "passed",
+      "calculation": "Check valid stationary value2 and both endpoints; local maximum6 is outside the operating interval.",
+      "independentChecks": [
+        {
+          "actual": 75,
+          "expected": 75,
+          "passed": true
+        },
+        {
+          "actual": 68,
+          "expected": 68,
+          "passed": true
+        },
+        {
+          "actual": 73,
+          "expected": 73,
+          "passed": true
+        },
+        {
+          "actual": 0,
+          "expected": 0,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "cf0240158b5917a881e840f35e7943cbd7d46cba19dc2033bd893c18c3d72c37",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-707",
+      "verdict": "passed",
+      "calculation": "Derivative sign intervals classify net-balance extrema; zero derivative does not determine F. Added explicit zero-level line to graph.",
+      "independentChecks": [
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "ab81e3c4f6253afa10b8679fc80f06a4ab48fb6c0b60b063e547921e522c5420",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-708",
+      "verdict": "passed",
+      "calculation": "Analytic antiderivative independently evaluated; average rate is accumulated inflow divided by8, not final rate.",
+      "independentChecks": [
+        {
+          "actual": 149.33333333333334,
+          "expected": 149.33333333333334,
+          "passed": true
+        },
+        {
+          "actual": 249.33333333333334,
+          "expected": 249.33333333333334,
+          "passed": true
+        },
+        {
+          "actual": 18.666666666666668,
+          "expected": 18.666666666666668,
+          "passed": true
+        },
+        {
+          "actual": 20,
+          "expected": 20,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "0a60e5e6f9a913ab0801142401ee237e9ddd4402350fce51853f20728e1a4805",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-709",
+      "verdict": "passed",
+      "calculation": "Equal baseline spacing gives trapezoidal area740; volume uses the separately supplied average depth.",
+      "independentChecks": [
+        {
+          "actual": 740,
+          "expected": 740,
+          "passed": true
+        },
+        {
+          "actual": 1036,
+          "expected": 1036,
+          "passed": true
+        },
+        {
+          "actual": 1036000,
+          "expected": 1036000,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "db390f2372e494583a9b6449608f8d3d299bab603280f7f6a8b635d3c4373ea9",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-710",
+      "verdict": "passed",
+      "calculation": "Exact positive polynomial area checked independently; chords lie below the curve, so trapezoidal estimate is low.",
+      "independentChecks": [
+        {
+          "actual": 27.2,
+          "expected": 27.2,
+          "passed": true
+        },
+        {
+          "actual": 27.733333333333334,
+          "expected": 27.733333333333334,
+          "passed": true
+        },
+        {
+          "actual": 1.923076923076929,
+          "expected": 1.9230769230769231,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "903114ee9cb79ff177a923042bf133377be1fdcab90819435377fa168c89b40f",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-711",
+      "verdict": "passed",
+      "calculation": "Differentiation recovers marginal model; actual one-unit cost increment differs from instantaneous derivative.",
+      "independentChecks": [
+        {
+          "actual": 530,
+          "expected": 530,
+          "passed": true
+        },
+        {
+          "actual": 18.620000000000005,
+          "expected": 18.62,
+          "passed": true
+        },
+        {
+          "actual": 18,
+          "expected": 18,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4e1a800e9f0b9cddff5224ad92c8ff53a3a0cc8a71df1635e4ebcfc55bc45353",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-712",
+      "verdict": "passed",
+      "calculation": "Observed amount determines additive constant; independent polynomial accumulation verifies18g,27g,78g.",
+      "independentChecks": [
+        {
+          "actual": 18,
+          "expected": 18,
+          "passed": true
+        },
+        {
+          "actual": 27,
+          "expected": 27,
+          "passed": true
+        },
+        {
+          "actual": 78,
+          "expected": 78,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4702cca39da6f79fd54afefbd0c2d83fd0fb3e9e2c42f97d44f44273ce75607a",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-713",
+      "verdict": "passed",
+      "calculation": "Physical positive-domain root found independently; maximum feasible area exceeds8.",
+      "independentChecks": [
+        {
+          "actual": 1.5337935658070174,
+          "expected": 1.53379,
+          "passed": true
+        },
+        {
+          "actual": 9.797958971132712,
+          "expected": 9.797959,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "aae124def6844dd53c440f0364d7d92bee5db62bc99bf9e471a21c2988b4a11a",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-714",
+      "verdict": "passed",
+      "calculation": "Different side costs yield unequal dimensions; first derivative sign and square-cost comparison checked.",
+      "independentChecks": [
+        {
+          "actual": 6.531972647421808,
+          "expected": 6.53197,
+          "passed": true
+        },
+        {
+          "actual": 14.696938456699069,
+          "expected": 14.6969,
+          "passed": true
+        },
+        {
+          "actual": 39.1918358845308,
+          "expected": 39.1918,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "4e62b934eb22d2508ceaa88d69e9645cef3f6104b058ff3d7422d01d5b7d1ae9",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-715",
+      "verdict": "passed",
+      "calculation": "Local tangent data and actual cubic output establish a positive .0248 underestimation error.",
+      "independentChecks": [
+        {
+          "actual": 9.8,
+          "expected": 9.8,
+          "passed": true
+        },
+        {
+          "actual": 3.2,
+          "expected": 3.2,
+          "passed": true
+        },
+        {
+          "actual": 10.440000000000001,
+          "expected": 10.44,
+          "passed": true
+        },
+        {
+          "actual": 10.4648,
+          "expected": 10.4648,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "94054f7480eb065e7bdf4b6c1f75764ba31e6e9f7cfa938efe7cd00d6b5dcf96",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-716",
+      "verdict": "passed",
+      "calculation": "Printed dimensions remain positive on4<x<100; stationary width20 gives a30cm height and64% printed fraction.",
+      "independentChecks": [
+        {
+          "actual": 384,
+          "expected": 384,
+          "passed": true
+        },
+        {
+          "actual": 30,
+          "expected": 30,
+          "passed": true
+        },
+        {
+          "actual": 0.64,
+          "expected": 0.64,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "6ab6e19402b5fe8d147b0d18e25cbdf18dacf52a15bbbdf94bbab8dc2db14a90",
+      "diagramType": "geom",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-717",
+      "verdict": "passed",
+      "calculation": "Derivative is positive on both sides of the stationary point, so extrema are the included endpoints.",
+      "independentChecks": [
+        {
+          "actual": 10,
+          "expected": 10,
+          "passed": true
+        },
+        {
+          "actual": 26,
+          "expected": 26,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "b726c983b5993d2b2c1e9eb1504379bef65fd74eab853f02fbd3103a29322c81",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-718",
+      "verdict": "passed",
+      "calculation": "Area constraint recovers a=2; positive-domain rate equation gives t2; final-minute accumulation is5/9 of total.",
+      "independentChecks": [
+        {
+          "actual": 2,
+          "expected": 2,
+          "passed": true
+        },
+        {
+          "actual": 12,
+          "expected": 12,
+          "passed": true
+        },
+        {
+          "actual": 16.666666666666668,
+          "expected": 16.666666666666668,
+          "passed": true
+        },
+        {
+          "actual": 0.5555555555555556,
+          "expected": 0.5555555555555556,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "2c11f04f2f42e7136ed09af3436787ad2bf3838b0a229aee5d19bce3c89de7ef",
+      "diagramType": "flow",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-719",
+      "verdict": "passed",
+      "calculation": "Half-total equation is15, not12; later delivery concentration gives t>3 and only35% delivered by halfway.",
+      "independentChecks": [
+        {
+          "actual": 30,
+          "expected": 30,
+          "passed": true
+        },
+        {
+          "actual": 15.000000000000002,
+          "expected": 15,
+          "passed": true
+        },
+        {
+          "actual": 0.35,
+          "expected": 0.35,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "524e80fd316032a69312618e174c10df385e32847e58e8787ee718a9a74ce99f",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    },
+    {
+      "id": "ib-aisl-ca-720",
+      "verdict": "passed",
+      "calculation": "Gradient factors exactly as .006(x−5)²; physical interval is intersected with the sublevel set and both endpoint failures checked.",
+      "independentChecks": [
+        {
+          "actual": 0.15,
+          "expected": 0.15,
+          "passed": true
+        },
+        {
+          "actual": 0.1,
+          "expected": 0.1,
+          "passed": true
+        },
+        {
+          "actual": 0.9175170953613696,
+          "expected": 0.917517,
+          "passed": true
+        },
+        {
+          "actual": 9.082482904638631,
+          "expected": 9.082483,
+          "passed": true
+        }
+      ],
+      "contentReview": "Read the complete stem, all requested parts and all M/A/R solution steps; checked admissibility, timing, units, rounding direction and interpretation.",
+      "markAllocationReview": "Every part has a corresponding solution group; additive awards match part and question totals.",
+      "questionSha256": "da37116918edd3a8a6dbc8f49be7988febd205367d8254c469cebe74dbc5f456",
+      "diagramType": "plot",
+      "diagramReview": "SVG parsed; source coordinates, curve formulas, domain bounds and supplied labels reviewed against the complete prompt. All100 raster contact sheets were inspected; six changed diagrams were additionally verified at native640px by the author after reviewer-directed corrections. No answer-leaking derived labels remain in the reviewed unknown-parameter tasks.",
+      "status": "passed"
+    }
+  ],
+  "limitations": [
+    "Independent computational/AI review does not substitute for independent human examiner moderation.",
+    "Difficulty labels remain editorial estimates pending student calibration."
+  ],
+  "reviewedRawSha256": "53a0c682f3d7b8b1ae7cf97568b6c9350887a811e315e52dab342f48a9c05512",
+  "lineEndingNormalization": "LF only; parsed content and per-question review unchanged"
+}
