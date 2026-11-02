@@ -11,6 +11,7 @@ const PROMO_IMAGE_URL =
   "/announcements/erasable-notepad-amazon-announcement.webp?v=20261102-image-refresh-v2";
 
 const PORTAL_ROUTE_PREFIXES = [
+  "/dashboard",
   "/esat",
   "/esat-question-bank",
   "/esat-practice-tests",
@@ -21,6 +22,10 @@ const PORTAL_ROUTE_PREFIXES = [
   "/tmua-classes",
   "/group-sessions",
 ] as const;
+
+// The root layout and the TMUA dashboard router can both mount this component.
+// Only one instance should query or open the announcement on a page.
+let popupInstanceActive = false;
 
 type Props = {
   /** Mount after the mixed dashboard router has confirmed TMUA access. */
@@ -68,6 +73,9 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
       setVisible(false);
       return;
     }
+
+    if (popupInstanceActive) return;
+    popupInstanceActive = true;
 
     let cancelled = false;
     let inFlight = false;
@@ -161,6 +169,7 @@ export default function ErasableNotepadPopup({ forcePortal = false }: Props) {
 
     return () => {
       cancelled = true;
+      popupInstanceActive = false;
       clearTimeout(timer);
       window.removeEventListener("focus", schedule);
       window.removeEventListener("online", schedule);
