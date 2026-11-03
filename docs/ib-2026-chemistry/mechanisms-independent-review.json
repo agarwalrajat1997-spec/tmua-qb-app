@@ -1,0 +1,1764 @@
+{
+  "status": "passed",
+  "questions": 35,
+  "sha256": "3759b4e836c9889f38c7847c1a9c3a0e3a2e257cb1f1a80bdf60416433fc3a0d",
+  "reviewer": "Separate AI reviewer; did not author this batch",
+  "method": "Independently read all 35 questions and every worked solution, recomputed numerical/atom/charge/electron checks, and inspected all 35 latest rendered question SVGs and all five private worked mechanism SVGs. No author helper imported.",
+  "independentCalculationChecks": 99,
+  "independentAtomChargeBalances": 53,
+  "diagramCount": 35,
+  "substantiveNonTableDiagrams": 35,
+  "workedMechanismDiagrams": 5,
+  "marks": 317,
+  "levels": {
+    "sl": 14,
+    "ahl": 21
+  },
+  "officialGuide": "https://www.ibo.org/globalassets/new-structure/university-admission/pdfs/subject-guides/chemistry-guide.pdf",
+  "specimen": "https://www.ibo.org/globalassets/new-structure/programmes/dp/pdfs/chemistry-hl-sl-specimen-papers-1a-2b-2-en.pdf",
+  "scopeReview": "Current first-assessment 2025 R3.1–R3.4 checked against the official guide and local blueprint. No SL Ka/Kb/buffer/pOH or standard-potential calculation demand; R3.3 radicals remain shared SL. HL mechanisms do not require solvent effects, rate laws or electrophile-generation recipes. No Faraday current-time demand.",
+  "correctedDuringReview": [
+    "704: made conductivity values physically plausible and computed the fraction from unrounded 10^(−2.70).",
+    "709: explicitly ice-cooled the ethanal receiver and drew the ice bath.",
+    "714: specified an inert non-aqueous bromination solvent to exclude bromohydrin ambiguity.",
+    "722: used established Co(III) chloridoammine complexes with correct +1/+2 complex charges.",
+    "706/710/724: aligned final mass, concentration and Gibbs-energy rounding with three significant figures.",
+    "All: explicitly set pH reporting to three decimal places and aligned equivalence examples.",
+    "733: clarified the minor-product prompt through carbon valence and retention of original ordinary hydrogens."
+  ],
+  "limitations": [
+    "Original IB-style practice, not official IB past-paper questions or official markschemes.",
+    "Computational and separate AI review; not human IB examiner moderation.",
+    "Release integration, build and deployment are outside this content review."
+  ],
+  "records": [
+    {
+      "id": "ib-chem-r3-701",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.1",
+      "calculation": "0.00300−0.00240=0.000600 mol H+; divide by 0.0500 or 0.250 dm3 before taking −log.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Neutralization",
+          "atomsEachSide": {
+            "H": 2,
+            "O": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Excess acid mol",
+          "actual": 0.0006000000000000003,
+          "expected": 0.0006,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Mixed pH",
+          "actual": 1.920818753952375,
+          "expected": 1.921,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Diluted pH",
+          "actual": 2.6197887582883936,
+          "expected": 2.62,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Diagram dots preserve 5:4 initial ion ratio",
+          "actual": 9,
+          "expected": 9,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Neutralization consumes the limiting hydroxide, while dilution conserves excess acid amount. Logarithmic pH values cannot be averaged.",
+      "diagramReview": "Five H+ and four OH− equal-amount dots correctly encode 5:4; no final excess or pH is labelled.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "5a37b2091d54d95229e33fe1eafc27033940ec30627fbfad6d313f9078a80e9b"
+    },
+    {
+      "id": "ib-chem-r3-702",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.1",
+      "calculation": "Equivalence amount is 0.001840 mol; the 0.20 cm3 overrun leaves 2.00e−5 mol OH− in 43.60 cm3.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Acid concentration M",
+          "actual": 0.0736,
+          "expected": 0.0736,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "End point pH",
+          "actual": 10.661543506395393,
+          "expected": 10.662,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Concentration positive bias percent",
+          "actual": 1.0869565217391353,
+          "expected": 1.09,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Strong acid/strong base equivalence is neutral at 298 K; an indicator observation is distinct from stoichiometric equivalence. Smaller increments near the steep region improve location.",
+      "diagramReview": "Strong-acid curve rises near 18.4 cm3, with no label revealing computed concentration or end-point pH. Both axes and pH range are correct.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "7c7e1f3307cd59458c9aaedae3a248a1e55222f15dd32cb3a85c009c2cb8d109"
+    },
+    {
+      "id": "ib-chem-r3-703",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.1",
+      "calculation": "Kw/[H+] gives 1.58e−6 M hydroxide versus 6.31e−9 M hydrogen ion.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Hydrogen carbonate proton acceptance",
+          "atomsEachSide": {
+            "C": 1,
+            "H": 4,
+            "O": 4
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Hydrogen carbonate proton donation",
+          "atomsEachSide": {
+            "C": 1,
+            "H": 2,
+            "O": 4
+          },
+          "chargeEachSide": -2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydrogen ion M",
+          "actual": 6.309573444801943e-9,
+          "expected": 6.3095734448e-9,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydroxide M",
+          "actual": 0.000001584893192461111,
+          "expected": 0.0000015848931925,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The conjugate partners H2CO3/HCO3−/CO3²− differ by one proton and charge; carbonate has no proton to donate. No equilibrium constant is assumed.",
+      "diagramReview": "HCO3− drawing has one C=O, one O− and one O–H. Lone pairs, formal charge and four carbon bond orders are correct.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "83367c7600ebfefe60446c898152dd924dcb96009a4cfc2f870ed392f54eeb37"
+    },
+    {
+      "id": "ib-chem-r3-704",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.1",
+      "calculation": "Use unrounded 10^(−2.70) when dividing by 0.200; Y is about 0.998%, reported 1.00%.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Fraction X ionized",
+          "actual": 0.9976311574844399,
+          "expected": 0.99763115748444,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Fraction Y ionized",
+          "actual": 0.009976311574844394,
+          "expected": 0.009976311574844,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "X tenfold dilution pH",
+          "actual": 2.7,
+          "expected": 2.7,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "X is essentially fully ionized whereas ten-times more concentrated Y is weak. Conductivity 8.1 versus 0.85 mS/cm is plausible supporting evidence; mobility differences are acknowledged.",
+      "diagramReview": "Dilution graph runs from pH1.70 to2.70 on log10 dilution factor0..1. It is supplied experimental evidence, not a labelled answer to the fraction calculation.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "1f86ae9c8fe97a9f11931d085859e7e9b7b82cd5e88846a6eb5e661de2cb172a"
+    },
+    {
+      "id": "ib-chem-r3-705",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.1",
+      "calculation": "Back titration subtracts 0.01000 from0.02500 mol HCl, then uses two acid per carbonate; predicted gas186 cm3.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Antacid carbonate reaction",
+          "atomsEachSide": {
+            "C": 1,
+            "Ca": 1,
+            "Cl": 2,
+            "H": 2,
+            "O": 3
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Acid consumed mol",
+          "actual": 0.015000000000000001,
+          "expected": 0.015,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Carbonate percentage",
+          "actual": 75.06750000000001,
+          "expected": 75.0675,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "CO2 cm3",
+          "actual": 186.00000000000003,
+          "expected": 186,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Inert acid-insoluble filler does not consume acid. Removing dissolved CO2 before back titration prevents its interference; dissolved/escaped gas can explain the independent low collection.",
+      "diagramReview": "Burette discharges into conical flask, with tap and correct standard NaOH/sample labels. Apparatus is chemically relevant and no result is printed.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "44ee37972d2469b07115919ce24e157976c7a34ead8435771560a40fcb669e83"
+    },
+    {
+      "id": "ib-chem-r3-706",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.2",
+      "calculation": "0.4862/24.31=0.02000 mol Mg yields the same amount Cu,1.271 g unrounded or1.27 g.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Magnesium oxidation",
+          "atomsEachSide": {
+            "Mg": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Copper reduction",
+          "atomsEachSide": {
+            "Cu": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Copper gained g",
+          "actual": 1.271,
+          "expected": 1.271,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Displacement ordering Mg>Zn>Cu makes Mg the negative anode. Electrons go through wire to Cu; nitrate migrates toward the Mg compartment and K+ toward Cu. Ions carry bridge current.",
+      "diagramReview": "Separate Mg/Cu half-cells have connected voltmeter and immersed salt bridge. Electrode and solution labels match the intended circuit; no sign answer is supplied.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "c7896c9cb81490869140aa4e8155193dfd235cd283703810069442a48716cf7a"
+    },
+    {
+      "id": "ib-chem-r3-707",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.2",
+      "calculation": "One PbO2 consumes four H+ and two sulfates per full cell reaction:0.0100 mol PbO2 consumes0.0200 formal mol H2SO4.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Lead anode on discharge",
+          "atomsEachSide": {
+            "O": 4,
+            "Pb": 1,
+            "S": 1
+          },
+          "chargeEachSide": -2,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Lead dioxide cathode",
+          "atomsEachSide": {
+            "H": 4,
+            "O": 6,
+            "Pb": 1,
+            "S": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Overall lead acid",
+          "atomsEachSide": {
+            "H": 4,
+            "O": 10,
+            "Pb": 2,
+            "S": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Formal H2SO4 remaining mol",
+          "actual": 0.030000000000000002,
+          "expected": 0.03,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Charging reverses the electrode reactions; PbSO4→Pb plate is the cathode on charge. Formal acid accounting explicitly avoids an assumption of complete second dissociation.",
+      "diagramReview": "Lead and lead dioxide plates share electrolyte and a load. The printed sulfates/protons match the model, without cell-sign or final-concentration labels.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "f2ef00d268875472b22238e18afa6d1a4af8b71fb2570145c5dd7cc576296e2a"
+    },
+    {
+      "id": "ib-chem-r3-708",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.2",
+      "calculation": "One molten MgCl2 produces one Mg and one Cl2, so0.200 mol gives0.200 mol each.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Molten magnesium chloride",
+          "atomsEachSide": {
+            "Cl": 2,
+            "Mg": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Molten chloride oxidation",
+          "atomsEachSide": {
+            "Cl": 2
+          },
+          "chargeEachSide": -2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Mg mol",
+          "actual": 0.2,
+          "expected": 0.2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Cl2 mol",
+          "actual": 0.2,
+          "expected": 0.2,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Positive X is the anode and negative Y the cathode. At720°C MgCl2 is molten and Mg product is liquid. Water-free melt excludes H2/O2 competition.",
+      "diagramReview": "DC polarity, inert electrodes and water-free melt temperature agree. The ion reduction/oxidation products are not drawn as answer labels.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "e57cdd959b27eaf52650e2049317049ff52469b081612a9828e48b2c3bce8a44"
+    },
+    {
+      "id": "ib-chem-r3-709",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.2",
+      "calculation": "Ethanal consumes one [O] and acid consumes two overall:0.0500+2×0.0200=0.0900 mol [O].",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Ethanol first oxidation",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 6,
+            "O": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Ethanal second oxidation",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 4,
+            "O": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Oxidant O equivalents mol",
+          "actual": 0.09,
+          "expected": 0.09,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Unreacted alcohol mol",
+          "actual": 0.009999999999999998,
+          "expected": 0.01,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Y distils aldehyde away from oxidant, with ice-cooled receiver required near ethanal bp20°C; X open reflux returns volatile material. Tertiary alcohol lacks the necessary carbinol H under the stated conditions.",
+      "diagramReview": "Inspected full receiver/condenser/reflux connections. Cooling water enters low and exits high; reflux is open; Y has visible ice bath and receiver. Heating and X/Y labels are clear.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "73167a3202f22096a4f97053a506dd2945c40f34f8eb4bb1bdb9190f064b4c62"
+    },
+    {
+      "id": "ib-chem-r3-710",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.2",
+      "calculation": "Permanganate amount0.0003600 mol multiplies by5, giving Fe0.001800 mol/0.02500 dm3=0.0720 M.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Iron permanganate intended",
+          "atomsEachSide": {
+            "Fe": 5,
+            "H": 8,
+            "Mn": 1,
+            "O": 4
+          },
+          "chargeEachSide": 17,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "MnO2 alternative reduction",
+          "atomsEachSide": {
+            "H": 4,
+            "Mn": 1,
+            "O": 4
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Fe concentration M",
+          "actual": 0.072,
+          "expected": 0.072,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Treating three electrons as five overestimates",
+          "actual": true,
+          "expected": true,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The MnO2 route accepts three rather than five electrons. Assigning five to all titrant therefore overstates iron; brown precipitate is meaningful evidence.",
+      "diagramReview": "Acidified iron flask and permanganate burette labels match the equation. No endpoint colour or computed concentration is printed.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "5eb7f0bf1bc9d0a0d7e64bf854d6af53e81939bb93e5f08f2376279fdd4c91d1"
+    },
+    {
+      "id": "ib-chem-r3-711",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.3",
+      "calculation": "Propagation conserves one chain-carrying radical; coupling two ethyl radicals forms butane and removes both radical centers.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Ethane chlorine H abstraction",
+          "atomsEachSide": {
+            "C": 2,
+            "Cl": 1,
+            "H": 6
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Ethyl radical propagation",
+          "atomsEachSide": {
+            "C": 2,
+            "Cl": 2,
+            "H": 5
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Ethyl radical termination",
+          "atomsEachSide": {
+            "C": 4,
+            "H": 10
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "One radical regenerated per propagation cycle",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Homolysis gives two Cl radicals, each fish-hook transfers one electron. Initiation is distinct from propagation and no radical remains in the required termination product.",
+      "diagramReview": "Full Cl2 Lewis electrons and UV shown; two one-barbed arrows start at the bond and finish at separate Cl atoms. Arrowheads are single-electron, not pair heads.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "54b2255339bae7150d8dd1a5318dd85a551357d092b98eb2f48e9060c1536540"
+    },
+    {
+      "id": "ib-chem-r3-712",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.3",
+      "calculation": "The four amounts0.0200/0.0500/0.0250/0.00500 mol give0.115 mol substituted H and thus Cl2 and HCl. Carbon and hydrogen inventories are conserved.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Carbon mol conserved",
+          "actual": 0.1,
+          "expected": 0.1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Cl2 consumed mol",
+          "actual": 0.115,
+          "expected": 0.115,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydrogen atom mol including HCl",
+          "actual": 0.4,
+          "expected": 0.4,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Two methane substitutions",
+          "atomsEachSide": {
+            "C": 1,
+            "Cl": 4,
+            "H": 4
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Repeated substitution is possible because chloromethane retains C–H bonds. Favourable reaction energy does not remove the initiation barrier; dark stability is kinetic.",
+      "diagramReview": "Four equal-width chromatographic peaks have proportional heights20/50/25/5 and non-overlapping retention positions. Corrected areas are explicitly supplied; axes use arbitrary response.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "54f0e963b3a562cbdbb8fe0a40da89c8bee2ab3f31f10040ddb4908e9f694714"
+    },
+    {
+      "id": "ib-chem-r3-713",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.4",
+      "calculation": "Net −1 charge is transferred from hydroxide to bromide; product oxygen has two bonds/two lone pairs and formal charge zero.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Primary hydroxide substitution",
+          "atomsEachSide": {
+            "Br": 1,
+            "C": 2,
+            "H": 6,
+            "O": 1
+          },
+          "chargeEachSide": -1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydroxide valence electrons",
+          "actual": 8,
+          "expected": 8,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Alcohol oxygen formal charge",
+          "actual": 0,
+          "expected": 0,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "O lone pair→electrophilic carbon and C–Br bond pair→Br conserve pairs without free electrons; heterolysis makes bromide. Shared-SL wording requires pair movement only.",
+      "diagramReview": "Reactant O has one O–H bond/three lone pairs/−charge; attacked C has four bonds. Private scheme's two full-headed arrows start at O pair and C–Br bond respectively and terminate at C/Br.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "8655f02910f6870ee91540c016a19e0eda606433906e441c25c82b37d60f7045"
+    },
+    {
+      "id": "ib-chem-r3-714",
+      "status": "passed",
+      "scope": "sl",
+      "syllabusCode": "R3.4",
+      "calculation": "One Br2 per alkene gives0.180 ethene and0.120 ethane, fractions0.600/0.400; only the later substitution releases0.120 mol HBr.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Ethene dark addition",
+          "atomsEachSide": {
+            "Br": 2,
+            "C": 2,
+            "H": 4
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Ethane UV substitution",
+          "atomsEachSide": {
+            "Br": 2,
+            "C": 2,
+            "H": 6
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Ethene fraction",
+          "actual": 0.6,
+          "expected": 0.6,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Ethane fraction",
+          "actual": 0.4,
+          "expected": 0.4,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "UV HBr mol",
+          "actual": 0.12,
+          "expected": 0.12,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Specified inert non-aqueous solvent excludes bromohydrin ambiguity. Dark addition makes1,2-dibromoethane without HBr; UV alkane substitution replaces H.",
+      "diagramReview": "Ethene has two C–C strokes and CH2 ends; ethane one stroke and CH3 ends. Names and electron-rich bond match the reasoning.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "e3b03459ae56a6543e5ab3e8c5d52c27439399cf627a5a2d6328196adf7a538e"
+    },
+    {
+      "id": "ib-chem-r3-715",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "Square-root estimate gives8.49e−4 M H+ andpH3.071; depletion2.12% is small, but21.2% at0.000400 M fails.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Weak acid pH",
+          "actual": 3.071333751784366,
+          "expected": 3.071,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Concentrated dissociation percent",
+          "actual": 2.1213203435596424,
+          "expected": 2.12132034356,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Dilute estimated dissociation percent",
+          "actual": 21.213203435596427,
+          "expected": 21.2132034356,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "pH-log c slope",
+          "actual": -0.5,
+          "expected": -0.5,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Derived pH≈½(pKa−log c) has slope−½. The question asks checking a stipulated approximation, not a quadratic, and notes eventual water contribution.",
+      "diagramReview": "Straight log-concentration graph has slope−½ and range−1.4..−0.4, within the useful approximation region. No extreme-dilution answer is plotted.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "1db16c6c14cd299a360419e9a69bb669d88804cce0b7398a679eed603c5c91ff"
+    },
+    {
+      "id": "ib-chem-r3-716",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "Conjugate Ka=Kw/Kb and square-root estimates givepH11.079/5.176; both depletion fractions satisfy small-ionization checks.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "NH4 Ka",
+          "actual": 5.555555555555555e-10,
+          "expected": 5.55555555556e-10,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "NH3 pH",
+          "actual": 11.079181246047625,
+          "expected": 11.079,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "NH4Cl pH",
+          "actual": 5.176091259055681,
+          "expected": 5.176,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "NH3 ionization percent",
+          "actual": 1.5,
+          "expected": 1.5,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "NH4 ionization percent",
+          "actual": 0.008333333333333333,
+          "expected": 0.00833333333333,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Ammonium hydrolysis",
+          "atomsEachSide": {
+            "H": 6,
+            "N": 1,
+            "O": 1
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The chloride spectator does not release HCl. Ammonium proton donation, rather than salt molecular acidity, explains the acidic solution.",
+      "diagramReview": "Solid NH3 branch is basic, dashed NH4Cl branch acidic over0.01..0.08 M; scales and concentration domain match. End labels do not obscure curves.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "9b50b38b5b2681eca0966680299ae012578027cbd902f7bca5da6ddc2b678db9"
+    },
+    {
+      "id": "ib-chem-r3-717",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "Derive Henderson ratio from Ka. Solving0.0100+x=0.0150−x gives0.00250 mol HCl and2.50 cm3.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Initial buffer pH",
+          "actual": 4.936091259055681,
+          "expected": 4.936,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Equalization acid mol",
+          "actual": 0.0024999999999999996,
+          "expected": 0.0025,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Required HCl cm3",
+          "actual": 2.4999999999999996,
+          "expected": 2.5,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Acetate consumes proton",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 4,
+            "O": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Both components share the same final volume, which cancels. A− consumes added H+, and appreciable weak-acid/conjugate-base reservoirs explain buffering.",
+      "diagramReview": "Two HA units and three A− units reproduce0.010:0.015. Acid O–H and anionic O forms are distinguishable; carbon valence four and charge are correct.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "72055daac9fd31b1115b049f26712a8a0bfb17e169ff4765374a28d0ee9f9f76"
+    },
+    {
+      "id": "ib-chem-r3-718",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "20mL P contains0.002/0.001 mol HA/A−, while Q contains one tenth; same0.00150 mol OH− leaves P buffered at ratio5 but Q with0.00130 mol OH−.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Common initial pH",
+          "actual": 3.6989700043360187,
+          "expected": 3.699,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "P post-addition ratio",
+          "actual": 5,
+          "expected": 5,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "P final pH",
+          "actual": 4.698970004336019,
+          "expected": 4.699,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Q excess hydroxide mol",
+          "actual": 0.0013,
+          "expected": 0.0013,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Q final pH",
+          "actual": 12.791724057572917,
+          "expected": 12.792,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Acid buffer consumes OH",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 5,
+            "O": 3
+          },
+          "chargeEachSide": -1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Volume dilution preserves the initial ratio while reducing capacity. It is essential to neutralize stoichiometrically before using weak-equilibrium or excess-strong-base calculations.",
+      "diagramReview": "Horizontal initial-pH curve represents dilution only and does not reveal the differing final post-NaOH outcomes. Axis ranges are clear and correct.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "dcded7a0923591ce4c60d14c35b8c901c25543c8c9f03bb9d5ee75399a4bb39b"
+    },
+    {
+      "id": "ib-chem-r3-719",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "Half-equivalence pH 4.80 fixes Ka; equivalence salt 0.0500 M gives pH 8.749 from Kb=Kw/Ka.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Acid concentration M",
+          "actual": 0.10000000000000002,
+          "expected": 0.1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Ka",
+          "actual": 0.00001584893192461114,
+          "expected": 0.0000158489319246,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Equivalence salt M",
+          "actual": 0.05000000000000001,
+          "expected": 0.05,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Equivalence pH",
+          "actual": 8.74948500216801,
+          "expected": 8.749,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Conjugate-base hydrolysis",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 5,
+            "O": 3
+          },
+          "chargeEachSide": -1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Basic hydrolysis selects indicator 8.2–10.0. Added water changes curve pH but not acid amount or the 25.0 cm3 equivalence requirement.",
+      "diagramReview": "Weak-acid titration has acidic start, buffer region and basic equivalence near 25 cm3. No numeric calculated Ka or equivalence pH label leaks.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "5e998694a8e8b7c06d5f407ecb6c81914f5cff1c5fe00950ab041ff1ff01df5d"
+    },
+    {
+      "id": "ib-chem-r3-720",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "0.00160 mol B needs16.0cm3 acid; at8.00cm3pOH=pKb. Equivalence BH+0.044444M hydrolyses topH5.526.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Equivalence volume cm3",
+          "actual": 16,
+          "expected": 16,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Half-equivalence pH",
+          "actual": 9.7,
+          "expected": 9.7,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Equivalence BH+ concentration",
+          "actual": 0.04444444444444445,
+          "expected": 0.0444444444444,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Equivalence pH",
+          "actual": 5.526091259055681,
+          "expected": 5.526,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Conjugate acid model",
+          "atomsEachSide": {
+            "H": 6,
+            "N": 1,
+            "O": 1
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "BH+ proton donation selects4.4–6.2 indicator. End point remains an observed indicator equilibrium, distinct from acid/base amount equality.",
+      "diagramReview": "Downward weak-base curve has half-equivalence near8cm3 and acidic steep region near16cm3. Axes and base initialpH are chemically consistent.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "bda3e0c0a8adef5a57f4c8031c580d1024ad593b87f2a64b705bc9c2b829ac04"
+    },
+    {
+      "id": "ib-chem-r3-721",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.1",
+      "calculation": "Only HInd absorbs at the chosen wavelength, so0.100/0.500=0.200 HInd, ratio4 andpH6.102; ratios0.1/10 give4.500/6.500.",
+      "independentChecks": [
+        {
+          "kind": "calculation",
+          "label": "Protonated fraction",
+          "actual": 0.2,
+          "expected": 0.2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Deprotonated fraction",
+          "actual": 0.8,
+          "expected": 0.8,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Indicator pH",
+          "actual": 6.1020599913279625,
+          "expected": 6.102,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Low transition pH",
+          "actual": 4.5,
+          "expected": 4.5,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "High transition pH",
+          "actual": 6.5,
+          "expected": 6.5,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "A continuous equilibrium yields a transition interval rather than one abrupt pH. No unsupported molecular identity or spectral assignment is required.",
+      "diagramReview": "Illustrative separated absorption bands label HInd/Ind− and use non-negative absorbance. The chosen wavelength's proportionality is in the stem, avoiding unsupported peak inference.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "ff9535ad8d2521d8576302a1a892a51793f849b30522ded4f43de49b05748a5b"
+    },
+    {
+      "id": "ib-chem-r3-722",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "N four bonds gives+1 and B four gives−1; neutral adduct overall. CoIII original+1 changes to+2 when neutral NH3 replaces Cl−; released chloride preserves charge.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "BF3 ammonia adduct",
+          "atomsEachSide": {
+            "B": 1,
+            "F": 3,
+            "H": 3,
+            "N": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "CoIII ligand substitution",
+          "atomsEachSide": {
+            "Cl": 2,
+            "Co": 1,
+            "H": 15,
+            "N": 5
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Adduct nitrogen formal charge",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Adduct boron formal charge",
+          "actual": -1,
+          "expected": -1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Original Co complex charge",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Final Co complex charge",
+          "actual": 2,
+          "expected": 2,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "NH3 supplies a lone pair to electron-deficient BF3 without proton transfer. Both original and final CoIII chloridoammine complexes are chemically established six-coordinate models.",
+      "diagramReview": "All BF3 fluorine lone pairs and NH3 nitrogen lone pair are shown; B has three bonds/six electrons initially. No adduct charge answer is drawn.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "6da0609ccfb272e400282c0726c8b9b30c6f6b5b1dbe8fa9b1eea3809a5c0d1f"
+    },
+    {
+      "id": "ib-chem-r3-723",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.2",
+      "calculation": "Cu connected to red lead reads+0.340V versus0V SHE; reversing leads changes the displayed sign without reversing cell chemistry.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Hydrogen oxidation against copper",
+          "atomsEachSide": {
+            "Cu": 1,
+            "H": 2
+          },
+          "chargeEachSide": 2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Copper potential versus SHE V",
+          "actual": 0.34,
+          "expected": 0.34,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Reversed meter leads V",
+          "actual": -0.34,
+          "expected": -0.34,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "SHE conditions includePt,H2at100kPa,H+1M,298K. H2 oxidizes and Cu2+ reduces; salt-bridge ions maintain electroneutrality.",
+      "diagramReview": "Pt/hydrogen bubbling assembly, Cu half-cell and salt bridge are physically connected. Copper metal electrode and solutions are correctly labelled; no electron-flow arrow supplies the answer.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "aa5b02a34e9084c68fb742fda72d22823bf882d88c5c876038dfaa3db0d018fa"
+    },
+    {
+      "id": "ib-chem-r3-724",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.2",
+      "calculation": "I2 reduction minusSn4+ reduction givesE0.390V,n2 andΔG−75.27kJ. Doubling makesn4,ΔG−150.54kJ (−151to3sig) with unchangedE.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Tin iodine cell",
+          "atomsEachSide": {
+            "I": 2,
+            "Sn": 1
+          },
+          "chargeEachSide": 2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Cell E V",
+          "actual": 0.39,
+          "expected": 0.39,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Gibbs kJ",
+          "actual": -75.27,
+          "expected": -75.27,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Doubled Gibbs kJ",
+          "actual": -150.54,
+          "expected": -150.54,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Sn2+ is oxidized while iodine reduces. Potential is intensive, Gibbs energy extensive; thermodynamic favorability makes no claim of rapid kinetics.",
+      "diagramReview": "Pt electrodes serve both nonmetallic redox systems. Sn4+/Sn2+ and I2/I− identities agree with potential data; no calculated potential is printed.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "f7101bf46d572d53236c28a88ed8b8b03d861ca8196dfa45853a6757568c8ae9"
+    },
+    {
+      "id": "ib-chem-r3-725",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.2",
+      "calculation": "2Cu+→Cu2++Cu transfers one electron per stated equation: E=0.370 V, ΔG=−35.705 kJ; 0.0400 mol Cu+ yields 0.0200 mol of each product.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Copper I disproportionation",
+          "atomsEachSide": {
+            "Cu": 2
+          },
+          "chargeEachSide": 2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Disproportionation E V",
+          "actual": 0.37,
+          "expected": 0.37,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Gibbs kJ",
+          "actual": -35.705,
+          "expected": -35.705,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Copper formed mol",
+          "actual": 0.02,
+          "expected": 0.02,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Cu+ is both oxidized and reduced. The electron count is one rather than the sum of both half-equations.",
+      "diagramReview": "Copper electrode/Cu+ on the left and inert Pt/Cu+/Cu2+ on the right depict the two half-cell roles. Components and salt-bridge connections are correct.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "de7930f90e08103b3316114fe050e091cbdcd7834e6391b79c158fe147af5742"
+    },
+    {
+      "id": "ib-chem-r3-726",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.2",
+      "calculation": "Depositing 0.0200 mol Cu consumes 0.0400 mol electrons. Inert-anode water oxidation gives 0.0100 mol O2 and 0.0400 mol H+, while a soluble Cu anode replenishes exactly the removed ions.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Copper inert-anode electrolysis",
+          "atomsEachSide": {
+            "Cu": 2,
+            "H": 4,
+            "O": 2
+          },
+          "chargeEachSide": 4,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Copper soluble anode",
+          "atomsEachSide": {
+            "Cu": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Cu2+ inert anode final M",
+          "actual": 0.7999999999999999,
+          "expected": 0.8,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "O2 mol",
+          "actual": 0.01,
+          "expected": 0.01,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydrogen ions generated mol",
+          "actual": 0.04,
+          "expected": 0.04,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Soluble Cu anode concentration unchanged M",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The electrolytic cathode is negative. Sulfate remains a spectator; oxygen is generated at the inert anode, whereas a Cu anode oxidizes into solution.",
+      "diagramReview": "The DC positive terminal goes to the varied anode and the negative terminal to the inert cathode, immersed in CuSO4. The diagram supports comparison without labelling products or final concentration.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "3e9abeaccea001731a16b61a8f8eb0e1efa34f049b4ae8a9f9a604c63318f8bb"
+    },
+    {
+      "id": "ib-chem-r3-727",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.2",
+      "calculation": "0.810/0.900=90.0% of anodic electron equivalents deposit Ni. The remaining 0.0900/58.69 mol Ni-equivalent produces 0.00153 mol H2 and leaves the same excess amount of Ni2+.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Nickel anode oxidation",
+          "atomsEachSide": {
+            "Ni": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Competing hydrogen cathode",
+          "atomsEachSide": {
+            "H": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Nickel deposition efficiency fraction",
+          "actual": 0.9,
+          "expected": 0.9,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Net nickel ion increase mol",
+          "actual": 0.0015334810018742542,
+          "expected": 0.001533481001874,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "H2 mol from electron deficit",
+          "actual": 0.001533481001874254,
+          "expected": 0.001533481001874,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The conducting object is the negative cathode and nickel is the positive anode. The lower cathodic mass results from a competing reduction and conserves charge.",
+      "diagramReview": "Nickel-anode/object labels and DC signs correctly show the plating circuit. Ni2+ and H+ in solution permit the explicitly stated competition.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "dea68b6a46eea6ef46802c64127be8249b115df9ae3b28f309676e9c31b9c84d"
+    },
+    {
+      "id": "ib-chem-r3-728",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.2",
+      "calculation": "Two electrons link one Cl2, one H2 and two OH−, giving 0.0240 mol OH− in 0.200 dm3 and pH 13.079. Water oxidation would give H2:O2=2.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Brine cell net ionic",
+          "atomsEachSide": {
+            "Cl": 2,
+            "H": 4,
+            "O": 2
+          },
+          "chargeEachSide": -2,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Water oxidation alternative",
+          "atomsEachSide": {
+            "H": 4,
+            "O": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydrogen mol",
+          "actual": 0.012,
+          "expected": 0.012,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Hydroxide concentration M",
+          "actual": 0.12,
+          "expected": 0.12,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Catholyte pH",
+          "actual": 13.079181246047625,
+          "expected": 13.079,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Water-only H2 to O2 ratio",
+          "actual": 2,
+          "expected": 2,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Chlorine production is supplied as observed evidence, avoiding an unsupported aqueous halide selectivity assumption. The membrane prevents product mixing; cathodic water reduction leaves OH−.",
+      "diagramReview": "Separated compartments, dashed membrane and DC polarities match the required anode/cathode. No products or measured amounts are shown.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "57ba56514a9ed5e7d72b4349c0138e79b3e59ee1aeb2dae2aed9b0801ab459f6"
+    },
+    {
+      "id": "ib-chem-r3-729",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "Cyanide carbon adds one carbon: 1-bromopropane gives butanenitrile, C4H7N. Atoms and net −1 charge balance.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Cyanide chain extension",
+          "atomsEachSide": {
+            "Br": 1,
+            "C": 4,
+            "H": 7,
+            "N": 1
+          },
+          "chargeEachSide": -1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Nitrile carbon atoms",
+          "actual": 4,
+          "expected": 4,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Cyanide carbon formal charge",
+          "actual": -1,
+          "expected": -1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Specified carbon attack by backside SN2 has concerted C–C formation/C–Br cleavage, one transition state and no carbocation. The carbon end of CN− is nucleophilic here.",
+      "diagramReview": "Inspected the full-size reactant and private scheme: N≡C− has a pair on C, with an ethyl group attached to the attacked CH2Br. The pair arrow starts at the cyanide carbon pair and ends at substrate carbon; the leaving-bond arrow ends at Br.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "86f787ae8086f9baf685e6e8c16aa5a061b469ae4dd4bd28a094dd7168c2b254"
+    },
+    {
+      "id": "ib-chem-r3-730",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "Ionization, neutral-water capture and deprotonation conserve atoms/charge separately and overall. Captured oxonium C4H11O+ has oxygen charge +1; neutral product C4H10O has oxygen charge zero.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Tertiary halide ionization",
+          "atomsEachSide": {
+            "C": 4,
+            "Cl": 1,
+            "H": 9
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Carbocation water capture",
+          "atomsEachSide": {
+            "C": 4,
+            "H": 11,
+            "O": 1
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Oxonium deprotonation",
+          "atomsEachSide": {
+            "C": 4,
+            "H": 13,
+            "O": 2
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Overall aqueous tertiary substitution",
+          "atomsEachSide": {
+            "C": 4,
+            "Cl": 1,
+            "H": 13,
+            "O": 2
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Oxonium O formal charge",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Neutral alcohol O formal charge",
+          "actual": 0,
+          "expected": 0,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The specified SN1 pathway forms a three-coordinate planar tertiary cation. Neutral water attacks; subsequent proton transfer to water yields alcohol and H3O+, completing the neutral organic product.",
+      "diagramReview": "The tertiary halide has three CH3 groups and Cl. The private cation has exactly three carbon bonds and positive charge; water has two bonds/two lone pairs. The full arrow starts at the water pair and ends at cation carbon.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "55c844e6a2ae07d95603474862ae3fbf68b87552f4a5cf685bec3f085092fc2d"
+    },
+    {
+      "id": "ib-chem-r3-731",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "With carbon groups fixed in the plane, Q swaps the towards/away positions of H/OH relative to H/Br; P retains the original arrangement. Net −1 charge resides on Br−.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Secondary substitution",
+          "atomsEachSide": {
+            "Br": 1,
+            "C": 4,
+            "H": 10,
+            "O": 1
+          },
+          "chargeEachSide": -1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Stereocentre distinct groups",
+          "actual": 4,
+          "expected": 4,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Solid wedge polygons in three panels",
+          "actual": 3,
+          "expected": 3,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "SN2 inversion follows the explicit premise. Optical activity alone does not identify the pathway. Product oxygen has two bonds/two pairs and neutral charge.",
+      "diagramReview": "Inspected all three wedge panels: reactant H solid/Br away; P has H solid/OH away; Q has OH solid/H away. Seven widening hash strokes per receding bond and solid wedges correctly encode geometry.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "300ae6d0be05c99361b043b4e15fb900059a251306487bdf75c076c7761850a9"
+    },
+    {
+      "id": "ib-chem-r3-732",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "At the same time the curves order I>Br>Cl; the weaker supplied C–I bond aligns with the leaving-group trend. Ag+ precipitates released Br− in a 1:1 ratio.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Ethyl bromide hydrolysis",
+          "atomsEachSide": {
+            "Br": 1,
+            "C": 2,
+            "H": 6,
+            "O": 1
+          },
+          "chargeEachSide": -1,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Released bromide detection",
+          "atomsEachSide": {
+            "Ag": 1,
+            "Br": 1
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Extent ordering at80s",
+          "actual": true,
+          "expected": true,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Supplied bond enthalpy order",
+          "actual": true,
+          "expected": true,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The same ethyl skeleton and fixed solvent make a controlled leaving-group comparison. Neither solvent effects nor a complete SN1/SN2 mechanism can be inferred from extent curves alone.",
+      "diagramReview": "Three bounded 0..1 extent curves are labelled I/Br/Cl near separate regions. Fast I, intermediate Br and slow Cl trace order is correct; labels do not cross.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "cc066e31d4679bb068186936479ce5dc42659f422d0ee091476b15c1dc43df5e"
+    },
+    {
+      "id": "ib-chem-r3-733",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "Major CH3CH(Br)CH2D follows secondary CH3C+(H)CH2D; minor CH3CH(D)CH2Br follows a primary cation. Both retain six ordinary hydrogens and add D plus Br.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "DBr isotope addition",
+          "atomsEachSide": {
+            "Br": 1,
+            "C": 3,
+            "D": 1,
+            "H": 6
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "DBr carbocation formation",
+          "atomsEachSide": {
+            "Br": 1,
+            "C": 3,
+            "D": 1,
+            "H": 6
+          },
+          "chargeEachSide": 0,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Major cation alkyl groups",
+          "actual": 2,
+          "expected": 2,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Ordinary hydrogens retained",
+          "actual": 6,
+          "expected": 6,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "Pairs move from pi bond to D and from D–Br bond to Br; Br− then attacks C+. No rearrangement or isotope effect is required. Carbon valence four and ordinary hydrogen balance hold in both products.",
+      "diagramReview": "Propene groups and the D–Br bond are clear. The private first arrow begins on the pi bond and finishes at D; the second begins on D–Br and ends at Br. Both have full pair heads.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "e997c5d3c2d511cf29127aa9e53ea226518e74935d71b9560ecb74a54f1ce899"
+    },
+    {
+      "id": "ib-chem-r3-734",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "Ethene protonation forms C2H5+; labelled water capture gives C2H5(18OH2)+, and deprotonation gives C2H5(18OH). The attacking water oxygen enters the product.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Hydronium protonates ethene",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 7,
+            "O": 1
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Labelled water capture elemental balance",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 7,
+            "O": 1
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Hydration deprotonation",
+          "atomsEachSide": {
+            "C": 2,
+            "H": 9,
+            "O": 2
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Alcohol oxygen derives from attacking water count",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Net water consumed",
+          "actual": 1,
+          "expected": 1,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The initial hydronium oxygen remains in water in this traced pathway. Hydronium is regenerated on deprotonation and acts as catalyst; isotopic exchange is expressly excluded.",
+      "diagramReview": "Ethene C=C and H3O+ with three O–H bonds, one pair and positive charge are correct. No product isotope label is supplied. Reviewed oxygen identity separately from elemental balance.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "fdc1a44a031f00acfa318bcf6198abc2d56f386203d0d277fac134f578bf7e92"
+    },
+    {
+      "id": "ib-chem-r3-735",
+      "status": "passed",
+      "scope": "ahl",
+      "syllabusCode": "R3.4",
+      "calculation": "The sigma complex retains H6/E and overall +1 charge; removing H+ restores neutral C6H5E. Net benzene+NO2+→nitrobenzene+H+ conserves atoms and charge.",
+      "independentChecks": [
+        {
+          "kind": "atoms and charge",
+          "label": "Nitronium sigma complex",
+          "atomsEachSide": {
+            "C": 6,
+            "H": 6,
+            "N": 1,
+            "O": 2
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "atoms and charge",
+          "label": "Net aromatic substitution",
+          "atomsEachSide": {
+            "C": 6,
+            "H": 6,
+            "N": 1,
+            "O": 2
+          },
+          "chargeEachSide": 1,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Attacked sigma-complex carbon bond count",
+          "actual": 4,
+          "expected": 4,
+          "status": "passed"
+        },
+        {
+          "kind": "calculation",
+          "label": "Final aromatic pi electrons",
+          "actual": 6,
+          "expected": 6,
+          "status": "passed"
+        }
+      ],
+      "chemicalReasoning": "The initial pi pair attacks supplied NO2+ to form C–E. A base pair attacks H while the C–H pair forms the adjacent ring pi bond, restoring aromaticity and releasing BH+. It is proton transfer; no electrophile-generation recall is required.",
+      "diagramReview": "Inspected full-size initial and private SVGs. The initial arrow starts at a pi bond. The private base arrow starts at its lone pair; restoration starts at C–H midpoint (303,117.5) and ends at the adjacent C–C region. The attacked carbon has four sigma bonds, with two remaining pi bonds and delocalized positive charge.",
+      "markAllocationReview": "Read every stem, part and solution award. Distinct M1/A1/R1 contributions match all part totals and the overall total; equivalent valid chemistry and admissible follow-through are allowed.",
+      "questionSha256": "65aae44dc44ec513fc422f3e6600a8d6af3b2f12a953959b7c933a06b9cf227c"
+    }
+  ],
+  "reviewedRawSha256": "3759b4e836c9889f38c7847c1a9c3a0e3a2e257cb1f1a80bdf60416433fc3a0d",
+  "normalization": "UTF-8 LF; content reviewed before line-ending normalization."
+}

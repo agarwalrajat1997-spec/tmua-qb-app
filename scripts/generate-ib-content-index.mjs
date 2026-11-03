@@ -6,12 +6,15 @@ import * as indexModule from '../lib/ib/build-content-index.ts';
 const {buildIbContentIndex}=indexModule.default??indexModule;
 const source=IB_COLLECTIONS.map(c=>({id:c.id,path:`@/content/ib/${c.subject}/${c.subject==='math-aa-hl'?c.id:c.topicId}.json`}));
 // Preserve frozen legacy banks. Each new topic has its own small server chunk.
-const additions=['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync(`content/ib/math-2026-expansion/${course}.json`,'utf8')).map(q=>ibQuestionSchema.parse(q)));
-const derived='content/ib/math-2026-expansion/by-collection';
-if(!process.argv.includes('--check'))mkdirSync(derived,{recursive:true});
+const additions=[
+ ...['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync(`content/ib/math-2026-expansion/${course}.json`,'utf8'))),
+ ...['structure','periodicity','reactivity','mechanisms'].flatMap(batch=>JSON.parse(readFileSync(`content/ib/chemistry-2026-expansion/${batch}.json`,'utf8'))),
+].map(q=>ibQuestionSchema.parse(q));
 for(const s of source){
  const items=additions.filter(q=>q.collectionId===s.id);
  if(!items.length)continue;
+ const derived=`content/ib/${items[0].subject==='chemistry'?'chemistry':'math'}-2026-expansion/by-collection`;
+ if(!process.argv.includes('--check'))mkdirSync(derived,{recursive:true});
  s.additionPath=`@/${derived}/${s.id}.json`;
  const expected=JSON.stringify(items)+'\n';
  if(process.argv.includes('--check'))assert.equal(readFileSync(s.additionPath.slice(2),'utf8'),expected,'Stale enrichment bank '+s.id);
