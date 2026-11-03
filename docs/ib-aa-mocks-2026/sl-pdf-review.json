@@ -1,0 +1,153 @@
+{
+  "status": "passed",
+  "reviewer": "mock_portal_audit (independent of SL content author and PDF builder)",
+  "reviewDate": "2026-11-03",
+  "scope": "Final combined PDFs for the four Mathematics AA SL mocks: reconstructed question paper followed by the corrected supplied worked solution book.",
+  "method": {
+    "finalPdfPages": 88,
+    "contactSheetsInspected": 8,
+    "newQuestionPaperPagesInspectedAtNativeRenderSize": 44,
+    "workedSolutionCoversInspectedAtNativeRenderSize": 4,
+    "correctedSourcePagesInspectedAtNativeRenderSize": 6,
+    "sourceErrataConfirmed": 8,
+    "newDiagramsInspected": 14,
+    "scientificReview": "All 40 original native solution pages, all question stems and all marking points were independently read and recalculated before this PDF layout review; see sl-independent-review.json and its 238 executable evidence checks.",
+    "finalRenderReview": "All final pages were inspected in contact sheets. Every new question page and every source page containing a correction were additionally inspected at native render size. A2 was rebuilt after the orphan end-marker finding; its current contact sheets, last question page, solution cover and both corrected solution pages were re-inspected. A2 question content is unchanged; earlier native content review and current contact review both apply.",
+    "programmaticChecks": "The actual PDF bytes were hashed and compared to pdf-checks.json. All 88 pages were checked for branding, consecutive final page numbering and removed source/file strings. Page counts, question-start pages, solution boundary, cover duration, marks, calculator instruction and branded metadata passed.",
+    "renderLocation": "work/aa-mocks-2026/pdf-review/<paper-id>/page-NNN.png and contact-XX.png (task workspace, outside the repository)",
+    "staleRenderExcluded": "The old A2 page-023.png is a stale render from the pre-fix 23-page PDF and was excluded. The final A2 PDF contains 22 pages."
+  },
+  "commonChecks": {
+    "durationMinutes": 90,
+    "maximumMark": 80,
+    "questionsPerPaper": 10,
+    "questionPaperPagesPerPdf": 11,
+    "workedSolutionCoverPage": 12,
+    "workedSolutionContentPages": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+    "questionBeforeSolutions": "passed",
+    "readableMathTablesAndDiagrams": "passed",
+    "noClippingOverlapsMissingGlyphsOrClippedMarks": "passed",
+    "brandHeaderFooterAndMetadata": "passed",
+    "removedSourceAndFilenameStrings": ["Christos", "Nikolaidis", "CN/MOCK", "MOCK25/Set", "_SOLUTIONS", "Created by"],
+    "removedStringsAbsentFromAllExtractedPageText": true,
+    "pdfAuthorCreatorProducer": "Thriving Scholars",
+    "continuousPageNumbering": "passed",
+    "calculatorInstructions": "Paper 1: calculator not permitted; Paper 2: graphic display calculator required."
+  },
+  "resolvedFindings": [
+    {
+      "paperId": "aa-sl-set-a-paper-2",
+      "finding": "An otherwise empty extra page held only the End of question paper marker after Question 10.",
+      "resolution": "Builder removed the orphan marker page. Current page 11 contains all of Question 10 and current page 12 is the solution-book cover. Both pages and the final contact sheets were visually rechecked.",
+      "status": "passed"
+    },
+    {
+      "paperId": "aa-sl-set-a-paper-1",
+      "sourcePage": 10,
+      "finalPage": 21,
+      "finding": "Builder requested specific confirmation that redaction of the obsolete source revision note preserved the final answer and marks.",
+      "resolution": "Native render confirms the old revision note is fully absent, a=2 is intact and the final [6 marks] is intact above the footer.",
+      "status": "passed"
+    }
+  ],
+  "papers": [
+    {
+      "id": "aa-sl-set-a-paper-1",
+      "status": "passed",
+      "pdf": "public/ib-mock-solutions/aa-sl-set-a-paper-1.pdf",
+      "pdfSha256": "a39493ed734a547e1c0b6d4ba3fa8aec6838867d87b4e8bafb412d771806077a",
+      "pdfBytes": 716862,
+      "totalPages": 22,
+      "canonicalPaperSha256": "31f7644faee16b1e9fb288a820439ef7541e5956092b0f81cb12b62db0be1294",
+      "diagrams": 2,
+      "confirmedCorrections": [
+        {
+          "sourcePage": 10,
+          "finalPage": 21,
+          "question": "9(d)",
+          "evidence": "All five corrected total-red probability denominators are 5. P(red)=(2-p)/5, the conditional expression p/(2-p), p=1/3, a=2 and the six-mark total are legible and unchanged in meaning."
+        }
+      ]
+    },
+    {
+      "id": "aa-sl-set-a-paper-2",
+      "status": "passed",
+      "pdf": "public/ib-mock-solutions/aa-sl-set-a-paper-2.pdf",
+      "pdfSha256": "dd2020670c007672a62ef6b195d9237a82b47a83e4ba147e9622a88ccf77d95a",
+      "pdfBytes": 935225,
+      "totalPages": 22,
+      "canonicalPaperSha256": "b6817a1d42cad794e0f7b12e649187192b56b617b0519d75499365f71d52bd3a",
+      "diagrams": 5,
+      "confirmedCorrections": [
+        {
+          "sourcePage": 9,
+          "finalPage": 20,
+          "question": "8(b)",
+          "evidence": "The tan(alpha) denominator is visibly 2; the preceding tan(40 degrees)=x/3, x=2.51729... and final alpha=51.5 degrees remain legible."
+        },
+        {
+          "sourcePage": 10,
+          "finalPage": 21,
+          "question": "9(e)",
+          "evidence": "The red exact-area remark visibly refers to (e), and 5sqrt(2)/3 and the four-mark area calculation remain intact."
+        }
+      ]
+    },
+    {
+      "id": "aa-sl-set-b-paper-1",
+      "status": "passed",
+      "pdf": "public/ib-mock-solutions/aa-sl-set-b-paper-1.pdf",
+      "pdfSha256": "9c2c1ff755d375644385728c990075e64d534d53bead96d9b6f8995396a0d514",
+      "pdfBytes": 916434,
+      "totalPages": 22,
+      "canonicalPaperSha256": "3ab094dbb3d11b318670b56d438f7d20616a9601d7d11e0fbff37f23ead48c33",
+      "diagrams": 5,
+      "confirmedCorrections": [
+        {
+          "sourcePage": 10,
+          "finalPage": 21,
+          "question": "9(b)",
+          "evidence": "The inverse graph and explanatory line show its x-intercept at -4."
+        },
+        {
+          "sourcePage": 10,
+          "finalPage": 21,
+          "question": "9(d)",
+          "evidence": "The false intermediate =f(x) is absent. The remaining visible substitution simplifies f(ln x)-ln x to x^2+x-6."
+        }
+      ]
+    },
+    {
+      "id": "aa-sl-set-b-paper-2",
+      "status": "passed",
+      "pdf": "public/ib-mock-solutions/aa-sl-set-b-paper-2.pdf",
+      "pdfSha256": "def0ed67bea3e54348211ef1429204dd90e063ff23776a0720d9a0d34e2120fb",
+      "pdfBytes": 752848,
+      "totalPages": 22,
+      "canonicalPaperSha256": "5cbf71ecc85c8d0523501a7aa2f573ab10a89cded2497055239093a02150e291",
+      "diagrams": 2,
+      "confirmedCorrections": [
+        {
+          "sourcePage": 5,
+          "finalPage": 16,
+          "question": "4(a)",
+          "evidence": "The binomial distribution line visibly reads n=12, p=1/2. The probability and method/accuracy marks are preserved."
+        },
+        {
+          "sourcePage": 11,
+          "finalPage": 22,
+          "question": "10(c)",
+          "evidence": "The height label is visibly h, while the area expression remains A=2a(4cos(a)-a^2)."
+        },
+        {
+          "sourcePage": 11,
+          "finalPage": 22,
+          "question": "10(d)(i)",
+          "evidence": "Both derivative occurrences show 6a^2, including -6a^2 in A prime and +6a^2 after rearranging. The target ratio 3/4 and marking points remain intact."
+        }
+      ]
+    }
+  ],
+  "openFindings": [],
+  "limits": "This record establishes content/layout verification of the listed local PDF bytes. Portal publication, live authentication, submission persistence and live email delivery are separately verified by the integrating agent."
+}

@@ -1,0 +1,535 @@
+{
+  "id": "aa-hl-set-a-paper-3",
+  "course": "hl",
+  "set": "A",
+  "paper": "3",
+  "title": "Mathematics AA HL - Set A - Paper 3",
+  "minutes": 75,
+  "marks": 55,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 25,
+      "stem": "The circle $C$ has equation $x^2+y^2=25$. The point $P=(3,4)$ lies on its upper semicircle, written $y=f(x)$. Coordinates are measured in millimetres. In parts(b)to(e), consider the differential equation $\\mathrm dy/\\mathrm dx=-x/y$, with $y=4$ when $x=3$, taking the positive branch near this point.",
+      "parts": [
+        {
+          "label": "a(i)",
+          "prompt": "Use implicit differentiation to show that $\\mathrm dy/\\mathrm dx=-x/y$ on $C$ where $y\\ne0$.",
+          "marks": 2
+        },
+        {
+          "label": "a(ii)",
+          "prompt": "Find the tangent to $C$ at $P$.",
+          "marks": 2
+        },
+        {
+          "label": "b(i)",
+          "prompt": "State, with a reason, whether the differential equation is separable.",
+          "marks": 1
+        },
+        {
+          "label": "b(ii)",
+          "prompt": "State, with a reason, whether it is homogeneous in the sense $y\\prime=F(y/x)$.",
+          "marks": 1
+        },
+        {
+          "label": "b(iii)",
+          "prompt": "State, with a reason, whether it is a first-order linear equation in $y$.",
+          "marks": 1
+        },
+        {
+          "label": "c",
+          "prompt": "Solve the initial-value differential equation to obtain an implicit equation relating $x$ and $y$.",
+          "marks": 3
+        },
+        {
+          "label": "d(i)",
+          "prompt": "Use Euler's method with step size $0.1$, starting at $(3,4)$, to estimate $y$ when $x=4$.",
+          "marks": 2
+        },
+        {
+          "label": "d(ii)",
+          "prompt": "Find the exact value of $y$ at $x=4$ and explain why the Euler estimate is an overestimate.",
+          "marks": 2
+        },
+        {
+          "label": "e(i)",
+          "prompt": "Show that $\\dfrac{\\mathrm d^2y}{\\mathrm dx^2}=-\\dfrac{x^2+y^2}{y^3}$.",
+          "marks": 3
+        },
+        {
+          "label": "e(ii)",
+          "prompt": "Find the Maclaurin approximation to $f(x)$ through the term in $x^2$.",
+          "marks": 3
+        },
+        {
+          "label": "e(iii)",
+          "prompt": "Use this approximation to estimate $f(4)$.",
+          "marks": 1
+        },
+        {
+          "label": "f",
+          "prompt": "A particle moves on $C$. At the instant it passes through $P$, its $x$-coordinate is increasing at $8$ mm s$^{-1}$. Find the rate of change of its $y$-coordinate at that instant.",
+          "marks": 4
+        }
+      ],
+      "answerSummary": "Tangent $y-4=-3(x-3)/4$; implicit solutioncircle; Euler3.0324aboveexact3; quadratic3.4; verticalrate-6mm/s.",
+      "markScheme": [
+        {
+          "part": "a(i)",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$2x+2y\\,\\mathrm dy/\\mathrm dx=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\mathrm dy/\\mathrm dx=-x/y$."
+            }
+          ]
+        },
+        {
+          "part": "a(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The gradient is $-3/4$."
+            },
+            {
+              "code": "A1",
+              "text": "$y-4=-\\frac34(x-3)$."
+            }
+          ]
+        },
+        {
+          "part": "b(i)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Yes: $y\\,\\mathrm dy=-x\\,\\mathrm dx$."
+            }
+          ]
+        },
+        {
+          "part": "b(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Yes: putting $v=y/x$ gives $y\\prime=-1/v$ wherever the substitution is defined."
+            }
+          ]
+        },
+        {
+          "part": "b(iii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "No: the right-hand side depends on $1/y$; it cannot be written $y\\prime+P(x)y=Q(x)$ as an equation in $y$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\int y\\,\\mathrm dy=-\\int x\\,\\mathrm dx$ gives $y^2/2=-x^2/2+c$."
+            },
+            {
+              "code": "A1",
+              "text": "$y(3)=4$ gives $c=25/2$."
+            },
+            {
+              "code": "M1",
+              "text": "Thus $x^2+y^2=25$, with the positive branch selected near the initial point."
+            }
+          ]
+        },
+        {
+          "part": "d(i)",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$x_{n+1}=x_n+0.1$, $y_{n+1}=y_n-0.1x_n/y_n$, for10steps."
+            },
+            {
+              "code": "A1",
+              "text": "$y_{10}=3.0324\\ldots$."
+            }
+          ]
+        },
+        {
+          "part": "d(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The positive-circle solution gives $y=3$."
+            },
+            {
+              "code": "R1",
+              "text": "The upper semicircle is concave down over the interval, so successive forward tangent steps lie above its exact solution."
+            }
+          ]
+        },
+        {
+          "part": "e(i)",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Differentiate $-x/y$ using the quotient rule."
+            },
+            {
+              "code": "A1",
+              "text": "$y\\prime\\prime=-(y-xy\\prime)/y^2$ and substitute $y\\prime=-x/y$."
+            },
+            {
+              "code": "A1",
+              "text": "$y\\prime\\prime=-(y+x^2/y)/y^2=-(x^2+y^2)/y^3$."
+            }
+          ]
+        },
+        {
+          "part": "e(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$f(0)=5$, $f\\prime(0)=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$f\\prime\\prime(0)=-1/5$."
+            },
+            {
+              "code": "A1",
+              "text": "$f(x)=5-x^2/10+\\cdots$."
+            }
+          ]
+        },
+        {
+          "part": "e(iii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$5-16/10=3.4$."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Differentiate with respect to time: $2x\\,\\mathrm dx/\\mathrm dt+2y\\,\\mathrm dy/\\mathrm dt=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$y\\,\\mathrm dy/\\mathrm dt=-x\\,\\mathrm dx/\\mathrm dt$."
+            },
+            {
+              "code": "M1",
+              "text": "At $P$, $4\\,\\mathrm dy/\\mathrm dt=-3\\cdot8$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\mathrm dy/\\mathrm dt=-6$ mm s$^{-1}$."
+            }
+          ]
+        }
+      ],
+      "sourcePages": [
+        2,
+        3
+      ],
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 460\" role=\"img\" aria-label=\"Circlex²+y²25 and pointP3,4\"><rect width=\"800\" height=\"460\" fill=\"white\"/><path d=\"M100 250L690 250\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><path d=\"M370 430L370 30\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><circle cx=\"370\" cy=\"250\" r=\"175\" fill=\"none\" stroke=\"#111\" stroke-width=\"2.4\"/><circle cx=\"475\" cy=\"110\" r=\"5\" fill=\"#111\"/><text x=\"520\" y=\"90\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-size=\"19\">P(3, 4)</text><text x=\"385\" y=\"25\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-size=\"19\">y</text><text x=\"705\" y=\"257\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-size=\"19\">x</text><text x=\"350\" y=\"278\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-size=\"19\">O</text><text x=\"550\" y=\"278\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-size=\"19\">5</text><text x=\"370\" y=\"450\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-size=\"18\">Circle C; coordinates measured in millimetres</text></svg>"
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 30,
+      "stem": "For an integer $n\\ge2$, consider the equation $z^n=1$. Write $\\operatorname{cis}\\theta=\\cos\\theta+i\\sin\\theta$ and define $z_k=\\operatorname{cis}(2\\pi k/n)$ for integer $k$. Any $n$ consecutive indices give all distinct roots. Let $S_n$ and $P_n$ be respectively the sum and product of these $n$ distinct roots. You may use $S_n=0$ for $n\\ge2$.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Verify that every $z_k$ satisfies $z^n=1$.",
+          "marks": 1
+        },
+        {
+          "label": "b",
+          "prompt": "State a formula for $P_n$ in terms of $n$.",
+          "marks": 1
+        },
+        {
+          "label": "c(i)",
+          "prompt": "For $n=3$, write $z_{-1},z_0,z_1$ in Cartesian form.",
+          "marks": 2
+        },
+        {
+          "label": "c(ii)",
+          "prompt": "Use these roots to calculate $P_3$.",
+          "marks": 2
+        },
+        {
+          "label": "d(i)",
+          "prompt": "For $n=4$, write $z_{-1},z_0,z_1,z_2$ in Cartesian form.",
+          "marks": 2
+        },
+        {
+          "label": "d(ii)",
+          "prompt": "Use these roots to calculate $P_4$.",
+          "marks": 1
+        },
+        {
+          "label": "e",
+          "prompt": "Show that $(z-z_k)(z-z_{-k})=z^2-2z\\cos(2\\pi k/n)+1$.",
+          "marks": 3
+        },
+        {
+          "label": "f(i)",
+          "prompt": "For $n=6$, list all six roots in cis form using the indices $-2,-1,0,1,2,3$.",
+          "marks": 3
+        },
+        {
+          "label": "f(ii)",
+          "prompt": "Write $z_3$ in Cartesian form for $n=6$.",
+          "marks": 1
+        },
+        {
+          "label": "f(iii)",
+          "prompt": "Factorize $z^6-1$ as a product of real linear and real quadratic factors.",
+          "marks": 2
+        },
+        {
+          "label": "g(i)",
+          "prompt": "For $n=5$, list all five roots in cis form using indices $-2,-1,0,1,2$.",
+          "marks": 2
+        },
+        {
+          "label": "g(ii)",
+          "prompt": "Factorize $z^5-1$ into one real linear and two real quadratic factors, leaving cosine coefficients exact.",
+          "marks": 2
+        },
+        {
+          "label": "h",
+          "prompt": "Write down the analogous real factorization of $z^7-1$.",
+          "marks": 2
+        },
+        {
+          "label": "i",
+          "prompt": "Using $S_5=0$, prove that $\\cos(2\\pi/5)+\\cos(4\\pi/5)=-1/2$.",
+          "marks": 4
+        },
+        {
+          "label": "j(i)",
+          "prompt": "Write down $\\cos(2\\pi/7)+\\cos(4\\pi/7)+\\cos(6\\pi/7)$.",
+          "marks": 1
+        },
+        {
+          "label": "j(ii)",
+          "prompt": "For $m\\in\\mathbb Z^+$, write down the value of $\\displaystyle\\sum_{k=1}^m\\cos\\left(\\frac{2k\\pi}{2m+1}\\right)$.",
+          "marks": 1
+        }
+      ],
+      "answerSummary": "$P_n=(-1)^{n+1}$; conjugate pairing gives the real factorizations; odd-root cosine sums equal $-1/2$.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$z_k^n=\\operatorname{cis}(2\\pi k)=1$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$P_n=(-1)^{n+1}$: $-1$ for even $n$, $1$ for odd $n$."
+            }
+          ]
+        },
+        {
+          "part": "c(i)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$z_{-1}=-1/2-i\\sqrt3/2$ and $z_0=1$."
+            },
+            {
+              "code": "A1",
+              "text": "$z_1=-1/2+i\\sqrt3/2$."
+            }
+          ]
+        },
+        {
+          "part": "c(ii)",
+          "steps": [
+            {
+              "code": "A2",
+              "text": "$P_3=(-1/2-i\\sqrt3/2)(1)(-1/2+i\\sqrt3/2)=1/4+3/4=1$."
+            }
+          ]
+        },
+        {
+          "part": "d(i)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$z_{-1}=-i$ and $z_0=1$."
+            },
+            {
+              "code": "A1",
+              "text": "$z_1=i$ and $z_2=-1$."
+            }
+          ]
+        },
+        {
+          "part": "d(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$P_4=(-i)(1)(i)(-1)=-1$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The paired roots are $\\cos\\phi\\pm i\\sin\\phi$, where $\\phi=2\\pi k/n$."
+            },
+            {
+              "code": "A1",
+              "text": "Multiply to obtain $(z-\\cos\\phi)^2+\\sin^2\\phi$."
+            },
+            {
+              "code": "A1",
+              "text": "Use $\\cos^2\\phi+\\sin^2\\phi=1$ to obtain $z^2-2z\\cos\\phi+1$."
+            }
+          ]
+        },
+        {
+          "part": "f(i)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\operatorname{cis}(-2\\pi/3)$, $\\operatorname{cis}(-\\pi/3)$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\operatorname{cis}0$, $\\operatorname{cis}(\\pi/3)$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\operatorname{cis}(2\\pi/3)$, $\\operatorname{cis}\\pi$."
+            }
+          ]
+        },
+        {
+          "part": "f(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$z_3=-1$."
+            }
+          ]
+        },
+        {
+          "part": "f(iii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Pair conjugate roots to give $(z-1)(z+1)(z^2-2z\\cos(\\pi/3)+1)(z^2-2z\\cos(2\\pi/3)+1)$."
+            },
+            {
+              "code": "A1",
+              "text": "$z^6-1=(z-1)(z+1)(z^2-z+1)(z^2+z+1)$."
+            }
+          ]
+        },
+        {
+          "part": "g(i)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\operatorname{cis}(-4\\pi/5)$, $\\operatorname{cis}(-2\\pi/5)$ and $1$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\operatorname{cis}(2\\pi/5)$ and $\\operatorname{cis}(4\\pi/5)$."
+            }
+          ]
+        },
+        {
+          "part": "g(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Pair indices $\\pm1$ and $\\pm2$."
+            },
+            {
+              "code": "A1",
+              "text": "$(z-1)(z^2-2z\\cos(2\\pi/5)+1)(z^2-2z\\cos(4\\pi/5)+1)$."
+            }
+          ]
+        },
+        {
+          "part": "h",
+          "steps": [
+            {
+              "code": "A2",
+              "text": "$(z-1)(z^2-2z\\cos(2\\pi/7)+1)(z^2-2z\\cos(4\\pi/7)+1)(z^2-2z\\cos(6\\pi/7)+1)$."
+            }
+          ]
+        },
+        {
+          "part": "i",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Take the real part of the sum of all five roots."
+            },
+            {
+              "code": "A1",
+              "text": "$\\cos(-4\\pi/5)+\\cos(-2\\pi/5)+1+\\cos(2\\pi/5)+\\cos(4\\pi/5)=0$."
+            },
+            {
+              "code": "A1",
+              "text": "Cosine is even, so $1+2\\cos(2\\pi/5)+2\\cos(4\\pi/5)=0$."
+            },
+            {
+              "code": "A1",
+              "text": "Division by2 gives the required result."
+            }
+          ]
+        },
+        {
+          "part": "j(i)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$-1/2$."
+            }
+          ]
+        },
+        {
+          "part": "j(ii)",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$-1/2$."
+            }
+          ]
+        }
+      ],
+      "sourcePages": [
+        4,
+        5
+      ]
+    }
+  ]
+}
