@@ -1,0 +1,1188 @@
+{
+  "id": "ai-hl-set-a-paper-1",
+  "strand": "ai",
+  "course": "hl",
+  "set": "A",
+  "paper": "1",
+  "title": "Mathematics AI HL · Set A · Paper 1",
+  "minutes": 120,
+  "marks": 110,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 6,
+      "stem": "A laboratory buys a scanner for 48 000 dollars. Its resale value falls by 16% each year. Maintenance costs 900 dollars in year 1 and rises by 18% each year. A replacement can be made at the end of any year $n$, where $1\\le n\\le12$. Define the average annual ownership cost as the purchase price minus resale value plus total maintenance, divided by $n$.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the resale value after 5 years.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the total maintenance cost in the first 5 years.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the replacement year that minimizes the average annual ownership cost over the permitted years. Give the minimum cost to the nearest dollar.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Resale 20074.173; maintenance 6438.7888; minimum at year 11, cost 6075.2375.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $48000(0.84)^5$."
+            },
+            {
+              "code": "A1",
+              "text": "The resale value is $20074.173$ dollars, or $20\\,074$ dollars to the nearest dollar."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the geometric sum $900(1.18^5-1)/(1.18-1)$."
+            },
+            {
+              "code": "A1",
+              "text": "Total maintenance is $6438.7888$ dollars."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Evaluate $C_n=[48000-48000(0.84)^n+900(1.18^n-1)/0.18]/n$ for integers $1\\le n\\le12$."
+            },
+            {
+              "code": "A1",
+              "text": "Replace at the end of year $11$; the minimum average is $6075$ dollars per year."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.4",
+        "SL 1.8"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 6,
+      "stem": "A sensor is calibrated against known concentrations $x$ (mg L$^{-1}$). Its measured signal is $y$ (mV).\n\n| $x$ | 10 | 20 | 30 | 40 | 50 | 60 |\n| --- | --- | --- | --- | --- | --- | --- |\n| $y$ | 18.3 | 30.5 | 42.1 | 58.4 | 66.7 | 82.6 |\n\nTreat concentration as the controlled explanatory variable.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the least-squares regression line of $y$ on $x$ and the Pearson correlation coefficient.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Use your calibration line to estimate the concentration corresponding to a signal of 50 mV. Give the result to 5 decimal places.",
+          "marks": 1
+        },
+        {
+          "label": "c",
+          "prompt": "Find the regression estimate of $x$ on $y$ when $y=50$, to 5 decimal places. Explain why it need not equal the answer to part (b).",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "y=1.2754286x+5.1266667, r=0.99778088; inverse prediction 35.182945, reverse regression 35.182134.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Apply linear regression to all six pairs."
+            },
+            {
+              "code": "A1",
+              "text": "$y=1.2754286x+5.1266667$."
+            },
+            {
+              "code": "A1",
+              "text": "$r=0.99778088$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$x=(50-5.1266667)/1.2754286=35.18295$ mg L$^{-1}$, using unrounded regression coefficients."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The reverse regression is $x=0.78057424y-3.846578$, giving $35.18213$ mg L$^{-1}$."
+            },
+            {
+              "code": "R1",
+              "text": "The regressions minimize residuals in different directions. They are inverses only for perfect linear correlation; here $|r|<1$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.4"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 6,
+      "stem": "Three rescue stations are at $A(1,2)$, $B(7,2)$ and $C(4,8)$ on a coordinate grid measured in kilometres. Each location is assigned to its nearest station. The diagram shows the sites, not the Voronoi boundaries.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write down the equation of the boundary equidistant from $A$ and $B$.",
+          "marks": 1
+        },
+        {
+          "label": "b",
+          "prompt": "Find the coordinates of the Voronoi vertex at which all three cells meet.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "A call is received at $(4,5)$. State the station assigned to the call and calculate its straight-line distance from the call.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Boundary x=4; vertex (4,4.25); call assigned to C, 3 km.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$x=4$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Equate squared distances to $A$ and $C$, giving $6x+12y=75$."
+            },
+            {
+              "code": "M1",
+              "text": "Solve this equation together with $x=4$."
+            },
+            {
+              "code": "A1",
+              "text": "The vertex is $(4,4.25)$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The distances to $A,B,C$ are $\\sqrt{18},\\sqrt{18},3$ km."
+            },
+            {
+              "code": "A1",
+              "text": "Station $C$ is assigned; the distance is $3$ km."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 2.1",
+        "SL 3.5",
+        "SL 3.6"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"640.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"70.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"356.000\" x2=\"70.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"196.667\" y1=\"356.000\" x2=\"196.667\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"196.667\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"323.333\" y1=\"356.000\" x2=\"323.333\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"323.333\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"450.000\" y1=\"356.000\" x2=\"450.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"450.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">6</text><line x1=\"576.667\" y1=\"356.000\" x2=\"576.667\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"576.667\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">8</text><line x1=\"66.000\" y1=\"300.000\" x2=\"74.000\" y2=\"300.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"305.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"66.000\" y1=\"240.000\" x2=\"74.000\" y2=\"240.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"245.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"66.000\" y1=\"180.000\" x2=\"74.000\" y2=\"180.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"185.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">6</text><line x1=\"66.000\" y1=\"120.000\" x2=\"74.000\" y2=\"120.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"125.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">8</text><line x1=\"66.000\" y1=\"60.000\" x2=\"74.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"65.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">10</text><text x=\"665.000\" y=\"351.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">x / km</text><text x=\"82.000\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">y / km</text><circle cx=\"133.333\" cy=\"300.000\" r=\"4\" fill=\"#202020\"/><text x=\"141.333\" y=\"287.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">A (1,2)</text><circle cx=\"513.333\" cy=\"300.000\" r=\"4\" fill=\"#202020\"/><text x=\"521.333\" y=\"287.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">B (7,2)</text><circle cx=\"323.333\" cy=\"120.000\" r=\"4\" fill=\"#202020\"/><text x=\"331.333\" y=\"107.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">C (4,8)</text></svg>"
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 6,
+      "stem": "A random sample of 150 trainees is classified by training programme and whether they pass an assessment.\n\n| Programme | Pass | Fail |\n| --- | --- | --- |\n| X | 36 | 14 |\n| Y | 28 | 22 |\n| Z | 40 | 10 |\n\nUse a chi-squared test of independence at the 5% significance level.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the expected number of passes in programme X under the null hypothesis, and state the degrees of freedom.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the test statistic and the $p$-value.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "State the conclusion in context. Explain why this test alone does not establish a causal effect of programme on passing.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Expected X pass 34.666667; df2; chi-square 7.0234114, p=0.029845963; reject independence.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$E_{X,\\mathrm{pass}}=50(104)/150=34.666667$."
+            },
+            {
+              "code": "A1",
+              "text": "$df=(3-1)(2-1)=2$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $\\chi^2=\\sum(O-E)^2/E$ across all six cells."
+            },
+            {
+              "code": "A1",
+              "text": "$\\chi^2=7.0234114$, $p=0.029845963$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "$p=0.029845963<0.05$, so reject independence: there is evidence of an association between programme and passing."
+            },
+            {
+              "code": "R1",
+              "text": "An observational classification does not control confounding factors or randomly assign programmes, so association does not establish causation."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.11"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 5,
+      "section": "",
+      "marks": 6,
+      "stem": "A boat must travel due north with ground velocity $(0,12)$ km h$^{-1}$. A uniform current has velocity $(3,-1)$ km h$^{-1}$. Vector components are east and north respectively. The ground velocity is the sum of the boat velocity relative to the water and the current.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the required velocity of the boat relative to the water.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the required speed and bearing of the boat relative to the water. Give the bearing to the nearest degree.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "The current changes to $(6,-2)$ while the boat keeps this same water-relative velocity. Find its eastward displacement after one hour.",
+          "marks": 1
+        }
+      ],
+      "answerSummary": "Water velocity (-3,13), speed 13.341664, bearing 347.00538 degrees; new drift 3 km east.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Subtract the current from the required ground velocity."
+            },
+            {
+              "code": "A1",
+              "text": "The required velocity is $(-3,13)$ km h$^{-1}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$v=\\sqrt{(-3)^2+13^2}$ and the heading is west of north."
+            },
+            {
+              "code": "A1",
+              "text": "$v=13.341664$ km h$^{-1}$."
+            },
+            {
+              "code": "A1",
+              "text": "The bearing is $347^\\circ$ ($347.00538^\\circ$ before rounding)."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The new eastward ground speed is $-3+6=3$ km h$^{-1}$, so the displacement is $3$ km east."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 3.3",
+        "AHL 3.10",
+        "AHL 3.12"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"307.059\" x2=\"640.000\" y2=\"307.059\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"277.273\" y1=\"360.000\" x2=\"277.273\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"121.818\" y1=\"303.059\" x2=\"121.818\" y2=\"311.059\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"121.818\" y=\"331.059\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">-3</text><line x1=\"277.273\" y1=\"303.059\" x2=\"277.273\" y2=\"311.059\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"277.273\" y=\"331.059\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"432.727\" y1=\"303.059\" x2=\"432.727\" y2=\"311.059\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"432.727\" y=\"331.059\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">3</text><line x1=\"588.182\" y1=\"303.059\" x2=\"588.182\" y2=\"311.059\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"588.182\" y=\"331.059\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">6</text><line x1=\"273.273\" y1=\"342.353\" x2=\"281.273\" y2=\"342.353\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"267.273\" y=\"347.353\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">-2</text><line x1=\"273.273\" y1=\"236.471\" x2=\"281.273\" y2=\"236.471\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"267.273\" y=\"241.471\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"273.273\" y1=\"165.882\" x2=\"281.273\" y2=\"165.882\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"267.273\" y=\"170.882\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">8</text><line x1=\"273.273\" y1=\"95.294\" x2=\"281.273\" y2=\"95.294\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"267.273\" y=\"100.294\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">12</text><text x=\"665.000\" y=\"298.059\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">east</text><text x=\"289.273\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">north</text><line x1=\"277.273\" y1=\"307.059\" x2=\"432.727\" y2=\"324.706\" stroke=\"#2563a6\" stroke-width=\"2\"/><polygon points=\"432.73,324.71 423.14,327.54 424.01,319.80\" fill=\"#2563a6\"/><text x=\"484.545\" y=\"345.882\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">current (3,−1)</text><line x1=\"277.273\" y1=\"307.059\" x2=\"277.273\" y2=\"95.294\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"277.27,95.29 281.17,104.50 273.38,104.50\" fill=\"#202020\"/><text x=\"380.909\" y=\"95.294\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">desired (0,12)</text></svg>"
+    },
+    {
+      "number": 6,
+      "section": "",
+      "marks": 7,
+      "stem": "Independent component masses satisfy $X\\sim N(500,12^2)$ and $Y\\sim N(200,8^2)$, in grams. A package has mass $T=X+2Y$. The same value of $Y$ is doubled; it is not the sum of two independent copies.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "State the distribution of $T$, including its mean and standard deviation.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find $P(880<T<930)$.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the mass $c$ such that only 1% of packages exceed $c$.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "T ~ N(900,400); probability 0.77453754; cutoff 946.52696 g.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$E(T)=500+2(200)$ and $\\operatorname{Var}(T)=12^2+2^2(8^2)$."
+            },
+            {
+              "code": "A1",
+              "text": "$E(T)=900$ g and $\\sigma_T=20$ g."
+            },
+            {
+              "code": "A1",
+              "text": "$T\\sim N(900,20^2)$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the normal distribution with the parameters in part (a)."
+            },
+            {
+              "code": "A1",
+              "text": "The probability is $0.77453754$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$c=900+20\\Phi^{-1}(0.99)$."
+            },
+            {
+              "code": "A1",
+              "text": "$c=946.52696$ g."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 4.14",
+        "AHL 4.15"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 7,
+      "section": "",
+      "marks": 7,
+      "stem": "A linear transformation maps a column vector $\\mathbf x$ to $M\\mathbf x$, where $M=\\begin{pmatrix}1.2&0.3\\\\-0.4&0.8\\end{pmatrix}$. A triangular sign has vertices $O(0,0)$, $B(4,0)$ and $C(1,3)$; lengths are measured in metres.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the images of $B$ and $C$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the area of the transformed sign.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "A transformed point is at $(3,2)$. Find its original position, showing an inverse-matrix method.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Images [4.8, -1.6], [2.0999999999999996, 2.0000000000000004]; area6.48; preimage [1.6666666666666667, 3.3333333333333335].",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$B\\mapsto(4.8,-1.6)$."
+            },
+            {
+              "code": "A1",
+              "text": "$C\\mapsto(2.1,2)$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The original area is $6$ m$^2$ and the area scale factor is $|\\det M|=1.08$."
+            },
+            {
+              "code": "A1",
+              "text": "$6(1.08)=6.48$ m$^2$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$M^{-1}=\\frac1{1.08}\\begin{pmatrix}0.8&-0.3\\\\0.4&1.2\\end{pmatrix}$."
+            },
+            {
+              "code": "M1",
+              "text": "Multiply $M^{-1}(3,2)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The original point is $(1.6666667,3.3333333)$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 3.9"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"310.000\" x2=\"640.000\" y2=\"310.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"151.429\" y1=\"360.000\" x2=\"151.429\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"151.429\" y1=\"306.000\" x2=\"151.429\" y2=\"314.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"151.429\" y=\"334.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"314.286\" y1=\"306.000\" x2=\"314.286\" y2=\"314.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"314.286\" y=\"334.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"477.143\" y1=\"306.000\" x2=\"477.143\" y2=\"314.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"477.143\" y=\"334.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"640.000\" y1=\"306.000\" x2=\"640.000\" y2=\"314.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"640.000\" y=\"334.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">6</text><line x1=\"147.429\" y1=\"310.000\" x2=\"155.429\" y2=\"310.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"315.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"147.429\" y1=\"210.000\" x2=\"155.429\" y2=\"210.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"215.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"147.429\" y1=\"110.000\" x2=\"155.429\" y2=\"110.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"115.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><text x=\"665.000\" y=\"301.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">x</text><text x=\"163.429\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">y</text><polyline points=\"151.429,310.000 477.143,310.000 232.857,160.000 151.429,310.000\" fill=\"#eef4fb\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"151.429\" cy=\"310.000\" r=\"4\" fill=\"#202020\"/><text x=\"158.429\" y=\"298.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">O</text><circle cx=\"477.143\" cy=\"310.000\" r=\"4\" fill=\"#202020\"/><text x=\"484.143\" y=\"298.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">B (4,0)</text><circle cx=\"232.857\" cy=\"160.000\" r=\"4\" fill=\"#202020\"/><text x=\"239.857\" y=\"148.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">C (1,3)</text></svg>"
+    },
+    {
+      "number": 8,
+      "section": "",
+      "marks": 7,
+      "stem": "The number of registered users of a service is modelled by $P(t)=1200/(1+7e^{-0.4t})$, where $t\\ge0$ is measured in days. Treat $P$ as continuous for this model.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the initial number of users and the limiting number predicted by the model.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the first time when the model predicts 900 users.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the maximum rate at which the number of users increases, and the time at which it occurs.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Initial150, limit1200; threshold 7.6113061d; maxrate120 at 4.8647754d.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$P(0)=150$."
+            },
+            {
+              "code": "A1",
+              "text": "The limiting number is $1200$ users."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $1200/(1+7e^{-0.4t})=900$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=7.6113061$ days."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$P\\prime(t)=0.4P(1-P/1200)$, maximized when $P=600$."
+            },
+            {
+              "code": "A1",
+              "text": "The maximum rate is $120$ users per day."
+            },
+            {
+              "code": "A1",
+              "text": "This occurs at $t=\\ln(7)/0.4=4.8647754$ days."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 2.5",
+        "AHL 2.9",
+        "AHL 5.9",
+        "AHL 5.10"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 9,
+      "section": "",
+      "marks": 7,
+      "stem": "A conservation reserve needs fibre links connecting all five monitoring stations. The undirected graph shows the possible links and their construction costs in thousands of dollars. A connection is required between every pair of stations through the network, but a direct link is not required.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Use Kruskal's algorithm to find a minimum spanning tree. State its edges in the order selected and its total cost.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Link $CD$ cannot now be built. Determine the revised minimum cost and list one optimal set of links.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Original MST [('B', 'C', 2), ('C', 'D', 3), ('A', 'B', 4), ('D', 'E', 4)], total13; closure MST [('B', 'C', 2), ('A', 'B', 4), ('D', 'E', 4), ('B', 'D', 5)], total15.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Consider edges in increasing order and reject an edge if it creates a cycle."
+            },
+            {
+              "code": "A2",
+              "text": "A valid order is $BC,CD,AB,DE$ (the two edges of cost 4 may be interchanged)."
+            },
+            {
+              "code": "A1",
+              "text": "The total cost is $13$ thousand dollars."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Repeat the cycle-free selection with $CD$ excluded."
+            },
+            {
+              "code": "A1",
+              "text": "Use $BC,AB,DE,BD$."
+            },
+            {
+              "code": "A1",
+              "text": "The revised cost is $15$ thousand dollars."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><text x=\"360.000\" y=\"27.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">Link costs / thousands of dollars</text><line x1=\"90.000\" y1=\"210.000\" x2=\"260.000\" y2=\"80.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"162.00\" y=\"131.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"175.000\" y=\"150.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">4</text><line x1=\"90.000\" y1=\"210.000\" x2=\"300.000\" y2=\"340.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"182.00\" y=\"261.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"195.000\" y=\"280.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">7</text><line x1=\"90.000\" y1=\"210.000\" x2=\"470.000\" y2=\"80.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"267.00\" y=\"131.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"280.000\" y=\"150.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">9</text><line x1=\"260.000\" y1=\"80.000\" x2=\"300.000\" y2=\"340.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"267.00\" y=\"196.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"280.000\" y=\"215.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">2</text><line x1=\"260.000\" y1=\"80.000\" x2=\"470.000\" y2=\"80.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"352.00\" y=\"66.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"365.000\" y=\"85.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">5</text><line x1=\"260.000\" y1=\"80.000\" x2=\"625.000\" y2=\"300.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"429.50\" y=\"176.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"442.500\" y=\"195.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">8</text><line x1=\"300.000\" y1=\"340.000\" x2=\"470.000\" y2=\"80.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"372.00\" y=\"196.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"385.000\" y=\"215.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">3</text><line x1=\"300.000\" y1=\"340.000\" x2=\"625.000\" y2=\"300.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"449.50\" y=\"306.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"462.500\" y=\"325.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">6</text><line x1=\"470.000\" y1=\"80.000\" x2=\"625.000\" y2=\"300.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"534.50\" y=\"176.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"547.500\" y=\"195.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">4</text><circle cx=\"90\" cy=\"210\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"90.000\" y=\"216.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">A</text><circle cx=\"260\" cy=\"80\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"260.000\" y=\"86.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">B</text><circle cx=\"300\" cy=\"340\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"300.000\" y=\"346.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">C</text><circle cx=\"470\" cy=\"80\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"470.000\" y=\"86.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">D</text><circle cx=\"625\" cy=\"300\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"625.000\" y=\"306.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">E</text></svg>"
+    },
+    {
+      "number": 10,
+      "section": "",
+      "marks": 7,
+      "stem": "Two oscillations of the same angular frequency are represented by $z_1=4e^{i\\pi/6}$ and $z_2=3e^{-i\\pi/3}$. Their resultant is $z=z_1+z_2$. Arguments are in radians.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Express $z$ in Cartesian form.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the amplitude $|z|$ and principal argument of $z$.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "A third oscillation exactly cancels the resultant. Give its amplitude and an argument in $[0,2\\pi)$.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "z=(4.964101615137755-0.5980762113533162j); amplitude5, phase-0.11990233; cancelling phase3.0216903.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Resolve each phasor into real and imaginary components."
+            },
+            {
+              "code": "A1",
+              "text": "$\\operatorname{Re}z=2\\sqrt3+3/2$."
+            },
+            {
+              "code": "A1",
+              "text": "$z=4.9641016-0.59807621i$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$|z|=5$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\arg z=-0.11990233$ rad."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The cancelling phasor is $-z$, so add $\\pi$ to the argument."
+            },
+            {
+              "code": "A1",
+              "text": "Amplitude $5$ and argument $3.0216903$ rad."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"210.000\" x2=\"640.000\" y2=\"210.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"151.429\" y1=\"360.000\" x2=\"151.429\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"151.429\" y1=\"206.000\" x2=\"151.429\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"151.429\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"314.286\" y1=\"206.000\" x2=\"314.286\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"314.286\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"477.143\" y1=\"206.000\" x2=\"477.143\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"477.143\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"640.000\" y1=\"206.000\" x2=\"640.000\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"640.000\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">6</text><line x1=\"147.429\" y1=\"360.000\" x2=\"155.429\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"365.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">-4</text><line x1=\"147.429\" y1=\"285.000\" x2=\"155.429\" y2=\"285.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"290.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">-2</text><line x1=\"147.429\" y1=\"210.000\" x2=\"155.429\" y2=\"210.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"215.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"147.429\" y1=\"135.000\" x2=\"155.429\" y2=\"135.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"140.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"147.429\" y1=\"60.000\" x2=\"155.429\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.429\" y=\"65.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><text x=\"665.000\" y=\"201.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">Re</text><text x=\"163.429\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">Im</text><line x1=\"151.429\" y1=\"210.000\" x2=\"433.505\" y2=\"135.000\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"433.51,135.00 425.60,141.13 423.60,133.60\" fill=\"#202020\"/><text x=\"453.863\" y=\"121.875\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">z₁</text><line x1=\"151.429\" y1=\"210.000\" x2=\"273.571\" y2=\"307.428\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"273.57,307.43 263.94,304.73 268.80,298.64\" fill=\"#202020\"/><text x=\"293.929\" y=\"294.303\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">z₂</text></svg>"
+    },
+    {
+      "number": 11,
+      "section": "",
+      "marks": 7,
+      "stem": "On a randomly chosen operating day, a service desk is in weekday mode with probability 0.7 and weekend mode with probability 0.3. Conditional on the mode, the number of urgent calls in an hour is Poisson with mean 4 or 7 respectively. Counts in different hours and on different days are independent conditional on their modes.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the probability of no urgent calls in the chosen hour.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Given that no calls occurred, find the probability that the desk was in weekday mode.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "An hour in weekday mode and an independent hour in weekend mode are selected. Find the probability of at least 14 calls in total.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Zero 0.013094512, weekday posterior 0.97910845, total-call tail 0.21870883.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the total-probability sum $0.7e^{-4}+0.3e^{-7}$."
+            },
+            {
+              "code": "A1",
+              "text": "The probability is $0.013094512$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use Bayes' theorem with numerator $0.7e^{-4}$."
+            },
+            {
+              "code": "M1",
+              "text": "Divide by $0.013094512$."
+            },
+            {
+              "code": "A1",
+              "text": "The conditional probability is $0.97910845$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The sum is Poisson with mean $4+7=11$."
+            },
+            {
+              "code": "A1",
+              "text": "$P(X\\ge14)=1-P(X\\le13)=0.21870883$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.6",
+        "AHL 4.17"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 12,
+      "section": "",
+      "marks": 7,
+      "stem": "The same eight runners complete a fixed course before and after a training programme. The times, in seconds, are shown below. Assume the population of paired differences is normally distributed.\n\n| Runner | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Before | 82 | 77 | 91 | 85 | 88 | 79 | 94 | 83 |\n| After | 78 | 76 | 85 | 81 | 86 | 75 | 88 | 80 |\n\nLet $D=$ before time minus after time. Test for an improvement at the 5% level.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the sample mean and unbiased sample standard deviation of the eight differences.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "State the null and alternative hypotheses.",
+          "marks": 1
+        },
+        {
+          "label": "c",
+          "prompt": "Calculate the paired $t$ statistic and the one-tailed $p$-value.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "State a conclusion in context and one additional sampling assumption needed for the inference.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Differences [4, 1, 6, 4, 2, 4, 6, 3]; mean3.75, s1.7525492, t6.0520994, p0.00025744373.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\bar d=3.75$ s."
+            },
+            {
+              "code": "A1",
+              "text": "$s_D=1.7525492$ s."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0:\\mu_D=0$, $H_1:\\mu_D>0$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$t=\\bar d/(s_D/\\sqrt8)$ with $df=7$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=6.0520994$, $p=0.00025744373$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "$p=0.00025744373<0.05$, so there is evidence that mean running time decreases."
+            },
+            {
+              "code": "R1",
+              "text": "The pairs should be a random/representative sample and differences from different runners should be independent. Do not assume the before and after measurements on the same runner are independent."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 4.18"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 13,
+      "section": "",
+      "marks": 7,
+      "stem": "A straight channel has a circular cross-section of radius 0.6 m. The water cross-section is the minor segment cut off by a chord subtending $140^\\circ$ at the centre, as shaded. This cross-section is uniform along a channel length of 12 m.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Calculate the cross-sectional area of the water.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the volume of water in the channel.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "A floating inspection bar must span the water surface. Find its required length, ignoring any clearance.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Area0.3241212m²; volume3.8894544m³; chord1.1276311m.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Convert $140^\\circ$ to $\\theta=7\\pi/9$ radians."
+            },
+            {
+              "code": "M1",
+              "text": "Subtract the isosceles triangle from the sector: $A=\\tfrac12r^2(\\theta-\\sin\\theta)$."
+            },
+            {
+              "code": "A1",
+              "text": "$A=0.3241212$ m$^2$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Multiply the cross-sectional area by 12."
+            },
+            {
+              "code": "A1",
+              "text": "$V=3.8894544$ m$^3$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The chord length is $2r\\sin(\\theta/2)$."
+            },
+            {
+              "code": "A1",
+              "text": "The length is $1.1276311$ m."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 3.4",
+        "AHL 3.7"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><circle cx=\"360\" cy=\"210\" r=\"160\" fill=\"none\" stroke=\"#333\" stroke-width=\"2\"/><path d=\"M 510.35081932574536 264.723222932107 A 160 160 0 0 1 209.64918067425467 264.72322293210703 Z\" fill=\"#dbeafe\" stroke=\"#333\" stroke-width=\"2\"/><line x1=\"360.000\" y1=\"210.000\" x2=\"510.351\" y2=\"264.723\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"360.000\" y1=\"210.000\" x2=\"209.649\" y2=\"264.723\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"360.000\" y=\"245.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">140°</text><text x=\"465.000\" y=\"224.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">0.6 m</text><text x=\"360.000\" y=\"195.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">O</text><text x=\"360.000\" y=\"403.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">Shaded minor segment is the water cross-section</text></svg>"
+    },
+    {
+      "number": 14,
+      "section": "",
+      "marks": 8,
+      "stem": "A closed cylindrical tank must hold 4 m$^3$. Its circular top and base cost 12 dollars per m$^2$; its curved side costs 7 dollars per m$^2$. The radius $r$ is restricted to $0.45\\le r\\le1.4$ metres. Material thickness and waste are ignored.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Show that its material cost is $C(r)=24\\pi r^2+56/r$.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the radius and height giving minimum cost, and justify that the minimum is attained.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "A new rule limits the height to at most 2 m. Find the new optimal radius and minimum material cost.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Unconstrained r0.71878495,h2.4644055; height-limited r0.79788456,cost118.18559.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$h=4/(\\pi r^2)$ from the volume constraint."
+            },
+            {
+              "code": "M1",
+              "text": "Top/base cost $12(2\\pi r^2)$ and side cost $7(2\\pi rh)$."
+            },
+            {
+              "code": "A1",
+              "text": "Hence $C=24\\pi r^2+56/r$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$C\\prime(r)=48\\pi r-56/r^2=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$r=0.71878495$ m, $h=2.4644055$ m."
+            },
+            {
+              "code": "R1",
+              "text": "$C^{\\prime\\prime}(r)=48\\pi+112/r^3>0$, and this stationary point lies inside the permitted interval."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$h\\le2$ gives $r\\ge\\sqrt{2/\\pi}$, above the unconstrained optimum, where cost is increasing."
+            },
+            {
+              "code": "A1",
+              "text": "Choose $r=0.79788456$ m, $h=2$ m; cost $118.18559$ dollars."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 5.6",
+        "SL 5.7",
+        "AHL 5.10"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 15,
+      "section": "",
+      "marks": 8,
+      "stem": "A transport survey classifies a commuter each week as walking (W), cycling (C) or taking the bus (B). The regular transition matrix is $T=\\begin{pmatrix}0.8&0.2&0.1\\\\0.15&0.6&0.2\\\\0.05&0.2&0.7\\end{pmatrix}$. State vectors are columns in the order W,C,B, and $T_{ij}$ is the probability of moving from state $j$ to state $i$. A commuter walks in week 0.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the probabilities of the three states in week 2.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the long-run proportion of weeks the commuter is expected to use each mode.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Given that the commuter cycles in week 2, find the probability that they took the bus in week 1.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Two steps [0.6750000000000002, 0.22, 0.10500000000000001]; stationary [0.4324324324324325, 0.29729729729729726, 0.27027027027027023]; intermediate conditional 0.045454545.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $T^2(1,0,0)^T$."
+            },
+            {
+              "code": "A2",
+              "text": "The state vector is $\\begin{pmatrix}0.675\\\\0.22\\\\0.105\\end{pmatrix}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $T\\boldsymbol\\pi=\\boldsymbol\\pi$ with $\\pi_W+\\pi_C+\\pi_B=1$."
+            },
+            {
+              "code": "A2",
+              "text": "$\\boldsymbol\\pi=\\begin{pmatrix}0.43243243\\\\0.2972973\\\\0.27027027\\end{pmatrix}$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The path W to B to C has probability $0.05(0.2)=0.01$; divide by $P(C_2)=0.22$."
+            },
+            {
+              "code": "A1",
+              "text": "The conditional probability is $0.045454545$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 4.19"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 16,
+      "section": "",
+      "marks": 8,
+      "stem": "A reservoir contains $V$ m$^3$ of water at time $t$ hours. It is modelled by $\\frac{dV}{dt}=30-0.2V^2$, with $V(0)=4$. A slope field is shown. The model applies while $V\\ge0$.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the physically relevant equilibrium volume and determine whether volumes just below it increase or decrease.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Use Euler's method with step size 0.1 hours to estimate $V(0.3)$. Show all three updates.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Calculate the one-step Euler estimate using step size 0.3. Explain, using concavity, whether tangent-line Euler estimates from points on the exact solution overestimate or underestimate the exact increasing solution.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Equilibrium12.247449; Euler h.1 [4.0, 6.68, 8.787552, 10.24313059694592]; h.3 12.04; increasing concave-down solution.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The non-negative equilibrium is $V=\\sqrt{150}=12.247449$ m$^3$."
+            },
+            {
+              "code": "R1",
+              "text": "For $0\\le V<\\sqrt{150}$, $30-0.2V^2>0$, so volume increases."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$V_{k+1}=V_k+0.1(30-0.2V_k^2)$."
+            },
+            {
+              "code": "A1",
+              "text": "$V_1=6.68$ and $V_2=8.787552$."
+            },
+            {
+              "code": "A1",
+              "text": "$V_3=10.243131$ m$^3$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The one-step estimate is $4+0.3(30-0.2\\times4^2)=12.04$ m$^3$."
+            },
+            {
+              "code": "M1",
+              "text": "$V^{\\prime\\prime}=-0.4V V\\prime<0$ while $0<V<\\sqrt{150}$."
+            },
+            {
+              "code": "R1",
+              "text": "The solution is concave down, so its forward tangent lines lie above the solution; tangent-line Euler estimates overestimate. The smaller-step result is closer here, but that observation alone is not a general proof."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 5.10",
+        "AHL 5.14",
+        "AHL 5.15",
+        "AHL 5.16"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"640.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"70.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"356.000\" x2=\"70.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"212.500\" y1=\"356.000\" x2=\"212.500\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"212.500\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0.1</text><line x1=\"355.000\" y1=\"356.000\" x2=\"355.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"355.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0.2</text><line x1=\"497.500\" y1=\"356.000\" x2=\"497.500\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"497.500\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0.3</text><line x1=\"640.000\" y1=\"356.000\" x2=\"640.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"640.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0.4</text><line x1=\"66.000\" y1=\"360.000\" x2=\"74.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"365.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"66.000\" y1=\"285.000\" x2=\"74.000\" y2=\"285.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"290.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"66.000\" y1=\"210.000\" x2=\"74.000\" y2=\"210.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"215.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">8</text><line x1=\"66.000\" y1=\"135.000\" x2=\"74.000\" y2=\"135.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"140.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">12</text><line x1=\"66.000\" y1=\"60.000\" x2=\"74.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"65.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">16</text><text x=\"665.000\" y=\"351.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">t / h</text><text x=\"82.000\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">V / m³</text><line x1=\"98.157\" y1=\"325.369\" x2=\"113.093\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"98.080\" y1=\"287.660\" x2=\"113.170\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"97.962\" y1=\"249.799\" x2=\"113.288\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"97.822\" y1=\"211.766\" x2=\"113.428\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"97.693\" y1=\"173.544\" x2=\"113.557\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"97.626\" y1=\"135.126\" x2=\"113.624\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"97.683\" y1=\"96.539\" x2=\"113.567\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"169.407\" y1=\"325.369\" x2=\"184.343\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"169.330\" y1=\"287.660\" x2=\"184.420\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"169.212\" y1=\"249.799\" x2=\"184.538\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"169.072\" y1=\"211.766\" x2=\"184.678\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"168.943\" y1=\"173.544\" x2=\"184.807\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"168.876\" y1=\"135.126\" x2=\"184.874\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"168.933\" y1=\"96.539\" x2=\"184.817\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.657\" y1=\"325.369\" x2=\"255.593\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.580\" y1=\"287.660\" x2=\"255.670\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.462\" y1=\"249.799\" x2=\"255.788\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.322\" y1=\"211.766\" x2=\"255.928\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.193\" y1=\"173.544\" x2=\"256.057\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.126\" y1=\"135.126\" x2=\"256.124\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"240.183\" y1=\"96.539\" x2=\"256.067\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.907\" y1=\"325.369\" x2=\"326.843\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.830\" y1=\"287.660\" x2=\"326.920\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.712\" y1=\"249.799\" x2=\"327.038\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.572\" y1=\"211.766\" x2=\"327.178\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.443\" y1=\"173.544\" x2=\"327.307\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.376\" y1=\"135.126\" x2=\"327.374\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"311.433\" y1=\"96.539\" x2=\"327.317\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"383.157\" y1=\"325.369\" x2=\"398.093\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"383.080\" y1=\"287.660\" x2=\"398.170\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"382.962\" y1=\"249.799\" x2=\"398.288\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"382.822\" y1=\"211.766\" x2=\"398.428\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"382.693\" y1=\"173.544\" x2=\"398.557\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"382.626\" y1=\"135.126\" x2=\"398.624\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"382.683\" y1=\"96.539\" x2=\"398.567\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"454.407\" y1=\"325.369\" x2=\"469.343\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"454.330\" y1=\"287.660\" x2=\"469.420\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"454.212\" y1=\"249.799\" x2=\"469.538\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"454.072\" y1=\"211.766\" x2=\"469.678\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"453.943\" y1=\"173.544\" x2=\"469.807\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"453.876\" y1=\"135.126\" x2=\"469.874\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"453.933\" y1=\"96.539\" x2=\"469.817\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.657\" y1=\"325.369\" x2=\"540.593\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.580\" y1=\"287.660\" x2=\"540.670\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.462\" y1=\"249.799\" x2=\"540.788\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.322\" y1=\"211.766\" x2=\"540.928\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.193\" y1=\"173.544\" x2=\"541.057\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.126\" y1=\"135.126\" x2=\"541.124\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"525.183\" y1=\"96.539\" x2=\"541.067\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.907\" y1=\"325.369\" x2=\"611.843\" y2=\"319.631\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.830\" y1=\"287.660\" x2=\"611.920\" y2=\"282.340\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.712\" y1=\"249.799\" x2=\"612.038\" y2=\"245.201\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.572\" y1=\"211.766\" x2=\"612.178\" y2=\"208.234\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.443\" y1=\"173.544\" x2=\"612.307\" y2=\"171.456\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.376\" y1=\"135.126\" x2=\"612.374\" y2=\"134.874\" stroke=\"#4b7196\" stroke-width=\"1.6\"/><line x1=\"596.433\" y1=\"96.539\" x2=\"612.317\" y2=\"98.461\" stroke=\"#4b7196\" stroke-width=\"1.6\"/></svg>"
+    }
+  ]
+}

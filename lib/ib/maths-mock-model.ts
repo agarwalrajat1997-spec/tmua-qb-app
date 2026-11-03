@@ -1,7 +1,9 @@
 import catalog from "@/content/ib/aa-mocks-2026/catalog.json";
+import aiCatalog from "@/content/ib/ai-mocks-2026/catalog.json";
 
+export type MathsMockStrand = "aa" | "ai";
 export type MathsMockMeta = {
-  id: string; course: "sl" | "hl"; set: "A" | "B"; paper: "1" | "2" | "3";
+  id: string; strand?: MathsMockStrand; course: "sl" | "hl"; set: "A" | "B" | "C" | "D"; paper: "1" | "2" | "3";
   title: string; minutes: number; marks: number; calculator: boolean;
   pdfUrl: string; status: "published" | "draft"; questionCount?: number; year: number; sections: ("A" | "B")[];
 };
@@ -10,8 +12,9 @@ export type MathsMockQuestion = {
   number: number; section: "A" | "B" | ""; marks: number; stem: string;
   parts: MathsMockPart[]; diagramSvg?: string; answerSummary?: string;
   markScheme: { part: string; steps: { code: string; text: string }[] }[];
+  syllabusRefs?: string[]; cognitiveDemand?: string;
 };
-export type MathsMockPaper = Pick<MathsMockMeta, "id" | "course" | "set" | "paper" | "title" | "minutes" | "marks" | "calculator"> & { questions: MathsMockQuestion[] };
+export type MathsMockPaper = Pick<MathsMockMeta, "id" | "strand" | "course" | "set" | "paper" | "title" | "minutes" | "marks" | "calculator"> & { questions: MathsMockQuestion[] };
 export type MathsMockPromptQuestion = Omit<MathsMockQuestion, "diagramSvg" | "markScheme" | "answerSummary"> & { diagramUrl?: string };
 export type MathsMockPrompt = MathsMockMeta & { questions: MathsMockPromptQuestion[] };
 export type MathsMockAnswers = Record<string, string>;
@@ -19,8 +22,12 @@ export type MathsMockMarks = Record<string, number>;
 export type MathsMockStage = "instructions" | "running" | "pending" | "review";
 export type MathsMockDraft = { version: 1; attemptId: string; name: string; startedAt: number; deadline: number; elapsed: number; stage: MathsMockStage; index: number; answers: MathsMockAnswers; flags: Record<number, boolean>; marks: MathsMockMarks };
 export const MATHS_MOCKS = catalog as MathsMockMeta[];
+export const AI_MATHS_MOCKS = aiCatalog as MathsMockMeta[];
+export const ALL_MATHS_MOCKS = [...MATHS_MOCKS, ...AI_MATHS_MOCKS];
+export const mathsStrand = (paper: Pick<MathsMockMeta, "strand">): MathsMockStrand => paper.strand ?? "aa";
+export const mathsStrandName = (paper: Pick<MathsMockMeta, "strand">) => mathsStrand(paper) === "ai" ? "Applications and interpretation" : "Analysis and approaches";
 export const mathsAnswerKey = (number: number, part: string) => `${number}:${part || "whole"}`;
-export const mathsSubject = (course: "sl" | "hl") => course === "sl" ? "math-aa-sl" : "math-aa-hl";
+export const mathsSubject = (course: "sl" | "hl", strand: MathsMockStrand = "aa") => `math-${strand}-${course}` as const;
 export function mathsSecondsRemaining(deadline: number, now: number, maximum: number) { return Math.min(maximum, Math.max(0, Math.ceil((deadline - now) / 1000))); }
 export function restoreMathsMockDraft(raw: string, paper: MathsMockPrompt): MathsMockDraft | null {
   try {
@@ -34,7 +41,7 @@ export function restoreMathsMockDraft(raw: string, paper: MathsMockPrompt): Math
     return d as MathsMockDraft;
   } catch { return null; }
 }
-export function getMathsMock(id: string) { return MATHS_MOCKS.find(m => m.id === id && m.status === "published"); }
+export function getMathsMock(id: string) { return ALL_MATHS_MOCKS.find(m => m.id === id && m.status === "published"); }
 export function mathsPdfUrl(meta: MathsMockMeta, origin?: string) {
   // This is one public solution asset, shared by the submitted UI and email.
   const expected = `/ib-mock-solutions/${meta.id}.pdf`;
@@ -85,7 +92,7 @@ export function mathsReportPayload(meta: MathsMockMeta, review: MathsMockReview,
   ].join("\n");
   return {
     name: review.name.trim() || "Student", to_email: email, student_email: email,
-    test_title: meta.title, session: `IB Mathematics AA ${meta.course.toUpperCase()} · Set ${meta.set} · Paper ${meta.paper}`,
+    test_title: meta.title, session: `IB Mathematics ${mathsStrand(meta).toUpperCase()} ${meta.course.toUpperCase()} · Set ${meta.set} · Paper ${meta.paper}`,
     attempt_id: review.id, timestamp: review.submittedAt,
     score: scored ? `${review.score.total} / ${review.score.maximum} (self-assessed)` : "Submitted — self-assessment pending",
     incorrect: scored ? review.score.rows.filter(q => q.score !== q.max).map(q => `Q${q.number}`).join(", ") || "None" : "Not yet marked",

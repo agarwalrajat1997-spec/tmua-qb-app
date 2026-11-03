@@ -1,0 +1,868 @@
+{
+  "id": "ai-hl-set-d-paper-2",
+  "strand": "ai",
+  "course": "hl",
+  "set": "D",
+  "paper": "2",
+  "title": "Mathematics AI HL - Set D - Paper 2",
+  "minutes": 120,
+  "marks": 110,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 18,
+      "stem": "A workshop models weekly demand for a product as $q(p)=500e^{-0.04p}$, where $p$ is the selling price in dollars, $0\\le p\\le100$. Every demanded unit can initially be supplied. Each unit costs \\$8 to make and fixed weekly costs are \\$1200. The expected weekly profit is revenue minus all production and fixed costs.",
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 5.7",
+        "AHL 5.9",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Optimize profit rather than revenue, use the permitted domain and then activate a capacity constraint.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write the profit function $\\Pi(p)$ and find its derivative.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the price giving maximum expected profit, and the corresponding demand and profit. Justify the maximum on the stated domain.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the interval of prices giving non-negative expected profit.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Production capacity is reduced to $100$ units per week. The workshop chooses a price at which the modelled demand does not exceed capacity. Find the price maximizing expected profit under this restriction, and its profit.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "If only fixed weekly costs increase, explain how the unconstrained profit-maximizing price and the set of profitable prices are affected.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Revenue is $pq(p)$ and variable cost is $8q(p)$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\Pi(p)=500(p-8)e^{-0.04p}-1200$."
+            },
+            {
+              "code": "M1",
+              "text": "Differentiate using the product rule."
+            },
+            {
+              "code": "A1",
+              "text": "$\\Pi\\prime(p)=500e^{-0.04p}\\{1-0.04(p-8)\\}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$1-0.04(p-8)=0$ gives $p=33$."
+            },
+            {
+              "code": "R1",
+              "text": "The derivative changes from positive to negative there, so it gives the global maximum on $[0,100]$."
+            },
+            {
+              "code": "A1",
+              "text": "Demand is $133.5677$ units and profit is \\$2139.191."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $500(p-8)e^{-0.04p}=1200$ numerically on the given domain."
+            },
+            {
+              "code": "A2",
+              "text": "The two roots are $11.85636$ and $87.51051$ dollars."
+            },
+            {
+              "code": "R1",
+              "text": "The profit is non-negative between and including these roots."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$500e^{-0.04p}\\le100$ gives $p\\ge\\ln5/0.04$."
+            },
+            {
+              "code": "A1",
+              "text": "The smallest feasible price is $40.23595$ dollars, above $33$."
+            },
+            {
+              "code": "R1",
+              "text": "The profit function is decreasing throughout the new feasible interval, so choose this boundary price."
+            },
+            {
+              "code": "A1",
+              "text": "The maximum feasible expected profit is \\$2023.595."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "A change in fixed costs shifts the profit function vertically without changing its derivative."
+            },
+            {
+              "code": "R1",
+              "text": "The unconstrained maximizing price remains $33$, provided the demand and variable-cost models are unchanged."
+            },
+            {
+              "code": "R1",
+              "text": "The range of prices with non-negative profit shrinks, and could disappear if fixed costs exceed the maximum contribution before fixed costs."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "$\\Pi\\prime(p)=500e^{-0.04p}\\{1-0.04(p-8)\\}$.; Demand is $133.5677$ units and profit is \\$2139.191.; The profit is non-negative between and including these roots.; The maximum feasible expected profit is \\$2023.595.; The range of prices with non-negative profit shrinks, and could disappear if fixed costs exceed the maximum contribution before fixed costs.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 70.00 40 V 290\" stroke=\"#ddd\"/><text x=\"70.00\" y=\"314\" text-anchor=\"middle\">0</text><path d=\"M 178.00 40 V 290\" stroke=\"#ddd\"/><text x=\"178.00\" y=\"314\" text-anchor=\"middle\">20</text><path d=\"M 286.00 40 V 290\" stroke=\"#ddd\"/><text x=\"286.00\" y=\"314\" text-anchor=\"middle\">40</text><path d=\"M 394.00 40 V 290\" stroke=\"#ddd\"/><text x=\"394.00\" y=\"314\" text-anchor=\"middle\">60</text><path d=\"M 502.00 40 V 290\" stroke=\"#ddd\"/><text x=\"502.00\" y=\"314\" text-anchor=\"middle\">80</text><path d=\"M 610.00 40 V 290\" stroke=\"#ddd\"/><text x=\"610.00\" y=\"314\" text-anchor=\"middle\">100</text><path d=\"M 70 290.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 70 241.92 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"246.92\" text-anchor=\"end\">100</text><path d=\"M 70 193.85 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"198.85\" text-anchor=\"end\">200</text><path d=\"M 70 145.77 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"150.77\" text-anchor=\"end\">300</text><path d=\"M 70 97.69 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"102.69\" text-anchor=\"end\">400</text><path d=\"M 70 49.62 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"54.62\" text-anchor=\"end\">500</text><path d=\"M 70 40 V 290 H 610\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M70.00,49.62 L75.40,59.04 L80.80,68.10 L86.20,76.80 L91.60,85.16 L97.00,93.19 L102.40,100.91 L107.80,108.32 L113.20,115.44 L118.60,122.29 L124.00,128.87 L129.40,135.18 L134.80,141.25 L140.20,147.09 L145.60,152.69 L151.00,158.07 L156.40,163.25 L161.80,168.22 L167.20,172.99 L172.60,177.58 L178.00,181.99 L183.40,186.22 L188.80,190.29 L194.20,194.20 L199.60,197.96 L205.00,201.57 L210.40,205.03 L215.80,208.37 L221.20,211.57 L226.60,214.64 L232.00,217.60 L237.40,220.44 L242.80,223.16 L248.20,225.78 L253.60,228.30 L259.00,230.72 L264.40,233.05 L269.80,235.28 L275.20,237.43 L280.60,239.49 L286.00,241.47 L291.40,243.37 L296.80,245.20 L302.20,246.96 L307.60,248.64 L313.00,250.26 L318.40,251.82 L323.80,253.32 L329.20,254.76 L334.60,256.14 L340.00,257.47 L345.40,258.74 L350.80,259.97 L356.20,261.15 L361.60,262.28 L367.00,263.36 L372.40,264.41 L377.80,265.41 L383.20,266.38 L388.60,267.30 L394.00,268.19 L399.40,269.05 L404.80,269.87 L410.20,270.66 L415.60,271.42 L421.00,272.15 L426.40,272.85 L431.80,273.52 L437.20,274.16 L442.60,274.79 L448.00,275.38 L453.40,275.96 L458.80,276.51 L464.20,277.04 L469.60,277.54 L475.00,278.03 L480.40,278.50 L485.80,278.95 L491.20,279.39 L496.60,279.80 L502.00,280.20 L507.40,280.59 L512.80,280.95 L518.20,281.31 L523.60,281.65 L529.00,281.98 L534.40,282.29 L539.80,282.59 L545.20,282.88 L550.60,283.16 L556.00,283.43 L561.40,283.69 L566.80,283.94 L572.20,284.17 L577.60,284.40 L583.00,284.62 L588.40,284.83 L593.80,285.04 L599.20,285.23 L604.60,285.42 L610.00,285.60\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">Price p (dollars)</text><text x=\"22\" y=\"175.0\" transform=\"rotate(-90 22 175.0)\" text-anchor=\"middle\">Expected weekly demand</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Workshop demand model</text></g></svg>"
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 18,
+      "stem": "A weather model has states sunny $(S)$ and rainy $(R)$. In either state, the probability of staying in that state on the next day is $0.75$. Day $0$ is sunny. A solar unit produces $10$ kWh on a sunny day and $3$ kWh on a rainy day. The Markov state for each day determines that day's production. Let $p_n=P(\\text{day }n\\text{ is sunny})$.",
+      "syllabusRefs": [
+        "AHL 4.19",
+        "SL 4.5",
+        "SL 4.7",
+        "SL 1.3"
+      ],
+      "cognitiveDemand": "Distinguish marginal state probabilities, dependent paths and linearity of expectation in a cumulative energy model.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write the transition matrix using column state vectors ordered $(S,R)$, and show that $p_{n+1}=0.5p_n+0.25$.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "By considering $p_n-0.5$, obtain an explicit expression for $p_n$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the steady-state distribution and explain why this chain has a unique long-run distribution.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "Find the probability that exactly two of days $1,2,3$ are sunny.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Find the expected total energy produced over days $1$ to $10$, showing a geometric sum.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "Explain why it would be incorrect to model the number of sunny days among days $1,2,3$ as $\\operatorname{Bin}(3,0.5)$.",
+          "marks": 2
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$T=\\begin{pmatrix}0.75&0.25\\\\0.25&0.75\\end{pmatrix}$."
+            },
+            {
+              "code": "M1",
+              "text": "$p_{n+1}=0.75p_n+0.25(1-p_n)$."
+            },
+            {
+              "code": "A1",
+              "text": "This simplifies to $0.5p_n+0.25$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$p_{n+1}-0.5=0.5(p_n-0.5)$."
+            },
+            {
+              "code": "M1",
+              "text": "This is geometric, with initial value $p_0-0.5=0.5$."
+            },
+            {
+              "code": "A1",
+              "text": "$p_n=0.5+0.5(0.5)^n$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The steady state is $(0.5,0.5)^T$."
+            },
+            {
+              "code": "R1",
+              "text": "All entries of $T$ are positive, so the chain is regular."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The possible paths are $SSR,SRS,RSS$, starting from sunny day $0$."
+            },
+            {
+              "code": "A1",
+              "text": "Their probabilities are $0.75^2(0.25)$, $0.75(0.25)^2$ and $(0.25)^2(0.75)$."
+            },
+            {
+              "code": "M1",
+              "text": "Add these mutually exclusive path probabilities."
+            },
+            {
+              "code": "A1",
+              "text": "The total probability is $0.234375$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The expectation for day $n$ is $10p_n+3(1-p_n)=6.5+3.5(0.5)^n$."
+            },
+            {
+              "code": "M1",
+              "text": "Sum over $n=1,\\ldots,10$, using linearity of expectation even though days are dependent."
+            },
+            {
+              "code": "A1",
+              "text": "The sum is $65+3.5(1-0.5^{10})$."
+            },
+            {
+              "code": "A1",
+              "text": "The expected energy is $68.49658$ kWh."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The day states are dependent: for example $P(S_{n+1}\\mid S_n)=0.75$, not $0.5$."
+            },
+            {
+              "code": "R1",
+              "text": "Also the marginal probabilities for the first three days are not all $0.5$, because the process starts sunny."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "This simplifies to $0.5p_n+0.25$.; $p_n=0.5+0.5(0.5)^n$.; All entries of $T$ are positive, so the chain is regular.; The total probability is $0.234375$.; The expected energy is $68.49658$ kWh.; Also the marginal probabilities for the first three days are not all $0.5$, because the process starts sunny."
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 19,
+      "stem": "An environmental scientist records independent pairs of water temperature $x$ in degrees Celsius and dissolved oxygen $y$ in mg per litre from eight randomly selected comparable sites. For the correlation test, assume the population of pairs is bivariate normal.\n\n| $x$ | 12 | 14 | 16 | 18 | 20 | 22 | 24 | 26 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| $y$ | 10.4 | 9.8 | 9.7 | 8.8 | 8.6 | 8.2 | 7.9 | 7.4 |\n\n",
+      "syllabusRefs": [
+        "SL 4.4",
+        "SL 4.10",
+        "AHL 4.18",
+        "AHL 4.12"
+      ],
+      "cognitiveDemand": "Compare Pearson and rank evidence, apply a declared one-sided population correlation test, and diagnose a leverage point.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find Pearson's correlation coefficient and the least-squares regression line of $y$ on $x$.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "At the $1\\%$ significance level, test whether the population correlation is negative. State hypotheses and report an appropriate test statistic, degrees of freedom, $p$-value and conclusion.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Find Spearman's rank correlation coefficient and explain why it differs from Pearson's coefficient here.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Predict dissolved oxygen at $21^\\circ$C and find the residual for the observed site at $20^\\circ$C.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "A ninth recorded pair is $(40,12)$. Find the new Pearson coefficient. Discuss whether the extra observation should automatically be deleted and whether the original correlation establishes a causal effect of temperature.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the eight raw pairs to fit $y=a+bx$."
+            },
+            {
+              "code": "A1",
+              "text": "$a=12.83095$ and $b=-0.2095238$."
+            },
+            {
+              "code": "A1",
+              "text": "The fitted line is $y=12.83095+(-0.2095238)x$."
+            },
+            {
+              "code": "A1",
+              "text": "Pearson's coefficient is $r=-0.9903281$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0:\\rho=0$, $H_1:\\rho<0$."
+            },
+            {
+              "code": "M1",
+              "text": "Use a correlation $t$ test on the given raw bivariate-normal pairs."
+            },
+            {
+              "code": "A1",
+              "text": "$t=r\\sqrt{(8-2)/(1-r^2)}=-17.48383$, with $6$ degrees of freedom."
+            },
+            {
+              "code": "A1",
+              "text": "The lower-tail $p$-value is $1.122767\\times10^{-6}$."
+            },
+            {
+              "code": "R1",
+              "text": "Reject $H_0$ at $1\\%$; there is evidence of a negative population correlation under these assumptions."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Temperatures strictly increase while oxygen values strictly decrease, giving reverse ranks without ties."
+            },
+            {
+              "code": "A1",
+              "text": "Spearman's coefficient is $-1$."
+            },
+            {
+              "code": "R1",
+              "text": "The ordering is perfectly decreasing, but the points do not lie exactly on a straight line; Pearson measures linear association rather than only rank order."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Substitute into the fitted line, and take residual as observed minus predicted."
+            },
+            {
+              "code": "A1",
+              "text": "The prediction at $21^\\circ$C is $8.430952$ mg per litre."
+            },
+            {
+              "code": "A1",
+              "text": "The residual at $20^\\circ$C is $8.6-8.640476=-0.04047619$ mg per litre."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Recalculate Pearson's coefficient using all nine pairs."
+            },
+            {
+              "code": "A1",
+              "text": "The new coefficient is $r=0.246713$."
+            },
+            {
+              "code": "R1",
+              "text": "The point has strong influence, but deletion requires investigation of measurement validity and population comparability, not merely dislike of its effect."
+            },
+            {
+              "code": "R1",
+              "text": "Observational association alone does not establish causation; other site conditions may affect oxygen."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "Pearson's coefficient is $r=-0.9903281$.; Reject $H_0$ at $1\\%$; there is evidence of a negative population correlation under these assumptions.; The ordering is perfectly decreasing, but the points do not lie exactly on a straight line; Pearson measures linear association rather than only rank order.; The residual at $20^\\circ$C is $8.6-8.640476=-0.04047619$ mg per litre.; Observational association alone does not establish causation; other site conditions may affect oxygen."
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 19,
+      "stem": "A transport researcher independently samples $60$ residents at random within each of three zones. Each resident reports one main travel mode. No resident appears twice. The observed counts are:\n\n| Zone | Bus | Walk | Cycle |\n| --- | --- | --- | --- |\n| 1 | 30 | 20 | 10 |\n| 2 | 18 | 25 | 17 |\n| 3 | 12 | 15 | 33 |\n\n The three zones have different population sizes; equal sample sizes were chosen for convenience.",
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.12",
+        "SL 4.1"
+      ],
+      "cognitiveDemand": "Analyze association, identify its main contribution and distinguish a conditional association study from a population-wide estimate.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Under independence of zone and travel mode, find the expected-frequency table and check the expected-count condition.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Carry out a chi-square independence test at the $5\\%$ significance level. State hypotheses, degrees of freedom, statistic, $p$-value and conclusion.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Identify the single cell making the largest contribution to the statistic. Calculate that contribution and interpret the direction of its deviation.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Zones 2 and 3 are combined into one category. Repeat the independence test for the resulting $2\\times3$ table and state whether the conclusion changes.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Explain why the pooled sample proportion travelling by bus need not estimate the whole area's bus-use proportion accurately. Give a suitable adjustment if zone population sizes are known.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Expected count is row total times column total divided by $180$."
+            },
+            {
+              "code": "A1",
+              "text": "Every row and column total is $60$, so all nine expected counts are $20$."
+            },
+            {
+              "code": "R1",
+              "text": "Each expected count is greater than $5$, satisfying the stated chi-square condition."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0$: travel mode and zone are independent; $H_1$: they are associated."
+            },
+            {
+              "code": "M1",
+              "text": "Calculate $\\sum(O-E)^2/E$ over all nine cells."
+            },
+            {
+              "code": "A1",
+              "text": "$\\chi^2=24.8$ and $df=(3-1)(3-1)=4$."
+            },
+            {
+              "code": "A1",
+              "text": "The upper-tail $p$-value is $5.518909\\times10^{-5}$."
+            },
+            {
+              "code": "R1",
+              "text": "Reject $H_0$ at $5\\%$; there is evidence of an association between zone and travel mode."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Compare the squared standardized deviations $(O-20)^2/20$."
+            },
+            {
+              "code": "A1",
+              "text": "Zone 3, cycle has the largest contribution, $13^2/20=8.45$."
+            },
+            {
+              "code": "R1",
+              "text": "Cycling is more frequent in the Zone 3 sample than expected under independence."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The new rows are $(30,20,10)$ and $(30,40,50)$, with expected rows $(20,20,20)$ and $(40,40,40)$."
+            },
+            {
+              "code": "M1",
+              "text": "Use the new table and $df=(2-1)(3-1)=2$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\chi^2=15$ and $p=0.0005530844$."
+            },
+            {
+              "code": "R1",
+              "text": "The null is still rejected at $5\\%$; the binary zone grouping remains associated with travel mode."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The pooled sample gives each zone equal weight because each contributes $60$ observations."
+            },
+            {
+              "code": "R1",
+              "text": "The zone populations are unequal, so this need not match residents' actual distribution across zones."
+            },
+            {
+              "code": "M1",
+              "text": "Establish the estimated bus fraction within each zone."
+            },
+            {
+              "code": "A1",
+              "text": "Weight those fractions by the respective zone population proportions, rather than averaging the three fractions equally."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "Each expected count is greater than $5$, satisfying the stated chi-square condition.; Reject $H_0$ at $5\\%$; there is evidence of an association between zone and travel mode.; Cycling is more frequent in the Zone 3 sample than expected under independence.; The null is still rejected at $5\\%$; the binary zone grouping remains associated with travel mode.; Weight those fractions by the respective zone population proportions, rather than averaging the three fractions equally."
+    },
+    {
+      "number": 5,
+      "section": "",
+      "marks": 18,
+      "stem": "A damped displacement $x(t)$ satisfies the given equation $x\\prime\\prime+3x\\prime+2x=0$, with $x(0)=4$ and $x\\prime(0)=-2$. Displacement is in centimetres and time is in seconds. Let $v=x\\prime$. The model is used only for $t\\ge0$.",
+      "syllabusRefs": [
+        "AHL 5.18",
+        "AHL 5.17",
+        "AHL 1.15",
+        "AHL 5.16"
+      ],
+      "cognitiveDemand": "Convert the supplied second-order model, use distinct real eigendirections and distinguish simultaneous from sequential numerical updates.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write the model as a first-order matrix system for $(x,v)^T$, including its initial state.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the eigenvalues and corresponding eigenvectors of the system matrix. Classify the equilibrium at the origin.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Use the eigensolutions and initial state to find $x(t)$ and $v(t)$.",
+          "marks": 5
+        },
+        {
+          "label": "d",
+          "prompt": "Show that the displacement remains positive and decreases for all $t\\ge0$. Explain what the model predicts in the long term.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "Use Euler's method on the coupled first-order system, with step size $0.2$ seconds, to estimate the state at $t=0.4$. Compare it with the exact state. Both updates at a step must use the same old state.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$x\\prime=v$."
+            },
+            {
+              "code": "A1",
+              "text": "$v\\prime=-2x-3v$, so $\\binom{x\\prime}{v\\prime}=\\begin{pmatrix}0&1\\\\-2&-3\\end{pmatrix}\\binom{x}{v}$."
+            },
+            {
+              "code": "A1",
+              "text": "The initial state is $(4,-2)^T$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\det(M-\\lambda I)=\\lambda^2+3\\lambda+2$."
+            },
+            {
+              "code": "A1",
+              "text": "The eigenvalues are $-1,-2$."
+            },
+            {
+              "code": "A1",
+              "text": "Corresponding eigenvectors are $(1,-1)^T$ and $(1,-2)^T$."
+            },
+            {
+              "code": "R1",
+              "text": "The distinct negative real eigenvalues give a stable node."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Write $(x,v)^T=Ae^{-t}(1,-1)^T+Be^{-2t}(1,-2)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The initial conditions give $A+B=4$ and $-A-2B=-2$."
+            },
+            {
+              "code": "A1",
+              "text": "Solving gives $A=6$, $B=-2$."
+            },
+            {
+              "code": "A1",
+              "text": "$x(t)=6e^{-t}-2e^{-2t}$."
+            },
+            {
+              "code": "A1",
+              "text": "$v(t)=-6e^{-t}+4e^{-2t}$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "$x=e^{-t}(6-2e^{-t})>0$, since $0<e^{-t}\\le1$."
+            },
+            {
+              "code": "R1",
+              "text": "$v=e^{-t}(-6+4e^{-t})<0$ on the same domain."
+            },
+            {
+              "code": "R1",
+              "text": "Both exponentials tend to zero, so the displacement decreases toward zero without crossing it."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $x_{n+1}=x_n+0.2v_n$, $v_{n+1}=v_n+0.2(-2x_n-3v_n)$ simultaneously. The first state is $(3.6,-2.4)$."
+            },
+            {
+              "code": "A1",
+              "text": "After the second step the Euler state is $(3.12,-2.4)$."
+            },
+            {
+              "code": "A1",
+              "text": "The exact state is $(3.123262,-2.224604)$; Euler slightly understates $x$ and makes the velocity more negative."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The initial state is $(4,-2)^T$.; The distinct negative real eigenvalues give a stable node.; $v(t)=-6e^{-t}+4e^{-2t}$.; Both exponentials tend to zero, so the displacement decreases toward zero without crossing it.; The exact state is $(3.123262,-2.224604)$; Euler slightly understates $x$ and makes the velocity more negative."
+    },
+    {
+      "number": 6,
+      "section": "",
+      "marks": 18,
+      "stem": "Three emergency posts are at $A(0,0)$, $B(8,0)$ and $C(4,6)$, with coordinates in kilometres. The service region is exactly the closed triangular region $ABC$. Straight-line distance determines the nearest post. A transmitter is to be placed as far as possible from its nearest post while remaining in this triangle. For a convex polygonal cell, you may use the fact that the maximum distance from its site occurs at a cell vertex.",
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6",
+        "SL 3.1",
+        "SL 5.7"
+      ],
+      "cognitiveDemand": "Solve a bounded largest-empty-circle problem and verify the interior optimum against all boundary candidates.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the perpendicular bisectors of $AB$ and $AC$.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the common Voronoi vertex and its distance from each post. Check that it lies inside the triangle.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Find the area of the portion of the triangle allocated to post $A$.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Find the transmitter's optimal position and the maximum distance from its nearest post. Justify the global optimum by checking all types of cell vertex, including those on the triangle boundary.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "The transmitter must instead be on the base road $AB$. Find its best position and maximum nearest-post distance.",
+          "marks": 2
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The bisector of horizontal $AB$ passes through $(4,0)$."
+            },
+            {
+              "code": "A1",
+              "text": "It is $x=4$."
+            },
+            {
+              "code": "M1",
+              "text": "Equate $x^2+y^2$ and $(x-4)^2+(y-6)^2$."
+            },
+            {
+              "code": "A1",
+              "text": "The second bisector is $2x+3y=13$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Intersect $x=4$ and $2x+3y=13$."
+            },
+            {
+              "code": "A1",
+              "text": "The vertex is $V=(4,5/3)$."
+            },
+            {
+              "code": "A1",
+              "text": "The common distance is $\\sqrt{16+25/9}=13/3$ km."
+            },
+            {
+              "code": "R1",
+              "text": "At $x=4$ the triangle extends from $y=0$ to $y=6$, so $V$ is inside."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The cell is the polygon with vertices $(0,0),(4,0),(4,5/3),(2,3)$."
+            },
+            {
+              "code": "A1",
+              "text": "The final point is the midpoint of side $AC$, where its bisector meets the triangle boundary."
+            },
+            {
+              "code": "M1",
+              "text": "Use a polygon area formula or divide the region into triangles."
+            },
+            {
+              "code": "A1",
+              "text": "The area is $23/3\\ \\mathrm{km}^2$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The cell vertices consist of the posts themselves, the three side midpoints, and $V$."
+            },
+            {
+              "code": "A1",
+              "text": "Nearest distances there are $0$, $4$ at the midpoint of $AB$, $\\sqrt{13}$ at the other two midpoints, and $13/3$ at $V$."
+            },
+            {
+              "code": "R1",
+              "text": "The supplied convex-cell maximum property means no interior or edge point within any cell can exceed its largest vertex distance."
+            },
+            {
+              "code": "A1",
+              "text": "The global optimum is $V=(4,5/3)$, with nearest-post distance $13/3$ km."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "On $y=0$, the nearest of $A,B$ is at most $4$ km away, with equality only at $(4,0)$; $C$ is then $6$ km away."
+            },
+            {
+              "code": "A1",
+              "text": "The optimum is $(4,0)$ and the maximum nearest-post distance is $4$ km."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The second bisector is $2x+3y=13$.; At $x=4$ the triangle extends from $y=0$ to $y=6$, so $V$ is inside.; The area is $23/3\\ \\mathrm{km}^2$.; The global optimum is $V=(4,5/3)$, with nearest-post distance $13/3$ km.; The optimum is $(4,0)$ and the maximum nearest-post distance is $4$ km.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 186.15 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"186.15\" y=\"314.0\" text-anchor=\"middle\">0</text><path d=\"M 263.08 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"263.08\" y=\"314.0\" text-anchor=\"middle\">2</text><path d=\"M 340.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"340.00\" y=\"314.0\" text-anchor=\"middle\">4</text><path d=\"M 416.92 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"416.92\" y=\"314.0\" text-anchor=\"middle\">6</text><path d=\"M 493.85 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"493.85\" y=\"314.0\" text-anchor=\"middle\">8</text><path d=\"M 186.15384615384616 290.00 H 493.8461538461538\" stroke=\"#ddd\"/><text x=\"174.15384615384616\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 186.15384615384616 213.08 H 493.8461538461538\" stroke=\"#ddd\"/><text x=\"174.15384615384616\" y=\"218.08\" text-anchor=\"end\">2</text><path d=\"M 186.15384615384616 136.15 H 493.8461538461538\" stroke=\"#ddd\"/><text x=\"174.15384615384616\" y=\"141.15\" text-anchor=\"end\">4</text><path d=\"M 186.15384615384616 59.23 H 493.8461538461538\" stroke=\"#ddd\"/><text x=\"174.15384615384616\" y=\"64.23\" text-anchor=\"end\">6</text><path d=\"M 186.15384615384616 40.0 V 290.0 H 493.8461538461538\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M186.15,290.00 L493.85,290.00 L340.00,59.23 L186.15,290.00\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><circle cx=\"186.15\" cy=\"290.00\" r=\"4\"/><text x=\"194.15\" y=\"280.00\">A</text><circle cx=\"493.85\" cy=\"290.00\" r=\"4\"/><text x=\"501.85\" y=\"280.00\">B</text><circle cx=\"340.00\" cy=\"59.23\" r=\"4\"/><text x=\"348.00\" y=\"49.23\">C</text><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">x (km)</text><text x=\"138.15384615384616\" y=\"175.0\" transform=\"rotate(-90 138.15384615384616 175.0)\" text-anchor=\"middle\">y (km)</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Triangular service region</text></g></svg>"
+    }
+  ]
+}

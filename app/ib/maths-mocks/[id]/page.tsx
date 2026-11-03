@@ -6,7 +6,7 @@ import { getMathsMockPaper, mathsMockPrompt } from "@/lib/ib/maths-mocks";
 import MathsMockRunner from "../MathsMockRunner";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "IB Mathematics AA Mock | Thriving Scholars", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "IB Mathematics Mock | Thriving Scholars", robots: { index: false, follow: false } };
 export default async function MathsMockPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ attempt?: string }> }) {
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const meta = getMathsMock(id);

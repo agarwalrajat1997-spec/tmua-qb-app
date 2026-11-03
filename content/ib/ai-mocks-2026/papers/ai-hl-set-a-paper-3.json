@@ -1,0 +1,412 @@
+{
+  "id": "ai-hl-set-a-paper-3",
+  "strand": "ai",
+  "course": "hl",
+  "set": "A",
+  "paper": "3",
+  "title": "Mathematics AI HL — Set A Paper 3",
+  "minutes": 75,
+  "marks": 55,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 27,
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 4.6",
+        "SL 4.8",
+        "AHL 4.18",
+        "AHL 4.19"
+      ],
+      "stem": "A factory models each day's production as being in one of two states: unstable $U$ or stable $S$. The state changes once per day according to the transition diagram. Initially, on day $0$, the factory is known to be stable.\n\nOn each day an inspector takes $40$ seals. Conditional on that day's state, the seals are independent and each seal is defective with probability $0.12$ in state $U$, or $0.04$ in state $S$. Let $X$ be the number of defective seals in the sample. The sample is too small to change the state-transition probabilities.\n\nThe inspector tests $H_0:p=0.04$ against $H_1:p>0.04$ at the $5\\%$ significance level, raising an alert when $X\\ge c$. Choose the smallest integer $c$ for which the Type I error probability is less than $0.05$.\n\nLet $q_n$ be the probability that the factory is unstable on day $n$, and let $a_n$ be the probability of an alert on day $n$. Use unrounded probabilities in subsequent calculations.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 760 370\" role=\"img\"><rect width=\"760\" height=\"370\" fill=\"#fff\"/><circle cx=\"215\" cy=\"205\" r=\"62\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"2\"/><circle cx=\"545\" cy=\"205\" r=\"62\" fill=\"#fff\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"215\" y=\"201\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">Unstable U</text><text x=\"215\" y=\"228\" font-family=\"Arial, sans-serif\" font-size=\"17\" text-anchor=\"middle\" fill=\"#111\">p = 0.12</text><text x=\"545\" y=\"201\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">Stable S</text><text x=\"545\" y=\"228\" font-family=\"Arial, sans-serif\" font-size=\"17\" text-anchor=\"middle\" fill=\"#111\">p = 0.04</text><line x1=\"276\" y1=\"183\" x2=\"484\" y2=\"183\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"475.00,187.35 484,183 475.00,178.65\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"380\" y=\"168\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">0.20</text><line x1=\"484\" y1=\"227\" x2=\"276\" y2=\"227\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"285.00,222.65 276,227 285.00,231.35\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"380\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">0.30</text><path d=\"M170 162 C90 48 340 48 260 162\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"257,149 260,162 271,155\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"215\" y=\"76\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">0.80</text><path d=\"M500 162 C420 48 670 48 590 162\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"587,149 590,162 601,155\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"545\" y=\"76\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">0.70</text><text x=\"380\" y=\"337\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" fill=\"#111\">State changes once per day; seal probabilities are conditional on that day’s state.</text></svg>",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find $c$ and the actual Type I error probability. Show why the next smaller value of $c$ is unsuitable.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the Type II error probability when $p=0.12$. Interpret this error in the factory context.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Using column states ordered $(U,S)$, write down the transition matrix $T$. Find $q_2$.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "By considering $q_{n+1}-0.6$, obtain an explicit formula for $q_n$ valid for every integer $n\\ge0$. Show the reasoning leading to your formula.",
+          "marks": 5
+        },
+        {
+          "label": "e",
+          "prompt": "In the long run, an alert is observed. Find the conditional probability that the factory is unstable on that day.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "Find the smallest day number $n$ for which $|a_n-\\lim_{k\\to\\infty}a_k|<0.001$.",
+          "marks": 3
+        },
+        {
+          "label": "g",
+          "prompt": "For a more general factory, suppose $\\mathrm P(U\\to S)=\\kappa u$ and $\\mathrm P(S\\to U)=\\kappa v$, where $u,v>0$ and $0<\\kappa(u+v)<1$. The two conditional seal distributions and alert rule are unchanged. Show that the limiting alert probability is independent of $\\kappa$. Explain how increasing $\\kappa$ affects the approach to this limit from a fixed initial state distribution.",
+          "marks": 5
+        }
+      ],
+      "answerSummary": "$c=5$; $\\alpha=0.0210222967$, $\\beta=0.4669109648$; $q_2=0.45$; $q_n=0.6(1-2^{-n})$; long-run $\\mathrm P(U\\mid\\text{alert})=0.9743835412$; first day $n=9$. General limit uses $v/(u+v)$ and convergence factor $1-\\kappa(u+v)$.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Under $H_0$, use $X\\sim\\operatorname{Bin}(40,0.04)$ and upper-tail probabilities."
+            },
+            {
+              "code": "A1",
+              "text": "$\\mathrm P(X\\ge4)=0.0748372580>0.05$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\mathrm P(X\\ge5)=0.0210222967<0.05$."
+            },
+            {
+              "code": "A1",
+              "text": "Thus $c=5$, with actual Type I probability $\\alpha=0.0210$ (three significant figures)."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $X\\sim\\operatorname{Bin}(40,0.12)$ and failure to reject, $X\\le4$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\beta=\\mathrm P(X\\le4)=0.4669109648\\approx0.467$."
+            },
+            {
+              "code": "R1",
+              "text": "The inspector fails to raise an alert although the factory is in its unstable, higher-defect state."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$T=\\begin{pmatrix}0.8&0.3\\\\0.2&0.7\\end{pmatrix}$, with column entries representing transitions from that column state."
+            },
+            {
+              "code": "M1",
+              "text": "Apply $T^2$ to $\\binom01$, or use $q_1=0.3$ and $q_2=0.8q_1+0.3(1-q_1)$."
+            },
+            {
+              "code": "A1",
+              "text": "$q_2=0.45$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$q_{n+1}=0.8q_n+0.3(1-q_n)=0.3+0.5q_n$."
+            },
+            {
+              "code": "A1",
+              "text": "The stationary value solves $q=0.3+0.5q$, so $q=0.6$."
+            },
+            {
+              "code": "M1",
+              "text": "$q_{n+1}-0.6=0.5(q_n-0.6)$, a geometric sequence of differences."
+            },
+            {
+              "code": "A1",
+              "text": "$q_n-0.6=(q_0-0.6)(0.5)^n$."
+            },
+            {
+              "code": "A1",
+              "text": "Since $q_0=0$, $q_n=0.6(1-2^{-n})$, including $n=0$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The limiting alert probability is $a_\\infty=0.6(1-\\beta)+0.4\\alpha$."
+            },
+            {
+              "code": "A1",
+              "text": "$a_\\infty=0.3282623398$."
+            },
+            {
+              "code": "M1",
+              "text": "$\\mathrm P(U\\mid\\text{alert})=0.6(1-\\beta)/a_\\infty$."
+            },
+            {
+              "code": "A1",
+              "text": "$0.9743835412\\approx0.974$."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$a_n=\\alpha+(1-\\beta-\\alpha)q_n$, so $|a_n-a_\\infty|=0.6(1-\\beta-\\alpha)2^{-n}$."
+            },
+            {
+              "code": "A1",
+              "text": "Solving the inequality gives $n>8.2632\\ldots$, hence $n=9$."
+            },
+            {
+              "code": "R1",
+              "text": "At $n=8$ the difference is $0.00120016\\ldots$; at $n=9$ it is $0.000600078\\ldots$, verifying the first integer day."
+            }
+          ]
+        },
+        {
+          "part": "g",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The general recurrence is $q_{n+1}=\\kappa v+[1-\\kappa(u+v)]q_n$."
+            },
+            {
+              "code": "A1",
+              "text": "The limiting unstable probability is $\\pi=v/(u+v)$."
+            },
+            {
+              "code": "M1",
+              "text": "The limiting alert probability is $\\alpha+(1-\\beta-\\alpha)v/(u+v)$."
+            },
+            {
+              "code": "A1",
+              "text": "This expression contains no $\\kappa$, so the limit is unchanged."
+            },
+            {
+              "code": "R1",
+              "text": "$q_n-\\pi=[1-\\kappa(u+v)]^n(q_0-\\pi)$. The factor lies in $(0,1)$ and decreases as $\\kappa$ increases, so convergence is faster (or the process is already stationary)."
+            }
+          ]
+        }
+      ],
+      "sourcePages": []
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 28,
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 1.15",
+        "SL 2.6",
+        "AHL 5.9",
+        "AHL 5.10",
+        "AHL 5.14",
+        "AHL 5.16",
+        "AHL 5.17"
+      ],
+      "stem": "Two reservoirs $X$ and $Y$ each contain $100\\,000$ litres of water. In each direction, water is pumped between the reservoirs at $20\\,000$ litres per hour. Each reservoir also receives pollutant-free water at $10\\,000$ litres per hour and discharges water to a drain at the same rate. Each reservoir is perfectly mixed, and its volume stays constant.\n\nAt time $t=0$, reservoir $X$ contains $30$ kg of pollutant and reservoir $Y$ contains none. No further pollutant enters the system. Let $x(t)$ and $y(t)$ be the pollutant masses, in kg, at time $t$ hours. Pollutant leaves each reservoir at its current concentration.\n\nThe diagram shows the flow rates. Take $1$ kg to be $10^6$ mg.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 760 440\" role=\"img\"><rect width=\"760\" height=\"440\" fill=\"#fff\"/><rect x=\"85\" y=\"140\" width=\"215\" height=\"140\" rx=\"9\" fill=\"#f5f5f5\" stroke=\"#111\" stroke-width=\"2\"/><rect x=\"460\" y=\"140\" width=\"215\" height=\"140\" rx=\"9\" fill=\"#f5f5f5\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"192\" y=\"177\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">Reservoir X</text><text x=\"192\" y=\"211\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">100000 L</text><text x=\"192\" y=\"247\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">pollutant x(t) kg</text><text x=\"567\" y=\"177\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">Reservoir Y</text><text x=\"567\" y=\"211\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">100000 L</text><text x=\"567\" y=\"247\" font-family=\"Arial, sans-serif\" font-size=\"19\" text-anchor=\"middle\" fill=\"#111\">pollutant y(t) kg</text><line x1=\"300\" y1=\"178\" x2=\"460\" y2=\"178\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"451.00,182.35 460,178 451.00,173.65\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"380\" y=\"164\" font-family=\"Arial, sans-serif\" font-size=\"17\" text-anchor=\"middle\" fill=\"#111\">20000 L/h</text><line x1=\"460\" y1=\"244\" x2=\"300\" y2=\"244\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"309.00,239.65 300,244 309.00,248.35\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"380\" y=\"271\" font-family=\"Arial, sans-serif\" font-size=\"17\" text-anchor=\"middle\" fill=\"#111\">20000 L/h</text><line x1=\"150\" y1=\"70\" x2=\"150\" y2=\"140\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"145.65,131.00 150,140 154.35,131.00\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"150\" y=\"44\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" fill=\"#111\">Fresh: 10000 L/h</text><line x1=\"610\" y1=\"70\" x2=\"610\" y2=\"140\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"605.65,131.00 610,140 614.35,131.00\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"610\" y=\"44\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" fill=\"#111\">Fresh: 10000 L/h</text><line x1=\"150\" y1=\"280\" x2=\"150\" y2=\"350\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"145.65,341.00 150,350 154.35,341.00\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"150\" y=\"378\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" fill=\"#111\">Drain: 10000 L/h</text><line x1=\"610\" y1=\"280\" x2=\"610\" y2=\"350\" stroke=\"#111\" stroke-width=\"2\"/><polyline points=\"605.65,341.00 610,350 614.35,341.00\" fill=\"none\" stroke=\"#111\" stroke-width=\"2\"/><text x=\"610\" y=\"378\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" fill=\"#111\">Drain: 10000 L/h</text><text x=\"380\" y=\"417\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" fill=\"#111\">Each reservoir is kept at a constant volume and is perfectly mixed.</text></svg>",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Obtain the coupled differential equations for $x$ and $y$, and express them as a matrix equation.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Use the eigenvalues and eigenvectors of your matrix to find exact expressions for $x(t)$ and $y(t)$.",
+          "marks": 6
+        },
+        {
+          "label": "c",
+          "prompt": "Find the time at which reservoir $Y$ contains the most pollutant, and find this maximum mass. Justify that it is a global maximum for $t\\ge0$.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Both reservoirs are classified as safe when each concentration is at most $10$ mg per litre. Find the earliest time at which both are safe, explaining which reservoir determines this time.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "Apply Euler's method with step length $h=1$ hour for two steps. Compare the resulting $y(2)$ with the exact value. A technician claims that an Euler model is accurate whenever it keeps both masses nonnegative. Evaluate this claim using your results.",
+          "marks": 3
+        },
+        {
+          "label": "f",
+          "prompt": "Now replace each exchange flow of $20\\,000$ litres per hour by an arbitrary rate $Q>0$, leaving both fresh-water and drain rates unchanged. Find the half-life of the total pollutant mass. Does increasing $Q$ make the total pollutant disappear faster? Justify your answer.",
+          "marks": 3
+        },
+        {
+          "label": "g",
+          "prompt": "Return to the original exchange flow. Set $S_n=x_n+y_n$ and $D_n=x_n-y_n$ for an Euler approximation with step length $h>0$. Derive recurrences for $S_n$ and $D_n$. Determine the largest $h$ that guarantees, for every initial state $x_0\\ge y_0\\ge0$, that both masses stay nonnegative and the ordering $x_n\\ge y_n$ is preserved at every step. Explain why this guarantee still does not establish accuracy.",
+          "marks": 5
+        }
+      ],
+      "answerSummary": "$\\binom{x\\prime}{y\\prime}=\\begin{pmatrix}-0.3&0.2\\\\0.2&-0.3\\end{pmatrix}\\binom xy$; $x=15(e^{-t/10}+e^{-t/2})$, $y=15(e^{-t/10}-e^{-t/2})$. The downstream maximum is $8.02488366$ kg at $t=(5/2)\\ln5=4.02359478$ h. Safe time $27.08069952$ h. Euler after two steps: $(15.9,8.4)$ kg; exact $y(2)=6.76276968$ kg. Total half-life $10\\ln2$ h; largest order-preserving Euler step $h=2$ h.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Concentration is mass divided by $100000$ L; total outflow from each reservoir is $30000$ L/h."
+            },
+            {
+              "code": "M1",
+              "text": "Pollutant inflow from the other reservoir is $0.2$ times its pollutant mass per hour."
+            },
+            {
+              "code": "A1",
+              "text": "$x\\prime=-0.3x+0.2y$, $y\\prime=0.2x-0.3y$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\binom{x\\prime}{y\\prime}=\\begin{pmatrix}-0.3&0.2\\\\0.2&-0.3\\end{pmatrix}\\binom xy$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the characteristic equation $(-0.3-\\lambda)^2-0.04=0$."
+            },
+            {
+              "code": "A2",
+              "text": "Eigenvalues are $-0.1$ and $-0.5$."
+            },
+            {
+              "code": "A1",
+              "text": "Corresponding eigenvectors may be taken as $\\binom11$ and $\\binom1{-1}$."
+            },
+            {
+              "code": "M1",
+              "text": "$\\binom xy=C_1e^{-0.1t}\\binom11+C_2e^{-0.5t}\\binom1{-1}$; apply $x(0)=30$, $y(0)=0$ to get $C_1=C_2=15$."
+            },
+            {
+              "code": "A1",
+              "text": "$x(t)=15(e^{-t/10}+e^{-t/2})$, $y(t)=15(e^{-t/10}-e^{-t/2})$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$y\\prime=-1.5e^{-t/10}+7.5e^{-t/2}=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$e^{0.4t}=5$, hence $t=(5/2)\\ln5=4.023594781\\ldots$ h."
+            },
+            {
+              "code": "R1",
+              "text": "$y\\prime$ changes from positive to negative at this sole stationary point; $y(0)=0$ and $y(t)\\to0$, so it is the global maximum."
+            },
+            {
+              "code": "A1",
+              "text": "$y_{\\max}=8.024883660\\ldots\\approx8.02$ kg."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$10$ mg/L in $100000$ L is $1$ kg, so require $x\\le1$ and $y\\le1$."
+            },
+            {
+              "code": "R1",
+              "text": "For $t\\ge0$, $x-y=30e^{-t/2}>0$ and $x$ is strictly decreasing, so the first safe time is the unique solution of $x(t)=1$."
+            },
+            {
+              "code": "A1",
+              "text": "Solve $15(e^{-t/10}+e^{-t/2})=1$: $t=27.08069952\\ldots\\approx27.1$ h."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use simultaneous Euler updates $x_{n+1}=x_n+h(-0.3x_n+0.2y_n)$ and $y_{n+1}=y_n+h(0.2x_n-0.3y_n)$."
+            },
+            {
+              "code": "A1",
+              "text": "For $h=1$: $(x_1,y_1)=(21,6)$ and $(x_2,y_2)=(15.9,8.4)$."
+            },
+            {
+              "code": "R1",
+              "text": "The exact $y(2)=6.762769679\\ldots$ kg. The nonnegative Euler value overestimates it by about $24.2\\%$ and even exceeds the exact global maximum $8.02488\\ldots$ kg. Nonnegativity does not imply accuracy."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Exchange terms cancel when adding the equations: $S\\prime=-0.1S$, $S(0)=30$, independently of $Q$."
+            },
+            {
+              "code": "A1",
+              "text": "$S(t)=30e^{-0.1t}$, so the total half-life is $10\\ln2\\approx6.93$ h."
+            },
+            {
+              "code": "R1",
+              "text": "Increasing exchange changes the distribution between reservoirs, but not the total removal rate or half-life under this perfectly mixed model."
+            }
+          ]
+        },
+        {
+          "part": "g",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Add and subtract the simultaneous Euler updates."
+            },
+            {
+              "code": "A1",
+              "text": "$S_{n+1}=(1-0.1h)S_n$, $D_{n+1}=(1-0.5h)D_n$."
+            },
+            {
+              "code": "A1",
+              "text": "Preserving $D_n\\ge0$ for every $D_0\\ge0$ requires $1-0.5h\\ge0$, hence $h\\le2$."
+            },
+            {
+              "code": "R1",
+              "text": "For $0<h\\le2$, the original update coefficients $1-0.3h$ and $0.2h$ are nonnegative, so masses remain nonnegative; the difference also stays nonnegative. Thus the largest allowed step is $2$ h. If $h>2$, any $D_0>0$ reverses sign after one step."
+            },
+            {
+              "code": "R1",
+              "text": "These conditions preserve qualitative features only. Finite-step truncation error can remain large, as the $h=1$ computation demonstrates."
+            }
+          ]
+        }
+      ],
+      "sourcePages": []
+    }
+  ]
+}

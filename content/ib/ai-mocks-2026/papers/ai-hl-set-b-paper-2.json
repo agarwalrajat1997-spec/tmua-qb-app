@@ -1,0 +1,883 @@
+{
+  "id": "ai-hl-set-b-paper-2",
+  "strand": "ai",
+  "course": "hl",
+  "set": "B",
+  "paper": "2",
+  "title": "Mathematics AI HL - Set B - Paper 2",
+  "minutes": 120,
+  "marks": 110,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 18,
+      "stem": "A community centre can buy an energy system for \\$18000 now. It produces savings of \\$3200 at the end of year 1; these savings increase by $3\\%$ each year for eight years. Maintenance of \\$900 is paid at the end of each year. A resale receipt of \\$2000 is received at the end of year 8 in addition to that year's savings. All amounts quoted are nominal cash flows. Define net present value as discounted receipts minus discounted payments.",
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.7",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Build a correctly timed cash-flow model and distinguish discount rate, IRR and inflation-adjusted growth.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write an expression for the net present value $V(r)$ when the effective annual discount rate is $r$.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the net present value at $r=0.06$, to the nearest dollar, and interpret its sign.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "The internal rate of return is the positive value of $r$ for which $V(r)=0$. Find it as a percentage. Explain why there is at most one positive solution for these cash flows.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Annual inflation is $2\\%$. Find the annual growth rate in the purchasing power of the gross savings.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "An alternative system costs the same initially and gives a guaranteed net receipt of \\$2600 at the end of each of nine years, with no resale value. Compare the two systems using a $6\\%$ discount rate.",
+          "marks": 3
+        },
+        {
+          "label": "f",
+          "prompt": "State two distinct forecasting risks in the first system which the NPV calculation does not remove.",
+          "marks": 2
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The net annual saving in year $j$ is $3200(1.03)^{j-1}-900$."
+            },
+            {
+              "code": "M1",
+              "text": "Discount each year-end flow by $(1+r)^j$."
+            },
+            {
+              "code": "A1",
+              "text": "Include $2000/(1+r)^8$ for the additional resale receipt."
+            },
+            {
+              "code": "A1",
+              "text": "$V(r)=-18000+\\sum_{j=1}^{8}\\{3200(1.03)^{j-1}-900\\}/(1+r)^j+2000/(1+r)^8$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$V(0.06)=-444.6266$ dollars, giving $-445$ dollars to the nearest dollar."
+            },
+            {
+              "code": "R1",
+              "text": "The negative value means the investment does not meet a $6\\%$ effective annual required return under these forecasts."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve the stated NPV equation numerically for $r>0$."
+            },
+            {
+              "code": "A1",
+              "text": "$r=0.05434374$, or $5.434374\\%$ per year."
+            },
+            {
+              "code": "R1",
+              "text": "Every future net receipt is positive."
+            },
+            {
+              "code": "R1",
+              "text": "Each discounted positive receipt decreases as $r$ increases, so $V$ is strictly decreasing for $r>0$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Divide the nominal savings growth factor by the inflation growth factor."
+            },
+            {
+              "code": "A1",
+              "text": "The real growth factor is $1.03/1.02$."
+            },
+            {
+              "code": "A1",
+              "text": "The real growth rate is $0.9803922\\%$ per year."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For the alternative, calculate $-18000+\\sum_{j=1}^{9}2600/(1.06)^j$."
+            },
+            {
+              "code": "A1",
+              "text": "The alternative NPV is $-315.6001$ dollars."
+            },
+            {
+              "code": "R1",
+              "text": "Compare this value with $-444.6266$ for the first system; choose the higher NPV if one must be selected. A negative NPV still fails the required return."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The actual future savings or their growth may differ from the forecast, for example because energy prices change."
+            },
+            {
+              "code": "R1",
+              "text": "Maintenance, service life or resale value may differ; discounting does not guarantee these uncertain cash flows."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "$V(r)=-18000+\\sum_{j=1}^{8}\\{3200(1.03)^{j-1}-900\\}/(1+r)^j+2000/(1+r)^8$.; The negative value means the investment does not meet a $6\\%$ effective annual required return under these forecasts.; Each discounted positive receipt decreases as $r$ increases, so $V$ is strictly decreasing for $r>0$.; The real growth rate is $0.9803922\\%$ per year.; Compare this value with $-444.6266$ for the first system; choose the higher NPV if one must be selected. A negative NPV still fails the required return.; Maintenance, service life or resale value may differ; discounting does not guarantee these uncertain cash flows."
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 18,
+      "stem": "Three service centres have coordinates $A(2,2)$, $B(10,2)$ and $C(6,8)$, in kilometres. Their service region is the rectangle $0\\le x\\le12$, $0\\le y\\le10$. Initially each location is allocated to its nearest centre by straight-line distance. The sites are shown on the diagram.",
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6",
+        "SL 3.1",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Connect bisector equations, bounded-cell geometry and the difference between distance and travel-time models.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the perpendicular bisector of $AB$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the perpendicular bisector of $AC$ and the point where the three Voronoi boundaries meet. Verify that this point is also equidistant from $B$ and $C$.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Find the area of the Voronoi cell allocated to $A$ within the rectangular region.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Within the cell for $A$, locate the point farthest from $A$ and find its distance. You may use the fact that the maximum distance from a fixed point over a convex polygon is attained at a vertex.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "At $D(5,4)$, straight-line response speeds from $A,B,C$ are respectively $40,80,30$ km per hour. Determine the fastest centre and explain why this may differ from the Voronoi allocation.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$AB$ is horizontal with midpoint $(6,2)$."
+            },
+            {
+              "code": "A1",
+              "text": "The bisector is $x=6$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Equate $(x-2)^2+(y-2)^2$ and $(x-6)^2+(y-8)^2$."
+            },
+            {
+              "code": "A1",
+              "text": "The bisector is $2x+3y=23$."
+            },
+            {
+              "code": "M1",
+              "text": "Intersect this with $x=6$."
+            },
+            {
+              "code": "A1",
+              "text": "The common vertex is $(6,11/3)$."
+            },
+            {
+              "code": "R1",
+              "text": "The $BC$ bisector is $-2x+3y=-1$, satisfied by the same point."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The cell satisfies $x\\le6$ and $2x+3y\\le23$, with the rectangle bounds."
+            },
+            {
+              "code": "A1",
+              "text": "Its vertices are $(0,0),(6,0),(6,11/3),(0,23/3)$."
+            },
+            {
+              "code": "M1",
+              "text": "Use a trapezium area or integrate the upper edge from $x=0$ to $6$."
+            },
+            {
+              "code": "A1",
+              "text": "The area is $34\\ \\mathrm{km}^2$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Compare distances from $A$ to the four cell vertices."
+            },
+            {
+              "code": "A1",
+              "text": "The squared distances are $8,20,169/9,325/9$, respectively."
+            },
+            {
+              "code": "A1",
+              "text": "The farthest vertex is $(0,23/3)$."
+            },
+            {
+              "code": "A1",
+              "text": "The maximum distance is $\\sqrt{325}/3=6.009252$ km."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Distances from $D$ to $A,B,C$ are $\\sqrt{13},\\sqrt{29},\\sqrt{17}$ km; divide by the respective speeds."
+            },
+            {
+              "code": "A1",
+              "text": "Times are $5.408327$, $4.038874$ and $8.246211$ minutes, so $B$ is fastest."
+            },
+            {
+              "code": "R1",
+              "text": "Distance-only allocation gives $A$, but unequal speeds mean nearest distance need not minimize response time."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The bisector is $x=6$.; The $BC$ bisector is $-2x+3y=-1$, satisfied by the same point.; The area is $34\\ \\mathrm{km}^2$.; The maximum distance is $\\sqrt{325}/3=6.009252$ km.; Distance-only allocation gives $A$, but unequal speeds mean nearest distance need not minimize response time.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 190.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"190.00\" y=\"314.0\" text-anchor=\"middle\">0</text><path d=\"M 240.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"240.00\" y=\"314.0\" text-anchor=\"middle\">2</text><path d=\"M 290.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"290.00\" y=\"314.0\" text-anchor=\"middle\">4</text><path d=\"M 340.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"340.00\" y=\"314.0\" text-anchor=\"middle\">6</text><path d=\"M 390.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"390.00\" y=\"314.0\" text-anchor=\"middle\">8</text><path d=\"M 440.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"440.00\" y=\"314.0\" text-anchor=\"middle\">10</text><path d=\"M 490.00 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"490.00\" y=\"314.0\" text-anchor=\"middle\">12</text><path d=\"M 190.0 290.00 H 490.0\" stroke=\"#ddd\"/><text x=\"178.0\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 190.0 240.00 H 490.0\" stroke=\"#ddd\"/><text x=\"178.0\" y=\"245.00\" text-anchor=\"end\">2</text><path d=\"M 190.0 190.00 H 490.0\" stroke=\"#ddd\"/><text x=\"178.0\" y=\"195.00\" text-anchor=\"end\">4</text><path d=\"M 190.0 140.00 H 490.0\" stroke=\"#ddd\"/><text x=\"178.0\" y=\"145.00\" text-anchor=\"end\">6</text><path d=\"M 190.0 90.00 H 490.0\" stroke=\"#ddd\"/><text x=\"178.0\" y=\"95.00\" text-anchor=\"end\">8</text><path d=\"M 190.0 40.00 H 490.0\" stroke=\"#ddd\"/><text x=\"178.0\" y=\"45.00\" text-anchor=\"end\">10</text><path d=\"M 190.0 40.0 V 290.0 H 490.0\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><circle cx=\"240.00\" cy=\"240.00\" r=\"4\"/><text x=\"248.00\" y=\"230.00\">A</text><circle cx=\"440.00\" cy=\"240.00\" r=\"4\"/><text x=\"448.00\" y=\"230.00\">B</text><circle cx=\"340.00\" cy=\"90.00\" r=\"4\"/><text x=\"348.00\" y=\"80.00\">C</text><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">x (km)</text><text x=\"142.0\" y=\"175.0\" transform=\"rotate(-90 142.0 175.0)\" text-anchor=\"middle\">y (km)</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Service sites within the rectangular region</text></g></svg>"
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 19,
+      "stem": "In a clinic, hourly counts of appointments and walk-ins are independent Poisson variables with means $2.4$ and $3.6$. Thus the total hourly count $N$ is Poisson with mean $6$. Counts in disjoint time intervals are independent, with constant rates. In parts (d) and (e), use one-tailed tests for an increase in the total arrival rate.",
+      "syllabusRefs": [
+        "AHL 4.17",
+        "SL 4.6",
+        "SL 4.8",
+        "AHL 4.18"
+      ],
+      "cognitiveDemand": "Handle count tails and conditional allocation exactly; separate significance, discrete rejection region and power.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the probability of at least ten arrivals in one hour.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Given that there are five arrivals in an hour, the number of appointments has a binomial distribution. Find its success probability and calculate the probability that at least three of the five are appointments.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "A two-hour session has capacity for $m$ arrivals. Find the smallest integer $m$ for which the probability of arrivals exceeding capacity is less than $0.01$. Show the adjacent probabilities used.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "In eight observed hours there are $65$ arrivals. Test at the $5\\%$ level whether the hourly total rate has increased from $6$. State hypotheses, distribution and conclusion.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "For the same eight-hour test, find the rejection region with the largest Type I error probability strictly below $0.05$. Then calculate and interpret the probability of a Type II error if the true hourly rate is $7$.",
+          "marks": 5
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$P(N\\ge10)=1-P(N\\le9)$, with $N\\sim\\operatorname{Po}(6)$."
+            },
+            {
+              "code": "A1",
+              "text": "Use the Poisson cumulative probability with upper included count $9$."
+            },
+            {
+              "code": "A1",
+              "text": "The probability is $0.08392402$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The appointment fraction is $2.4/(2.4+3.6)=0.4$."
+            },
+            {
+              "code": "A1",
+              "text": "The conditional count is $\\operatorname{Bin}(5,0.4)$."
+            },
+            {
+              "code": "M1",
+              "text": "Use $1-P(X\\le2)$."
+            },
+            {
+              "code": "A1",
+              "text": "The conditional probability is $0.31744$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The two-hour count is $\\operatorname{Po}(12)$; require $P(N>m)<0.01$."
+            },
+            {
+              "code": "A1",
+              "text": "At $m=21$ the tail is $0.006065147$; at one less it is $0.01159774$."
+            },
+            {
+              "code": "A1",
+              "text": "The smallest capacity is $21$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0:\\lambda=6$ per hour, $H_1:\\lambda>6$ per hour."
+            },
+            {
+              "code": "M1",
+              "text": "Under $H_0$, the eight-hour count is $X\\sim\\operatorname{Po}(48)$."
+            },
+            {
+              "code": "A1",
+              "text": "$p=P(X\\ge65)=0.01117098$."
+            },
+            {
+              "code": "R1",
+              "text": "Reject $H_0$ since $p<0.05$; the observed count supports an increased rate."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Find the smallest integer $k$ with $P(\\operatorname{Po}(48)\\ge k)<0.05$."
+            },
+            {
+              "code": "A1",
+              "text": "Reject for $X\\ge61$; the actual Type I error probability is $0.03950011$."
+            },
+            {
+              "code": "M1",
+              "text": "At rate $7$, the eight-hour count is $\\operatorname{Po}(56)$; a Type II error is $X<61$."
+            },
+            {
+              "code": "A1",
+              "text": "The Type II probability is $0.7309104$."
+            },
+            {
+              "code": "R1",
+              "text": "This is the probability that the test fails to detect an increase when the true hourly rate is $7$, not the probability that the null hypothesis is true."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The probability is $0.08392402$.; The conditional probability is $0.31744$.; The smallest capacity is $21$.; Reject $H_0$ since $p<0.05$; the observed count supports an increased rate.; This is the probability that the test fails to detect an increase when the true hourly rate is $7$, not the probability that the null hypothesis is true."
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 19,
+      "stem": "A learning website has pages $A,B,C$. Each minute a visitor either stays or follows one link. Using column state vectors, the transition matrix is $T=\\begin{pmatrix}0.6&0.2&0.1\\\\0.3&0.5&0.3\\\\0.1&0.3&0.6\\end{pmatrix}$, where $T_{ij}$ is the probability of moving from page $j$ to page $i$. Initially $1000$ visitors are all on $A$. Each visitor remains in the model and evolves independently. Repeated visits to $C$ in different minutes are counted separately.",
+      "syllabusRefs": [
+        "AHL 4.19",
+        "AHL 1.14",
+        "SL 4.7"
+      ],
+      "cognitiveDemand": "Use the declared column convention, distinguish occupancy from visits, and compare a revised navigation policy.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "State the probability of moving from $B$ to $C$ in one minute and find the expected state vector after one minute.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the expected numbers on each page after two minutes.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the steady-state proportions on the three pages. Show the equations and normalization used.",
+          "marks": 5
+        },
+        {
+          "label": "d",
+          "prompt": "Explain why the steady state is approached from any initial probability distribution.",
+          "marks": 2
+        },
+        {
+          "label": "e",
+          "prompt": "Find the expected total number of visits to $C$ during minutes $1,2,3,4,5$ by the $1000$ visitors.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "An additional link changes the probabilities from page $C$ to $(0.25,0.30,0.45)^T$, leaving the other columns unchanged. Find the new steady state and assess whether this increases the long-run fraction on $C$.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The probability from $B$ to $C$ is the row $C$, column $B$ entry, $0.3$."
+            },
+            {
+              "code": "A1",
+              "text": "The expected counts are $(600,300,100)^T$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $T^2(1000,0,0)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The probability vector is $(0.43,0.36,0.21)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The expected counts are $(430,360,210)^T$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $T\\mathbf s=\\mathbf s$."
+            },
+            {
+              "code": "A1",
+              "text": "For example, $0.4a=0.2b+0.1c$ and $0.5b=0.3a+0.3c$."
+            },
+            {
+              "code": "M1",
+              "text": "Add $a+b+c=1$ to give a unique normalized state."
+            },
+            {
+              "code": "A1",
+              "text": "The steady state is $(0.275,0.375,0.35)^T$."
+            },
+            {
+              "code": "R1",
+              "text": "These are long-run fractions, and multiplying by $1000$ gives the corresponding limiting expected counts."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Every entry of $T$ is strictly positive, so the transition matrix is regular."
+            },
+            {
+              "code": "R1",
+              "text": "A regular Markov chain approaches its unique steady-state distribution independently of its initial distribution."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For one visitor initially on $A$, use the $C$ component of $T^n(1,0,0)^T$ in minute $n$."
+            },
+            {
+              "code": "M1",
+              "text": "Add those five probabilities, rather than using only the minute-5 occupancy."
+            },
+            {
+              "code": "A1",
+              "text": "The expected visits per visitor total $1.23123$."
+            },
+            {
+              "code": "A1",
+              "text": "The expected aggregate is $1231.23$ visits; repeated visits are included."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Replace the third column and solve $T_{\\rm new}\\mathbf s=\\mathbf s$, $a+b+c=1$."
+            },
+            {
+              "code": "A1",
+              "text": "The new proportions are $(0.3557692,0.375,0.2692308)^T$."
+            },
+            {
+              "code": "R1",
+              "text": "The fraction on $C$ decreases from $0.35$ to $0.2692308$, so the change does not meet that objective."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The expected counts are $(600,300,100)^T$.; The expected counts are $(430,360,210)^T$.; These are long-run fractions, and multiplying by $1000$ gives the corresponding limiting expected counts.; A regular Markov chain approaches its unique steady-state distribution independently of its initial distribution.; The expected aggregate is $1231.23$ visits; repeated visits are included.; The fraction on $C$ decreases from $0.35$ to $0.2692308$, so the change does not meet that objective."
+    },
+    {
+      "number": 5,
+      "section": "",
+      "marks": 18,
+      "stem": "A vehicle is tested on one dry road. Speed $v$ is in km per hour and braking distance $d$ is in metres. Use a power model $d=kv^b$, fitted by linear regression of $\\ln d$ on $\\ln v$.\n\n| $v$ | 20 | 30 | 40 | 50 | 60 | 70 | 80 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| $d$ | 3.2 | 6.9 | 12.6 | 20.1 | 29.5 | 39.8 | 53.0 |\n\n",
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Linearize a power relation, retain units in a stopping model and solve an implicit safety design limit.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find $k$ and $b$, and the correlation coefficient for the linearized data.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Use the model to predict the braking distance at $65$ km per hour and find the residual at $80$ km per hour, taking residual as observed minus predicted distance.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "The driver's reaction time is $1.1$ seconds. Find the largest speed for which the modelled total stopping distance is at most $50$ metres. Show the equation solved and justify choosing the boundary solution.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "An alert system reduces reaction time to $0.85$ seconds without changing braking performance. Find the new largest speed for the same $50$-metre stopping distance and explain why the braking coefficient $k$ is unchanged.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Explain why the high linearized correlation does not justify using this model on an icy road at $120$ km per hour. State what quantity the log-linear regression minimizes.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Fit $\\ln d=a+b\\ln v$."
+            },
+            {
+              "code": "A1",
+              "text": "$a=-4.964212$ and $b=2.036363$."
+            },
+            {
+              "code": "A1",
+              "text": "$k=e^a=0.00698345$."
+            },
+            {
+              "code": "A1",
+              "text": "The correlation coefficient of the log data is $r=0.9998259$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Substitute the speeds into $kv^b$, using unrounded regression coefficients."
+            },
+            {
+              "code": "A1",
+              "text": "The prediction at $65$ is $34.34158$ m."
+            },
+            {
+              "code": "A1",
+              "text": "At $80$, the residual is $53-52.41465=0.5853497$ m."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The speed in metres per second is $v/3.6$, so total stopping distance is $1.1v/3.6+kv^b$."
+            },
+            {
+              "code": "M1",
+              "text": "Solve $1.1v/3.6+kv^b=50$ on the tested speed interval."
+            },
+            {
+              "code": "A1",
+              "text": "The boundary speed is $61.89802$ km per hour."
+            },
+            {
+              "code": "R1",
+              "text": "Both terms increase for $v>0$ since $k,b>0$, so this is the largest admissible speed."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Replace only the reaction term: $0.85v/3.6+kv^b=50$."
+            },
+            {
+              "code": "A1",
+              "text": "The new boundary speed is $65.23683$ km per hour."
+            },
+            {
+              "code": "R1",
+              "text": "The system changes reaction time, not the measured relationship between speed and braking distance."
+            },
+            {
+              "code": "R1",
+              "text": "Therefore the original braking regression and its coefficient $k$ remain in the model."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The road condition differs from that of the measurements, so the same braking parameters need not apply."
+            },
+            {
+              "code": "R1",
+              "text": "$120$ lies outside the observed speed range, making this an extrapolation."
+            },
+            {
+              "code": "R1",
+              "text": "The fitted line minimizes the sum of squared residuals in $\\ln d$, not in the original distances $d$."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The correlation coefficient of the log data is $r=0.9998259$.; At $80$, the residual is $53-52.41465=0.5853497$ m.; Both terms increase for $v>0$ since $k,b>0$, so this is the largest admissible speed.; Therefore the original braking regression and its coefficient $k$ remain in the model.; The fitted line minimizes the sum of squared residuals in $\\ln d$, not in the original distances $d$."
+    },
+    {
+      "number": 6,
+      "section": "",
+      "marks": 18,
+      "stem": "A managed culture is modelled by $N(t)=\\dfrac{1200}{1+11e^{-0.42t}}$, where $N$ is the expected number of organisms and $t\\ge0$ is time in days. A proposed differential model is $N\\prime=rN(1-N/1200)$. Resource conditions are held fixed during the observation period.",
+      "syllabusRefs": [
+        "AHL 2.9",
+        "AHL 5.9",
+        "AHL 5.10",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Connect explicit and differential logistic forms and distinguish maximum instantaneous growth from mean population.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the initial population and limiting population, and interpret the constant $1200$.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Differentiate $N(t)$ and show that the proposed differential model holds for a particular value of $r$.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Find the largest instantaneous growth rate and the time at which it occurs. Justify that it is a maximum.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Find the mean population over days $5$ to $10$. Explain why this need not equal the population on day $7.5$.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Explain why this model predicts no overshoot above $1200$ from the stated initial condition. Give one plausible change to the real culture which would invalidate the fixed carrying-capacity assumption.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$N(0)=1200/12=100$."
+            },
+            {
+              "code": "A1",
+              "text": "$N(t)$ approaches $1200$ as $t$ increases."
+            },
+            {
+              "code": "R1",
+              "text": "$1200$ is the modelled carrying capacity under the fixed resource conditions."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Apply the chain rule to $1200(1+11e^{-0.42t})^{-1}$."
+            },
+            {
+              "code": "A1",
+              "text": "$N\\prime=1200(11)(0.42)e^{-0.42t}/(1+11e^{-0.42t})^2$."
+            },
+            {
+              "code": "M1",
+              "text": "$1-N/1200=11e^{-0.42t}/(1+11e^{-0.42t})$."
+            },
+            {
+              "code": "A1",
+              "text": "The expressions agree for $r=0.42$ per day."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Treat growth as $G(N)=0.42N(1-N/1200)$."
+            },
+            {
+              "code": "R1",
+              "text": "This downward-opening quadratic is maximized at $N=600$."
+            },
+            {
+              "code": "A1",
+              "text": "The maximum rate is $126$ organisms per day."
+            },
+            {
+              "code": "A1",
+              "text": "$11e^{-0.42t}=1$, giving $t=5.709274$ days."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The time mean is $\\frac15\\int_5^{10}N(t)\\,dt$."
+            },
+            {
+              "code": "A1",
+              "text": "The mean is $799.7329$ organisms."
+            },
+            {
+              "code": "A1",
+              "text": "The midpoint population is $N(7.5)=815.5646$."
+            },
+            {
+              "code": "R1",
+              "text": "For a nonlinear function, an interval average generally differs from the value at the midpoint; they answer different questions."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The denominator is $1+11e^{-0.42t}>1$ for every finite $t\\ge0$, so $N(t)<1200$."
+            },
+            {
+              "code": "R1",
+              "text": "Also $N\\prime>0$ while $0<N<1200$, with growth tending to zero near capacity."
+            },
+            {
+              "code": "R1",
+              "text": "A change in nutrient supply, available space, temperature or waste accumulation could change the effective carrying capacity."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "$1200$ is the modelled carrying capacity under the fixed resource conditions.; The expressions agree for $r=0.42$ per day.; $11e^{-0.42t}=1$, giving $t=5.709274$ days.; For a nonlinear function, an interval average generally differs from the value at the midpoint; they answer different questions.; A change in nutrient supply, available space, temperature or waste accumulation could change the effective carrying capacity.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 70.00 40 V 290\" stroke=\"#ddd\"/><text x=\"70.00\" y=\"314\" text-anchor=\"middle\">0</text><path d=\"M 178.00 40 V 290\" stroke=\"#ddd\"/><text x=\"178.00\" y=\"314\" text-anchor=\"middle\">3</text><path d=\"M 286.00 40 V 290\" stroke=\"#ddd\"/><text x=\"286.00\" y=\"314\" text-anchor=\"middle\">6</text><path d=\"M 394.00 40 V 290\" stroke=\"#ddd\"/><text x=\"394.00\" y=\"314\" text-anchor=\"middle\">9</text><path d=\"M 502.00 40 V 290\" stroke=\"#ddd\"/><text x=\"502.00\" y=\"314\" text-anchor=\"middle\">12</text><path d=\"M 610.00 40 V 290\" stroke=\"#ddd\"/><text x=\"610.00\" y=\"314\" text-anchor=\"middle\">15</text><path d=\"M 70 290.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 70 232.31 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"237.31\" text-anchor=\"end\">300</text><path d=\"M 70 174.62 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"179.62\" text-anchor=\"end\">600</text><path d=\"M 70 116.92 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"121.92\" text-anchor=\"end\">900</text><path d=\"M 70 59.23 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"64.23\" text-anchor=\"end\">1200</text><path d=\"M 70 40 V 290 H 610\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M70.00,270.77 L73.60,270.02 L77.20,269.24 L80.80,268.43 L84.40,267.59 L88.00,266.73 L91.60,265.83 L95.20,264.91 L98.80,263.96 L102.40,262.97 L106.00,261.95 L109.60,260.90 L113.20,259.82 L116.80,258.70 L120.40,257.54 L124.00,256.35 L127.60,255.13 L131.20,253.87 L134.80,252.57 L138.40,251.23 L142.00,249.86 L145.60,248.45 L149.20,247.00 L152.80,245.51 L156.40,243.98 L160.00,242.41 L163.60,240.81 L167.20,239.16 L170.80,237.48 L174.40,235.75 L178.00,233.99 L181.60,232.19 L185.20,230.35 L188.80,228.47 L192.40,226.56 L196.00,224.61 L199.60,222.63 L203.20,220.60 L206.80,218.55 L210.40,216.46 L214.00,214.34 L217.60,212.19 L221.20,210.01 L224.80,207.80 L228.40,205.56 L232.00,203.30 L235.60,201.02 L239.20,198.71 L242.80,196.38 L246.40,194.04 L250.00,191.68 L253.60,189.30 L257.20,186.91 L260.80,184.51 L264.40,182.10 L268.00,179.68 L271.60,177.26 L275.20,174.84 L278.80,172.42 L282.40,170.00 L286.00,167.58 L289.60,165.17 L293.20,162.77 L296.80,160.37 L300.40,157.99 L304.00,155.63 L307.60,153.28 L311.20,150.95 L314.80,148.64 L318.40,146.35 L322.00,144.08 L325.60,141.84 L329.20,139.63 L332.80,137.44 L336.40,135.29 L340.00,133.16 L343.60,131.07 L347.20,129.01 L350.80,126.98 L354.40,124.99 L358.00,123.03 L361.60,121.11 L365.20,119.22 L368.80,117.38 L372.40,115.57 L376.00,113.80 L379.60,112.07 L383.20,110.38 L386.80,108.73 L390.40,107.11 L394.00,105.54 L397.60,104.00 L401.20,102.51 L404.80,101.05 L408.40,99.63 L412.00,98.25 L415.60,96.91 L419.20,95.60 L422.80,94.33 L426.40,93.10 L430.00,91.91 L433.60,90.75 L437.20,89.62 L440.80,88.53 L444.40,87.47 L448.00,86.45 L451.60,85.45 L455.20,84.49 L458.80,83.56 L462.40,82.67 L466.00,81.80 L469.60,80.96 L473.20,80.14 L476.80,79.36 L480.40,78.60 L484.00,77.87 L487.60,77.16 L491.20,76.48 L494.80,75.82 L498.40,75.18 L502.00,74.57 L505.60,73.98 L509.20,73.41 L512.80,72.86 L516.40,72.33 L520.00,71.82 L523.60,71.33 L527.20,70.86 L530.80,70.41 L534.40,69.97 L538.00,69.55 L541.60,69.14 L545.20,68.75 L548.80,68.37 L552.40,68.01 L556.00,67.66 L559.60,67.33 L563.20,67.01 L566.80,66.70 L570.40,66.40 L574.00,66.11 L577.60,65.84 L581.20,65.57 L584.80,65.32 L588.40,65.08 L592.00,64.84 L595.60,64.62 L599.20,64.40 L602.80,64.19 L606.40,63.99 L610.00,63.80\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">t (days)</text><text x=\"22\" y=\"175.0\" transform=\"rotate(-90 22 175.0)\" text-anchor=\"middle\">Expected population</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Culture model</text></g></svg>"
+    }
+  ]
+}

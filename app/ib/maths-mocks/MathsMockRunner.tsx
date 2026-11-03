@@ -5,7 +5,7 @@ import Script from "next/script";
 import IbBrand from "../IbBrand";
 import MathContent from "../components/MathContent";
 import DiagramImage from "../components/DiagramImage";
-import { mathsAnswerKey, mathsPdfUrl, mathsReportPayload, mathsSecondsRemaining, mathsSubject, restoreMathsMockDraft, type MathsMockDraft, type MathsMockPrompt, type MathsMockPromptQuestion, type MathsMockQuestion, type MathsMockReview } from "@/lib/ib/maths-mock-model";
+import { mathsAnswerKey, mathsPdfUrl, mathsReportPayload, mathsSecondsRemaining, mathsStrand, mathsStrandName, mathsSubject, restoreMathsMockDraft, type MathsMockDraft, type MathsMockPrompt, type MathsMockPromptQuestion, type MathsMockQuestion, type MathsMockReview } from "@/lib/ib/maths-mock-model";
 import styles from "./maths-mocks.module.css";
 
 type Draft = MathsMockDraft;
@@ -45,7 +45,7 @@ export default function MathsMockRunner({ paper, email, accountId, initialAttemp
   const draftRef = useRef(draft); draftRef.current = draft;
   const submitting = useRef(false), mailBusy = useRef(new Set<string>());
   const storageKey = `ts:ib-maths:v1:${accountId}:${paper.id}`, api = `/api/ib/maths-mocks/${paper.id}`;
-  const home = `/ib?subject=${mathsSubject(paper.course)}&view=mocks`;
+  const home = `/ib?subject=${mathsSubject(paper.course, mathsStrand(paper))}&view=mocks`;
   const pdfUrl = mathsPdfUrl(paper);
   const mailKey = useCallback((attempt: string, kind: MailKind) => `ts:ib-maths-mail:v1:${accountId}:${attempt}:${kind}`, [accountId]);
   const setMailStatus = useCallback((attempt: string, kind: MailKind, state: MailState) => {
@@ -134,7 +134,7 @@ export default function MathsMockRunner({ paper, email, accountId, initialAttemp
     <Script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js" strategy="afterInteractive" />
     <header className={styles.header}><Link href={home} aria-label="IB Mathematics mock tests"><IbBrand /></Link><span className={styles.account}>{email}</span><Link href={home}>All mocks ↗</Link></header>
     <main className={styles.main}>
-      <div className={styles.heading}><span className={styles.tag}>MATHEMATICS: ANALYSIS AND APPROACHES · {paper.course.toUpperCase()}</span><h1>Mock Set {paper.set}<span>Paper {paper.paper}</span></h1><p>{paper.minutes} minutes · {paper.marks} marks · {paper.calculator ? "Graphic display calculator required" : "No calculator permitted"}</p></div>
+      <div className={styles.heading}><span className={styles.tag}>MATHEMATICS: {mathsStrandName(paper).toUpperCase()} · {paper.course.toUpperCase()}</span><h1>Mock Set {paper.set}<span>Paper {paper.paper}</span></h1><p>{paper.minutes} minutes · {paper.marks} marks · {paper.calculator ? "Graphic display calculator required" : "No calculator permitted"}</p></div>
       {warning ? <p className={styles.notice} role="status">{warning}</p> : null}
       {error ? <div className={styles.error} role="alert">{error}{(initialAttempt || draft.stage === "review") && !review ? <button onClick={() => loadAttempt(initialAttempt || draft.attemptId)} disabled={busy}>Retry loading</button> : null}</div> : null}
       {!ready ? <p>Loading your saved work…</p> : null}
@@ -151,7 +151,7 @@ export default function MathsMockRunner({ paper, email, accountId, initialAttemp
         {review.selfMarks ? <section className={styles.breakdown}><h2>Question breakdown</h2><table><thead><tr><th>Question</th><th>Marks (self-assessed)</th></tr></thead><tbody>{review.score.rows.map(q => <tr key={q.number}><td>{q.number}{q.section ? ` · Section ${q.section}` : ""}</td><td>{q.score} / {q.max}</td></tr>)}</tbody></table></section> : null}
         <section className={styles.solutions}><h2>Worked solutions and self-assessment</h2><p>Check your retained working and the supplied marking points. Enter whole-number marks up to each part’s maximum. Accept valid alternative methods and apply follow-through only where the marking note allows it.</p>{review.solutions.map(q => <details key={q.number} className={styles.solution}><summary>Question {q.number} · {q.marks} marks</summary><div className={styles.solutionBody}><MockQuestion question={q} />{q.markScheme.map(group => <section key={group.part || "whole"}><h3>{group.part ? `Part (${group.part})` : "Worked solution"}</h3><p className={styles.writtenAnswer}><strong>Your response:</strong> {review.answers[mathsAnswerKey(q.number, group.part)] || "No typed response. Check your retained written work."}</p><ol className={styles.markSteps}>{group.steps.map((step, index) => <li key={index}><strong>{step.code}</strong><MathContent>{step.text}</MathContent></li>)}</ol><label className={styles.markInput}>Your mark for Question {q.number}{group.part ? ` (${group.part})` : ""}<select disabled={!!review.selfMarks} value={draft.marks[mathsAnswerKey(q.number, group.part)] ?? ""} onChange={event => { const value = event.target.value; setDraft(d => { const marks = { ...d.marks }; if (value === "") delete marks[mathsAnswerKey(q.number, group.part)]; else marks[mathsAnswerKey(q.number, group.part)] = Number(value); return { ...d, marks }; }); }}><option value="">Choose a mark</option>{Array.from({ length: (q.parts.find(part => part.label === group.part)?.marks ?? 0) + 1 }, (_, mark) => <option key={mark} value={mark}>{mark}</option>)}</select></label></section>)}</div></details>)}</section>
         {!review.selfMarks ? <div className={styles.markFooter}><p>{unmarked} part{unmarked === 1 ? "" : "s"} left to mark. Save the marks to receive the self-assessed score report.</p><button className={styles.primary} onClick={saveMarks} disabled={busy || unmarked > 0}>{busy ? "Saving…" : "Save marks and email scored report"}</button></div> : null}
-        <Link className={styles.back} href={home}>← Back to Mathematics AA mocks</Link>{review.selfMarks ? <button className={styles.secondary} onClick={startAgain}>Start a new attempt</button> : null}
+        <Link className={styles.back} href={home}>← Back to Mathematics {mathsStrand(paper).toUpperCase()} mocks</Link>{review.selfMarks ? <button className={styles.secondary} onClick={startAgain}>Start a new attempt</button> : null}
       </> : null}
     </main>
   </div>;

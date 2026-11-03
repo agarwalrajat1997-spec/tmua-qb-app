@@ -1,0 +1,4852 @@
+{
+  "status": "passed",
+  "reviewer": "Separate mathematical reviewer who did not author the AI Paper 1 questions",
+  "method": "Read complete stems and all worked marking points, independently transcribed inputs and recomputed all parts without author code. Exact rational linear algebra, exhaustive finite optimisation/tree enumeration, independent density quadrature and analytic domain/global-extremum arguments supplement numeric checks.",
+  "papers": 4,
+  "questions": 64,
+  "parts": 199,
+  "marks": 440,
+  "independentCheckCount": 337,
+  "nativeDiagramsInspected": 28,
+  "syllabusPrimarySource": "https://www.ibo.org/globalassets/new-structure/university-admission/pdfs/dp-mathematics-applications-and-interpretation-guide-en.pdf",
+  "syllabusReview": "Official SL/AHL references and the independently checked current-guide boundaries were considered for every question. Original contexts define unfamiliar models; no complex roots, plane equations, unsupported integration methods, absorbing-chain theory or nonlinear Jacobians are assumed. Each part-specific review records the actual method and modelling assumptions.",
+  "paperHashes": {
+    "ai-hl-set-a-paper-1": "ad905ebe848479378896fb4e4bb35243845fbf7ecd48abf8e9dbde0b85574acf",
+    "ai-hl-set-b-paper-1": "bb4ef7a738a090145ad110d366fbf8db8cc5d6aee8da2cf91abd53f66fd53cbb",
+    "ai-hl-set-c-paper-1": "0101c8230e0fc77dc66c813a5541b98ec26cfa5df45d2eaa3beb78d1eff9c864",
+    "ai-hl-set-d-paper-1": "d3da6dbc11efd369ee4807cb3046bf70cd3e9c50e157c188cc69864320814fd7"
+  },
+  "records": [
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 1,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "5b61fa69036d1670281945b40fb68ee30568ebbc4c18635d542cc1f492fd31d1",
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.4",
+        "SL 1.8"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Five-year retained value",
+            "calculated": 20074.173235199996,
+            "expected": 20074.1732352,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Sum five independently listed annual maintenance payments",
+            "calculated": 6438.7887839999985,
+            "expected": 6438.788784,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Exhaustive permitted integer minimizer",
+            "calculated": 11,
+            "expected": 11,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Minimum annual cost",
+            "calculated": 6075.237474869745,
+            "expected": 6075.237474869745,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Nearest-dollar minimum",
+            "calculated": 6075,
+            "expected": 6075,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "A 16% annual fall multiplies value by0.84 five times.",
+        "b": "Maintenance in years1 through5 is900 times1,1.18,...,1.18^4; no extra year is charged.",
+        "c": "Every integer1 through12 is evaluated, including both endpoints. Year11 beats the nearby year10 by about2.15 dollars/year; this establishes the global discrete optimum."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 2,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "a0b2e57cd8a2c632fc2e8f769a87c5cbfae5ae75796e6d21cd245b835bab8fdb",
+      "syllabusRefs": [
+        "SL 4.4"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "OLS slope",
+            "calculated": 1.2754285714285714,
+            "expected": 1.2754285714285714,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "OLS intercept",
+            "calculated": 5.126666666666665,
+            "expected": 5.126666666666665,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Pearson r",
+            "calculated": 0.9977808814425589,
+            "expected": 0.9977808814425589,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Invert y-on-x calibration at50mV",
+            "calculated": 35.18294504181601,
+            "expected": 35.18294504181601,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Reverse regression slope",
+            "calculated": 0.7805742396512131,
+            "expected": 0.7805742396512131,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Reverse intercept",
+            "calculated": -3.8465779933087063,
+            "expected": -3.8465779933087063,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "x-on-y prediction",
+            "calculated": 35.182133989251945,
+            "expected": 35.182133989251945,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Slopes product equals r squared",
+            "calculated": 0.99556668737229,
+            "expected": 0.9955666873722898,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Centred cross-products from all six raw pairs determine the OLS line and r; the controlled explanatory variable is x.",
+        "b": "Calibration inversion is (signal-intercept)/slope;50mV lies within the measured range. Five decimal places preserve the small distinction.",
+        "c": "Regressing x on y minimizes horizontal residuals. The product of regression slopes is r^2<1, so reverse fitting is not algebraic inversion."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 3,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "cd122229fc8d9e3d64b7b5bf67f3fc4d5b047de81de1b1c68d296e91c383876f",
+      "syllabusRefs": [
+        "SL 2.1",
+        "SL 3.5",
+        "SL 3.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "AB midpoint x",
+            "calculated": 4,
+            "expected": 4,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Circumcentre",
+            "calculated": [
+              "4",
+              "17/4"
+            ],
+            "expected": [
+              4,
+              4.25
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "All three squared distances",
+            "calculated": [
+              14.0625,
+              14.0625,
+              14.0625
+            ],
+            "expected": [
+              14.0625,
+              14.0625,
+              14.0625
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Call distances",
+            "calculated": [
+              4.242640687119285,
+              4.242640687119285,
+              3.0
+            ],
+            "expected": [
+              4.242640687119285,
+              4.242640687119285,
+              3
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Unique nearest station index",
+            "calculated": 2,
+            "expected": 2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Horizontal AB has vertical bisector x4.",
+        "b": "Equating A/C squared distances gives6x+12y75. Atx4 the common pointy4.25 has equal distances to every site, so all three Voronoi cells meet.",
+        "c": "The A/B tie is not the nearest tie: C is strictly nearer at3km, versus sqrt18km to A/B."
+      },
+      "nativeDiagramReview": "Native SVG read: sites A(1,2),B(7,2),C(4,8), kilometre axes and no pre-drawn answer boundaries are correct.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 4,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "6c677f0aa1cd2d7ad90bacecf1f12cd8e314a6d3c9676aa3af8e27cafea4dd1f",
+      "syllabusRefs": [
+        "SL 4.11"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "X pass expectation",
+            "calculated": 34.666666666666664,
+            "expected": 34.666666666666664,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Degrees of freedom",
+            "calculated": 2,
+            "expected": 2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Every expected cell exceeds5",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Pearson statistic from all six cells",
+            "calculated": 7.023411371237458,
+            "expected": 7.023411371237458,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Upper tail for chi-square df2",
+            "calculated": 0.029845963165705147,
+            "expected": 0.029845963165705147,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Reject independence at5percent",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The marginal pass total is104 and each programme has50 trainees; df2 and all expected counts exceed5.",
+        "b": "The df2 survival function is exp(-statistic/2), independently verifying the GDC p-value.",
+        "c": "The p-value rejects independence and supports association. Random sampling does not mean random treatment assignment; confounding prevents the stated table alone proving causation."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 5,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "b3fbefa13013d4f1cad9479bee952d1e01e68c915f10abee5a5f146dda5dc681",
+      "syllabusRefs": [
+        "SL 3.3",
+        "AHL 3.10",
+        "AHL 3.12"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Water-relative velocity",
+            "calculated": [
+              -3,
+              13
+            ],
+            "expected": [
+              -3,
+              13
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Speed",
+            "calculated": 13.341664064126334,
+            "expected": 13.341664064126334,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Clockwise bearing from north",
+            "calculated": 347.0053832080835,
+            "expected": 347.0053832080835,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Bearing nearest degree",
+            "calculated": 347,
+            "expected": 347,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "One-hour east displacement",
+            "calculated": 3,
+            "expected": 3,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Ground equals water-relative plus current, with east/north components explicitly defined.",
+        "b": "The direction lies west of north, so bearing is360 minus atan(3/13), not the standard angle from east.",
+        "c": "The water-relative velocity is held constant; adding the changed current gives3km/h east for one hour."
+      },
+      "nativeDiagramReview": "Native SVG read: desired ground vector(0,12), current(3,-1), east/north axes and legible labels agree with the givens.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 6,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "dc2b87de1f132df9588a4e2af61d2e0425e3995f37801b0eda133f7b68da53a7",
+      "syllabusRefs": [
+        "AHL 4.14",
+        "AHL 4.15"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Linear-combination mean",
+            "calculated": 900,
+            "expected": 900,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Variance with squared coefficient",
+            "calculated": 400,
+            "expected": 400,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Standard deviation",
+            "calculated": 20.0,
+            "expected": 20,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Normal interval probability",
+            "calculated": 0.7745375447996847,
+            "expected": 0.7745375447996847,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Upper1percent mass",
+            "calculated": 946.5269574808168,
+            "expected": 946.5269574808168,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Independent normals yield an exactly normal linear combination. Doubling one Y gives4VarY; treating2Y as two copies would be wrong. Official AHL4.15 explicitly includes this normality result.",
+        "b": "The standardized bounds are-1 and1.5; use the exact normal model rather than a CLT approximation.",
+        "c": "Only1percent exceed c, hence use the99th percentile, with the population standard deviation20g."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 7,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "bbdb931f61873c53f8b0190685be24146aef7d56faa8290e4d4cd8c136b38a41",
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 3.9"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Image of B",
+            "calculated": [
+              "24/5",
+              "-8/5"
+            ],
+            "expected": [
+              4.8,
+              -1.6
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Image of C",
+            "calculated": [
+              "21/10",
+              "2"
+            ],
+            "expected": [
+              2.1,
+              2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Determinant",
+            "calculated": "27/25",
+            "expected": 1.08,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Transformed area",
+            "calculated": "162/25",
+            "expected": 6.48,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Inverse solution",
+            "calculated": [
+              "5/3",
+              "10/3"
+            ],
+            "expected": [
+              "5/3",
+              "10/3"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Image verification",
+            "calculated": [
+              "3",
+              "2"
+            ],
+            "expected": [
+              3,
+              2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Column-vector multiplication maps each original point; O stays at the origin.",
+        "b": "The original triangle area is6m2 and nonsingular determinant27/25 scales area by its absolute value.",
+        "c": "The inverse has determinant denominator1.08 and returns(5/3,10/3), which maps back to(3,2)."
+      },
+      "nativeDiagramReview": "Native SVG read: original triangle O(0,0),B(4,0),C(1,3), labelled axes and original shaded region are consistent.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 8,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "8c16e080f89a12839c47dd11cd3cac1a0ab6e932797bea5376e2feab9159bf78",
+      "syllabusRefs": [
+        "SL 2.5",
+        "AHL 2.9",
+        "AHL 5.9",
+        "AHL 5.10"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Initial users",
+            "calculated": 150.0,
+            "expected": 150,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Horizontal limiting value",
+            "calculated": 1200,
+            "expected": 1200,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "First900-user crossing",
+            "calculated": 7.611306094308557,
+            "expected": 7.611306094308557,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Quadratic logistic maximum rate",
+            "calculated": 120.0,
+            "expected": 120,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Inflection time",
+            "calculated": 4.864775372638283,
+            "expected": 4.864775372638283,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "At t0 the denominator is8; the decaying exponential tends to0, giving carrying capacity1200.",
+        "b": "The model increases strictly for t>=0; equation900 gives exp(-0.4t)=1/21, so the single crossing is first.",
+        "c": "P prime0.4P(1-P/1200) is a concave quadratic in P, maximized at600. This value is reached after t0, establishing the attainable global maximum rate."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 9,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "8795e0d494c2c19c6b8e0797f31dd88baf2db1edd9e0e918c5a100a5b4aedad9",
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Enumerated minimum spanning cost",
+            "calculated": 13,
+            "expected": 13,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Selected original tree weight",
+            "calculated": 13,
+            "expected": 13,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Minimum after CD closure",
+            "calculated": 15,
+            "expected": 15,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Proposed replacement tree is among enumerated minima",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Kruskal accepts costs2,3,4,4 without a cycle; the equal-cost AB/DE edges may swap order. Independent enumeration of every four-edge subset proves the optimum.",
+        "b": "Removing CD forces the cheapest bridge BD5. Enumerating all admissible trees confirms cost15 and the listed four links."
+      },
+      "nativeDiagramReview": "Native weighted graph read edge-by-edge: AB4,AC7,AD9,BC2,BD5,BE8,CD3,CE6,DE4; crossings are not vertices and no weight is ambiguous.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 10,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "5472aba316813a993a28bacc016d9ae05dadbfb5faf81965296cf01a877c748d",
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Cartesian resultant",
+            "calculated": [
+              4.964101615137755,
+              -0.5980762113533162
+            ],
+            "expected": [
+              4.964101615137755,
+              -0.5980762113533162
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Resultant amplitude",
+            "calculated": 5.000000000000001,
+            "expected": 5,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Principal argument",
+            "calculated": -0.11990233319498556,
+            "expected": -0.11990233319498556,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Cancelling argument in0to2pi",
+            "calculated": 3.0216903203948076,
+            "expected": 3.0216903203948076,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Resultant plus cancelling phasor magnitude",
+            "calculated": 1.047382306668854e-15,
+            "expected": 0,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Resolve the two equal-frequency phasors into real and imaginary parts and add vectors.",
+        "b": "The angle difference is pi/2, so amplitude5 also follows from orthogonality; the sum is in quadrantIV.",
+        "c": "The unique cancelling vector is-z: same amplitude and argument shifted by pi into the requested interval. No roots-of-complex-number topic is assumed."
+      },
+      "nativeDiagramReview": "Native Argand diagram read: z1 ends at(2sqrt3,2), z2 at(1.5,-3sqrt3/2); axes and vector labels are correct.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 11,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "26279d80538b49b0ba8c056a9058f4e34ae8d029f52398c9ff6993398159b094",
+      "syllabusRefs": [
+        "SL 4.6",
+        "AHL 4.17"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Mixture probability of zero",
+            "calculated": 0.013094511811780278,
+            "expected": 0.013094511811780278,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Weekday posterior given zero",
+            "calculated": 0.9791084544732515,
+            "expected": 0.9791084544732515,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Independent Poisson total at least14",
+            "calculated": 0.21870882746162945,
+            "expected": 0.21870882746162945,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Condition on the weekday/weekend mode; the mixture is not a Poisson with the mixture mean.",
+        "b": "Bayes numerator is0.7 exp(-4), divided by the same total-zero probability.",
+        "c": "The two specified hours have independent Poisson means4 and7. Their sum has mean11, and at least14 is the survival beyond13."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 12,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "c9b4f3bdd78355bb97e458c2aaf9a49bbd72a1dda312c89983e44b59e8d7767c",
+      "syllabusRefs": [
+        "AHL 4.18"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Paired differences",
+            "calculated": [
+              4,
+              1,
+              6,
+              4,
+              2,
+              4,
+              6,
+              3
+            ],
+            "expected": [
+              4,
+              1,
+              6,
+              4,
+              2,
+              4,
+              6,
+              3
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Sample mean",
+            "calculated": 3.75,
+            "expected": 3.75,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Unbiased sample sd",
+            "calculated": 1.7525491637693282,
+            "expected": 1.7525491637693282,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Improvement is positive before-minus-after mean",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Student t statistic",
+            "calculated": 6.052099385894467,
+            "expected": 6.052099385894467,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "One-sided t7 tail by independent density quadrature",
+            "calculated": 0.00025744373150937694,
+            "expected": 0.00025744373,
+            "absoluteTolerance": 1e-10,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Decision at5percent",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Form within-runner differences before computing sample statistics; use denominator n-1 for variance.",
+        "b": "The parameter is population mean difference: H0 muD0 and H1 muD>0. A decrease in after-time is a positive difference.",
+        "c": "Unknown population spread and eight assumed-normal differences require t7, not a known-sigma z test. The p-value is one-tailed.",
+        "d": "Evidence supports a mean decrease. Inference additionally requires representative/random pairs and independent differences across runners; within-pair measurements should remain paired."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 13,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "e1355089920d7d2a0858e2b89d8e0b5665878967ced9bcf7a6b7d6ed1bd308e2",
+      "syllabusRefs": [
+        "SL 3.4",
+        "AHL 3.7"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Radian angle",
+            "calculated": 2.443460952792061,
+            "expected": 2.443460952792061,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Minor segment area",
+            "calculated": 0.3241212017589939,
+            "expected": 0.3241212017589939,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Uniform twelve-metre channel volume",
+            "calculated": 3.889454421107927,
+            "expected": 3.889454421107927,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Surface chord length",
+            "calculated": 1.12763114494309,
+            "expected": 1.12763114494309,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Subtract the isosceles triangle from the140degree sector; using degrees inside theta-sintheta would be invalid.",
+        "b": "The uniform cross-sectional area is multiplied by12m, yielding cubic metres.",
+        "c": "The inspection bar spans the chord, so its length is2r sin70degrees, not the arc length."
+      },
+      "nativeDiagramReview": "Native circular diagram read:0.6m radius,140degree lower central angle and physically lower minor water segment correctly match the stem.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 14,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "6459b05800770cf76f8c08937f8edb5fff9d6f7705d794a214f9b0ce1d14fc56",
+      "syllabusRefs": [
+        "SL 5.6",
+        "SL 5.7",
+        "AHL 5.10"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Side cost coefficient after eliminating h",
+            "calculated": 56,
+            "expected": 56,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Unconstrained radius",
+            "calculated": 0.7187849451782345,
+            "expected": 0.7187849451782345,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Unconstrained height",
+            "calculated": 2.464405526325376,
+            "expected": 2.464405526325376,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Interior feasible optimum",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Stationary point beats both endpoints",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Height-limited radius",
+            "calculated": 0.7978845608028654,
+            "expected": 0.7978845608028654,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Constrained cost",
+            "calculated": 118.18559168966803,
+            "expected": 118.18559168966802,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Derivative positive at new lower endpoint",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Use volume4pi r2h to eliminate h. Both circular faces cost24pi r2; the curved side contributes56/r.",
+        "b": "C prime vanishes uniquely at r cubed7/(6pi). C second48pi+112/r3 is positive for every permitted radius; the stationary point lies inside the interval and is the global minimum.",
+        "c": "The new height cap means r>=sqrt(2/pi), which lies above the former optimum. C is increasing throughout the remaining feasible interval, so the lower boundary is optimal."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 15,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "d20e6c6000625b7246ad0cc24f441b1785774f7a0b50ded4b0f2e92ce802a5f2",
+      "syllabusRefs": [
+        "AHL 4.19"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Two-week column state",
+            "calculated": [
+              "27/40",
+              "11/50",
+              "21/200"
+            ],
+            "expected": [
+              "27/40",
+              "11/50",
+              "21/200"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Exact stationary proportions",
+            "calculated": [
+              "16/37",
+              "11/37",
+              "10/37"
+            ],
+            "expected": [
+              "16/37",
+              "11/37",
+              "10/37"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Stationary vector substitution",
+            "calculated": [
+              "16/37",
+              "11/37",
+              "10/37"
+            ],
+            "expected": [
+              "16/37",
+              "11/37",
+              "10/37"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "All entries positive gives regular chain",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Bus-in-week1 posterior given cycle-in-week2",
+            "calculated": "1/22",
+            "expected": "1/22",
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Column sums are1; the specified orientation means multiply T by the initial walking column twice.",
+        "b": "Solve the fixed-point equations and normalization in exact rational arithmetic. Positivity makes the chain regular, justifying the unique limiting proportions.",
+        "c": "The only relevant numerator is W0 to B1 to C2, probability0.05 times0.2. Divide by all paths giving C2,0.22; this is a reverse conditional, not a forward transition."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-a-paper-1",
+      "question": 16,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "e84043126dbace6c9963988894ff99883ae1277b47b06a8f87747d0d61d27269",
+      "syllabusRefs": [
+        "AHL 5.10",
+        "AHL 5.14",
+        "AHL 5.15",
+        "AHL 5.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Physical equilibrium",
+            "calculated": 12.24744871391589,
+            "expected": 12.24744871391589,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Positive derivative below equilibrium",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "All three old-state Euler updates",
+            "calculated": [
+              4.0,
+              6.68,
+              8.787552,
+              10.24313059694592
+            ],
+            "expected": [
+              4,
+              6.68,
+              8.787552,
+              10.24313059694592
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Single h0.3 Euler step",
+            "calculated": 12.04,
+            "expected": 12.04,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Independent exact solution at0.3 for error-direction check",
+            "calculated": 9.68665595468164,
+            "expected": 9.68665595468164,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Both stated approximations overestimate in this interval",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Equilibria solve V squared150, with the negative root excluded by the physical domain. For0<=V<sqrt150 the derivative is positive.",
+        "b": "Use the old volume in each explicit Euler update; retaining full precision gives the printed third-step estimate.",
+        "c": "Along the increasing positive solution, V second=-0.4V V prime<0. A tangent at an exact solution point therefore lies above it forwards. The exact tanh solution is used only by this independent verifier, not demanded of students; the stated conclusion is about local tangent estimates."
+      },
+      "nativeDiagramReview": "Native slope field inspected: uniform t invariance, positive slopes below12.247, nearly flat near12, negative above, and m3/hour axes agree with the differential model.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 1,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "723fbeba61de08a4614a968225b115f1b3a925bbf3597a85b132f84318c593e0",
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.4",
+        "SL 1.7"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Nominal annual to monthly rate",
+            "calculated": 0.004,
+            "expected": 0.004,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "End-month deposits accumulated to deposit120",
+            "calculated": 122905.56720832092,
+            "expected": 122905.56961920908,
+            "absoluteTolerance": 0.01,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Inflation-discounted purchasing power",
+            "calculated": 96013.63266633426,
+            "expected": 96013.633,
+            "absoluteTolerance": 0.001,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Target purchasing-power deposit",
+            "calculated": 833.2150110184383,
+            "expected": 833.21501,
+            "absoluteTolerance": 1e-05,
+            "status": "passed"
+          },
+          {
+            "test": "Unrounded target substitution",
+            "calculated": 100000.0,
+            "expected": 100000,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Nominal monthly compounding divides0.048 by12, not an effective annual twelfth root.",
+        "b": "The latest payment earns no interest and the first earns119monthly periods; independent summation verifies the ordinary-annuity expression.",
+        "c": "Inflation is stated annually; discount the future amount by1.025^10.",
+        "d": "Inflate the100000real-dollar target, then divide by the same future-value annuity factor. The exact ideal payment is833.21501; an attainable minimum cent payment would round upward to833.22, as the scheme notes."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 2,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "b8c8acbf83c9b7c7af3daa489c68ea6d666c12d048a822b61f76c6c78d17bdae",
+      "syllabusRefs": [
+        "AHL 2.7",
+        "SL 2.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Inverse at lower endpoint",
+            "calculated": 0.0,
+            "expected": 0,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Inverse algebraic composition",
+            "calculated": [
+              3.0,
+              13.0,
+              14.0,
+              15.0,
+              16.0,
+              17.9
+            ],
+            "expected": [
+              3,
+              13,
+              14,
+              15,
+              16,
+              17.9
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Concentration for14mV",
+            "calculated": 11.0,
+            "expected": 11,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Concentration changes for the two equal signal increments",
+            "calculated": [
+              3.0,
+              10.0
+            ],
+            "expected": [
+              3,
+              10
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Rearrangement gives(4S-12)/(18-S). S at c0 is3, and S=18-60/(c+4) stays strictly below18 for all c>=0; the inverse physical domain is[3,18).",
+        "b": "The signal14lies in the inverse domain and gives11mg/L.",
+        "c": "The inverse increments grow from3to10for equal1mV signal increments: more concentration is required for the same signal change, so high-concentration signal sensitivity is lower."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 3,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "c74b87711977ee565297d22ebe2d36ec9c5c7901d19ad39cfaea0080641d4a31",
+      "syllabusRefs": [
+        "AHL 3.11",
+        "AHL 3.13"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "First rail at s2",
+            "calculated": [
+              5,
+              0,
+              7
+            ],
+            "expected": [
+              5,
+              0,
+              7
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Second rail at t0",
+            "calculated": [
+              5,
+              0,
+              7
+            ],
+            "expected": [
+              5,
+              0,
+              7
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Acute angle using absolute dot product",
+            "calculated": 63.612200038757,
+            "expected": 63.612200038757,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Perpendicular distance by quadratic minimization",
+            "calculated": 5.374838498865699,
+            "expected": 5.3748384988657,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Closest-point residual is perpendicular to line",
+            "calculated": 0.0,
+            "expected": 0,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Solving x/y components gives s2,t0 and the zcomponent confirms the intersection; the directions are nonparallel.",
+        "b": "The direction dot product is-4 with both norms3; an acute unoriented line angle uses its absolute value, giving acos(4/9).",
+        "c": "Minimize the squared distance from P to I+t v. The optimum t8/9 leaves a residual perpendicular to v and distance sqrt260/3; no plane equations are needed."
+      },
+      "nativeDiagramReview": "Native SVG is explicitly a schematic intersection, not an inaccurate coordinate projection; both rail labels and intersection I are clear.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 4,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "72c7d84f258435d34b6c73bb3d7993c5feaa754fd80436230b39dea00805ee42",
+      "syllabusRefs": [
+        "SL 4.10",
+        "SL 4.4"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Average tied x ranks",
+            "calculated": [
+              1.0,
+              2.5,
+              2.5,
+              4.0,
+              5.0,
+              6.0,
+              7.0
+            ],
+            "expected": [
+              1,
+              2.5,
+              2.5,
+              4,
+              5,
+              6,
+              7
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Ascending y ranks",
+            "calculated": [
+              7.0,
+              5.0,
+              6.0,
+              3.0,
+              4.0,
+              2.0,
+              1.0
+            ],
+            "expected": [
+              7,
+              5,
+              6,
+              3,
+              4,
+              2,
+              1
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Pearson correlation of rank lists",
+            "calculated": -0.9549937104572925,
+            "expected": -0.954993710457128,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Negative strong monotonic rank relation",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Two xvalues14tie for ranks2and3, so both receive2.5. The yvalues are all distinct and are ranked ascending in original hiker order.",
+        "b": "Pearson correlation of the actual averaged ranks handles ties; the no-ties shortcut without correction should not replace it.",
+        "c": "The association is strongly negative and monotonic: larger distance tends to shorter time. The observational sample does not isolate training from fitness, age or other confounders."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 5,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "bc72f6e59d419757c6f78b494aac6d6a47ce9e7214ffc758a124a067a3495d53",
+      "syllabusRefs": [
+        "AHL 2.9",
+        "AHL 3.8"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Amplitude",
+            "calculated": 1.6,
+            "expected": 1.6,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Period",
+            "calculated": 12.0,
+            "expected": 12,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "First threshold window",
+            "calculated": [
+              0.8648159924123338,
+              5.135184007587666
+            ],
+            "expected": [
+              0.8648159899416186,
+              5.135184010058381
+            ],
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Threshold values at both endpoints",
+            "calculated": [
+              3.1,
+              3.1
+            ],
+            "expected": [
+              3.1,
+              3.1
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Latest90minute start",
+            "calculated": 3.6351840075876662,
+            "expected": 3.635184010058381,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Operation fits inside the first high-tide window",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The amplitude is the positive cosine coefficient; the angular coefficient pi/6 gives a12hour period.",
+        "b": "Cosine must be at least0.4375. Around the first maximumt3this yields3plus/minus6acos(0.4375)/pi; no earlier segment is available at midnight because h0=2.4.",
+        "c": "The full operation must remain inside the continuous high-depth interval. Its latest start is the right threshold minus1.5hours, with equality allowed because the depth requirement is at least3.1."
+      },
+      "nativeDiagramReview": "Native tide SVG checked: peaks(3,4),(15,4), troughs(9,0.8),(21,0.8), correct24hour domain and horizontal3.1m threshold.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 6,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "2c49215f073714c6137a4441a577999539a795bddb52b6e4af858cb1a4801ed7",
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Odd-degree vertices",
+            "calculated": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "expected": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "All three shortest-distance pairings",
+            "calculated": [
+              7,
+              17,
+              11
+            ],
+            "expected": [
+              7,
+              17,
+              11
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Minimum repeat distance",
+            "calculated": 7,
+            "expected": 7,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Sum of all original corridors",
+            "calculated": 40,
+            "expected": 40,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Closed inspection optimum",
+            "calculated": 47,
+            "expected": 47,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "A,B,C,D each have odd degree3; Ehasdegree4. The graph is connected, but its four odd vertices prevent an Euler circuit without repeats.",
+        "b": "Compute shortest-path distances, not just direct edge lengths. The three pairings exhaust all ways to pair four odd vertices; duplicating AB4 and CD3 is cheapest.",
+        "c": "Adding the seven repeated metres makes all degrees even while retaining connectivity, so a47metre Euler circuit exists and the pairing lower bound proves optimality."
+      },
+      "nativeDiagramReview": "Native graph read: outer AB4,BC5,CD3,DA6; spokes AE7,BE6,CE4,DE5. E is a labelled junction and all weights/units are clear.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 7,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "e0a0ff9acc547427d977c7cca39e89ccb8a5e36f39f4454fb0978b24b3bf56a1",
+      "syllabusRefs": [
+        "SL 4.8",
+        "AHL 4.18"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Alternative direction is reduced defect probability",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Exact lower-tail null probability",
+            "calculated": 0.044178985151997086,
+            "expected": 0.04417898515199869,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Reject at5percent",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Largest permitted lower-tail cutoff",
+            "calculated": 2,
+            "expected": 2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Next cutoff exceeds significance",
+            "calculated": 0.12271080639416354,
+            "expected": 0.12271080639416,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "TypeII nonrejection probability under true p0.1",
+            "calculated": 0.5886487604404943,
+            "expected": 0.5886487604404947,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "H0p0.20,H1p<0.20; the model is independent Bernoulli trials with a common defect probability.",
+        "b": "The observed count2calls for Pnull(X<=2), not a point probability or a doubled tail. It is below0.05.",
+        "c": "The critical region isX<=2. Its probability is strictly below0.05, whileX<=3is already above; exhaustive cutoff search confirms maximality.",
+        "d": "A TypeII error is failure to reject a false null. Underp0.10useP(X>2), retaining the original null-based critical region."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 8,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "e4ed770331b777bbff956c02dad007896ba148acefb9b32cc4a085580ada9aef",
+      "syllabusRefs": [
+        "AHL 4.14",
+        "AHL 4.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Sample mean",
+            "calculated": 43.81111111111111,
+            "expected": 43.81111111111111,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Unbiased sample sd",
+            "calculated": 1.4793955222019255,
+            "expected": 1.479395522495694,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "t8 97.5percent quantile by density quadrature inversion",
+            "calculated": 2.306004135204164,
+            "expected": 2.306004135204166,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Confidence interval",
+            "calculated": [
+              42.67394704717772,
+              44.9482751750445
+            ],
+            "expected": [
+              42.67394704717772,
+              44.9482751750445
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Claim44.5 lies inside interval",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Use all nine normal-population observations and sample sd with n-1denominator.",
+        "b": "The unknown population variance requires a two-sided t8confidence interval. Standard error iss/3; independent inversion of the t-density integral verifies the critical quantile.",
+        "c": "The claimed mean44.5is compatible with this sample at95percent confidence. The interval describes uncertainty about a mean, not95percent individual lifetime coverage."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 9,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "8ac9aeea415ba915ef111dd10247b5265b768d15eeb39312c64996b96dca6259",
+      "syllabusRefs": [
+        "SL 5.8",
+        "AHL 5.10"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "20m trapezoidal volume",
+            "calculated": 1720.0,
+            "expected": 1720,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "10m trapezoidal volume",
+            "calculated": 1755.0,
+            "expected": 1755,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Refined data consistent with strict concavity",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Refinement raises the chord estimate",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The six areas give five equal20mintervals, not six. Endpoint weights are one-half, and area-times-length gives m3.",
+        "b": "Interleave every midpoint observation with the originals to give ten equal10mintervals. All ten consecutive secant slopes strictly decrease, so the data support the stated concavity assumption.",
+        "c": "For a concave-down underlying area function, each chord is below the curve. Integrating those chords therefore underestimates volume; the larger refined result is consistent but does not alone prove the error direction."
+      },
+      "nativeDiagramReview": "Native SVG checked: all six measured area points and metre/m2axes are correct; drawn joining chords represent measurements, not an assertion that the underlying strictly concave function is piecewise linear.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 10,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "9a5db5c8e36201306920d12346a63cbb07229b201f3ceaaebed71822141f1622",
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 1.15"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "One-year stage state",
+            "calculated": [
+              180.0,
+              130.0
+            ],
+            "expected": [
+              180,
+              130
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Dominant eigenvalue",
+            "calculated": 1.1104686356149274,
+            "expected": 1.1104686356149274,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Other eigenvalue",
+            "calculated": -0.8104686356149273,
+            "expected": -0.8104686356149273,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Dominance and eventual growth",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Juvenile-to-adult ratio",
+            "calculated": 1.6209372712298546,
+            "expected": 1.6209372712298549,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Adult limiting proportion",
+            "calculated": 0.38154289725932955,
+            "expected": 0.3815428971851665,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Stable vector equation",
+            "calculated": [
+              1.8,
+              1.1104686356149274
+            ],
+            "expected": [
+              1.8,
+              1.1104686356149274
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The first component is fertility1.8times100adults; adults next year combine juvenile survival0.5and adult retention0.3.",
+        "b": "The characteristic equation islambda squared-0.3lambda-0.9=0. Distinct real eigenvalues are within AI HL scope. Positive initial populations have a nonzero dominant component and the positive dominant eigenvalue exceeds1.",
+        "c": "Normalize the positive dominant eigenvector:1.8A=lambda J. Dividing A byJ+A gives the limiting adult proportion, distinct from the growth factor."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 11,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "dc94cabee46551c687471d867ce8c9ae1186d99e9770b590ae445f0ffd96d256",
+      "syllabusRefs": [
+        "AHL 5.9",
+        "SL 5.5"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Similarity radius at h2",
+            "calculated": 1.0,
+            "expected": 1,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Volume coefficient",
+            "calculated": 0.2617993877991494,
+            "expected": 0.2617993877991494,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Net volume inflow at h2",
+            "calculated": 0.36000000000000004,
+            "expected": 0.36,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Depth derivative at h2",
+            "calculated": 0.11459155902616464,
+            "expected": 0.11459155902616464,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Time quadrature with variable depth",
+            "calculated": 4.982900061303871,
+            "expected": 4.9829001,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Positive flow over integration range",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Similar triangles scale water radius as h/2; the cone volume becomes pi h3/12.",
+        "b": "Chain rule gives dVdt=(pi h2/4)dhdt. The net flow at h2is0.36m3/min, so dhdt0.36/pi.",
+        "c": "Integrate dtdh=pi h2/[4(0.4-0.02h)] from1to2. The denominator remains positive, so depth rises monotonically and this integral is the required elapsed time."
+      },
+      "nativeDiagramReview": "Native cone inspected: vertex down, full height6m bracket outside the cone, top radius3m, water-level line and dashed central height are legible and consistent.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 12,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "9b2a9109f951c3b7520addd5f06a8774a3538ddb4be8ec037d368ba7931d4be2",
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "AHL 5.9"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Log-linear slope",
+            "calculated": 1.172117818717949,
+            "expected": 1.1721178,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Exponential intercept",
+            "calculated": 5.154939659496454,
+            "expected": 5.1549397,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Unrounded power-model prediction",
+            "calculated": 58.986340263758095,
+            "expected": 58.98634,
+            "absoluteTolerance": 1e-05,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Elasticity identity at two positive loads",
+            "calculated": [
+              1.172117818717949,
+              1.172117818717949
+            ],
+            "expected": [
+              1.172117818717949,
+              1.172117818717949
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "First-order5percent response estimate",
+            "calculated": 5.860589093589745,
+            "expected": 5.8605891,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Use least squares on logE versus logm exactly as requested, which is a specified fit rather than silently replacing it by direct nonlinear least squares.",
+        "b": "Eight kilograms lies within the observed load range; retain the unrounded regression coefficients to avoid avoidable prediction error.",
+        "c": "Differentiation gives abm^(b-1); multiplying by m/E simplifies algebraically to constant b. Relative differential dE/E=b dm/m gives an estimated5bpercent, not an exact finite-change percentage."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 13,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "da50258c21b5a4d04274c98660b010b794d64992b06056dad52e87f968534cf2",
+      "syllabusRefs": [
+        "SL 4.6",
+        "AHL 4.17"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Poisson total point probability",
+            "calculated": 0.1754673697678507,
+            "expected": 0.1754673697678507,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Conditional split from independent joint probabilities",
+            "calculated": 0.3456,
+            "expected": 0.3456,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Conditioned positive-A probability",
+            "calculated": 0.8646647167633873,
+            "expected": 0.8646647167633873,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The independent Poisson sum has mean5for the same15minute interval.",
+        "b": "Given the total5, exactly2atAforces3atB. Divide the independent joint Poisson probability by the total probability; no unprovided splitting theorem is needed.",
+        "c": "A and B are independent, so B0does not alter the distribution of A. At least one atAis1-exp(-2)."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 14,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "86a11e8edc95d8bd276a09713597ec07fd4e808af57fb9f6cfe6233162a6b4fb",
+      "syllabusRefs": [
+        "AHL 3.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Nearest-neighbour tour cost",
+            "calculated": 28,
+            "expected": 28,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Deleted-A minimum spanning tree",
+            "calculated": 15,
+            "expected": 15,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Deleted-A lower bound",
+            "calculated": 28,
+            "expected": 28,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Exhaustive Hamiltonian-tour optimum",
+            "calculated": 28,
+            "expected": 28,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "At each visited vertex the nearest remaining choice isB,C,D,Ethen returnA; a feasible tour gives an upper bound.",
+        "b": "Deleting Afrom any Hamiltonian cycle leaves a spanning path on B,C,D,E, whose cost is at least that of its MST15. The two incident Aedges cost at least6and7, giving lower bound28.",
+        "c": "A28km tour attains the28km lower bound, so it is optimal. Independent enumeration of all24orders verifies the bound argument."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 15,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "07a62d474f6012934e5c2e5d4b13955b5e8f3c1858089e897ac2d3fc8a4c081a",
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 2.9"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Temperature at room change",
+            "calculated": 58.41681452658185,
+            "expected": 58.41681452658185,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "First15degree time",
+            "calculated": 15.170269881220849,
+            "expected": 15.17027,
+            "absoluteTolerance": 1e-05,
+            "status": "passed"
+          },
+          {
+            "test": "Second-stage target substitution",
+            "calculated": 15.0,
+            "expected": 15,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Left and right cooling derivatives",
+            "calculated": [
+              -5.762522178987278,
+              -8.012522178987277
+            ],
+            "expected": [
+              -5.762522178987278,
+              -8.012522178987277
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Derivative jump",
+            "calculated": -2.249999999999999,
+            "expected": -2.25,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Before the move the temperature excess above20decays from70. Continuity fixes T4for the new stage.",
+        "b": "The first stage stays above20, so it cannot reach15. In the second stage the positive excess above5decays strictly, giving one target time after4.",
+        "c": "The state remains continuous but the ambient parameter drops15degrees. The driving difference therefore increases15and the derivative jumps downward2.25degrees/min."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-b-paper-1",
+      "question": 16,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "ad0906148a77f96a9215b90bb4db04af94490d33ebe126d17be37ad7380ed3d5",
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Multiplier modulus",
+            "calculated": 1.0,
+            "expected": 1,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Anticlockwise angle",
+            "calculated": 0.9272952180016123,
+            "expected": 0.9272952180016123,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Image-circle centre",
+            "calculated": [
+              2.6,
+              -0.19999999999999996
+            ],
+            "expected": [
+              2.6,
+              -0.2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Image radius",
+            "calculated": 2.0,
+            "expected": 2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Parameter at greatest imaginary part",
+            "calculated": 0.6435011087932843,
+            "expected": 0.6435011087932843,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Maximum imaginary part",
+            "calculated": 1.7999999999999998,
+            "expected": 1.8,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Radius points vertically upward at optimum",
+            "calculated": 2.6,
+            "expected": 2.6,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Complex multiplication is rotation about the origin by Argfactor and scale its modulus1; the subsequent translation is separate.",
+        "b": "Transform the centre z1, then multiply the radius2by the modulus. The centre shifts to2.6-0.2i while radius is unchanged.",
+        "c": "The transformed radius has angle t+Argfactor. Its imaginary part is largest when that angle is pi/2mod2pi, yielding the unique t in the requested domain and centre-imaginary-part plus radius."
+      },
+      "nativeDiagramReview": "Native original z-circle inspected: centre1on the real axis, real intercepts-1and3, and imaginary extremesplus/minus2 match z1+2exp(it).",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 1,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "8d44eebf1b2c09193abd549edd8ae4ae92846ab83254889d20cea86ab97b1471",
+      "syllabusRefs": [
+        "AHL 1.9",
+        "AHL 2.10"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Sum intensities then logarithm",
+            "calculated": 73.45540463109293,
+            "expected": 73.455405,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Retained first-machine intensity fraction",
+            "calculated": 0.23285017392669607,
+            "expected": 0.23285017,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          },
+          {
+            "test": "Minimum percentage reduction",
+            "calculated": 76.7149826073304,
+            "expected": 76.714983,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Threshold intensity substitution",
+            "calculated": 1e-05,
+            "expected": 1e-05,
+            "absoluteTolerance": 1e-15,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Incoherent sound intensities add; adding72and68decibels would violate the supplied logarithmic definition. Logarithms here use the permitted base10.",
+        "b": "A70dBtotal is10^-5W/m2. Since the unchanged second intensity is below that limit, the retained fraction is positive and below1. The logarithm is increasing, so equality gives the least required reduction."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 2,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "9f88da45fbb6ce3161f3382453ed43a52fa76e2b6cf84c3d7ea32466b6dab91c",
+      "syllabusRefs": [
+        "SL 2.5",
+        "SL 2.6",
+        "SL 1.8"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Quadratic coefficients",
+            "calculated": [
+              "-1",
+              "8",
+              "2"
+            ],
+            "expected": [
+              -1,
+              8,
+              2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "All three observation substitutions",
+            "calculated": [
+              2,
+              14,
+              17
+            ],
+            "expected": [
+              2,
+              14,
+              17
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Positive ground root",
+            "calculated": 8.242640687119284,
+            "expected": 8.242640687119284,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Ground-height substitution",
+            "calculated": 1.4210854715202004e-14,
+            "expected": 0,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Interior vertex time",
+            "calculated": 4.0,
+            "expected": 4,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Maximum height",
+            "calculated": 18,
+            "expected": 18,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "A unique three-equation system gives a-1,b8,c2.",
+        "b": "The roots are4plus/minussqrt18; the negative root precedes the model start and is excluded. The physical domain runs from0to the first positive ground-contact time inclusive.",
+        "c": "The parabola opens downward and its vertex at4lies within the physical domain. It gives18m, exceeding both endpoint heights."
+      },
+      "nativeDiagramReview": "Native parabola inspected: points(0,2),(2,14),(5,17), peak near(4,18), and positive ground root just beyond8 agree with the model.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 3,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "3c1d1943cc4a1e20a3bc2a400fc5e3c8283f3912dd33cf4bebb33d60bfbf3c4b",
+      "syllabusRefs": [
+        "SL 4.2",
+        "SL 4.3",
+        "SL 4.5"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Last-class density",
+            "calculated": 0.9,
+            "expected": 0.9,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Uniform-class interpolated median",
+            "calculated": 19.0,
+            "expected": 19,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Estimated tail beyond25",
+            "calculated": 0.35,
+            "expected": 0.35,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Greatest-density class index",
+            "calculated": 1,
+            "expected": 1,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Unequal-width histogram heights are frequency divided by width, so the final20minute class has height0.9.",
+        "b": "Cumulative frequency reaches32at15minutes; interpolate the40th cumulative observation within the next30observations over15minutes.",
+        "c": "Under the stated uniform-within-class estimate, the final5of15minutes account for one-third of that class, plus the18longest delays.",
+        "d": "The5to15minute class has greatest density2.4, even though another class has greater absolute frequency."
+      },
+      "nativeDiagramReview": "Native histogram inspected: widths5,10,15,20 and heights1.6,2.4,2,0.9; areas recover8,24,30,18, so modal density and all axes agree.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 4,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "086f47d5a138c4f98b55090ba61356f85134fbfa4cbc1841cae8b0610844ce7d",
+      "syllabusRefs": [
+        "SL 4.5",
+        "SL 4.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Conditional-mixture double-positive probability",
+            "calculated": 0.07116,
+            "expected": 0.07116,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Condition posterior after two positives",
+            "calculated": 0.9612141652613828,
+            "expected": 0.9612141652613828,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Whole-population positive marginals",
+            "calculated": [
+              0.21000000000000002,
+              0.0944
+            ],
+            "expected": [
+              0.21,
+              0.0944
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Product of marginals",
+            "calculated": 0.019824,
+            "expected": 0.019824,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Marginal independence fails",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Sensitivity applies to affected people and false-positive probabilities1-specificity to unaffected people. Conditional independence permits multiplication within each subgroup.",
+        "b": "Bayes numerator is affected-and-both-positive. Dividing by all both-positive outcomes gives the posterior, not the joint probability.",
+        "c": "The shared latent condition creates dependence after mixing groups. The joint0.07116is not the product0.019824, so conditional independence does not imply unconditional independence."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 5,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "1eda0ee8772140d4352af545d6eb58eae276995bad3dda1eaaf0bb26f84fb726",
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Voronoi triple vertex",
+            "calculated": [
+              "5",
+              "8/3"
+            ],
+            "expected": [
+              5,
+              "8/3"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Triple-distance equality",
+            "calculated": [
+              4.333333333333333,
+              4.333333333333333,
+              4.333333333333334
+            ],
+            "expected": [
+              "13/3",
+              "13/3",
+              "13/3"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Candidates nearest distances",
+            "calculated": [
+              4.333333333333333,
+              1.0
+            ],
+            "expected": [
+              "13/3",
+              1
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Preferred permitted candidate",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "AB is horizontal with bisectorx5; the A/Cdistance equation is8x+12y72. Their intersection is inside the stated reserve.",
+        "b": "At Uall three sites are13/3km away. At Vthe stationCis1km away and closer than A/B.",
+        "c": "Among the two explicitly permitted candidates, choose U. The question and scheme correctly avoid claiming a global optimum over every reserve point."
+      },
+      "nativeDiagramReview": "Native reserve plot inspected: bounds[0,10]x[0,8], A(1,1),B(9,1),C(5,7),V(5,8), clear B label and no supplied U answer.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 6,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "83db2e2566a95c267b031828d86dbfa6bd9d6ad32f1d072c15b7a36ae62b0f10",
+      "syllabusRefs": [
+        "AHL 4.19"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "First-step regular probability",
+            "calculated": 0.34450000000000003,
+            "expected": 0.3445,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Stationary regular probability",
+            "calculated": "25/37",
+            "expected": 0.6756756756756757,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "First threshold month",
+            "calculated": 7,
+            "expected": 7,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Adjacent probabilities",
+            "calculated": [
+              0.6428085914063499,
+              0.6549694125860004
+            ],
+            "expected": [
+              0.64280858828455,
+              0.6549694106192665
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Sequence increases over checked months",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The next regular state receives0.88from current Rplus0.25from current O, giving0.63p+0.25.",
+        "b": "The fixed point solves0.37p0.25. Both transition states communicate and the positive matrix is regular.",
+        "c": "The exact deviation is(p0-pstar)0.63^n. It stays negative with decreasing magnitude, so the sequence is strictly increasing. Values at6and7prove7is first, not merely a sampled crossing."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 7,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "4c534e6b2940dd68e73a91c9266e77210f2f31f04257080f0b23886f1ec55c12",
+      "syllabusRefs": [
+        "SL 4.4",
+        "AHL 4.18"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Pearson raw-data correlation",
+            "calculated": 0.9673727084418704,
+            "expected": 0.96737271,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Equivalent correlation test statistic",
+            "calculated": 9.352670257465592,
+            "expected": 9.3526703,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "One-sided t6 survival quadrature",
+            "calculated": 4.236084237391191e-05,
+            "expected": 4.2360842e-05,
+            "absoluteTolerance": 1e-10,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Reject zero correlation at1percent",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Use all eight raw pairs; independent paired observations and bivariate normality are explicitly given.",
+        "b": "H0rho0versusH1rho>0uses the population correlation parameter. The transformed statistic has6degrees of freedom under H0and the one-sided upper tail is required.",
+        "c": "The small p-value supports positive population correlation at1percent. It does not remove common causes or establish a direction of causation."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 8,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "cb0a1303326766b2ee7c1668ece1022536aad3ccde54e826c240c06e7b50481b",
+      "syllabusRefs": [
+        "AHL 4.13",
+        "SL 2.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Observed-minus-model A residuals",
+            "calculated": [
+              -0.09550944459786503,
+              -0.11392894125692266,
+              0.1700825623748763,
+              -0.13463546821419747,
+              0.11335997798238218,
+              -0.20340690611417678
+            ],
+            "expected": [
+              -0.095509,
+              -0.113929,
+              0.170083,
+              -0.134635,
+              0.11336,
+              -0.203407
+            ],
+            "absoluteTolerance": 6e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Model A squared-residual sum",
+            "calculated": 0.12338149905168354,
+            "expected": 0.1233815,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Model B squared-residual sum",
+            "calculated": 69.80999999999999,
+            "expected": 69.81,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "A is better by residual-sum criterion",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Model B eventually predicts negative cumulative release",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Residuals use the explicitly stated observed-minus-predicted convention, and all six contribute to SSE.",
+        "b": "Both candidates are compared on the same observations and units. The smaller SSEfavors Aunder this stated criterion, without claiming it is uniquely true.",
+        "c": "At large time Aapproaches16mg from below; Beventually falls to negative values, impossible for cumulative release. Limited1to6hour observations cannot validate distant extrapolation even for A."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 9,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "81398deff229941d89c432864b8621c585595d13236b6f9211826ac6a1b2ff86",
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.13"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Cross product",
+            "calculated": [
+              -7,
+              6,
+              11
+            ],
+            "expected": [
+              -7,
+              6,
+              11
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Unit normal norm",
+            "calculated": 1.0,
+            "expected": 1,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Orthogonality to both edges",
+            "calculated": [
+              0.0,
+              -5.551115123125783e-17
+            ],
+            "expected": [
+              0,
+              0
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Parallelogram area",
+            "calculated": 14.352700094407323,
+            "expected": 14.352700094407323,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Projected effective area",
+            "calculated": 12.521980673998822,
+            "expected": 12.521980673998822,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Normalize either sign of the nonzero cross product; both are valid normals. Exact dot products independently confirm perpendicularity to both edges.",
+        "b": "The cross-product magnitude gives the full parallelogram area, without the factor one-half used for a triangle.",
+        "c": "The supplied projection formula cancels the normal magnitude, leaving absolute(cross dot d)/normd. Absolute value removes the arbitrary normal orientation; projected area is below actual area."
+      },
+      "nativeDiagramReview": "Native schematic parallelogram inspected: adjacent u/vlabels and explicit3Dedge-context caption do not imply false planar coordinate data.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 10,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "6d399f76d57b91c4f641c21858647f7eadc3f5af2b169959f145ac18ac2f9627",
+      "syllabusRefs": [
+        "AHL 5.15",
+        "AHL 5.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Initial simultaneous derivative",
+            "calculated": [
+              12.0,
+              0.0
+            ],
+            "expected": [
+              12,
+              0
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "First simultaneous Euler state",
+            "calculated": [
+              46.0,
+              10.0
+            ],
+            "expected": [
+              46,
+              10
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Second simultaneous Euler state",
+            "calculated": [
+              52.9,
+              10.3
+            ],
+            "expected": [
+              52.9,
+              10.3
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Positive coexistence equilibrium derivatives",
+            "calculated": [
+              0.0,
+              0.0
+            ],
+            "expected": [
+              0,
+              0
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "At(40,10), prey increases12hundreds/month and predator change is0, so the initial phase direction is horizontal right.",
+        "b": "Both updates use the same old pair at each step. Updating yusing the new xwould incorrectly alter the first predator value.",
+        "c": "Strict positivity lets the factors xand ybe divided out: y25andx40. No Jacobian or unsupported nonlinear phase classification is required."
+      },
+      "nativeDiagramReview": "Native phase field inspected: directions left/right across y25and down/up across x40match both nullclines; initial(40,10) is correctly placed. Refreshed native PNG rechecked: initial label is left of its dot, clear of field arrows.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 11,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "6f1766e6e01ecea4725f1232f8a7dcc3ea08fcb24a3747048e3cdd03e4e612d0",
+      "syllabusRefs": [
+        "AHL 1.14"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Coefficient matrix from I minus C",
+            "calculated": [
+              [
+                "9/10",
+                "-1/5",
+                "-1/10"
+              ],
+              [
+                "-3/10",
+                "9/10",
+                "-1/10"
+              ],
+              [
+                "-1/10",
+                "-1/5",
+                "4/5"
+              ]
+            ],
+            "expected": [
+              [
+                0.9,
+                -0.2,
+                -0.1
+              ],
+              [
+                -0.3,
+                0.9,
+                -0.1
+              ],
+              [
+                -0.1,
+                -0.2,
+                0.8
+              ]
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Gross production vector",
+            "calculated": [
+              "18200/113",
+              "17800/113",
+              "15200/113"
+            ],
+            "expected": [
+              161.06194690265485,
+              157.52212389380531,
+              134.51327433628316
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Back-substitution recovers demand",
+            "calculated": [
+              "100",
+              "80",
+              "60"
+            ],
+            "expected": [
+              100,
+              80,
+              60
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Increase caused by third-demand change",
+            "calculated": [
+              "132/113",
+              "144/113",
+              "900/113"
+            ],
+            "expected": [
+              1.1681415929203538,
+              1.2743362831858405,
+              7.9646017699115035
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Increase back-substitution",
+            "calculated": [
+              "0",
+              "0",
+              "6"
+            ],
+            "expected": [
+              0,
+              0,
+              6
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Subtract the entire internal-demand matrix from I, retaining signs on off-diagonal coefficients.",
+        "b": "The provided economic relation is a unique three-variable matrix system, explicitly allowing technology as required for general AI matrices. Exact rational elimination verifies the solution without any unsupported3x3eigenvalue work.",
+        "c": "Only external demand for sector3rises10percentof60, so delta d=(0,0,6), not10percentof the gross output. Linear-system response produces increases in all sectors."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 12,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "d973a88f0d1d84d6466fe229f8a0cbc17210ca0b56c2489db9674a596f7eec00",
+      "syllabusRefs": [
+        "SL 4.6",
+        "SL 4.9"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Mixture flagging probability",
+            "calculated": 0.2029472535057019,
+            "expected": 0.20294725,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Degraded posterior after flagging",
+            "calculated": 0.7366519620646904,
+            "expected": 0.73665196,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "One-percent standard false-flag cutoff",
+            "calculated": 90.69460850383663,
+            "expected": 90.69460850367264,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Degraded nonflag probability at new cutoff",
+            "calculated": 0.45391817284951363,
+            "expected": 0.45391817,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The mixture uses the correct prior weights0.8and0.2and each subgroup standard deviation.",
+        "b": "The posterior numerator includes the degraded prior and lower-tail flagging probability, then divides by the total flag probability.",
+        "c": "Choose the lower1percentstandard quantile, then evaluate the degraded upper-tail beyond that same cutoff. Normal equality has probability0, so the strict flag boundary introduces no discrepancy."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 13,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "57fd1d7a12fe814299b0919d801e54dcf76c5bbf5b7d76ad3856b422658d2fe1",
+      "syllabusRefs": [
+        "SL 4.11"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Sample means",
+            "calculated": [
+              12.583333333333334,
+              14.266666666666667
+            ],
+            "expected": [
+              12.583333333333334,
+              14.266666666666667
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Pooled sample standard deviation",
+            "calculated": 0.614952572697006,
+            "expected": 0.61495257,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Pooled two-sample statistic",
+            "calculated": -4.741209304354222,
+            "expected": -4.7412093,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "One-tailed t10 p-value by density quadrature",
+            "calculated": 0.0003953317161188852,
+            "expected": 0.00039533172,
+            "absoluteTolerance": 1e-10,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Reject equality for lower Amean",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Independently sampled normal populations with equal unknown variances meet the pooled test assumptions. Pool the two sample variances with5degrees of freedom each.",
+        "b": "H0muA=muB,H1muA<muB. The difference AminusBis negative; use the left tail with10degrees of freedom, not a paired test or doubled p-value.",
+        "c": "Reject equality at5percent and conclude evidence of lower mean drying time for A; this is a population-mean claim, not a statement that every Aobservation dries faster."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 14,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "c8033945e2ccba7f5b6e67e493cb3498e45ac31cdc8553183454e0dc7bfa7b04",
+      "syllabusRefs": [
+        "SL 3.1",
+        "SL 5.7"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Volume coefficient for top radius2r",
+            "calculated": 7.330382858376184,
+            "expected": 7.330382858376184,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Closed-end area multiplier",
+            "calculated": 5,
+            "expected": 5,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Unique optimum radius",
+            "calculated": 0.5919748149057003,
+            "expected": 0.59197481,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          },
+          {
+            "test": "Corresponding height",
+            "calculated": 2.335705759176145,
+            "expected": 2.3357058,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Minimum total area",
+            "calculated": 18.948071978404442,
+            "expected": 18.948072,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Positive transformed stationary root satisfies equation",
+            "calculated": 0.0,
+            "expected": 0,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Endpoint areas",
+            "calculated": [
+              21.85785301113443,
+              50.06448533078084
+            ],
+            "expected": [
+              21.857853,
+              50.064485
+            ],
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Derivative switches negative to positive",
+            "calculated": [
+              true,
+              true
+            ],
+            "expected": [
+              true,
+              true
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Substitute R2rin the supplied volume formula; volume6gives h18/(7pi r2).",
+        "b": "Both circular ends contribute5pi r2and the supplied curved area gives3pi r sqrt(r2+h2). No unfamiliar formula must be recalled.",
+        "c": "Numerically minimizing the resulting positive one-variable area gives the stated r,h,Sinside the permitted interval.",
+        "d": "Independent global proof: let u=k2/r6>0. The derivative divided by pi r is10+3(2-u)/sqrt(1+u), strictly decreasing as a function of uand therefore increasing with r. Its unique physical zero hasu>2and solves9u2-136u-64=0. Endpoint signs and the unique zero establish the global minimum, beyond numerical sampling."
+      },
+      "nativeDiagramReview": "Native closed frustum inspected: lower radiusr, upper radius2r, central heighth, both circular ends and sloping side match the supplied geometry.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 15,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "99ba3e7bf4d348fb370300f41aa684cb712742cf348f9e972e6d655714f1861f",
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.15",
+        "SL 4.5"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Two outgoing arrows per row",
+            "calculated": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "expected": [
+              2,
+              2,
+              2,
+              2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Four-step walk count by direct enumeration",
+            "calculated": 4,
+            "expected": 4,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "All equally probable four-step walks",
+            "calculated": 16,
+            "expected": 16,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Four-move Dprobability",
+            "calculated": 0.25,
+            "expected": 0.25,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Enumeration includes at least one repeated-vertex walk",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Read arrows with the explicitly given row-origin,column-destination adjacency convention, distinct from column-stochastic state-vector convention.",
+        "b": "The rowA,columnDentry of M4counts ordered four-link walks. Direct enumeration independently finds four such walks.",
+        "c": "Every vertex has exactly two uniformly chosen outgoing links; each four-step walk therefore has probability1/16. Summing the four favorable walks gives1/4.",
+        "d": "The robot may revisit vertices or links, so walks rather than simple paths correctly count the sample space."
+      },
+      "nativeDiagramReview": "Native directed graph read arrow-by-arrow: AtoB/C,BtoA/D,CtoB/D,DtoA/C. Opposite ABandCDarrows are drawn separately, and diagonal crossings are not extra vertices.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-c-paper-1",
+      "question": 16,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "161b738482391ccf37ae9a516cfd59d38ba486c48c450f0212d1142cf2b3784e",
+      "syllabusRefs": [
+        "SL 5.6",
+        "AHL 5.12"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Maximum radius at derivative zero",
+            "calculated": 0.16,
+            "expected": 0.16,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Maximum exceeds both endpoint radii",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Polynomial antiderivative capacity in litres",
+            "calculated": 106.59423873630168,
+            "expected": 106.59423873150169,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Independent quadrature agrees",
+            "calculated": 0.10659423873630168,
+            "expected": 0.10659423873630168,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Half-full depth",
+            "calculated": 0.8158233848917709,
+            "expected": 0.81582338,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          },
+          {
+            "test": "Half-full volume substitution",
+            "calculated": 0.49999999999999994,
+            "expected": 0.5,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The radius is a concave quadratic with derivative0.08-0.08x; its vertexx1lies within[0,1.5].",
+        "b": "Horizontal circular cross-sections have area pi r2. Independent polynomial squaring/integration and numerical quadrature both give0.1065942387m3, converted by1000litres/m3.",
+        "c": "The upright depth equation integrates from base0toh. Radius remains positive throughout the vessel, so cumulative volume is strictly increasing and the numerical half-volume root is unique; half depth need not be half height."
+      },
+      "nativeDiagramReview": "Native diagram is explicitly radius against height, not an inverted vessel side view. Radius0.12atbase, maximum0.16atheight1and radius0.15atheight1.5match the function.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 1,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "ea8510cbb4ed8c343c31a1fd36e45bdf1e401e9e6e6f5e9b04c83c2669b68903",
+      "syllabusRefs": [
+        "SL 1.4",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Present value at6percent",
+            "calculated": 5244.651993415908,
+            "expected": 5244.652,
+            "absoluteTolerance": 0.001,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Internal rate as annual percent",
+            "calculated": 15.245770880198284,
+            "expected": 15.245771,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "IRR zero substitution",
+            "calculated": -7.275957614183426e-12,
+            "expected": 0,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Positive NPV at10percent",
+            "calculated": 2721.013840336287,
+            "expected": 2721.0138,
+            "absoluteTolerance": 0.0001,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Every end-of-year cash flow is discounted by its own year index before subtracting the current18000cost; the NPV definition is supplied.",
+        "b": "All future flows are positive, so NPV is strictly decreasing for r>=0. NPV0is positive and NPV1negative, giving one positive root; the annual percentage is100r.",
+        "c": "The modeled NPV at the required10percentreturn is positive. Forecast cash flows, timings and costs remain uncertain, so the mathematical calculation alone cannot guarantee commercial profit."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 2,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "e2e352f56827ad1aad088ec9a5b49f002c5c398de35c946bb1916228bfe04632",
+      "syllabusRefs": [
+        "SL 1.6",
+        "SL 3.1"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Half-unit radius bounds",
+            "calculated": [
+              2.395,
+              2.405
+            ],
+            "expected": [
+              2.395,
+              2.405
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Half-unit height bounds",
+            "calculated": [
+              5.15,
+              5.25
+            ],
+            "expected": [
+              5.15,
+              5.25
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "True volume bounding expressions",
+            "calculated": [
+              92.80430810415807,
+              95.39801485294342
+            ],
+            "expected": [
+              92.804308,
+              95.398015
+            ],
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Recorded nominal volume",
+            "calculated": 94.09698316032149,
+            "expected": 94.096983,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Largest true-denominator overstatement percentage",
+            "calculated": 1.3929041469848533,
+            "expected": 1.3929041,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Standard half-unit intervals include lower and exclude upper endpoints: radius[2.395,2.405),height[5.15,5.25).",
+        "b": "For positive dimensions pi r2his strictly increasing in r and h, so the minimum is attained at both lower bounds and the upper expression is an unattained upper bound.",
+        "c": "With a fixed nominal volume, nominal/true-1decreases as true volume increases. The largest overstatement is at the included minimum volume, using true volume in the denominator as explicitly requested."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 3,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "0124dfe47537a0717030e8187f999ac013a6091013267fbdd97ee7897c1eab41",
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 4.7"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Bill at150kWh",
+            "calculated": 39.199999999999996,
+            "expected": 39.2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Four possible bills",
+            "calculated": [
+              17.0,
+              26.0,
+              39.199999999999996,
+              55.2
+            ],
+            "expected": [
+              17,
+              26,
+              39.2,
+              55.2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Probability-weighted expected bill",
+            "calculated": 36.22,
+            "expected": 36.22,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Mean use",
+            "calculated": 135.0,
+            "expected": 135,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Bill evaluated at mean use",
+            "calculated": 34.4,
+            "expected": 34.4,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Expected bill exceeds bill of mean",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The upper tariff applies only to use above120kWh, not all150kWh.",
+        "b": "Apply the tariff to each discrete possible use before probability weighting; include the fixed fee once per month.",
+        "c": "The upward tariff kink makes the bill convex and not a single affine rule over the distribution. Therefore evaluating the bill at mean use need not equal the mean bill; higher-use months attract the higher marginal rate."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 4,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "42b4a25c7eadbbdeeda11974c615ad5a32cdb7e89291dbe5a5fafff4ef51d271",
+      "syllabusRefs": [
+        "SL 3.2",
+        "AHL 3.8"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Ambiguous opposite-angle solutions",
+            "calculated": [
+              48.590377890729144,
+              131.40962210927086
+            ],
+            "expected": [
+              48.590377890729144,
+              131.40962210927086
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Both AC lengths",
+            "calculated": [
+              5.100802223284086,
+              15.683807467542447
+            ],
+            "expected": [
+              5.100802223284079,
+              15.683807467542449
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Only shorter triangle projection is interior",
+            "calculated": [
+              true,
+              false
+            ],
+            "expected": [
+              true,
+              false
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The sine rule gives sinC0.75. Both acute and obtuse Csolutions leave a positive Bangle when A30degrees.",
+        "b": "For each Cuse B180-A-Cand the sine rule; equivalently the ray from Aintersects the circle around Bofradius8at two positive distances.",
+        "c": "The horizontal projection isACcos30degrees. Only the shorter length places the foot strictly between0and12; the longer candidate projects beyond B."
+      },
+      "nativeDiagramReview": "Native SSA diagram read: AB12, angleA30degrees, both possible Cpositions along the same ray, two8mBCsegments and the larger candidate projecting beyond B are coherent.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 5,
+      "status": "passed",
+      "marks": 6,
+      "canonicalQuestionSha256": "ff58131fbf66f52da3c36640341196633abba7d33a80fcb2f132c54e48f3e052",
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.12",
+        "AHL 4.17"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Poisson fitted mean from complete raw total",
+            "calculated": 2.0,
+            "expected": 2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Raw total compatible with grouped tail",
+            "calculated": 400,
+            "expected": 400,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "All four expected frequencies",
+            "calculated": [
+              27.06705664732254,
+              54.13411329464508,
+              54.13411329464508,
+              64.6647167633873
+            ],
+            "expected": [
+              27.06705664732254,
+              54.13411329464508,
+              54.13411329464508,
+              64.6647167633873
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Expected counts all exceed5",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Fitted-parameter degrees of freedom",
+            "calculated": 2,
+            "expected": 2,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Pearson statistic",
+            "calculated": 3.6006848725995275,
+            "expected": 3.6006849,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Chi-square df2 upper tail",
+            "calculated": 0.165242293572533,
+            "expected": 0.16524229,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Do not reject at5percent",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The ungrouped sum400is explicitly supplied, so its sample mean2can be fitted consistently; treating every pooled count as3would be invalid.",
+        "b": "Pool all values>=3into the last expected cell. The four expected frequencies sum200and exceed5.",
+        "c": "Subtract one degree of freedom for total count and one for the fitted Poisson mean, giving2. Independent df2survival evaluation confirms the stated p-value.",
+        "d": "There is insufficient evidence of lack of fit at5percent, which is weaker than proving a Poisson distribution or its underlying event-process assumptions."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 6,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "2f4bcfa6e1df2f861e4efb9967daab53500316a2743d9b08d362bf60b7d874b7",
+      "syllabusRefs": [
+        "AHL 2.10",
+        "SL 4.4",
+        "SL 2.6"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Linearized slope",
+            "calculated": -0.26723697377029676,
+            "expected": -0.26723697,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          },
+          {
+            "test": "Linearized intercept",
+            "calculated": 4.129800508319731,
+            "expected": 4.1298005,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "All logarithm arguments positive",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Fitted A",
+            "calculated": 62.16552019360186,
+            "expected": 62.16552,
+            "absoluteTolerance": 1e-05,
+            "status": "passed"
+          },
+          {
+            "test": "Fitted k",
+            "calculated": 0.26723697377029676,
+            "expected": 0.26723697,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Fitted initial response",
+            "calculated": 17.834479806398143,
+            "expected": 17.83448,
+            "absoluteTolerance": 1e-05,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The fixed proposed saturation80allows log(80-Y)=logA-kt; every observed Yis below80, so the transform is defined.",
+        "b": "Exponentiate the unrounded fitted intercept and negate the slope; Aandkare both positive as required.",
+        "c": "Regression does not force the fitted initial value through the first noisy observation. The early-time data do not reach a plateau and therefore cannot establish the assumed limiting80on their own."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 7,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "6abee64cfad2fd3bde59053914f811f334611222cceef68662afc833b865da14",
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Exhaustive original shortest-route cost",
+            "calculated": 16,
+            "expected": 16,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Listed original route is available",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Best unchanged-path constant",
+            "calculated": 16,
+            "expected": 16,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Best upgraded-path base constant",
+            "calculated": 11,
+            "expected": 11,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Tie upgrade value",
+            "calculated": 5,
+            "expected": 5,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Largest20percent-reduction x",
+            "calculated": 1.8000000000000007,
+            "expected": 1.8,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Boundary journey time",
+            "calculated": 12.8,
+            "expected": 12.8,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Enumerate all simple AtoFpaths in the nonnegative-weight undirected graph; a shortest route never needs a positive-cost cycle.",
+        "b": "Among paths not using BD,the best remains16. Among paths using BDonce,the best other-edge total is11, so the exact lower envelope ismin(16,11+x)for every0<=x<=6. Strict improvement means0<=x<5.",
+        "c": "At least20percentreduction requires a journey at most12.8minutes. Thus11+x<=12.8and the largest feasible upgrade time is1.8."
+      },
+      "nativeDiagramReview": "Native graph edge data independently read: AB4,AC7,BC2,BD6,CD3,CE8,DE4,DF9,EF3. Distinct cost labels and minute units match the route calculations.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 8,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "80b2c61ab963dfa906913b18f1e841ad9a415afa090597338379b09f9124662a",
+      "syllabusRefs": [
+        "AHL 4.15"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "CLT sampling-mean tail for n64",
+            "calculated": 0.09121121972586788,
+            "expected": 0.09121121972586788,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Upper1percent sample-mean bound",
+            "calculated": 21.489521811061262,
+            "expected": 21.48952181106126,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Smallest permitted integer sample size",
+            "calculated": 139,
+            "expected": 139,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Neighbouring mean-tail probabilities",
+            "calculated": [
+              0.02512145956468903,
+              0.024708795876847933
+            ],
+            "expected": [
+              0.02512146,
+              0.024708796
+            ],
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Individual times are skewed, but the question explicitly permits the CLTfor n>30. The sample mean has sd12/sqrt64=1.5, not12.",
+        "b": "Use the99th percentile of the approximate sample-mean distribution, not an individual service-time percentile.",
+        "c": "The mean-tail probability decreases with n. Solving the normal-quantile inequality gives a real lower bound, rounding up gives139and checking138/139confirms the first valid integer. The result remains a CLTapproximation."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 9,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "0c814df4c0fbb9939a9c037785c7930f225287cfc0aa94415f642473952257b2",
+      "syllabusRefs": [
+        "AHL 1.15",
+        "AHL 5.17"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Eigenvector for eigenvalue-1",
+            "calculated": [
+              -1,
+              -1
+            ],
+            "expected": [
+              -1,
+              -1
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Eigenvector for eigenvalue-3",
+            "calculated": [
+              -3,
+              3
+            ],
+            "expected": [
+              -3,
+              3
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Initial modal coefficients",
+            "calculated": [
+              "4",
+              "2"
+            ],
+            "expected": [
+              4,
+              2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Initial condition",
+            "calculated": [
+              6.0,
+              2.0
+            ],
+            "expected": [
+              6,
+              2
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Both differential equations at three independent times",
+            "calculated": [
+              [
+                -10.0,
+                2.0
+              ],
+              [
+                -1.770240174892953,
+                -1.1727953544785856
+              ],
+              [
+                -0.07329942082905669,
+                -0.07322569028081674
+              ]
+            ],
+            "expected": [
+              [
+                -10.0,
+                2.0
+              ],
+              [
+                -1.770240174892953,
+                -1.1727953544785856
+              ],
+              [
+                -0.07329942082905669,
+                -0.07322569028081674
+              ]
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Late-time y-over-x approaches1",
+            "calculated": 0.9999999979388464,
+            "expected": 1,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The2x2matrix has distinct nonzero real eigenvalues-1and-3, so exact diagonalizable-system solutions are within the stated AI boundary.",
+        "b": "The two eigenmodes give s=aexp(-t)(1,1)+bexp(-3t)(1,-1). The initial sum/difference equations determine a4,b2and substitution verifies both equations.",
+        "c": "The nonzero slow modeexp(-t)dominates the fasterexp(-3t)mode, so the trajectory approaches alongy=x. This is an asymptotic direction, not a claim the whole trajectory lies on that line."
+      },
+      "nativeDiagramReview": "Native phase field inspected: origin is inward stable in every quadrant, both eigendirections agree with the negative eigenvalues, and initial point(6,2)is labelled correctly.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 10,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "8faa6af099a43b8e171b38b32a199745823005cfcf158f5923c97773eaee59c3",
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13",
+        "AHL 3.8"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Real-axis locus endpoints",
+            "calculated": [
+              7,
+              -1
+            ],
+            "expected": [
+              7,
+              -1
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Unique positive-ray argument solution",
+            "calculated": 1.344388029422434,
+            "expected": 1.344388,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Resultant argument",
+            "calculated": 0.7853981633974484,
+            "expected": 0.7853981633974483,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Resultant amplitude at that parameter",
+            "calculated": 5.5124853351222765,
+            "expected": 5.5124853,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Minimum amplitude over permitted semicircle",
+            "calculated": 1.0,
+            "expected": 1,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "The parameter0throughpi traces the full upper semicircle centred3ofradius4, with endpoints included.",
+        "b": "Argpi/4requires equal positive real/imaginary parts. Intersecting the circle with yxgives coordinate(3+sqrt23)/2on the positive ray; the other algebraic root is negative and invalid.",
+        "c": "Use the modulus at the valid positive-ray point, equivalently sqrt2timesits positive coordinate.",
+        "d": "The reverse triangle inequality gives modulus at least|4-3|1, attained at the allowed endpointtheta pi. Therefore complete cancellation is impossible."
+      },
+      "nativeDiagramReview": "Native locus inspected: upper semicircle from-1to7, centre3and maximum imaginary4, labelled real/imaginary axes and clear centre annotation.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 11,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "3f1b8a0dac51395a3bbbd9bf4da525c8b71510a85dfc0bd5d0ca913f9331e49f",
+      "syllabusRefs": [
+        "AHL 3.12",
+        "AHL 5.13"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Closest time",
+            "calculated": 4.4,
+            "expected": 4.4,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Minimum distance",
+            "calculated": 4.0,
+            "expected": 4,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Interior optimum beats endpoints",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Five-metre boundary times",
+            "calculated": [
+              3.8000000000000003,
+              5.0
+            ],
+            "expected": [
+              3.8,
+              5
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Squared separation at boundaries",
+            "calculated": [
+              25.000000000000004,
+              25
+            ],
+            "expected": [
+              25,
+              25
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Crossing position at different robot times",
+            "calculated": [
+              [
+                18,
+                6
+              ],
+              [
+                18,
+                6
+              ]
+            ],
+            "expected": [
+              [
+                18,
+                6
+              ],
+              [
+                18,
+                6
+              ]
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "No simultaneous collision",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Use simultaneous positions: separation squared25t2-220t+500=25(t-4.4)2+16. Its positive quadratic coefficient and interior vertex give the global minimum on[0,6].",
+        "b": "At most5mmeans squared distance<=25, so |t-4.4|<=0.6. The whole resulting[3.8,5]interval lies in the model domain.",
+        "c": "Ppasses the path intersection(18,6)att6while Qpasses it att2. Their minimum simultaneous distance4mproves no collision."
+      },
+      "nativeDiagramReview": "Native trajectories inspected: Pfrom(0,0)to(18,6), Qfrom(20,10)to(14,-2), arrows point forward and caption distinguishes paths from simultaneous positions.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 12,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "24c277b1d6c96fab5bc210a502bbd168775c035eeedf5bb0288eec2b61459dc6",
+      "syllabusRefs": [
+        "AHL 5.12",
+        "SL 3.1"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Disc-integration original volume",
+            "calculated": 53.616514621265814,
+            "expected": 53.6165146212658,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Independent numerical disc quadrature",
+            "calculated": 53.6165146212658,
+            "expected": 53.616514621265814,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Volume after radius1depth1.5cylinder removal",
+            "calculated": 48.90412564088113,
+            "expected": 48.90412564088111,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Cylinder fits up to depth1.5",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Limiting drilling depth",
+            "calculated": 1.7320508075688772,
+            "expected": 1.7320508075688772,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Curved-surface radius at limiting depth",
+            "calculated": 1.0000000000000004,
+            "expected": 1,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Revolution about the yaxis uses disc radiusx4-y2, so integrate its square with respect to y, not a shell around the wrong axis.",
+        "b": "The solid radius decreases with yand remains at least1.75through the stated1.5mdepth, so the whole removed cylinder lies inside the solid.",
+        "c": "For a radius1drill,the available outer radius4-y2first equals1at sqrt3. This gives the limiting depth before the cylinder would exit the curved side."
+      },
+      "nativeDiagramReview": "Native region/hole diagram inspected: outer x4-y2with intercepts(4,0),(0,2), y-axis rotation orientation, and shaded0<=x<=1,0<=y<=1.5rectangle match the problem.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 13,
+      "status": "passed",
+      "marks": 7,
+      "canonicalQuestionSha256": "dd781cbccc3686eda1d3005f380851b0e986e42b75f31954b47279f79549e6f7",
+      "syllabusRefs": [
+        "SL 4.8",
+        "AHL 4.18"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Alternative contamination probability exceeds null",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Largest sample size under strict TypeIlimit",
+            "calculated": 18,
+            "expected": 18,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Adjacent TypeI probabilities",
+            "calculated": [
+              0.04950883331793482,
+              0.05461595003443548
+            ],
+            "expected": [
+              0.049508833,
+              0.05461595
+            ],
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Power at true probability0.12",
+            "calculated": 0.6539976805208485,
+            "expected": 0.65399768,
+            "absoluteTolerance": 1e-08,
+            "status": "passed"
+          }
+        ],
+        "d": [
+          {
+            "test": "Positive increment in null rejection probability",
+            "calculated": 0.005107116716500659,
+            "expected": 0.00510711671650065,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "H0p0.02versusH1p>0.02uses the specified upper-tail fixed thresholdX>=2.",
+        "b": "Under H0the rejection probability is1-P0-P1. It increases strictly with nforn>=1because the increment is n p2(1-p)^(n-1)>0; adjacent18/19values therefore prove the maximal n, not just a local scan.",
+        "c": "Power is rejection under the true alternativep0.12using the same n18and threshold2, not one minus a probability under H0.",
+        "d": "More observations with the threshold held fixed increase null rejection probability and can breach the strict significance constraint; power alone does not determine validity."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 14,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "304326f0425dcc47009742bcd18bb634dced84814ac6dd2f0ec2cf3a40996903",
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 5.7",
+        "AHL 5.9"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": true,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Derivative bracket at t0",
+            "calculated": 3.7079632679489656,
+            "expected": 3.7079632679489656,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "All stationary times from sinusoid phase form",
+            "calculated": [
+              1.136294024741355,
+              10.427899386044558
+            ],
+            "expected": [
+              1.1362940247413555,
+              10.427899386044558
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Both derivative brackets vanish",
+            "calculated": [
+              1.7763568394002505e-15,
+              1.7763568394002505e-15
+            ],
+            "expected": [
+              0,
+              0
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Complete endpoint/stationary values",
+            "calculated": [
+              200.0,
+              202.52507157702908,
+              95.21301969491317,
+              97.35045119199434
+            ],
+            "expected": [
+              200,
+              202.525072,
+              95.21302,
+              97.350451
+            ],
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Global maximizing candidate",
+            "calculated": 1.136294024741355,
+            "expected": 1.136294024741355,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Maximum forecast revenue",
+            "calculated": 202.52507157702908,
+            "expected": 202.52507,
+            "absoluteTolerance": 1e-05,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Product and chain rules give exp(-0.06t)[5pi cos(pi t/6)-0.06(200+30sin(pi t/6))].",
+        "b": "Rewrite the zero equation asBcos(u+phi)12withu0to2pi, Bsqrt((5pi)2+1.8^2). The cosine equation has exactly two solutions in that full phase-shifted interval, giving the complete stationary set.",
+        "c": "A continuous differentiable function on the closed model interval reaches its global maximum at an endpoint or stationary point. Comparing both endpoints and both interior points identifies the first stationary point as the global maximum."
+      },
+      "nativeDiagramReview": "Native revenue curve inspected: initial200thousand, small early maximum around1.14, trough near10.43and rising end near97.35are consistent; axes show months and thousands.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 15,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "0e347c2ff4de3bc1c4bca55e8e0e3392a87b44a0111d4d17aa09428c84427830",
+      "syllabusRefs": [
+        "AHL 4.19",
+        "AHL 1.14"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "First app proportion identifies q0.4",
+            "calculated": "2/5",
+            "expected": "2/5",
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Stationary distribution at q0.4",
+            "calculated": [
+              "2/5",
+              "2/5",
+              "1/5"
+            ],
+            "expected": [
+              "2/5",
+              "2/5",
+              "1/5"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Stationary substitution",
+            "calculated": [
+              "2/5",
+              "2/5",
+              "1/5"
+            ],
+            "expected": [
+              "2/5",
+              "2/5",
+              "1/5"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Policy stationary distribution",
+            "calculated": [
+              "17/40",
+              "2/5",
+              "7/40"
+            ],
+            "expected": [
+              "17/40",
+              "2/5",
+              "7/40"
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Change in expected app count",
+            "calculated": "25",
+            "expected": 25,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Starting from uniform column probabilities gives app(0.8+q)/3, equated to0.4; the result0.4lies within the allowed parameter interval.",
+        "b": "The positive column-stochastic matrix is regular. Solve its fixed-point equations and normalize; both fixed point and exact rational substitution verify the limiting vector.",
+        "c": "The policy modifies both entries in the telephone-origin column to preserve its total1. Recompute the stationary state, then multiply the app-probability increase0.025by1000customers."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    },
+    {
+      "paperId": "ai-hl-set-d-paper-1",
+      "question": 16,
+      "status": "passed",
+      "marks": 8,
+      "canonicalQuestionSha256": "dcd85d5b320d1f1b6c791637d2929c83009c8ae4c2a094977c4bf95674b5f2ce",
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 5.9",
+        "SL 5.7"
+      ],
+      "stemAndEveryMarkingPointRead": true,
+      "nativeDiagramInspected": false,
+      "partChecks": {
+        "a": [
+          {
+            "test": "Initial amount",
+            "calculated": 80.0,
+            "expected": 80,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Separated exponent derivative agrees with DE",
+            "calculated": [
+              -8.0,
+              -8.810232043945398,
+              -3.2480467976787053
+            ],
+            "expected": [
+              -8.0,
+              -8.810232043945398,
+              -3.2480467976787053
+            ],
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "b": [
+          {
+            "test": "Half-amount time",
+            "calculated": 4.711576496943971,
+            "expected": 4.7115765,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Half-amount substitution",
+            "calculated": 39.99999999999999,
+            "expected": 40,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ],
+        "c": [
+          {
+            "test": "Global peak-removal time",
+            "calculated": 2.071067811865475,
+            "expected": 2.0710678118654746,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          },
+          {
+            "test": "Maximum removal rate",
+            "calculated": 8.81112503845094,
+            "expected": 8.811125,
+            "absoluteTolerance": 1e-06,
+            "status": "passed"
+          },
+          {
+            "test": "Peak beats both endpoint rates",
+            "calculated": true,
+            "expected": true,
+            "absoluteTolerance": 1e-07,
+            "status": "passed"
+          }
+        ]
+      },
+      "partMathematicalReview": {
+        "a": "Positive Minitialpermits separation and logM. Integrating the time-dependent coefficient gives-.1t-.01t2and initial mass fixes multiplier80.",
+        "b": "The mass decreases strictly on the entire nonnegative domain, so the positive quadratic root for the half amount is the unique admissible time.",
+        "c": "rprime=M[0.02-(0.1+0.02t)^2]. Since Mispositive and the increasing positive bracket coefficient crosses sqrt0.02once, rprimechanges positive to negative at the interior peak. Both endpoints are lower, confirming the global maximum on[0,10]."
+      },
+      "nativeDiagramReview": "No diagram required; givens and demands are complete in the text.",
+      "markAllocationReview": "Each part demand and all additive method/accuracy/reasoning steps were read; every group, question and paper total was reconciled."
+    }
+  ],
+  "openFindings": [],
+  "limits": [
+    "The original questions and all diagrams are computationally and AI reviewed; no human IB examiner moderation is claimed.",
+    "Final combined PDFs and live portal/email behaviour require their separate release checks."
+  ]
+}

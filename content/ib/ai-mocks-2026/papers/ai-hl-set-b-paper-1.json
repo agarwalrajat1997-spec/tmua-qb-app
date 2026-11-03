@@ -1,0 +1,1216 @@
+{
+  "id": "ai-hl-set-b-paper-1",
+  "strand": "ai",
+  "course": "hl",
+  "set": "B",
+  "paper": "1",
+  "title": "Mathematics AI HL · Set B · Paper 1",
+  "minutes": 120,
+  "marks": 110,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 6,
+      "stem": "An account pays a nominal annual interest rate of 4.8%, compounded monthly. Deposits of 800 dollars are made at the end of every month for 10 years. The initial balance is zero. Annual inflation is assumed to remain at 2.5%. Ignore tax and fees.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write down the monthly interest rate as a decimal.",
+          "marks": 1
+        },
+        {
+          "label": "b",
+          "prompt": "Find the balance immediately after the 120th deposit.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Express that balance in today's purchasing power.",
+          "marks": 1
+        },
+        {
+          "label": "d",
+          "prompt": "Find the monthly deposit required to achieve purchasing power of 100 000 dollars after 10 years, under the same assumptions.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Future122905.57, real96013.633, required deposit833.21501.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$i=0.048/12=0.004$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the ordinary-annuity future value $800[(1.004)^{120}-1]/0.004$."
+            },
+            {
+              "code": "A1",
+              "text": "The balance is $122905.57$ dollars."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Divide by $1.025^{10}$, giving $96013.633$ dollars in today's money."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Set the target future balance to $100000(1.025)^{10}$ and solve for the deposit."
+            },
+            {
+              "code": "A1",
+              "text": "The required deposit is $833.21501$ dollars per month (round up to the next cent if an attainable minimum payment is required)."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.4",
+        "SL 1.7"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 6,
+      "stem": "A chemical sensor has response $S(c)=(18c+12)/(c+4)$ mV at concentration $c\\ge0$ mg L$^{-1}$. The response is increasing on this physical domain.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find $c$ as a function of $S$, and state the physical domain of this inverse.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the concentration corresponding to 14 mV.",
+          "marks": 1
+        },
+        {
+          "label": "c",
+          "prompt": "Compare the concentration changes corresponding to signal increases from 13 to 14 mV and from 15 to 16 mV. Explain what this says about sensitivity at high concentration.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Inverse (4S−12)/(18−S), 3≤S<18; c14=11; changes3 and10.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Rearrange $Sc+4S=18c+12$."
+            },
+            {
+              "code": "A1",
+              "text": "$c=(4S-12)/(18-S)$."
+            },
+            {
+              "code": "A1",
+              "text": "The inverse domain is $3\\le S<18$, since $S(0)=3$ and the response approaches 18 from below."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$c=(56-12)/4=11$ mg L$^{-1}$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The concentration changes are $11-8=3$ and $26-16=10$ mg L$^{-1}$ respectively."
+            },
+            {
+              "code": "R1",
+              "text": "A larger concentration change gives the same 1 mV response change at high concentration; the sensor is less sensitive there."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 2.7",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 6,
+      "stem": "Two maintenance rails are modelled by $\\ell_1:\\mathbf r=(1,2,3)+s(2,-1,2)$ and $\\ell_2:\\mathbf r=(5,0,7)+t(1,2,-2)$, with real $s,t$. Coordinates are in metres. The schematic shows only that the rails intersect.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find their intersection point.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the acute angle between the rails.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the perpendicular distance from $(1,2,3)$ to $\\ell_2$.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Intersection[5, 0, 7]; acute angle63.6122degrees; perpendicular distance5.3748385m.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Equate the three components; $s=2$, $t=0$ satisfies all of them."
+            },
+            {
+              "code": "A1",
+              "text": "The intersection is $(5,0,7)$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\cos\\theta=|\\mathbf u\\cdot\\mathbf v|/(|\\mathbf u||\\mathbf v|)=4/9$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\theta=63.6122^\\circ$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $|\\overrightarrow{IP}\\times\\mathbf v|/|\\mathbf v|$, or minimize the squared point-to-line distance."
+            },
+            {
+              "code": "A1",
+              "text": "The distance is $5.3748385$ m."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 3.11",
+        "AHL 3.13"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"100.000\" y1=\"300.000\" x2=\"610.000\" y2=\"105.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"120.000\" y1=\"100.000\" x2=\"600.000\" y2=\"335.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"620.000\" y=\"100.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">line ℓ₁</text><text x=\"610.000\" y=\"350.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">line ℓ₂</text><text x=\"358.000\" y=\"184.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">I</text><text x=\"360.000\" y=\"395.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">Schematic intersection; not a coordinate projection</text></svg>"
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 6,
+      "stem": "Seven hikers report their weekly training distance $x$ (km) and the time $y$ (minutes) to complete a steep climb.\n\n| Hiker | A | B | C | D | E | F | G |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| $x$ | 12 | 14 | 14 | 18 | 20 | 23 | 25 |\n| $y$ | 44 | 40 | 42 | 35 | 37 | 31 | 28 |\n\nRank both variables in ascending order, using average ranks for ties.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write down the rank lists for $x$ and $y$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate Spearman's rank correlation coefficient.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Interpret the sign and magnitude of this coefficient. State why it does not by itself prove that training causes a faster climb.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Ranks [1, 2.5, 2.5, 4, 5, 6, 7], [7, 5, 6, 3, 4, 2, 1]; Spearman -0.95499371.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The $x$ ranks are $[1, 2.5, 2.5, 4, 5, 6, 7]$."
+            },
+            {
+              "code": "A1",
+              "text": "The $y$ ranks are $[7, 5, 6, 3, 4, 2, 1]$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Calculate the Pearson correlation of the rank lists, which handles the tied ranks."
+            },
+            {
+              "code": "A1",
+              "text": "$r_s=-0.95499371$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "There is a strong negative monotonic association: greater training distance tends to be associated with shorter climb times."
+            },
+            {
+              "code": "R1",
+              "text": "The data are observational and may be confounded, for example by baseline fitness or age; correlation is not proof of causation."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.10",
+        "SL 4.4"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 5,
+      "section": "",
+      "marks": 6,
+      "stem": "Tidal depth at a harbour is modelled by $h(t)=2.4+1.6\\cos(\\pi(t-3)/6)$ metres, for $0\\le t\\le24$, where $t$ is hours after midnight. A survey vessel requires a depth of at least 3.1 m throughout an uninterrupted 90-minute operation. Angles in the formula are in radians.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "State the amplitude and period of the tidal model.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the first interval after midnight during which the depth is at least 3.1 m.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the latest start time in this first interval for the operation. Give hours after midnight, without converting to clock time.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Amplitude1.6, period12; firstwindow[0.86481599,5.135184]; lateststart3.635184h.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Amplitude $1.6$ m."
+            },
+            {
+              "code": "A1",
+              "text": "Period $12$ hours."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $\\cos(\\pi(t-3)/6)\\ge0.4375$ around the first maximum."
+            },
+            {
+              "code": "A1",
+              "text": "The interval is $0.86481599\\le t\\le 5.135184$ hours."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Subtract 1.5 hours from the end of the interval."
+            },
+            {
+              "code": "A1",
+              "text": "The latest start is $t=3.635184$ hours."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 2.9",
+        "AHL 3.8"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"640.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"70.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"356.000\" x2=\"70.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"141.250\" y1=\"356.000\" x2=\"141.250\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"141.250\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">3</text><line x1=\"212.500\" y1=\"356.000\" x2=\"212.500\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"212.500\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">6</text><line x1=\"283.750\" y1=\"356.000\" x2=\"283.750\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"283.750\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">9</text><line x1=\"355.000\" y1=\"356.000\" x2=\"355.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"355.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">12</text><line x1=\"426.250\" y1=\"356.000\" x2=\"426.250\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"426.250\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">15</text><line x1=\"497.500\" y1=\"356.000\" x2=\"497.500\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"497.500\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">18</text><line x1=\"568.750\" y1=\"356.000\" x2=\"568.750\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"568.750\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">21</text><line x1=\"640.000\" y1=\"356.000\" x2=\"640.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"640.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">24</text><line x1=\"66.000\" y1=\"360.000\" x2=\"74.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"365.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"66.000\" y1=\"293.333\" x2=\"74.000\" y2=\"293.333\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"298.333\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">1</text><line x1=\"66.000\" y1=\"226.667\" x2=\"74.000\" y2=\"226.667\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"231.667\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"66.000\" y1=\"160.000\" x2=\"74.000\" y2=\"160.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"165.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">3</text><line x1=\"66.000\" y1=\"93.333\" x2=\"74.000\" y2=\"93.333\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"98.333\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><text x=\"665.000\" y=\"351.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">t / h</text><text x=\"82.000\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">h / m</text><polyline points=\"70.000,200.000 71.188,197.208 72.375,194.417 73.562,191.631 74.750,188.850 75.938,186.077 77.125,183.314 78.312,180.562 79.500,177.823 80.688,175.099 81.875,172.393 83.062,169.705 84.250,167.038 85.438,164.394 86.625,161.774 87.812,159.180 89.000,156.615 90.188,154.079 91.375,151.574 92.562,149.103 93.750,146.667 94.938,144.267 96.125,141.905 97.312,139.583 98.500,137.303 99.688,135.065 100.875,132.872 102.062,130.726 103.250,128.626 104.438,126.576 105.625,124.575 106.812,122.627 108.000,120.731 109.188,118.890 110.375,117.104 111.562,115.376 112.750,113.705 113.938,112.093 115.125,110.542 116.312,109.052 117.500,107.624 118.688,106.260 119.875,104.959 121.062,103.724 122.250,102.555 123.438,101.453 124.625,100.418 125.812,99.452 127.000,98.554 128.188,97.726 129.375,96.968 130.562,96.281 131.750,95.664 132.938,95.119 134.125,94.647 135.312,94.246 136.500,93.918 137.688,93.662 138.875,93.480 140.062,93.370 141.250,93.333 142.438,93.370 143.625,93.480 144.812,93.662 146.000,93.918 147.188,94.246 148.375,94.647 149.562,95.119 150.750,95.664 151.938,96.281 153.125,96.968 154.312,97.726 155.500,98.554 156.688,99.452 157.875,100.418 159.062,101.453 160.250,102.555 161.438,103.724 162.625,104.959 163.812,106.260 165.000,107.624 166.188,109.052 167.375,110.542 168.562,112.093 169.750,113.705 170.938,115.376 172.125,117.104 173.312,118.890 174.500,120.731 175.688,122.627 176.875,124.575 178.062,126.576 179.250,128.626 180.438,130.726 181.625,132.872 182.812,135.065 184.000,137.303 185.188,139.583 186.375,141.905 187.562,144.267 188.750,146.667 189.938,149.103 191.125,151.574 192.312,154.079 193.500,156.615 194.688,159.180 195.875,161.774 197.062,164.394 198.250,167.038 199.438,169.705 200.625,172.393 201.813,175.099 203.000,177.823 204.188,180.562 205.375,183.314 206.562,186.077 207.750,188.850 208.938,191.631 210.125,194.417 211.312,197.208 212.500,200.000 213.688,202.792 214.875,205.583 216.062,208.369 217.250,211.150 218.438,213.923 219.625,216.686 220.813,219.438 222.000,222.177 223.188,224.901 224.375,227.607 225.563,230.295 226.750,232.962 227.938,235.606 229.125,238.226 230.312,240.820 231.500,243.385 232.688,245.921 233.875,248.426 235.062,250.897 236.250,253.333 237.438,255.733 238.625,258.095 239.812,260.417 241.000,262.697 242.188,264.935 243.375,267.128 244.562,269.274 245.750,271.374 246.938,273.424 248.125,275.425 249.312,277.373 250.500,279.269 251.688,281.110 252.875,282.896 254.062,284.624 255.250,286.295 256.438,287.907 257.625,289.458 258.812,290.948 260.000,292.376 261.188,293.740 262.375,295.041 263.562,296.276 264.750,297.445 265.938,298.547 267.125,299.582 268.312,300.548 269.500,301.446 270.688,302.274 271.875,303.032 273.062,303.719 274.250,304.336 275.438,304.881 276.625,305.353 277.812,305.754 279.000,306.082 280.188,306.338 281.375,306.520 282.562,306.630 283.750,306.667 284.938,306.630 286.125,306.520 287.312,306.338 288.500,306.082 289.688,305.754 290.875,305.353 292.062,304.881 293.250,304.336 294.438,303.719 295.625,303.032 296.812,302.274 298.000,301.446 299.188,300.548 300.375,299.582 301.562,298.547 302.750,297.445 303.938,296.276 305.125,295.041 306.312,293.740 307.500,292.376 308.688,290.948 309.875,289.458 311.062,287.907 312.250,286.295 313.438,284.624 314.625,282.896 315.812,281.110 317.000,279.269 318.188,277.373 319.375,275.425 320.562,273.424 321.750,271.374 322.938,269.274 324.125,267.128 325.312,264.935 326.500,262.697 327.688,260.417 328.875,258.095 330.063,255.733 331.250,253.333 332.438,250.897 333.625,248.426 334.812,245.921 336.000,243.385 337.188,240.820 338.375,238.226 339.563,235.606 340.750,232.962 341.938,230.295 343.125,227.607 344.312,224.901 345.500,222.177 346.688,219.438 347.875,216.686 349.062,213.923 350.250,211.150 351.438,208.369 352.625,205.583 353.813,202.792 355.000,200.000 356.188,197.208 357.375,194.417 358.562,191.631 359.750,188.850 360.938,186.077 362.125,183.314 363.313,180.562 364.500,177.823 365.688,175.099 366.875,172.393 368.062,169.705 369.250,167.038 370.438,164.394 371.625,161.774 372.812,159.180 374.000,156.615 375.188,154.079 376.375,151.574 377.563,149.103 378.750,146.667 379.938,144.267 381.125,141.905 382.312,139.583 383.500,137.303 384.688,135.065 385.875,132.872 387.063,130.726 388.250,128.626 389.438,126.576 390.625,124.575 391.812,122.627 393.000,120.731 394.188,118.890 395.375,117.104 396.562,115.376 397.750,113.705 398.938,112.093 400.125,110.542 401.313,109.052 402.500,107.624 403.688,106.260 404.875,104.959 406.062,103.724 407.250,102.555 408.438,101.453 409.625,100.418 410.813,99.452 412.000,98.554 413.188,97.726 414.375,96.968 415.562,96.281 416.750,95.664 417.938,95.119 419.125,94.647 420.312,94.246 421.500,93.918 422.688,93.662 423.875,93.480 425.062,93.370 426.250,93.333 427.438,93.370 428.625,93.480 429.812,93.662 431.000,93.918 432.188,94.246 433.375,94.647 434.562,95.119 435.750,95.664 436.938,96.281 438.125,96.968 439.312,97.726 440.500,98.554 441.688,99.452 442.875,100.418 444.062,101.453 445.250,102.555 446.438,103.724 447.625,104.959 448.812,106.260 450.000,107.624 451.188,109.052 452.375,110.542 453.563,112.093 454.750,113.705 455.938,115.376 457.125,117.104 458.312,118.890 459.500,120.731 460.688,122.627 461.875,124.575 463.062,126.576 464.250,128.626 465.438,130.726 466.625,132.872 467.812,135.065 469.000,137.303 470.188,139.583 471.375,141.905 472.562,144.267 473.750,146.667 474.938,149.103 476.125,151.574 477.313,154.079 478.500,156.615 479.688,159.180 480.875,161.774 482.062,164.394 483.250,167.038 484.438,169.705 485.625,172.393 486.812,175.099 488.000,177.823 489.188,180.562 490.375,183.314 491.562,186.077 492.750,188.850 493.938,191.631 495.125,194.417 496.312,197.208 497.500,200.000 498.688,202.792 499.875,205.583 501.063,208.369 502.250,211.150 503.438,213.923 504.625,216.686 505.812,219.438 507.000,222.177 508.188,224.901 509.375,227.607 510.562,230.295 511.750,232.962 512.938,235.606 514.125,238.226 515.312,240.820 516.500,243.385 517.688,245.921 518.875,248.426 520.062,250.897 521.250,253.333 522.438,255.733 523.625,258.095 524.812,260.417 526.000,262.697 527.188,264.935 528.375,267.128 529.562,269.274 530.750,271.374 531.938,273.424 533.125,275.425 534.312,277.373 535.500,279.269 536.688,281.110 537.875,282.896 539.062,284.624 540.250,286.295 541.438,287.907 542.625,289.458 543.812,290.948 545.000,292.376 546.188,293.740 547.375,295.041 548.562,296.276 549.750,297.445 550.938,298.547 552.125,299.582 553.312,300.548 554.500,301.446 555.688,302.274 556.875,303.032 558.062,303.719 559.250,304.336 560.438,304.881 561.625,305.353 562.812,305.754 564.000,306.082 565.188,306.338 566.375,306.520 567.562,306.630 568.750,306.667 569.938,306.630 571.125,306.520 572.312,306.338 573.500,306.082 574.688,305.754 575.875,305.353 577.062,304.881 578.250,304.336 579.438,303.719 580.625,303.032 581.812,302.274 583.000,301.446 584.188,300.548 585.375,299.582 586.562,298.547 587.750,297.445 588.938,296.276 590.125,295.041 591.313,293.740 592.500,292.376 593.688,290.948 594.875,289.458 596.063,287.907 597.250,286.295 598.438,284.624 599.625,282.896 600.812,281.110 602.000,279.269 603.188,277.373 604.375,275.425 605.562,273.424 606.750,271.374 607.938,269.274 609.125,267.128 610.312,264.935 611.500,262.697 612.688,260.417 613.875,258.095 615.063,255.733 616.250,253.333 617.438,250.897 618.625,248.426 619.813,245.921 621.000,243.385 622.188,240.820 623.375,238.226 624.562,235.606 625.750,232.962 626.938,230.295 628.125,227.607 629.312,224.901 630.500,222.177 631.688,219.438 632.875,216.686 634.062,213.923 635.250,211.150 636.438,208.369 637.625,205.583 638.813,202.792 640.000,200.000\" fill=\"none\" stroke=\"#202020\" stroke-width=\"2\"/><polyline points=\"70.000,153.333 640.000,153.333\" fill=\"none\" stroke=\"#4b7196\" stroke-width=\"2\" stroke-dasharray=\"7 5\"/></svg>"
+    },
+    {
+      "number": 6,
+      "section": "",
+      "marks": 7,
+      "stem": "A robot must inspect every corridor in the undirected network at least once and return to its starting station A. Edge labels are corridor lengths in metres. It may repeat corridors; crossings away from labelled stations are not junctions.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Explain why traversing every corridor exactly once in a closed route is impossible.",
+          "marks": 1
+        },
+        {
+          "label": "b",
+          "prompt": "Find the minimum total length of corridors that must be repeated.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the minimum length of a complete inspection route and explain why your construction permits a closed route.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Edge total40; oddpair totals[7, 17, 11]; minimumroute47m.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Vertices A,B,C,D have odd degree 3. A connected graph admits an Euler circuit only when all degrees are even."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Pair the four odd vertices using shortest path distances."
+            },
+            {
+              "code": "A1",
+              "text": "The three pairing totals are $7, 17, 11$ m."
+            },
+            {
+              "code": "A1",
+              "text": "Repeat AB and CD, for $7$ m in total."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The original edge total is $40$ m."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum route length is $40+7=47$ m."
+            },
+            {
+              "code": "R1",
+              "text": "Duplicating the selected paths makes every vertex even while preserving connectivity, so an Euler circuit of that length exists."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><text x=\"360.000\" y=\"27.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">Corridor lengths / m</text><line x1=\"100.000\" y1=\"95.000\" x2=\"610.000\" y2=\"95.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"342.00\" y=\"81.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"355.000\" y=\"100.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">4</text><line x1=\"610.000\" y1=\"95.000\" x2=\"610.000\" y2=\"335.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"597.00\" y=\"201.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"610.000\" y=\"220.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">5</text><line x1=\"610.000\" y1=\"335.000\" x2=\"100.000\" y2=\"335.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"342.00\" y=\"321.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"355.000\" y=\"340.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">3</text><line x1=\"100.000\" y1=\"335.000\" x2=\"100.000\" y2=\"95.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"87.00\" y=\"201.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"100.000\" y=\"220.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">6</text><line x1=\"100.000\" y1=\"95.000\" x2=\"355.000\" y2=\"215.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"214.50\" y=\"141.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"227.500\" y=\"160.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">7</text><line x1=\"610.000\" y1=\"335.000\" x2=\"355.000\" y2=\"215.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"469.50\" y=\"261.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"482.500\" y=\"280.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">4</text><line x1=\"610.000\" y1=\"95.000\" x2=\"355.000\" y2=\"215.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"469.50\" y=\"141.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"482.500\" y=\"160.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">6</text><line x1=\"100.000\" y1=\"335.000\" x2=\"355.000\" y2=\"215.000\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"214.50\" y=\"261.00\" width=\"26\" height=\"24\" fill=\"white\"/><text x=\"227.500\" y=\"280.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">5</text><circle cx=\"100\" cy=\"95\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"100.000\" y=\"101.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">A</text><circle cx=\"610\" cy=\"95\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"610.000\" y=\"101.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">B</text><circle cx=\"610\" cy=\"335\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"610.000\" y=\"341.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">C</text><circle cx=\"100\" cy=\"335\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"100.000\" y=\"341.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">D</text><circle cx=\"355\" cy=\"215\" r=\"17\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"355.000\" y=\"221.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">E</text></svg>"
+    },
+    {
+      "number": 7,
+      "section": "",
+      "marks": 7,
+      "stem": "A factory claims that a new process reduces the defect probability from 0.20. Thirty independent items are tested and two are defective. Use a one-tailed exact binomial test at the 5% level. For a lower-tail critical region, choose the largest rejection probability strictly below 0.05.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "State the hypotheses for the new defect probability $p$.",
+          "marks": 1
+        },
+        {
+          "label": "b",
+          "prompt": "Find the $p$-value and state the test decision.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the critical region, showing that the next larger lower-tail region is not permitted.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "Find the probability of a Type II error when the true defect probability is 0.10.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "pvalue0.044178985; criticalX≤2; beta(p=.1)=0.58864876.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0:p=0.20$, $H_1:p<0.20$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$P(X\\le2)$ for $X\\sim B(30,0.20)$."
+            },
+            {
+              "code": "A1",
+              "text": "$p=0.044178985<0.05$; reject the null hypothesis in favour of a reduction."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Reject when $X\\le 2$; its probability is $0.044178985$."
+            },
+            {
+              "code": "R1",
+              "text": "$P_0(X\\le 3)=0.12271081>0.05$, so the region cannot be enlarged."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Failing to reject means $X>2$, now with $X\\sim B(30,0.10)$."
+            },
+            {
+              "code": "A1",
+              "text": "The Type II error probability is $0.58864876$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.8",
+        "AHL 4.18"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 8,
+      "section": "",
+      "marks": 7,
+      "stem": "Nine independent observations of the lifetime of a component, in hours, are\n\n$42.1,44.8,41.7,46.3,43.5,45.2,42.9,44.1,43.7$.\n\nAssume a random sample from a normal population whose variance is unknown.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the sample mean and unbiased sample standard deviation.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find a 95% confidence interval for the population mean lifetime.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Comment on a claimed mean lifetime of 44.5 hours, and explain why the interval is not a range containing 95% of individual lifetimes.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "mean43.811111,s1.4793955;95%CI[42.67394704717772, 44.9482751750445].",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\bar x=43.811111$ h."
+            },
+            {
+              "code": "A1",
+              "text": "$s=1.4793955$ h."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use a $t$ interval with $df=8$, not the population standard deviation."
+            },
+            {
+              "code": "M1",
+              "text": "$\\bar x\\pm t_{0.975,8}s/\\sqrt9$, where $t_{0.975,8}=2.3060041$."
+            },
+            {
+              "code": "A1",
+              "text": "The interval is $(42.673947,44.948275)$ hours."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "44.5 hours lies inside this interval, so this sample is compatible with that mean at this confidence level."
+            },
+            {
+              "code": "R1",
+              "text": "The interval estimates the population mean using the standard error; it is not a prediction interval for individual observations."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 4.14",
+        "AHL 4.16"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 9,
+      "section": "",
+      "marks": 7,
+      "stem": "The cross-sectional area $A(x)$ of a flooded tunnel is measured perpendicular to its axis at equally spaced positions.\n\n| $x$ / m | 0 | 20 | 40 | 60 | 80 | 100 |\n| --- | --- | --- | --- | --- | --- | --- |\n| $A(x)$ / m$^2$ | 0 | 18 | 29 | 25 | 14 | 0 |\n\nAssume $A(x)$ is continuous and strictly concave down between the ends.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Use the trapezoidal rule with intervals of width 20 m to estimate the water volume.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Additional areas at $x=10,30,50,70,90$ are respectively $9.5,24,28.5,20,7.5$ m$^2$. Find the trapezoidal estimate using width 10 m.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Using the concavity assumption, state whether these trapezoidal estimates are underestimates or overestimates, and justify your answer.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "T20=1720.0m³;T10=1755.0m³; both underestimate under stated concavity.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $V\\approx(20/2)[A_0+2(A_1+A_2+A_3+A_4)+A_5]$."
+            },
+            {
+              "code": "M1",
+              "text": "Substitute $18+29+25+14=86$."
+            },
+            {
+              "code": "A1",
+              "text": "$V\\approx 1720.0$ m$^3$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Interleave all eleven equally spaced observations; endpoints are zero."
+            },
+            {
+              "code": "A1",
+              "text": "The refined estimate is $1755.0$ m$^3$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Each chord lies below a concave-down graph."
+            },
+            {
+              "code": "R1",
+              "text": "The trapezoids therefore underestimate the integral and hence the volume; the larger refined estimate is consistent with this."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 5.8",
+        "AHL 5.10"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"640.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"360.000\" x2=\"70.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"70.000\" y1=\"356.000\" x2=\"70.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"184.000\" y1=\"356.000\" x2=\"184.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"184.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">20</text><line x1=\"298.000\" y1=\"356.000\" x2=\"298.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"298.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">40</text><line x1=\"412.000\" y1=\"356.000\" x2=\"412.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"412.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">60</text><line x1=\"526.000\" y1=\"356.000\" x2=\"526.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"526.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">80</text><line x1=\"640.000\" y1=\"356.000\" x2=\"640.000\" y2=\"364.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"640.000\" y=\"384.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">100</text><line x1=\"66.000\" y1=\"360.000\" x2=\"74.000\" y2=\"360.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"365.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"66.000\" y1=\"271.765\" x2=\"74.000\" y2=\"271.765\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"276.765\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">10</text><line x1=\"66.000\" y1=\"183.529\" x2=\"74.000\" y2=\"183.529\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"188.529\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">20</text><line x1=\"66.000\" y1=\"95.294\" x2=\"74.000\" y2=\"95.294\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"60.000\" y=\"100.294\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">30</text><text x=\"665.000\" y=\"351.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">x / m</text><text x=\"82.000\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">A / m²</text><polyline points=\"70.000,360.000 184.000,201.176 298.000,104.118 412.000,139.412 526.000,236.471 640.000,360.000\" fill=\"none\" stroke=\"#4b7196\" stroke-width=\"2\"/><circle cx=\"70.000\" cy=\"360.000\" r=\"4\" fill=\"#202020\"/><circle cx=\"184.000\" cy=\"201.176\" r=\"4\" fill=\"#202020\"/><circle cx=\"298.000\" cy=\"104.118\" r=\"4\" fill=\"#202020\"/><circle cx=\"412.000\" cy=\"139.412\" r=\"4\" fill=\"#202020\"/><circle cx=\"526.000\" cy=\"236.471\" r=\"4\" fill=\"#202020\"/><circle cx=\"640.000\" cy=\"360.000\" r=\"4\" fill=\"#202020\"/></svg>"
+    },
+    {
+      "number": 10,
+      "section": "",
+      "marks": 7,
+      "stem": "A two-stage population has juvenile and adult state vector $\\mathbf s_n$. It follows $\\mathbf s_{n+1}=L\\mathbf s_n$, where $L=\\begin{pmatrix}0&1.8\\\\0.5&0.3\\end{pmatrix}$. Initially there are 200 juveniles and 100 adults. Fractional population predictions are permitted within the model.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the predicted juvenile and adult populations one year later.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the dominant eigenvalue and interpret its long-run growth implication.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the long-run juvenile-to-adult ratio and the long-run adult proportion.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Nextstate[180.0, 130.0];dominanteigenvalue1.1104686;J:A=1.6209373:1;adult0.3815429.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Multiply $L(200,100)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The next state is $\\begin{pmatrix}180\\\\130\\end{pmatrix}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The eigenvalues are $1.1104686$ and $-0.81046864$; the dominant magnitude is $1.1104686$."
+            },
+            {
+              "code": "R1",
+              "text": "The model eventually grows by a factor $1.1104686$ per year, about $11.05\\%$ annually."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For an eigenvector $(J,A)^T$, $1.8A=\\lambda J$."
+            },
+            {
+              "code": "A1",
+              "text": "$J:A=1.6209373:1$."
+            },
+            {
+              "code": "A1",
+              "text": "The adult proportion is $1/(1+1.6209373)=0.3815429$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 1.15"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 11,
+      "section": "",
+      "marks": 7,
+      "stem": "A conical tank has height 6 m and top radius 3 m, with its vertex at the bottom. Water depth is $h$ metres. Water enters at 0.4 m$^3$ min$^{-1}$ and leaks at $0.02h$ m$^3$ min$^{-1}$.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Express the water volume $V$ in terms of $h$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the rate of increase of the water depth when $h=2$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the time taken for the depth to rise from 1 m to 2 m, using numerical integration.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "V=πh³/12; dh/dt at2=0.11459156;time1to2=4.9829001min.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Similar triangles give $r=h/2$."
+            },
+            {
+              "code": "A1",
+              "text": "$V=\\frac13\\pi(h/2)^2h=\\pi h^3/12$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$dV/dh=\\pi h^2/4$."
+            },
+            {
+              "code": "M1",
+              "text": "At $h=2$, $(\\pi h^2/4)(dh/dt)=0.4-0.02h=0.36$."
+            },
+            {
+              "code": "A1",
+              "text": "$dh/dt=0.11459156$ m min$^{-1}$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\Delta t=\\int_1^2\\frac{\\pi h^2}{4(0.4-0.02h)}\\,dh$."
+            },
+            {
+              "code": "A1",
+              "text": "The time is $4.9829001$ minutes."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 5.9",
+        "SL 5.5"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"220.000\" y1=\"65.000\" x2=\"360.000\" y2=\"350.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"500.000\" y1=\"65.000\" x2=\"360.000\" y2=\"350.000\" stroke=\"#202020\" stroke-width=\"2\"/><ellipse cx=\"360\" cy=\"65\" rx=\"140\" ry=\"30\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\"/><line x1=\"360.000\" y1=\"65.000\" x2=\"360.000\" y2=\"350.000\" stroke=\"#777\" stroke-width=\"1.6\" stroke-dasharray=\"7 5\"/><line x1=\"360.000\" y1=\"65.000\" x2=\"500.000\" y2=\"65.000\" stroke=\"#777\" stroke-width=\"1.6\" stroke-dasharray=\"7 5\"/><line x1=\"185.000\" y1=\"65.000\" x2=\"185.000\" y2=\"350.000\" stroke=\"#777\" stroke-width=\"1.3\"/><line x1=\"179.000\" y1=\"65.000\" x2=\"191.000\" y2=\"65.000\" stroke=\"#777\" stroke-width=\"1.3\"/><line x1=\"179.000\" y1=\"350.000\" x2=\"191.000\" y2=\"350.000\" stroke=\"#777\" stroke-width=\"1.3\"/><text x=\"150.000\" y=\"215.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">6 m</text><text x=\"430.000\" y=\"50.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">3 m</text><line x1=\"290.000\" y1=\"207.500\" x2=\"430.000\" y2=\"207.500\" stroke=\"#2563a6\" stroke-width=\"2\"/><text x=\"510.000\" y=\"215.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"18\" fill=\"#171717\">water level</text><text x=\"360.000\" y=\"400.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">Conical tank; not to scale</text></svg>"
+    },
+    {
+      "number": 12,
+      "section": "",
+      "marks": 7,
+      "stem": "An engineering model relates energy use $E$ (kJ) to load $m$ (kg) by $E=am^b$, with $a>0$.\n\n| $m$ | 2 | 4 | 6 | 9 | 12 |\n| --- | --- | --- | --- | --- | --- |\n| $E$ | 11.8 | 25.7 | 41.4 | 68.6 | 95.5 |\n\nFit the power model by least-squares linear regression of $\\ln E$ on $\\ln m$.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find $a$ and $b$.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Estimate the energy use at a load of 8 kg.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Show that $(m/E)(dE/dm)=b$. Hence estimate the percentage energy increase caused by a small 5% load increase.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "Power modela5.1549397,b1.1721178;E8=58.98634;5% elasticityincrease5.8605891%.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Linearize as $\\ln E=\\ln a+b\\ln m$."
+            },
+            {
+              "code": "A1",
+              "text": "$b=1.1721178$."
+            },
+            {
+              "code": "A1",
+              "text": "$a=5.1549397$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $5.1549397(8)^{1.1721178}$ with unrounded fitted parameters."
+            },
+            {
+              "code": "A1",
+              "text": "$E=58.98634$ kJ."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$dE/dm=abm^{b-1}$, so $(m/E)(dE/dm)=b$."
+            },
+            {
+              "code": "A1",
+              "text": "The first-order estimated increase is $5b=5.8605891\\%$. This is a local approximation."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "AHL 5.9"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 13,
+      "section": "",
+      "marks": 7,
+      "stem": "During a 15-minute interval, independent arrival counts $A$ and $B$ from two entrances follow Poisson distributions with means 2 and 3 respectively. Let $T=A+B$.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "State the distribution of $T$ and find $P(T=5)$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Given that five people arrived in total, find the probability that exactly two used entrance A.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Given that nobody used entrance B, find the probability that at least one person used entrance A. Explain the role of independence.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "T~Po5,P(T5)=0.17546737;splitconditional0.3456;conditionedApositive0.86466472.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$T\\sim\\operatorname{Po}(5)$."
+            },
+            {
+              "code": "A1",
+              "text": "$P(T=5)=e^{-5}5^5/5!=0.17546737$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The numerator is $P(A=2,B=3)=P(A=2)P(B=3)$."
+            },
+            {
+              "code": "M1",
+              "text": "Divide that joint probability by $P(T=5)$."
+            },
+            {
+              "code": "A1",
+              "text": "The conditional probability is $0.3456$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Independence means conditioning on $B=0$ does not change the distribution of $A$."
+            },
+            {
+              "code": "A1",
+              "text": "$P(A\\ge1\\mid B=0)=1-e^{-2}=0.86466472$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.6",
+        "AHL 4.17"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 14,
+      "section": "",
+      "marks": 8,
+      "stem": "A courier must start at A, visit each of B,C,D,E once, and return to A. The complete undirected distance table, in kilometres, is shown.\n\n|  | A | B | C | D | E |\n| --- | --- | --- | --- | --- | --- |\n| A | — | 6 | 9 | 10 | 7 |\n| B | 6 | — | 5 | 8 | 9 |\n| C | 9 | 5 | — | 6 | 8 |\n| D | 10 | 8 | 6 | — | 4 |\n| E | 7 | 9 | 8 | 4 | — |",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Apply the nearest-neighbour algorithm starting at A. State the resulting tour and an upper bound for the optimum.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Use the deleted-vertex method, deleting A, to obtain a lower bound.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the optimal tour length and justify your conclusion.",
+          "marks": 2
+        }
+      ],
+      "answerSummary": "NN28, deleted-A lower28, exactoptimum28.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Choose the closest unvisited vertex at each step."
+            },
+            {
+              "code": "A1",
+              "text": "The tour is A-B-C-D-E-A."
+            },
+            {
+              "code": "A1",
+              "text": "Its length is $6+5+6+4+7=28$ km, an upper bound."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "A minimum spanning tree on B,C,D,E uses DE,BC,CD."
+            },
+            {
+              "code": "A1",
+              "text": "That tree has weight $15$ km."
+            },
+            {
+              "code": "A1",
+              "text": "Add the two smallest A-edges, 6 and 7, to obtain a lower bound of $28$ km."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The lower and upper bounds are equal."
+            },
+            {
+              "code": "A1",
+              "text": "The optimum is exactly $28$ km; the tour in part (a) attains it."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 3.16"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 15,
+      "section": "",
+      "marks": 8,
+      "stem": "An object initially at $90^\\circ$C cools according to $dT/dt=-0.15(T-A)$, where $t$ is minutes and $A$ is ambient temperature. For $0\\le t<4$, $A=20$. At $t=4$ the object is moved instantly to a room with $A=5$; its own temperature is continuous and the same differential model then applies.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the object's temperature at $t=4$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the first time after $t=0$ at which the temperature reaches $15^\\circ$C.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the cooling rates immediately before and after the move, and explain why the derivative changes even though temperature is continuous.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "T4=58.416815;T15time15.17027;rates-5.7625222,-8.0125222.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The first-stage solution is $T=20+70e^{-0.15t}$."
+            },
+            {
+              "code": "A1",
+              "text": "$T(4)=58.416815^\\circ$C."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For $t\\ge4$, $T=5+(58.416815-5)e^{-0.15(t-4)}$, retaining the unrounded $T(4)$."
+            },
+            {
+              "code": "M1",
+              "text": "Solve $10=(T(4)-5)e^{-0.15(t-4)}$."
+            },
+            {
+              "code": "A1",
+              "text": "The first time is $t=15.17027$ minutes."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The rates are $-5.7625222$ and $-8.0125222^\\circ$C min$^{-1}$ respectively."
+            },
+            {
+              "code": "M1",
+              "text": "The ambient temperature changes by 15 degrees, changing the derivative by $-0.15(15)=-2.25$ degrees per minute."
+            },
+            {
+              "code": "R1",
+              "text": "The driving temperature difference changes immediately, while the object's temperature does not jump."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 2.9"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context."
+    },
+    {
+      "number": 16,
+      "section": "",
+      "marks": 8,
+      "stem": "Points on a circle are described by $z=1+2e^{it}$, $0\\le t<2\\pi$. A transformation is $w=(0.6+0.8i)z+2-i$. The diagram shows the original circle in the $z$-plane. Angles are in radians.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Describe the rotation and scale factor associated with multiplication by $0.6+0.8i$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the centre and radius of the image circle in the $w$-plane.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the value of $t$ for which $\\operatorname{Im}w$ is greatest, and find that maximum imaginary part.",
+          "marks": 3
+        }
+      ],
+      "answerSummary": "Rotation0.92729522,scale1;centre(2.6-0.19999999999999996j),radius2;tmax0.64350111,maxIm1.8.",
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The scale factor is $\\sqrt{0.6^2+0.8^2}=1$."
+            },
+            {
+              "code": "A1",
+              "text": "The rotation is anticlockwise through $0.92729522$ rad about the origin."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Transform the original centre $z=1$ and multiply the radius by $|0.6+0.8i|$."
+            },
+            {
+              "code": "A1",
+              "text": "The centre is $2.6-0.2i$."
+            },
+            {
+              "code": "A1",
+              "text": "The radius remains $2$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$w=2.6-0.2i+2e^{i(t+\\arg(0.6+0.8i))}$."
+            },
+            {
+              "code": "A1",
+              "text": "The maximum occurs at $t=0.64350111$ rad, where the rotating radius points upwards."
+            },
+            {
+              "code": "A1",
+              "text": "The maximum imaginary part is $-0.2+2=1.8$."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13"
+      ],
+      "cognitiveDemand": "Connect representations, choose a model or method, compute and interpret in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 720 420\"><rect width=\"720\" height=\"420\" fill=\"white\"/><line x1=\"70.000\" y1=\"210.000\" x2=\"640.000\" y2=\"210.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"295.000\" y1=\"360.000\" x2=\"295.000\" y2=\"60.000\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"175.000\" y1=\"206.000\" x2=\"175.000\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"175.000\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">-2</text><line x1=\"295.000\" y1=\"206.000\" x2=\"295.000\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"295.000\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"415.000\" y1=\"206.000\" x2=\"415.000\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"415.000\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><line x1=\"535.000\" y1=\"206.000\" x2=\"535.000\" y2=\"214.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"535.000\" y=\"234.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">4</text><line x1=\"291.000\" y1=\"330.000\" x2=\"299.000\" y2=\"330.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"285.000\" y=\"335.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">-2</text><line x1=\"291.000\" y1=\"210.000\" x2=\"299.000\" y2=\"210.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"285.000\" y=\"215.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">0</text><line x1=\"291.000\" y1=\"90.000\" x2=\"299.000\" y2=\"90.000\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"285.000\" y=\"95.000\" text-anchor=\"end\" font-family=\"Arial, sans-serif\" font-size=\"15\" fill=\"#171717\">2</text><text x=\"665.000\" y=\"201.000\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">Re z</text><text x=\"307.000\" y=\"30.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"16\" fill=\"#171717\">Im z</text><polyline points=\"475.000,210.000 474.941,206.231 474.763,202.465 474.467,198.707 474.054,194.960 473.523,191.228 472.874,187.514 472.110,183.823 471.230,180.157 470.235,176.521 469.127,172.918 467.906,169.351 466.573,165.825 465.131,162.342 463.579,158.906 461.921,155.521 460.157,152.190 458.289,148.915 456.319,145.701 454.250,142.550 452.082,139.466 449.819,136.451 447.462,133.509 445.013,130.643 442.476,127.854 439.853,125.147 437.146,122.524 434.357,119.987 431.491,117.538 428.549,115.181 425.534,112.918 422.450,110.750 419.299,108.681 416.085,106.711 412.810,104.843 409.479,103.079 406.094,101.421 402.658,99.869 399.175,98.427 395.649,97.094 392.082,95.873 388.479,94.765 384.843,93.770 381.177,92.890 377.486,92.126 373.772,91.477 370.040,90.946 366.293,90.533 362.535,90.237 358.769,90.059 355.000,90.000 351.231,90.059 347.465,90.237 343.707,90.533 339.960,90.946 336.228,91.477 332.514,92.126 328.823,92.890 325.157,93.770 321.521,94.765 317.918,95.873 314.351,97.094 310.825,98.427 307.342,99.869 303.906,101.421 300.521,103.079 297.190,104.843 293.915,106.711 290.701,108.681 287.550,110.750 284.466,112.918 281.451,115.181 278.509,117.538 275.643,119.987 272.854,122.524 270.147,125.147 267.524,127.854 264.987,130.643 262.538,133.509 260.181,136.451 257.918,139.466 255.750,142.550 253.681,145.701 251.711,148.915 249.843,152.190 248.079,155.521 246.421,158.906 244.869,162.342 243.427,165.825 242.094,169.351 240.873,172.918 239.765,176.521 238.770,180.157 237.890,183.823 237.126,187.514 236.477,191.228 235.946,194.960 235.533,198.707 235.237,202.465 235.059,206.231 235.000,210.000 235.059,213.769 235.237,217.535 235.533,221.293 235.946,225.040 236.477,228.772 237.126,232.486 237.890,236.177 238.770,239.843 239.765,243.479 240.873,247.082 242.094,250.649 243.427,254.175 244.869,257.658 246.421,261.094 248.079,264.479 249.843,267.810 251.711,271.085 253.681,274.299 255.750,277.450 257.918,280.534 260.181,283.549 262.538,286.491 264.987,289.357 267.524,292.146 270.147,294.853 272.854,297.476 275.643,300.013 278.509,302.462 281.451,304.819 284.466,307.082 287.550,309.250 290.701,311.319 293.915,313.289 297.190,315.157 300.521,316.921 303.906,318.579 307.342,320.131 310.825,321.573 314.351,322.906 317.918,324.127 321.521,325.235 325.157,326.230 328.823,327.110 332.514,327.874 336.228,328.523 339.960,329.054 343.707,329.467 347.465,329.763 351.231,329.941 355.000,330.000 358.769,329.941 362.535,329.763 366.293,329.467 370.040,329.054 373.772,328.523 377.486,327.874 381.177,327.110 384.843,326.230 388.479,325.235 392.082,324.127 395.649,322.906 399.175,321.573 402.658,320.131 406.094,318.579 409.479,316.921 412.810,315.157 416.085,313.289 419.299,311.319 422.450,309.250 425.534,307.082 428.549,304.819 431.491,302.462 434.357,300.013 437.146,297.476 439.853,294.853 442.476,292.146 445.013,289.357 447.462,286.491 449.819,283.549 452.082,280.534 454.250,277.450 456.319,274.299 458.289,271.085 460.157,267.810 461.921,264.479 463.579,261.094 465.131,257.658 466.573,254.175 467.906,250.649 469.127,247.082 470.235,243.479 471.230,239.843 472.110,236.177 472.874,232.486 473.523,228.772 474.054,225.040 474.467,221.293 474.763,217.535 474.941,213.769 475.000,210.000\" fill=\"none\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"355.000\" cy=\"210.000\" r=\"4\" fill=\"#202020\"/><text x=\"361.000\" y=\"198.000\" text-anchor=\"start\" font-family=\"Arial, sans-serif\" font-size=\"17\" fill=\"#171717\">centre 1</text></svg>"
+    }
+  ]
+}

@@ -1,0 +1,1590 @@
+{
+  "status": "passed",
+  "reviewType": "independent re-solution; no author calculation imported",
+  "questionCount": 4,
+  "partCount": 28,
+  "independentCheckCount": 116,
+  "diagramReview": "All four native-resolution diagrams independently inspected: two-state transitions, both reservoir flow directions, phasor vector angle/orientation, eight network weights/crossings. No findings.",
+  "papers": [
+    {
+      "id": "ai-hl-set-a-paper-3",
+      "sha256": "3b9a72f7178d79890790ba670ef695394eb4fe464433a30161a3d87d164bfd96",
+      "status": "passed"
+    },
+    {
+      "id": "ai-hl-set-b-paper-3",
+      "sha256": "46f82aef95e535ce9f9c58642bd482fb8c9b57a9d24e289052cb37b327f38b78",
+      "status": "passed"
+    }
+  ],
+  "records": [
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "a",
+      "checks": [
+        {
+          "name": "minimal critical count",
+          "actual": 5,
+          "expected": 5,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "actual Type I probability",
+          "actual": 0.02102229672833392,
+          "expected": 0.0210222967,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "preceding tail",
+          "actual": 0.07483725799931401,
+          "expected": 0.074837258,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "b",
+      "checks": [
+        {
+          "name": "Type II probability",
+          "actual": 0.46691096475829197,
+          "expected": 0.4669109648,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "independent library cross-check",
+          "actual": 0.4669109647582914,
+          "expected": 0.46691096475829197,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "Failure to reject when p=.12 is the event X<=4; it is a missed unstable day, not a false alert."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "c",
+      "checks": [
+        {
+          "name": "column sums",
+          "actual": [
+            1.0,
+            1.0
+          ],
+          "expected": [
+            1,
+            1
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "two-day state",
+          "actual": [
+            0.44999999999999996,
+            0.5499999999999999
+          ],
+          "expected": [
+            0.45,
+            0.55
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "d",
+      "checks": [
+        {
+          "name": "recurrence agrees with matrix powers",
+          "actual": [
+            0.0,
+            0.3,
+            0.44999999999999996,
+            0.525,
+            0.5625,
+            0.58125,
+            0.5906250000000001,
+            0.5953125,
+            0.5976562500000001,
+            0.5988281250000002,
+            0.5994140625000002,
+            0.5997070312500001,
+            0.5998535156250002,
+            0.5999267578125003,
+            0.5999633789062503,
+            0.5999816894531252,
+            0.5999908447265628,
+            0.5999954223632815,
+            0.599997711181641,
+            0.5999988555908207,
+            0.5999994277954106,
+            0.5999997138977056,
+            0.599999856948853,
+            0.5999999284744267,
+            0.5999999642372136
+          ],
+          "expected": [
+            0.0,
+            0.3,
+            0.44999999999999996,
+            0.525,
+            0.5625,
+            0.5812499999999999,
+            0.590625,
+            0.5953125,
+            0.59765625,
+            0.5988281249999999,
+            0.5994140625,
+            0.59970703125,
+            0.599853515625,
+            0.5999267578124999,
+            0.59996337890625,
+            0.599981689453125,
+            0.5999908447265625,
+            0.5999954223632812,
+            0.5999977111816406,
+            0.5999988555908203,
+            0.5999994277954102,
+            0.599999713897705,
+            0.5999998569488525,
+            0.5999999284744263,
+            0.5999999642372131
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "q(n+1)=.3+.5q(n), so subtracting .6 gives a geometric difference with initial -.6. This proves the formula for every n>=0."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "e",
+      "checks": [
+        {
+          "name": "limiting alert probability",
+          "actual": 0.3282623398363584,
+          "expected": 0.3282623398,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "Bayes posterior",
+          "actual": 0.9743835412386157,
+          "expected": 0.9743835412,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "f",
+      "checks": [
+        {
+          "name": "first close day",
+          "actual": 9,
+          "expected": 9,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "day8 gap",
+          "actual": 0.0012001564183906632,
+          "expected": 0.0012001564,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "day9 gap",
+          "actual": 0.0006000782091953316,
+          "expected": 0.0006000782,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 1,
+      "part": "g",
+      "checks": [
+        {
+          "name": "general stationary fraction at kappa=0.2",
+          "actual": [
+            0.5999999999999998,
+            0.40000000000000024
+          ],
+          "expected": [
+            0.6,
+            0.4
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "general stationary fraction at kappa=0.8",
+          "actual": [
+            0.5999999999999999,
+            0.4000000000000001
+          ],
+          "expected": [
+            0.6,
+            0.4
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "general stationary fraction at kappa=1.6",
+          "actual": [
+            0.5999999999999999,
+            0.4000000000000001
+          ],
+          "expected": [
+            0.6,
+            0.4
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "For u,v>0 and 0<kappa(u+v)<1, all transition entries are valid. The fixed point v/(u+v) contains no kappa; the error factor 1-kappa(u+v) lies in(0,1) and decreases with kappa. Initial stationarity is an explicit exception to any strict speed comparison."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "a",
+      "checks": [
+        {
+          "name": "drain and exchange coefficients",
+          "actual": [
+            [
+              -0.3,
+              0.2
+            ],
+            [
+              0.2,
+              -0.3
+            ]
+          ],
+          "expected": [
+            [
+              -0.3,
+              0.2
+            ],
+            [
+              0.2,
+              -0.3
+            ]
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "b",
+      "checks": [
+        {
+          "name": "eigenvalue -0.1 direction",
+          "actual": [
+            -0.09999999999999998,
+            -0.09999999999999998
+          ],
+          "expected": [
+            -0.1,
+            -0.1
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "eigenvalue -0.5 direction",
+          "actual": [
+            -0.5,
+            0.5
+          ],
+          "expected": [
+            -0.5,
+            0.5
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "explicit solution at t=0",
+          "actual": [
+            30.0,
+            0.0
+          ],
+          "expected": [
+            30.0,
+            0.0
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "explicit solution at t=0.7",
+          "actual": [
+            24.556228644369924,
+            3.4155859528085224
+          ],
+          "expected": [
+            24.556228644369924,
+            3.415585952808522
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "explicit solution at t=2",
+          "actual": [
+            17.79915291374136,
+            6.762769678598092
+          ],
+          "expected": [
+            17.799152913741363,
+            6.762769678598093
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "explicit solution at t=4",
+          "actual": [
+            12.08482993908378,
+            8.024771441985399
+          ],
+          "expected": [
+            12.084829939083782,
+            8.024771441985402
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "explicit solution at t=10",
+          "actual": [
+            5.6192608225579175,
+            5.4171224125853525
+          ],
+          "expected": [
+            5.619260822557922,
+            5.417122412585352
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "explicit solution at t=30",
+          "actual": [
+            0.7468106140527667,
+            0.7468014369831516
+          ],
+          "expected": [
+            0.7468106140527683,
+            0.7468014369831533
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "c",
+      "checks": [
+        {
+          "name": "independent peak time",
+          "actual": 4.023594819596336,
+          "expected": 4.023594781085251,
+          "tolerance": 2e-06,
+          "status": "passed"
+        },
+        {
+          "name": "peak mass",
+          "actual": 8.024883659717064,
+          "expected": 8.02488366,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "y prime changes sign only when exp(.4t)=5; it is positive before and negative after. Endpoint y(0)=0 and the limiting value0 establish the global maximum."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "d",
+      "checks": [
+        {
+          "name": "concentration-to-mass threshold",
+          "actual": 1.0,
+          "expected": 1,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "safe time",
+          "actual": 27.080699524330026,
+          "expected": 27.08069952,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "other reservoir below threshold",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "x-y=30 exp(-t/2)>0, and x is strictly decreasing; thus x=1 is the earliest simultaneous safe condition."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "e",
+      "checks": [
+        {
+          "name": "Euler step1",
+          "actual": [
+            21.0,
+            6.0
+          ],
+          "expected": [
+            21,
+            6
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "Euler step2",
+          "actual": [
+            15.9,
+            8.4
+          ],
+          "expected": [
+            15.9,
+            8.4
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "exact downstream at2",
+          "actual": 6.762769678598093,
+          "expected": 6.762769679,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "relative error percent to three significant figures",
+          "actual": 24.2,
+          "expected": 24.2,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "Both Euler masses are positive yet y2 exceeds even the exact global maximum. Positivity therefore cannot guarantee accuracy."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "f",
+      "checks": [
+        {
+          "name": "total half-life",
+          "actual": 6.931471805599452,
+          "expected": 6.931471805,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "total at t=5 for exchange 100",
+          "actual": 18.195919791379005,
+          "expected": 18.195919791379,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "total at t=5 for exchange 10000",
+          "actual": 18.195919791378998,
+          "expected": 18.195919791379,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "total at t=5 for exchange 75000",
+          "actual": 18.195919791379026,
+          "expected": 18.195919791379,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "Exchange contributes opposite signs to the two balances and cancels on addition, leaving S prime=-.1S for every Q>0."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-a-paper-3",
+      "question": 2,
+      "part": "g",
+      "checks": [
+        {
+          "name": "nonnegative update coefficients h=0.01",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "sum/difference multipliers h=0.01",
+          "actual": [
+            [
+              0.999,
+              0.999
+            ],
+            [
+              0.995,
+              -0.995
+            ]
+          ],
+          "expected": [
+            [
+              0.999,
+              0.999
+            ],
+            [
+              0.995,
+              -0.995
+            ]
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "nonnegative update coefficients h=0.5",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "sum/difference multipliers h=0.5",
+          "actual": [
+            [
+              0.95,
+              0.95
+            ],
+            [
+              0.75,
+              -0.75
+            ]
+          ],
+          "expected": [
+            [
+              0.95,
+              0.95
+            ],
+            [
+              0.75,
+              -0.75
+            ]
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "nonnegative update coefficients h=1",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "sum/difference multipliers h=1",
+          "actual": [
+            [
+              0.8999999999999999,
+              0.8999999999999999
+            ],
+            [
+              0.49999999999999994,
+              -0.49999999999999994
+            ]
+          ],
+          "expected": [
+            [
+              0.9,
+              0.9
+            ],
+            [
+              0.5,
+              -0.5
+            ]
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "nonnegative update coefficients h=2",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "sum/difference multipliers h=2",
+          "actual": [
+            [
+              0.8,
+              0.8
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "expected": [
+            [
+              0.8,
+              0.8
+            ],
+            [
+              0.0,
+              -0.0
+            ]
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "ordering fails above2",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "D1=(1-.5h)D0 forces h<=2 for every nonnegative ordered state with D0>0. For0<h<=2, coefficients1-.3h and.2h preserve both nonnegative masses; D remains nonnegative. This qualitative guarantee makes no truncation-error promise."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "a",
+      "checks": [
+        {
+          "name": "phasor amplitude",
+          "actual": 5.8048760630559695,
+          "expected": 5.804876063,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "phase delay",
+          "actual": 0.502575580195619,
+          "expected": 0.5025755802,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "b",
+      "checks": [
+        {
+          "name": "amplitude identity",
+          "actual": [
+            49.0,
+            48.98815744877755,
+            48.95264148227851,
+            48.8934871504739,
+            48.81075283154746,
+            48.70452017428331,
+            48.57489401748854,
+            48.42200228652993,
+            48.245995867087146,
+            48.047048456246635,
+            47.82535639108369,
+            47.58113845490139,
+            47.314635661318036,
+            47.02611101641555,
+            46.71584925918447,
+            46.38415658052084,
+            46.031360321052716,
+            45.65780864809464,
+            45.26387021204835,
+            44.84993378258948,
+            44.41640786499874,
+            43.96372029701657,
+            43.492317826618944,
+            43.00266567113101,
+            42.495247058113875,
+            41.970562748477136,
+            41.429130542288526,
+            40.87148476776765,
+            40.298175753968536,
+            39.70976928767144,
+            39.10684605501936,
+            38.49000106845115,
+            37.85984307949592,
+            37.21699397800891,
+            36.56208817844117,
+            35.89577199374912,
+            35.21870299756174,
+            34.531549375234725,
+            33.834989264432274,
+            33.12971008588699,
+            32.416407864998746,
+            31.695786544941505,
+            30.968557291956515,
+            30.235437793517022,
+            29.49715155005739,
+            28.754427160965538,
+            28.007997605543306,
+            27.258599519644342,
+            26.506972468703513,
+            25.75385821787507,
+            24.999999999999993,
+            24.246141782124916,
+            23.493027531296484,
+            22.741400480355654,
+            21.992002394456698,
+            21.245572839034455,
+            20.502848449942597,
+            19.764562206482978,
+            19.031442708043485,
+            18.30421345505849,
+            17.583592135001258,
+            16.870289914113,
+            16.165010735567733,
+            15.468450624765264,
+            14.781297002438254,
+            14.104228006250878,
+            13.437911821558828,
+            12.783006021991088,
+            12.140156920504076,
+            11.509998931548864,
+            10.893153944980646,
+            10.290230712328562,
+            9.701824246031448,
+            9.128515232232354,
+            8.57086945771147,
+            8.029437251522861,
+            7.504752941886122,
+            6.997334328868972,
+            6.507682173381055,
+            6.036279702983428,
+            5.583592135001262,
+            5.150066217410513,
+            4.736129787951639,
+            4.34219135190535,
+            3.968639678947273,
+            3.6158434194791678,
+            3.2841507408155297,
+            2.973888983584452,
+            2.6853643386819646,
+            2.418861545098588,
+            2.174643608916312,
+            1.952951543753365,
+            1.754004132912853,
+            1.577997713470062,
+            1.4251059825114711,
+            1.2954798257166933,
+            1.1892471684525316,
+            1.1065128495260796,
+            1.0473585177214824,
+            1.0118425512224425,
+            1.0
+          ],
+          "expected": [
+            49.0,
+            48.98815744877756,
+            48.952641482278516,
+            48.893487150473916,
+            48.81075283154747,
+            48.7045201742833,
+            48.57489401748853,
+            48.42200228652994,
+            48.245995867087146,
+            48.047048456246635,
+            47.82535639108369,
+            47.58113845490141,
+            47.314635661318036,
+            47.02611101641555,
+            46.715849259184466,
+            46.38415658052083,
+            46.03136032105273,
+            45.657808648094644,
+            45.26387021204836,
+            44.84993378258949,
+            44.41640786499874,
+            43.96372029701657,
+            43.492317826618944,
+            43.00266567113103,
+            42.495247058113875,
+            41.970562748477136,
+            41.429130542288526,
+            40.87148476776764,
+            40.29817575396855,
+            39.709769287671435,
+            39.10684605501935,
+            38.490001068451136,
+            37.85984307949592,
+            37.21699397800891,
+            36.562088178441165,
+            35.89577199374912,
+            35.21870299756174,
+            34.53154937523473,
+            33.83498926443227,
+            33.12971008588699,
+            32.41640786499874,
+            31.6957865449415,
+            30.968557291956515,
+            30.23543779351702,
+            29.49715155005739,
+            28.754427160965538,
+            28.007997605543302,
+            27.258599519644342,
+            26.50697246870352,
+            25.753858217875077,
+            24.999999999999996,
+            24.246141782124923,
+            23.493027531296477,
+            22.741400480355654,
+            21.992002394456694,
+            21.245572839034455,
+            20.502848449942604,
+            19.764562206482978,
+            19.031442708043485,
+            18.304213455058495,
+            17.583592135001258,
+            16.870289914113002,
+            16.165010735567726,
+            15.468450624765264,
+            14.781297002438254,
+            14.104228006250878,
+            13.43791182155883,
+            12.783006021991088,
+            12.140156920504076,
+            11.509998931548864,
+            10.893153944980646,
+            10.290230712328562,
+            9.701824246031446,
+            9.12851523223235,
+            8.57086945771147,
+            8.029437251522861,
+            7.504752941886121,
+            6.997334328868973,
+            6.507682173381056,
+            6.036279702983428,
+            5.583592135001265,
+            5.150066217410512,
+            4.73612978795164,
+            4.342191351905349,
+            3.968639678947273,
+            3.6158434194791695,
+            3.28415074081553,
+            2.9738889835844518,
+            2.685364338681964,
+            2.41886154509859,
+            2.1746436089163126,
+            1.9529515437533647,
+            1.7540041329128542,
+            1.5779977134700616,
+            1.4251059825114716,
+            1.2954798257166935,
+            1.1892471684525319,
+            1.10651284952608,
+            1.0473585177214844,
+            1.0118425512224434,
+            1.0
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "amplitude endpoints",
+          "actual": [
+            7,
+            1
+          ],
+          "expected": [
+            7,
+            1
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "c",
+      "checks": [
+        {
+          "name": "period average direct quadrature",
+          "actual": 168.48293053720084,
+          "expected": 168.48293053720087,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "d",
+      "checks": [
+        {
+          "name": "off fraction for A=5",
+          "actual": 0.40966552939826684,
+          "expected": 0.4096655294,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "no shutdown A=4",
+          "actual": 0,
+          "expected": 0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "e",
+      "checks": [
+        {
+          "name": "largest permitted amplitude",
+          "actual": 4.329568801169576,
+          "expected": 4.329568801,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "smallest permitted phase",
+          "actual": 1.8344586819029165,
+          "expected": 1.834458682,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "off fraction at boundary",
+          "actual": 0.25000000000000006,
+          "expected": 0.25,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "f",
+      "checks": [
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=1",
+          "actual": 5,
+          "expected": 5.0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=2.2",
+          "actual": 24.200000000000003,
+          "expected": 24.200000000000003,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=4",
+          "actual": 80,
+          "expected": 80.0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=4.01",
+          "actual": 73.18145457854071,
+          "expected": 73.18145457854072,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=4.2",
+          "actual": 54.496843663388866,
+          "expected": 54.496843663388866,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=4.329568801169576",
+          "actual": 49.19864901206661,
+          "expected": 49.19864901206661,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "piecewise mean versus exact-on-interval quadrature A=7",
+          "actual": 21.727141399597304,
+          "expected": 21.727141399597315,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "right-hand finite-epsilon continuity check at4",
+          "actual": 79.99992797153325,
+          "expected": 80,
+          "tolerance": 0.0001,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 1,
+      "part": "g",
+      "checks": [
+        {
+          "name": "global sampled upper bound",
+          "actual": 80.0,
+          "expected": 80,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "right branch strictly decreasing",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "maximizing phase",
+          "actual": 1.9551931012905357,
+          "expected": 1.955193101,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "For A<=4, P=5A squared strictly increases. For A>4, write P=10/pi times integral from-4 to4 of I squared /sqrt(A squared-I squared) dI. For fixed I the integrand strictly decreases with A; hence the entire right branch decreases. This also independently proves the claimed global peak, beyond the requested calculator investigation."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "a",
+      "checks": [
+        {
+          "name": "odd vertices",
+          "actual": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "expected": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "A closed walk using every edge once requires all degrees even. Four odd vertices A,B,D,E prevent such an Euler circuit."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "b",
+      "checks": [
+        {
+          "name": "all odd-pair shortest lengths",
+          "actual": [
+            4,
+            2,
+            8,
+            6,
+            7,
+            6
+          ],
+          "expected": [
+            4,
+            2,
+            8,
+            6,
+            7,
+            6
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "c",
+      "checks": [
+        {
+          "name": "pairing weights",
+          "actual": [
+            10,
+            9,
+            14
+          ],
+          "expected": [
+            10,
+            9,
+            14
+          ],
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed optimum at2",
+          "actual": 48,
+          "expected": 48,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "constructed route covers every edge and has correct endpoints",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "constructed route weight",
+          "actual": 48,
+          "expected": 48,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "f",
+      "checks": [
+        {
+          "name": "constructed route covers every edge and has correct endpoints",
+          "actual": true,
+          "expected": true,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "constructed route weight",
+          "actual": 46,
+          "expected": 46,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=0.001",
+          "actual": 44.001,
+          "expected": 44.001,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=0.5",
+          "actual": 44.5,
+          "expected": 44.5,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=2",
+          "actual": 46,
+          "expected": 46,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=3",
+          "actual": 47,
+          "expected": 47,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=5",
+          "actual": 49,
+          "expected": 49,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=13",
+          "actual": 57,
+          "expected": 57,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open-route formula w=40",
+          "actual": 84,
+          "expected": 84,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "d",
+      "checks": [
+        {
+          "name": "closed-route formula w=0.001",
+          "actual": 44.001999999999995,
+          "expected": 44.002,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=0.001",
+          "actual": 10.002,
+          "expected": 10.002,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=0.5",
+          "actual": 45.0,
+          "expected": 45.0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=0.5",
+          "actual": 11.0,
+          "expected": 11.0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=2",
+          "actual": 48,
+          "expected": 48,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=2",
+          "actual": 14,
+          "expected": 14,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=3",
+          "actual": 50,
+          "expected": 50,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=3",
+          "actual": 16,
+          "expected": 16,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=3.001",
+          "actual": 50.001,
+          "expected": 50.001,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=3.001",
+          "actual": 16.002,
+          "expected": 16.002,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=5",
+          "actual": 52,
+          "expected": 52,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=5",
+          "actual": 20,
+          "expected": 20,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=13",
+          "actual": 60,
+          "expected": 60,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=13",
+          "actual": 20,
+          "expected": 20,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "closed-route formula w=40",
+          "actual": 87,
+          "expected": 87,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "third pairing w=40",
+          "actual": 20,
+          "expected": 20,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "e",
+      "checks": [
+        {
+          "name": "deleted AD closed optimum",
+          "actual": 44,
+          "expected": 44,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "Removing AD removes its once-required traversal and changes odd vertices to B,E only. A smaller inspection obligation can outweigh the loss of a connection."
+      ],
+      "status": "passed"
+    },
+    {
+      "paper": "ai-hl-set-b-paper-3",
+      "question": 2,
+      "part": "g",
+      "checks": [
+        {
+          "name": "open/closed comparison w=0.2,h=0.1",
+          "actual": 0.10000000000000142,
+          "expected": 0.1,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=0.2,h=1",
+          "actual": -0.7999999999999972,
+          "expected": -0.8,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=0.2,h=3",
+          "actual": -2.799999999999997,
+          "expected": -2.8,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=0.2,h=5",
+          "actual": -4.799999999999997,
+          "expected": -4.8,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=1,h=0.1",
+          "actual": 0.8999999999999986,
+          "expected": 0.9,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=1,h=1",
+          "actual": 0,
+          "expected": 0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=1,h=3",
+          "actual": -2,
+          "expected": -2,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=1,h=5",
+          "actual": -4,
+          "expected": -4,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=3,h=0.1",
+          "actual": 2.8999999999999986,
+          "expected": 2.9,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=3,h=1",
+          "actual": 2,
+          "expected": 2,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=3,h=3",
+          "actual": 0,
+          "expected": 0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=3,h=5",
+          "actual": -2,
+          "expected": -2,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=8,h=0.1",
+          "actual": 2.8999999999999986,
+          "expected": 2.9,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=8,h=1",
+          "actual": 2,
+          "expected": 2,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=8,h=3",
+          "actual": 0,
+          "expected": 0,
+          "tolerance": 1e-08,
+          "status": "passed"
+        },
+        {
+          "name": "open/closed comparison w=8,h=5",
+          "actual": -2,
+          "expected": -2,
+          "tolerance": 1e-08,
+          "status": "passed"
+        }
+      ],
+      "reasoning": [
+        "Choose open when h<min(w,3), closed when h>min(w,3), tie when equal. For w>=3, closed adds AB+DE=10 while open adds BE=7; the shared base37+w cancels, so the maximal traversal saving is3."
+      ],
+      "status": "passed"
+    }
+  ],
+  "openFindings": [],
+  "scopeReview": "Current AI HL references and boundaries checked: regular chains; one-tailed binomial inference; real distinct2x2 eigensolutions; simultaneous Euler; phasor sums and provided trig identity; undirected postman with four odd vertices. No assumed AA-only methods."
+}

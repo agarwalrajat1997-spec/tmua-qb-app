@@ -1,0 +1,2845 @@
+{
+  "status": "passed",
+  "reviewType": "author calculations and explicit reasoning",
+  "papers": [
+    {
+      "id": "ai-hl-set-a-paper-2",
+      "sha256": "8734bcb80973dbe1fac3ebf0ef45b5b11436f8699807b751fd9e87900c13a84c",
+      "questions": 6,
+      "marks": 110
+    },
+    {
+      "id": "ai-hl-set-b-paper-2",
+      "sha256": "9f125bc00f327acdd6cbae9b58f0a343c62a22d88f7c86141b2e6674aa219898",
+      "questions": 6,
+      "marks": 110
+    },
+    {
+      "id": "ai-hl-set-c-paper-2",
+      "sha256": "55670b7de66c1289dd7f0e43bee8e7646558168777e7232b0904803f440d3592",
+      "questions": 6,
+      "marks": 110
+    },
+    {
+      "id": "ai-hl-set-d-paper-2",
+      "sha256": "9adf0ca0656737e3d3fdf50ce29ad0340e6d1d271106e0be406fa22f6e6d81a9",
+      "questions": 6,
+      "marks": 110
+    }
+  ],
+  "questionCount": 24,
+  "marks": 440,
+  "records": [
+    {
+      "set": "A",
+      "question": 1,
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 2.4",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "r1": 7.237941680119228,
+        "r2": 15.849450147926527,
+        "surplus": 254.53721892958438,
+        "shortfall": 63.382237456706164,
+        "stored": 203.62977514366753,
+        "unused": 140.24753768696138,
+        "production": 611.1549814728781
+      },
+      "reviewFocus": "Select numerical intersections and split energy integrals; assess a storage claim rather than confuse power and energy.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The maximum sine value is $1$, giving $80$ kW.",
+            "It occurs at $t=12$, or noon."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve $80\\sin(\\pi(t-6)/12)=35+2(t-12)$ on $[6,18]$.",
+            "The roots are $t=7.237942$ and $t=15.84945$.",
+            "Production exceeds demand between these roots."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Integrate $P(t)-D(t)$ between the two crossings.",
+            "Use the unrounded intersection values in the definite integral.",
+            "$\\int_{7.237942}^{15.84945}(P-D)\\,dt=254.5372$.",
+            "The surplus is $254.5372$ kWh, or 255 kWh to three significant figures."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $\\int_6^{7.237942}(D-P)\\,dt+\\int_{15.84945}^{18}(D-P)\\,dt$.",
+            "Both intervals have demand above production; add positive shortfalls.",
+            "The sum is $63.38224$.",
+            "The shortfall is $63.38224$ kWh."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The recoverable stored energy is $0.8(254.5372)=203.6298$ kWh.",
+            "This exceeds the combined shortfall of $63.38224$ kWh.",
+            "However, the first shortfall occurs before any surplus has charged the initially empty battery.",
+            "The claim is false for this day: an earlier stored supply or some morning grid supply is necessary."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "A",
+      "question": 2,
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "total": 61,
+        "mst": 16,
+        "AF": 13,
+        "closed": 74,
+        "newTotal": 58,
+        "newAE": 10,
+        "newClosed": 68,
+        "newMst": 21
+      },
+      "reviewFocus": "Distinguish minimum spanning infrastructure from edge-covering walks and reconsider parity after an edge closure.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use Kruskal or Prim, rejecting any edge that closes a cycle.",
+            "One minimum tree is $DE,BC,EF,AB,CD$.",
+            "Its total length is $16$ km."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Compare feasible path lengths, or label successive shortest distances.",
+            "A shortest path is $A-B-E-F$.",
+            "Its length is $13$ km."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The total edge length is $61$ km.",
+            "Only $A$ and $F$ have odd degree.",
+            "Duplicate a shortest $A$ to $F$ path so that all degrees become even.",
+            "The minimum closed length is $61+13=74$ km."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The original graph already has exactly the two odd vertices $A,F$.",
+            "It therefore has an Euler trail beginning at $A$ and ending at $F$, using every edge once.",
+            "The minimum is $61$ km."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The remaining odd vertices are $A$ and $E$; $F$ is now even.",
+            "The new total is $58$ and a shortest $A-E$ path is $A-B-E$ of length $10$.",
+            "The new closed length is $58+10=68$ km.",
+            "The required repeated path has changed with the parity, so a simple subtraction from the former route is not justified."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "A",
+      "question": 3,
+      "syllabusRefs": [
+        "SL 4.3",
+        "AHL 4.16",
+        "AHL 4.18",
+        "AHL 4.12"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 2
+        }
+      ],
+      "computedEvidence": {
+        "mean": 4.3,
+        "sd": 3.3349995835415367,
+        "se": 1.054619467970425,
+        "t": 4.0773000410045395,
+        "p": 0.0013845939715963031,
+        "lo": 1.9142850164453233,
+        "hi": 6.685714983554677,
+        "newMean": 5.8,
+        "newT": 5.499614008796821,
+        "newP": 0.00019018796291202477,
+        "critical": 2.2621571628540993
+      },
+      "reviewFocus": "Choose a paired test; keep sample standard deviation separate from standard error and assess sensitivity to systematic bias.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$\\bar d=4.3$ s.",
+            "$s=3.335$ s, using denominator $9$.",
+            "$s/\\sqrt{10}=1.054619$ s."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$H_0:\\mu_d=0$, $H_1:\\mu_d>0$.",
+            "Use the one-sample $t$ test on paired differences, $t=\\bar d/(s/\\sqrt{10})$.",
+            "$t=4.0773$ with $9$ degrees of freedom.",
+            "One-tailed $p=0.001384594$.",
+            "Since $p<0.05$, reject $H_0$; the data support a reduction in mean recorded completion time."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $\\bar d\\pm t_{0.975,9}s/\\sqrt{10}$.",
+            "The critical value is $2.262157$.",
+            "The interval is $(1.914285,6.685715)$ seconds.",
+            "The interval estimates the mean before-minus-after difference for the operator population; it is not an interval containing $95\\%$ of individual differences."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Corrected after times are $1.5$ seconds smaller, so every before-minus-after difference increases by $1.5$.",
+            "The corrected mean is $5.8$ s; the sample standard deviation and standard error are unchanged.",
+            "The new statistic is $5.499614$ with $9$ degrees of freedom.",
+            "$p=0.000190188$; reject $H_0$ at $5\\%$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "No randomized untreated comparison group is described.",
+            "Practice, fatigue, changed task conditions or another time-related influence may also change completion time."
+          ],
+          "markCodeSum": 2
+        }
+      ]
+    },
+    {
+      "set": "A",
+      "question": 4,
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 1.15",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "lambda": 1.0717797887081348,
+        "mu": -0.6717797887081346,
+        "ratio": 1.6794494717703365,
+        "jprop": 0.6267890062732585,
+        "aprop": 0.37321099372674155,
+        "j1": 216.0,
+        "a1": 144.0,
+        "j2": 259.2,
+        "a2": 144.0,
+        "n": 16,
+        "previous": 976.3630644776151,
+        "thresholdTotal": 1046.512376192435,
+        "criticalSurvival": 0.28
+      },
+      "reviewFocus": "Connect an eigensystem to demographic interpretation, finite-time threshold and a survival intervention.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$\\mathbf s_1=(216,144)^T$.",
+            "$\\mathbf s_2=(259.2,144)^T$.",
+            "An adult has probability $0.4$ of remaining an adult in the next yearly count."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$\\det(M-\\lambda I)=\\lambda^2-0.4\\lambda-0.72=0$.",
+            "The eigenvalues are $1.07178$ and $-0.6717798$.",
+            "From the first row, $1.8A=\\lambda J$.",
+            "For either eigenvalue, an eigenvector is $(1.8/\\lambda,1)^T$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The positive eigenvalue $1.07178$ has greater modulus and determines the eventual positive composition.",
+            "Normalize its eigenvector $(1.679449,1)^T$.",
+            "The juvenile and adult proportions are $0.626789$ and $0.373211$ respectively."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Evaluate $J_n+A_n$ using $M^n\\mathbf s_0$, checking consecutive years at the threshold.",
+            "At $n=16$ the total is $1046.512$; the preceding total is $976.3631$.",
+            "The first year is $n=16$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The characteristic equation becomes $\\lambda^2-q\\lambda-0.72=0$.",
+            "For replacement, the dominant eigenvalue is $1$.",
+            "$1-q-0.72=0$, so $q=0.28$.",
+            "For $0\\le q<0.28$, the dominant positive eigenvalue is below $1$, so the expected population eventually declines."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "f",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The component along the negative-eigenvalue direction alternates sign between years, so stage composition may approach its limit through alternating deviations.",
+            "Its modulus is smaller than that of the dominant eigenvalue, so its relative effect diminishes.",
+            "The model assumes constant reproduction and survival and omits resource limits, migration or environmental variation."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "A",
+      "question": 5,
+      "syllabusRefs": [
+        "SL 3.1",
+        "SL 5.7",
+        "AHL 5.9"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "unconstrained": 3.7797631496846193,
+        "lower": 4.47213595499958,
+        "heightUnconstrained": 4.199736832982911,
+        "cost": 4414.953415699772,
+        "costRounded": 4415,
+        "length": 8.94427190999916,
+        "criticalWallPrice": 49.69039949999534
+      },
+      "reviewFocus": "Detect an infeasible stationary point and solve a constrained model with a price sensitivity threshold.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$2w^2h=120$, hence $h=60/w^2$.",
+            "The floor area is $2w^2$ and its cost is $100w^2$.",
+            "The wall area is $2h(2w+w)=6wh=360/w$.",
+            "The wall cost is $10800/w$, giving the stated $C(w)$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$C\\prime(w)=200w-10800/w^2=0$ gives $w^3=54$.",
+            "$w=3.779763$ m.",
+            "$C\\prime\\prime(w)=200+21600/w^3>0$, so this is a minimum for $w>0$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$60/w^2\\le3$ gives $w\\ge\\sqrt{20}$; $2w\\le12$ gives $w\\le6$.",
+            "Thus $\\sqrt{20}\\le w\\le6$.",
+            "The stationary width $3.779763$ is below $\\sqrt{20}$, and would give height $4.199737$ m, exceeding $3$ m."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$C\\prime(w)>0$ throughout the feasible interval, because every feasible $w$ exceeds the unconstrained minimizing width.",
+            "The minimum occurs at $w=\\sqrt{20}=4.472136$ m.",
+            "The length is $8.944272$ m and height is $3$ m.",
+            "The minimum cost is \\$4414.953, which is \\$4415 to the nearest dollar."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The new cost is $100w^2+360k/w$.",
+            "At a stationary point, $200w^3=360k$.",
+            "It first enters the feasible interval at $w=\\sqrt{20}$.",
+            "$k=200(\\sqrt{20})^3/360=49.6904$ dollars per square metre."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "A",
+      "question": 6,
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.11",
+        "AHL 3.12",
+        "AHL 3.13",
+        "SL 5.7"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "marks": 2
+        }
+      ],
+      "computedEvidence": {
+        "initialDistance": 9.433981132056603,
+        "tmin": 2.2580645161290325,
+        "minimum": 0.6956083436402524,
+        "entry": 2.0856379084435943,
+        "exit": 2.4304911238144706,
+        "duration": 0.3448532153708763,
+        "angle": 98.68054449467662,
+        "quadraticA": 17.36,
+        "quadraticB": -78.4,
+        "quadraticC": 89.0
+      },
+      "reviewFocus": "Use relative motion and a quadratic inequality; distinguish crossing horizontal projections from a simultaneous collision.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "At $t=0$, the relative position is $(-9,2,-2)^T$.",
+            "The distance is $\\sqrt{89}=9.433981$ km."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "b",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The initial relative position is $(-9,2,-2)^T$.",
+            "The relative velocity is $(4,-1,0.6)^T$, so subtract the positions componentwise."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The squared distance is $17.36t^2-78.4t+89$.",
+            "Differentiate the squared distance and solve $34.72t-78.4=0$.",
+            "$t=2.258065$ min lies in $[0,4]$.",
+            "The minimum separation is $0.6956083$ km."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve $17.36t^2-78.4t+89<1$.",
+            "The boundary times are $2.085638$ and $2.430491$ min.",
+            "The upward-opening quadratic is below $1$ between these roots.",
+            "The alert lasts $0.3448532$ min."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $\\cos\\theta=(\\mathbf v_p\\cdot\\mathbf v_q)/(|\\mathbf v_p||\\mathbf v_q|)$.",
+            "The dot product is $-1.08$.",
+            "The squared speeds are $10.16$ and $5.04$.",
+            "$\\theta=98.68054^\\circ$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "f",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "A collision requires all three coordinates to agree at the same time; projected path crossing alone does not guarantee either condition.",
+            "The minimum three-dimensional separation is positive, so the drones do not collide on $[0,4]$."
+          ],
+          "markCodeSum": 2
+        }
+      ]
+    },
+    {
+      "set": "B",
+      "question": 1,
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.7",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 3
+        },
+        {
+          "label": "f",
+          "marks": 2
+        }
+      ],
+      "computedEvidence": {
+        "npv": -444.62656273914763,
+        "npvRounded": -445,
+        "irr": 0.054343738800312597,
+        "irrPercent": 5.434373880031259,
+        "realGrowth": 0.9803921568627416,
+        "planB": -315.6000863010995,
+        "difference": 129.02647643804812
+      },
+      "reviewFocus": "Build a correctly timed cash-flow model and distinguish discount rate, IRR and inflation-adjusted growth.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The net annual saving in year $j$ is $3200(1.03)^{j-1}-900$.",
+            "Discount each year-end flow by $(1+r)^j$.",
+            "Include $2000/(1+r)^8$ for the additional resale receipt.",
+            "$V(r)=-18000+\\sum_{j=1}^{8}\\{3200(1.03)^{j-1}-900\\}/(1+r)^j+2000/(1+r)^8$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$V(0.06)=-444.6266$ dollars, giving $-445$ dollars to the nearest dollar.",
+            "The negative value means the investment does not meet a $6\\%$ effective annual required return under these forecasts."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve the stated NPV equation numerically for $r>0$.",
+            "$r=0.05434374$, or $5.434374\\%$ per year.",
+            "Every future net receipt is positive.",
+            "Each discounted positive receipt decreases as $r$ increases, so $V$ is strictly decreasing for $r>0$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Divide the nominal savings growth factor by the inflation growth factor.",
+            "The real growth factor is $1.03/1.02$.",
+            "The real growth rate is $0.9803922\\%$ per year."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "For the alternative, calculate $-18000+\\sum_{j=1}^{9}2600/(1.06)^j$.",
+            "The alternative NPV is $-315.6001$ dollars.",
+            "Compare this value with $-444.6266$ for the first system; choose the higher NPV if one must be selected. A negative NPV still fails the required return."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "f",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The actual future savings or their growth may differ from the forecast, for example because energy prices change.",
+            "Maintenance, service life or resale value may differ; discounting does not guarantee these uncertain cash flows."
+          ],
+          "markCodeSum": 2
+        }
+      ]
+    },
+    {
+      "set": "B",
+      "question": 2,
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6",
+        "SL 3.1",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "vertexY": 3.6666666666666665,
+        "area": 34,
+        "farthestDistance": 6.009252125773315,
+        "timeA": 5.4083269131959835,
+        "timeB": 4.038873605350878,
+        "timeC": 8.246211251235321
+      },
+      "reviewFocus": "Connect bisector equations, bounded-cell geometry and the difference between distance and travel-time models.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$AB$ is horizontal with midpoint $(6,2)$.",
+            "The bisector is $x=6$."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "b",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Equate $(x-2)^2+(y-2)^2$ and $(x-6)^2+(y-8)^2$.",
+            "The bisector is $2x+3y=23$.",
+            "Intersect this with $x=6$.",
+            "The common vertex is $(6,11/3)$.",
+            "The $BC$ bisector is $-2x+3y=-1$, satisfied by the same point."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The cell satisfies $x\\le6$ and $2x+3y\\le23$, with the rectangle bounds.",
+            "Its vertices are $(0,0),(6,0),(6,11/3),(0,23/3)$.",
+            "Use a trapezium area or integrate the upper edge from $x=0$ to $6$.",
+            "The area is $34\\ \\mathrm{km}^2$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Compare distances from $A$ to the four cell vertices.",
+            "The squared distances are $8,20,169/9,325/9$, respectively.",
+            "The farthest vertex is $(0,23/3)$.",
+            "The maximum distance is $\\sqrt{325}/3=6.009252$ km."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Distances from $D$ to $A,B,C$ are $\\sqrt{13},\\sqrt{29},\\sqrt{17}$ km; divide by the respective speeds.",
+            "Times are $5.408327$, $4.038874$ and $8.246211$ minutes, so $B$ is fastest.",
+            "Distance-only allocation gives $A$, but unequal speeds mean nearest distance need not minimize response time."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "B",
+      "question": 3,
+      "syllabusRefs": [
+        "AHL 4.17",
+        "SL 4.6",
+        "SL 4.8",
+        "AHL 4.18"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 5
+        }
+      ],
+      "computedEvidence": {
+        "busy": 0.08392401699487584,
+        "cond": 0.31744000000000017,
+        "capacity": 21,
+        "tailAtCapacity": 0.0060651474043965205,
+        "tailPrevious": 0.011597737214807462,
+        "p": 0.011170975975590481,
+        "critical": 61,
+        "alpha": 0.03950010503541395,
+        "beta": 0.7309103599485761
+      },
+      "reviewFocus": "Handle count tails and conditional allocation exactly; separate significance, discrete rejection region and power.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$P(N\\ge10)=1-P(N\\le9)$, with $N\\sim\\operatorname{Po}(6)$.",
+            "Use the Poisson cumulative probability with upper included count $9$.",
+            "The probability is $0.08392402$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The appointment fraction is $2.4/(2.4+3.6)=0.4$.",
+            "The conditional count is $\\operatorname{Bin}(5,0.4)$.",
+            "Use $1-P(X\\le2)$.",
+            "The conditional probability is $0.31744$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The two-hour count is $\\operatorname{Po}(12)$; require $P(N>m)<0.01$.",
+            "At $m=21$ the tail is $0.006065147$; at one less it is $0.01159774$.",
+            "The smallest capacity is $21$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$H_0:\\lambda=6$ per hour, $H_1:\\lambda>6$ per hour.",
+            "Under $H_0$, the eight-hour count is $X\\sim\\operatorname{Po}(48)$.",
+            "$p=P(X\\ge65)=0.01117098$.",
+            "Reject $H_0$ since $p<0.05$; the observed count supports an increased rate."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Find the smallest integer $k$ with $P(\\operatorname{Po}(48)\\ge k)<0.05$.",
+            "Reject for $X\\ge61$; the actual Type I error probability is $0.03950011$.",
+            "At rate $7$, the eight-hour count is $\\operatorname{Po}(56)$; a Type II error is $X<61$.",
+            "The Type II probability is $0.7309104$.",
+            "This is the probability that the test fails to detect an increase when the true hourly rate is $7$, not the probability that the null hypothesis is true."
+          ],
+          "markCodeSum": 5
+        }
+      ]
+    },
+    {
+      "set": "B",
+      "question": 4,
+      "syllabusRefs": [
+        "AHL 4.19",
+        "AHL 1.14",
+        "SL 4.7"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 5
+        },
+        {
+          "label": "d",
+          "marks": 2
+        },
+        {
+          "label": "e",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "twoA": 0.43,
+        "twoB": 0.36,
+        "twoC": 0.21,
+        "sA": 0.2750000000000001,
+        "sB": 0.37499999999999994,
+        "sC": 0.35,
+        "newSA": 0.3557692307692309,
+        "newSB": 0.37499999999999994,
+        "newSC": 0.2692307692307692,
+        "visits": 1.2312299999999998,
+        "allVisits": 1231.2299999999998
+      },
+      "reviewFocus": "Use the declared column convention, distinguish occupancy from visits, and compare a revised navigation policy.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The probability from $B$ to $C$ is the row $C$, column $B$ entry, $0.3$.",
+            "The expected counts are $(600,300,100)^T$."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $T^2(1000,0,0)^T$.",
+            "The probability vector is $(0.43,0.36,0.21)^T$.",
+            "The expected counts are $(430,360,210)^T$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve $T\\mathbf s=\\mathbf s$.",
+            "For example, $0.4a=0.2b+0.1c$ and $0.5b=0.3a+0.3c$.",
+            "Add $a+b+c=1$ to give a unique normalized state.",
+            "The steady state is $(0.275,0.375,0.35)^T$.",
+            "These are long-run fractions, and multiplying by $1000$ gives the corresponding limiting expected counts."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "d",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Every entry of $T$ is strictly positive, so the transition matrix is regular.",
+            "A regular Markov chain approaches its unique steady-state distribution independently of its initial distribution."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "For one visitor initially on $A$, use the $C$ component of $T^n(1,0,0)^T$ in minute $n$.",
+            "Add those five probabilities, rather than using only the minute-5 occupancy.",
+            "The expected visits per visitor total $1.23123$.",
+            "The expected aggregate is $1231.23$ visits; repeated visits are included."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "f",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Replace the third column and solve $T_{\\rm new}\\mathbf s=\\mathbf s$, $a+b+c=1$.",
+            "The new proportions are $(0.3557692,0.375,0.2692308)^T$.",
+            "The fraction on $C$ decreases from $0.35$ to $0.2692308$, so the change does not meet that objective."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "B",
+      "question": 5,
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "a": -4.964212201067716,
+        "b": 2.0363633275185014,
+        "k": 0.006983450097139936,
+        "r": 0.9998258998611905,
+        "pred65": 34.3415829298024,
+        "pred80": 52.41465029284429,
+        "res80": 0.5853497071557072,
+        "speed": 61.89801840396105,
+        "speed2": 65.23682684910936
+      },
+      "reviewFocus": "Linearize a power relation, retain units in a stopping model and solve an implicit safety design limit.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Fit $\\ln d=a+b\\ln v$.",
+            "$a=-4.964212$ and $b=2.036363$.",
+            "$k=e^a=0.00698345$.",
+            "The correlation coefficient of the log data is $r=0.9998259$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Substitute the speeds into $kv^b$, using unrounded regression coefficients.",
+            "The prediction at $65$ is $34.34158$ m.",
+            "At $80$, the residual is $53-52.41465=0.5853497$ m."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The speed in metres per second is $v/3.6$, so total stopping distance is $1.1v/3.6+kv^b$.",
+            "Solve $1.1v/3.6+kv^b=50$ on the tested speed interval.",
+            "The boundary speed is $61.89802$ km per hour.",
+            "Both terms increase for $v>0$ since $k,b>0$, so this is the largest admissible speed."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Replace only the reaction term: $0.85v/3.6+kv^b=50$.",
+            "The new boundary speed is $65.23683$ km per hour.",
+            "The system changes reaction time, not the measured relationship between speed and braking distance.",
+            "Therefore the original braking regression and its coefficient $k$ remain in the model."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The road condition differs from that of the measurements, so the same braking parameters need not apply.",
+            "$120$ lies outside the observed speed range, making this an extrapolation.",
+            "The fitted line minimizes the sum of squared residuals in $\\ln d$, not in the original distances $d$."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "B",
+      "question": 6,
+      "syllabusRefs": [
+        "AHL 2.9",
+        "AHL 5.9",
+        "AHL 5.10",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "time": 5.70927445904374,
+        "maxRate": 126.0,
+        "n5": 511.2864980214701,
+        "n10": 1030.0859388887056,
+        "average": 799.732903442597,
+        "midpoint": 815.5645627680261
+      },
+      "reviewFocus": "Connect explicit and differential logistic forms and distinguish maximum instantaneous growth from mean population.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$N(0)=1200/12=100$.",
+            "$N(t)$ approaches $1200$ as $t$ increases.",
+            "$1200$ is the modelled carrying capacity under the fixed resource conditions."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Apply the chain rule to $1200(1+11e^{-0.42t})^{-1}$.",
+            "$N\\prime=1200(11)(0.42)e^{-0.42t}/(1+11e^{-0.42t})^2$.",
+            "$1-N/1200=11e^{-0.42t}/(1+11e^{-0.42t})$.",
+            "The expressions agree for $r=0.42$ per day."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Treat growth as $G(N)=0.42N(1-N/1200)$.",
+            "This downward-opening quadratic is maximized at $N=600$.",
+            "The maximum rate is $126$ organisms per day.",
+            "$11e^{-0.42t}=1$, giving $t=5.709274$ days."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The time mean is $\\frac15\\int_5^{10}N(t)\\,dt$.",
+            "The mean is $799.7329$ organisms.",
+            "The midpoint population is $N(7.5)=815.5646$.",
+            "For a nonlinear function, an interval average generally differs from the value at the midpoint; they answer different questions."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The denominator is $1+11e^{-0.42t}>1$ for every finite $t\\ge0$, so $N(t)<1200$.",
+            "Also $N\\prime>0$ while $0<N<1200$, with growth tending to zero near capacity.",
+            "A change in nutrient supply, available space, temperature or waste accumulation could change the effective carrying capacity."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "C",
+      "question": 1,
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 5.16",
+        "AHL 5.10",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "c10": 3.5284822353142307,
+        "c20": 1.2980560729107609,
+        "euler": [
+          1.0,
+          2.0,
+          2.75,
+          3.3125,
+          3.734375
+        ],
+        "euler10": 3.734375,
+        "eulerError": 0.20589276468576934,
+        "up": 2.8768207245178083,
+        "down": 15.677206362578818,
+        "duration": 12.80038563806101,
+        "removed": 4701.943927089239,
+        "massBalance": 4701.943927089239
+      },
+      "reviewFocus": "Join two differential regimes, evaluate a threshold duration and independently reconcile an integral with conservation of mass.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Separate variables or recognize $C=5+Ae^{-0.1t}$.",
+            "The initial condition gives $A=-4$.",
+            "$C(t)=5-4e^{-0.1t}$ for $0\\le t\\le10$.",
+            "$C(10)=3.528482$ grams per litre."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $C_{n+1}=C_n+2.5(0.5-0.1C_n)$, starting at $C_0=1$.",
+            "The values are $1,2,2.75,3.3125,3.734375$, so the estimate is $3.734375$.",
+            "This is an overestimate; the exact curve is increasing and concave down, so forward tangent steps lie above it."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "With clean inflow, $C\\prime=-0.1C$.",
+            "Use the exact value $C(10)$ as the new initial condition.",
+            "$C(t)=3.528482e^{-0.1(t-10)}$ for $t\\ge10$, using the unrounded coefficient."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve $5-4e^{-0.1t}=2$ in the first regime and $C(10)e^{-0.1(t-10)}=2$ in the second.",
+            "The upward crossing is $t=2.876821$ h and the downward crossing is $t=15.67721$ h.",
+            "The concentration exceeds $2$ only between these crossings.",
+            "The total duration is $12.80039$ hours."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Outflow mass is $100\\{\\int_0^{10}C(t)\\,dt+\\int_{10}^{20}C(t)\\,dt\\}$ grams, using the appropriate expressions.",
+            "The removed mass is $4701.944$ grams.",
+            "Initially there are $1000$ g and the first ten hours add $100\\times5\\times10=5000$ g; the final mass is $1000C(20)$.",
+            "$1000+5000-1000C(20)=4701.944$ grams, agreeing with the integral."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "C",
+      "question": 2,
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 5
+        },
+        {
+          "label": "e",
+          "marks": 1
+        }
+      ],
+      "computedEvidence": {
+        "originalNN": 36,
+        "deletedMST": 17,
+        "lower": 32,
+        "improved": 34,
+        "newCD": 13,
+        "newNN": 34,
+        "newDeletedMST": 19,
+        "newLower": 34,
+        "allOriginalTourLengths": [
+          34,
+          36,
+          38,
+          39,
+          40,
+          41,
+          43,
+          45
+        ]
+      },
+      "reviewFocus": "Compute valid TSP bounds and identify when a topology change makes an upper and lower bound coincide.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "At each step choose the nearest unvisited site.",
+            "The tour is $A-B-C-D-E-A$.",
+            "Its length is $7+6+5+6+12=36$ km.",
+            "It is a feasible tour, so the optimal tour cannot be longer than this particular tour."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "On $B,C,D,E$, choose $CD=5$, $BC=6$ and $DE=6$.",
+            "The MST weight is $17$.",
+            "The two smallest edges from $A$ are $AB=7$ and $AD=8$.",
+            "The lower bound is $17+7+8=32$ km.",
+            "Deleting $A$ from any tour leaves a spanning path, whose weight is at least the MST weight, and the two removed connections have sum at least $7+8$."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Consider the feasible tour $A-B-C-E-D-A$.",
+            "Its length is $7+6+7+6+8=34$ km.",
+            "Thus $32\\le L_{\\rm opt}\\le34$ km; these bounds alone do not prove the tour is optimal."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The new shortest $C-D$ connection is $C-E-D$ of length $13$; all other table entries remain unchanged.",
+            "Nearest neighbour gives $A-B-C-E-D-A$, length $34$.",
+            "The deleted-$A$ MST now uses $BC=6$, $DE=6$, $CE=7$, weight $19$.",
+            "The new lower bound is $19+7+8=34$.",
+            "The matching upper and lower bounds prove the optimum is $34$ km."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "e",
+          "marks": 1,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The $34$-km feasible tour from (c) does not use $CD$ and remains available with the same length. This observation does not by itself establish the original optimal length."
+          ],
+          "markCodeSum": 1
+        }
+      ]
+    },
+    {
+      "set": "C",
+      "question": 3,
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.16",
+        "AHL 4.12"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "sp": 3.828054336082496,
+        "se": 1.4825990692024598,
+        "t": -1.753677075622764,
+        "p": 0.04586991669926381,
+        "lo": 49.79498428195466,
+        "hi": 55.005015718045335,
+        "critical": 2.200985160082949,
+        "shiftedLo": 51.79498428195466,
+        "shiftedHi": 57.005015718045335
+      },
+      "reviewFocus": "Select the correct pooled inference model and distinguish shared bias, independence and population conclusions.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$s_p^2=\\{11(4.1)^2+14(3.6)^2\\}/25$.",
+            "$s_p=3.828054$ minutes.",
+            "The standard error is $s_p\\sqrt{1/12+1/15}=1.482599$ minutes."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$H_0:\\mu_A=\\mu_B$, $H_1:\\mu_A<\\mu_B$.",
+            "$t=(52.4-55.0)/(s_p\\sqrt{1/12+1/15})$.",
+            "$t=-1.753677$ with $12+15-2=25$ degrees of freedom.",
+            "The lower-tail $p$-value is $0.04586992$.",
+            "Since this is less than $0.05$, reject $H_0$; the data support a smaller mean for $A$ under the stated assumptions."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $52.4\\pm t_{0.975,11}(4.1/\\sqrt{12})$.",
+            "This uses the $t$ distribution with $11$ degrees of freedom, since the population variance is unknown.",
+            "The critical value is $2.200985$.",
+            "The confidence interval is $(49.79498,55.00502)$ minutes."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Both sample means increase by $2$, leaving their difference, both sample standard deviations and the pooled statistic unchanged.",
+            "The $p$-value and conclusion in (b) are therefore unchanged.",
+            "The interval for $A$ shifts upward by $2$, to $(51.79498,57.00502)$ minutes."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Repeats on the same operator may be correlated and do not supply five independent operators.",
+            "Treating them as independent can underestimate standard error and exaggerate significance.",
+            "Sample more independent operators, or summarize each operator's repeats before an analysis that respects the sampling unit."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "C",
+      "question": 4,
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "a": 4.780067589332188,
+        "slope": -0.1602743107869654,
+        "amp": 119.11240050035349,
+        "threshold": 8.603189125566166,
+        "sse1": 1.7526907361687523,
+        "sse2": 8.963825841445555,
+        "halfLife": 3.850817669777474,
+        "dose": 646.4643691318722,
+        "mean": 53.872030760989354,
+        "model1_12": 17.40531918669834,
+        "model2_12": 20.916413556263002
+      },
+      "reviewFocus": "Compare residuals on a declared scale and challenge long-term extrapolation despite an excellent short-term fit.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Fit $\\ln C=\\ln A+bt$.",
+            "The fitted intercept is $4.780068$ and slope is $-0.1602743$.",
+            "$A=e^{4.780068}=119.1124$.",
+            "Thus $C_1(t)=119.1124e^{-0.1602743t}$, with unrounded regression coefficients retained for subsequent work."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve $Ae^{bt}=30$.",
+            "The crossing is $t=\\ln(30/A)/b=8.603189$ hours.",
+            "Since $b<0$, concentration is below $30$ after this time."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Calculate $\\sum_i(C_i-C_j(t_i))^2$ for each $j=1,2$ on the original scale.",
+            "The sums are $1.752691$ for Model 1 and $8.963826$ for Model 2.",
+            "Model 1 has the smaller original-scale sum and fits these observations better by this criterion.",
+            "These are short-term observations; a physical background and future ventilation conditions can matter beyond the observed interval."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The excess is $C_2-8=112e^{-0.18t}$, so solve $e^{-0.18h}=1/2$.",
+            "$h=\\ln2/0.18=3.850818$ hours.",
+            "The constant background $8$ does not decay, so halving the excess does not halve the sum of excess and background."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $\\int_0^{12}(8+112e^{-0.18t})\\,dt$.",
+            "The integral is $646.4644$ concentration-unit hours.",
+            "Divide the integral by the interval length, $12$ hours.",
+            "The mean concentration is $53.87203$ concentration units."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "C",
+      "question": 5,
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13",
+        "AHL 3.9",
+        "AHL 1.14",
+        "SL 1.3"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 3
+        },
+        {
+          "label": "f",
+          "marks": 2
+        }
+      ],
+      "computedEvidence": {
+        "modulus": 0.6324555320336759,
+        "angle": 18.434948822922014,
+        "n": 11,
+        "distancePrevious": 0.05120000000000001,
+        "distanceAt": 0.03238172324012421,
+        "determinant": 0.4,
+        "z1real": 2.0,
+        "z1imag": 0.9999999999999998,
+        "z2real": 3.0,
+        "z2imag": -1.1102230246251565e-16
+      },
+      "reviewFocus": "Connect an affine complex recurrence to a real matrix, area scaling and an exact stopping threshold.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Substitute $z_0$ into the recurrence and multiply the complex numbers.",
+            "$z_1=2+i$.",
+            "$z_2=3$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The matrix is $\\begin{pmatrix}0.6&-0.2\\\\0.2&0.6\\end{pmatrix}$.",
+            "The length scale factor is $\\sqrt{0.4}=0.6324555$.",
+            "The rotation is $18.43495^\\circ$ anticlockwise.",
+            "The area scale factor is the determinant, $0.4$; translation does not affect lengths or areas."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Rearrange to $(0.4-0.2i)z_*=2-i$.",
+            "Divide by $0.4-0.2i$, using the conjugate or technology.",
+            "$z_*=5$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Let $w_n=z_n-5$. Then $w_{n+1}=(0.6+0.2i)w_n$.",
+            "Thus $z_n-5=(0.6+0.2i)^n(-4+3i)$.",
+            "At $n=0$ this gives $z_0-5=-4+3i$, agreeing with the initial position.",
+            "Multiplying the formula by $0.6+0.2i$ gives exactly the next-step recurrence."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$|z_n-5|=5(\\sqrt{0.4})^n<0.05$.",
+            "The distances at $n=11$ and the preceding step are $0.03238172$ and $0.0512$ metres.",
+            "The smallest integer is $n=11$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "f",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "At each step the displacement from $5$ is rotated by the nonzero angle $18.43495^\\circ$.",
+            "Its length is multiplied by $0.6324555<1$, so it contracts while its direction changes."
+          ],
+          "markCodeSum": 2
+        }
+      ]
+    },
+    {
+      "set": "C",
+      "question": 6,
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.12",
+        "AHL 3.13",
+        "SL 3.3",
+        "SL 1.8"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 6
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "area": 14.0,
+        "angle": 49.76364169072618,
+        "bearing": 70.01689347810003,
+        "time": 1.802012237319678,
+        "waterE": 0.3549351881690909,
+        "waterN": 2.4746759408454544,
+        "heading": 8.162093614928189,
+        "projection": 0.4,
+        "closest": 4.427188724235731,
+        "closestX": 2.4000000000000004,
+        "closestY": 0.8
+      },
+      "reviewFocus": "Use geometric and kinematic representations consistently, including a current correction in an inverse heading problem.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $\\frac12|\\overrightarrow{AB}\\times\\overrightarrow{AC}|$.",
+            "The cross product is $(0,0,28)^T$.",
+            "The area is $14\\ \\mathrm{km}^2$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use the dot-product angle formula for $(6,2,0)$ and $(3,2,4)$.",
+            "The dot product is $22$ and the product of lengths is $\\sqrt{40}\\sqrt{29}$.",
+            "The angle is $49.76364^\\circ$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Add the current to obtain shore velocity $(2.2,0.8)$.",
+            "For an east-north vector in this quadrant, bearing is $\\tan^{-1}(2.2/0.8)$.",
+            "The bearing is $70.01689^\\circ$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 6,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "If the travel time is $t>0$, shore velocity is $(1/t,5/t)$.",
+            "The water-relative velocity is $(1/t-0.2,5/t-0.3)$.",
+            "Its magnitude condition is $(1-0.2t)^2+(5-0.3t)^2=6.25t^2$.",
+            "The positive solution is $t=1.802012$ hours.",
+            "The water-relative components are $(0.3549352,2.474676)$ km per hour.",
+            "The required heading is $8.162094^\\circ$ clockwise from north."
+          ],
+          "markCodeSum": 6
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Points on the cable are $\\mathbf r=s(6,2,0)$, $0\\le s\\le1$; minimize $|\\mathbf r-C|^2$ or use a perpendicular dot product.",
+            "$s=(C\\cdot B)/(B\\cdot B)=16/40=0.4$, which is in $[0,1]$.",
+            "The closest point is $(2.4,0.8,0)$.",
+            "The minimum distance is $4.427189$ km."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "D",
+      "question": 1,
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 5.7",
+        "AHL 5.9",
+        "SL 2.6"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "price": 33,
+        "quantity": 133.56765098292516,
+        "profit": 2139.191274573129,
+        "low": 11.856357282262557,
+        "high": 87.51051280152797,
+        "capacityPrice": 40.23594781085251,
+        "capacityProfit": 2023.5947810852508
+      },
+      "reviewFocus": "Optimize profit rather than revenue, use the permitted domain and then activate a capacity constraint.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Revenue is $pq(p)$ and variable cost is $8q(p)$.",
+            "$\\Pi(p)=500(p-8)e^{-0.04p}-1200$.",
+            "Differentiate using the product rule.",
+            "$\\Pi\\prime(p)=500e^{-0.04p}\\{1-0.04(p-8)\\}$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$1-0.04(p-8)=0$ gives $p=33$.",
+            "The derivative changes from positive to negative there, so it gives the global maximum on $[0,100]$.",
+            "Demand is $133.5677$ units and profit is \\$2139.191."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Solve $500(p-8)e^{-0.04p}=1200$ numerically on the given domain.",
+            "The two roots are $11.85636$ and $87.51051$ dollars.",
+            "The profit is non-negative between and including these roots."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$500e^{-0.04p}\\le100$ gives $p\\ge\\ln5/0.04$.",
+            "The smallest feasible price is $40.23595$ dollars, above $33$.",
+            "The profit function is decreasing throughout the new feasible interval, so choose this boundary price.",
+            "The maximum feasible expected profit is \\$2023.595."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "A change in fixed costs shifts the profit function vertically without changing its derivative.",
+            "The unconstrained maximizing price remains $33$, provided the demand and variable-cost models are unchanged.",
+            "The range of prices with non-negative profit shrinks, and could disappear if fixed costs exceed the maximum contribution before fixed costs."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "D",
+      "question": 2,
+      "syllabusRefs": [
+        "AHL 4.19",
+        "SL 4.5",
+        "SL 4.7",
+        "SL 1.3"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "marks": 2
+        }
+      ],
+      "computedEvidence": {
+        "p2": 0.625,
+        "p10": 0.50048828125,
+        "exact2": 0.234375,
+        "energy": 68.49658203125,
+        "rain3": 0.140625,
+        "allPaths": [
+          {
+            "states": [
+              0,
+              0,
+              0
+            ],
+            "probability": 0.421875
+          },
+          {
+            "states": [
+              0,
+              0,
+              1
+            ],
+            "probability": 0.140625
+          },
+          {
+            "states": [
+              0,
+              1,
+              0
+            ],
+            "probability": 0.046875
+          },
+          {
+            "states": [
+              0,
+              1,
+              1
+            ],
+            "probability": 0.140625
+          },
+          {
+            "states": [
+              1,
+              0,
+              0
+            ],
+            "probability": 0.046875
+          },
+          {
+            "states": [
+              1,
+              0,
+              1
+            ],
+            "probability": 0.015625
+          },
+          {
+            "states": [
+              1,
+              1,
+              0
+            ],
+            "probability": 0.046875
+          },
+          {
+            "states": [
+              1,
+              1,
+              1
+            ],
+            "probability": 0.140625
+          }
+        ]
+      },
+      "reviewFocus": "Distinguish marginal state probabilities, dependent paths and linearity of expectation in a cumulative energy model.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$T=\\begin{pmatrix}0.75&0.25\\\\0.25&0.75\\end{pmatrix}$.",
+            "$p_{n+1}=0.75p_n+0.25(1-p_n)$.",
+            "This simplifies to $0.5p_n+0.25$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$p_{n+1}-0.5=0.5(p_n-0.5)$.",
+            "This is geometric, with initial value $p_0-0.5=0.5$.",
+            "$p_n=0.5+0.5(0.5)^n$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "c",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The steady state is $(0.5,0.5)^T$.",
+            "All entries of $T$ are positive, so the chain is regular."
+          ],
+          "markCodeSum": 2
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The possible paths are $SSR,SRS,RSS$, starting from sunny day $0$.",
+            "Their probabilities are $0.75^2(0.25)$, $0.75(0.25)^2$ and $(0.25)^2(0.75)$.",
+            "Add these mutually exclusive path probabilities.",
+            "The total probability is $0.234375$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The expectation for day $n$ is $10p_n+3(1-p_n)=6.5+3.5(0.5)^n$.",
+            "Sum over $n=1,\\ldots,10$, using linearity of expectation even though days are dependent.",
+            "The sum is $65+3.5(1-0.5^{10})$.",
+            "The expected energy is $68.49658$ kWh."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "f",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The day states are dependent: for example $P(S_{n+1}\\mid S_n)=0.75$, not $0.5$.",
+            "Also the marginal probabilities for the first three days are not all $0.5$, because the process starts sunny."
+          ],
+          "markCodeSum": 2
+        }
+      ]
+    },
+    {
+      "set": "D",
+      "question": 3,
+      "syllabusRefs": [
+        "SL 4.4",
+        "SL 4.10",
+        "AHL 4.18",
+        "AHL 4.12"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "r": -0.9903281005339564,
+        "slope": -0.2095238095238097,
+        "intercept": 12.830952380952384,
+        "t": -17.48382711325878,
+        "p": 1.1227670301912017e-06,
+        "spearman": -1.0,
+        "pred21": 8.43095238095238,
+        "pred20": 8.640476190476189,
+        "res20": -0.04047619047619033,
+        "newR": 0.2467129597128928
+      },
+      "reviewFocus": "Compare Pearson and rank evidence, apply a declared one-sided population correlation test, and diagnose a leverage point.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use the eight raw pairs to fit $y=a+bx$.",
+            "$a=12.83095$ and $b=-0.2095238$.",
+            "The fitted line is $y=12.83095+(-0.2095238)x$.",
+            "Pearson's coefficient is $r=-0.9903281$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$H_0:\\rho=0$, $H_1:\\rho<0$.",
+            "Use a correlation $t$ test on the given raw bivariate-normal pairs.",
+            "$t=r\\sqrt{(8-2)/(1-r^2)}=-17.48383$, with $6$ degrees of freedom.",
+            "The lower-tail $p$-value is $1.122767\\times10^{-6}$.",
+            "Reject $H_0$ at $1\\%$; there is evidence of a negative population correlation under these assumptions."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Temperatures strictly increase while oxygen values strictly decrease, giving reverse ranks without ties.",
+            "Spearman's coefficient is $-1$.",
+            "The ordering is perfectly decreasing, but the points do not lie exactly on a straight line; Pearson measures linear association rather than only rank order."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Substitute into the fitted line, and take residual as observed minus predicted.",
+            "The prediction at $21^\\circ$C is $8.430952$ mg per litre.",
+            "The residual at $20^\\circ$C is $8.6-8.640476=-0.04047619$ mg per litre."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Recalculate Pearson's coefficient using all nine pairs.",
+            "The new coefficient is $r=0.246713$.",
+            "The point has strong influence, but deletion requires investigation of measurement validity and population comparability, not merely dislike of its effect.",
+            "Observational association alone does not establish causation; other site conditions may affect oxygen."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "D",
+      "question": 4,
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.12",
+        "SL 4.1"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 4
+        }
+      ],
+      "computedEvidence": {
+        "chi": 24.8,
+        "p": 5.518908868097848e-05,
+        "df": 4,
+        "expected": [
+          [
+            20.0,
+            20.0,
+            20.0
+          ],
+          [
+            20.0,
+            20.0,
+            20.0
+          ],
+          [
+            20.0,
+            20.0,
+            20.0
+          ]
+        ],
+        "largestContribution": 8.45,
+        "aggChi": 15.0,
+        "aggP": 0.0005530843701478337,
+        "aggDf": 2,
+        "aggExpected": [
+          [
+            20.0,
+            20.0,
+            20.0
+          ],
+          [
+            40.0,
+            40.0,
+            40.0
+          ]
+        ]
+      },
+      "reviewFocus": "Analyze association, identify its main contribution and distinguish a conditional association study from a population-wide estimate.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Expected count is row total times column total divided by $180$.",
+            "Every row and column total is $60$, so all nine expected counts are $20$.",
+            "Each expected count is greater than $5$, satisfying the stated chi-square condition."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$H_0$: travel mode and zone are independent; $H_1$: they are associated.",
+            "Calculate $\\sum(O-E)^2/E$ over all nine cells.",
+            "$\\chi^2=24.8$ and $df=(3-1)(3-1)=4$.",
+            "The upper-tail $p$-value is $5.518909\\times10^{-5}$.",
+            "Reject $H_0$ at $5\\%$; there is evidence of an association between zone and travel mode."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "c",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Compare the squared standardized deviations $(O-20)^2/20$.",
+            "Zone 3, cycle has the largest contribution, $13^2/20=8.45$.",
+            "Cycling is more frequent in the Zone 3 sample than expected under independence."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The new rows are $(30,20,10)$ and $(30,40,50)$, with expected rows $(20,20,20)$ and $(40,40,40)$.",
+            "Use the new table and $df=(2-1)(3-1)=2$.",
+            "$\\chi^2=15$ and $p=0.0005530844$.",
+            "The null is still rejected at $5\\%$; the binary zone grouping remains associated with travel mode."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The pooled sample gives each zone equal weight because each contributes $60$ observations.",
+            "The zone populations are unequal, so this need not match residents' actual distribution across zones.",
+            "Establish the estimated bus fraction within each zone.",
+            "Weight those fractions by the respective zone population proportions, rather than averaging the three fractions equally."
+          ],
+          "markCodeSum": 4
+        }
+      ]
+    },
+    {
+      "set": "D",
+      "question": 5,
+      "syllabusRefs": [
+        "AHL 5.18",
+        "AHL 5.17",
+        "AHL 1.15",
+        "AHL 5.16"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 5
+        },
+        {
+          "label": "d",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "marks": 3
+        }
+      ],
+      "computedEvidence": {
+        "eulerStates": [
+          [
+            4.0,
+            -2.0
+          ],
+          [
+            3.6,
+            -2.4
+          ],
+          [
+            3.12,
+            -2.4
+          ]
+        ],
+        "x04": 3.1232623479793924,
+        "v04": -2.2246044197449493,
+        "xEuler": 3.12,
+        "vEuler": -2.4,
+        "time1": 1.73090328193676
+      },
+      "reviewFocus": "Convert the supplied second-order model, use distinct real eigendirections and distinguish simultaneous from sequential numerical updates.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$x\\prime=v$.",
+            "$v\\prime=-2x-3v$, so $\\binom{x\\prime}{v\\prime}=\\begin{pmatrix}0&1\\\\-2&-3\\end{pmatrix}\\binom{x}{v}$.",
+            "The initial state is $(4,-2)^T$."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$\\det(M-\\lambda I)=\\lambda^2+3\\lambda+2$.",
+            "The eigenvalues are $-1,-2$.",
+            "Corresponding eigenvectors are $(1,-1)^T$ and $(1,-2)^T$.",
+            "The distinct negative real eigenvalues give a stable node."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 5,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Write $(x,v)^T=Ae^{-t}(1,-1)^T+Be^{-2t}(1,-2)^T$.",
+            "The initial conditions give $A+B=4$ and $-A-2B=-2$.",
+            "Solving gives $A=6$, $B=-2$.",
+            "$x(t)=6e^{-t}-2e^{-2t}$.",
+            "$v(t)=-6e^{-t}+4e^{-2t}$."
+          ],
+          "markCodeSum": 5
+        },
+        {
+          "part": "d",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "$x=e^{-t}(6-2e^{-t})>0$, since $0<e^{-t}\\le1$.",
+            "$v=e^{-t}(-6+4e^{-t})<0$ on the same domain.",
+            "Both exponentials tend to zero, so the displacement decreases toward zero without crossing it."
+          ],
+          "markCodeSum": 3
+        },
+        {
+          "part": "e",
+          "marks": 3,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Use $x_{n+1}=x_n+0.2v_n$, $v_{n+1}=v_n+0.2(-2x_n-3v_n)$ simultaneously. The first state is $(3.6,-2.4)$.",
+            "After the second step the Euler state is $(3.12,-2.4)$.",
+            "The exact state is $(3.123262,-2.224604)$; Euler slightly understates $x$ and makes the velocity more negative."
+          ],
+          "markCodeSum": 3
+        }
+      ]
+    },
+    {
+      "set": "D",
+      "question": 6,
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6",
+        "SL 3.1",
+        "SL 5.7"
+      ],
+      "parts": [
+        {
+          "label": "a",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "marks": 2
+        }
+      ],
+      "computedEvidence": {
+        "vx": 4,
+        "vy": 1.6666666666666667,
+        "radius": 4.333333333333333,
+        "areaA": 7.666666666666667,
+        "totalArea": 24,
+        "midAB": 4,
+        "midAC": 3.605551275463989,
+        "roadRadius": 4
+      },
+      "reviewFocus": "Solve a bounded largest-empty-circle problem and verify the interior optimum against all boundary candidates.",
+      "partChecks": [
+        {
+          "part": "a",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The bisector of horizontal $AB$ passes through $(4,0)$.",
+            "It is $x=4$.",
+            "Equate $x^2+y^2$ and $(x-4)^2+(y-6)^2$.",
+            "The second bisector is $2x+3y=13$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "b",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "Intersect $x=4$ and $2x+3y=13$.",
+            "The vertex is $V=(4,5/3)$.",
+            "The common distance is $\\sqrt{16+25/9}=13/3$ km.",
+            "At $x=4$ the triangle extends from $y=0$ to $y=6$, so $V$ is inside."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "c",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The cell is the polygon with vertices $(0,0),(4,0),(4,5/3),(2,3)$.",
+            "The final point is the midpoint of side $AC$, where its bisector meets the triangle boundary.",
+            "Use a polygon area formula or divide the region into triangles.",
+            "The area is $23/3\\ \\mathrm{km}^2$."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "d",
+          "marks": 4,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "The cell vertices consist of the posts themselves, the three side midpoints, and $V$.",
+            "Nearest distances there are $0$, $4$ at the midpoint of $AB$, $\\sqrt{13}$ at the other two midpoints, and $13/3$ at $V$.",
+            "The supplied convex-cell maximum property means no interior or edge point within any cell can exceed its largest vertex distance.",
+            "The global optimum is $V=(4,5/3)$, with nearest-post distance $13/3$ km."
+          ],
+          "markCodeSum": 4
+        },
+        {
+          "part": "e",
+          "marks": 2,
+          "status": "passed",
+          "evidenceKind": "author worked derivation and additive mark check; fresh independent numerical evidence is in the separate review",
+          "workedReasoning": [
+            "On $y=0$, the nearest of $A,B$ is at most $4$ km away, with equality only at $(4,0)$; $C$ is then $6$ km away.",
+            "The optimum is $(4,0)$ and the maximum nearest-post distance is $4$ km."
+          ],
+          "markCodeSum": 2
+        }
+      ]
+    }
+  ],
+  "scope": "Current AI HL specification; original contextual extended problems; independent review is separate.",
+  "numericEvidenceCount": 204
+}

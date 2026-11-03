@@ -1,0 +1,4362 @@
+{
+  "status": "passed",
+  "reviewer": "mock_exam_spec; independent of p2_author.py",
+  "method": "Read every complete stem, every part and every markscheme; solved afresh without importing author code; inspected all nine rendered SVG diagrams against the stated data; checked official AI scope and reference numbering.",
+  "questions": 24,
+  "parts": 126,
+  "calculationAssertions": 297,
+  "diagramsVisuallyInspected": 9,
+  "diagramPreviewDirectory": "work/ai-mocks-2026/p2-independent-preview",
+  "papers": [
+    {
+      "id": "ai-hl-set-a-paper-2",
+      "sha256": "8734bcb80973dbe1fac3ebf0ef45b5b11436f8699807b751fd9e87900c13a84c",
+      "questions": 6,
+      "parts": 32,
+      "marks": 110,
+      "minutes": 120,
+      "diagrams": 2
+    },
+    {
+      "id": "ai-hl-set-b-paper-2",
+      "sha256": "9f125bc00f327acdd6cbae9b58f0a343c62a22d88f7c86141b2e6674aa219898",
+      "questions": 6,
+      "parts": 32,
+      "marks": 110,
+      "minutes": 120,
+      "diagrams": 2
+    },
+    {
+      "id": "ai-hl-set-c-paper-2",
+      "sha256": "55670b7de66c1289dd7f0e43bee8e7646558168777e7232b0904803f440d3592",
+      "questions": 6,
+      "parts": 31,
+      "marks": 110,
+      "minutes": 120,
+      "diagrams": 3
+    },
+    {
+      "id": "ai-hl-set-d-paper-2",
+      "sha256": "9adf0ca0656737e3d3fdf50ce29ad0340e6d1d271106e0be406fa22f6e6d81a9",
+      "questions": 6,
+      "parts": 31,
+      "marks": 110,
+      "minutes": 120,
+      "diagrams": 2
+    }
+  ],
+  "questionReviews": [
+    {
+      "id": "A1",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 2.4",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "reasoning": "Solar-minus-load is concave down on the daylight interval, positive at noon and negative at each endpoint, so its two crossings delimit the sole surplus. Integrals have units kWh. An initially empty battery cannot supply the earlier morning deficit even when its later recoverable energy is ample.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Solar peak and endpoints",
+              "actual": [
+                80.0,
+                0.0,
+                0.0
+              ],
+              "expected": [
+                80.0,
+                0.0,
+                0.0
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First crossing",
+              "actual": 7.237941680119228,
+              "expected": 7.237942,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Second crossing",
+              "actual": 15.849450147926527,
+              "expected": 15.84945,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Single surplus sign pattern",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Surplus energy",
+              "actual": 254.53721892958438,
+              "expected": 254.5372,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Both positive deficits",
+              "actual": 63.382237456706164,
+              "expected": 63.38224,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Net-energy identity",
+              "actual": 191.1549814728782,
+              "expected": 191.15498147287815,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Deliverable later surplus",
+              "actual": 203.62977514366753,
+              "expected": 203.6298,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Timing defeats energy-only claim",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The battery is empty before the first crossing. Energy generated later cannot retroactively remove that earlier grid requirement. No assumption about unmodelled night-time demand is needed to refute the claim.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "A2",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "reasoning": "The network diagram was independently transcribed as eleven undirected edges, total61. Connectivity and degree parity determine the postman corrections; removing EF changes which vertices are odd.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Independent Kruskal tree weight",
+              "actual": 16,
+              "expected": 16,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Shortest A-F",
+              "actual": 13,
+              "expected": 13,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exhibited A-B-E-F length",
+              "actual": 13,
+              "expected": 13,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Odd vertices",
+              "actual": [
+                "A",
+                "F"
+              ],
+              "expected": [
+                "A",
+                "F"
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "All-edge total",
+              "actual": 61,
+              "expected": 61,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed postman lower bound and augmentation",
+              "actual": 74,
+              "expected": 74,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Open endpoint parity fits original graph",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Euler trail length",
+              "actual": 61,
+              "expected": 61,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "New odd vertices",
+              "actual": [
+                "A",
+                "E"
+              ],
+              "expected": [
+                "A",
+                "E"
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "New closed postman optimum",
+              "actual": 68,
+              "expected": 68,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Removing a required edge changes both the base inspection obligation and the minimum parity-correction path; subtracting3 from74 would give71, not68.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "A3",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "SL 4.3",
+        "AHL 4.16",
+        "AHL 4.18",
+        "AHL 4.12"
+      ],
+      "reasoning": "The before-minus-after sign makes improvement a positive mean. Population sigma is unknown, so the paired differences use one-sample t, df9. Correcting overstated after-times increases every difference by1.5; it does not alter dispersion. Observational before/after improvement is not by itself causal evidence.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Difference mean",
+              "actual": 4.3,
+              "expected": 4.3,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Unbiased SD",
+              "actual": 3.3349995835415367,
+              "expected": 3.335,
+              "absoluteTolerance": 0.0005,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Estimated standard error",
+              "actual": 1.054619467970425,
+              "expected": 1.054619,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Paired t statistic",
+              "actual": 4.0773000410045395,
+              "expected": 4.0773,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "One-tailed p",
+              "actual": 0.0013845939715963031,
+              "expected": 0.001384594,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Reject at5%",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "t critical value",
+              "actual": 2.2621571628540993,
+              "expected": 2.262157,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Mean CI",
+              "actual": [
+                1.9142850164453233,
+                6.685714983554677
+              ],
+              "expected": [
+                1.914285,
+                6.685715
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "A repeated-sampling confidence interval concerns the population mean difference; it does not contain95% of individual changes and is not a probability statement that the fixed mean lies in this realized interval.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Corrected mean",
+              "actual": 5.8,
+              "expected": 5.8,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Unchanged sample SD",
+              "actual": 3.3349995835415367,
+              "expected": 3.3349995835415367,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Corrected t",
+              "actual": 5.499614008796821,
+              "expected": 5.499614,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Corrected p",
+              "actual": 0.00019018796291202477,
+              "expected": 0.000190188,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "No randomized untreated comparison is described. Practice or changed conditions could explain some change; two linked reasons in the scheme support the two reasoning marks.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "A4",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 20,
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 1.15",
+        "SL 2.6"
+      ],
+      "reasoning": "This is a nonnegative stage matrix, not a transition matrix. Reproduction may exceed1. A positive dominant eigenvector determines composition. At q=0 both eigenvalues have equal modulus, but both are below1, so eventual extinction still follows; no regular-Markov assumption is needed.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First two states",
+              "actual": [
+                [
+                  216.0,
+                  144.0
+                ],
+                [
+                  259.2,
+                  144.0
+                ]
+              ],
+              "expected": [
+                [
+                  216,
+                  144
+                ],
+                [
+                  259.2,
+                  144
+                ]
+              ],
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The lower-right .4 is annual adult survival/retention, not juvenile recruitment.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Eigenvalues",
+              "actual": [
+                1.0717797887081348,
+                -0.6717797887081346
+              ],
+              "expected": [
+                1.07178,
+                -0.6717798
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Eigenvector substitution",
+              "actual": [
+                1.8,
+                -0.671779788708135
+              ],
+              "expected": [
+                1.8,
+                -0.6717797887081346
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Eigenvector substitution",
+              "actual": [
+                1.8,
+                1.0717797887081346
+              ],
+              "expected": [
+                1.8,
+                1.0717797887081348
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Normalized eventual composition",
+              "actual": [
+                0.6267890062732585,
+                0.37321099372674155
+              ],
+              "expected": [
+                0.626789,
+                0.373211
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Strict modulus dominance",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First threshold over all earlier years",
+              "actual": 16,
+              "expected": 16,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Adjacent totals",
+              "actual": [
+                976.3630644776148,
+                1046.512376192435
+              ],
+              "expected": [
+                976.3631,
+                1046.512
+              ],
+              "absoluteTolerance": 0.0005,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Replacement parameter",
+              "actual": 0.28,
+              "expected": 0.28,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "All eigenvalue moduli below1 below threshold",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "All eigenvalue moduli below1 below threshold",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "All eigenvalue moduli below1 below threshold",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Growth side above threshold",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "f": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The secondary eigencomponent alternates because its eigenvalue is negative; its size relative to the dominant component decays since its modulus is smaller. Constant vital rates omit environmental/resource changes.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "A5",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "SL 3.1",
+        "SL 5.7",
+        "AHL 5.9"
+      ],
+      "reasoning": "The floor and wall areas have units m2; volume fixes h=60/w2. The unconstrained strictly convex cost minimum is infeasible. The actual optimum is the left boundary sqrt20. The price threshold follows from the increasing cube-root stationary width.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Volume and material model",
+              "actual": 4500.0,
+              "expected": 4500.0,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Volume and material model",
+              "actual": 4660.0,
+              "expected": 4660.0,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Volume and material model",
+              "actual": 5400.0,
+              "expected": 5400.0,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Unconstrained stationary width",
+              "actual": 3.7797631496846193,
+              "expected": 3.779763,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Global strict convexity",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Infeasible unconstrained height",
+              "actual": 4.199736832982911,
+              "expected": 4.199737,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Feasible width interval and excluded stationary point",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Optimal dimensions",
+              "actual": [
+                4.47213595499958,
+                8.94427190999916,
+                2.9999999999999996
+              ],
+              "expected": [
+                4.472136,
+                8.944272,
+                3
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Unrounded constrained minimum",
+              "actual": 4414.953415699772,
+              "expected": 4414.953,
+              "absoluteTolerance": 0.0005,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Nearest-dollar minimum",
+              "actual": 4415,
+              "expected": 4415,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Cost increasing over feasible interval",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First feasible stationary wall price",
+              "actual": 49.69039949999534,
+              "expected": 49.6904,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "A6",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.11",
+        "AHL 3.12",
+        "AHL 3.13",
+        "SL 5.7"
+      ],
+      "reasoning": "Compare positions at the same time, not geometric path intersections at independent times. Squared separation is a strictly convex quadratic; its stationary point lies inside the modelled interval. Alert endpoints are excluded because the rule is strictly less than1km.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Initial separation",
+              "actual": 9.433981132056603,
+              "expected": 9.433981,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Relative initial position",
+              "actual": [
+                -9.0,
+                2.0,
+                -2.0
+              ],
+              "expected": [
+                -9,
+                2,
+                -2
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Relative velocity",
+              "actual": [
+                4.0,
+                -1.0,
+                0.6
+              ],
+              "expected": [
+                4,
+                -1,
+                0.6
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Distance-squared coefficients",
+              "actual": [
+                17.36,
+                -78.4,
+                89.0
+              ],
+              "expected": [
+                17.36,
+                -78.4,
+                89
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Minimum time and separation",
+              "actual": [
+                2.2580645161290325,
+                0.6956083436402524
+              ],
+              "expected": [
+                2.258065,
+                0.6956083
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Global minimum lies inside time domain",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Alert boundary times",
+              "actual": [
+                2.0856379084435943,
+                2.4304911238144706
+              ],
+              "expected": [
+                2.085638,
+                2.430491
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Alert duration",
+              "actual": 0.3448532153708763,
+              "expected": 0.3448532,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The quadratic opens upward; the interval is open at both equality times and lies entirely in[0,4].",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Velocity dot product",
+              "actual": -1.08,
+              "expected": -1.08,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Squared speeds",
+              "actual": [
+                10.16,
+                5.04
+              ],
+              "expected": [
+                10.16,
+                5.04
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Angle in degrees",
+              "actual": 98.68054449467662,
+              "expected": 98.68054,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "f": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "No simultaneous 3D collision",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "A projected crossing suppresses altitude and may occur at different traversal times; the strictly positive global3D separation rules out collision.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "B1",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.7",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "reasoning": "Every annual net receipt is positive, so discounted receipts decrease strictly with the discount rate. Cash flows are explicitly nominal and year-end. Correct real growth divides gross factors; it is not exactly3%-2%.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "All annual net receipts positive",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Undiscounted cash-flow expression",
+              "actual": 5255.475348012384,
+              "expected": 5255.475348012384,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "NPV at6%",
+              "actual": -444.62656273914786,
+              "expected": -444.6266,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Nearest-dollar NPV",
+              "actual": -445,
+              "expected": -445,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Negative NPV fails the specified required effective return, conditional on the cash-flow forecasts.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Internal rate of return",
+              "actual": 0.054343738800312597,
+              "expected": 0.05434374,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Strict decreasing witness",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "A sum of positive discounted receipts is strictly decreasing for r>0. Together with a numerical sign change this gives a unique positive root.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Purchasing-power growth percent",
+              "actual": 0.9803921568627416,
+              "expected": 0.9803922,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Alternative NPV",
+              "actual": -315.6000863010995,
+              "expected": -315.6001,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Both fail6%, alternative higher NPV",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "f": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Forecast energy prices/savings and future maintenance/service life/resale are distinct uncertain inputs. Discounting changes timing values, not their uncertainty.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "B2",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6",
+        "SL 3.1",
+        "SL 2.6"
+      ],
+      "reasoning": "Euclidean bisectors bound a convex clipped Voronoi cell. Part(d) asks farthest from A within A cell, not the global toxic-waste maximin problem; the supplied polygon-maximum fact makes boundary vertices legitimate. Distance-only cells do not minimize time with unequal speeds.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "AB bisector midpoint x",
+              "actual": 6.0,
+              "expected": 6.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Three equal distances",
+              "actual": [
+                4.333333333333333,
+                4.333333333333333,
+                4.333333333333334
+              ],
+              "expected": [
+                4.333333333333333,
+                4.333333333333333,
+                4.333333333333333
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "AC bisector equation at common vertex",
+              "actual": 23.0,
+              "expected": 23,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Clipped cell area",
+              "actual": 34.0,
+              "expected": 34,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Each listed vertex in cell and rectangle",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Each listed vertex in cell and rectangle",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Each listed vertex in cell and rectangle",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Each listed vertex in cell and rectangle",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "All vertex squared distances",
+              "actual": [
+                8.0,
+                20.0,
+                18.77777777777778,
+                36.111111111111114
+              ],
+              "expected": [
+                8,
+                20,
+                18.77777777777778,
+                36.111111111111114
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Maximum cell distance",
+              "actual": 6.009252125773315,
+              "expected": 6.009252,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Response times in minutes",
+              "actual": [
+                5.4083269131959835,
+                4.038873605350878,
+                8.246211251235321
+              ],
+              "expected": [
+                5.408327,
+                4.038874,
+                8.246211
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Fastest centre differs from nearest",
+              "actual": 1,
+              "expected": 1,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "B3",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 19,
+      "syllabusRefs": [
+        "AHL 4.17",
+        "SL 4.6",
+        "SL 4.8",
+        "AHL 4.18"
+      ],
+      "reasoning": "Independent constant-rate Poisson streams combine by addition of means. The conditional binomial law is introduced in the question. Every count-tail direction and included endpoint is checked, and the requested discrete size is strictly below5%.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "One-hour tail at least10",
+              "actual": 0.08392401699487584,
+              "expected": 0.08392402,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Conditional appointment fraction",
+              "actual": 0.39999999999999997,
+              "expected": 0.4,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Conditional binomial tail",
+              "actual": 0.31744000000000017,
+              "expected": 0.31744,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Minimum capacity",
+              "actual": 21,
+              "expected": 21,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Adjacent capacity tails",
+              "actual": [
+                0.0060651474043965205,
+                0.011597737214807462
+              ],
+              "expected": [
+                0.006065147,
+                0.01159774
+              ],
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Eight-hour one-sided p",
+              "actual": 0.011170975975590481,
+              "expected": 0.01117098,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Reject5%",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The test parameter is hourly lambda; the null eight-hour total mean is48, not6. The alternative is an increase.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Smallest rejection threshold",
+              "actual": 61,
+              "expected": 61,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Actual Type I size",
+              "actual": 0.03950010503541395,
+              "expected": 0.03950011,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Next larger region violates size",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Type II at hourly rate7",
+              "actual": 0.7309103599485761,
+              "expected": 0.7309104,
+              "absoluteTolerance": 1e-07,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "A missed increase is X<=60 when the true eight-hour mean is56; it is not a posterior probability of H0.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "B4",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 19,
+      "syllabusRefs": [
+        "AHL 4.19",
+        "AHL 1.14",
+        "SL 4.7"
+      ],
+      "reasoning": "The column convention is explicit and every matrix entry positive, so this is regular. Occupancy at each minute contributes to the visits sum; repeated visits remain counted. General3x3 steady-state solving is allowed; this does not ask for3x3 eigenvalue calculation.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "B to C transition",
+              "actual": 0.3,
+              "expected": 0.3,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "One-minute expected counts",
+              "actual": [
+                600.0,
+                300.0,
+                100.0
+              ],
+              "expected": [
+                600,
+                300,
+                100
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Two-minute counts",
+              "actual": [
+                430.0,
+                360.0,
+                210.0
+              ],
+              "expected": [
+                430,
+                360,
+                210
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Normalized steady state",
+              "actual": [
+                0.2750000000000001,
+                0.37499999999999994,
+                0.35
+              ],
+              "expected": [
+                0.275,
+                0.375,
+                0.35
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Steady equation",
+              "actual": [
+                0.275,
+                0.375,
+                0.35
+              ],
+              "expected": [
+                0.2750000000000001,
+                0.37499999999999994,
+                0.35
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Strict positivity gives regularity",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Five-minute repeated visits per visitor",
+              "actual": 1.2312299999999998,
+              "expected": 1.23123,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Aggregate expected visits",
+              "actual": 1231.2299999999998,
+              "expected": 1231.23,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "f": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Updated steady state",
+              "actual": [
+                0.3557692307692309,
+                0.37499999999999994,
+                0.2692307692307692
+              ],
+              "expected": [
+                0.3557692,
+                0.375,
+                0.2692308
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "C occupancy decreases",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "B5",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "SL 1.8",
+        "SL 2.6"
+      ],
+      "reasoning": "The prescribed fit minimizes log-distance residuals. Reaction distance requires converting km/h to m/s. Both stopping-distance terms are increasing, giving a unique largest allowable speed within the observed range; an altered reaction time need not change the independently fitted braking law.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Log fit intercept and slope",
+              "actual": [
+                -4.964212201067717,
+                2.0363633275185022
+              ],
+              "expected": [
+                -4.964212,
+                2.036363
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Power coefficient",
+              "actual": 0.00698345009713993,
+              "expected": 0.00698345,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Log-data Pearson correlation",
+              "actual": 0.9998258998611904,
+              "expected": 0.9998259,
+              "absoluteTolerance": 1e-07,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "65km/h braking prediction",
+              "actual": 34.3415829298025,
+              "expected": 34.34158,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "80km/h original-scale residual",
+              "actual": 0.5853497071555509,
+              "expected": 0.5853497,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First stopping-boundary speed",
+              "actual": 61.89801840396098,
+              "expected": 61.89802,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Monotone stopping function",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Reduced-reaction boundary speed",
+              "actual": 65.23682684910929,
+              "expected": 65.23683,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Reaction-only reduction permits higher speed",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The measured speed/braking pairs remain unchanged, so the fitted braking k and b remain fixed. Only the reaction-distance coefficient changes.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Icy-road friction changes the context and120km/h is extrapolation beyond20..80. The transformed least-squares target is squared residuals in ln(d), not in metres.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "B6",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 2.9",
+        "AHL 5.9",
+        "AHL 5.10",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "reasoning": "The given logistic expression starts below its carrying capacity and remains below it. The differential model is checked by substitution, not by demanding an out-of-scope logistic integration. Growth as a function of population is a concave quadratic with its reachable maximum at600.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Initial population",
+              "actual": 100.0,
+              "expected": 100.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Long-time limit",
+              "actual": 1200.0,
+              "expected": 1200,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "1200 is the fixed-resource carrying capacity, not the starting count or an arbitrary growth rate.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Derivative satisfies supplied logistic DE",
+              "actual": 38.5,
+              "expected": 38.5,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Derivative satisfies supplied logistic DE",
+              "actual": 92.63535758177643,
+              "expected": 92.63535758177643,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Derivative satisfies supplied logistic DE",
+              "actual": 117.17808913076499,
+              "expected": 117.17808913076499,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Derivative satisfies supplied logistic DE",
+              "actual": 1.2405199026427722,
+              "expected": 1.2405199026427904,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Time of maximum growth",
+              "actual": 5.70927445904374,
+              "expected": 5.709274,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Maximum instantaneous growth",
+              "actual": 125.99999999999999,
+              "expected": 126,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Peak population and global quadratic sign",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Mean population",
+              "actual": 799.732903442597,
+              "expected": 799.7329,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Midpoint population",
+              "actual": 815.5645627680261,
+              "expected": 815.5646,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The integral average need not equal a nonlinear function at the midpoint; this model supplies an explicit numerical counterexample.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "No finite-time overshoot",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The positive exponential makes the denominator greater than1 at every finite nonnegative time. A nutrient, space or environmental change can alter carrying capacity.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "C1",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 5.16",
+        "AHL 5.10",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "reasoning": "The piecewise mass-balance solution is continuous at the clean-water switch, but its derivative changes. The rising concave-down branch makes forward Euler overestimate here. Duration above threshold uses one root on each branch. Outlet concentration times volume-flow gives grams per hour.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Exact initial and ten-hour concentrations",
+              "actual": [
+                1.0,
+                3.5284822353142307
+              ],
+              "expected": [
+                1,
+                3.528482
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Original DE satisfied",
+              "actual": 0.4,
+              "expected": 0.4,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Original DE satisfied",
+              "actual": 0.2963272882726872,
+              "expected": 0.2963272882726872,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Original DE satisfied",
+              "actual": 0.14715177646857694,
+              "expected": 0.1471517764685769,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "All simultaneous Euler values",
+              "actual": [
+                1.0,
+                2.0,
+                2.75,
+                3.3125,
+                3.734375
+              ],
+              "expected": [
+                1,
+                2,
+                2.75,
+                3.3125,
+                3.734375
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Euler overestimate and downward concavity",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Switch continuity",
+              "actual": 3.5284822353142307,
+              "expected": 3.5284822353142307,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Clean-water DE",
+              "actual": -0.3528482235314231,
+              "expected": -0.3528482235314231,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Clean-water DE",
+              "actual": -0.28888769177411006,
+              "expected": -0.2888876917741101,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Clean-water DE",
+              "actual": -0.1298056072910761,
+              "expected": -0.1298056072910761,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Upward and downward threshold crossings",
+              "actual": [
+                2.876820724517809,
+                15.677206362578818
+              ],
+              "expected": [
+                2.876821,
+                15.67721
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Total above-threshold duration",
+              "actual": 12.800385638061009,
+              "expected": 12.80039,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Crossings in correct regimes",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Outlet integral mass in grams",
+              "actual": 4701.943927089239,
+              "expected": 4701.944,
+              "absoluteTolerance": 0.0005,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Independent whole-system mass balance",
+              "actual": 4701.943927089239,
+              "expected": 4701.943927089239,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "C2",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "reasoning": "The supplied complete graph is metric and visits are explicitly scheduled, so shortest connections passing another site are not ambiguous. Nearest-neighbour is only an upper bound; deleted-vertex MST gives a lower bound. Closing CD requires metric completion. The final wording was corrected to best-known tour length, avoiding an unjustified assertion about the original optimum.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Initial table already shortest-distance closure",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Nearest-neighbour tour and weight",
+              "actual": [
+                "ABCDEA",
+                36.0
+              ],
+              "expected": [
+                "ABCDEA",
+                36.0
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Deleted-A MST",
+              "actual": 17.0,
+              "expected": 17.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Deleted-A lower bound",
+              "actual": 32.0,
+              "expected": 32.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "DeletingA from a Hamiltonian cycle leaves a spanning path; its weight is at least the MST. The removed connections cost at least the two cheapestA edges. Both inequalities point in the lower-bound direction.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Improved feasible tour",
+              "actual": 34.0,
+              "expected": 34.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Valid bounding interval",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "New indirect C-D shortest distance",
+              "actual": 13.0,
+              "expected": 13.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Only C-D distance changes",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "New nearest-neighbour upper bound",
+              "actual": [
+                "ABCEDA",
+                34.0
+              ],
+              "expected": [
+                "ABCEDA",
+                34.0
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "New deleted-A lower bound",
+              "actual": 34.0,
+              "expected": 34.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 1,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Retained best-known tour avoids removed connection",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The revised question asks about the best known tour from(c). That34km route remains feasible. Parts(a–c) only established bounds32..34, so their reasoning alone must not claim that the old optimum was proved34.",
+              "reviewed": true
+            },
+            {
+              "type": "executable",
+              "check": "Additional reviewer-only enumeration of original optimum",
+              "actual": 34.0,
+              "expected": 34.0,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "C3",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.16",
+        "AHL 4.12"
+      ],
+      "reasoning": "The supplied equal unknown population variance calls for the pooled two-sample t test, df25. The confidence interval in(c) deliberately uses only sampleA, so its df is11. A common additive timer correction does not affect the mean difference, but shifts the one-population interval. Repeated measurements are not independent sampling units.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Pooled SD",
+              "actual": 3.8280543360824963,
+              "expected": 3.828054,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Difference standard error",
+              "actual": 1.48259906920246,
+              "expected": 1.482599,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Lower-tail t statistic",
+              "actual": -1.7536770756227638,
+              "expected": -1.753677,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "One-sided p",
+              "actual": 0.045869916699263866,
+              "expected": 0.04586992,
+              "absoluteTolerance": 1e-08,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Reject5% with25df",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Single-populationA critical value",
+              "actual": 2.200985160082949,
+              "expected": 2.200985,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Single-populationA mean interval",
+              "actual": [
+                49.79498428195466,
+                55.005015718045335
+              ],
+              "expected": [
+                49.79498,
+                55.00502
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Test statistic after common bias correction",
+              "actual": -1.7536770756227638,
+              "expected": -1.7536770756227638,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "ShiftedA interval",
+              "actual": [
+                51.79498428195466,
+                57.005015718045335
+              ],
+              "expected": [
+                51.79498,
+                57.00502
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Adding the same2minutes preserves each sample SD and the difference of means, hence the t statistic and p value. It shifts both endpoints ofA CI upward by2.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Within-operator repeats can be correlated, so multiplying the nominal sample size can artificially lower the standard error. More independent operators or per-operator summaries respect the sampling unit.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "C4",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "reasoning": "The prescribed regression is on ln(concentration), whereas residual comparisons are explicitly on the original scale. The constant background changes the physical long-term interpretation. Integrated concentration has concentration×time units; the time mean recovers concentration units.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Log intercept and slope",
+              "actual": [
+                4.780067589332187,
+                -0.16027431078696538
+              ],
+              "expected": [
+                4.780068,
+                -0.1602743
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exponential coefficient",
+              "actual": 119.11240050035337,
+              "expected": 119.1124,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "30-unit crossing time",
+              "actual": 8.60318912556616,
+              "expected": 8.603189,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Below threshold after crossing",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Original-scale sums of squared residuals",
+              "actual": [
+                1.7526907361688606,
+                8.963825841445555
+              ],
+              "expected": [
+                1.752691,
+                8.963826
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Model1 wins stated residual criterion",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "A smaller in-sample residual sum does not establish correct future background or ventilation assumptions. Log regression and original-scale least squares also have different objectives.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Excess-concentration half-life",
+              "actual": 3.850817669777474,
+              "expected": 3.850818,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Excess halves, not total",
+              "actual": 56.0,
+              "expected": 56.0,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Total does not halve over that interval",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Integrated concentration",
+              "actual": 646.4643691318722,
+              "expected": 646.4644,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Mean concentration",
+              "actual": 53.872030760989354,
+              "expected": 53.87203,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The integral is in concentration-unit hours, and division by12hours gives concentration units. The model is defined throughout the integration interval.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "C5",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 19,
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13",
+        "AHL 3.9",
+        "AHL 1.14",
+        "SL 1.3"
+      ],
+      "reasoning": "The affine command is within matrix transformations and complex multiplication; no complex roots are asked. Translating to the fixed point converts the recurrence to a geometric complex sequence. Its modulus determines the first integer proximity index, and its argument explains rotating contraction.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First complex position",
+              "actual": {
+                "real": 2.0,
+                "imag": 0.9999999999999998
+              },
+              "expected": {
+                "real": 2.0,
+                "imag": 1.0
+              },
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Second complex position",
+              "actual": {
+                "real": 3.0,
+                "imag": -1.1102230246251565e-16
+              },
+              "expected": {
+                "real": 3.0,
+                "imag": 0.0
+              },
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Matrix matches complex multiplication",
+              "actual": [
+                -1.1102230246251565e-16,
+                1.9999999999999998
+              ],
+              "expected": [
+                -1.1102230246251565e-16,
+                1.9999999999999998
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Length scale",
+              "actual": 0.6324555320336759,
+              "expected": 0.6324555,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Rotation in degrees",
+              "actual": 18.434948822922014,
+              "expected": 18.43495,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Area scale determinant",
+              "actual": 0.39999999999999997,
+              "expected": 0.4,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Fixed position",
+              "actual": {
+                "real": 5.0,
+                "imag": 0.0
+              },
+              "expected": {
+                "real": 5.0,
+                "imag": 0.0
+              },
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -4.0,
+                "imag": 3.0
+              },
+              "expected": {
+                "real": -4.0,
+                "imag": 3.0
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -3.0,
+                "imag": 0.9999999999999998
+              },
+              "expected": {
+                "real": -3.0,
+                "imag": 0.9999999999999998
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -2.0,
+                "imag": -1.1102230246251565e-16
+              },
+              "expected": {
+                "real": -1.9999999999999998,
+                "imag": -1.1102230246251565e-16
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -1.2000000000000002,
+                "imag": -0.4
+              },
+              "expected": {
+                "real": -1.1999999999999997,
+                "imag": -0.39999999999999997
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -0.6400000000000006,
+                "imag": -0.48
+              },
+              "expected": {
+                "real": -0.6399999999999997,
+                "imag": -0.4799999999999999
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -0.28800000000000026,
+                "imag": -0.41600000000000015
+              },
+              "expected": {
+                "real": -0.2879999999999998,
+                "imag": -0.4159999999999999
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": -0.0895999999999999,
+                "imag": -0.30720000000000003
+              },
+              "expected": {
+                "real": -0.08959999999999993,
+                "imag": -0.3071999999999999
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.007680000000000575,
+                "imag": -0.20223999999999998
+              },
+              "expected": {
+                "real": 0.007680000000000034,
+                "imag": -0.2022399999999999
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.04505600000000065,
+                "imag": -0.1198079999999998
+              },
+              "expected": {
+                "real": 0.04505599999999999,
+                "imag": -0.11980799999999991
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.05099520000000002,
+                "imag": -0.06287359999999964
+              },
+              "expected": {
+                "real": 0.05099519999999998,
+                "imag": -0.06287359999999995
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.043171839999999406,
+                "imag": -0.027525119999999736
+              },
+              "expected": {
+                "real": 0.043171839999999975,
+                "imag": -0.02752511999999997
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.03140812799999981,
+                "imag": -0.00788070399999996
+              },
+              "expected": {
+                "real": 0.03140812799999997,
+                "imag": -0.007880703999999985
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.02042101760000037,
+                "imag": 0.001553203200000075
+              },
+              "expected": {
+                "real": 0.02042101759999998,
+                "imag": 0.001553203200000004
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.011941969920000517,
+                "imag": 0.005016125440000296
+              },
+              "expected": {
+                "real": 0.011941969919999986,
+                "imag": 0.005016125439999999
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closed form against direct recurrence",
+              "actual": {
+                "real": 0.006161956864000118,
+                "imag": 0.005398069248000237
+              },
+              "expected": {
+                "real": 0.006161956863999991,
+                "imag": 0.005398069247999996
+              },
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "First proximity index",
+              "actual": 11,
+              "expected": 11,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Adjacent distances",
+              "actual": [
+                0.05120000000000001,
+                0.03238172324012421
+              ],
+              "expected": [
+                0.0512,
+                0.03238172
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "f": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The multiplier has a nonzero non-pi argument and modulus below1, so displacement angle changes each step while distance contracts. A translation alone would not explain this.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "C6",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 19,
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.12",
+        "AHL 3.13",
+        "SL 3.3",
+        "SL 1.8"
+      ],
+      "reasoning": "All bearings use atan2(east,north), not the mathematical polar convention. The current must be subtracted from required shore velocity before enforcing water-relative speed. A positive quadratic root gives the unique travel time; closest point on the cable is checked within its finite segment.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Buoy cross product",
+              "actual": [
+                0.0,
+                0.0,
+                28.0
+              ],
+              "expected": [
+                0,
+                0,
+                28
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Triangle area",
+              "actual": 14.0,
+              "expected": 14,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Sight-line angle",
+              "actual": 49.76364169072618,
+              "expected": 49.76364,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Shore-relative velocity",
+              "actual": [
+                2.2,
+                0.8
+              ],
+              "expected": [
+                2.2,
+                0.8
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Shore bearing clockwise from north",
+              "actual": 70.01689347810003,
+              "expected": 70.01689,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 6,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Positive travel time",
+              "actual": 1.8020122373196736,
+              "expected": 1.802012,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exactly one positive time root",
+              "actual": 1,
+              "expected": 1,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Relative-water speed condition",
+              "actual": 2.5,
+              "expected": 2.5,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Water-relative velocity",
+              "actual": [
+                0.35493518816909225,
+                2.4746759408454615
+              ],
+              "expected": [
+                0.3549352,
+                2.474676
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Required water heading",
+              "actual": 8.162093614928196,
+              "expected": 8.162094,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Current plus heading reaches target",
+              "actual": [
+                1.0,
+                5.0
+              ],
+              "expected": [
+                1,
+                5
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Segment projection parameter",
+              "actual": 0.4,
+              "expected": 0.4,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Projection inside segment",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Closest cable point",
+              "actual": [
+                2.4000000000000004,
+                0.8,
+                0.0
+              ],
+              "expected": [
+                2.4,
+                0.8,
+                0
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Minimum cable distance",
+              "actual": 4.427188724235731,
+              "expected": 4.427189,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "D1",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 5.7",
+        "AHL 5.9",
+        "SL 2.6"
+      ],
+      "reasoning": "The demand and profit functions are distinct. Profit is contribution minus fixed cost. Its derivative changes sign once at33 on[0,100]. With demand capped by a price choice, feasible prices begin above33, so the constrained optimum moves to the capacity boundary rather than retaining the unconstrained price.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Profit model from revenue/cost",
+              "actual": -5200.0,
+              "expected": -5200.0,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Profit model from revenue/cost",
+              "actual": 1495.9737847033293,
+              "expected": 1495.9737847033293,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Profit model from revenue/cost",
+              "actual": 2139.191274573129,
+              "expected": 2139.1912745731292,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Profit model from revenue/cost",
+              "actual": 1158.6667855247251,
+              "expected": 1158.6667855247251,
+              "absoluteTolerance": 1e-09,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Derivative against central difference",
+              "actual": 116.82553067047762,
+              "expected": 116.82553065384126,
+              "absoluteTolerance": 1e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Maximum price",
+              "actual": 33.0,
+              "expected": 33.0,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Demand at optimum",
+              "actual": 133.56765098292516,
+              "expected": 133.5677,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Maximum profit",
+              "actual": 2139.191274573129,
+              "expected": 2139.191,
+              "absoluteTolerance": 0.0005,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Global derivative signs",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Profit roots",
+              "actual": [
+                11.856357282262557,
+                87.51051280152797
+              ],
+              "expected": [
+                11.85636,
+                87.51051
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Nonnegative profit interval",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Capacity price boundary",
+              "actual": 40.23594781085251,
+              "expected": 40.23595,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Demand at constrained optimum",
+              "actual": 100.0,
+              "expected": 100,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Constrained profit",
+              "actual": 2023.5947810852508,
+              "expected": 2023.595,
+              "absoluteTolerance": 0.0005,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Feasible region wholly decreasing",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Fixed cost subtracts a constant: derivative and unconstrained maximizing price are unchanged. Increasing the constant shrinks the superlevel set profit>=0 and can eliminate it.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "D2",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 4.19",
+        "SL 4.5",
+        "SL 4.7",
+        "SL 1.3"
+      ],
+      "reasoning": "The process starts sunny rather than stationary. Daily states are dependent, so exact path probabilities replace a binomial count model. Linearity of expectation still permits summing daily energy, and the resulting transient probabilities form a geometric sequence.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Column-stochastic transition sums",
+              "actual": [
+                1.0,
+                1.0
+              ],
+              "expected": [
+                1,
+                1
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "One-step probability recurrence",
+              "actual": 0.75,
+              "expected": 0.75,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 1.0,
+              "expected": 1.0,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.75,
+              "expected": 0.75,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.625,
+              "expected": 0.625,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.5625,
+              "expected": 0.5625,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.53125,
+              "expected": 0.53125,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.515625,
+              "expected": 0.515625,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.5078125,
+              "expected": 0.5078125,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.50390625,
+              "expected": 0.50390625,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.501953125,
+              "expected": 0.501953125,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.5009765625,
+              "expected": 0.5009765625,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Geometric marginal at each day",
+              "actual": 0.50048828125,
+              "expected": 0.50048828125,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Steady distribution",
+              "actual": [
+                0.5,
+                0.5
+              ],
+              "expected": [
+                0.5,
+                0.5
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Positive matrix regularity",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Exactly two sunny days by complete path enumeration",
+              "actual": 0.234375,
+              "expected": 0.234375,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Energy expectation from daily marginals",
+              "actual": 68.49658203125,
+              "expected": 68.49658,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Independent geometric-sum identity",
+              "actual": 68.49658203125,
+              "expected": 68.49658203125,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "f": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Independent stationary-binomial value differs",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Conditional sunny probability after sunny is.75, and the first three marginals are.75,.625,.5625 rather than a common.5. Both independence and identical-success assumptions fail.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "D3",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 19,
+      "syllabusRefs": [
+        "SL 4.4",
+        "SL 4.10",
+        "AHL 4.18",
+        "AHL 4.12"
+      ],
+      "reasoning": "Raw bivariate-normal data are supplied for the rho=0 technology test. A decreasing ranking can be perfect while linear correlation is not. An influential ninth point must be investigated for validity; neither deleting it automatically nor declaring causality is justified.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Linear coefficients",
+              "actual": [
+                12.83095238095238,
+                -0.20952380952380953
+              ],
+              "expected": [
+                12.83095,
+                -0.2095238
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Pearson coefficient",
+              "actual": -0.9903281005339561,
+              "expected": -0.9903281,
+              "absoluteTolerance": 1e-07,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Correlation test statistic",
+              "actual": -17.483827113258574,
+              "expected": -17.48383,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Lower-tail p",
+              "actual": 1.1227670301912796e-06,
+              "expected": 1.122767e-06,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Reject at1%",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Spearman reverse ranking",
+              "actual": -1.0,
+              "expected": -1,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The oxygen sequence strictly decreases with temperature but has nonconstant slopes between points; ranks capture monotonic order whereas Pearson quantifies linearity.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "21-degree prediction",
+              "actual": 8.43095238095238,
+              "expected": 8.430952,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "20-degree original residual",
+              "actual": -0.040476190476189444,
+              "expected": -0.04047619,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Nine-pair Pearson correlation",
+              "actual": 0.24671295971289292,
+              "expected": 0.246713,
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "The extra observation reverses the sign, but removal requires checking error or population mismatch. The original independent-site observational association does not establish a causal effect.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "D4",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 19,
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.12",
+        "SL 4.1"
+      ],
+      "reasoning": "Independent residents sampled separately by zone produce a valid comparison of travel distributions. All expected counts exceed5 and degrees of freedom are4 or2, so both tables satisfy current AI bounds. Equal allocation across unequal zone populations needs population weighting for an overall resident estimate.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Expected table",
+              "actual": [
+                [
+                  20.0,
+                  20.0,
+                  20.0
+                ],
+                [
+                  20.0,
+                  20.0,
+                  20.0
+                ],
+                [
+                  20.0,
+                  20.0,
+                  20.0
+                ]
+              ],
+              "expected": [
+                [
+                  20,
+                  20,
+                  20
+                ],
+                [
+                  20,
+                  20,
+                  20
+                ],
+                [
+                  20,
+                  20,
+                  20
+                ]
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Expected counts strictly greater than5",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Independence statistic",
+              "actual": 24.8,
+              "expected": 24.8,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Degrees of freedom",
+              "actual": 4,
+              "expected": 4,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Upper-tail p",
+              "actual": 5.518908868097848e-05,
+              "expected": 5.518909e-05,
+              "absoluteTolerance": 1e-11,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Reject5%",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Largest contribution index",
+              "actual": [
+                2,
+                2
+              ],
+              "expected": [
+                2,
+                2
+              ],
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Largest contribution",
+              "actual": 8.45,
+              "expected": 8.45,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Cycling observed above independence expectation",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Combined table",
+              "actual": [
+                [
+                  30.0,
+                  20.0,
+                  10.0
+                ],
+                [
+                  30.0,
+                  40.0,
+                  50.0
+                ]
+              ],
+              "expected": [
+                [
+                  30,
+                  20,
+                  10
+                ],
+                [
+                  30,
+                  40,
+                  50
+                ]
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Combined expected table",
+              "actual": [
+                [
+                  20.0,
+                  20.0,
+                  20.0
+                ],
+                [
+                  40.0,
+                  40.0,
+                  40.0
+                ]
+              ],
+              "expected": [
+                [
+                  20,
+                  20,
+                  20
+                ],
+                [
+                  40,
+                  40,
+                  40
+                ]
+              ],
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "New statistic",
+              "actual": 15.0,
+              "expected": 15,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "New degrees of freedom",
+              "actual": 2,
+              "expected": 2,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "New p",
+              "actual": 0.0005530843701478337,
+              "expected": 0.0005530844,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Sample weighting assigns one third to each zone although residents may not. A suitable estimate is sum_z(population_z/total_population)*(bus_count_z/60), using within-zone random samples.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "D5",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "AHL 5.18",
+        "AHL 5.17",
+        "AHL 1.15",
+        "AHL 5.16"
+      ],
+      "reasoning": "The second-order equation is given, and both eigenvalues are distinct negative reals, within the exact-solution AI boundary. Initial displacement and velocity determine both coefficients. The Euler comparison uses the same old state in both updates.",
+      "diagramInspected": false,
+      "parts": {
+        "a": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Matrix first derivative from initial state",
+              "actual": [
+                -2.0,
+                -2.0
+              ],
+              "expected": [
+                -2,
+                -2
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Distinct negative eigenvalues",
+              "actual": [
+                -2.0,
+                -1.0
+              ],
+              "expected": [
+                -2,
+                -1
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Corresponding eigenvectors",
+              "actual": [
+                -1.0,
+                1.0
+              ],
+              "expected": [
+                -1,
+                1
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Corresponding eigenvectors",
+              "actual": [
+                -2.0,
+                4.0
+              ],
+              "expected": [
+                -2,
+                4
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Both distinct eigenvalues are negative real, so all eigendirections decay and the origin is a stable node.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 5,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Initial state of exact solution",
+              "actual": [
+                4.0,
+                -2.0
+              ],
+              "expected": [
+                4,
+                -2
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exact solution satisfies DE",
+              "actual": 0.0,
+              "expected": 0,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exact solution satisfies DE",
+              "actual": 0.0,
+              "expected": 0,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exact solution satisfies DE",
+              "actual": 4.440892098500626e-16,
+              "expected": 0,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exact solution satisfies DE",
+              "actual": 2.7755575615628914e-17,
+              "expected": 0,
+              "absoluteTolerance": 1e-10,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Positive decreasing factors on domain",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "For every t>=0, e^-t is in(0,1], making x positive and v negative. Both exponentials tend to0, so there is no displacement sign crossing.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 3,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Simultaneous Euler states",
+              "actual": [
+                [
+                  3.6,
+                  -2.4
+                ],
+                [
+                  3.12,
+                  -2.4
+                ]
+              ],
+              "expected": [
+                [
+                  3.6,
+                  -2.4
+                ],
+                [
+                  3.12,
+                  -2.4
+                ]
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Exact state at.4s",
+              "actual": [
+                3.1232623479793924,
+                -2.2246044197449493
+              ],
+              "expected": [
+                3.123262,
+                -2.224604
+              ],
+              "absoluteTolerance": 5e-05,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Signs of two Euler errors",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    },
+    {
+      "id": "D6",
+      "status": "passed",
+      "completeStemAndSchemeRead": true,
+      "marks": 18,
+      "syllabusRefs": [
+        "SL 3.5",
+        "SL 3.6",
+        "SL 3.1",
+        "SL 5.7"
+      ],
+      "reasoning": "The acute triangular region gives the common Voronoi vertex inside the domain. All boundary vertices of every clipped cell are checked, so the maximin conclusion is global rather than a circumcentre guess. The separate road restriction changes the candidate set.",
+      "diagramInspected": true,
+      "parts": {
+        "a": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "AB bisector coordinate",
+              "actual": 4.0,
+              "expected": 4.0,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "AC bisector evaluated at midpoint",
+              "actual": 13,
+              "expected": 13,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "b": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Common vertex bisector equations",
+              "actual": [
+                4.0,
+                13.0
+              ],
+              "expected": [
+                4,
+                13
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "All three post distances",
+              "actual": [
+                4.333333333333333,
+                4.333333333333333,
+                4.333333333333333
+              ],
+              "expected": [
+                4.333333333333333,
+                4.333333333333333,
+                4.333333333333333
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Vertex in service triangle",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "c": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "ClippedA Voronoi area",
+              "actual": 7.666666666666666,
+              "expected": 7.666666666666667,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "d": {
+          "marks": 4,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "All candidate nearest-post distances",
+              "actual": [
+                0.0,
+                0.0,
+                0.0,
+                4.0,
+                3.605551275463989,
+                3.605551275463989,
+                4.333333333333333
+              ],
+              "expected": [
+                0,
+                0,
+                0,
+                4,
+                3.605551275463989,
+                3.605551275463989,
+                4.333333333333333
+              ],
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "Common vertex strictly best candidate",
+              "actual": 6,
+              "expected": 6,
+              "absoluteTolerance": 0,
+              "passed": true
+            },
+            {
+              "type": "analytic/contextual review",
+              "rationale": "Within each convex clipped cell, the supplied distance-maximization fact reduces the search to its vertices. The union consists exactly of posts, side midpoints andV; hence all cell interiors/edges are covered by these bounds.",
+              "reviewed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        },
+        "e": {
+          "marks": 2,
+          "evidence": [
+            {
+              "type": "executable",
+              "check": "Base-road centre nearest-post distance",
+              "actual": 4.0,
+              "expected": 4,
+              "absoluteTolerance": 1e-12,
+              "passed": true
+            },
+            {
+              "type": "executable",
+              "check": "No base point exceeds4",
+              "actual": true,
+              "expected": true,
+              "absoluteTolerance": 0,
+              "passed": true
+            }
+          ],
+          "fullPromptAndSchemeRead": true
+        }
+      }
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "question": "A5(d)",
+      "finding": "Nearest-dollar answer originally retained only an unrounded value.",
+      "resolution": "Author now explicitly shows4415 dollars; independently rounded4414.953415... to4415."
+    },
+    {
+      "question": "B1(b)",
+      "finding": "Nearest-dollar NPV originally retained only an unrounded value.",
+      "resolution": "Author now explicitly shows -445 dollars; independently recalculated -444.6266... ."
+    },
+    {
+      "question": "C2(e)",
+      "finding": "Original wording claimed unchanged optimum without establishing the old optimum, since prior bounds only32..34.",
+      "resolution": "Question now asks about best known tour from(c); retained34km tour justifies that statement. Reviewer additionally enumerated all24 original tours, but does not use that extra fact to mask the earlier logical gap."
+    },
+    {
+      "question": "multiple prose fields",
+      "finding": "Escaped apostrophes could leave literal backslashes in PDF prose.",
+      "resolution": "Final canonical JSON has no backslash-apostrophe sequences."
+    },
+    {
+      "question": "B2,C6,D6 spatial diagrams",
+      "finding": "The root review requested matching horizontal and vertical kilometre scales.",
+      "resolution": "All three updated SVGs were independently rendered and visually re-inspected: coordinates, labels, triangular/rectangular geometry and equal physical axis scales are correct. Numerical question content and solutions remain unchanged."
+    }
+  ],
+  "unresolvedFindings": [],
+  "limits": "This report verifies original question mathematics, scope, marking and SVGs. Final composed PDF layout and live portal delivery require their separate release checks."
+}

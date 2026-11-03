@@ -1,0 +1,874 @@
+{
+  "id": "ai-hl-set-c-paper-2",
+  "strand": "ai",
+  "course": "hl",
+  "set": "C",
+  "paper": "2",
+  "title": "Mathematics AI HL - Set C - Paper 2",
+  "minutes": 120,
+  "marks": 110,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 18,
+      "stem": "A well-mixed tank contains $1000$ litres of water. Liquid flows in and out at $100$ litres per hour, keeping the volume fixed. Initially the pollutant concentration is $1$ gram per litre. For the first ten hours the incoming concentration is $5$ grams per litre, so the tank concentration $C(t)$ satisfies $C\\prime=0.5-0.1C$. At $t=10$ the inflow is changed to clean water; the outflow rate remains unchanged. Assume instantaneous mixing and no other pollutant loss.",
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 5.16",
+        "AHL 5.10",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Join two differential regimes, evaluate a threshold duration and independently reconcile an integral with conservation of mass.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Solve the differential equation for $0\\le t\\le10$ and find $C(10)$.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Use Euler's method with step size $2.5$ hours to estimate $C(10)$ from the original differential equation. State whether it overestimates or underestimates the exact value, with a reason.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Write the differential equation for $t>10$ and find its solution, preserving concentration continuity at the switch.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Find the total time for which the pollutant concentration exceeds $2$ grams per litre.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Calculate the mass of pollutant leaving through the outlet during the first $20$ hours. Verify your result using a mass balance.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Separate variables or recognize $C=5+Ae^{-0.1t}$."
+            },
+            {
+              "code": "A1",
+              "text": "The initial condition gives $A=-4$."
+            },
+            {
+              "code": "A1",
+              "text": "$C(t)=5-4e^{-0.1t}$ for $0\\le t\\le10$."
+            },
+            {
+              "code": "A1",
+              "text": "$C(10)=3.528482$ grams per litre."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $C_{n+1}=C_n+2.5(0.5-0.1C_n)$, starting at $C_0=1$."
+            },
+            {
+              "code": "A1",
+              "text": "The values are $1,2,2.75,3.3125,3.734375$, so the estimate is $3.734375$."
+            },
+            {
+              "code": "R1",
+              "text": "This is an overestimate; the exact curve is increasing and concave down, so forward tangent steps lie above it."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "With clean inflow, $C\\prime=-0.1C$."
+            },
+            {
+              "code": "M1",
+              "text": "Use the exact value $C(10)$ as the new initial condition."
+            },
+            {
+              "code": "A1",
+              "text": "$C(t)=3.528482e^{-0.1(t-10)}$ for $t\\ge10$, using the unrounded coefficient."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $5-4e^{-0.1t}=2$ in the first regime and $C(10)e^{-0.1(t-10)}=2$ in the second."
+            },
+            {
+              "code": "A1",
+              "text": "The upward crossing is $t=2.876821$ h and the downward crossing is $t=15.67721$ h."
+            },
+            {
+              "code": "R1",
+              "text": "The concentration exceeds $2$ only between these crossings."
+            },
+            {
+              "code": "A1",
+              "text": "The total duration is $12.80039$ hours."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Outflow mass is $100\\{\\int_0^{10}C(t)\\,dt+\\int_{10}^{20}C(t)\\,dt\\}$ grams, using the appropriate expressions."
+            },
+            {
+              "code": "A1",
+              "text": "The removed mass is $4701.944$ grams."
+            },
+            {
+              "code": "M1",
+              "text": "Initially there are $1000$ g and the first ten hours add $100\\times5\\times10=5000$ g; the final mass is $1000C(20)$."
+            },
+            {
+              "code": "A1",
+              "text": "$1000+5000-1000C(20)=4701.944$ grams, agreeing with the integral."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "$C(10)=3.528482$ grams per litre.; This is an overestimate; the exact curve is increasing and concave down, so forward tangent steps lie above it.; $C(t)=3.528482e^{-0.1(t-10)}$ for $t\\ge10$, using the unrounded coefficient.; The total duration is $12.80039$ hours.; $1000+5000-1000C(20)=4701.944$ grams, agreeing with the integral.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 70.00 40 V 290\" stroke=\"#ddd\"/><text x=\"70.00\" y=\"314\" text-anchor=\"middle\">0</text><path d=\"M 205.00 40 V 290\" stroke=\"#ddd\"/><text x=\"205.00\" y=\"314\" text-anchor=\"middle\">5</text><path d=\"M 340.00 40 V 290\" stroke=\"#ddd\"/><text x=\"340.00\" y=\"314\" text-anchor=\"middle\">10</text><path d=\"M 475.00 40 V 290\" stroke=\"#ddd\"/><text x=\"475.00\" y=\"314\" text-anchor=\"middle\">15</text><path d=\"M 610.00 40 V 290\" stroke=\"#ddd\"/><text x=\"610.00\" y=\"314\" text-anchor=\"middle\">20</text><path d=\"M 70 290.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 70 240.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"245.00\" text-anchor=\"end\">1</text><path d=\"M 70 190.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"195.00\" text-anchor=\"end\">2</text><path d=\"M 70 140.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"145.00\" text-anchor=\"end\">3</text><path d=\"M 70 90.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"95.00\" text-anchor=\"end\">4</text><path d=\"M 70 40.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"45.00\" text-anchor=\"end\">5</text><path d=\"M 70 40 V 290 H 610\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M70.00,240.00 L72.70,238.01 L75.40,236.04 L78.10,234.09 L80.80,232.16 L83.50,230.25 L86.20,228.35 L88.90,226.48 L91.60,224.62 L94.30,222.79 L97.00,220.97 L99.70,219.17 L102.40,217.38 L105.10,215.62 L107.80,213.87 L110.50,212.14 L113.20,210.43 L115.90,208.73 L118.60,207.05 L121.30,205.39 L124.00,203.75 L126.70,202.12 L129.40,200.50 L132.10,198.91 L134.80,197.33 L137.50,195.76 L140.20,194.21 L142.90,192.68 L145.60,191.16 L148.30,189.65 L151.00,188.16 L153.70,186.69 L156.40,185.23 L159.10,183.78 L161.80,182.35 L164.50,180.94 L167.20,179.54 L169.90,178.15 L172.60,176.77 L175.30,175.41 L178.00,174.06 L180.70,172.73 L183.40,171.41 L186.10,170.10 L188.80,168.81 L191.50,167.53 L194.20,166.26 L196.90,165.00 L199.60,163.76 L202.30,162.53 L205.00,161.31 L207.70,160.10 L210.40,158.90 L213.10,157.72 L215.80,156.55 L218.50,155.39 L221.20,154.24 L223.90,153.11 L226.60,151.98 L229.30,150.87 L232.00,149.76 L234.70,148.67 L237.40,147.59 L240.10,146.52 L242.80,145.46 L245.50,144.41 L248.20,143.37 L250.90,142.34 L253.60,141.32 L256.30,140.32 L259.00,139.32 L261.70,138.33 L264.40,137.35 L267.10,136.38 L269.80,135.42 L272.50,134.47 L275.20,133.53 L277.90,132.60 L280.60,131.68 L283.30,130.77 L286.00,129.87 L288.70,128.97 L291.40,128.09 L294.10,127.21 L296.80,126.34 L299.50,125.48 L302.20,124.63 L304.90,123.79 L307.60,122.96 L310.30,122.13 L313.00,121.31 L315.70,120.50 L318.40,119.70 L321.10,118.91 L323.80,118.13 L326.50,117.35 L329.20,116.58 L331.90,115.82 L334.60,115.06 L337.30,114.32 L340.00,113.58 L342.70,115.33 L345.40,117.07 L348.10,118.79 L350.80,120.49 L353.50,122.18 L356.20,123.85 L358.90,125.50 L361.60,127.14 L364.30,128.76 L367.00,130.36 L369.70,131.95 L372.40,133.53 L375.10,135.08 L377.80,136.62 L380.50,138.15 L383.20,139.66 L385.90,141.16 L388.60,142.64 L391.30,144.10 L394.00,145.56 L396.70,146.99 L399.40,148.42 L402.10,149.83 L404.80,151.22 L407.50,152.60 L410.20,153.97 L412.90,155.32 L415.60,156.66 L418.30,157.99 L421.00,159.30 L423.70,160.60 L426.40,161.89 L429.10,163.16 L431.80,164.43 L434.50,165.68 L437.20,166.91 L439.90,168.14 L442.60,169.35 L445.30,170.55 L448.00,171.74 L450.70,172.92 L453.40,174.08 L456.10,175.23 L458.80,176.38 L461.50,177.51 L464.20,178.63 L466.90,179.73 L469.60,180.83 L472.30,181.92 L475.00,182.99 L477.70,184.06 L480.40,185.11 L483.10,186.16 L485.80,187.19 L488.50,188.21 L491.20,189.22 L493.90,190.23 L496.60,191.22 L499.30,192.20 L502.00,193.18 L504.70,194.14 L507.40,195.09 L510.10,196.04 L512.80,196.97 L515.50,197.90 L518.20,198.81 L520.90,199.72 L523.60,200.62 L526.30,201.51 L529.00,202.39 L531.70,203.26 L534.40,204.13 L537.10,204.98 L539.80,205.83 L542.50,206.66 L545.20,207.49 L547.90,208.31 L550.60,209.13 L553.30,209.93 L556.00,210.73 L558.70,211.52 L561.40,212.30 L564.10,213.07 L566.80,213.84 L569.50,214.59 L572.20,215.34 L574.90,216.09 L577.60,216.82 L580.30,217.55 L583.00,218.27 L585.70,218.99 L588.40,219.69 L591.10,220.39 L593.80,221.08 L596.50,221.77 L599.20,222.45 L601.90,223.12 L604.60,223.79 L607.30,224.44 L610.00,225.10\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">t (hours)</text><text x=\"22\" y=\"175.0\" transform=\"rotate(-90 22 175.0)\" text-anchor=\"middle\">C (grams per litre)</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">The two flow regimes; switch at t = 10</text></g></svg>"
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 18,
+      "stem": "A courier must start at $A$, visit each of $B,C,D,E$ and return to $A$. The symmetric table gives the shortest available travel distances, in kilometres, between every pair. A tour is assessed on this complete distance graph; travelling along a shortest connection may pass through another site without counting it as its scheduled visit.\n\n|  | A | B | C | D | E |\n| --- | --- | --- | --- | --- | --- |\n| A | 0 | 7 | 9 | 8 | 12 |\n| B | 7 | 0 | 6 | 10 | 9 |\n| C | 9 | 6 | 0 | 5 | 7 |\n| D | 8 | 10 | 5 | 0 | 6 |\n| E | 12 | 9 | 7 | 6 | 0 |\n\n",
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "cognitiveDemand": "Compute valid TSP bounds and identify when a topology change makes an upper and lower bound coincide.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Apply the nearest-neighbour algorithm starting at $A$. State the tour and its length, explaining why it is an upper bound.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find a lower bound by deleting $A$, finding a minimum spanning tree on the remaining sites, and then adding the two smallest connections from $A$. Explain the lower-bound argument.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Find a tour shorter than the nearest-neighbour tour in (a), and use it with (b) to improve the interval containing the optimal length.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "The direct path $CD$ is closed. All the other listed direct paths remain available. Recalculate shortest travel distances as needed, apply nearest neighbour from $A$, and find a deleted-$A$ lower bound. Hence determine the new optimal tour length.",
+          "marks": 5
+        },
+        {
+          "label": "e",
+          "prompt": "Explain why closing the direct path $CD$ does not increase the best known tour length from part (c).",
+          "marks": 1
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At each step choose the nearest unvisited site."
+            },
+            {
+              "code": "A1",
+              "text": "The tour is $A-B-C-D-E-A$."
+            },
+            {
+              "code": "A1",
+              "text": "Its length is $7+6+5+6+12=36$ km."
+            },
+            {
+              "code": "R1",
+              "text": "It is a feasible tour, so the optimal tour cannot be longer than this particular tour."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "On $B,C,D,E$, choose $CD=5$, $BC=6$ and $DE=6$."
+            },
+            {
+              "code": "A1",
+              "text": "The MST weight is $17$."
+            },
+            {
+              "code": "A1",
+              "text": "The two smallest edges from $A$ are $AB=7$ and $AD=8$."
+            },
+            {
+              "code": "A1",
+              "text": "The lower bound is $17+7+8=32$ km."
+            },
+            {
+              "code": "R1",
+              "text": "Deleting $A$ from any tour leaves a spanning path, whose weight is at least the MST weight, and the two removed connections have sum at least $7+8$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Consider the feasible tour $A-B-C-E-D-A$."
+            },
+            {
+              "code": "A1",
+              "text": "Its length is $7+6+7+6+8=34$ km."
+            },
+            {
+              "code": "A1",
+              "text": "Thus $32\\le L_{\\rm opt}\\le34$ km; these bounds alone do not prove the tour is optimal."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The new shortest $C-D$ connection is $C-E-D$ of length $13$; all other table entries remain unchanged."
+            },
+            {
+              "code": "A1",
+              "text": "Nearest neighbour gives $A-B-C-E-D-A$, length $34$."
+            },
+            {
+              "code": "M1",
+              "text": "The deleted-$A$ MST now uses $BC=6$, $DE=6$, $CE=7$, weight $19$."
+            },
+            {
+              "code": "A1",
+              "text": "The new lower bound is $19+7+8=34$."
+            },
+            {
+              "code": "R1",
+              "text": "The matching upper and lower bounds prove the optimum is $34$ km."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The $34$-km feasible tour from (c) does not use $CD$ and remains available with the same length. This observation does not by itself establish the original optimal length."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "It is a feasible tour, so the optimal tour cannot be longer than this particular tour.; Deleting $A$ from any tour leaves a spanning path, whose weight is at least the MST weight, and the two removed connections have sum at least $7+8$.; Thus $32\\le L_{\\rm opt}\\le34$ km; these bounds alone do not prove the tour is optimal.; The matching upper and lower bounds prove the optimum is $34$ km.; The $34$-km feasible tour from (c) does not use $CD$ and remains available with the same length. This observation does not by itself establish the original optimal length."
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 18,
+      "stem": "Two independent random samples compare completion times for procedures $A$ and $B$. The populations may be treated as normal with a common unknown variance. The reported standard deviations are unbiased sample standard deviations.\n\n| Procedure | $n$ | Mean (minutes) | Sample standard deviation (minutes) |\n| --- | --- | --- | --- |\n| A | 12 | 52.4 | 4.1 |\n| B | 15 | 55.0 | 3.6 |\n\n Use a pooled two-sample $t$ test when comparing means.",
+      "syllabusRefs": [
+        "SL 4.11",
+        "AHL 4.16",
+        "AHL 4.12"
+      ],
+      "cognitiveDemand": "Select the correct pooled inference model and distinguish shared bias, independence and population conclusions.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the pooled estimate of the common standard deviation and the estimated standard error of the difference between sample means.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "At the $5\\%$ significance level, test whether procedure $A$ has a smaller population mean completion time than procedure $B$. State hypotheses, statistic, degrees of freedom and $p$-value.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Using only the sample from $A$, find a $95\\%$ confidence interval for its population mean completion time. State the distribution and degrees of freedom used.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Both timers are found to have understated every recorded time by exactly $2$ minutes. Explain the effects of correcting this error on the test in (b) and the interval in (c).",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "A manager proposes replacing each operator's one measurement by five repeat measurements and treating all repeats as independent observations. Explain why this could produce misleading evidence, and suggest a better design.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$s_p^2=\\{11(4.1)^2+14(3.6)^2\\}/25$."
+            },
+            {
+              "code": "A1",
+              "text": "$s_p=3.828054$ minutes."
+            },
+            {
+              "code": "A1",
+              "text": "The standard error is $s_p\\sqrt{1/12+1/15}=1.482599$ minutes."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0:\\mu_A=\\mu_B$, $H_1:\\mu_A<\\mu_B$."
+            },
+            {
+              "code": "M1",
+              "text": "$t=(52.4-55.0)/(s_p\\sqrt{1/12+1/15})$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=-1.753677$ with $12+15-2=25$ degrees of freedom."
+            },
+            {
+              "code": "A1",
+              "text": "The lower-tail $p$-value is $0.04586992$."
+            },
+            {
+              "code": "R1",
+              "text": "Since this is less than $0.05$, reject $H_0$; the data support a smaller mean for $A$ under the stated assumptions."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $52.4\\pm t_{0.975,11}(4.1/\\sqrt{12})$."
+            },
+            {
+              "code": "A1",
+              "text": "This uses the $t$ distribution with $11$ degrees of freedom, since the population variance is unknown."
+            },
+            {
+              "code": "A1",
+              "text": "The critical value is $2.200985$."
+            },
+            {
+              "code": "A1",
+              "text": "The confidence interval is $(49.79498,55.00502)$ minutes."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Both sample means increase by $2$, leaving their difference, both sample standard deviations and the pooled statistic unchanged."
+            },
+            {
+              "code": "R1",
+              "text": "The $p$-value and conclusion in (b) are therefore unchanged."
+            },
+            {
+              "code": "A1",
+              "text": "The interval for $A$ shifts upward by $2$, to $(51.79498,57.00502)$ minutes."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Repeats on the same operator may be correlated and do not supply five independent operators."
+            },
+            {
+              "code": "R1",
+              "text": "Treating them as independent can underestimate standard error and exaggerate significance."
+            },
+            {
+              "code": "R1",
+              "text": "Sample more independent operators, or summarize each operator's repeats before an analysis that respects the sampling unit."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The standard error is $s_p\\sqrt{1/12+1/15}=1.482599$ minutes.; Since this is less than $0.05$, reject $H_0$; the data support a smaller mean for $A$ under the stated assumptions.; The confidence interval is $(49.79498,55.00502)$ minutes.; The interval for $A$ shifts upward by $2$, to $(51.79498,57.00502)$ minutes.; Sample more independent operators, or summarize each operator's repeats before an analysis that respects the sampling unit."
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 18,
+      "stem": "A sealed chamber contains a gas whose concentration is measured in arbitrary units after ventilation begins. The observations are:\n\n| $t$ (hours) | 0 | 2 | 4 | 6 | 8 | 10 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Concentration | 120 | 86 | 62 | 46 | 33 | 24 |\n\n Model 1 is $C_1(t)=Ae^{bt}$, fitted by linear regression of $\\ln C$ on $t$. A physical model which allows a background concentration is $C_2(t)=8+112e^{-0.18t}$, for $t\\ge0$.",
+      "syllabusRefs": [
+        "AHL 2.10",
+        "AHL 4.13",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Compare residuals on a declared scale and challenge long-term extrapolation despite an excellent short-term fit.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the parameters of Model 1, showing the linearized equation.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Using Model 1, find the first time at which concentration falls below $30$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "For each model calculate the sum of squared residuals in the original concentration units. Which fits these six observations better on this criterion? Explain why this comparison does not by itself validate long-term predictions.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "For Model 2, find the time taken for the excess concentration above the background to halve. Explain why the same time does not generally halve the total concentration.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "Using Model 2, calculate the integrated concentration over the first $12$ hours and hence the mean concentration over that interval. State appropriate units for both.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Fit $\\ln C=\\ln A+bt$."
+            },
+            {
+              "code": "A1",
+              "text": "The fitted intercept is $4.780068$ and slope is $-0.1602743$."
+            },
+            {
+              "code": "A1",
+              "text": "$A=e^{4.780068}=119.1124$."
+            },
+            {
+              "code": "A1",
+              "text": "Thus $C_1(t)=119.1124e^{-0.1602743t}$, with unrounded regression coefficients retained for subsequent work."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $Ae^{bt}=30$."
+            },
+            {
+              "code": "A1",
+              "text": "The crossing is $t=\\ln(30/A)/b=8.603189$ hours."
+            },
+            {
+              "code": "R1",
+              "text": "Since $b<0$, concentration is below $30$ after this time."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Calculate $\\sum_i(C_i-C_j(t_i))^2$ for each $j=1,2$ on the original scale."
+            },
+            {
+              "code": "A1",
+              "text": "The sums are $1.752691$ for Model 1 and $8.963826$ for Model 2."
+            },
+            {
+              "code": "R1",
+              "text": "Model 1 has the smaller original-scale sum and fits these observations better by this criterion."
+            },
+            {
+              "code": "R1",
+              "text": "These are short-term observations; a physical background and future ventilation conditions can matter beyond the observed interval."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The excess is $C_2-8=112e^{-0.18t}$, so solve $e^{-0.18h}=1/2$."
+            },
+            {
+              "code": "A1",
+              "text": "$h=\\ln2/0.18=3.850818$ hours."
+            },
+            {
+              "code": "R1",
+              "text": "The constant background $8$ does not decay, so halving the excess does not halve the sum of excess and background."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $\\int_0^{12}(8+112e^{-0.18t})\\,dt$."
+            },
+            {
+              "code": "A1",
+              "text": "The integral is $646.4644$ concentration-unit hours."
+            },
+            {
+              "code": "M1",
+              "text": "Divide the integral by the interval length, $12$ hours."
+            },
+            {
+              "code": "A1",
+              "text": "The mean concentration is $53.87203$ concentration units."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "Thus $C_1(t)=119.1124e^{-0.1602743t}$, with unrounded regression coefficients retained for subsequent work.; Since $b<0$, concentration is below $30$ after this time.; These are short-term observations; a physical background and future ventilation conditions can matter beyond the observed interval.; The constant background $8$ does not decay, so halving the excess does not halve the sum of excess and background.; The mean concentration is $53.87203$ concentration units.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 70.00 40 V 290\" stroke=\"#ddd\"/><text x=\"70.00\" y=\"314\" text-anchor=\"middle\">0</text><path d=\"M 160.00 40 V 290\" stroke=\"#ddd\"/><text x=\"160.00\" y=\"314\" text-anchor=\"middle\">2</text><path d=\"M 250.00 40 V 290\" stroke=\"#ddd\"/><text x=\"250.00\" y=\"314\" text-anchor=\"middle\">4</text><path d=\"M 340.00 40 V 290\" stroke=\"#ddd\"/><text x=\"340.00\" y=\"314\" text-anchor=\"middle\">6</text><path d=\"M 430.00 40 V 290\" stroke=\"#ddd\"/><text x=\"430.00\" y=\"314\" text-anchor=\"middle\">8</text><path d=\"M 520.00 40 V 290\" stroke=\"#ddd\"/><text x=\"520.00\" y=\"314\" text-anchor=\"middle\">10</text><path d=\"M 610.00 40 V 290\" stroke=\"#ddd\"/><text x=\"610.00\" y=\"314\" text-anchor=\"middle\">12</text><path d=\"M 70 290.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 70 232.31 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"237.31\" text-anchor=\"end\">30</text><path d=\"M 70 174.62 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"179.62\" text-anchor=\"end\">60</text><path d=\"M 70 116.92 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"121.92\" text-anchor=\"end\">90</text><path d=\"M 70 59.23 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"64.23\" text-anchor=\"end\">120</text><path d=\"M 70 40 V 290 H 610\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M70.00,59.23 L74.50,63.07 L79.00,66.85 L83.50,70.55 L88.00,74.19 L92.50,77.77 L97.00,81.28 L101.50,84.73 L106.00,88.12 L110.50,91.44 L115.00,94.71 L119.50,97.92 L124.00,101.07 L128.50,104.17 L133.00,107.21 L137.50,110.20 L142.00,113.13 L146.50,116.01 L151.00,118.84 L155.50,121.62 L160.00,124.35 L164.50,127.03 L169.00,129.66 L173.50,132.25 L178.00,134.79 L182.50,137.28 L187.00,139.73 L191.50,142.14 L196.00,144.50 L200.50,146.82 L205.00,149.10 L209.50,151.34 L214.00,153.54 L218.50,155.70 L223.00,157.82 L227.50,159.90 L232.00,161.95 L236.50,163.96 L241.00,165.93 L245.50,167.87 L250.00,169.78 L254.50,171.65 L259.00,173.48 L263.50,175.29 L268.00,177.06 L272.50,178.80 L277.00,180.51 L281.50,182.19 L286.00,183.84 L290.50,185.46 L295.00,187.05 L299.50,188.61 L304.00,190.14 L308.50,191.65 L313.00,193.13 L317.50,194.58 L322.00,196.01 L326.50,197.41 L331.00,198.79 L335.50,200.14 L340.00,201.47 L344.50,202.78 L349.00,204.06 L353.50,205.32 L358.00,206.55 L362.50,207.77 L367.00,208.96 L371.50,210.13 L376.00,211.28 L380.50,212.41 L385.00,213.52 L389.50,214.61 L394.00,215.68 L398.50,216.73 L403.00,217.76 L407.50,218.78 L412.00,219.78 L416.50,220.75 L421.00,221.71 L425.50,222.66 L430.00,223.58 L434.50,224.50 L439.00,225.39 L443.50,226.27 L448.00,227.13 L452.50,227.98 L457.00,228.81 L461.50,229.63 L466.00,230.43 L470.50,231.22 L475.00,231.99 L479.50,232.75 L484.00,233.50 L488.50,234.23 L493.00,234.95 L497.50,235.66 L502.00,236.35 L506.50,237.04 L511.00,237.71 L515.50,238.37 L520.00,239.01 L524.50,239.65 L529.00,240.27 L533.50,240.88 L538.00,241.49 L542.50,242.08 L547.00,242.66 L551.50,243.23 L556.00,243.79 L560.50,244.34 L565.00,244.88 L569.50,245.41 L574.00,245.93 L578.50,246.44 L583.00,246.94 L587.50,247.44 L592.00,247.92 L596.50,248.40 L601.00,248.87 L605.50,249.32 L610.00,249.78\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><circle cx=\"70.00\" cy=\"59.23\" r=\"4\"/><text x=\"78.00\" y=\"49.23\"></text><circle cx=\"160.00\" cy=\"124.62\" r=\"4\"/><text x=\"168.00\" y=\"114.62\"></text><circle cx=\"250.00\" cy=\"170.77\" r=\"4\"/><text x=\"258.00\" y=\"160.77\"></text><circle cx=\"340.00\" cy=\"201.54\" r=\"4\"/><text x=\"348.00\" y=\"191.54\"></text><circle cx=\"430.00\" cy=\"226.54\" r=\"4\"/><text x=\"438.00\" y=\"216.54\"></text><circle cx=\"520.00\" cy=\"243.85\" r=\"4\"/><text x=\"528.00\" y=\"233.85\"></text><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">t (hours)</text><text x=\"22\" y=\"175.0\" transform=\"rotate(-90 22 175.0)\" text-anchor=\"middle\">Concentration units</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Points: observations; curve: Model 2</text></g></svg>"
+    },
+    {
+      "number": 5,
+      "section": "",
+      "marks": 19,
+      "stem": "A robot's position in a plane is represented by the complex number $z$. Successive commands apply $z_{n+1}=(0.6+0.2i)z_n+(2-i)$, with $z_0=1+3i$. Coordinates are in metres. The linear part of this affine map acts before the translation.",
+      "syllabusRefs": [
+        "AHL 1.12",
+        "AHL 1.13",
+        "AHL 3.9",
+        "AHL 1.14",
+        "SL 1.3"
+      ],
+      "cognitiveDemand": "Connect an affine complex recurrence to a real matrix, area scaling and an exact stopping threshold.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find $z_1$ and $z_2$ in Cartesian form.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Write the real $2\\times2$ matrix for the linear part. State its scale factor, rotation angle and area scale factor.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Find the fixed position $z_*$ satisfying $z_*=(0.6+0.2i)z_*+(2-i)$.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "By subtracting the fixed-position equation from the recurrence, obtain a formula for $z_n-z_*$. Verify that your formula satisfies both the recurrence and the initial condition.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Find the smallest integer $n$ for which the robot is within $0.05$ metres of the fixed position.",
+          "marks": 3
+        },
+        {
+          "label": "f",
+          "prompt": "Explain why the positions approach the fixed point in a rotating pattern rather than along a single straight line.",
+          "marks": 2
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Substitute $z_0$ into the recurrence and multiply the complex numbers."
+            },
+            {
+              "code": "A1",
+              "text": "$z_1=2+i$."
+            },
+            {
+              "code": "A1",
+              "text": "$z_2=3$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The matrix is $\\begin{pmatrix}0.6&-0.2\\\\0.2&0.6\\end{pmatrix}$."
+            },
+            {
+              "code": "A1",
+              "text": "The length scale factor is $\\sqrt{0.4}=0.6324555$."
+            },
+            {
+              "code": "A1",
+              "text": "The rotation is $18.43495^\\circ$ anticlockwise."
+            },
+            {
+              "code": "A1",
+              "text": "The area scale factor is the determinant, $0.4$; translation does not affect lengths or areas."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Rearrange to $(0.4-0.2i)z_*=2-i$."
+            },
+            {
+              "code": "M1",
+              "text": "Divide by $0.4-0.2i$, using the conjugate or technology."
+            },
+            {
+              "code": "A1",
+              "text": "$z_*=5$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Let $w_n=z_n-5$. Then $w_{n+1}=(0.6+0.2i)w_n$."
+            },
+            {
+              "code": "A1",
+              "text": "Thus $z_n-5=(0.6+0.2i)^n(-4+3i)$."
+            },
+            {
+              "code": "R1",
+              "text": "At $n=0$ this gives $z_0-5=-4+3i$, agreeing with the initial position."
+            },
+            {
+              "code": "R1",
+              "text": "Multiplying the formula by $0.6+0.2i$ gives exactly the next-step recurrence."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$|z_n-5|=5(\\sqrt{0.4})^n<0.05$."
+            },
+            {
+              "code": "A1",
+              "text": "The distances at $n=11$ and the preceding step are $0.03238172$ and $0.0512$ metres."
+            },
+            {
+              "code": "A1",
+              "text": "The smallest integer is $n=11$."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "At each step the displacement from $5$ is rotated by the nonzero angle $18.43495^\\circ$."
+            },
+            {
+              "code": "R1",
+              "text": "Its length is multiplied by $0.6324555<1$, so it contracts while its direction changes."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "$z_2=3$.; The area scale factor is the determinant, $0.4$; translation does not affect lengths or areas.; $z_*=5$.; Multiplying the formula by $0.6+0.2i$ gives exactly the next-step recurrence.; The smallest integer is $n=11$.; Its length is multiplied by $0.6324555<1$, so it contracts while its direction changes."
+    },
+    {
+      "number": 6,
+      "section": "",
+      "marks": 19,
+      "stem": "In a coastal survey, east, north and vertical coordinates are measured in kilometres. Buoys are at $A(0,0,0)$, $B(6,2,0)$ and $C(1,5,0)$; a drone is at $D(3,2,4)$. Bearings are measured clockwise from north. In parts (c) and (d), a uniform horizontal current has velocity $(0.2,0.3)$ km per hour in east-north coordinates.",
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.12",
+        "AHL 3.13",
+        "SL 3.3",
+        "SL 1.8"
+      ],
+      "cognitiveDemand": "Use geometric and kinematic representations consistently, including a current correction in an inverse heading problem.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the area of the triangle formed by the three buoys.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the angle between the sight lines $AB$ and $AD$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "A boat has velocity $(2,0.5)$ km per hour relative to the water. Find its bearing relative to the fixed shore.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "A second boat leaves $A$ and travels directly to $C$ at a constant speed of $2.5$ km per hour relative to the water. Find the travel time and the heading it must maintain relative to the water. Show the equation used to allow for the current.",
+          "marks": 6
+        },
+        {
+          "label": "e",
+          "prompt": "A straight floating cable is stretched along the segment $AB$. Find the point on the cable closest to $C$ and the minimum distance. Check that your point lies on the cable segment.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $\\frac12|\\overrightarrow{AB}\\times\\overrightarrow{AC}|$."
+            },
+            {
+              "code": "A1",
+              "text": "The cross product is $(0,0,28)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The area is $14\\ \\mathrm{km}^2$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the dot-product angle formula for $(6,2,0)$ and $(3,2,4)$."
+            },
+            {
+              "code": "A1",
+              "text": "The dot product is $22$ and the product of lengths is $\\sqrt{40}\\sqrt{29}$."
+            },
+            {
+              "code": "A1",
+              "text": "The angle is $49.76364^\\circ$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Add the current to obtain shore velocity $(2.2,0.8)$."
+            },
+            {
+              "code": "M1",
+              "text": "For an east-north vector in this quadrant, bearing is $\\tan^{-1}(2.2/0.8)$."
+            },
+            {
+              "code": "A1",
+              "text": "The bearing is $70.01689^\\circ$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "If the travel time is $t>0$, shore velocity is $(1/t,5/t)$."
+            },
+            {
+              "code": "M1",
+              "text": "The water-relative velocity is $(1/t-0.2,5/t-0.3)$."
+            },
+            {
+              "code": "A1",
+              "text": "Its magnitude condition is $(1-0.2t)^2+(5-0.3t)^2=6.25t^2$."
+            },
+            {
+              "code": "A1",
+              "text": "The positive solution is $t=1.802012$ hours."
+            },
+            {
+              "code": "A1",
+              "text": "The water-relative components are $(0.3549352,2.474676)$ km per hour."
+            },
+            {
+              "code": "A1",
+              "text": "The required heading is $8.162094^\\circ$ clockwise from north."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Points on the cable are $\\mathbf r=s(6,2,0)$, $0\\le s\\le1$; minimize $|\\mathbf r-C|^2$ or use a perpendicular dot product."
+            },
+            {
+              "code": "A1",
+              "text": "$s=(C\\cdot B)/(B\\cdot B)=16/40=0.4$, which is in $[0,1]$."
+            },
+            {
+              "code": "A1",
+              "text": "The closest point is $(2.4,0.8,0)$."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum distance is $4.427189$ km."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The area is $14\\ \\mathrm{km}^2$.; The angle is $49.76364^\\circ$.; The bearing is $70.01689^\\circ$.; The required heading is $8.162094^\\circ$ clockwise from north.; The minimum distance is $4.427189$ km.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 194.17 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"194.17\" y=\"314.0\" text-anchor=\"middle\">0</text><path d=\"M 235.83 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"235.83\" y=\"314.0\" text-anchor=\"middle\">1</text><path d=\"M 277.50 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"277.50\" y=\"314.0\" text-anchor=\"middle\">2</text><path d=\"M 319.17 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"319.17\" y=\"314.0\" text-anchor=\"middle\">3</text><path d=\"M 360.83 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"360.83\" y=\"314.0\" text-anchor=\"middle\">4</text><path d=\"M 402.50 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"402.50\" y=\"314.0\" text-anchor=\"middle\">5</text><path d=\"M 444.17 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"444.17\" y=\"314.0\" text-anchor=\"middle\">6</text><path d=\"M 485.83 40.0 V 290.0\" stroke=\"#ddd\"/><text x=\"485.83\" y=\"314.0\" text-anchor=\"middle\">7</text><path d=\"M 194.16666666666669 290.00 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 194.16666666666669 248.33 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"253.33\" text-anchor=\"end\">1</text><path d=\"M 194.16666666666669 206.67 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"211.67\" text-anchor=\"end\">2</text><path d=\"M 194.16666666666669 165.00 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"170.00\" text-anchor=\"end\">3</text><path d=\"M 194.16666666666669 123.33 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"128.33\" text-anchor=\"end\">4</text><path d=\"M 194.16666666666669 81.67 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"86.67\" text-anchor=\"end\">5</text><path d=\"M 194.16666666666669 40.00 H 485.8333333333333\" stroke=\"#ddd\"/><text x=\"182.16666666666669\" y=\"45.00\" text-anchor=\"end\">6</text><path d=\"M 194.16666666666669 40.0 V 290.0 H 485.8333333333333\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M194.17,290.00 L444.17,206.67 L235.83,81.67 L194.17,290.00\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><circle cx=\"194.17\" cy=\"290.00\" r=\"4\"/><text x=\"202.17\" y=\"280.00\">A</text><circle cx=\"444.17\" cy=\"206.67\" r=\"4\"/><text x=\"452.17\" y=\"196.67\">B</text><circle cx=\"235.83\" cy=\"81.67\" r=\"4\"/><text x=\"243.83\" y=\"71.67\">C</text><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">East (km)</text><text x=\"146.16666666666669\" y=\"175.0\" transform=\"rotate(-90 146.16666666666669 175.0)\" text-anchor=\"middle\">North (km)</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Horizontal plan of the buoys</text></g></svg>"
+    }
+  ]
+}

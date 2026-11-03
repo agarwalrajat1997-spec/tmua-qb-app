@@ -1,0 +1,182 @@
+{
+  "status": "passed",
+  "projectId": "pnkzxzigpkvhlmhsmzdd",
+  "checkedAtUTC": "2026-11-03T03:53:31Z",
+  "migration": {
+    "version": "20261103035050",
+    "name": "ib_ai_hl_mock_attempt_ids",
+    "file": "supabase/migrations/20261103035050_ib_ai_hl_mock_attempt_ids.sql",
+    "sha256": "60dab945b3cfb6cd6577abe1857ca73122ef161a04bdbfc5fbf7cd79f793873b",
+    "appliedThrough": "Supabase MCP after root review"
+  },
+  "schemaApplied": true,
+  "rowLevelSecurityEnabled": true,
+  "explicitOwnerPolicies": true,
+  "columnRestrictedInsertAndUpdate": true,
+  "noAnonymousAccess": true,
+  "ownerPolicies": 3,
+  "savedRowsBeforeVerification": 1,
+  "savedRowsAfterVerification": 1,
+  "remainingQaRows": 0,
+  "changeScope": "Only the mock_id allowed-ID constraint was expanded. Existing AA IDs, rows, elapsed-time bounds, RLS policies, grants and immutable responses/marks were retained.",
+  "verification": {
+    "expressionCases": 15,
+    "expressionCasesPassed": 15,
+    "transaction": "All data checks ran under actual authenticated/anon roles and JWT owner subjects inside BEGIN/ROLLBACK; no QA rows persisted.",
+    "script": "scripts/ib-ai-mocks-2026/verify_database.sql",
+    "checks": [
+      {
+        "test": "All ten AI IDs insert and read for their owner at their maximum permitted duration",
+        "status": "passed"
+      },
+      {
+        "test": "Existing AA SL IDs still accept 5,400-second attempts",
+        "status": "passed"
+      },
+      {
+        "test": "Mock-ID-filtered reads cannot retrieve AI attempts through AA IDs or AA attempts through AI IDs",
+        "status": "passed"
+      },
+      {
+        "test": "AI C3 ID rejected by the database allowlist",
+        "status": "passed"
+      },
+      {
+        "test": "AI Paper 3 4,501-second elapsed rejected; 4,500 seconds accepted",
+        "status": "passed"
+      },
+      {
+        "test": "Submitted responses cannot be updated through authenticated column privileges/trigger",
+        "status": "passed"
+      },
+      {
+        "test": "Owner self-assessment and marked_at can be saved and read",
+        "status": "passed"
+      },
+      {
+        "test": "A completed self-assessment cannot be replaced",
+        "status": "passed"
+      },
+      {
+        "test": "Different JWT owner cannot read any temporary owner AI/AA attempts",
+        "status": "passed"
+      },
+      {
+        "test": "Different JWT owner cannot update owner self-marks",
+        "status": "passed"
+      },
+      {
+        "test": "Different JWT owner cannot insert a row owned by the first user",
+        "status": "passed"
+      },
+      {
+        "test": "Anonymous role cannot read the attempt table",
+        "status": "passed"
+      },
+      {
+        "test": "Rollback leaves zero QA rows and preserves pre-existing row count",
+        "status": "passed"
+      }
+    ]
+  },
+  "advisors": {
+    "security": [
+      {
+        "name": "rls_enabled_no_policy",
+        "level": "INFO",
+        "count": 40,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+        "mathsFindings": []
+      },
+      {
+        "name": "security_definer_view",
+        "level": "ERROR",
+        "count": 1,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0010_security_definer_view",
+        "mathsFindings": []
+      },
+      {
+        "name": "function_search_path_mutable",
+        "level": "WARN",
+        "count": 3,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0011_function_search_path_mutable",
+        "mathsFindings": []
+      },
+      {
+        "name": "extension_in_public",
+        "level": "WARN",
+        "count": 1,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0014_extension_in_public",
+        "mathsFindings": []
+      },
+      {
+        "name": "anon_security_definer_function_executable",
+        "level": "WARN",
+        "count": 12,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable",
+        "mathsFindings": []
+      },
+      {
+        "name": "authenticated_security_definer_function_executable",
+        "level": "WARN",
+        "count": 12,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable",
+        "mathsFindings": []
+      },
+      {
+        "name": "auth_leaked_password_protection",
+        "level": "WARN",
+        "count": 1,
+        "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+        "mathsFindings": []
+      }
+    ],
+    "performance": [
+      {
+        "name": "unindexed_foreign_keys",
+        "level": "INFO",
+        "count": 7,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0001_unindexed_foreign_keys",
+        "mathsFindings": []
+      },
+      {
+        "name": "auth_rls_initplan",
+        "level": "WARN",
+        "count": 29,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+        "mathsFindings": []
+      },
+      {
+        "name": "no_primary_key",
+        "level": "INFO",
+        "count": 19,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0004_no_primary_key",
+        "mathsFindings": []
+      },
+      {
+        "name": "unused_index",
+        "level": "INFO",
+        "count": 49,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index",
+        "mathsFindings": []
+      },
+      {
+        "name": "multiple_permissive_policies",
+        "level": "WARN",
+        "count": 2,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0006_multiple_permissive_policies",
+        "mathsFindings": []
+      },
+      {
+        "name": "duplicate_index",
+        "level": "WARN",
+        "count": 3,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0009_duplicate_index",
+        "mathsFindings": []
+      }
+    ],
+    "mathsRelatedFindings": 0,
+    "scope": "Advisors were run after applying the migration. All reported findings concern other existing objects or project settings; none concerns ib_maths_mock_attempts or guard_ib_maths_mock_attempt."
+  },
+  "limits": "Database evidence does not claim live EmailJS inbox delivery or completed scientific/PDF review. API access-state denial is separately covered by scripts/verify-ib-ai-mocks.mjs."
+}

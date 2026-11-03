@@ -1,0 +1,872 @@
+{
+  "id": "ai-hl-set-a-paper-2",
+  "strand": "ai",
+  "course": "hl",
+  "set": "A",
+  "paper": "2",
+  "title": "Mathematics AI HL - Set A - Paper 2",
+  "minutes": 120,
+  "marks": 110,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 18,
+      "stem": "A solar installation produces power $P(t)=80\\sin\\!\\left(\\dfrac{\\pi(t-6)}{12}\\right)$ kW for $6\\le t\\le18$, where $t$ is the time in hours after midnight. Its local load is $D(t)=35+2(t-12)$ kW. The diagram shows the two models. Electricity cannot be transferred between different days.",
+      "syllabusRefs": [
+        "AHL 2.9",
+        "SL 2.4",
+        "SL 5.5",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Select numerical intersections and split energy integrals; assess a storage claim rather than confuse power and energy.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the maximum solar power and the time at which it occurs.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find the two times when production equals demand. Hence state when there is a surplus.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Calculate the total surplus energy generated between these times.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Calculate the total energy shortfall during the rest of the interval $6\\le t\\le18$.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "A battery starts empty at 06:00, has unlimited capacity and can deliver $80\\%$ of the surplus energy stored that day. An engineer claims that this removes the need for any grid supply during the entire day. Assess the claim, referring to both energy and timing.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The maximum sine value is $1$, giving $80$ kW."
+            },
+            {
+              "code": "A1",
+              "text": "It occurs at $t=12$, or noon."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $80\\sin(\\pi(t-6)/12)=35+2(t-12)$ on $[6,18]$."
+            },
+            {
+              "code": "A2",
+              "text": "The roots are $t=7.237942$ and $t=15.84945$."
+            },
+            {
+              "code": "R1",
+              "text": "Production exceeds demand between these roots."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Integrate $P(t)-D(t)$ between the two crossings."
+            },
+            {
+              "code": "M1",
+              "text": "Use the unrounded intersection values in the definite integral."
+            },
+            {
+              "code": "A1",
+              "text": "$\\int_{7.237942}^{15.84945}(P-D)\\,dt=254.5372$."
+            },
+            {
+              "code": "A1",
+              "text": "The surplus is $254.5372$ kWh, or 255 kWh to three significant figures."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $\\int_6^{7.237942}(D-P)\\,dt+\\int_{15.84945}^{18}(D-P)\\,dt$."
+            },
+            {
+              "code": "M1",
+              "text": "Both intervals have demand above production; add positive shortfalls."
+            },
+            {
+              "code": "A1",
+              "text": "The sum is $63.38224$."
+            },
+            {
+              "code": "A1",
+              "text": "The shortfall is $63.38224$ kWh."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The recoverable stored energy is $0.8(254.5372)=203.6298$ kWh."
+            },
+            {
+              "code": "A1",
+              "text": "This exceeds the combined shortfall of $63.38224$ kWh."
+            },
+            {
+              "code": "R1",
+              "text": "However, the first shortfall occurs before any surplus has charged the initially empty battery."
+            },
+            {
+              "code": "R1",
+              "text": "The claim is false for this day: an earlier stored supply or some morning grid supply is necessary."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "It occurs at $t=12$, or noon.; Production exceeds demand between these roots.; The surplus is $254.5372$ kWh, or 255 kWh to three significant figures.; The shortfall is $63.38224$ kWh.; The claim is false for this day: an earlier stored supply or some morning grid supply is necessary.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"15\" fill=\"#111\"><path d=\"M 70.00 40 V 290\" stroke=\"#ddd\"/><text x=\"70.00\" y=\"314\" text-anchor=\"middle\">6</text><path d=\"M 205.00 40 V 290\" stroke=\"#ddd\"/><text x=\"205.00\" y=\"314\" text-anchor=\"middle\">9</text><path d=\"M 340.00 40 V 290\" stroke=\"#ddd\"/><text x=\"340.00\" y=\"314\" text-anchor=\"middle\">12</text><path d=\"M 475.00 40 V 290\" stroke=\"#ddd\"/><text x=\"475.00\" y=\"314\" text-anchor=\"middle\">15</text><path d=\"M 610.00 40 V 290\" stroke=\"#ddd\"/><text x=\"610.00\" y=\"314\" text-anchor=\"middle\">18</text><path d=\"M 70 290.00 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"295.00\" text-anchor=\"end\">0</text><path d=\"M 70 234.44 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"239.44\" text-anchor=\"end\">20</text><path d=\"M 70 178.89 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"183.89\" text-anchor=\"end\">40</text><path d=\"M 70 123.33 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"128.33\" text-anchor=\"end\">60</text><path d=\"M 70 67.78 H 610\" stroke=\"#ddd\"/><text x=\"58\" y=\"72.78\" text-anchor=\"end\">80</text><path d=\"M 70 40 V 290 H 610\" fill=\"none\" stroke=\"black\" stroke-width=\"1.6\"/><path d=\"M70.00,290.00 L74.50,284.18 L79.00,278.37 L83.50,272.56 L88.00,266.77 L92.50,260.99 L97.00,255.24 L101.50,249.50 L106.00,243.80 L110.50,238.12 L115.00,232.48 L119.50,226.89 L124.00,221.33 L128.50,215.82 L133.00,210.36 L137.50,204.96 L142.00,199.61 L146.50,194.33 L151.00,189.11 L155.50,183.96 L160.00,178.89 L164.50,173.89 L169.00,168.97 L173.50,164.13 L178.00,159.38 L182.50,154.72 L187.00,150.15 L191.50,145.68 L196.00,141.30 L200.50,137.03 L205.00,132.87 L209.50,128.81 L214.00,124.86 L218.50,121.02 L223.00,117.30 L227.50,113.70 L232.00,110.22 L236.50,106.86 L241.00,103.63 L245.50,100.52 L250.00,97.55 L254.50,94.71 L259.00,92.00 L263.50,89.43 L268.00,86.99 L272.50,84.69 L277.00,82.54 L281.50,80.52 L286.00,78.65 L290.50,76.93 L295.00,75.35 L299.50,73.92 L304.00,72.63 L308.50,71.50 L313.00,70.51 L317.50,69.68 L322.00,69.00 L326.50,68.46 L331.00,68.08 L335.50,67.85 L340.00,67.78 L344.50,67.85 L349.00,68.08 L353.50,68.46 L358.00,69.00 L362.50,69.68 L367.00,70.51 L371.50,71.50 L376.00,72.63 L380.50,73.92 L385.00,75.35 L389.50,76.93 L394.00,78.65 L398.50,80.52 L403.00,82.54 L407.50,84.69 L412.00,86.99 L416.50,89.43 L421.00,92.00 L425.50,94.71 L430.00,97.55 L434.50,100.52 L439.00,103.63 L443.50,106.86 L448.00,110.22 L452.50,113.70 L457.00,117.30 L461.50,121.02 L466.00,124.86 L470.50,128.81 L475.00,132.87 L479.50,137.03 L484.00,141.30 L488.50,145.68 L493.00,150.15 L497.50,154.72 L502.00,159.38 L506.50,164.13 L511.00,168.97 L515.50,173.89 L520.00,178.89 L524.50,183.96 L529.00,189.11 L533.50,194.33 L538.00,199.61 L542.50,204.96 L547.00,210.36 L551.50,215.82 L556.00,221.33 L560.50,226.89 L565.00,232.48 L569.50,238.12 L574.00,243.80 L578.50,249.50 L583.00,255.24 L587.50,260.99 L592.00,266.77 L596.50,272.56 L601.00,278.37 L605.50,284.18 L610.00,290.00\" fill=\"none\" stroke=\"black\" stroke-width=\"2.2\" stroke-dasharray=\"\"/><path d=\"M70.00,226.11 L610.00,159.44\" fill=\"none\" stroke=\"#771d27\" stroke-width=\"2.2\" stroke-dasharray=\"6 4\"/><text x=\"320.0\" y=\"338\" text-anchor=\"middle\">t (hours after midnight)</text><text x=\"22\" y=\"175.0\" transform=\"rotate(-90 22 175.0)\" text-anchor=\"middle\">Power (kW)</text><text x=\"320.0\" y=\"22\" text-anchor=\"middle\">Solid: solar production; dashed: local load</text></g></svg>"
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 18,
+      "stem": "The undirected network represents maintenance paths. Edge weights are lengths in kilometres. All paths can be traversed in either direction, and repeated travel has the same length as the original path. Every edge must be inspected at least once.",
+      "syllabusRefs": [
+        "AHL 3.14",
+        "AHL 3.16"
+      ],
+      "cognitiveDemand": "Distinguish minimum spanning infrastructure from edge-covering walks and reconsider parity after an edge closure.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Use an appropriate algorithm to find a minimum spanning tree. List its edges and total length.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find a shortest path from $A$ to $F$, stating its length.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the minimum length of a closed inspection walk starting and finishing at $A$. Explain why your augmentation is sufficient.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "The inspector may instead finish at $F$. Find the minimum inspection length and justify your answer.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "Path $EF$ is closed and no longer requires inspection. Find the new minimum closed inspection length from $A$. Explain why subtracting only the length of $EF$ from your answer to (c) is incorrect.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use Kruskal or Prim, rejecting any edge that closes a cycle."
+            },
+            {
+              "code": "A2",
+              "text": "One minimum tree is $DE,BC,EF,AB,CD$."
+            },
+            {
+              "code": "A1",
+              "text": "Its total length is $16$ km."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Compare feasible path lengths, or label successive shortest distances."
+            },
+            {
+              "code": "A1",
+              "text": "A shortest path is $A-B-E-F$."
+            },
+            {
+              "code": "A1",
+              "text": "Its length is $13$ km."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The total edge length is $61$ km."
+            },
+            {
+              "code": "R1",
+              "text": "Only $A$ and $F$ have odd degree."
+            },
+            {
+              "code": "M1",
+              "text": "Duplicate a shortest $A$ to $F$ path so that all degrees become even."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum closed length is $61+13=74$ km."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The original graph already has exactly the two odd vertices $A,F$."
+            },
+            {
+              "code": "R1",
+              "text": "It therefore has an Euler trail beginning at $A$ and ending at $F$, using every edge once."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum is $61$ km."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The remaining odd vertices are $A$ and $E$; $F$ is now even."
+            },
+            {
+              "code": "M1",
+              "text": "The new total is $58$ and a shortest $A-E$ path is $A-B-E$ of length $10$."
+            },
+            {
+              "code": "A1",
+              "text": "The new closed length is $58+10=68$ km."
+            },
+            {
+              "code": "R1",
+              "text": "The required repeated path has changed with the parity, so a simple subtraction from the former route is not justified."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "Its total length is $16$ km.; Its length is $13$ km.; The minimum closed length is $61+13=74$ km.; The minimum is $61$ km.; The required repeated path has changed with the parity, so a simple subtraction from the former route is not justified.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 350\" width=\"640\" height=\"350\"><rect width=\"640\" height=\"350\" fill=\"white\"/><g font-family=\"Arial\" font-size=\"16\"><path d=\"M60,175 L210,65\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"124.0\" y=\"103.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"135.0\" y=\"120.0\" text-anchor=\"middle\">4</text><path d=\"M60,175 L210,285\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"124.0\" y=\"213.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"135.0\" y=\"230.0\" text-anchor=\"middle\">7</text><path d=\"M60,175 L405,285\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"221.5\" y=\"213.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"232.5\" y=\"230.0\" text-anchor=\"middle\">9</text><path d=\"M210,65 L210,285\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"199.0\" y=\"158.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"210.0\" y=\"175.0\" text-anchor=\"middle\">3</text><path d=\"M210,65 L405,65\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"296.5\" y=\"48.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"307.5\" y=\"65.0\" text-anchor=\"middle\">6</text><path d=\"M210,285 L405,285\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"296.5\" y=\"268.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"307.5\" y=\"285.0\" text-anchor=\"middle\">4</text><path d=\"M210,285 L405,65\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"296.5\" y=\"158.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"307.5\" y=\"175.0\" text-anchor=\"middle\">5</text><path d=\"M405,285 L405,65\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"394.0\" y=\"158.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"405.0\" y=\"175.0\" text-anchor=\"middle\">2</text><path d=\"M405,285 L580,175\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"481.5\" y=\"213.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"492.5\" y=\"230.0\" text-anchor=\"middle\">8</text><path d=\"M405,65 L580,175\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"481.5\" y=\"103.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"492.5\" y=\"120.0\" text-anchor=\"middle\">3</text><path d=\"M210,65 L580,175\" stroke=\"#555\" stroke-width=\"1.6\"/><rect x=\"384.0\" y=\"103.0\" width=\"24\" height=\"22\" fill=\"white\"/><text x=\"395.0\" y=\"120.0\" text-anchor=\"middle\">10</text><circle cx=\"60\" cy=\"175\" r=\"18\" fill=\"white\" stroke=\"black\" stroke-width=\"1.8\"/><text x=\"60\" y=\"181\" text-anchor=\"middle\">A</text><circle cx=\"210\" cy=\"65\" r=\"18\" fill=\"white\" stroke=\"black\" stroke-width=\"1.8\"/><text x=\"210\" y=\"71\" text-anchor=\"middle\">B</text><circle cx=\"210\" cy=\"285\" r=\"18\" fill=\"white\" stroke=\"black\" stroke-width=\"1.8\"/><text x=\"210\" y=\"291\" text-anchor=\"middle\">C</text><circle cx=\"405\" cy=\"285\" r=\"18\" fill=\"white\" stroke=\"black\" stroke-width=\"1.8\"/><text x=\"405\" y=\"291\" text-anchor=\"middle\">D</text><circle cx=\"405\" cy=\"65\" r=\"18\" fill=\"white\" stroke=\"black\" stroke-width=\"1.8\"/><text x=\"405\" y=\"71\" text-anchor=\"middle\">E</text><circle cx=\"580\" cy=\"175\" r=\"18\" fill=\"white\" stroke=\"black\" stroke-width=\"1.8\"/><text x=\"580\" y=\"181\" text-anchor=\"middle\">F</text></g></svg>"
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 18,
+      "stem": "Ten randomly selected operators complete a task before and after training. For each operator the recorded difference $d$ is time before training minus time after training, in seconds. The differences are $4,-1,7,3,8,0,6,5,9,2$. Treat operators as independent, and assume the population of differences is normal with unknown variance.",
+      "syllabusRefs": [
+        "SL 4.3",
+        "AHL 4.16",
+        "AHL 4.18",
+        "AHL 4.12"
+      ],
+      "cognitiveDemand": "Choose a paired test; keep sample standard deviation separate from standard error and assess sensitivity to systematic bias.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the mean and unbiased sample standard deviation of the differences, and the estimated standard error of the mean.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Test at the $5\\%$ significance level whether the training reduces the population mean completion time. State the hypotheses, statistic, degrees of freedom, $p$-value and conclusion.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Find a $95\\%$ confidence interval for the population mean difference and interpret it in context.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "It is discovered that the after-training timer systematically overstated every time by $1.5$ seconds. Correct this error and repeat the test in (b), explaining which sample statistics change.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Give one reason why a significant result alone does not establish that training caused the improvement.",
+          "marks": 2
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\bar d=4.3$ s."
+            },
+            {
+              "code": "A1",
+              "text": "$s=3.335$ s, using denominator $9$."
+            },
+            {
+              "code": "A1",
+              "text": "$s/\\sqrt{10}=1.054619$ s."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$H_0:\\mu_d=0$, $H_1:\\mu_d>0$."
+            },
+            {
+              "code": "M1",
+              "text": "Use the one-sample $t$ test on paired differences, $t=\\bar d/(s/\\sqrt{10})$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=4.0773$ with $9$ degrees of freedom."
+            },
+            {
+              "code": "A1",
+              "text": "One-tailed $p=0.001384594$."
+            },
+            {
+              "code": "R1",
+              "text": "Since $p<0.05$, reject $H_0$; the data support a reduction in mean recorded completion time."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $\\bar d\\pm t_{0.975,9}s/\\sqrt{10}$."
+            },
+            {
+              "code": "A1",
+              "text": "The critical value is $2.262157$."
+            },
+            {
+              "code": "A1",
+              "text": "The interval is $(1.914285,6.685715)$ seconds."
+            },
+            {
+              "code": "R1",
+              "text": "The interval estimates the mean before-minus-after difference for the operator population; it is not an interval containing $95\\%$ of individual differences."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Corrected after times are $1.5$ seconds smaller, so every before-minus-after difference increases by $1.5$."
+            },
+            {
+              "code": "A1",
+              "text": "The corrected mean is $5.8$ s; the sample standard deviation and standard error are unchanged."
+            },
+            {
+              "code": "M1",
+              "text": "The new statistic is $5.499614$ with $9$ degrees of freedom."
+            },
+            {
+              "code": "A1",
+              "text": "$p=0.000190188$; reject $H_0$ at $5\\%$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "No randomized untreated comparison group is described."
+            },
+            {
+              "code": "R1",
+              "text": "Practice, fatigue, changed task conditions or another time-related influence may also change completion time."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "$s/\\sqrt{10}=1.054619$ s.; Since $p<0.05$, reject $H_0$; the data support a reduction in mean recorded completion time.; The interval estimates the mean before-minus-after difference for the operator population; it is not an interval containing $95\\%$ of individual differences.; $p=0.000190188$; reject $H_0$ at $5\\%$.; Practice, fatigue, changed task conditions or another time-related influence may also change completion time."
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 20,
+      "stem": "A wetland population has juvenile and adult stages. Expected numbers in year $n$ are represented by the column vector $\\mathbf s_n=(J_n,A_n)^T$, with $\\mathbf s_{n+1}=M\\mathbf s_n$, where $M=\\begin{pmatrix}0&1.8\\\\0.4&0.4\\end{pmatrix}$ and $\\mathbf s_0=(240,120)^T$. A juvenile has probability $0.4$ of reaching the adult stage in the following year; each adult produces on average $1.8$ juveniles. Counts in this model are expected values, not necessarily integers.",
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 1.15",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Connect an eigensystem to demographic interpretation, finite-time threshold and a survival intervention.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find $\\mathbf s_1$ and $\\mathbf s_2$. Explain the meaning of the lower-right entry of $M$.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Find the two eigenvalues of $M$ and a corresponding eigenvector for each.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Find the long-term proportions of juveniles and adults. Explain which eigenvalue is relevant.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Find the first year in which the expected total population exceeds $1000$. Show how you establish that it is the first such year.",
+          "marks": 3
+        },
+        {
+          "label": "e",
+          "prompt": "The adult survival probability is replaced by $q$, with $0\\le q\\le1$, while all other entries remain fixed. Find the critical value of $q$ for long-term population replacement, and determine on which side of this value the population eventually declines.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "Explain the effect of the negative eigenvalue on short-term stage composition, and state a limitation of using this model over many years.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\mathbf s_1=(216,144)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\mathbf s_2=(259.2,144)^T$."
+            },
+            {
+              "code": "R1",
+              "text": "An adult has probability $0.4$ of remaining an adult in the next yearly count."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\det(M-\\lambda I)=\\lambda^2-0.4\\lambda-0.72=0$."
+            },
+            {
+              "code": "A1",
+              "text": "The eigenvalues are $1.07178$ and $-0.6717798$."
+            },
+            {
+              "code": "M1",
+              "text": "From the first row, $1.8A=\\lambda J$."
+            },
+            {
+              "code": "A1",
+              "text": "For either eigenvalue, an eigenvector is $(1.8/\\lambda,1)^T$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The positive eigenvalue $1.07178$ has greater modulus and determines the eventual positive composition."
+            },
+            {
+              "code": "M1",
+              "text": "Normalize its eigenvector $(1.679449,1)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The juvenile and adult proportions are $0.626789$ and $0.373211$ respectively."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Evaluate $J_n+A_n$ using $M^n\\mathbf s_0$, checking consecutive years at the threshold."
+            },
+            {
+              "code": "A1",
+              "text": "At $n=16$ the total is $1046.512$; the preceding total is $976.3631$."
+            },
+            {
+              "code": "A1",
+              "text": "The first year is $n=16$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The characteristic equation becomes $\\lambda^2-q\\lambda-0.72=0$."
+            },
+            {
+              "code": "M1",
+              "text": "For replacement, the dominant eigenvalue is $1$."
+            },
+            {
+              "code": "A1",
+              "text": "$1-q-0.72=0$, so $q=0.28$."
+            },
+            {
+              "code": "R1",
+              "text": "For $0\\le q<0.28$, the dominant positive eigenvalue is below $1$, so the expected population eventually declines."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The component along the negative-eigenvalue direction alternates sign between years, so stage composition may approach its limit through alternating deviations."
+            },
+            {
+              "code": "R1",
+              "text": "Its modulus is smaller than that of the dominant eigenvalue, so its relative effect diminishes."
+            },
+            {
+              "code": "R1",
+              "text": "The model assumes constant reproduction and survival and omits resource limits, migration or environmental variation."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "An adult has probability $0.4$ of remaining an adult in the next yearly count.; For either eigenvalue, an eigenvector is $(1.8/\\lambda,1)^T$.; The juvenile and adult proportions are $0.626789$ and $0.373211$ respectively.; The first year is $n=16$.; For $0\\le q<0.28$, the dominant positive eigenvalue is below $1$, so the expected population eventually declines.; The model assumes constant reproduction and survival and omits resource limits, migration or environmental variation."
+    },
+    {
+      "number": 5,
+      "section": "",
+      "marks": 18,
+      "stem": "An open-top rectangular reservoir has internal width $w$ metres, length $2w$ metres and height $h$ metres. Its volume must be $120\\ \\mathrm m^3$. The floor costs \\$50 per square metre and the four vertical walls cost \\$30 per square metre. Material thickness is negligible. Planning rules require $h\\le3$ and $2w\\le12$.",
+      "syllabusRefs": [
+        "SL 3.1",
+        "SL 5.7",
+        "AHL 5.9"
+      ],
+      "cognitiveDemand": "Detect an infeasible stationary point and solve a constrained model with a price sensitivity threshold.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Express $h$ in terms of $w$ and show that the material cost is $C(w)=100w^2+10800/w$.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the positive stationary point of $C$ if the planning rules are temporarily ignored. Classify it.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the feasible interval of widths under both planning rules. Explain why the answer to (b) cannot be used.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Find the feasible reservoir dimensions of minimum cost and the minimum cost, to the nearest dollar.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "The wall material price becomes $k$ dollars per square metre. Find the price at which the unconstrained optimal width first enters the feasible interval as $k$ increases from $30$.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$2w^2h=120$, hence $h=60/w^2$."
+            },
+            {
+              "code": "A1",
+              "text": "The floor area is $2w^2$ and its cost is $100w^2$."
+            },
+            {
+              "code": "M1",
+              "text": "The wall area is $2h(2w+w)=6wh=360/w$."
+            },
+            {
+              "code": "A1",
+              "text": "The wall cost is $10800/w$, giving the stated $C(w)$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$C\\prime(w)=200w-10800/w^2=0$ gives $w^3=54$."
+            },
+            {
+              "code": "A1",
+              "text": "$w=3.779763$ m."
+            },
+            {
+              "code": "R1",
+              "text": "$C\\prime\\prime(w)=200+21600/w^3>0$, so this is a minimum for $w>0$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$60/w^2\\le3$ gives $w\\ge\\sqrt{20}$; $2w\\le12$ gives $w\\le6$."
+            },
+            {
+              "code": "A1",
+              "text": "Thus $\\sqrt{20}\\le w\\le6$."
+            },
+            {
+              "code": "R1",
+              "text": "The stationary width $3.779763$ is below $\\sqrt{20}$, and would give height $4.199737$ m, exceeding $3$ m."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "$C\\prime(w)>0$ throughout the feasible interval, because every feasible $w$ exceeds the unconstrained minimizing width."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum occurs at $w=\\sqrt{20}=4.472136$ m."
+            },
+            {
+              "code": "A1",
+              "text": "The length is $8.944272$ m and height is $3$ m."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum cost is \\$4414.953, which is \\$4415 to the nearest dollar."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The new cost is $100w^2+360k/w$."
+            },
+            {
+              "code": "M1",
+              "text": "At a stationary point, $200w^3=360k$."
+            },
+            {
+              "code": "M1",
+              "text": "It first enters the feasible interval at $w=\\sqrt{20}$."
+            },
+            {
+              "code": "A1",
+              "text": "$k=200(\\sqrt{20})^3/360=49.6904$ dollars per square metre."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The wall cost is $10800/w$, giving the stated $C(w)$.; $C\\prime\\prime(w)=200+21600/w^3>0$, so this is a minimum for $w>0$.; The stationary width $3.779763$ is below $\\sqrt{20}$, and would give height $4.199737$ m, exceeding $3$ m.; The minimum cost is \\$4414.953, which is \\$4415 to the nearest dollar.; $k=200(\\sqrt{20})^3/360=49.6904$ dollars per square metre."
+    },
+    {
+      "number": 6,
+      "section": "",
+      "marks": 18,
+      "stem": "Two inspection drones have positions, in kilometres, $\\mathbf p(t)=(0,2,1)^T+t(3,1,0.4)^T$ and $\\mathbf q(t)=(9,0,3)^T+t(-1,2,-0.2)^T$, where $t$ is in minutes and $0\\le t\\le4$. A safety alert is triggered whenever their separation is less than $1$ km. Treat the drones as particles.",
+      "syllabusRefs": [
+        "AHL 3.10",
+        "AHL 3.11",
+        "AHL 3.12",
+        "AHL 3.13",
+        "SL 5.7"
+      ],
+      "cognitiveDemand": "Use relative motion and a quadratic inequality; distinguish crossing horizontal projections from a simultaneous collision.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the initial separation of the drones.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Write a vector expression for $\\mathbf p(t)-\\mathbf q(t)$.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the time and value of the minimum separation during the modelled interval.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Find the interval during which the safety alert is triggered and its duration.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Find the angle between the velocity vectors.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "An overhead drawing shows the projected paths crossing. Explain why this does not establish that the drones collide, and determine whether a collision occurs in this model.",
+          "marks": 2
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At $t=0$, the relative position is $(-9,2,-2)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The distance is $\\sqrt{89}=9.433981$ km."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The initial relative position is $(-9,2,-2)^T$."
+            },
+            {
+              "code": "A1",
+              "text": "The relative velocity is $(4,-1,0.6)^T$, so subtract the positions componentwise."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The squared distance is $17.36t^2-78.4t+89$."
+            },
+            {
+              "code": "M1",
+              "text": "Differentiate the squared distance and solve $34.72t-78.4=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=2.258065$ min lies in $[0,4]$."
+            },
+            {
+              "code": "A1",
+              "text": "The minimum separation is $0.6956083$ km."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $17.36t^2-78.4t+89<1$."
+            },
+            {
+              "code": "A1",
+              "text": "The boundary times are $2.085638$ and $2.430491$ min."
+            },
+            {
+              "code": "R1",
+              "text": "The upward-opening quadratic is below $1$ between these roots."
+            },
+            {
+              "code": "A1",
+              "text": "The alert lasts $0.3448532$ min."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $\\cos\\theta=(\\mathbf v_p\\cdot\\mathbf v_q)/(|\\mathbf v_p||\\mathbf v_q|)$."
+            },
+            {
+              "code": "A1",
+              "text": "The dot product is $-1.08$."
+            },
+            {
+              "code": "A1",
+              "text": "The squared speeds are $10.16$ and $5.04$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\theta=98.68054^\\circ$."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "A collision requires all three coordinates to agree at the same time; projected path crossing alone does not guarantee either condition."
+            },
+            {
+              "code": "R1",
+              "text": "The minimum three-dimensional separation is positive, so the drones do not collide on $[0,4]$."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "The distance is $\\sqrt{89}=9.433981$ km.; The relative velocity is $(4,-1,0.6)^T$, so subtract the positions componentwise.; The minimum separation is $0.6956083$ km.; The alert lasts $0.3448532$ min.; $\\theta=98.68054^\\circ$.; The minimum three-dimensional separation is positive, so the drones do not collide on $[0,4]$."
+    }
+  ]
+}
