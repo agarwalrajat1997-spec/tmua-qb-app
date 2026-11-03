@@ -41,8 +41,8 @@ export const IB_BANK_LOADERS = {
   "chemistry-reactivity-1": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/chemistry/reactivity-1.json"), import("@/content/ib/chemistry-2026-expansion/by-collection/chemistry-reactivity-1.json")]); return { default: [...bank.default, ...additions.default] }; },
   "chemistry-reactivity-2": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/chemistry/reactivity-2.json"), import("@/content/ib/chemistry-2026-expansion/by-collection/chemistry-reactivity-2.json")]); return { default: [...bank.default, ...additions.default] }; },
   "chemistry-reactivity-3": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/chemistry/reactivity-3.json"), import("@/content/ib/chemistry-2026-expansion/by-collection/chemistry-reactivity-3.json")]); return { default: [...bank.default, ...additions.default] }; },
-  "biology-unity-diversity": () => import("@/content/ib/biology/unity-diversity.json"),
-  "biology-form-function": () => import("@/content/ib/biology/form-function.json"),
-  "biology-interaction-interdependence": () => import("@/content/ib/biology/interaction-interdependence.json"),
-  "biology-continuity-change": () => import("@/content/ib/biology/continuity-change.json"),
+  "biology-unity-diversity": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/biology/unity-diversity.json"), import("@/content/ib/biology-2026-expansion/by-collection/biology-unity-diversity.json")]); return { default: [...bank.default, ...additions.default] }; },
+  "biology-form-function": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/biology/form-function.json"), import("@/content/ib/biology-2026-expansion/by-collection/biology-form-function.json")]); return { default: [...bank.default, ...additions.default] }; },
+  "biology-interaction-interdependence": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/biology/interaction-interdependence.json"), import("@/content/ib/biology-2026-expansion/by-collection/biology-interaction-interdependence.json")]); return { default: [...bank.default, ...additions.default] }; },
+  "biology-continuity-change": async () => { const [bank, additions] = await Promise.all([import("@/content/ib/biology/continuity-change.json"), import("@/content/ib/biology-2026-expansion/by-collection/biology-continuity-change.json")]); return { default: [...bank.default, ...additions.default] }; },
 };

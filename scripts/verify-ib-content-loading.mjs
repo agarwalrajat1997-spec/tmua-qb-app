@@ -46,7 +46,7 @@ const collectionLookupAverageMs=(performance.now()-timer)/1000;
 let total=0;
 for(const collection of h.model.IB_COLLECTIONS){
  const file=`content/ib/${collection.subject}/${collection.subject==='math-aa-hl'?collection.id:collection.topicId}.json`;
- const enrichment=[...['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync('content/ib/math-2026-expansion/'+course+'.json','utf8'))),...['structure','periodicity','reactivity','mechanisms'].flatMap(batch=>JSON.parse(readFileSync('content/ib/chemistry-2026-expansion/'+batch+'.json','utf8')))].filter(q=>q.collectionId===collection.id);
+ const enrichment=[...['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync('content/ib/math-2026-expansion/'+course+'.json','utf8'))),...['structure','periodicity','reactivity','mechanisms'].flatMap(batch=>JSON.parse(readFileSync('content/ib/chemistry-2026-expansion/'+batch+'.json','utf8'))),...['unity-diversity','form-function','interaction-interdependence','continuity-change'].flatMap(batch=>JSON.parse(readFileSync('content/ib/biology-2026-expansion/'+batch+'.json','utf8')))].filter(q=>q.collectionId===collection.id);
  const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment].filter(q=>q.status==='published');
  const actual=await content.getIbQuestions(collection.id,'hl');
  assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'question order preserved');
@@ -55,7 +55,7 @@ for(const collection of h.model.IB_COLLECTIONS){
  total+=actual.length;
 }
 assert.equal(bankImports().length,45,'each bank loaded only once');
-assert.equal(total,5722);
+assert.equal(total,5922);
 
 // A failed load must not poison the cache for the lifetime of the server.
 let attempts=0;
