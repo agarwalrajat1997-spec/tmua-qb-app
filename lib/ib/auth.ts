@@ -1,4 +1,5 @@
 import "server-only";
+import { getIbAccessState } from "@/lib/ib/access";
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/utils/supabase/server";
@@ -12,5 +13,7 @@ const verifiedUser = cache(async () => {
 export async function requireIbUser(destination: string) {
   const user = await verifiedUser();
   if (!user?.email) redirect(`/ib-login?next=${encodeURIComponent(safeLoginDestination(destination))}`);
+  const access = await getIbAccessState();
+  if (access !== "active") redirect(`/ib-access?state=${access}`);
   return user as typeof user & { email: string };
 }

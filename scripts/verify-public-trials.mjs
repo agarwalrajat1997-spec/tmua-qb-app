@@ -36,7 +36,7 @@ const welcomeMails = [];
 let grantFailure, claimFailure, otpFailure, welcomeOk = true, markerFailure, uniqueFailure;
 const tableKey = (program, email) => `${program}:${email}`;
 function query(table) {
-  assert.match(table, /^(tmua|esat)_free_trials$/);
+  assert.match(table, /^(tmua|esat|ib)_free_trials$/);
   const program = table.split('_')[0];
   const conditions = [];
   let patch;
@@ -68,7 +68,7 @@ const db = {
       assert.equal(value, false);
       rpcCalls.push({ name, args: plain(args) });
       if (name.startsWith('mark_')) return Promise.resolve({ data: null, error: markerFailure });
-      assert.match(name, /^grant_(tmua|esat)_free_trial$/);
+      assert.match(name, /^grant_(tmua|esat|ib)_free_trial$/);
       assert.deepEqual(Object.keys(args).sort(), ['p_email', 'p_student_name']);
       if (uniqueFailure) { uniqueFailure = false; return Promise.resolve({ error: { code: '23505' } }); }
       if (grantFailure) return Promise.resolve({ error: grantFailure });
@@ -101,7 +101,7 @@ const shared = moduleAt('app/api/public/_trial.ts', {
     welcomeMails.push(plain(input)); return { ok: welcomeOk };
   } },
 });
-const routes = Object.fromEntries(['tmua', 'esat'].map(program => [program,
+const routes = Object.fromEntries(['tmua', 'esat', 'ib'].map(program => [program,
   moduleAt(`app/api/public/${program}-free-trial/route.ts`, { '../_trial': shared })]));
 function request(body, overrides = {}) {
   return new Request('https://portal.invalid/api/public/free-trial', {
@@ -113,7 +113,7 @@ const post = (program, email, rest = {}) => routes[program].POST(request({
   email, student_name: 'Example Student', program, ...rest,
 }));
 
-for (const program of ['tmua', 'esat']) {
+for (const program of ['tmua', 'esat', 'ib']) {
   const email = `${program}_student@example.com`;
   const first = await post(program, ` ${email.toUpperCase()} `);
   assert.equal(first.status, 200);
@@ -124,10 +124,10 @@ for (const program of ['tmua', 'esat']) {
   assert.equal(data.login_email_sent, true);
   assert.equal(data.welcome_email_sent, true);
   assert.equal(Date.parse(data.expires_at) - now, 48 * 3_600_000);
-  assert.equal(data.dashboard_url, `https://apps.thrivingscholars.com/${program === 'tmua' ? 'dashboard' : 'esat'}`);
+  assert.equal(data.dashboard_url, `https://apps.thrivingscholars.com/${program === 'tmua' ? 'dashboard' : program}`);
   assert.equal(loginMails.at(-1).email, email);
   assert.equal(loginMails.at(-1).options.shouldCreateUser, true);
-  assert.ok(loginMails.at(-1).options.emailRedirectTo.endsWith(program === 'tmua' ? 'next=%2Fdashboard' : 'next=%2Fesat'));
+  assert.ok(loginMails.at(-1).options.emailRedirectTo.endsWith(program === 'tmua' ? 'next=%2Fdashboard' : `next=%2F${program}`));
   assert.equal(welcomeMails.at(-1).program, program);
   assert.equal(welcomeMails.at(-1).expiresAt, data.expires_at);
 
@@ -216,7 +216,7 @@ const welcome = moduleAt('lib/server/trial-welcome-email.ts', {}, {
     return emailResponse;
   },
 });
-for (const program of ['tmua', 'esat']) {
+for (const program of ['tmua', 'esat', 'ib']) {
   const input = { program, studentName: 'Example', studentEmail: 'test@example.com',
     expiresAt: '2026-10-22T12:00:00Z' };
   assert.equal((await welcome.sendTrialWelcomeEmail(input)).ok, true);
@@ -224,7 +224,7 @@ for (const program of ['tmua', 'esat']) {
   assert.equal(payload.service_id, 'service_5l4w8x2');
   assert.equal(payload.template_params.exam_name, program.toUpperCase());
   assert.equal(payload.template_params.access_duration, '2 days');
-  assert.equal(payload.template_params.login_url, `https://apps.thrivingscholars.com/${program === 'tmua' ? 'dashboard' : 'esat'}`);
+  assert.equal(payload.template_params.login_url, `https://apps.thrivingscholars.com/${program === 'tmua' ? 'dashboard' : program === 'ib' ? 'ib-login?next=%2Fib' : 'esat'}`);
   assert.match(payload.template_params.expires_at, /22 Oct 2026/);
   assert.equal(payload.accessToken, undefined);
 }
@@ -404,5 +404,5 @@ assert.equal(new Set(dashboardIds).size, 19);
 for (const id of dashboardIds) {
   assert.ok(canonicalRegistry.getCanonicalTmuaTest(id), `${id}: must be covered by request-time TMUA access gate`);
 }
-console.log('Public TMUA/ESAT trials passed: validation, exact RPC contract, 48h/repeats, atomic cooldown, delivery failures, and ESAT class expiry protection (all isolated mocks).');
+console.log('Public TMUA/ESAT/IB trials passed: validation, exact RPC contract, 48h/repeats, atomic cooldown, delivery failures, and ESAT class expiry protection (all isolated mocks).');
 console.log('TMUA request-time trial expiry passed: QB and new mock submissions reject expired/equal/invalid expiry; permanent and longer paid access preserved; outages fail closed before scoring.');

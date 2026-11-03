@@ -48,9 +48,11 @@ assert.match(readFileSync('lib/ib/content.ts','utf8'),/^import "server-only"/);
 assert.match(readFileSync('app/ib-login/IBLoginClient.tsx','utf8'),/parsed\.pathname\.startsWith\("\/ib\/"\)/);
 
 // Exercise the real page-level guard as well as the routes' dependency boundary.
+let guardAccess='active';
 let guardUser={email:'synthetic@example.invalid'},guardError=null,verifiedCalls=0;
 const guardCode=ts.transpileModule(readFileSync('lib/ib/auth.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
 const guardImports={
+  '@/lib/ib/access':{getIbAccessState:async()=>guardAccess},
   'server-only':{},'react':{cache:fn=>fn},
   'next/navigation':{redirect:destination=>{throw new Error(`LOGIN:${destination}`);}},
   '@/lib/auth/login-destination':harness.load('lib/auth/login-destination.ts'),
@@ -66,6 +68,12 @@ for(const failure of ['no-user','no-email','provider-error']) {
   await assert.rejects(()=>guard('/ib/mark-scheme/ib-aa-na-001'),/LOGIN:\/ib-login\?next=%2Fib%2Fmark-scheme%2Fib-aa-na-001/);
 }
 assert.equal(verifiedCalls,4);
+guardUser={id:'new-student',email:'synthetic@example.invalid'};guardError=null;
+for(const state of ['trial_expired','trial_required','unavailable']) {
+  guardAccess=state;
+  await assert.rejects(()=>guard('/ib/mark-scheme/ib-aa-na-001'), new RegExp(`LOGIN:/ib-access\\?state=${state}`));
+}
+
 
 // Physics uses the same authenticated routes and prompt-only projection.
 const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60"><path d="M10 50L90 10"/><text x="12" y="12">v / m s-1</text></svg>';

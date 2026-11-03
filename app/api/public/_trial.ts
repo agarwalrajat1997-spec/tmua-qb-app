@@ -5,11 +5,14 @@ import { sendTrialWelcomeEmail, type TrialProgram } from "@/lib/server/trial-wel
 const PRODUCTION_ORIGINS = new Set([
   "https://www.thrivingscholars.com",
   "https://thrivingscholars.com",
+  "https://apps.thrivingscholars.com",
 ]);
 const EMAIL_PATTERN = /^[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}$/i;
 const MAX_BODY_BYTES = 4_096;
 const EMAIL_COOLDOWN_SECONDS = 300;
 const PROGRAMMES = {
+  ib: { dashboard: "/ib", grant: "grant_ib_free_trial", table: "ib_free_trials",
+    marker: "mark_ib_trial_started_email_sent" },
   tmua: { dashboard: "/dashboard", grant: "grant_tmua_free_trial", table: "tmua_free_trials",
     marker: "mark_tmua_trial_started_email_sent" },
   esat: { dashboard: "/esat", grant: "grant_esat_free_trial", table: "esat_free_trials",

@@ -46,7 +46,8 @@ const db={auth:{getUser:async()=>({data:{user},error:null})},from(table){assert.
     then(resolve,reject){try{if(dbFailure)return resolve({error:{code:'503'}});const found=[...rows.values()].filter(row=>filters.every(([k,v])=>row[k]===v));if(action==='update')for(const row of found)Object.assign(row,patch);resolve({data:found,error:null});}catch(e){reject(e);}}
   };return query;
 }};
-const api=ibHarness({moduleMocks:{'@/lib/supabase/server':{createSupabaseServerClient:async()=>db}}}).load('app/api/ib/mocks/[id]/route.ts');
+let ibAccess='active';
+const api=ibHarness({moduleMocks:{'@/lib/ib/access':{getIbAccessState:async()=>ibAccess},'@/lib/supabase/server':{createSupabaseServerClient:async()=>db}}}).load('app/api/ib/mocks/[id]/route.ts');
 const m=PHYSICS_MOCKS[0],id='22222222-2222-4222-8222-222222222222',items=content.getMockItems(m.id,'1');
 const correct=Object.fromEntries(items.filter(i=>i.question.correctOption).map(i=>[i.question.id,i.question.correctOption]));
 const body={action:'submit',attemptId:id,paper:'1',answers:correct,elapsed:100};
@@ -66,3 +67,6 @@ response=await post({...body,action:'mark',selfMarks:marks});assert.equal(respon
 assert.equal((await get()).status,200);
 const migration=readFileSync('supabase/migrations/20261102090000_ib_physics_mock_attempts.sql','utf8');assert.match(migration,/enable row level security/);assert.match(migration,/grant update\(self_marks, marked_at\)/);assert.doesNotMatch(migration,/grant update on/);
 console.log(JSON.stringify({status:'passed',mocks:6,paperSittings:12,uniqueQuestions:seen.size,diagrams,checks:'Exact IB totals/timings; all applicable Paper 1A subtopics; SL/HL separation; unique numbering; automatic scoring; bounded self-marks; private API; immutable retry; history; EmailJS payload; no live mail sent'}));
+
+ibAccess='trial_expired';assert.equal((await get()).status,403);assert.equal((await post({})).status,403);
+ibAccess='unavailable';assert.equal((await get()).status,503);

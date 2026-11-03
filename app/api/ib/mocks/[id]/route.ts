@@ -1,3 +1,4 @@
+import { getIbAccessState } from "@/lib/ib/access";
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getPhysicsMock, getMockItems } from "@/lib/ib/physics-mocks";
@@ -24,6 +25,8 @@ export async function GET(req:Request,{params}:{params:Promise<{id:string}>}) {
   const db = await createSupabaseServerClient();
   const {data:{user},error:authError} = await db.auth.getUser();
   if (authError || !user) return json({error:"Please sign in to view your attempts."},401);
+  const access = await getIbAccessState();
+  if (access !== "active") return json({error: access === "unavailable" ? "Access check is temporarily unavailable. Please retry." : "Your IB trial has ended or access is required.", access_url: "/ib-access"}, access === "unavailable" ? 503 : 403);
   const attempt = new URL(req.url).searchParams.get("attempt");
   if (attempt) {
     if (!uuid.test(attempt)) return json({error:"Invalid attempt."},400);
@@ -45,6 +48,8 @@ export async function POST(req:Request,{params}:{params:Promise<{id:string}>}) {
   const db = await createSupabaseServerClient();
   const {data:{user},error:authError} = await db.auth.getUser();
   if (authError || !user) return json({error:"Your answers are kept on this device. Sign in again, then retry."},401);
+  const access = await getIbAccessState();
+  if (access !== "active") return json({error: access === "unavailable" ? "Access check is temporarily unavailable. Please retry." : "Your IB trial has ended or access is required.", access_url: "/ib-access"}, access === "unavailable" ? 503 : 403);
   let body;
   try {
     const raw = await req.text();

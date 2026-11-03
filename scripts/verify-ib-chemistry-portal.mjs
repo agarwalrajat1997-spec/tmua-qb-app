@@ -128,8 +128,7 @@ for(const course of ['sl','hl']){
 }
 const destinations=[];
 const blockedPortal=ibHarness({questions,useContentModule:true,user:null,onDestination:url=>destinations.push(url)}).load('app/ib/page.tsx').default;
-await assert.rejects(()=>blockedPortal({searchParams:Promise.resolve({subject:'chemistry',course:'sl',view:'questions'})}),/REDIRECT/);
-assert.equal(destinations.at(-1),'/ib-login?next='+encodeURIComponent('/ib?subject=chemistry&view=questions&course=sl'));
+await assert.rejects(()=>blockedPortal({searchParams:Promise.resolve({subject:'chemistry',course:'sl',view:'questions'})}),/AUTH_REQUIRED/);
 for(const path of ['/ib/question-bank/chemistry-structure-1','/ib/questions/ib-chem-s1-001','/ib/mark-scheme/ib-chem-s1-001']){
   assert.equal(catalog.ibSubjectForPath(path),'chemistry');
   const login=ibHarness({query:'next='+encodeURIComponent(path+'?course=sl')}).load('app/ib-login/IBLoginClient.tsx').default;
