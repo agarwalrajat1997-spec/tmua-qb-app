@@ -1,0 +1,699 @@
+{
+  "id": "physics-sl-set-b-paper-2",
+  "mockId": "physics-sl-challenge-b",
+  "course": "sl",
+  "set": "B",
+  "paper": "2",
+  "title": "Physics SL - Set B - Paper 2",
+  "minutes": 90,
+  "marks": 50,
+  "calculator": true,
+  "questions": [
+    {
+      "id": "phy-sl-b-2-01",
+      "section": "2",
+      "number": 1,
+      "title": "Settling spheres and model limits",
+      "syllabusCode": "A.2",
+      "syllabusRefs": [
+        "A.2"
+      ],
+      "level": "core",
+      "subtopic": "Settling spheres and model limits",
+      "difficulty": "hard",
+      "stem": "A solid sphere of radius $1.00\\,\\mathrm{mm}$ and density $3000\\,\\mathrm{kg\\,m^{-3}}$ falls through a stationary liquid of density $1000\\,\\mathrm{kg\\,m^{-3}}$ and dynamic viscosity $0.200\\,\\mathrm{Pa\\,s}$. Use $g=9.81\\,\\mathrm{m\\,s^{-2}}$. For slow laminar motion, drag magnitude is $6\\pi\\eta rv$.",
+      "sourceAnchors": [
+        {
+          "document": "s.pdf",
+          "page": 1,
+          "question": "1",
+          "focus": "Buoyancy and viscous settling, changed to a radius-scaling and validity task"
+        }
+      ],
+      "changeNotes": "Rebuilt context/data and part sequence with independently recomputed results and a new precise figure where useful.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "See the named reproducible author checks and worked solution for this question."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 330\" role=\"img\"><rect x=\"90\" y=\"35\" width=\"270\" height=\"235\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"225\" cy=\"150\" r=\"30\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"225\" y1=\"150\" x2=\"255\" y2=\"150\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"235\" y=\"140\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">r</text><line x1=\"450\" y1=\"100\" x2=\"450\" y2=\"220\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"450,220 446.495,211.71 453.505,211.71\" fill=\"#202020\"/><text x=\"510\" y=\"165\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">motion</text><text x=\"225\" y=\"300\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">liquid vessel; sphere clear of walls</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Identify the three forces on the sphere and show that the net downward driving force, excluding drag, is $\\tfrac43\\pi r^3(\\rho_s-\\rho_l)g$.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the terminal speed in this model.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Predict the terminal-speed change if the radius is doubled while all other quantities remain fixed.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "State one reason your prediction in (c) might fail for a sufficiently large sphere.",
+          "marks": 1
+        }
+      ],
+      "marks": 8,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Weight acts down; buoyancy and motion-opposing viscous drag act up."
+            },
+            {
+              "code": "M1",
+              "text": "Weight is $\\tfrac43\\pi r^3\\rho_s g$ and buoyancy is the displaced-liquid weight $\\tfrac43\\pi r^3\\rho_l g$."
+            },
+            {
+              "code": "A1",
+              "text": "Subtracting yields $F_{\\rm drive}=\\tfrac43\\pi r^3(\\rho_s-\\rho_l)g$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At terminal speed, $6\\pi\\eta rv_t=F_{\\rm drive}$, so $v_t=2r^2(\\rho_s-\\rho_l)g/(9\\eta)$."
+            },
+            {
+              "code": "A1",
+              "text": "$v_t=0.0218\\,\\mathrm{m\\,s^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "With the other parameters fixed, the model gives $v_t\\propto r^2$."
+            },
+            {
+              "code": "A1",
+              "text": "Doubling radius makes the speed four times as large, $0.0872\\,\\mathrm{m\\,s^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "For example, flow may cease to be laminar so Stokes drag no longer applies, or the sphere may become too large for container-wall effects to be negligible. Accept a specific relevant limitation."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) Subtracting yields $F_{\\rm drive}=\\tfrac43\\pi r^3(\\rho_s-\\rho_l)g$.; (b) $v_t=0.0218\\,\\mathrm{m\\,s^{-1}}$.; (c) Doubling radius makes the speed four times as large, $0.0872\\,\\mathrm{m\\,s^{-1}}$.; (d) For example, flow may cease to be laminar so Stokes drag no longer applies, or the sphere may become too large for container-wall effects to be negligible. Accept a specific relevant limitation."
+    },
+    {
+      "id": "phy-sl-b-2-02",
+      "section": "2",
+      "number": 2,
+      "title": "A lamp and a cell with internal resistance",
+      "syllabusCode": "B.5",
+      "syllabusRefs": [
+        "B.5"
+      ],
+      "level": "core",
+      "subtopic": "A lamp and a cell with internal resistance",
+      "difficulty": "hard",
+      "stem": "A cell of emf $12.0\\,\\mathrm V$ and internal resistance $1.00\\,\\Omega$ is connected in series with a $2.00\\,\\Omega$ resistor and a filament lamp. The lamp characteristic is shown and is described by $V_L=I^2$, with $V_L$ in volts and $I$ in amperes. Use the positive operating current.",
+      "sourceAnchors": [
+        {
+          "document": "a.pdf",
+          "page": 5,
+          "question": "11",
+          "focus": "Circuit loop and branch reasoning, changed to a nonlinear lamp operating point"
+        }
+      ],
+      "changeNotes": "Rebuilt context/data and part sequence with independently recomputed results and a new precise figure where useful.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "See the named reproducible author checks and worked solution for this question."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 300\" role=\"img\"><line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"80\" y1=\"235\" x2=\"565\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"322.5\" y=\"285\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">lamp current / A</text><text x=\"80\" y=\"18\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">lamp potential difference / V</text><line x1=\"80\" y1=\"235\" x2=\"80\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"80\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">0</text><line x1=\"201.25\" y1=\"235\" x2=\"201.25\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"201.25\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">1</text><line x1=\"322.5\" y1=\"235\" x2=\"322.5\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"322.5\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">2</text><line x1=\"443.75\" y1=\"235\" x2=\"443.75\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"443.75\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">3</text><line x1=\"565\" y1=\"235\" x2=\"565\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"565\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">4</text><line x1=\"75\" y1=\"235\" x2=\"80\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"239\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">0</text><line x1=\"75\" y1=\"183.75\" x2=\"80\" y2=\"183.75\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"187.75\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">4</text><line x1=\"75\" y1=\"132.5\" x2=\"80\" y2=\"132.5\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"136.5\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">8</text><line x1=\"75\" y1=\"81.25\" x2=\"80\" y2=\"81.25\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"85.25\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">12</text><line x1=\"75\" y1=\"30\" x2=\"80\" y2=\"30\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"34\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">16</text><polyline points=\"80.00,235.00 86.06,234.97 92.12,234.87 98.19,234.71 104.25,234.49 110.31,234.20 116.38,233.85 122.44,233.43 128.50,232.95 134.56,232.41 140.62,231.80 146.69,231.12 152.75,230.39 158.81,229.59 164.88,228.72 170.94,227.79 177.00,226.80 183.06,225.74 189.12,224.62 195.19,223.44 201.25,222.19 207.31,220.87 213.38,219.50 219.44,218.06 225.50,216.55 231.56,214.98 237.62,213.35 243.69,211.65 249.75,209.89 255.81,208.06 261.88,206.17 267.94,204.22 274.00,202.20 280.06,200.12 286.12,197.97 292.19,195.76 298.25,193.49 304.31,191.15 310.38,188.75 316.44,186.28 322.50,183.75 328.56,181.16 334.62,178.50 340.69,175.77 346.75,172.99 352.81,170.14 358.88,167.22 364.94,164.24 371.00,161.20 377.06,158.09 383.12,154.92 389.19,151.69 395.25,148.39 401.31,145.02 407.38,141.60 413.44,138.11 419.50,134.55 425.56,130.93 431.62,127.25 437.69,123.50 443.75,119.69 449.81,115.81 455.88,111.87 461.94,107.87 468.00,103.80 474.06,99.67 480.12,95.47 486.19,91.21 492.25,86.89 498.31,82.50 504.38,78.05 510.44,73.53 516.50,68.95 522.56,64.31 528.62,59.60 534.69,54.82 540.75,49.99 546.81,45.09 552.88,40.12 558.94,35.09 565.00,30.00\" fill=\"none\" stroke=\"#202020\" stroke-width=\"2.2\"/></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Explain why the lamp does not obey Ohm's law over this range.",
+          "marks": 1
+        },
+        {
+          "label": "b",
+          "prompt": "Derive the circuit load-line relation between $V_L$ and $I$.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Find the operating current, graphically or by calculation.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "Calculate the fraction of the cell's electrical power dissipated in the lamp.",
+          "marks": 3
+        }
+      ],
+      "marks": 8,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "$V_L/I=I$ varies with current, so the characteristic does not have constant resistance."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Apply the loop rule including both the external $2.00\\,\\Omega$ and internal $1.00\\,\\Omega$ resistances."
+            },
+            {
+              "code": "A1",
+              "text": "$12.0=V_L+3.00I$, so $V_L=12.0-3.00I$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Intersect the load line with the lamp curve, or solve $I^2+3I-12=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$I=(-3+\\sqrt{57})/2=2.27\\,\\mathrm A$. Accept a reasonable graphical value, approximately $2.2$ to $2.35\\,\\mathrm A$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Lamp power is $P_L=IV_L$; total cell power supplied is $\\varepsilon I$."
+            },
+            {
+              "code": "M1",
+              "text": "The fraction is $V_L/\\varepsilon=I^2/12.0$."
+            },
+            {
+              "code": "A1",
+              "text": "The fraction is $0.431$, approximately $43.1\\%$. Use unrounded current, or follow through a reasonable graphical value."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $V_L/I=I$ varies with current, so the characteristic does not have constant resistance.; (b) $12.0=V_L+3.00I$, so $V_L=12.0-3.00I$.; (c) $I=(-3+\\sqrt{57})/2=2.27\\,\\mathrm A$. Accept a reasonable graphical value, approximately $2.2$ to $2.35\\,\\mathrm A$.; (d) The fraction is $0.431$, approximately $43.1\\%$. Use unrounded current, or follow through a reasonable graphical value."
+    },
+    {
+      "id": "phy-sl-b-2-03",
+      "section": "2",
+      "number": 3,
+      "title": "A resonance tube with an end correction",
+      "syllabusCode": "C.4",
+      "syllabusRefs": [
+        "C.4"
+      ],
+      "level": "core",
+      "subtopic": "A resonance tube with an end correction",
+      "difficulty": "hard",
+      "stem": "A uniform tube of physical length $0.850\\,\\mathrm m$ is closed at one end and open at the other. The speed of sound is $343\\,\\mathrm{m\\,s^{-1}}$. First ignore end correction. The tube is driven by a variable-frequency sound source.",
+      "sourceAnchors": [
+        {
+          "document": "6.pdf",
+          "page": 7,
+          "question": "15",
+          "focus": "Standing sound-wave boundary conditions and resonance lengths"
+        }
+      ],
+      "changeNotes": "Rebuilt context/data and part sequence with independently recomputed results and a new precise figure where useful.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "See the named reproducible author checks and worked solution for this question."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 300\" role=\"img\"><line x1=\"150\" y1=\"40\" x2=\"150\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"250\" y1=\"40\" x2=\"250\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"150\" y1=\"240\" x2=\"250\" y2=\"240\" stroke=\"#202020\" stroke-width=\"4\"/><text x=\"200\" y=\"25\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">open</text><text x=\"200\" y=\"270\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">closed</text><line x1=\"315\" y1=\"240\" x2=\"315\" y2=\"40\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"315,40 318.505,48.2895 311.495,48.2895\" fill=\"#202020\"/><text x=\"385\" y=\"150\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">0.850 m</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Describe the displacement node and antinode positions in the fundamental mode.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the fundamental frequency.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Calculate the next allowed resonance frequency.",
+          "marks": 1
+        },
+        {
+          "label": "d",
+          "prompt": "The measured fundamental is $98.6\\,\\mathrm{Hz}$. Infer the end correction, assuming $L_{\\rm effective}=L_{\\rm physical}+e$.",
+          "marks": 2
+        },
+        {
+          "label": "e",
+          "prompt": "State the pressure-oscillation condition at the closed end.",
+          "marks": 1
+        }
+      ],
+      "marks": 8,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The closed end is a displacement node because the fluid cannot move through it."
+            },
+            {
+              "code": "R1",
+              "text": "The open end is approximately a displacement antinode; the fundamental fits one-quarter wavelength in the effective length."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\lambda_1=4L$, so $f_1=v/(4L)$."
+            },
+            {
+              "code": "A1",
+              "text": "$f_1=343/(4\\times0.850)=101\\,\\mathrm{Hz}$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Only odd harmonics are allowed, so the next resonance is $3f_1=303\\,\\mathrm{Hz}$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$L_{\\rm effective}=343/(4\\times98.6)=0.8697\\,\\mathrm m$."
+            },
+            {
+              "code": "A1",
+              "text": "$e=0.8697-0.850=0.0197\\,\\mathrm m$, approximately $2.0\\,\\mathrm{cm}$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The closed end is a pressure antinode (maximum pressure-variation amplitude)."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) The open end is approximately a displacement antinode; the fundamental fits one-quarter wavelength in the effective length.; (b) $f_1=343/(4\\times0.850)=101\\,\\mathrm{Hz}$.; (c) Only odd harmonics are allowed, so the next resonance is $3f_1=303\\,\\mathrm{Hz}$.; (d) $e=0.8697-0.850=0.0197\\,\\mathrm m$, approximately $2.0\\,\\mathrm{cm}$.; (e) The closed end is a pressure antinode (maximum pressure-variation amplitude)."
+    },
+    {
+      "id": "phy-sl-b-2-04",
+      "section": "2",
+      "number": 4,
+      "title": "A satellite as a gravitational probe",
+      "syllabusCode": "D.1",
+      "syllabusRefs": [
+        "D.1"
+      ],
+      "level": "core",
+      "subtopic": "A satellite as a gravitational probe",
+      "difficulty": "hard",
+      "stem": "A satellite of negligible mass travels in a circular orbit of radius $7.20\\times10^6\\,\\mathrm m$ about a spherical planet. Its period is $6000\\,\\mathrm s$. The planet radius is $6.00\\times10^6\\,\\mathrm m$. Use $G=6.67\\times10^{-11}\\,\\mathrm{N\\,m^2\\,kg^{-2}}$. Neglect other bodies.",
+      "sourceAnchors": [
+        {
+          "document": "6.pdf",
+          "page": 8,
+          "question": "17",
+          "focus": "Kepler scaling linked to a central-mass measurement"
+        }
+      ],
+      "changeNotes": "Rebuilt context/data and part sequence with independently recomputed results and a new precise figure where useful.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "See the named reproducible author checks and worked solution for this question."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 330\" role=\"img\"><circle cx=\"280\" cy=\"150\" r=\"80\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"280\" y=\"155\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">planet</text><circle cx=\"280\" cy=\"150\" r=\"130\" fill=\"none\" stroke=\"#202020\" stroke-width=\"1.5\" stroke-dasharray=\"6 5\"/><circle cx=\"410\" cy=\"150\" r=\"7\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"280\" y1=\"150\" x2=\"410\" y2=\"150\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"400\" y=\"120\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">orbital radius r</text><text x=\"280\" y=\"305\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">orbital radius is measured from the centre</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine the planet mass.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the satellite orbital speed.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Calculate the gravitational field strength at the planet surface.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "A second circular orbit has twice the first orbital radius. Determine its period.",
+          "marks": 2
+        }
+      ],
+      "marks": 8,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$GM=4\\pi^2r^3/T^2$, so $M=4\\pi^2r^3/(GT^2)$."
+            },
+            {
+              "code": "A1",
+              "text": "$M=6.14\\times10^{24}\\,\\mathrm{kg}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$v=2\\pi r/T$."
+            },
+            {
+              "code": "A1",
+              "text": "$v=7.54\\times10^3\\,\\mathrm{m\\,s^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$g_s=GM/R^2$ using the surface radius, not the orbital radius."
+            },
+            {
+              "code": "A1",
+              "text": "$g_s=11.4\\,\\mathrm{N\\,kg^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For the same planet, $T\\propto r^{3/2}$, so $T_2/T_1=2^{3/2}$."
+            },
+            {
+              "code": "A1",
+              "text": "$T_2=1.70\\times10^4\\,\\mathrm s$."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $M=6.14\\times10^{24}\\,\\mathrm{kg}$.; (b) $v=7.54\\times10^3\\,\\mathrm{m\\,s^{-1}}$.; (c) $g_s=11.4\\,\\mathrm{N\\,kg^{-1}}$.; (d) $T_2=1.70\\times10^4\\,\\mathrm s$."
+    },
+    {
+      "id": "phy-sl-b-2-05",
+      "section": "2",
+      "number": 5,
+      "title": "A changing planetary radiation balance",
+      "syllabusCode": "B.2",
+      "syllabusRefs": [
+        "B.2"
+      ],
+      "level": "core",
+      "subtopic": "A changing planetary radiation balance",
+      "difficulty": "hard",
+      "stem": "A rapidly rotating spherical planet receives stellar intensity $S=1000\\,\\mathrm{W\\,m^{-2}}$ at its orbit. Its albedo is $0.360$ and its effective thermal emissivity is $0.800$. Use $\\sigma=5.67\\times10^{-8}\\,\\mathrm{W\\,m^{-2}\\,K^{-4}}$. A simple uniform-temperature model neglects internal heating and has no separate atmospheric layer.",
+      "sourceAnchors": [
+        {
+          "document": "a.pdf",
+          "page": 4,
+          "question": "8",
+          "focus": "Planetary energy-budget modelling, rebuilt as an albedo-change prediction"
+        }
+      ],
+      "changeNotes": "Rebuilt context/data and part sequence with independently recomputed results and a new precise figure where useful.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "See the named reproducible author checks and worked solution for this question."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 310\" role=\"img\"><circle cx=\"300\" cy=\"165\" r=\"85\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"45\" y1=\"110\" x2=\"215\" y2=\"110\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"215,110 206.71,113.505 206.71,106.495\" fill=\"#202020\"/><text x=\"130\" y=\"100\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">stellar radiation</text><line x1=\"45\" y1=\"165\" x2=\"215\" y2=\"165\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"215,165 206.71,168.505 206.71,161.495\" fill=\"#202020\"/><line x1=\"45\" y1=\"220\" x2=\"215\" y2=\"220\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"215,220 206.71,223.505 206.71,216.495\" fill=\"#202020\"/><line x1=\"230\" y1=\"95\" x2=\"160\" y2=\"40\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"160,40 168.684,42.3656 164.353,47.8773\" fill=\"#202020\"/><text x=\"145\" y=\"27\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">reflected</text><line x1=\"385\" y1=\"165\" x2=\"535\" y2=\"165\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"535,165 526.71,168.505 526.71,161.495\" fill=\"#202020\"/><text x=\"465\" y=\"145\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">thermal radiation</text><text x=\"300\" y=\"275\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">uniform-temperature model</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Explain why the globally averaged absorbed intensity is $(1-\\alpha)S/4$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the equilibrium temperature.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "The albedo falls to $0.250$ while emissivity remains fixed. Determine the new equilibrium temperature.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "Give two limitations of this model when used for a real planet.",
+          "marks": 2
+        }
+      ],
+      "marks": 9,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The planet intercepts sunlight over projected area $\\pi R^2$ but distributes/radiates it over surface area $4\\pi R^2$."
+            },
+            {
+              "code": "R1",
+              "text": "Only fraction $1-\\alpha$ is absorbed, giving global average $(1-\\alpha)S/4$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At equilibrium $(1-\\alpha)S/4=\\varepsilon\\sigma T^4$."
+            },
+            {
+              "code": "M1",
+              "text": "$T=[0.640(1000)/(4\\times0.800\\times5.67\\times10^{-8})]^{1/4}$."
+            },
+            {
+              "code": "A1",
+              "text": "$T=244\\,\\mathrm K$ to three significant figures."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$T_{\\rm new}/T_{\\rm old}=[(1-0.250)/(1-0.360)]^{1/4}$."
+            },
+            {
+              "code": "A1",
+              "text": "$T_{\\rm new}=254\\,\\mathrm K$ to three significant figures. Retain unrounded values."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "For example, real temperatures differ with latitude, day/night and seasons, so one uniform $T$ need not represent emission exactly."
+            },
+            {
+              "code": "R1",
+              "text": "For example, clouds/atmospheric absorption and emission cannot generally be represented by one fixed emissivity; albedo and emissivity may change with temperature. Award two distinct relevant limitations, not duplicate wording."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) Only fraction $1-\\alpha$ is absorbed, giving global average $(1-\\alpha)S/4$.; (b) $T=244\\,\\mathrm K$ to three significant figures.; (c) $T_{\\rm new}=254\\,\\mathrm K$ to three significant figures. Retain unrounded values.; (d) For example, clouds/atmospheric absorption and emission cannot generally be represented by one fixed emissivity; albedo and emissivity may change with temperature. Award two distinct relevant limitations, not duplicate wording."
+    },
+    {
+      "id": "phy-sl-b-2-06",
+      "section": "2",
+      "number": 6,
+      "title": "From reactor output to fuel consumption",
+      "syllabusCode": "E.4",
+      "syllabusRefs": [
+        "E.4"
+      ],
+      "level": "core",
+      "subtopic": "From reactor output to fuel consumption",
+      "difficulty": "hard",
+      "stem": "A fission power station delivers $640\\,\\mathrm{MW}$ of electrical power at efficiency $40.0\\%$. Each fission releases $200\\,\\mathrm{MeV}$. Approximate each fissioned uranium-235 nucleus as having mass $235u$. Use $1\\,\\mathrm{eV}=1.60\\times10^{-19}\\,\\mathrm J$, $u=1.66\\times10^{-27}\\,\\mathrm{kg}$ and one day $=86400\\,\\mathrm s$.",
+      "sourceAnchors": [
+        {
+          "document": "a.pdf",
+          "page": 11,
+          "question": "23",
+          "focus": "Controlled fission with quantitative output and fuel accounting"
+        }
+      ],
+      "changeNotes": "Rebuilt context/data and part sequence with independently recomputed results and a new precise figure where useful.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "See the named reproducible author checks and worked solution for this question."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 310\" role=\"img\"><rect x=\"50\" y=\"105\" width=\"145\" height=\"65\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"122.5\" y=\"142.5\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">reactor</text><line x1=\"195\" y1=\"137\" x2=\"325\" y2=\"137\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"325,137 316.71,140.505 316.71,133.495\" fill=\"#202020\"/><text x=\"260\" y=\"110\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">thermal power</text><rect x=\"325\" y=\"105\" width=\"130\" height=\"65\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"390\" y=\"142.5\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">generator</text><line x1=\"455\" y1=\"137\" x2=\"560\" y2=\"137\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"560,137 551.71,140.505 551.71,133.495\" fill=\"#202020\"/><text x=\"510\" y=\"110\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">640 MW</text><line x1=\"390\" y1=\"175\" x2=\"390\" y2=\"270\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"390,270 386.495,261.71 393.505,261.71\" fill=\"#202020\"/><text x=\"470\" y=\"240\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">waste heat</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Explain how the neutron chain reaction can be kept approximately steady.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the thermal power produced by fission.",
+          "marks": 1
+        },
+        {
+          "label": "c",
+          "prompt": "Convert the energy released per fission into joules.",
+          "marks": 1
+        },
+        {
+          "label": "d",
+          "prompt": "Determine the fission rate.",
+          "marks": 2
+        },
+        {
+          "label": "e",
+          "prompt": "Determine the mass of uranium-235 nuclei undergoing fission per day.",
+          "marks": 2
+        },
+        {
+          "label": "f",
+          "prompt": "Explain why the mass-equivalent of the released energy is much smaller than the mass calculated in (e).",
+          "marks": 1
+        }
+      ],
+      "marks": 9,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "On average, each fission must lead to one subsequent fission; too many or too few surviving fission-producing neutrons change the rate."
+            },
+            {
+              "code": "R1",
+              "text": "Neutron-absorbing control rods regulate neutron survival; in a thermal reactor a moderator slows neutrons to increase the likelihood of further fission."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$P_{\\rm thermal}=640\\,\\mathrm{MW}/0.400=1.60\\times10^9\\,\\mathrm W$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$E_f=200\\times10^6\\times1.60\\times10^{-19}=3.20\\times10^{-11}\\,\\mathrm J$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\dot N=P_{\\rm thermal}/E_f$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\dot N=5.00\\times10^{19}\\,\\mathrm{s^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$m=\\dot N(86400)(235)(1.66\\times10^{-27})$."
+            },
+            {
+              "code": "A1",
+              "text": "$m=1.69\\,\\mathrm{kg}$ of uranium-235 nuclei per day. This is not the total mass of fuel assemblies."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Almost all initial mass remains in fission fragments and emitted particles; only the small difference in total rest mass is converted to released energy."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) Neutron-absorbing control rods regulate neutron survival; in a thermal reactor a moderator slows neutrons to increase the likelihood of further fission.; (b) $P_{\\rm thermal}=640\\,\\mathrm{MW}/0.400=1.60\\times10^9\\,\\mathrm W$.; (c) $E_f=200\\times10^6\\times1.60\\times10^{-19}=3.20\\times10^{-11}\\,\\mathrm J$.; (d) $\\dot N=5.00\\times10^{19}\\,\\mathrm{s^{-1}}$.; (e) $m=1.69\\,\\mathrm{kg}$ of uranium-235 nuclei per day. This is not the total mass of fuel assemblies.; (f) Almost all initial mass remains in fission fragments and emitted particles; only the small difference in total rest mass is converted to released energy."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import manifest from "@/content/ib/catalog.json";
-import physicsMocks from "@/content/ib/physics-mocks.json";
+import physicsMocks from "@/content/ib/physics-mocks-2026/catalog.json";
 import mathsMocks from "@/content/ib/aa-mocks-2026/catalog.json";
 import aiMathsMocks from "@/content/ib/ai-mocks-2026/catalog.json";
 import { IB_COURSES, ibIsMathSubject, ibSyllabusSubtopics, type IbCourseLevel, type IbSubject, type IbSummary } from "./catalog";
@@ -16,7 +16,7 @@ export function buildIbContentIndex(all: IbQuestion[]) {
       const questions = published.filter(q => q.subject === subject && questionAvailableForCourse(q, course));
       result[subject] = {
         questions: questions.length,
-        mocks: subject === "physics-hl" ? physicsMocks.filter(t => t.course === course && t.status === "published").length : subject === "math-aa-hl" || subject === "math-aa-sl" ? mathsMocks.filter(t => t.course === (subject === "math-aa-sl" ? "sl" : "hl") && t.status === "published").length : subject === "math-ai-hl" ? aiMathsMocks.filter(t => t.status === "published").length : (manifest.mockTests as { subject: string; status: string }[]).filter(t => t.subject === subject && t.status === "published").length,
+        mocks: subject === "physics-hl" ? physicsMocks.filter(t => t.course === course && t.status === "published").reduce((sum, t) => sum + t.papers.filter(p => p.status === "published").length, 0) : subject === "math-aa-hl" || subject === "math-aa-sl" ? mathsMocks.filter(t => t.course === (subject === "math-aa-sl" ? "sl" : "hl") && t.status === "published").length : subject === "math-ai-hl" ? aiMathsMocks.filter(t => t.status === "published").length : (manifest.mockTests as { subject: string; status: string }[]).filter(t => t.subject === subject && t.status === "published").length,
         topics: Object.fromEntries(IB_COURSES[subject].topics.map(topic => [topic.id, questions.filter(q => q.topicId === topic.id).length])),
         collections: IB_COLLECTIONS.filter(c => c.subject === subject).map(collection => {
           const items = questions.filter(q => q.collectionId === collection.id);

@@ -1,72 +1,47 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { ibHarness } from './ib-component-harness.mjs';
-
-const harness=ibHarness();
-const model=harness.load('lib/ib/physics-mock-model.ts');
-const content=harness.load('lib/ib/physics-mocks.ts');
-const {PHYSICS_MOCKS,cleanAnswers,validateSelfMarks,scoreMock,paperSpec,reportPayload,answerKey}=model;
-assert.equal(PHYSICS_MOCKS.length,6);
-const seen=new Set();let diagrams=0;
-for(const m of PHYSICS_MOCKS){
-  for(const paper of ['1','2']){
-    const items=content.getMockItems(m.id,paper), spec=paperSpec(m.course,paper);
-    assert.equal(items.reduce((s,{question:q})=>s+q.marks,0),spec.marks);
-    for(const {question:q} of items){assert(!seen.has(q.id),q.id);seen.add(q.id);assert.equal(q.source.document,'Independent syllabus-authored practice');if(m.course==='sl')assert.equal(q.level,'core');if(q.diagramSvg||q.diagramUrl)diagrams++;}
-    for(const section of new Set(items.map(i=>i.section))){const sectionItems=items.filter(i=>i.section===section);assert.deepEqual(Array.from(sectionItems,i=>i.number),Array.from({length:sectionItems.length},(_,n)=>n+1));}
-    const full=Object.fromEntries(items.flatMap(({question:q})=>q.questionType==='multiple-choice'?[[q.id,q.correctOption]]:q.parts.map(p=>[answerKey(q.id,p.label),'Worked response'])));
-    const allMarks=Object.fromEntries(items.flatMap(({question:q})=>q.parts.map(p=>[answerKey(q.id,p.label),p.marks])));
-    const answers=cleanAnswers(items,full), marks=validateSelfMarks(items,allMarks);
-    assert.equal(scoreMock(items,answers,marks).total,spec.marks);
-    assert.equal(scoreMock(items,cleanAnswers(items,{}),Object.fromEntries(Object.keys(allMarks).map(k=>[k,0]))).total,0);
-    assert.equal(scoreMock(items,answers,null).total,null);
-    assert.throws(()=>validateSelfMarks(items,{}));
-    const key=Object.keys(allMarks)[0];for(const invalid of [-1,100,0.5,'1',null])assert.throws(()=>validateSelfMarks(items,{...allMarks,[key]:invalid}));
-    const review={id:'11111111-1111-4111-8111-111111111111',submittedAt:'2026-11-02T12:00:00Z',elapsed:120,answers,selfMarks:marks,score:scoreMock(items,answers,marks),solutions:[]};
-    const report=reportPayload(m,paper,review,'student@example.invalid','Student','https://example.invalid');
-    assert.equal(report.to_email,'student@example.invalid');assert.match(report.test_title,new RegExp(m.course.toUpperCase()));assert.match(report.paper1+report.paper2,/self-assessed/);assert.match(report.score,new RegExp(`${spec.marks} / ${spec.marks}`));assert.match(report.solution_link,/\?attempt=/);
-  }
-  const a=content.getMockItems(m.id,'1').filter(i=>i.section==='1A');
-  assert.equal(a.length,m.course==='sl'?25:40);
-  assert.equal(new Set(a.map(i=>i.question.syllabusCode)).size,m.course==='sl'?19:24);
-  const b=content.getMockItems(m.id,'1').filter(i=>i.section==='1B');assert.equal(b.reduce((s,i)=>s+i.question.marks,0),20);assert(b.every(i=>i.question.questionType==='data-based'));
-  const p2=content.getMockItems(m.id,'2');assert.equal(new Set(p2.map(i=>i.question.syllabusCode[0])).size,5);
-  if(m.course==='hl')assert(p2.filter(i=>i.question.level==='ahl').length>=3);
+import {readFileSync,existsSync} from 'node:fs';
+import {ibHarness} from './ib-component-harness.mjs';
+import {physicsFixture} from './physics-mocks-fixtures.mjs';
+const infra=process.argv.includes('--infrastructure-only'),root=ibHarness(),m=root.load('lib/ib/physics-mock-model.ts'),server=root.load('lib/ib/physics-mocks.ts');
+const {PHYSICS_MOCKS,answerKey,cleanAnswers,validateSelfMarks,scoreMock,physicsPdfUrl,reportPayload,restorePhysicsDraft,secondsRemaining}=m;
+const metas=PHYSICS_MOCKS.flatMap(s=>s.papers),fixtures=new Map(),copy=v=>JSON.parse(JSON.stringify(v));
+assert.equal(PHYSICS_MOCKS.length,5);assert.equal(metas.length,10);assert.equal(metas.reduce((s,p)=>s+p.questionCount,0),219);assert.equal(metas.reduce((s,p)=>s+p.marks,0),640);
+for(const course of ['sl','hl'])assert.equal(metas.filter(p=>p.course===course).length,course==='sl'?4:6);
+let actualQuestions=0,actualDiagrams=0;const unique=new Set();
+for(const meta of metas){
+ assert.equal(meta.status,'published');assert.equal(meta.calculator,true);assert.equal(meta.minutes,m.paperSpec(meta.course,meta.paper).minutes);assert.equal(meta.marks,m.paperSpec(meta.course,meta.paper).marks);assert.equal(physicsPdfUrl(meta),`/ib-mock-solutions/${meta.id}.pdf`);assert.throws(()=>physicsPdfUrl({...meta,pdfUrl:'https://evil.invalid'}));
+ const p=server.validatePhysicsMockPaper(physicsFixture(meta),meta);fixtures.set(meta.id,p);
+ const marks=Object.fromEntries(p.questions.flatMap(q=>q.parts.map(part=>[answerKey(q.id,part.label),part.marks]))),answers=Object.fromEntries(p.questions.flatMap(q=>q.questionType==='multiple-choice'?[[q.id,'B']]:q.parts.map(part=>[answerKey(q.id,part.label),'Written working'])));
+ const cleaned=cleanAnswers(p.questions,{...answers,unknown:'discard'});assert(!('unknown'in cleaned));assert.equal(scoreMock(p.questions,cleaned,validateSelfMarks(p.questions,marks)).total,meta.marks);assert.equal(scoreMock(p.questions,cleaned,null).total,null);assert.equal(scoreMock(p.questions,cleaned,null).mcqMaximum,meta.paper==='1'?(meta.course==='sl'?25:40):0);
+ for(const value of [-1,999,.5,'1',null])assert.throws(()=>validateSelfMarks(p.questions,{...marks,[Object.keys(marks)[0]]:value}));assert.throws(()=>validateSelfMarks(p.questions,{}));assert.throws(()=>cleanAnswers(p.questions,null));assert.throws(()=>cleanAnswers(p.questions,{[Object.keys(answers)[0]]:'x'.repeat(12001)}));if(meta.paper==='1')assert.throws(()=>cleanAnswers(p.questions,{[p.questions[0].id]:'Z'}));
+ const prompt=server.physicsMockPrompt(p,meta),solutions=server.physicsMockSolutions(p);assert.doesNotMatch(JSON.stringify(prompt),/PRIVATE_|markScheme|answerSummary|correctOption|sourceAnchors|changeNotes|verification|cognitiveDemand|diagramSvg/);assert.doesNotMatch(JSON.stringify(solutions),/PRIVATE_(SOURCE|FOCUS|CHANGE|DEMAND|METHOD|VERIFICATION)|sourceAnchors|changeNotes|verification|cognitiveDemand|diagramSvg/);assert.match(prompt.questions[0].diagramUrl,/^data:image\/svg\+xml;base64,/);
+ const review={id:'22222222-2222-4222-8222-222222222222',name:'Student',elapsed:25,submittedAt:'2026-11-04T00:00:00Z',answers:cleaned,selfMarks:null,score:scoreMock(p.questions,cleaned,null),solutions},pending=reportPayload(meta,review,'student@example.invalid','https://example.invalid'),scored=reportPayload(meta,{...review,selfMarks:marks,score:scoreMock(p.questions,cleaned,marks)},'student@example.invalid','https://example.invalid');assert.match(pending.score,/pending/);assert.doesNotMatch(pending.score,/null|NaN/);assert.match(scored.score,/self-assessed/);assert.equal(pending.solution_link,physicsPdfUrl(meta,'https://example.invalid'));assert.equal(scored.solution_link,pending.solution_link);assert.match(pending.paper1+pending.paper2,/Written marking is pending/);
+ const d={version:2,attemptId:review.id,name:'Student',startedAt:100000,deadline:100000+meta.minutes*60000,elapsed:0,stage:'running',index:0,answers:cleaned,flags:{[p.questions[0].id]:true},marks:{}};assert.equal(restorePhysicsDraft(JSON.stringify(d),prompt).deadline,d.deadline);assert.equal(secondsRemaining(d.deadline,d.startedAt+25000,meta.minutes*60),meta.minutes*60-25);assert.equal(secondsRemaining(0,1,10),0);for(const patch of [{index:-1},{deadline:d.deadline+1},{attemptId:'bad'},{answers:[]},{marks:{unknown:1}},{flags:{unknown:true}},{answers:{unknown:'x'}}])assert.equal(restorePhysicsDraft(JSON.stringify({...d,...patch}),prompt),null);
+ for(const change of [p=>p.questions[0].marks++,p=>p.questions[0].markScheme[0].steps[0].code='N1',p=>p.questions[0].diagramSvg='<svg viewBox="0 0 10 10"><script>alert(1)</script></svg>',p=>p.questions[1].id=p.questions[0].id,p=>p.questions[0].number=99]){const bad=copy(p);change(bad);assert.throws(()=>server.validatePhysicsMockPaper(bad,meta));}
+ if(!infra){const path=`content/ib/physics-mocks-2026/papers/${meta.id}.json`;assert(existsSync(path),`Missing ${path}`);const actual=server.validatePhysicsMockPaper(JSON.parse(readFileSync(path,'utf8')),meta);for(const q of actual.questions){assert(!unique.has(q.id));unique.add(q.id);actualQuestions++;actualDiagrams+=Number(!!q.diagramSvg);}assert(existsSync(`public${meta.pdfUrl}`),`Missing PDF ${meta.id}`);}
 }
-assert.equal(seen.size,282);assert(diagrams>50);
-
-// Exercise the actual route handlers with an in-memory DB adapter. No network or emails.
-let user={id:'11111111-1111-4111-8111-111111111111',email:'student@example.invalid'};
-let dbFailure=false;const rows=new Map();
-const db={auth:{getUser:async()=>({data:{user},error:null})},from(table){assert.equal(table,'ib_physics_mock_attempts');let action='select',patch=null,filters=[];
-  const query={select(){return query;},eq(k,v){filters.push([k,v]);return query;},order(){return query;},limit(){return query;},
-    insert:async row=>{if(dbFailure)return {error:{code:'503'}};if(rows.has(row.id))return {error:{code:'23505'}};rows.set(row.id,{...row,submitted_at:'2026-11-02T12:00:00Z',self_marks:null});return {error:null};},
-    update(value){action='update';patch=value;return query;},
-    async maybeSingle(){if(dbFailure)return {data:null,error:{code:'503'}};return {data:[...rows.values()].find(row=>filters.every(([k,v])=>row[k]===v))??null,error:null};},
-    then(resolve,reject){try{if(dbFailure)return resolve({error:{code:'503'}});const found=[...rows.values()].filter(row=>filters.every(([k,v])=>row[k]===v));if(action==='update')for(const row of found)Object.assign(row,patch);resolve({data:found,error:null});}catch(e){reject(e);}}
-  };return query;
-}};
-let ibAccess='active';
-const api=ibHarness({moduleMocks:{'@/lib/ib/access':{getIbAccessState:async()=>ibAccess},'@/lib/supabase/server':{createSupabaseServerClient:async()=>db}}}).load('app/api/ib/mocks/[id]/route.ts');
-const m=PHYSICS_MOCKS[0],id='22222222-2222-4222-8222-222222222222',items=content.getMockItems(m.id,'1');
-const correct=Object.fromEntries(items.filter(i=>i.question.correctOption).map(i=>[i.question.id,i.question.correctOption]));
-const body={action:'submit',attemptId:id,paper:'1',answers:correct,elapsed:100};
-const post=(value,origin='https://example.invalid')=>api.POST(new Request(`https://example.invalid/api/ib/mocks/${m.id}`,{method:'POST',headers:{origin,'Content-Type':'application/json'},body:JSON.stringify(value)}),{params:Promise.resolve({id:m.id})});
-const get=()=>api.GET(new Request(`https://example.invalid/api/ib/mocks/${m.id}?attempt=${id}`),{params:Promise.resolve({id:m.id})});
-assert.equal((await post(body,'https://evil.invalid')).status,403);
-const account=user;user=null;assert.equal((await post(body)).status,401);assert.equal((await get()).status,401);user=account;
-assert.equal((await post({...body,answers:{[items[0].question.id]:'E'}})).status,400);
-assert.equal((await post({...body,elapsed:99999})).status,400);
-dbFailure=true;assert.equal((await post(body)).status,503);dbFailure=false;
-let response=await post(body);assert.equal(response.status,200);let data=await response.json();assert.equal(data.review.score.mcq,25);assert.equal(data.review.score.total,null);assert(data.review.solutions.length>25);
-response=await post({...body,answers:{}});assert.equal((await response.json()).review.score.mcq,25,'Retry must not replace answers');assert.equal(rows.size,1);
-user={id:'33333333-3333-4333-8333-333333333333',email:'other@example.invalid'};assert.equal((await get()).status,404);assert.equal((await post(body)).status,404);user=account;
-assert.equal((await post({...body,action:'mark',selfMarks:{}})).status,400);
-const marks=Object.fromEntries(items.flatMap(({question:q})=>q.parts.map(p=>[answerKey(q.id,p.label),p.marks])));
-response=await post({...body,action:'mark',selfMarks:marks});assert.equal(response.status,200);assert.equal((await response.json()).review.score.total,45);
-assert.equal((await get()).status,200);
-const migration=readFileSync('supabase/migrations/20261102090000_ib_physics_mock_attempts.sql','utf8');assert.match(migration,/enable row level security/);assert.match(migration,/grant update\(self_marks, marked_at\)/);assert.doesNotMatch(migration,/grant update on/);
-console.log(JSON.stringify({status:'passed',mocks:6,paperSittings:12,uniqueQuestions:seen.size,diagrams,checks:'Exact IB totals/timings; all applicable Paper 1A subtopics; SL/HL separation; unique numbering; automatic scoring; bounded self-marks; private API; immutable retry; history; EmailJS payload; no live mail sent'}));
-
-ibAccess='trial_expired';assert.equal((await get()).status,403);assert.equal((await post({})).status,403);
-ibAccess='unavailable';assert.equal((await get()).status,503);
+const owner={id:'11111111-1111-4111-8111-111111111111',email:'student@example.invalid'};let user=owner,access='active',outage=false,loads=0,queries=0,writes=0;const rows=new Map();
+const db={auth:{getUser:async()=>({data:{user},error:null})},from(table){queries++;assert(['ib_physics_challenge_attempts','ib_physics_mock_attempts'].includes(table));let action='select',patch,filters=[];const matching=()=>[...rows.values()].filter(r=>r.table===table&&filters.every(([k,v])=>(v&&typeof v==='object'&&Array.isArray(v.includes)?v.includes.includes(r[k]):r[k]===v)));const q={select(){return q;},eq(k,v){filters.push([k,v]);return q;},is(k,v){filters.push([k,v]);return q;},in(k,values){filters.push([k,{includes:values}]);return q;},order(){return q;},limit(){return q;},insert:async r=>{writes++;if(outage)return {error:{code:'503'}};if(rows.has(r.id))return {error:{code:'23505'}};rows.set(r.id,{...r,table,submitted_at:'2026-11-04T00:00:00Z',self_marks:null,marked_at:null});return {error:null};},update(p){writes++;patch=p;action='update';return q;},async maybeSingle(){return outage?{data:null,error:{code:'503'}}:{data:matching()[0]??null,error:null};},then(resolve){if(outage)return resolve({error:{code:'503'}});const found=matching();if(action==='update')for(const r of found)Object.assign(r,patch);resolve({data:found,error:null});}};return q;}};
+let archiveLoads=0;
+const modules={'@/lib/supabase/server':{createSupabaseServerClient:async()=>db},'@/lib/ib/access':{getIbAccessState:async()=>access},'@/lib/ib/physics-mocks':{...server,getPhysicsMockPaper:async(id,p)=>{loads++;return fixtures.get(m.getPhysicsPaperMeta(id,p)?.id);}},'@/lib/ib/physics-mock-archive':{legacyReview:row=>{archiveLoads++;return {id:row.id,spec:{minutes:90,marks:55}};}}};
+const api=ibHarness({moduleMocks:modules}).load('app/api/ib/mocks/[id]/route.ts'),meta=metas[0],attempt='33333333-3333-4333-8333-333333333333';
+const ctx=id=>({params:Promise.resolve({id})}),url=id=>`https://example.invalid/api/ib/mocks/${id}`,body={action:'submit',paper:'1',attemptId:attempt,name:'Student',elapsed:30,answers:{[fixtures.get(meta.id).questions[0].id]:'B'}};
+const post=(b=body,id=meta.mockId,origin='https://example.invalid')=>api.POST(new Request(url(id),{method:'POST',headers:{origin},body:JSON.stringify(b)}),ctx(id));const get=(suffix='',id=meta.mockId)=>api.GET(new Request(url(id)+suffix),ctx(id));
+assert.equal((await post(body,meta.mockId,'https://evil.invalid')).status,403);assert.equal(writes,0);user=null;assert.equal((await post()).status,401);assert.equal((await get()).status,401);user=owner;
+for(const state of ['trial_required','trial_expired','unavailable','unexpected_state']){access=state;const before={loads,queries,writes};assert.equal((await get('?attempt='+attempt)).status,state==='unavailable'?503:403);assert.equal((await post()).status,state==='unavailable'?503:403);assert.deepEqual({loads,queries,writes},before);}access='active';
+outage=true;assert.equal((await post()).status,503);assert.equal(rows.size,0);outage=false;let res=await post();assert.equal(res.status,200);let data=await res.json();assert.equal(data.review.name,'Student');assert.equal(data.review.score.mcq,1);assert.equal(data.review.score.total,null);assert.doesNotMatch(JSON.stringify(data),/PRIVATE_(SOURCE|CHANGE|VERIFICATION|DEMAND|METHOD|FOCUS)/);assert.equal(res.headers.get('cache-control'),'private, no-store');
+assert.equal((await post({...body,name:'Changed',answers:{}})).status,200);assert.equal(rows.get(attempt).student_name,'Student');assert.equal((await get('?attempt='+attempt+'&paper=2')).status,404);assert.equal((await post({...body,paper:'2'})).status,404);assert.equal(rows.get(attempt).paper,'1');
+const p=fixtures.get(meta.id),marks=Object.fromEntries(p.questions.flatMap(q=>q.parts.map(part=>[answerKey(q.id,part.label),part.marks])));assert.equal((await post({action:'mark',paper:'1',attemptId:attempt,selfMarks:{}})).status,400);assert.equal((await post({action:'mark',paper:'1',attemptId:attempt,selfMarks:marks})).status,200);const firstMarks=copy(rows.get(attempt).self_marks);assert.equal((await post({action:'mark',paper:'1',attemptId:attempt,selfMarks:Object.fromEntries(Object.keys(marks).map(k=>[k,0]))})).status,200);assert.deepEqual(copy(rows.get(attempt).self_marks),firstMarks);
+user={id:'44444444-4444-4444-8444-444444444444',email:'other@example.invalid'};assert.equal((await get('?attempt='+attempt)).status,404);assert.equal((await post()).status,404);assert.equal((await post({action:'mark',paper:'1',attemptId:attempt,selfMarks:marks})).status,404);user=owner;
+assert.equal((await get()).status,200);assert.equal((await post({...body,elapsed:7201})).status,400);assert.equal((await post({...body,name:'x'.repeat(101)})).status,400);
+const oldId='physics-sl-mock-01',oldAttempt='55555555-5555-4555-8555-555555555555';assert.equal((await post(body,oldId)).status,410);assert.equal((await get('?attempt='+oldAttempt,oldId)).status,404);assert.equal(archiveLoads,0);rows.set(oldAttempt,{table:'ib_physics_mock_attempts',id:oldAttempt,user_id:owner.id,mock_id:oldId,paper:'2',answers:{},self_marks:null});res=await get('?attempt='+oldAttempt,oldId);assert.equal(res.status,200);assert.equal((await res.json()).review.spec.marks,55);assert.equal(archiveLoads,1);
+const archiveApi=ibHarness({moduleMocks:modules}).load('app/api/ib/mocks/archive/route.ts');let ah=await archiveApi.GET(new Request('https://example.invalid/api/ib/mocks/archive?course=sl'));assert.equal(ah.status,200);assert.equal((await ah.json()).attempts[0].id,oldAttempt);for(const state of ['trial_required','trial_expired','unavailable']){access=state;const before=queries;assert.equal((await archiveApi.GET(new Request('https://example.invalid/api/ib/mocks/archive?course=sl'))).status,state==='unavailable'?503:403);assert.equal(queries,before);}access='active';user={id:'66666666-6666-4666-8666-666666666666',email:'archive-other@example.invalid'};ah=await archiveApi.GET(new Request('https://example.invalid/api/ib/mocks/archive?course=sl'));assert.equal((await ah.json()).attempts.length,0);user=owner;
+const realLegacy=root.load('lib/ib/physics-mock-archive.ts').legacyReview({id:oldAttempt,mock_id:oldId,paper:'2',answers:{},elapsed_seconds:5400,submitted_at:'2026-11-02T00:00:00Z',self_marks:null});assert.equal(realLegacy.spec.marks,55);assert.equal(realLegacy.score.maximum,55);assert.equal(realLegacy.elapsed,5400);
+let authCalls=0,pageLoads=0;const page=ibHarness({user:owner,onAuth:()=>authCalls++,moduleMocks:{...modules,'@/lib/ib/physics-mocks':{...server,getPhysicsMockPaper:async()=>{assert(authCalls>0);pageLoads++;return p;}}}}).load('app/ib/mocks/[id]/[paper]/page.tsx').default;const tree=await page({params:Promise.resolve({id:meta.mockId,paper:'1'}),searchParams:Promise.resolve({})});assert.equal(pageLoads,1);assert.equal(tree.props.paper.id,meta.id);assert.doesNotMatch(JSON.stringify(tree.props.paper),/PRIVATE_|correctOption|markScheme/);
+for(const file of ['lib/ib/physics-mock-model.ts','lib/ib/physics-mocks.ts','app/ib/mocks/PhysicsMockRunner.tsx'])assert.doesNotMatch(readFileSync(file,'utf8'),/content\/ib\/physics-hl\/|physics-mocks\.json|IbQuestion|ibQuestionSchema/);
+const runner=readFileSync('app/ib/mocks/PhysicsMockRunner.tsx','utf8');assert.match(runner,/deliverEmail\(result, "completion"\)/);assert.match(runner,/deliverEmail\(data.review, "scored"\)/);assert.match(runner,/physicsPdfUrl\(paper\)/);assert.match(runner,/if \(pdfOpen|pdfOpen \?/);assert.match(runner,/ts:ib-physics:v2:\$\{accountId\}:\$\{paper.id\}/);
+const index=ibHarness().load('lib/ib/build-content-index.ts').buildIbContentIndex([]);assert.equal(index.summaries.hl['physics-hl'].mocks,6);assert.equal(index.summaries.sl['physics-hl'].mocks,4);
+const legacy=ibHarness().load('lib/ib/physics-mock-legacy-model.ts');assert.equal(legacy.paperSpec('sl','2').marks,55);assert.equal(m.paperSpec('sl','2').marks,50);
+const sql=readFileSync('supabase/migrations/20261104004753_ib_physics_challenge_attempts.sql','utf8');assert.match(sql,/enable row level security/i);assert.match(sql,/grant insert \(id, user_id, mock_id, paper, student_name, answers, elapsed_seconds\)/i);assert.match(sql,/Saved self-assessment is immutable/);assert.doesNotMatch(sql,/alter table public\.ib_physics_mock_attempts/i);
+if(!infra){assert.equal(actualQuestions,219);assert(actualDiagrams>=110);}
+console.log(JSON.stringify({status:'passed',scope:infra?'isolated infrastructure fixtures':'content and isolated infrastructure',sets:5,papers:10,questions:infra?219:actualQuestions,marks:640,diagrams:actualDiagrams,checks:['Standalone validator','Prompt/review privacy allowlists','MCQ and written scoring','Pending/scored shared PDF reports','Strict draft/deadline','Actual API auth/access fail closed','Owner isolation','Immutable idempotent submit/mark','Legacy read-only 55-mark archive','Guarded page','RLS migration'],liveEmailsSent:0}));

@@ -1,0 +1,9 @@
+// Isolated synthetic paper builder. Never imported by the application or published.
+export function physicsFixture(meta) {
+ const counts=meta.paper==='1'?[meta.course==='hl'?40:25,2]:[meta.course==='hl'?9:6];
+ const questions=counts.flatMap((count,index)=>Array.from({length:count},(_,i)=>{
+  const section=meta.paper==='1'?(index===0?'1A':'1B'):'2',mcq=section==='1A',number=i+1,marks=mcq?1:section==='1B'||meta.course==='hl'?10:number<5?8:9;
+  return {id:`phy-${meta.course}-${meta.set.toLowerCase()}-${section.toLowerCase()}-${String(number).padStart(2,'0')}`,section,number,title:'Isolated fixture',syllabusCode:`${'ABCDE'[i%5]}.1`,syllabusRefs:[`${'ABCDE'[i%5]}.1`],level:meta.course==='hl'&&i%3===0?'ahl':'core',subtopic:'Fixture physics',difficulty:'hard',questionType:mcq?'multiple-choice':section==='1B'?'data-based':'structured',marks,stem:'Isolated API/browser fixture; not publication content. A graph gives $v=2t$.',parts:mcq?[]:[{label:'a',prompt:'Fixture working and evaluation.',marks}],...(mcq?{options:['A','B','C','D'].map(label=>({label,text:`Choice ${label}`})),correctOption:'B'}:{}),markScheme:[{part:mcq?'':'a',steps:[{code:`A${marks}`,text:'PRIVATE_SCHEME_CANARY'}]}],answerSummary:'PRIVATE_ANSWER_CANARY',diagramSvg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150"><path d="M30 10V120H280M30 120L260 20" fill="none" stroke="black"/><text x="140" y="145">Time / s</text></svg>',sourceAnchors:[{document:'PRIVATE_SOURCE_CANARY.pdf',page:1,question:'Q1',focus:'PRIVATE_FOCUS_CANARY'}],changeNotes:'PRIVATE_CHANGE_CANARY',cognitiveDemand:'PRIVATE_DEMAND_CANARY',verification:{method:'PRIVATE_METHOD_CANARY',notes:'PRIVATE_VERIFICATION_CANARY'}};
+ }));
+ return {id:meta.id,mockId:meta.mockId,course:meta.course,set:meta.set,paper:meta.paper,title:meta.title,minutes:meta.minutes,marks:meta.marks,calculator:true,questions};
+}

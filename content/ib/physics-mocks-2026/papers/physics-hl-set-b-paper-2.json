@@ -1,0 +1,1063 @@
+{
+  "id": "physics-hl-set-b-paper-2",
+  "mockId": "physics-hl-challenge-b",
+  "course": "hl",
+  "set": "B",
+  "paper": "2",
+  "title": "Physics HL - Set B - Paper 2",
+  "minutes": 150,
+  "marks": 90,
+  "calculator": true,
+  "questions": [
+    {
+      "id": "phy-hl-b-2-01",
+      "section": "2",
+      "number": 1,
+      "title": "An inspection trolley on an inclined rail",
+      "syllabusCode": "A.3",
+      "syllabusRefs": [
+        "A.2",
+        "A.3"
+      ],
+      "level": "core",
+      "subtopic": "An inspection trolley on an inclined rail",
+      "difficulty": "hard",
+      "stem": "A motorized inspection trolley of mass $30.0\\,\\mathrm{kg}$ moves up a rail inclined at $5.00^\\circ$ to the horizontal. Rolling and aerodynamic resistance have resultant magnitude $F_r=bv^2$, opposite to the motion. The motor transfers $80.0\\%$ of its electrical input power to mechanical power. At a steady uphill speed of $3.00\\,\\mathrm{m\\,s^{-1}}$, input power is $300\\,\\mathrm W$. Take $g=9.81\\,\\mathrm{m\\,s^{-2}}$.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 1,
+          "question": "1",
+          "focus": "An inspection trolley on an inclined rail"
+        }
+      ],
+      "changeNotes": "New inclined inspection system, efficiency and gravity; uses force balances in opposite directions and a high-speed limiting law instead of the source car graph.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q01 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 280\" role=\"img\"><line x1=\"70\" y1=\"220\" x2=\"520\" y2=\"180.63\" stroke=\"#202020\" stroke-width=\"2\"/><g transform=\"rotate(-5 300 200)\"><rect x=\"245\" y=\"150\" width=\"110\" height=\"50\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"300\" y=\"180\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">30.0 kg</text></g><line x1=\"350\" y1=\"145\" x2=\"445\" y2=\"136.689\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"445,136.689 437.047,140.902 436.437,133.92\" fill=\"#202020\"/><text x=\"397.5\" y=\"130.844\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">v uphill</text><line x1=\"245\" y1=\"210\" x2=\"155\" y2=\"217.874\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"155,217.874 162.953,213.66 163.563,220.643\" fill=\"#202020\"/><text x=\"170\" y=\"250\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">resistance</text><line x1=\"70\" y1=\"220\" x2=\"520\" y2=\"220\" stroke=\"#202020\" stroke-width=\"2\" stroke-dasharray=\"6 5\"/><text x=\"480\" y=\"207\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">5.00°</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine $b$ and express its unit using fundamental SI units.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the electrical input power required for a steady uphill speed of $6.00\\,\\mathrm{m\\,s^{-1}}$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "The trolley is now allowed to roll downhill with its motor disengaged. Determine its terminal speed under the same resistance model.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "For very large uphill speeds, explain how the steady speed changes when electrical input power is multiplied by eight. State the approximation required.",
+          "marks": 2
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Steady mechanical power is $0.800(300)=240\\,\\mathrm W$, so driving force is $240/3=80.0\\,\\mathrm N$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "M1",
+              "text": "Balance gives $80.0=30.0(9.81)\\sin5^\\circ+b(3.00)^2$."
+            },
+            {
+              "code": "A1",
+              "text": "$b=6.04\\,\\mathrm{kg\\,m^{-1}}$. Since $F=bv^2$, units are $(\\mathrm{kg\\,m\\,s^{-2}})/(\\mathrm{m^2s^{-2}})=\\mathrm{kg\\,m^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At $6.00\\,\\mathrm{m\\,s^{-1}}$, gravitational force is still $25.650\\,\\mathrm N$, while resistance is $b(6.00)^2=217.400\\,\\mathrm N$."
+            },
+            {
+              "code": "M1",
+              "text": "Mechanical power is $(25.650+217.400)(6.00)=1458.30\\,\\mathrm W$; divide by efficiency."
+            },
+            {
+              "code": "A1",
+              "text": "Input power is $1.82\\times10^3\\,\\mathrm W$ to three significant figures. It is not eight times $300\\,\\mathrm W$ because the gravitational term scales only linearly with speed."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At terminal speed, $bv^2=mg\\sin5.00^\\circ$."
+            },
+            {
+              "code": "A1",
+              "text": "$v=\\sqrt{25.650/6.03890}=2.06\\,\\mathrm{m\\,s^{-1}}$ downhill."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "If $bv^2\\gg mg\\sin5^\\circ$, the required mechanical power is approximately $bv^3$."
+            },
+            {
+              "code": "A1",
+              "text": "With unchanged efficiency, $v\\propto P_{\\rm in}^{1/3}$; multiplying power by eight approximately doubles steady speed."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $b=6.04\\,\\mathrm{kg\\,m^{-1}}$. Since $F=bv^2$, units are $(\\mathrm{kg\\,m\\,s^{-2}})/(\\mathrm{m^2s^{-2}})=\\mathrm{kg\\,m^{-1}}$.; (b) Input power is $1.82\\times10^3\\,\\mathrm W$ to three significant figures. It is not eight times $300\\,\\mathrm W$ because the gravitational term scales only linearly with speed.; (c) $v=\\sqrt{25.650/6.03890}=2.06\\,\\mathrm{m\\,s^{-1}}$ downhill.; (d) With unchanged efficiency, $v\\propto P_{\\rm in}^{1/3}$; multiplying power by eight approximately doubles steady speed."
+    },
+    {
+      "id": "phy-hl-b-2-02",
+      "section": "2",
+      "number": 2,
+      "title": "Inferring a planet field from two orbits",
+      "syllabusCode": "D.1",
+      "syllabusRefs": [
+        "D.1"
+      ],
+      "level": "ahl",
+      "subtopic": "Inferring a planet field from two orbits",
+      "difficulty": "hard",
+      "stem": "A probe of negligible mass moves in a circular orbit of radius $r_1=7.20\\times10^7\\,\\mathrm m$ around an isolated spherical planet, with orbital period $6.00\\,\\mathrm h$. A second probe moves in a circular orbit of radius $r_2=1.60r_1$. There is no significant atmospheric drag. Use $G=6.67\\times10^{-11}\\,\\mathrm{N\\,m^2kg^{-2}}$.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 4,
+          "question": "2",
+          "focus": "Inferring a planet field from two orbits"
+        }
+      ],
+      "changeNotes": "New probe orbits with supplied dimensional data; extends an approximate potential-gradient question into an exact mean-field location.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q02 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 280\" role=\"img\"><circle cx=\"300\" cy=\"145\" r=\"105\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"300\" cy=\"145\" r=\"66\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"300\" cy=\"145\" r=\"23\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"300\" y=\"150\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">M</text><line x1=\"300\" y1=\"145\" x2=\"366\" y2=\"145\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"366,145 357.71,148.505 357.71,141.495\" fill=\"#202020\"/><text x=\"340\" y=\"130\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">r₁</text><line x1=\"300\" y1=\"145\" x2=\"300\" y2=\"40\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"300,40 303.505,48.2895 296.495,48.2895\" fill=\"#202020\"/><text x=\"325\" y=\"75\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">r₂</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine the planet mass from the first orbit.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Determine the second probe orbital period.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Calculate $\\phi(r_2)-\\phi(r_1)$ and the magnitude of the mean radial field between these radii, defined by $\\langle g\\rangle=[\\phi(r_2)-\\phi(r_1)]/(r_2-r_1)$.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Show that the local field magnitude equals this mean at radius $\\sqrt{r_1r_2}$, and determine that radius.",
+          "marks": 2
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Equate gravitational and centripetal acceleration: $GM/r_1^2=4\\pi^2r_1/T_1^2$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "M1",
+              "text": "Use $T_1=21600\\,\\mathrm s$ in $M=4\\pi^2r_1^3/(GT_1^2)$."
+            },
+            {
+              "code": "A1",
+              "text": "$M=4.74\\times10^{26}\\,\\mathrm{kg}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For the same central mass, $T_2/T_1=(r_2/r_1)^{3/2}=1.60^{3/2}$."
+            },
+            {
+              "code": "A1",
+              "text": "$T_2=12.1\\,\\mathrm h$ to three significant figures."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\phi=-GM/r$, so $\\Delta\\phi=GM(1/r_1-1/r_2)>0$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\Delta\\phi=1.64\\times10^8\\,\\mathrm{J\\,kg^{-1}}$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\langle g\\rangle=\\Delta\\phi/(0.60r_1)=3.81\\,\\mathrm{m\\,s^{-2}}$. The actual field direction is inward."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\langle g\\rangle=GM[(r_2-r_1)/(r_1r_2)]/(r_2-r_1)=GM/(r_1r_2)$. Equating to $GM/r^2$ gives $r=\\sqrt{r_1r_2}$."
+            },
+            {
+              "code": "A1",
+              "text": "$r=9.11\\times10^7\\,\\mathrm m$. It is the geometric, rather than arithmetic, mean radius."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $M=4.74\\times10^{26}\\,\\mathrm{kg}$.; (b) $T_2=12.1\\,\\mathrm h$ to three significant figures.; (c) $\\langle g\\rangle=\\Delta\\phi/(0.60r_1)=3.81\\,\\mathrm{m\\,s^{-2}}$. The actual field direction is inward.; (d) $r=9.11\\times10^7\\,\\mathrm m$. It is the geometric, rather than arithmetic, mean radius."
+    },
+    {
+      "id": "phy-hl-b-2-03",
+      "section": "2",
+      "number": 3,
+      "title": "Separating background and nuclear decay",
+      "syllabusCode": "E.3",
+      "syllabusRefs": [
+        "E.1",
+        "E.3"
+      ],
+      "level": "core",
+      "subtopic": "Separating background and nuclear decay",
+      "difficulty": "hard",
+      "stem": "An activated sample contains a parent nuclide P that decays to a stable daughter D. Initially no D is present. Laboratory model count rates at times $0$, $3.00$ and $6.00$ days are $318$, $168$ and $93.0\\,\\mathrm{min^{-1}}$. The observed rate is a single exponential plus a constant background. Detector calibration shows that $15.0\\%$ of parent decays are recorded, including all geometric and detection effects.\n\nEach parent decay releases a total of $550\\,\\mathrm{keV}$ as gamma radiation, either directly or in a two-photon cascade. Three possible photon energies are $210$, $340$ and $550\\,\\mathrm{keV}$. Use $1\\,\\mathrm{eV}=1.602\\times10^{-19}\\,\\mathrm J$ and one day $=86400\\,\\mathrm s$.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 5,
+          "question": "3(b,c)",
+          "focus": "Separating background and nuclear decay"
+        }
+      ],
+      "changeNotes": "New unknown-background inverse problem, calibrated decay efficiency and a direct/cascade gamma-energy account; no gold data copied.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q03 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 300\" role=\"img\"><line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"80\" y1=\"235\" x2=\"565\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"322.5\" y=\"285\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">time / day</text><text x=\"80\" y=\"18\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">observed rate / min⁻¹</text><line x1=\"80\" y1=\"235\" x2=\"80\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"80\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">0</text><line x1=\"322.5\" y1=\"235\" x2=\"322.5\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"322.5\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">3</text><line x1=\"565\" y1=\"235\" x2=\"565\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"565\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">6</text><line x1=\"75\" y1=\"235\" x2=\"80\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"239\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">0</text><line x1=\"75\" y1=\"174.706\" x2=\"80\" y2=\"174.706\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"178.706\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">100</text><line x1=\"75\" y1=\"114.412\" x2=\"80\" y2=\"114.412\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"118.412\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">200</text><line x1=\"75\" y1=\"54.1176\" x2=\"80\" y2=\"54.1176\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"58.1176\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">300</text><line x1=\"76\" y1=\"39.2647\" x2=\"84\" y2=\"47.2647\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"76\" y1=\"47.2647\" x2=\"84\" y2=\"39.2647\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"318.5\" y1=\"129.706\" x2=\"326.5\" y2=\"137.706\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"318.5\" y1=\"137.706\" x2=\"326.5\" y2=\"129.706\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"561\" y1=\"174.926\" x2=\"569\" y2=\"182.926\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"561\" y1=\"182.926\" x2=\"569\" y2=\"174.926\" stroke=\"#202020\" stroke-width=\"2\"/></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine the background rate and the parent half-life. Show how the equal time intervals constrain the background.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Determine the decay constant in $\\mathrm{s^{-1}}$ and the initial number of parent nuclei.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the number of daughter nuclei and the total emitted gamma energy after $9.00$ days.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Draw a minimal energy-level diagram that can account for the three gamma energies. Explain why this is consistent with quantized nuclear energies.",
+          "marks": 2
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For background $B$, the common three-day decay factor requires $(168-B)^2=(318-B)(93-B)$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "A1",
+              "text": "This gives $B=18.0\\,\\mathrm{min^{-1}}$, so corrected rates are $300$, $150$ and $75.0\\,\\mathrm{min^{-1}}$."
+            },
+            {
+              "code": "A1",
+              "text": "The corrected rate halves in each $3.00$-day interval; $t_{1/2}=3.00$ days."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$\\lambda=\\ln2/(3.00\\times86400)=2.67\\times10^{-6}\\,\\mathrm{s^{-1}}$."
+            },
+            {
+              "code": "A1",
+              "text": "$A_0=(300/60)/0.150=33.333\\,\\mathrm{s^{-1}}$ and $N_0=A_0/\\lambda=1.25\\times10^7$. Use unrounded $\\lambda$ in this calculation."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "After three half-lives, $N_P=N_0/8$ and $N_D=7N_0/8$."
+            },
+            {
+              "code": "A1",
+              "text": "$N_D=1.09\\times10^7$ daughter nuclei."
+            },
+            {
+              "code": "A1",
+              "text": "Total gamma energy is $N_D(550\\times10^3)(1.602\\times10^{-19})=9.61\\times10^{-7}\\,\\mathrm J$. A two-photon cascade still carries total energy $550\\,\\mathrm{keV}$ per decay."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Draw levels at $0$, $340$ and $550\\,\\mathrm{keV}$, with downward arrows $550\\to0$, $550\\to340$ and $340\\to0$. The two-step route emits $210+340=550\\,\\mathrm{keV}$. An intermediate level at $210\\,\\mathrm{keV}$ is an equivalent minimal arrangement."
+            },
+            {
+              "code": "R1",
+              "text": "Discrete photon energies correspond to fixed differences between allowed nuclear energy levels, rather than a continuum of possible nuclear energies."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) The corrected rate halves in each $3.00$-day interval; $t_{1/2}=3.00$ days.; (b) $A_0=(300/60)/0.150=33.333\\,\\mathrm{s^{-1}}$ and $N_0=A_0/\\lambda=1.25\\times10^7$. Use unrounded $\\lambda$ in this calculation.; (c) Total gamma energy is $N_D(550\\times10^3)(1.602\\times10^{-19})=9.61\\times10^{-7}\\,\\mathrm J$. A two-photon cascade still carries total energy $550\\,\\mathrm{keV}$ per decay.; (d) Discrete photon energies correspond to fixed differences between allowed nuclear energy levels, rather than a continuum of possible nuclear energies."
+    },
+    {
+      "id": "phy-hl-b-2-04",
+      "section": "2",
+      "number": 4,
+      "title": "Finite thermal bodies and maximum work",
+      "syllabusCode": "B.4",
+      "syllabusRefs": [
+        "B.4"
+      ],
+      "level": "ahl",
+      "subtopic": "Finite thermal bodies and maximum work",
+      "difficulty": "hard",
+      "stem": "Two solid blocks, each of constant heat capacity $C=100\\,\\mathrm{J\\,K^{-1}}$, start at $300\\,\\mathrm K$ and $450\\,\\mathrm K$. They are thermally insulated from their surroundings; useful work can be transferred to an external ideal work store in the second arrangement. No phase changes occur. For either block, use the supplied relation\n$$\\Delta S=C\\ln(T_f/T_i).$$\nIn a second arrangement, a reversible engine operates between the two blocks, extracting work until their temperatures are equal. The engine returns to its initial state.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 8,
+          "question": "4",
+          "focus": "Finite thermal bodies and maximum work"
+        }
+      ],
+      "changeNotes": "Replaces a qualitative microstate example with finite bodies and a supplied entropy model; requires distinguishing energy conservation from reversible maximum work.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q04 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 320\" role=\"img\"><rect x=\"70\" y=\"45\" width=\"170\" height=\"70\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"155\" y=\"85\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">300 K; C = 100 J/K</text><rect x=\"360\" y=\"45\" width=\"170\" height=\"70\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"445\" y=\"85\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">450 K; C = 100 J/K</text><rect x=\"220\" y=\"175\" width=\"160\" height=\"50\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"300\" y=\"205\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">reversible engine</text><line x1=\"445\" y1=\"125\" x2=\"380\" y2=\"200\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"380,200 382.781,191.44 388.078,196.031\" fill=\"#202020\"/><line x1=\"220\" y1=\"200\" x2=\"155\" y2=\"125\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"155,125 163.078,128.969 157.781,133.56\" fill=\"#202020\"/><line x1=\"300\" y1=\"225\" x2=\"300\" y2=\"285\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"300,285 296.495,276.71 303.505,276.71\" fill=\"#202020\"/><text x=\"350\" y=\"270\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">work</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the final temperature if the blocks are simply placed in direct thermal contact, with no work extracted.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate their total entropy change in direct contact and explain its sign.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "For the reversible-engine arrangement, determine the common final temperature and the maximum work extracted.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "A proposed engine would leave both blocks at $300\\,\\mathrm K$ and deliver the entire reduction in block internal energy as work, without any other change. Explain why energy conservation alone does not validate this proposal.",
+          "marks": 2
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "No energy leaves, so $C(T_f-300)=C(450-T_f)$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "A1",
+              "text": "$T_f=375\\,\\mathrm K$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\Delta S=100\\ln(375/300)+100\\ln(375/450)$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\Delta S=+4.08\\,\\mathrm{J\\,K^{-1}}$."
+            },
+            {
+              "code": "R1",
+              "text": "Direct heat transfer through a finite temperature difference is irreversible. The isolated system entropy increases, consistently with the second law."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Reversibility requires zero total entropy change: $\\ln(T_f/300)+\\ln(T_f/450)=0$, hence $T_f^2=300(450)$."
+            },
+            {
+              "code": "A1",
+              "text": "$T_f=367\\,\\mathrm K$ to three significant figures."
+            },
+            {
+              "code": "A1",
+              "text": "$W_{\\max}=C[300+450-2\\sqrt{300(450)}]=1.52\\times10^3\\,\\mathrm J$. The reversible final temperature is below the direct-contact arithmetic mean."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Both blocks at $300\\,\\mathrm K$ would give total entropy change $100\\ln(300/450)=-40.5\\,\\mathrm{J\\,K^{-1}}$."
+            },
+            {
+              "code": "R1",
+              "text": "With no other change, the engine cannot compensate this entropy decrease. Although a first-law energy balance could be written, the proposal violates the second law and exceeds the reversible maximum work."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $T_f=375\\,\\mathrm K$.; (b) Direct heat transfer through a finite temperature difference is irreversible. The isolated system entropy increases, consistently with the second law.; (c) $W_{\\max}=C[300+450-2\\sqrt{300(450)}]=1.52\\times10^3\\,\\mathrm J$. The reversible final temperature is below the direct-contact arithmetic mean.; (d) With no other change, the engine cannot compensate this entropy decrease. Although a first-law energy balance could be written, the proposal violates the second law and exceeds the reversible maximum work."
+    },
+    {
+      "id": "phy-hl-b-2-05",
+      "section": "2",
+      "number": 5,
+      "title": "An acoustic echo and a reflecting boundary",
+      "syllabusCode": "C.5",
+      "syllabusRefs": [
+        "C.3",
+        "C.5"
+      ],
+      "level": "ahl",
+      "subtopic": "An acoustic echo and a reflecting boundary",
+      "difficulty": "hard",
+      "stem": "A small vehicle approaches a stationary vertical wall. Its onboard source emits $40.0\\,\\mathrm{kHz}$ sound and its receiver detects a reflected frequency of $43.0\\,\\mathrm{kHz}$. The speed of sound in air is $343\\,\\mathrm{m\\,s^{-1}}$. Treat reflection at the wall as preserving the frequency in the wall frame.\n\nIn a separate stationary arrangement, a sound source S and detector D are $1.20\\,\\mathrm m$ apart, both $0.450\\,\\mathrm m$ above a flat water surface. Sound reaches D directly and by reflection at P, midway horizontally between S and D. There is no phase change of the pressure wave at reflection. The sound speed in water is $1480\\,\\mathrm{m\\,s^{-1}}$, and both media are non-dispersive.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 9,
+          "question": "5",
+          "focus": "An acoustic echo and a reflecting boundary"
+        }
+      ],
+      "changeNotes": "Adds a reflected two-stage Doppler inverse problem; stationary geometry is recomputed for the lowest interference order and tests frequency-independent refraction.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q05 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 265\" role=\"img\"><line x1=\"70\" y1=\"187.5\" x2=\"530\" y2=\"187.5\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"150\" cy=\"75\" r=\"6\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"450\" cy=\"75\" r=\"6\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"130\" y=\"60\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">S</text><text x=\"465\" y=\"60\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">D</text><line x1=\"150\" y1=\"75\" x2=\"450\" y2=\"75\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"150\" y1=\"75\" x2=\"300\" y2=\"187.5\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"300\" y1=\"187.5\" x2=\"450\" y2=\"75\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"300\" y1=\"120\" x2=\"300\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\" stroke-dasharray=\"6 5\"/><text x=\"300\" y=\"55\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">1.20 m</text><line x1=\"115\" y1=\"75\" x2=\"115\" y2=\"187.5\" stroke=\"#202020\" stroke-width=\"2\" stroke-dasharray=\"6 5\"/><text x=\"78\" y=\"140\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">0.450 m</text><text x=\"495\" y=\"225\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">water</text><text x=\"495\" y=\"170\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">air</text><text x=\"315\" y=\"210\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">P</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine the speed of the approaching vehicle, accounting for both stages of the reflected Doppler shift.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "For the stationary arrangement, determine the lowest positive frequency producing destructive interference of the direct and reflected pressure waves at D.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Use wave refraction to decide whether a propagating transmitted ray in water exists for the ray SP at the same incident angle. Show your angular calculation.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Within the stated non-dispersive model, can changing only the frequency restore a transmitted ray at that incident angle? Explain.",
+          "marks": 1
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The wall receives $f_w=fv/(v-u)$ because the source approaches it. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "M1",
+              "text": "The moving receiver then detects $f_r=f_w(v+u)/v=f(v+u)/(v-u)$."
+            },
+            {
+              "code": "A1",
+              "text": "$u=v(f_r-f)/(f_r+f)=343(43.0-40.0)/(43.0+40.0)=12.4\\,\\mathrm{m\\,s^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The reflected length is $2\\sqrt{0.600^2+0.450^2}=1.50\\,\\mathrm m$; path difference is $0.300\\,\\mathrm m$."
+            },
+            {
+              "code": "M1",
+              "text": "With no reflection phase reversal, the lowest positive destructive frequency has path difference $\\lambda/2$, so $\\lambda=0.600\\,\\mathrm m$."
+            },
+            {
+              "code": "A1",
+              "text": "$f=343/0.600=572\\,\\mathrm{Hz}$ to three significant figures."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Incident angle to the normal is $\\theta_i=\\tan^{-1}(0.600/0.450)=53.1^\\circ$."
+            },
+            {
+              "code": "M1",
+              "text": "The critical angle is $\\sin^{-1}(v_{\\rm air}/v_{\\rm water})=\\sin^{-1}(343/1480)=13.4^\\circ$."
+            },
+            {
+              "code": "A1",
+              "text": "Since $53.1^\\circ>13.4^\\circ$, the geometric-acoustics model gives total internal reflection and no propagating refracted ray. Equivalently the required refracted sine would exceed one."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "No. The critical angle depends on the speed ratio, which is frequency-independent under the stated non-dispersive assumption. Frequency changes the interference condition, not this transmission condition."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $u=v(f_r-f)/(f_r+f)=343(43.0-40.0)/(43.0+40.0)=12.4\\,\\mathrm{m\\,s^{-1}}$.; (b) $f=343/0.600=572\\,\\mathrm{Hz}$ to three significant figures.; (c) Since $53.1^\\circ>13.4^\\circ$, the geometric-acoustics model gives total internal reflection and no propagating refracted ray. Equivalently the required refracted sine would exceed one.; (d) No. The critical angle depends on the speed ratio, which is frequency-independent under the stated non-dispersive assumption. Frequency changes the interference condition, not this transmission condition."
+    },
+    {
+      "id": "phy-hl-b-2-06",
+      "section": "2",
+      "number": 6,
+      "title": "An ion velocity selector and magnetic analyser",
+      "syllabusCode": "D.3",
+      "syllabusRefs": [
+        "D.2",
+        "D.3"
+      ],
+      "level": "core",
+      "subtopic": "An ion velocity selector and magnetic analyser",
+      "difficulty": "hard",
+      "stem": "Singly positive ions are accelerated from rest through $4.20\\,\\mathrm{kV}$. They enter crossed uniform fields: electric field $E=2.40\\times10^4\\,\\mathrm{V\\,m^{-1}}$ downwards and magnetic field of magnitude $0.0800\\,\\mathrm T$. Selected ions travel horizontally to the right without deflection.\n\nAfter the selector, they enter a region containing only a uniform magnetic field of $0.200\\,\\mathrm T$ into the page. They follow a semicircle and hit a detector in the entry plane. Use $e=1.602\\times10^{-19}\\,\\mathrm C$ and $1\\,\\mathrm u=1.66\\times10^{-27}\\,\\mathrm{kg}$. Motion is non-relativistic.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 11,
+          "question": "6",
+          "focus": "An ion velocity selector and magnetic analyser"
+        }
+      ],
+      "changeNotes": "Changes electrons and plate impact into isotope selection followed by a semicircular mass analyser; asks charge-sign directions and contamination rejection.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q06 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 335\" role=\"img\"><line x1=\"100\" y1=\"170\" x2=\"275\" y2=\"170\" stroke=\"#202020\" stroke-width=\"4\"/><line x1=\"100\" y1=\"250\" x2=\"275\" y2=\"250\" stroke=\"#202020\" stroke-width=\"4\"/><text x=\"180\" y=\"158\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">positive plate</text><text x=\"180\" y=\"275\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">negative plate</text><line x1=\"55\" y1=\"210\" x2=\"350\" y2=\"210\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"350,210 341.71,213.505 341.71,206.495\" fill=\"#202020\"/><text x=\"65\" y=\"195\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">ions</text><line x1=\"245\" y1=\"185\" x2=\"245\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"245,235 241.495,226.71 248.505,226.71\" fill=\"#202020\"/><text x=\"260\" y=\"215\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">E</text><text x=\"175\" y=\"130\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">Selector B: to be determined</text><path d=\"M350 210 A80 80 0 0 0 350 50\" fill=\"none\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"350\" y1=\"35\" x2=\"350\" y2=\"225\" stroke=\"#202020\" stroke-width=\"2\" stroke-dasharray=\"6 5\"/><circle cx=\"400\" cy=\"90\" r=\"8\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"396\" y1=\"86\" x2=\"404\" y2=\"94\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"396\" y1=\"94\" x2=\"404\" y2=\"86\" stroke=\"#202020\" stroke-width=\"2\"/><circle cx=\"440\" cy=\"175\" r=\"8\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"436\" y1=\"171\" x2=\"444\" y2=\"179\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"436\" y1=\"179\" x2=\"444\" y2=\"171\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"475\" y=\"120\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">analyser</text><text x=\"475\" y=\"142\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">B into page</text><text x=\"300\" y=\"310\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">Schematic: not to scale</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine the selected speed and the required direction of the selector magnetic field.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Determine the selected ion mass and its approximate nucleon number, taking nuclear mass to be approximately $A\\,\\mathrm u$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the separation of the detector impact point from the analyser entry point.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Ions of a heavier isotope with the same charge are accelerated through the same potential difference. Explain whether they pass the selector, and toward which plate they initially deflect.",
+          "marks": 2
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$qE=qvB$ gives $v=E/B=3.00\\times10^5\\,\\mathrm{m\\,s^{-1}}$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "R1",
+              "text": "The electric force is downward. The magnetic force on a positive ion moving right must be upward, requiring magnetic field into the page."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$qV=mv^2/2$ gives $m=2eV/v^2$."
+            },
+            {
+              "code": "A1",
+              "text": "$m=1.50\\times10^{-26}\\,\\mathrm{kg}$."
+            },
+            {
+              "code": "A1",
+              "text": "$m/\\mathrm u=9.007$, so the approximate nucleon number is $A=9$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The magnetic force supplies centripetal force: $evB=mv^2/r$, so $r=mv/(eB)$."
+            },
+            {
+              "code": "A1",
+              "text": "$r=0.140\\,\\mathrm m$."
+            },
+            {
+              "code": "A1",
+              "text": "The displacement after a semicircle in the entry plane is a diameter, $2r=0.280\\,\\mathrm m$, above the entry point for the stated field direction."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "At fixed $qV$, speed is proportional to $m^{-1/2}$, so a heavier isotope is slower than the selected speed and is not transmitted undeflected."
+            },
+            {
+              "code": "R1",
+              "text": "Its upward magnetic force $qvB$ is smaller than the unchanged downward electric force $qE$; it initially deflects down toward the negative plate."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) The electric force is downward. The magnetic force on a positive ion moving right must be upward, requiring magnetic field into the page.; (b) $m/\\mathrm u=9.007$, so the approximate nucleon number is $A=9$.; (c) The displacement after a semicircle in the entry plane is a diameter, $2r=0.280\\,\\mathrm m$, above the entry point for the stated field direction.; (d) Its upward magnetic force $qvB$ is smaller than the unchanged downward electric force $qE$; it initially deflects down toward the negative plate."
+    },
+    {
+      "id": "phy-hl-b-2-07",
+      "section": "2",
+      "number": 7,
+      "title": "Reversed event order and causality",
+      "syllabusCode": "A.5",
+      "syllabusRefs": [
+        "A.5"
+      ],
+      "level": "ahl",
+      "subtopic": "Reversed event order and causality",
+      "difficulty": "hard",
+      "stem": "In inertial frame S, event P is a flash at $x=0$, $ct=0$. Event Q is a separately programmed flash at $x=1200\\,\\mathrm m$, $ct=900\\,\\mathrm m$. Frame S′ moves at $+0.800c$ relative to S and its origin coincides with P. Use\n$$x'=\\gamma(x-\\beta ct),\\qquad ct'=\\gamma(ct-\\beta x),\\qquad \\gamma=(1-\\beta^2)^{-1/2}.$$\nUse the convention $(\\Delta s)^2=(c\\Delta t)^2-(\\Delta x)^2$.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 13,
+          "question": "7",
+          "focus": "Reversed event order and causality"
+        }
+      ],
+      "changeNotes": "New flashes, explicit negative time coordinate and a causal-signalling test; derives the simultaneous separation as an invariant check.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q07 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 300\" role=\"img\"><line x1=\"80\" y1=\"30\" x2=\"80\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"80\" y1=\"235\" x2=\"565\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"322.5\" y=\"285\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">x / m</text><text x=\"80\" y=\"18\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">ct / m</text><line x1=\"80\" y1=\"235\" x2=\"80\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"80\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">0</text><line x1=\"218.571\" y1=\"235\" x2=\"218.571\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"218.571\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">400</text><line x1=\"357.143\" y1=\"235\" x2=\"357.143\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"357.143\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">800</text><line x1=\"495.714\" y1=\"235\" x2=\"495.714\" y2=\"240\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"495.714\" y=\"258\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">1200</text><line x1=\"75\" y1=\"235\" x2=\"80\" y2=\"235\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"239\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">0</text><line x1=\"75\" y1=\"176.429\" x2=\"80\" y2=\"176.429\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"180.429\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">400</text><line x1=\"75\" y1=\"117.857\" x2=\"80\" y2=\"117.857\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"121.857\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">800</text><line x1=\"75\" y1=\"59.2857\" x2=\"80\" y2=\"59.2857\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"70\" y=\"63.2857\" font-family=\"Arial, sans-serif\" font-size=\"13\" text-anchor=\"end\" font-weight=\"normal\" fill=\"#202020\">1200</text><polyline points=\"80.00,235.00 530.36,44.64\" fill=\"none\" stroke=\"#202020\" stroke-width=\"2.2\"/><circle cx=\"80.00\" cy=\"235.00\" r=\"3\" fill=\"#202020\"/><text x=\"90\" y=\"225\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">P</text><circle cx=\"495.71\" cy=\"103.21\" r=\"3\" fill=\"#202020\"/><text x=\"505.714\" y=\"95.2143\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">Q</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Calculate the invariant interval between P and Q and classify their separation.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the S′ coordinates of Q and state which flash occurs first in that frame.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the speed of a frame in which the flashes are simultaneous and the spatial separation of the flashes in that frame.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "Explain why the reversed time order creates no causal paradox, and why Q cannot have been triggered by a signal emitted at P.",
+          "marks": 3
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$(\\Delta s)^2=900^2-1200^2$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "A1",
+              "text": "$(\\Delta s)^2=-6.30\\times10^5\\,\\mathrm{m^2}<0$, so the separation is spacelike."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$\\gamma=1/\\sqrt{1-0.800^2}=5/3$."
+            },
+            {
+              "code": "A1",
+              "text": "$x^{\\prime}_Q=(5/3)(1200-0.800\\times900)=800\\,\\mathrm m$."
+            },
+            {
+              "code": "A1",
+              "text": "$ct^{\\prime}_Q=(5/3)(900-0.800\\times1200)=-100\\,\\mathrm m$. Since P remains at $ct^{\\prime}=0$, Q occurs first in S′."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Simultaneity requires $900-\\beta(1200)=0$, so the frame speed is $+0.750c$."
+            },
+            {
+              "code": "A1",
+              "text": "With $\\Delta ct^{\\prime\\prime}=0$, invariance gives $\\Delta x^{\\prime\\prime}=\\sqrt{630000}=794\\,\\mathrm m$. Direct Lorentz transformation gives the same value."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "In S, light travels only $900\\,\\mathrm m$ during the time between the events, less than their $1200\\,\\mathrm m$ separation."
+            },
+            {
+              "code": "A1",
+              "text": "A signal from P to Q would require speed $\\Delta x/\\Delta t=(4/3)c>c$, so no allowed causal signal connects them."
+            },
+            {
+              "code": "R1",
+              "text": "Spacelike events have no causal ordering enforced by a light-speed-limited influence. Different inertial observers may reverse their time order without reversing any actual cause and effect."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $(\\Delta s)^2=-6.30\\times10^5\\,\\mathrm{m^2}<0$, so the separation is spacelike.; (b) $ct^{\\prime}_Q=(5/3)(900-0.800\\times1200)=-100\\,\\mathrm m$. Since P remains at $ct^{\\prime}=0$, Q occurs first in S′.; (c) With $\\Delta ct^{\\prime\\prime}=0$, invariance gives $\\Delta x^{\\prime\\prime}=\\sqrt{630000}=794\\,\\mathrm m$. Direct Lorentz transformation gives the same value.; (d) Spacelike events have no causal ordering enforced by a light-speed-limited influence. Different inertial observers may reverse their time order without reversing any actual cause and effect."
+    },
+    {
+      "id": "phy-hl-b-2-08",
+      "section": "2",
+      "number": 8,
+      "title": "A main-sequence energy budget",
+      "syllabusCode": "E.5",
+      "syllabusRefs": [
+        "B.2",
+        "E.5"
+      ],
+      "level": "core",
+      "subtopic": "A main-sequence energy budget",
+      "difficulty": "hard",
+      "stem": "A main-sequence star is modelled as a blackbody with luminosity $8.00\\times10^{26}\\,\\mathrm W$, effective surface temperature $7200\\,\\mathrm K$ and mass $1.40M_\\odot$, where $M_\\odot=2.00\\times10^{30}\\,\\mathrm{kg}$. Its initial hydrogen mass fraction is $0.700$. In this simplified lifetime model, $12.0\\%$ of that hydrogen mass can undergo fusion, converting $0.700\\%$ of the consumed hydrogen rest mass into energy. Neutrinos carry away $2.00\\%$ of the released energy; the rest supplies the stated luminosity.\n\nFor a reaction-rate estimate, use $26.7\\,\\mathrm{MeV}$ total energy released per completed four-proton fusion chain. Use $\\sigma=5.67\\times10^{-8}\\,\\mathrm{W\\,m^{-2}K^{-4}}$, $c=3.00\\times10^8\\,\\mathrm{m\\,s^{-1}}$, $1\\,\\mathrm{eV}=1.602\\times10^{-19}\\,\\mathrm J$ and one year $=3.15576\\times10^7\\,\\mathrm s$.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 15,
+          "question": "8(c,d,e)",
+          "focus": "A main-sequence energy budget"
+        }
+      ],
+      "changeNotes": "New stellar model separates accessible fuel, mass-conversion efficiency and neutrino losses; quantitative rate and hydrostatic-feedback tasks use no source solar numbers.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q08 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 290\" role=\"img\"><circle cx=\"190\" cy=\"140\" r=\"85\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"190\" y=\"135\" font-family=\"Arial, sans-serif\" font-size=\"18\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">7200 K</text><text x=\"190\" y=\"165\" font-family=\"Arial, sans-serif\" font-size=\"16\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">1.40 M☉</text><line x1=\"290\" y1=\"95\" x2=\"470\" y2=\"60\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"470,60 462.532,65.0226 461.194,58.1419\" fill=\"#202020\"/><text x=\"380\" y=\"67.5\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">photons: L</text><line x1=\"290\" y1=\"180\" x2=\"470\" y2=\"225\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"470,225 461.108,226.39 462.808,219.589\" fill=\"#202020\"/><text x=\"380\" y=\"192.5\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">neutrinos</text><text x=\"190\" y=\"260\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">blackbody star model</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Determine the stellar radius.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Estimate the model main-sequence lifetime, assuming constant luminosity and the stated accessible fuel fraction.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the number of completed fusion chains per second needed to supply the luminosity.",
+          "marks": 2
+        },
+        {
+          "label": "d",
+          "prompt": "Calculate the rate of stellar mass loss due to all the escaping radiation and neutrinos. Then explain how a small increase in core fusion rate can be moderated by hydrostatic feedback in a stable main-sequence star.",
+          "marks": 3
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use $L=4\\pi R^2\\sigma T^4$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "A1",
+              "text": "$R=\\sqrt{8.00\\times10^{26}/[4\\pi(5.67\\times10^{-8})(7200)^4]}=6.46\\times10^8\\,\\mathrm m$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Accessible hydrogen mass is $0.700(0.120)(1.40)(2.00\\times10^{30})=2.352\\times10^{29}\\,\\mathrm{kg}$."
+            },
+            {
+              "code": "M1",
+              "text": "Energy available to the photon luminosity is $0.980(0.00700)(2.352\\times10^{29})c^2=1.45212\\times10^{44}\\,\\mathrm J$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=E/L=1.81516\\times10^{17}\\,\\mathrm s=5.75\\times10^9$ years. This estimate assumes constant luminosity, composition/fuel accessibility as specified and the given mass-conversion fraction."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Photon energy available per completed chain is $0.980(26.7\\times10^6)(1.602\\times10^{-19})\\,\\mathrm J$."
+            },
+            {
+              "code": "A1",
+              "text": "Number of chains per second is $L/E_{\\rm photon,chain}=1.91\\times10^{38}\\,\\mathrm{s^{-1}}$. Do not treat the neutrino fraction as part of the observed photon luminosity."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "All escaping power is $L/0.980$, so $\\dot m=L/(0.980c^2)=9.07\\times10^9\\,\\mathrm{kg\\,s^{-1}}$."
+            },
+            {
+              "code": "R1",
+              "text": "An enhanced fusion rate heats the core and raises its pressure, tending to expand the star/core against gravity."
+            },
+            {
+              "code": "R1",
+              "text": "Expansion cools the core and reduces the temperature-sensitive fusion rate, providing negative feedback around hydrostatic equilibrium. Accept an equivalent physically consistent account of pressure, gravity and temperature."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $R=\\sqrt{8.00\\times10^{26}/[4\\pi(5.67\\times10^{-8})(7200)^4]}=6.46\\times10^8\\,\\mathrm m$.; (b) $t=E/L=1.81516\\times10^{17}\\,\\mathrm s=5.75\\times10^9$ years. This estimate assumes constant luminosity, composition/fuel accessibility as specified and the given mass-conversion fraction.; (c) Number of chains per second is $L/E_{\\rm photon,chain}=1.91\\times10^{38}\\,\\mathrm{s^{-1}}$. Do not treat the neutrino fraction as part of the observed photon luminosity.; (d) Expansion cools the core and reduces the temperature-sensitive fusion rate, providing negative feedback around hydrostatic equilibrium. Accept an equivalent physically consistent account of pressure, gravity and temperature."
+    },
+    {
+      "id": "phy-hl-b-2-09",
+      "section": "2",
+      "number": 9,
+      "title": "Quantifying electromagnetic damping",
+      "syllabusCode": "D.4",
+      "syllabusRefs": [
+        "C.1",
+        "D.4"
+      ],
+      "level": "ahl",
+      "subtopic": "Quantifying electromagnetic damping",
+      "difficulty": "hard",
+      "stem": "A light rectangular coil attached to a horizontal spring oscillates along the $x$ direction. The total moving mass is $0.0800\\,\\mathrm{kg}$ and the spring constant is $12.0\\,\\mathrm{N\\,m^{-1}}$. The initial amplitude is $0.0400\\,\\mathrm m$. Mechanical friction is negligible.\n\nThe coil has $200$ turns, each of area $4.00\\times10^{-4}\\,\\mathrm{m^2}$. A static magnetic field is perpendicular to the coil, with constant spatial gradient $dB/dx=8.00\\,\\mathrm{T\\,m^{-1}}$ across the operating region. Flux linkage is $NA B(x)$, where $x$ is the coil centre. The circuit resistance is $20.0\\,\\Omega$; self-inductance is negligible.\n\nFor weak damping with force $F=-bv$, use the supplied amplitude envelope\n$$a(t)=a_0e^{-bt/(2m)}.$$\nUse the undamped period to estimate elapsed time for a given number of cycles.",
+      "sourceAnchors": [
+        {
+          "document": "f.pdf",
+          "page": 19,
+          "question": "9",
+          "focus": "Quantifying electromagnetic damping"
+        }
+      ],
+      "changeNotes": "Changes a qualitative spring-magnet setup into a translating coil in a specified field gradient; derives damping from power and tests a quantitative amplitude envelope.",
+      "cognitiveDemand": "Link physical models, interpret conditions and justify the result.",
+      "verification": {
+        "method": "Author calculation, dimensional and limiting-case checks",
+        "notes": "Executable values for every numerical part are named P2Q09 in hl-b-author-checks.json; limiting cases and units are checked in the solutions."
+      },
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 310\" role=\"img\"><line x1=\"60\" y1=\"150\" x2=\"150\" y2=\"150\" stroke=\"#202020\" stroke-width=\"2\"/><polyline points=\"150,150 162,150 162,142 169.167,158 176.333,142 183.5,158 190.667,142 197.833,158 205,142 212.167,158 219.333,142 226.5,158 233.667,142 240.833,158 248,142 260,150\" fill=\"none\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"260\" y=\"95\" width=\"95\" height=\"110\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"307.5\" y=\"155\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">coil</text><line x1=\"355\" y1=\"115\" x2=\"430\" y2=\"115\" stroke=\"#202020\" stroke-width=\"2\"/><rect x=\"430\" y=\"95\" width=\"95\" height=\"40\" fill=\"white\" stroke=\"#202020\" stroke-width=\"2\"/><text x=\"477.5\" y=\"120\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">20.0 Ω</text><line x1=\"525\" y1=\"115\" x2=\"545\" y2=\"115\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"545\" y1=\"115\" x2=\"545\" y2=\"225\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"545\" y1=\"225\" x2=\"355\" y2=\"225\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"355\" y1=\"225\" x2=\"355\" y2=\"185\" stroke=\"#202020\" stroke-width=\"2\"/><line x1=\"280\" y1=\"65\" x2=\"420\" y2=\"65\" stroke=\"#202020\" stroke-width=\"2\"/><polygon points=\"420,65 411.71,68.5048 411.71,61.4952\" fill=\"#202020\"/><text x=\"350\" y=\"55\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">positive x</text><text x=\"300\" y=\"275\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"middle\" font-weight=\"normal\" fill=\"#202020\">B normal to the coil; dB/dx = 8.00 T/m</text><text x=\"100\" y=\"120\" font-family=\"Arial, sans-serif\" font-size=\"14\" text-anchor=\"start\" font-weight=\"normal\" fill=\"#202020\">spring</text></svg>",
+      "questionType": "structured",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Calculate the undamped period and initial maximum speed.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate the initial maximum induced emf.",
+          "marks": 2
+        },
+        {
+          "label": "c",
+          "prompt": "Using the rate of electrical energy dissipation and energy conservation, show that the magnetic damping coefficient is $b=(NA\\,dB/dx)^2/R$. Calculate $b$ and justify the force direction.",
+          "marks": 3
+        },
+        {
+          "label": "d",
+          "prompt": "Estimate the fraction of initial oscillation energy remaining after ten cycles. Explain the limiting effect of disconnecting the external circuit.",
+          "marks": 3
+        }
+      ],
+      "marks": 10,
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "$T=2\\pi\\sqrt{m/k}=0.513\\,\\mathrm s$. Marking guidance: credit a valid subsequent method after an earlier arithmetic or graph-reading error; do not penalize the same numerical error twice. Require a correct physical model and units, and allow consistent use of rounded intermediate values."
+            },
+            {
+              "code": "A1",
+              "text": "$\\omega=\\sqrt{k/m}=12.247\\,\\mathrm{rad\\,s^{-1}}$ and $v_{\\max}=\\omega a_0=0.490\\,\\mathrm{m\\,s^{-1}}$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Faraday law gives $|\\varepsilon|=|d(NAB)/dt|=NA|dB/dx|\\,|v|$."
+            },
+            {
+              "code": "A1",
+              "text": "$\\varepsilon_{\\max}=(200)(4.00\\times10^{-4})(8.00)(0.489898)=0.314\\,\\mathrm V$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$P_R=\\varepsilon^2/R=(NA\\,dB/dx)^2v^2/R$. This energy is taken from the oscillator; $Fv=-P_R$, so $F=-[(NA\\,dB/dx)^2/R]v$."
+            },
+            {
+              "code": "A1",
+              "text": "$b=(0.640)^2/20.0=0.02048\\,\\mathrm{kg\\,s^{-1}}\\approx0.0205\\,\\mathrm{kg\\,s^{-1}}$."
+            },
+            {
+              "code": "R1",
+              "text": "The force opposes velocity, as required by energy conservation and Lenz law. A force in the velocity direction would increase mechanical energy while also heating the resistor without a source."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "$E\\propto a^2$, so $E(t)/E_0=e^{-bt/m}$ and $t\\approx10T=5.1302\\,\\mathrm s$."
+            },
+            {
+              "code": "A1",
+              "text": "$E/E_0=e^{-(0.02048)(5.1302)/0.0800}=0.269$. The small ratio $b/(2m\\omega)\\approx0.0105$ supports the weak-damping period approximation."
+            },
+            {
+              "code": "R1",
+              "text": "For an open circuit, $R\\to\\infty$, induced current and magnetic damping tend to zero. A changing flux can still produce an emf, but there is negligible Joule energy dissipation in this idealized limit."
+            }
+          ]
+        }
+      ],
+      "answerSummary": "(a) $\\omega=\\sqrt{k/m}=12.247\\,\\mathrm{rad\\,s^{-1}}$ and $v_{\\max}=\\omega a_0=0.490\\,\\mathrm{m\\,s^{-1}}$.; (b) $\\varepsilon_{\\max}=(200)(4.00\\times10^{-4})(8.00)(0.489898)=0.314\\,\\mathrm V$.; (c) The force opposes velocity, as required by energy conservation and Lenz law. A force in the velocity direction would increase mechanical energy while also heating the resistor without a source.; (d) For an open circuit, $R\\to\\infty$, induced current and magnetic damping tend to zero. A changing flux can still produce an emf, but there is negligible Joule energy dissipation in this idealized limit."
+    }
+  ]
+}

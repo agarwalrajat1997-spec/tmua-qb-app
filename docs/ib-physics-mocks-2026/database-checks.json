@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "projectId": "pnkzxzigpkvhlmhsmzdd",
+  "checkedAtUTC": "2026-11-04T01:14:05.429558+00:00",
+  "migration": {
+    "version": "20261104004753",
+    "name": "ib_physics_challenge_attempts",
+    "file": "supabase/migrations/20261104004753_ib_physics_challenge_attempts.sql",
+    "sha256": "d093ccab32b50ddf88e560295e2363d935082989a64cf9342d37ea083985adc4",
+    "appliedThrough": "Parent-reviewed Supabase MCP migration"
+  },
+  "schemaApplied": true,
+  "rowLevelSecurityEnabled": true,
+  "ownerPolicies": 3,
+  "columnRestrictedInsertAndUpdate": true,
+  "noAnonymousAccess": true,
+  "savedRowsAfterVerification": 0,
+  "legacyRowsAfterVerification": 0,
+  "remainingQaRows": 0,
+  "verification": {
+    "script": "scripts/ib-physics-mocks-2026/verify_database.sql",
+    "transaction": "Actual authenticated/anon roles and JWT owner subjects, inside BEGIN/ROLLBACK. No QA rows persisted.",
+    "checks": [
+      "Owner inserts and reads all ten new sittings at each maximum duration",
+      "All ten duration-plus-one values rejected",
+      "Duplicate attempt ID rejected; retained answers immutable",
+      "Invalid SL C, old bank ID, Maths ID and Paper3 rejected",
+      "Submitted answers and name cannot be updated by owner",
+      "Administrative RLS bypass still cannot overwrite immutable responses",
+      "Marking timestamp cannot be saved without marks",
+      "Out-of-range, fractional and string marks rejected",
+      "Owner saves and reads initial self-assessment",
+      "Initial saved self-assessment cannot be overwritten",
+      "Owner cannot delete submitted attempt",
+      "Different user cannot read, mark or insert owner rows",
+      "Anonymous role cannot read attempt table",
+      "Maths and earlier Physics history unchanged",
+      "Rollback leaves zero QA rows"
+    ]
+  },
+  "advisors": {
+    "checked": [
+      "security",
+      "performance"
+    ],
+    "securityLintGroups": 7,
+    "performanceLintGroups": 6,
+    "physicsChallengeRelatedFindings": 0
+  },
+  "limits": "API bounds per actual question part and all current access states are independently covered by isolated actual-route tests. Database checks do not send emails."
+}
