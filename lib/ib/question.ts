@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { ibSyllabusSubtopics, ibCoreLevel, ibHasCourseChoice, type IbCourseLevel, type IbSubject, type IbSyllabusSubtopic } from "./catalog.ts";
+import { PSYCHOLOGY_COLLECTIONS, PSYCHOLOGY_CONTEXTS, PSYCHOLOGY_CONCEPTS, PSYCHOLOGY_SECTIONS, PSYCHOLOGY_BAND_RANGES, psychologyTopic } from "./psychology-catalog.ts";
 
 export const IB_COLLECTIONS = [
+  ...PSYCHOLOGY_COLLECTIONS,
   { id: "economics-introduction", subject: "economics", topicId: "introduction", code: "1", title: "Introduction to economics", description: "Scarcity, choice, economic models and ways of thinking." },
   { id: "economics-microeconomics", subject: "economics", topicId: "microeconomics", code: "2", title: "Microeconomics", description: "Markets, elasticity, intervention, market failure and market power." },
   { id: "economics-macroeconomics", subject: "economics", topicId: "macroeconomics", code: "3", title: "Macroeconomics", description: "Economic activity, objectives, inequality and policy choices." },
@@ -151,7 +153,20 @@ const biologyQuestion = commonQuestion.extend({
   options: z.array(z.object({ label: optionLabel, text })).length(4).optional(), correctOption: optionLabel.optional(),
   source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
 });
-export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, mathsAaSlQuestion, mathsAiSlQuestion, mathsAiHlQuestion, economicsQuestion, businessQuestion, physicsQuestion, chemistryQuestion, biologyQuestion]).superRefine((q, ctx) => {
+const psychologyQuestion = commonQuestion.extend({
+  id: z.string().regex(/^ib-psy-(?:bio|cog|soc|res|cul|mot|tec)-\d{3}$/), subject: z.literal("psychology"),
+  firstAssessment: z.literal(2027), calculator: z.literal(false), difficulty: z.enum(["medium", "hard"]),
+  topicId: z.enum(["biological-approach", "cognitive-approach", "sociocultural-approach", "research-methodology", "culture", "motivation", "technology"]),
+  collectionId: z.enum(["psychology-biological-approach", "psychology-cognitive-approach", "psychology-sociocultural-approach", "psychology-research-methodology", "psychology-culture", "psychology-motivation", "psychology-technology"]),
+  syllabusCode: z.string().regex(/^(?:BIO|COG|SOC|RES|CUL|MOT|TEC)\.\d{2}$/), level: z.enum(["sl", "ahl"]),
+  examStyle: z.enum(["paper-1", "paper-2", "paper-3"]),
+  examSection: z.enum(["p1-a", "p1-b", "p1-c", "p2-a-knowledge", "p2-a-application", "p2-a-comparison", "p2-a-design", "p2-b", "p3-graph", "p3-data", "p3-qualitative", "p3-synthesis"]),
+  questionType: z.enum(["short-response", "scenario-response", "extended-response", "research-methods", "data-response"]),
+  context: z.enum(PSYCHOLOGY_CONTEXTS), concepts: z.array(z.enum(PSYCHOLOGY_CONCEPTS)).min(1).max(6),
+  parts: z.array(z.never()).length(0),
+  source: z.object({ document: z.literal("Independent syllabus-authored practice"), question: z.number().int().positive() }),
+});
+export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, mathsAaSlQuestion, mathsAiSlQuestion, mathsAiHlQuestion, economicsQuestion, businessQuestion, physicsQuestion, chemistryQuestion, biologyQuestion, psychologyQuestion]).superRefine((q, ctx) => {
   const fail = (message: string) => ctx.addIssue({ code: "custom", message });
   const collection = getIbCollection(q.collectionId);
   if (collection?.topicId !== q.topicId || collection?.subject !== q.subject) fail("Collection and syllabus topic disagree");
@@ -167,6 +182,16 @@ export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, 
       if (!q.options || q.options.map(option => option.label).join("") !== "ABCD" || !q.correctOption) fail("Multiple-choice questions require options A–D in order and a private correct option");
       if (q.markScheme.length !== 1 || q.markScheme[0].steps.length !== 1 || q.markScheme[0].steps[0].code !== "A1") fail("Multiple-choice schemes require a single A1 step with the correct choice and its scientific reasoning");
     } else if (q.options !== undefined || q.correctOption !== undefined) fail("Only multiple-choice questions may define options or a correct option");
+  } else if (q.subject === "psychology") {
+    const topic = psychologyTopic(q.topicId), section = PSYCHOLOGY_SECTIONS[q.examSection];
+    const area = ibSyllabusSubtopics(q.subject, q.topicId).find(item => item.code === q.syllabusCode);
+    if (!area || q.subtopic !== area.title || !topic || q.level !== (topic.additionalHlOnly ? "ahl" : "sl")) fail("Psychology content area and level disagree");
+    if (q.id !== `ib-psy-${topic?.token}-${String(q.number).padStart(3, "0")}`) fail("Psychology ID must match its topic and question number");
+    if (q.examStyle !== section.paper || q.questionType !== section.questionType || q.marks !== section.marks || q.level !== (section.paper === "paper-3" ? "ahl" : "sl")) fail("Psychology assessment section, response type, marks, paper and level disagree");
+    if ((q.examSection === "p1-a") !== (q.context === "general")) fail("Only Paper 1A uses the general context; other items require one course context");
+    if (new Set(q.concepts).size !== q.concepts.length) fail("Duplicate Psychology concepts");
+    if (q.markScheme.length !== 1 || q.markScheme[0].part !== "" || !q.markScheme[0].rubric?.bands || q.markScheme[0].rubric.criteria || q.markScheme[0].steps.some(step => step.code !== "IND")) fail("Psychology uses one unlabelled best-fit rubric with indicative content");
+    if (JSON.stringify(q.markScheme[0]?.rubric?.bands?.map(band => [band.min, band.max])) !== JSON.stringify(PSYCHOLOGY_BAND_RANGES[section.marks])) fail("Psychology mark-band boundaries must match its assessment allocation");
   } else if (q.subject === "economics" || q.subject === "business-management") {
     const syllabus = ibSyllabusSubtopics(q.subject, q.topicId).find(item => item.code === q.syllabusCode);
     if (!syllabus || syllabus.additionalHlOnly && q.level !== "ahl") fail("Humanities syllabus code and content level disagree");
@@ -192,7 +217,7 @@ export const ibQuestionSchema = z.discriminatedUnion("subject", [mathsQuestion, 
   }
   for (const group of q.markScheme) {
     if (group.rubric) {
-      if (q.subject !== "economics" && q.subject !== "business-management") fail("Levelled rubrics are reserved for humanities responses");
+      if (q.subject !== "economics" && q.subject !== "business-management" && q.subject !== "psychology") fail("Levelled rubrics are reserved for humanities responses");
       if (group.steps.some(step => step.code !== "IND")) fail("Levelled schemes use indicative content, not additive point awards");
       if (Boolean(group.rubric.bands) === Boolean(group.rubric.criteria)) fail("Choose best-fit bands or analytic criteria");
       if (group.rubric.bands) checkBands(group.rubric.bands, group.rubric.maxMarks);
@@ -225,7 +250,7 @@ export type IbQuestionPrompt = PromptOnly<IbQuestion>;
 export function isScienceQuestion(q: IbQuestion | IbQuestionPrompt): q is Extract<IbQuestion | IbQuestionPrompt, { subject: "physics-hl" | "chemistry" | "biology" }> {
   return q.subject === "physics-hl" || q.subject === "chemistry" || q.subject === "biology";
 }
-export function isHumanitiesQuestion(q: IbQuestion | IbQuestionPrompt): q is Extract<IbQuestion | IbQuestionPrompt, {subject:"economics" | "business-management"}> { return q.subject === "economics" || q.subject === "business-management"; }
+export function isHumanitiesQuestion(q: IbQuestion | IbQuestionPrompt): q is Extract<IbQuestion | IbQuestionPrompt, {subject:"economics" | "business-management" | "psychology"}> { return q.subject === "economics" || q.subject === "business-management" || q.subject === "psychology"; }
 /** An explicit allowlist keeps solutions and private authoring metadata out of question views. */
 export function questionPrompt(q: IbQuestion): IbQuestionPrompt {
   const prompt = { id: q.id, topicId: q.topicId, collectionId: q.collectionId, number: q.number,
@@ -245,6 +270,7 @@ export function questionPrompt(q: IbQuestion): IbQuestionPrompt {
     calculator: q.calculator, syllabusCode: q.syllabusCode, level: q.level, examStyle: q.examStyle };
   if (q.subject === "economics") return { ...prompt, subject:q.subject,topicId:q.topicId,collectionId:q.collectionId,syllabusCode:q.syllabusCode,level:q.level,examStyle:q.examStyle,questionType:q.questionType };
   if (q.subject === "business-management") return { ...prompt, subject:q.subject,topicId:q.topicId,collectionId:q.collectionId,calculator:q.calculator,syllabusCode:q.syllabusCode,level:q.level,examStyle:q.examStyle,questionType:q.questionType };
+  if (q.subject === "psychology") return { ...prompt, subject:q.subject,topicId:q.topicId,collectionId:q.collectionId,calculator:q.calculator,difficulty:q.difficulty,parts:q.parts,syllabusCode:q.syllabusCode,level:q.level,examStyle:q.examStyle,questionType:q.questionType,firstAssessment:q.firstAssessment,examSection:q.examSection,context:q.context,concepts:q.concepts };
   return { ...prompt, subject: q.subject, topicId: q.topicId, collectionId: q.collectionId,
     syllabusCode: q.syllabusCode, level: q.level, examStyle: q.examStyle };
 }

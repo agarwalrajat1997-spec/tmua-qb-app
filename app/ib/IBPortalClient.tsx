@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "@/app/ib/components/IbLink";
 import { supabaseBrowser } from "@/utils/supabase/browser";
-import { IB_COURSES, ibHasCourseChoice, ibHref, ibCourseLabel, ibQualification, ibCourseHref, ibIsMathSubject, ibNavigationSubjects, ibSubjectLabel, type IbSummary, type IbSubject, type IbView, type IbCourseLevel } from "@/lib/ib/catalog";
+import { IB_COURSES, ibHasCourseChoice, ibHref, ibCourseLabel, ibQualification, ibCourseHref, ibIsMathSubject, ibNavigationSubjects, ibSubjectLabel, ibTopicsForCourse, type IbSummary, type IbSubject, type IbView, type IbCourseLevel } from "@/lib/ib/catalog";
 import styles from "./ib.module.css";
 import IbBrand from "./IbBrand";
 import ChemistryCourseSwitch from "./components/ChemistryCourseSwitch";
@@ -48,7 +48,7 @@ export default function IBPortalClient({ email, summary: counts, subject, view, 
           <Link className={`${styles.navItem} ${view === "mocks" ? styles.navActive : ""}`} href={ibHref(subject, "mocks", courseLevel)} aria-current={view === "mocks" ? "page" : undefined}><span className={styles.navIcon} aria-hidden="true">◷</span><span>Mock tests<small>Put your learning into practice</small></span><span className={styles.navArrow} aria-hidden="true">↗</span></Link>
         </nav>
         <div className={styles.sidebarNote}><span className={styles.noteRule} /><strong>A little practice.<br />A lot of possibility.</strong><p>Your space to work through ideas, one question at a time.</p></div>
-        <div className={styles.sidebarFooter}><span className={styles.statusDot} /> IB Diploma Programme<small>Maths AA & AI SL/HL · Physics, Chemistry, Biology, Economics & Business SL/HL</small></div>
+        <div className={styles.sidebarFooter}><span className={styles.statusDot} /> IB Diploma Programme<small>Maths AA & AI SL/HL · Physics, Chemistry, Biology, Economics, Business & Psychology SL/HL</small></div>
       </aside>
       <main id="ib-main" className={styles.main}>
         <div className={styles.courseBar}><span className={styles.eyebrow}>CHOOSE YOUR SUBJECT</span><nav className={styles.subjectSwitch} aria-label="Subject">{ibNavigationSubjects(subject).map(id => <Link key={id} href={ibHref(id, view, courseLevel)} onClick={() => setQuery("")} aria-current={subject === id ? "page" : undefined} className={subject === id ? styles.subjectActive : ""}><span aria-hidden="true">{IB_COURSES[id].symbol}</span>{ibSubjectLabel(id)}</Link>)}</nav></div>
@@ -58,7 +58,7 @@ export default function IBPortalClient({ email, summary: counts, subject, view, 
           <div><span className={styles.heroLabel}>IB {courseLabel.toUpperCase()} <span>{qualification.toUpperCase()}</span></span><h1 id="course-heading">{view === "questions" ? "Question bank" : "Mock tests"}<span className={styles.headingDot}>.</span></h1><p>{ibHasCourseChoice(subject) ? `${course.subtitle} · ${qualification}` : course.subtitle}</p></div>
           <div className={styles.heroArt} aria-hidden="true"><span className={styles.artRing} /><span className={styles.artRingTwo} /><span className={styles.artSymbol}>{course.symbol}</span><span className={styles.artSpark}>✦</span></div>
         </section>
-        <div className={styles.stats}><div><strong>{view === "questions" ? counts.questions : counts.mocks}</strong><span>{view === "questions" ? "Questions available" : "Mock tests available"}</span></div><div><strong>{course.topics.length}</strong><span>{ibIsMathSubject(subject) ? "Core topics" : "Syllabus themes"}</span></div><div><strong className={styles.statText}>{qualification === "Standard Level" ? "SL" : "HL"}</strong><span>{qualification}</span></div></div>
+        <div className={styles.stats}><div><strong>{view === "questions" ? counts.questions : counts.mocks}</strong><span>{view === "questions" ? "Questions available" : "Mock tests available"}</span></div><div><strong>{ibTopicsForCourse(subject, courseLevel).length}</strong><span>{ibIsMathSubject(subject) ? "Core topics" : subject === "psychology" ? "Content areas" : "Syllabus themes"}</span></div><div><strong className={styles.statText}>{qualification === "Standard Level" ? "SL" : "HL"}</strong><span>{qualification}</span></div></div>
         {view === "questions" ? <>
           <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>START WITH A TOPIC</span><h2>Explore {course.title.toLowerCase()}</h2></div><label className={styles.search}><span aria-hidden="true">⌕</span><span className={styles.srOnly}>Search topics</span><input type="search" placeholder="Search topics or subtopics" value={query} onChange={event => setQuery(event.target.value)} /></label></div>
           <div className={styles.topicGrid} key={subject}>

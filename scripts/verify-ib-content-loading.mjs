@@ -54,8 +54,13 @@ for(const collection of h.model.IB_COLLECTIONS){
  for(const q of actual)assert.equal(await content.getIbQuestion(q.id),q,'generated ID index resolves every published question');
  total+=actual.length;
 }
-assert.equal(bankImports().length,45,'each bank loaded only once');
-assert.equal(total,5922);
+assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject!=='psychology').length,45,'all established banks remain');
+assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject==='psychology').length,7);
+assert.equal(bankImports().length,52,'each bank loaded only once');
+assert.equal(total,6162);
+assert.equal(total-content.getIbSummary('hl').psychology.questions,5922,'established question count remains unchanged');
+assert.equal(content.getIbSummary('hl').psychology.questions,240);
+assert.equal(content.getIbSummary('sl').psychology.questions,180);
 
 // A failed load must not poison the cache for the lifetime of the server.
 let attempts=0;

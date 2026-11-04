@@ -17,7 +17,7 @@ const inputValues=(html,name)=>elements(html,node=>node.name==='input'&&node.att
 const report=[];
 for(const subject of Object.keys(catalog.IB_COURSES))for(const course of catalog.ibHasCourseChoice(subject)?['sl','hl']:['hl']){
   const available=questions.filter(q=>q.subject===subject&&h.model.questionAvailableForCourse(q,course));
-  const collections=h.model.IB_COLLECTIONS.filter(c=>c.subject===subject);let before=0,after=0;
+  const collections=h.model.IB_COLLECTIONS.filter(c=>c.subject===subject&&catalog.ibTopicVisible(subject,c.topicId,course));let before=0,after=0;
   for(const collection of collections){
     const items=available.filter(q=>q.collectionId===collection.id),groups=ibTopicGroups(collection,items,course);
     const original=catalog.ibIsMathSubject(subject)?new Set(items.map(q=>q.subtopic)).size:catalog.ibSyllabusSubtopics(subject,collection.topicId,course).length;
@@ -76,4 +76,4 @@ const removed=new URL(removeLink.attribs.href,'https://example.invalid');assert.
 const slSwitch=elements(removeHtml,node=>node.name==='a'&&node.attribs.href?.startsWith('/ib/question-bank/physics-space-time-motion?course=sl'))[0];assert.ok(slSwitch);
 const switched=new URL(slSwitch.attribs.href,'https://example.invalid');assert.deepEqual(switched.searchParams.getAll('category'),['motion-forces-and-momentum']);assert.deepEqual(switched.searchParams.getAll('difficulty'),['easy','hard']);
 console.log(report.join('\n'));
-console.log('Grouped filters passed: all 45 collections, every course, complete unique question/syllabus coverage, category counts, multiselect unions/intersections, legacy links, pagination, sign-in returns, invalid inputs and SL boundaries. No live account or writes.');
+console.log('Grouped filters passed: all 52 collections, every course, complete unique question/syllabus coverage, category counts, multiselect unions/intersections, legacy links, pagination, sign-in returns, invalid inputs and SL boundaries. No live account or writes.');

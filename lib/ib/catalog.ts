@@ -1,15 +1,17 @@
 import { HUMANITIES_COURSES, humanitiesSyllabusSubtopics } from "./humanities-catalog.ts";
+import { PSYCHOLOGY_COURSE, psychologySyllabusSubtopics, psychologyTopicVisible } from "./psychology-catalog.ts";
 export type IbMathSubject = "math-aa-sl" | "math-ai-sl" | "math-aa-hl" | "math-ai-hl";
-export type IbSubject = IbMathSubject | "physics-hl" | "chemistry" | "biology" | "economics" | "business-management";
+export type IbSubject = IbMathSubject | "physics-hl" | "chemistry" | "biology" | "economics" | "business-management" | "psychology";
 export type IbCourseLevel = "sl" | "hl";
 export type IbView = "questions" | "mocks";
 export type IbTopic = { id: string; code: string; title: string; description: string; subtopics: string[] };
-export type IbCourse = { id: IbSubject; label: string; title: string; subtitle: string; symbol: string; topics: IbTopic[] };
+export type IbCourse = { id: IbSubject; label: string; title: string; subtitle: string; symbol: string; topics: IbTopic[]; firstAssessment?: number };
 
 // Maths: current course (final assessment November 2028).
 // Physics: first assessment 2025. Keep IDs stable when content is imported.
 export const IB_COURSES: Record<IbSubject, IbCourse> = {
   ...HUMANITIES_COURSES,
+  psychology: PSYCHOLOGY_COURSE,
   "math-ai-hl": {
     id: "math-ai-hl", label: "Maths AI HL", title: "Mathematics", subtitle: "Applications & Interpretation · Higher Level", symbol: "ƒ",
     topics: [
@@ -91,7 +93,7 @@ export function ibIsMathSubject(subject: IbSubject): subject is IbMathSubject {
 }
 /** Keep one Maths entry in the subject navigation while retaining the selected course. */
 export function ibNavigationSubjects(subject: IbSubject): IbSubject[] {
-  return [ibIsMathSubject(subject) ? subject : "math-aa-hl", "physics-hl", "chemistry", "biology", "economics", "business-management"];
+  return [ibIsMathSubject(subject) ? subject : "math-aa-hl", "physics-hl", "chemistry", "biology", "economics", "business-management", "psychology"];
 }
 export function ibSubjectLabel(subject: IbSubject) {
   return ibIsMathSubject(subject) ? "Maths" : subject === "business-management" ? "Business" : IB_COURSES[subject].label;
@@ -108,6 +110,7 @@ export function ibSubjectForPath(pathname: string): IbSubject {
   if (/^\/ib\/(?:question-bank\/ai-hl-|(?:questions|mark-scheme)\/ib-aihl-)/.test(pathname)) return "math-ai-hl";
   if (/^\/ib\/(?:question-bank\/economics-|(?:questions|mark-scheme)\/ib-econ-)/.test(pathname)) return "economics";
   if (/^\/ib\/(?:question-bank\/business-|(?:questions|mark-scheme)\/ib-bm-)/.test(pathname)) return "business-management";
+  if (/^\/ib\/(?:question-bank\/psychology-|(?:questions|mark-scheme)\/ib-psy-)/.test(pathname)) return "psychology";
   if (/^\/ib\/(?:question-bank\/biology-|(?:questions|mark-scheme)\/ib-bio-)/.test(pathname)) return "biology";
   if (/^\/ib\/(?:question-bank\/chemistry-|(?:questions|mark-scheme)\/ib-chem-)/.test(pathname)) return "chemistry";
   if (/^\/ib\/(?:question-bank\/physics-|(?:questions|mark-scheme)\/ib-phy-)/.test(pathname)) return "physics-hl";
@@ -117,10 +120,16 @@ export function ibCourseLevel(value: unknown): IbCourseLevel {
   return value === "sl" ? "sl" : "hl";
 }
 export function ibHasCourseChoice(subject: IbSubject) {
-  return subject === "chemistry" || subject === "biology" || subject === "physics-hl" || subject === "economics" || subject === "business-management";
+  return subject === "chemistry" || subject === "biology" || subject === "physics-hl" || subject === "economics" || subject === "business-management" || subject === "psychology";
 }
 export function ibCoreLevel(subject: IbSubject) { return subject === "physics-hl" ? "core" : "sl"; }
-export function ibIsHumanitiesSubject(subject: IbSubject): subject is "economics" | "business-management" { return subject === "economics" || subject === "business-management"; }
+export function ibIsHumanitiesSubject(subject: IbSubject): subject is "economics" | "business-management" | "psychology" { return subject === "economics" || subject === "business-management" || subject === "psychology"; }
+export function ibTopicVisible(subject: IbSubject, topicId: string, course: IbCourseLevel = "hl") {
+  return subject !== "psychology" || psychologyTopicVisible(topicId, course);
+}
+export function ibTopicsForCourse(subject: IbSubject, course: IbCourseLevel = "hl") {
+  return IB_COURSES[subject].topics.filter(topic => ibTopicVisible(subject, topic.id, course));
+}
 export function ibCourseLabel(subject: IbSubject, course: IbCourseLevel = "hl") {
   return ibHasCourseChoice(subject) ? `${IB_COURSES[subject].label} ${course.toUpperCase()}` : IB_COURSES[subject].label;
 }
@@ -152,7 +161,7 @@ export function chemistrySyllabusSubtopics(topicId?: string, course: IbCourseLev
     })).filter(topic => course === "hl" || !topic.additionalHlOnly);
 }
 export function ibSyllabusSubtopics(subject: IbSubject, topicId?: string, course: IbCourseLevel = "hl") {
-  return ibIsHumanitiesSubject(subject) ? humanitiesSyllabusSubtopics(subject, topicId, course) : subject === "biology" ? biologySyllabusSubtopics(topicId, course) : subject === "chemistry" ? chemistrySyllabusSubtopics(topicId, course) : subject === "physics-hl" ? physicsSyllabusSubtopics(topicId, course) : [];
+  return subject === "psychology" ? psychologySyllabusSubtopics(topicId, course) : ibIsHumanitiesSubject(subject) ? humanitiesSyllabusSubtopics(subject, topicId, course) : subject === "biology" ? biologySyllabusSubtopics(topicId, course) : subject === "chemistry" ? chemistrySyllabusSubtopics(topicId, course) : subject === "physics-hl" ? physicsSyllabusSubtopics(topicId, course) : [];
 }
 export type IbSyllabusSubtopic = { code: string; title: string; additionalHlOnly: boolean };
 const PHYSICS_AHL_ONLY = new Set(["A.4", "A.5", "B.4", "D.4", "E.2"]);

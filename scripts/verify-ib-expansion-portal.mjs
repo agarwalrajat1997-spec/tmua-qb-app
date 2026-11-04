@@ -19,7 +19,8 @@ const bank=h.load('app/ib/question-bank/[collection]/page.tsx').default,question
 const args=(q,course='hl',query={})=>({params:Promise.resolve({collection:q.collectionId}),searchParams:Promise.resolve({course,...query})});
 const detail=(q,course)=>({params:Promise.resolve({id:q.id}),searchParams:Promise.resolve({course})});
 for(const q of questions)assert.equal(h.model.ibQuestionSchema.safeParse(q).success,true,q.id);
-assert.equal(catalog.IB_MATH_SUBJECTS.length,4);assert.equal(catalog.ibNavigationSubjects('math-ai-hl').length,6);
+assert.equal(catalog.IB_MATH_SUBJECTS.length,4);assert.equal(catalog.ibNavigationSubjects('math-ai-hl').length,7);
+assert.equal(catalog.ibNavigationSubjects('math-ai-hl').filter(subject=>subject!=='psychology').length,6,'six established subject entries remain');
 assert.equal(catalog.ibQualification('math-ai-hl'),'Higher Level');
 assert.equal(catalog.ibMathCourseHref('math-ai-hl','calculus'),'/ib/question-bank/ai-hl-calculus');
 assert.equal(catalog.ibSubjectForPath('/ib/mark-scheme/ib-aihl-sp-001'),'math-ai-hl');

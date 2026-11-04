@@ -29,7 +29,7 @@ export default async function MarkScheme({ params, searchParams }: { params: Pro
     <div className={styles.schemeColumns}>
       <section className={styles.schemeQuestion}><h2>Question</h2><QuestionBody question={questionPrompt(q)} /></section>
       <section className={styles.schemeSolution}><h2>Worked solution & mark allocation</h2>
-        <div className={styles.markLegend}><span><b>M</b> Method</span><span><b>A</b> Accuracy</span><span><b>R</b> Reasoning</span></div>
+        <div className={styles.markLegend}>{q.subject === "psychology" ? <><span>Holistic best-fit bands</span><span>Indicative reasoning</span></> : <><span><b>M</b> Method</span><span><b>A</b> Accuracy</span><span><b>R</b> Reasoning</span></>}</div>
         {q.markScheme.map(group => <section className={styles.schemePart} key={group.part || "whole"}>
           {group.part ? <h3>Part ({group.part})<span>[{q.parts.find(p => p.label === group.part)?.marks} {q.parts.find(p => p.label === group.part)?.marks === 1 ? "mark" : "marks"}]</span></h3> : null}
           {group.rubric ? <MarkRubric rubric={group.rubric} /> : null}

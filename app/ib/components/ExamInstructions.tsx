@@ -2,7 +2,9 @@ import type { IbSubject } from "@/lib/ib/catalog";
 import styles from "../questions.module.css";
 
 export default function ExamInstructions({ subject }: { subject: IbSubject }) {
-  return <p className={styles.examInstructions}>{subject === "economics"
+  return <p className={styles.examInstructions}>{subject === "psychology"
+    ? <>First assessment 2027. Use psychological terminology, apply knowledge to the stimulus and support evaluations with reasoned arguments. Supplied fictional studies and simulated data are identified in each question. Use the holistic mark bands for written answers; indicative content is not an additive checklist. No calculator is needed for these practice items. Content-area codes are internal Thriving Scholars groupings, not official IB syllabus numbering.</>
+    : subject === "economics"
     ? <>Use economic terminology, clearly labelled diagrams and relevant evidence. Explain causal links and develop a supported judgement for evaluative responses. Follow each question’s calculator and precision instructions.</>
     : subject === "business-management"
       ? <>Apply relevant business tools and theory to the case. Show calculations with appropriate units and support recommendations with evidence, trade-offs and practical implementation. A calculator may be used.</>

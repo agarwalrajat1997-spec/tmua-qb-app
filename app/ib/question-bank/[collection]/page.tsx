@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "@/app/ib/components/IbLink";
 import { notFound } from "next/navigation";
 import { requireIbUser } from "@/lib/ib/auth";
-import { ibHref, ibHasCourseChoice, ibCoreLevel, ibIsHumanitiesSubject, ibSyllabusSubtopics, ibCourseLevel, ibCourseLabel, ibCourseHref } from "@/lib/ib/catalog";
+import { ibHref, ibHasCourseChoice, ibCoreLevel, ibIsHumanitiesSubject, ibSyllabusSubtopics, ibCourseLevel, ibCourseLabel, ibCourseHref, ibTopicVisible } from "@/lib/ib/catalog";
+import { psychologyPaperStyles } from "@/lib/ib/psychology-catalog";
 import { getIbQuestions } from "@/lib/ib/content";
 import { ibTopicGroups, questionInTopicGroup } from "@/lib/ib/topic-groups";
 import { ibFilterHref, queryValues, selectedValues, singleQueryValue as single, type IbFilterQuery as Query } from "@/lib/ib/question-filters";
@@ -27,6 +28,7 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const courseChoice = ibHasCourseChoice(collection.subject);
   const science = physics || courseChoice;
   const humanities = ibIsHumanitiesSubject(collection.subject);
+  const psychology = collection.subject === "psychology";
   const coreLevel = ibCoreLevel(collection.subject);
   const courseLevel = ibCourseLevel(single(raw.course));
   const courseLabel = ibCourseLabel(collection.subject, courseLevel);
@@ -61,9 +63,10 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   ];
   const allowedLevels = courseChoice ? courseLevel === "sl" ? [coreLevel] : [coreLevel, "ahl"] : [];
   const level = selectedValues(raw.level, allowedLevels);
-  const allowedStyles = humanities ? courseLevel === "sl" ? ["paper-1", "paper-2"] : ["paper-1", "paper-2", "paper-3"] : collection.subject === "math-aa-hl" || collection.subject === "math-ai-hl" ? ["short-response", "extended-response", "problem-solving"] : ["short-response", "extended-response"];
+  const allowedStyles = psychology ? psychologyPaperStyles(courseLevel, collection.topicId) : humanities ? courseLevel === "sl" ? ["paper-1", "paper-2"] : ["paper-1", "paper-2", "paper-3"] : collection.subject === "math-aa-hl" || collection.subject === "math-ai-hl" ? ["short-response", "extended-response", "problem-solving"] : ["short-response", "extended-response"];
   const style = selectedValues(raw.style, !science || humanities ? allowedStyles : []);
-  const type = selectedValues(raw.type, science && !humanities ? ["multiple-choice", "structured", "data-based"] : []);
+  const allowedTypes = psychology ? ["short-response", "scenario-response", "extended-response", "research-methods", "data-response"] : science && !humanities ? ["multiple-choice", "structured", "data-based"] : [];
+  const type = selectedValues(raw.type, allowedTypes);
   const filtered = all.filter(q => {
     if (difficulty.length && !difficulty.includes(q.difficulty)) return false;
     if (!isScienceQuestion(q) && style.length && !style.includes(q.examStyle ?? "")) return false;
@@ -97,18 +100,18 @@ export default async function QuestionBank({ params, searchParams }: { params: P
 
   return <ExamShell email={user.email} subject={collection.subject} courseLevel={courseLevel} mathsTopicId={collection.topicId} courseLinks={{ sl: filterHref({ course: "sl", level: level.filter(value => value !== "ahl"), syllabus: syllabus.filter(code => slCodes.includes(code)), subtopic: subtopic.filter(title => slQuestions.some(q => q.subtopic === title)), category: categoriesForCourse("sl"), style: slStyles }), hl: filterHref({ course: "hl", category: categoriesForCourse("hl") }) }}>
     <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href={ibHref(collection.subject, "questions", courseLevel)}>Question bank</Link><span>/</span><span>{collection.title}</span></nav>
-    <nav className={styles.themeNav} aria-label={`${courseLabel.replace(/ (SL|HL)$/, "")} ${science ? "themes" : "topics"}`}>{IB_COLLECTIONS.filter(item => item.subject === collection.subject).map(item => <Link key={item.id} href={ibCourseHref("/ib/question-bank/" + item.id, collection.subject, courseLevel)} aria-current={item.id === id ? "page" : undefined}><b>{item.code}</b> {item.title}</Link>)}</nav>
-    <div className={styles.bankHeading}><div><span className={styles.overline}>IB {courseLabel.toUpperCase()} · {science ? "THEME" : "TOPIC"} {collection.code}</span><h1>{collection.title}{!/[.!?]$/.test(collection.title) ? <span>.</span> : null}</h1><p>{collection.description}</p></div><div className={styles.bankCount}><strong>{all.length}</strong><span>questions</span></div></div>
+    <nav className={styles.themeNav} aria-label={`${courseLabel.replace(/ (SL|HL)$/, "")} ${psychology ? "content areas" : science ? "themes" : "topics"}`}>{IB_COLLECTIONS.filter(item => item.subject === collection.subject && ibTopicVisible(collection.subject, item.topicId, courseLevel)).map(item => <Link key={item.id} href={ibCourseHref("/ib/question-bank/" + item.id, collection.subject, courseLevel)} aria-current={item.id === id ? "page" : undefined}><b>{item.code}</b> {item.title}</Link>)}</nav>
+    <div className={styles.bankHeading}><div><span className={styles.overline}>IB {courseLabel.toUpperCase()} · {psychology ? "CONTENT AREA" : science ? "THEME" : "TOPIC"} {collection.code}</span><h1>{collection.title}{!/[.!?]$/.test(collection.title) ? <span>.</span> : null}</h1><p>{collection.description}</p></div><div className={styles.bankCount}><strong>{all.length}</strong><span>questions</span></div></div>
     <ExamInstructions subject={collection.subject} />
-    <p className={styles.filterHint}>Choose one or more options in each filter. Related subtopics are grouped into {groups.length} study categories.</p>
+    <p className={styles.filterHint}>Choose one or more options in each filter. Related {psychology ? "content areas" : "subtopics"} are grouped into {groups.length} {psychology ? "content groups" : "study categories"}.</p>
     <AutoFilterForm key={collection.id + courseLevel} className={`${styles.filters} ${styles.physicsFilters}`} action={pathname}>
       {courseChoice ? <input type="hidden" name="course" value={courseLevel} /> : null}
       <label className={styles.searchFilter}>Search questions<AutoSearchInput search={search} /></label>
-      <MultiSelectFilter name="category" label="Study categories" options={categoryOptions} selected={selectedCategories} allLabel="All categories" wide />
+      <MultiSelectFilter name="category" label={psychology ? "Content areas" : "Study categories"} options={categoryOptions} selected={selectedCategories} allLabel="All categories" wide />
       <MultiSelectFilter name="difficulty" label="Difficulty" selected={difficulty} allLabel="All difficulties" options={[{ value: "easy", label: "Easy" }, { value: "medium", label: "Medium" }, { value: "hard", label: "Hard" }]} />
       {science ? <>
         <MultiSelectFilter name="level" label="Course content" selected={level} allLabel={courseLevel === "sl" ? "All SL content" : "SL + additional HL"} options={[{ value: coreLevel, label: "SL content" }, ...(courseLevel === "hl" ? [{ value: "ahl", label: "Additional HL" }] : [])]} />
-        {humanities ? <MultiSelectFilter name="style" label="Exam paper" selected={style} allLabel="All papers" options={allowedStyles.map(value => ({ value, label: "Paper " + value.slice(-1) }))} /> : <MultiSelectFilter name="type" label="Question type" selected={type} allLabel="All question types" options={[{ value: "multiple-choice", label: "Multiple choice" }, { value: "structured", label: "Structured" }, { value: "data-based", label: "Data-based" }]} />}
+        {humanities ? <><MultiSelectFilter name="style" label="Exam paper" selected={style} allLabel="All papers" options={allowedStyles.map(value => ({ value, label: "Paper " + value.slice(-1) }))} />{psychology ? <MultiSelectFilter name="type" label="Response type" selected={type} allLabel="All response types" options={allowedTypes.map(value => ({ value, label: ({ "short-response": "Short response", "scenario-response": "Scenario response", "extended-response": "Extended response", "research-methods": "Research methods", "data-response": "Data response" } as Record<string, string>)[value] }))} /> : null}</> : <MultiSelectFilter name="type" label="Question type" selected={type} allLabel="All question types" options={[{ value: "multiple-choice", label: "Multiple choice" }, { value: "structured", label: "Structured" }, { value: "data-based", label: "Data-based" }]} />}
       </> : <>
         <MultiSelectFilter name="style" label="Response style" selected={style} allLabel="All response styles" options={allowedStyles.map(value => ({ value, label: ({ "short-response": "Short response", "extended-response": "Extended response", "problem-solving": "Problem solving" } as Record<string, string>)[value] }))} />
         <MultiSelectFilter name="calculator" label="Calculator" selected={calculator} allLabel="All questions" options={[{ value: "no", label: "No calculator" }, { value: "yes", label: "Calculator" }]} />

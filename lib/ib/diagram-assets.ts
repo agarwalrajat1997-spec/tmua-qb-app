@@ -5,13 +5,14 @@ import chemistryManifest from "@/content/ib/chemistry-diagram-manifest.json";
 import biologyManifest from "@/content/ib/biology-diagram-manifest.json";
 import expansionManifest from "@/content/ib/expansion-diagram-manifest.json";
 import mathsManifest from "@/content/ib/maths-diagram-manifest.json";
+import psychologyManifest from "@/content/ib/psychology-diagram-manifest.json";
 import { safeDiagramUrl } from "./question";
 
 /** Only content-hashed images verified against their Cloudflare response enter this manifest. */
 export function diagramUrlForSvg(svg?: string) {
   if (!svg) return undefined;
   const hash = createHash("sha256").update(svg).digest("hex");
-  for (const [assets, prefix] of [[expansionManifest, "ib/expansion/2026-10-31/"], [mathsManifest, "ib/maths/2026-10-30/"], [manifest, "ib/physics-hl/2026-10-30/"], [chemistryManifest, "ib/chemistry/2026-10-30/"], [biologyManifest, "ib/biology/2026-10-30/"]] as const) {
+  for (const [assets, prefix] of [[psychologyManifest, "ib/psychology/2026-11-04/"], [expansionManifest, "ib/expansion/2026-10-31/"], [mathsManifest, "ib/maths/2026-10-30/"], [manifest, "ib/physics-hl/2026-10-30/"], [chemistryManifest, "ib/chemistry/2026-10-30/"], [biologyManifest, "ib/biology/2026-10-30/"]] as const) {
     const entry = (assets.assets as Record<string, { key: string; bytes: number }>)[hash];
     if (!entry || entry.key !== prefix + hash + ".svg" || entry.bytes !== Buffer.byteLength(svg)) continue;
     const url = assets.origin + "/" + entry.key;
