@@ -1,0 +1,165 @@
+{
+  "status": "passed",
+  "author": "root",
+  "reviewer": "mock_pdf_inventory",
+  "course": "math-aa-hl",
+  "file": "calculus-2.json",
+  "contentPath": "content/ib/math-aa-hl/calculus-2.json",
+  "questionId": "ib-aa-c2-056",
+  "baselineSha256": "5464b1c00673fd895b8d356c6ed2933640dea9a77c8583c7c207f9bef543462d",
+  "currentSha256": "803785e3225a03e562f751a9a88211bd0df7deec4690157a8c3b634f5698a150",
+  "originalQuestionSha256": "c459c2c3b84513a771cd488e7e53a73f587f61e84b382041de157f0d6383c173",
+  "updatedQuestionSha256": "51bb061b6352dd8b0d02e34beb6a93f397fa44d5b105ff19dcb3b5a6e55081b6",
+  "questionHashMethod": "SHA256 of JavaScript JSON.stringify(question), without sorting keys",
+  "changes": [
+    {
+      "group": 1,
+      "step": 3,
+      "before": "$V=\\frac{\\pi \\left(-161 + \\log{\\left(39402006196394479212279040100143613805079739270465446667948293404245721771497210611414266254884915640806627990306816 \\right)}\\right)}{32}$.",
+      "after": "$V=\\pi\\left(4\\ln8-\\frac{161}{32}\\right)$."
+    }
+  ],
+  "reasoning": "I independently read the full stem, both parts and every existing marking step. Translating y=ln x two units left and ln4 up gives f(x)=ln(4x+8), x>-2. Its intercepts are (-7/4,0) and (0,ln8), so the unique finite region bounded by the curve and both axes lies in quadrant II. For 0<=y<=ln8 the curve is x=e^y/4-2<=0; the physical disk radius is 2-e^y/4. Thus V=pi integral_0^ln8 (2-e^y/4)^2 dy = pi[e^(2y)/32-e^y+4y]_0^ln8 = pi(4ln8-161/32). The existing squared negative x-expression gives the same integral. The original final answer is also correct because its giant integer is exactly 2^384. Replacing that final A1 text with the readable equivalent changes presentation only, with no change to the problem, marking allocation or mathematical answer.",
+  "mathematicalDerivation": {
+    "transformedFunction": "f(x)=ln(x+2)+ln4=ln(4x+8)",
+    "domain": "x>-2",
+    "intercepts": {
+      "x": -1.75,
+      "y": "ln8"
+    },
+    "region": "-7/4<=x<=0 and 0<=y<=ln(4x+8); the bounded region is left of the y-axis.",
+    "diskRadius": "r(y)=2-e^y/4, non-negative on [0,ln8], strictly positive below ln8",
+    "diskIntegral": "V=pi integral_0^ln8 (2-e^y/4)^2 dy",
+    "antiderivativeInsidePi": "e^(2y)/32-e^y+4y",
+    "boundaryEvaluation": "(2-8+4ln8)-(1/32-1)=4ln8-161/32",
+    "exactVolume": "pi(4ln8-161/32)=pi(384ln2-161)/32",
+    "numericVolume": 10.324895045269576,
+    "acceptableAlternative": {
+      "method": "Cylindrical shells",
+      "integral": "V=2pi integral_(-7/4)^0 (-x)ln(4x+8) dx",
+      "substitution": "u=x+2, 1/4<=u<=2",
+      "antiderivativeInsideTwoPi": "(2u-u^2/2)ln(4u)-2u+u^2/4",
+      "evaluation": "2pi[(2ln8-3)-(-31/64)]=pi(4ln8-161/32)"
+    }
+  },
+  "numericChecks": [
+    {
+      "name": "Translated curve x-intercept",
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-14,
+      "reason": "The finite enclosed region meets the x-axis at x=-7/4, within x>-2."
+    },
+    {
+      "name": "Translated curve y-intercept",
+      "actual": 2.0794415416798357,
+      "expected": 2.0794415416798357,
+      "tolerance": 1e-14,
+      "reason": "At x=0, the upper y-bound is ln8."
+    },
+    {
+      "name": "Disk radius at lower y-bound",
+      "actual": 1.75,
+      "expected": 1.75,
+      "tolerance": 1e-14,
+      "reason": "The physical radius is -x=2-e^y/4 because the region is left of the y-axis."
+    },
+    {
+      "name": "Disk radius at upper y-bound",
+      "actual": 4.440892098500626e-16,
+      "expected": 0,
+      "tolerance": 1e-14,
+      "reason": "The radius decreases to zero at the y-intercept; horizontal slices are disks without a hole."
+    },
+    {
+      "name": "Disk Simpson quadrature, 200000 subintervals",
+      "actual": 10.324895045269576,
+      "expected": 10.324895045269576,
+      "tolerance": 1e-10,
+      "reason": "Fresh compensated Simpson sum of pi(2-e^y/4)^2 over 0<=y<=ln8, compared with the independently evaluated exact expression."
+    },
+    {
+      "name": "Shell Simpson quadrature, 200000 subintervals",
+      "actual": 10.324895045269576,
+      "expected": 10.324895045269576,
+      "tolerance": 1e-10,
+      "reason": "Fresh compensated Simpson sum of 2pi(-x)ln(4x+8) over -7/4<=x<=0 uses independent horizontal-variable geometry."
+    },
+    {
+      "name": "Independent quadratures agree",
+      "actual": 10.324895045269576,
+      "expected": 10.324895045269576,
+      "tolerance": 1e-10,
+      "reason": "Disk and cylindrical-shell descriptions integrate the same bounded quadrant-II region using different variables."
+    },
+    {
+      "name": "Original giant-log expression is equivalent",
+      "actual": 10.324895045269576,
+      "expected": 10.324895045269576,
+      "tolerance": 1e-12,
+      "reason": "Exact BigInt equality establishes the giant integer is 2^384; its natural logarithm is therefore 384ln2, equal to 128ln8."
+    },
+    {
+      "name": "Positive volume",
+      "actual": 10.324895045269576,
+      "expected": 10.324895045269576,
+      "tolerance": 1e-12,
+      "reason": "Exact symbolic simplification gives pi(4ln8-161/32), a positive volume."
+    }
+  ],
+  "exactIntegerCheck": {
+    "originalInteger": "39402006196394479212279040100143613805079739270465446667948293404245721771497210611414266254884915640806627990306816",
+    "identity": "2^384",
+    "verifiedBy": "JavaScript arbitrary-precision BigInt exact equality",
+    "equal": true
+  },
+  "markingReview": {
+    "total": 6,
+    "parts": [
+      {
+        "label": "a",
+        "marks": 2,
+        "codes": [
+          "M1",
+          "A1"
+        ],
+        "assessment": "Correct translations and resulting function; natural domain supplied."
+      },
+      {
+        "label": "b",
+        "marks": 4,
+        "codes": [
+          "M1",
+          "A1",
+          "A1",
+          "A1"
+        ],
+        "assessment": "Existing inverse/setup attempt, correct disk integral and bounds, correct primitive, and correct simplified exact volume; accept an equivalent valid shell solution."
+      }
+    ],
+    "marksUnchanged": true
+  },
+  "scopeChecks": {
+    "fullQuestionAndSchemeRead": true,
+    "onlyFinalAnswerTextChanged": true,
+    "stemUnchanged": true,
+    "partsUnchanged": true,
+    "otherQuestionFieldsUnchanged": true,
+    "allOtherRecordsUnchanged": true,
+    "otherRecordCount": 166,
+    "bankRecordOrderAndCountUnchanged": true,
+    "reversePatchWholeBankSha256": "5464b1c00673fd895b8d356c6ed2933640dea9a77c8583c7c207f9bef543462d",
+    "reversePatchMatchesFrozenBaseline": true,
+    "sourceUnchanged": true,
+    "verificationNotesUnchanged": true
+  },
+  "sourceContext": {
+    "original": {
+      "document": "IB Mathematics AA HL Questionbank - Calculus II.pdf",
+      "question": 56
+    },
+    "unchanged": true,
+    "note": "The original calculus-II source mapping, non-calculator setting, syllabus metadata, question wording and previous verification metadata are retained. This independent ledger records the display-only correction without replacing or rebasing earlier reviews."
+  },
+  "openFindings": []
+}

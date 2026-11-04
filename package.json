@@ -71,7 +71,7 @@
     "verify:ib-biology-question-bank": "node --experimental-strip-types scripts/verify-ib-biology-content.mjs --complete --require-cdn && node scripts/verify-ib-biology-reviews.mjs",
     "verify:ib-chemistry-question-bank": "node --experimental-strip-types scripts/verify-ib-chemistry-content.mjs --complete --require-cdn",
     "verify:ib-physics-question-bank": "node --experimental-strip-types scripts/verify-ib-physics-content.mjs --complete --require-cdn",
-    "verify:ib-question-bank": "node --experimental-strip-types scripts/verify-ib-maths-content.mjs --complete --require-cdn && node scripts/verify-ib-maths-reviews.mjs && node --experimental-strip-types scripts/verify-ib-content.mjs --complete && node scripts/verify-ib-portal.mjs && npm run verify:ib-grouped-filters && npm run verify:ib-content-loading",
+    "verify:ib-question-bank": "node --experimental-strip-types scripts/verify-ib-maths-content.mjs --complete --require-cdn && node scripts/verify-ib-maths-reviews.mjs && node scripts/verify-ib-maths-reviewed-corrections.mjs && node --experimental-strip-types scripts/verify-ib-content.mjs --complete && node scripts/verify-ib-portal.mjs && npm run verify:ib-grouped-filters && npm run verify:ib-content-loading",
     "verify:tmua-bank-client": "node --experimental-strip-types scripts/verify-tmua-bank-client.mjs",
     "verify:tmua-studio": "node src/tmua-studio/verify-studio.mjs && node --import tsx --test lib/tmua-studio-server/server.test.ts",
     "verify:ib-expansion-question-bank": "node --experimental-strip-types scripts/verify-ib-expansion-content.mjs --require-cdn && node scripts/verify-ib-expansion-reviews.mjs && node scripts/verify-ib-expansion-portal.mjs",
