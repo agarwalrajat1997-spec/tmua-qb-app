@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useAutoFilters } from "./AutoFilterForm";
 import styles from "./multi-select-filter.module.css";
 
@@ -21,12 +21,54 @@ export default function MultiSelectFilter({ name, label, options, selected, allL
   const id = useId();
   const details = useRef<HTMLDetailsElement>(null);
   const summary = useRef<HTMLElement>(null);
+  useEffect(() => {
+    let dismissFrame: number | null = null;
+    function cancelDismissal() {
+      if (dismissFrame !== null) cancelAnimationFrame(dismissFrame);
+      dismissFrame = null;
+    }
+    function dismissAfterFocusSettles(pointer: boolean) {
+      cancelDismissal();
+      dismissFrame = requestAnimationFrame(() => {
+        dismissFrame = null;
+        const menu = details.current;
+        if (!menu?.open || (!pointer && menu.contains(document.activeElement))) return;
+        // Hiding a focused native details child during blur can crash Chromium.
+        // Move any remaining internal focus before closing, after the event ends.
+        if (menu.contains(document.activeElement)) summary.current?.focus();
+        menu.open = false;
+      });
+    }
+    function outsidePointer(event: PointerEvent) {
+      const menu = details.current;
+      if (!(event.target instanceof Node) || !menu?.open) return;
+      if (menu.contains(event.target)) cancelDismissal();
+      else dismissAfterFocusSettles(true);
+    }
+    function outsideFocus(event: FocusEvent) {
+      const menu = details.current;
+      if (!(event.target instanceof Node) || !menu?.open) return;
+      if (menu.contains(event.target)) cancelDismissal();
+      else dismissAfterFocusSettles(false);
+    }
+    // Null-related-target blurs from padding, scrollbars or window switching are
+    // deliberately ignored. Only a real outside pointer/focus target dismisses.
+    document.addEventListener("pointerdown", outsidePointer, true);
+    document.addEventListener("focusin", outsideFocus, true);
+    return () => {
+      cancelDismissal();
+      document.removeEventListener("pointerdown", outsidePointer, true);
+      document.removeEventListener("focusin", outsideFocus, true);
+    };
+  }, []);
   return <div className={`${styles.field} ${wide ? styles.wide : ""}`}>
     <span id={id} className={styles.label}>{label}</span>
-    <details ref={details} className={styles.dropdown} onBlur={event => {
-      if (!event.currentTarget.contains(event.relatedTarget as Node | null)) event.currentTarget.open = false;
-    }} onKeyDown={event => {
-      if (event.key === "Escape" && details.current) { details.current.open = false; summary.current?.focus(); }
+    <details ref={details} className={styles.dropdown} onKeyDown={event => {
+      if (event.key === "Escape" && details.current) {
+        event.preventDefault();
+        summary.current?.focus();
+        details.current.open = false;
+      }
     }}>
       <summary ref={summary} aria-labelledby={`${id} ${id}-selection`}><span id={`${id}-selection`}>{values.length ? `${values.length} selected` : allLabel}</span><span aria-hidden="true">⌄</span></summary>
       <div className={styles.panel}>
