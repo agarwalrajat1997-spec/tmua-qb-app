@@ -47,7 +47,8 @@ let total=0;
 for(const collection of h.model.IB_COLLECTIONS){
  const file=`content/ib/${collection.subject}/${collection.subject==='math-aa-hl'?collection.id:collection.topicId}.json`;
  const enrichment=[...['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync('content/ib/math-2026-expansion/'+course+'.json','utf8'))),...['structure','periodicity','reactivity','mechanisms'].flatMap(batch=>JSON.parse(readFileSync('content/ib/chemistry-2026-expansion/'+batch+'.json','utf8'))),...['unity-diversity','form-function','interaction-interdependence','continuity-change'].flatMap(batch=>JSON.parse(readFileSync('content/ib/biology-2026-expansion/'+batch+'.json','utf8')))].filter(q=>q.collectionId===collection.id);
- const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment].filter(q=>q.status==='published');
+ const chemistryPractice=['s1','s2','s3','r1','r2','r3'].flatMap(theme=>JSON.parse(readFileSync('content/ib/chemistry-2025-practice/'+theme+'.json','utf8'))).filter(q=>q.collectionId===collection.id);
+ const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice].filter(q=>q.status==='published');
  const actual=await content.getIbQuestions(collection.id,'hl');
  assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'question order preserved');
  assert.deepEqual(Array.from(await content.getIbQuestions(collection.id,'sl'),q=>q.id),expected.filter(q=>h.model.questionAvailableForCourse(q,'sl')).map(q=>q.id));
@@ -56,9 +57,11 @@ for(const collection of h.model.IB_COLLECTIONS){
 }
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject!=='psychology').length,45,'all established banks remain');
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject==='psychology').length,7);
-assert.equal(bankImports().length,52,'each bank loaded only once');
-assert.equal(total,6162);
-assert.equal(total-content.getIbSummary('hl').psychology.questions,5922,'established question count remains unchanged');
+assert.equal(bankImports().length,58,'52 established bank files and six new Chemistry chunks each loaded once');
+assert.equal(total,6362);
+assert.equal(total-content.getIbSummary('hl').psychology.questions,6122,'established questions plus 200 new Chemistry questions');
+assert.equal(content.getIbSummary('hl').chemistry.questions,1000);
+assert.equal(content.getIbSummary('sl').chemistry.questions,606);
 assert.equal(content.getIbSummary('hl').psychology.questions,240);
 assert.equal(content.getIbSummary('sl').psychology.questions,180);
 
