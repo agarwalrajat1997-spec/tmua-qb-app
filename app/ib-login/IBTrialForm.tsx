@@ -84,7 +84,7 @@ function emailStatus(confirmation: TrialConfirmation): string {
 function requestError(status: number, data: Record<string, unknown>): string {
   const code = data.code ?? data.error ?? data.status;
   if (status === 409 && code === "trial_already_used") {
-    return "The free trial for this programme has already been used and cannot be restarted. If you have paid access, sign in to your portal as usual.";
+    return "This email has already used its free trial. Each email can claim one lifetime trial across TMUA, ESAT and IB. If you have active trial or paid access, sign in as usual.";
   }
   if (status === 429) {
     return "There have been too many requests. Please wait a few minutes, then try again. If you already requested access, check your inbox first.";
@@ -180,7 +180,7 @@ export function IBTrialForm() {
               <div><strong>{config.access}</strong><p>{config.scope}</p></div>
             </div>
             <p className="programme-trial-terms">
-              Your 48 hours start when the trial is activated. One trial per programme; it cannot be restarted or extended. Existing paid access stays unchanged.
+              Your 48 hours start when the trial is activated. One lifetime free trial per email across TMUA, ESAT and IB; it cannot be restarted or extended. Existing paid access stays unchanged.
             </p>
           </div>
 

@@ -138,8 +138,9 @@ export function createTrialHandlers(program: TrialProgram) {
 
     try {
       const { admin, auth } = trialClients();
-      // The existing TWO-argument functions own expiry and paid-access preservation.
-      // Never use the legacy one-argument TMUA grant or write student_access here.
+      // Programme RPCs enforce one lifetime trial per normalized email across
+      // TMUA, ESAT and IB, and own expiry and paid-access preservation.
+      // Use the explicit two-argument contract; never write student_access here.
       const grant = () => admin.rpc(programme.grant, {
         p_email: email, p_student_name: studentName || null,
       }).retry(false);
@@ -158,7 +159,7 @@ export function createTrialHandlers(program: TrialProgram) {
       }
       if (status === "trial_already_used") {
         return json(origin, { ok: false, status,
-          message: "This email has already used its free trial. Contact Thriving Scholars if you need help with access." }, 409);
+          message: "This email has already used its free trial. Each email can claim one lifetime trial across TMUA, ESAT and IB. Sign in to use any existing access." }, 409);
       }
       if ((status !== "trial_started" && status !== "trial_already_active") ||
         !result.out_expires_at || !Number.isFinite(Date.parse(result.out_expires_at))) {
