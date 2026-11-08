@@ -1,4 +1,4 @@
-import { canonicalQuestionState } from "../qb/question-identities";
+import { canonicalQuestionState } from "../qb/question-identities.ts";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
