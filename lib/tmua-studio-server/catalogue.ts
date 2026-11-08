@@ -81,6 +81,16 @@ export function publicQuestion(q: ReleasedQuestion) {
   return {...questionMetadata(q), prompt_html: q.prompt_html, options, updated_at: q.updated_at,
     guide_path: `/api/tmua/studio?action=guide&qid=${encodeURIComponent(canonicalQid(q.qid))}&contentVersion=${encodeURIComponent(q.content_version)}`};
 }
+// Add first-step hints to these exact audited versions. Future revisions can
+// change the prompt and must supply their own hints.
+const firstStepHints: Record<string,string> = {
+  "studio-20261029-73a6bd3c83786bd5b898e98b": "Write the number in place-value columns. What is the largest value the final two digits can add, and can they carry into the hundreds column?",
+  "studio-20261029-1c19d484365068f633412279": "Consider the opposite event: nobody solves the problem. How does independence help you find its probability?",
+  "studio-20261029-ddba4f523d8d527013edf9e8": "Fix the first jump. The possible endpoints of the second jump form a circle. Which arc lies inside a radius-one circle around the starting point?",
+  "studio-20261029-da5dfe2fc362c5e188c456b7": "Let p be the probability of heads. Count the orders with two heads in four flips, then write down the probability of one such order.",
+  "studio-20261029-faaf89615117c2c1e9349459": "List the points for the first few instances. From the first to the nth instance, how many times has the award increased?",
+  "studio-20261029-34b0f3d9846bb4837703c198": "Work out how many items the dealer buys per refill. Then use the average number of refills in four weeks.",
+};
 export function questionGuide(q: ReleasedQuestion) {
   const replacementGuide = guidesByVersion.get(q.content_version);
   if (replacementGuide) return canonicalQuestionState({...replacementGuide, audit_qid: canonicalQid(q.qid), qid: canonicalQid(q.qid)});
@@ -88,6 +98,10 @@ export function questionGuide(q: ReleasedQuestion) {
   if (!file || !/^[a-f0-9]{64}\.json\.gz$/.test(file)) return null;
   const guide = JSON.parse(gunzipSync(readFileSync(join(root,"guides",file))).toString("utf8"));
   if (guide.qid !== q.qid || guide.version_id !== q.content_version || guide.source_sha256 !== q.source_sha256) throw new Error("Guide version mismatch");
+  const hint = firstStepHints[q.content_version];
+  if (hint && !guide.enrichment.hints?.length) {
+    guide.enrichment.hints = [{hint_id:"first-step",stage:"orient",text:hint,skill_ids:[]}];
+  }
   // Adapt public identities without rewriting the original audit archive or its hashes.
   guide.audit_qid = guide.qid;
   guide.qid = canonicalQid(q.qid);

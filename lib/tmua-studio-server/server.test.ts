@@ -24,6 +24,7 @@ test("all 2178 eligible questions have unique stable identity, exact guide versi
     assert.equal(resolveQuestion(metadata.qid,"wrong-version"),undefined);
     const visible=publicQuestion(q);
     assert.equal(visible.audit_qid,metadata.qid);
+    assert.ok(guide.enrichment.hints.some((h: {text:string}) => h.text.trim()), "Missing hint for "+metadata.qid);
     assert.ok(storedSolution(q).solutionHtml.trim(), "Missing worked solution for "+metadata.qid);
     assert.ok(!("answer" in visible)&&!("solution_html" in visible)&&!("audited_reference" in visible));
     if(i&&catalogue[i-1].topic===metadata.topic)assert.ok(catalogue[i-1].difficulty<=metadata.difficulty);
