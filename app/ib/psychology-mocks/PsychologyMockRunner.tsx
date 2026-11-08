@@ -15,8 +15,11 @@ type EmailJs = { init: (key: string) => void; send: (service: string, template: 
 type Props = { paper: PsychologyMockPrompt; email: string; accountId: string; initialAttempt?: string };
 const emptyDraft = (): Draft => ({ version: 2, attemptId: "", name: "", startedAt: 0, deadline: 0, elapsed: 0, stage: "instructions", index: 0, answers: {}, flags: {}, marks: {} });
 const clock = (seconds: number) => `${String(Math.floor(seconds / 3600)).padStart(2, "0")}:${String(Math.floor(seconds / 60) % 60).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+function ResearchChart({src,caption}:{src:string;caption:string}){
+  return <><img src={src} alt={caption} width={650} height={300} style={{maxWidth:"100%",height:"auto"}}/><details style={{textAlign:"left"}}><summary>Read chart values</summary><p>{caption}</p></details></>;
+}
 function MockQuestion({ question }: { question: PsychologyPromptQuestion | PsychologySolution }) {
-  return <div className={styles.questionBody}><div className={styles.questionHeading}><h2>Question {question.number}{" · "+question.title}</h2><strong>[Maximum mark: {question.marks}]</strong></div>{question.stem ? <MathContent>{question.stem}</MathContent> : null}{question.stimulusUrl ? <figure className={styles.diagram}><DiagramImage src={question.stimulusUrl} caption={question.stimulusCaption || question.title}/></figure> : null}<ol className={styles.parts}>{question.parts.map(part => <li key={part.label}><MathContent>{part.prompt}</MathContent><strong>[{part.marks}]</strong></li>)}</ol></div>;
+  return <div className={styles.questionBody}><div className={styles.questionHeading}><h2>Question {question.number}{" · "+question.title}</h2><strong>[Maximum mark: {question.marks}]</strong></div>{question.stem ? <MathContent>{question.stem}</MathContent> : null}{question.stimulusUrl ? <figure className={styles.diagram}><ResearchChart src={question.stimulusUrl} caption={question.stimulusCaption || question.title}/></figure> : null}{question.parts.map(part => <div key={part.label}><MathContent>{part.prompt}</MathContent></div>)}</div>;
 }
 async function emailJsReady(): Promise<EmailJs> {
   const start = Date.now();
@@ -134,7 +137,7 @@ export default function PsychologyMockRunner({ paper, email, accountId, initialA
   const chosen = activeQuestions.filter(q => q.optional);
   const item = activeQuestions[draft.index] ?? activeQuestions[0];
   const answerCount = activeQuestions.filter(answered).length;
-  const resources = paper.resources.length ? <details className={styles.instructions}><summary>Paper 3 resource booklet · Sources 2–5</summary>{paper.resources.map(r=><section key={r.number}><h3>Source {r.number} · {r.title}</h3><MathContent>{r.text}</MathContent>{r.figureUrl ? <figure className={styles.diagram}><img src={r.figureUrl} alt={r.caption || r.title} width={650} height={300} style={{maxWidth:"100%",height:"auto"}} /></figure> : null}</section>)}<a href={paper.questionBooklets[1].url} target="_blank" rel="noopener noreferrer">Print the resource booklet (PDF) ↗</a></details> : null;
+  const resources = paper.resources.length ? <details className={styles.instructions}><summary>Paper 3 resource booklet · Sources 2–5</summary>{paper.resources.map(r=><section key={r.number}><h3>Source {r.number} · {r.title}</h3><MathContent>{r.text}</MathContent>{r.figureUrl ? <figure className={styles.diagram}><ResearchChart src={r.figureUrl} caption={r.caption || r.title}/></figure> : null}</section>)}<a href={paper.questionBooklets[1].url} target="_blank" rel="noopener noreferrer">Print the resource booklet (PDF) ↗</a></details> : null;
   const choices = extended.length ? <details className={styles.instructions} open={draft.stage === "instructions" || undefined}>
     <summary>Section C · Choose one of {extended.length} essays</summary>
     <p>Read the options below. You can change your choice while the timer is running. Answer Questions 1–4 as well. Only your chosen essay counts toward the total.</p>

@@ -66,7 +66,15 @@ assert.equal(index.summaries.sl.psychology.collections.length,4);
 assert.equal(index.summaries.hl.psychology.collections.length,7);
 assert.equal(index.summaries.sl.psychology.questions,questions.filter(q=>q.level==='sl').length);
 assert.equal(index.summaries.hl.psychology.questions,questions.length);
-assert.equal(index.summaries.hl.psychology.mocks,0);
+const PsychologyMocks=h.load('app/ib/components/PsychologyMockList.tsx').default;
+for(const [course,total] of [['sl',4],['hl',6]]){
+  assert.equal(index.summaries[course].psychology.mocks,total);
+  const page=render(PsychologyMocks({course}));
+  const links=elements(page,n=>n.name==='a'&&n.attribs.href?.startsWith('/ib/psychology-mocks/'));
+  assert.equal(links.length,total);
+  assert(links.every(n=>catalog.ibSubjectForPath(n.attribs.href)==='psychology'));
+  assert.equal(elements(page,n=>n.name==='a'&&n.attribs.href?.endsWith('-resources.pdf')).length,course==='hl'?2:0);
+}
 for(const q of questions){const prompt=model.questionPrompt(q);for(const key of ['markScheme','markSchemeDiagramSvg','answerSummary','verification','source'])assert.ok(!(key in prompt));assert.equal(prompt.firstAssessment,2027);assert.equal(prompt.examSection,q.examSection);}
 let html=render(await bank(listArgs(base.collectionId,{course:'sl'})));
 assert.match(html,/First assessment 2027/);assert.match(html,/Content areas/);assert.match(html,/No calculator needed/);assert.match(html,/not official IB syllabus numbering/);
