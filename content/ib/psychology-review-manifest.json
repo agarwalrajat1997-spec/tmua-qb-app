@@ -1094,9 +1094,19 @@
       "sha256": "8f6405504ab9fc2be3f5a0aa0c407dbb491859829c3e6c652940672788e3f3eb"
     },
     {
+      "file": "scripts/verify-ib-psychology-mocks-browser.mjs",
+      "bytes": 11140,
+      "sha256": "1fb4fbf93a6a9364f888e12d1e68449430829d94043491ae976b2f94e4a115d1"
+    },
+    {
+      "file": "scripts/verify-ib-psychology-mocks.mjs",
+      "bytes": 8191,
+      "sha256": "8a3e5a3caa7deae4c8a4388b13de9d41f74047250ae327010cf5e461e2a5e80c"
+    },
+    {
       "file": "scripts/verify-ib-psychology-portal.mjs",
-      "bytes": 10405,
-      "sha256": "486993f4b4645d8c02d8bf0260c634e44fa2154ecb169eb95ac17372a2b99a6c"
+      "bytes": 10839,
+      "sha256": "a03cf35af1dccaa297be101f97a51fcf2dbf4021458de972aa5b200ad0d87b1f"
     },
     {
       "file": "scripts/verify-ib-psychology-review-mutations.mjs",
@@ -1107,6 +1117,23 @@
       "file": "scripts/verify-ib-psychology-reviews.mjs",
       "bytes": 17799,
       "sha256": "e8052bfca49b30c7f3d6dc3e8ee805c693d3c96ea06f206bd277bf646b94b0dd"
+    }
+  ],
+  "amendments": [
+    {
+      "release": "Psychology SL and HL mock launch, November 2026",
+      "reason": "The original bank launch asserted that no mocks existed. The portal test now verifies the published counts, course-specific links, routing and separate HL resource booklets. The two new mock acceptance scripts also match the protected test inventory.",
+      "previousPortalTest": {
+        "file": "scripts/verify-ib-psychology-portal.mjs",
+        "bytes": 10405,
+        "sha256": "486993f4b4645d8c02d8bf0260c634e44fa2154ecb169eb95ac17372a2b99a6c"
+      },
+      "changedFiles": [
+        "scripts/verify-ib-psychology-portal.mjs",
+        "scripts/verify-ib-psychology-mocks.mjs",
+        "scripts/verify-ib-psychology-mocks-browser.mjs"
+      ],
+      "scope": "Only these three test file entries change. All original question, evidence, figure, mutation-proof and verifier bindings are preserved; no new mock claims the historical independent bank review."
     }
   ]
 }
