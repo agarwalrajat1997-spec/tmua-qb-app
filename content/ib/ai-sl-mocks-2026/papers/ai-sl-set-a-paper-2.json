@@ -1,0 +1,600 @@
+{
+  "id": "ai-sl-set-a-paper-2",
+  "strand": "ai",
+  "course": "sl",
+  "set": "A",
+  "paper": "2",
+  "title": "Mathematics AI SL · Set A · Paper 2",
+  "minutes": 90,
+  "marks": 80,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 20,
+      "stem": "A theatre needs a lighting console for three years. It can buy one today with a loan for 12 000 dollars at 4.8% nominal annual interest compounded monthly. The loan is repaid in 36 equal end-of-month instalments. Alternatively, it can rent for 290 dollars in month 1, rising by 1% each month. The console can be sold immediately after month 36 if purchased. Ignore tax, maintenance and the time value of cash when comparing totals.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the monthly loan payment and the total of all repayments. Give monetary totals to the nearest dollar and the payment to the nearest cent.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Write the rent in month n and find the total rent for the 36 months.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the first month in which that month's rent exceeds one loan instalment. Justify the discrete answer.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Determine the break-even resale price after 36 months. A dealer offers a guaranteed 1050 dollars. Recommend one option using the numerical margin, not just the break-even figure.",
+          "marks": 5
+        },
+        {
+          "label": "e",
+          "prompt": "Rental includes free replacement during a breakdown; a purchased console has no such cover. Explain how to use the result above and an estimate of the cost of lost performances to reassess the decision.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Monthly rate = 0.048/12 = 0.004."
+            },
+            {
+              "code": "M1",
+              "text": "Use PV = 12 000, N = 36, FV = 0 and end-of-month payments."
+            },
+            {
+              "code": "A1",
+              "text": "Payment = 358.57 dollars."
+            },
+            {
+              "code": "A1",
+              "text": "Total = 12909 dollars, using the unrounded instalment."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Rent in month n is 290(1.01)^(n − 1)."
+            },
+            {
+              "code": "M1",
+              "text": "Sum 36 terms of a geometric sequence."
+            },
+            {
+              "code": "A1",
+              "text": "Total = 290[(1.01³⁶ − 1)/0.01]."
+            },
+            {
+              "code": "A1",
+              "text": "Total rent = 12492 dollars."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Compare 290(1.01)^(n − 1) with the unrounded loan instalment."
+            },
+            {
+              "code": "A1",
+              "text": "Rent in month 22 is 357.39 dollars."
+            },
+            {
+              "code": "A1",
+              "text": "Rent in month 23 is 360.97 dollars."
+            },
+            {
+              "code": "R1",
+              "text": "Since rents increase, month 23 is the first above the instalment."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Cost of buying net of sale is the sum of loan payments minus resale price S."
+            },
+            {
+              "code": "M1",
+              "text": "Equate this cost to total rent."
+            },
+            {
+              "code": "A1",
+              "text": "Break-even S = 416 dollars."
+            },
+            {
+              "code": "A1",
+              "text": "At 1050 dollars resale, net buying cost is 11859 dollars."
+            },
+            {
+              "code": "R1",
+              "text": "Buy: this costs about 634 dollars less than renting on the stated cash-total basis."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "A breakdown cost raises the expected cost of ownership relative to rental."
+            },
+            {
+              "code": "M1",
+              "text": "Add expected uncovered loss to net buying cost, comparing with the same rental total."
+            },
+            {
+              "code": "R1",
+              "text": "A loss exceeding the calculated buying advantage reverses a recommendation to buy; a smaller loss does not. Credit a consistent threshold comparison."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 1.3",
+        "SL 1.4",
+        "SL 1.7",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context."
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 20,
+      "stem": "At a harbour the modelled water depth during a 12-hour cycle is d(t) = 3.6 + 1.4 cos(30t°) metres, where t is hours after 06:00 and 0 ≤ t ≤ 12. A ferry requires at least 3.0 m to enter. Treat the model as continuous and use degrees.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the maximum depth, the minimum depth and the period. Explain the role of 3.6 in the model.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Determine the two times when the depth is exactly 3.0 m. Give clock times to the nearest minute.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "The ferry must stay above or at the threshold for its entire 45-minute approach. Determine the latest starting time, to the nearest minute, for an approach completed before the first unsafe interval. Explain why testing depth only at departure is inadequate.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "At t = 0, 2, 4 and 6 h, sensors record outgoing current speeds of 0.2, 0.8, 1.1 and 0.5 km/h. Estimate the distance a freely drifting marker would travel in these six hours, using the trapezoidal rule. State an assumption.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "A cross-check shows every depth prediction may overstate actual depth by up to 0.20 m. Departures are scheduled only at whole minutes. Find the latest start for the same first approach that guarantees safe clearance.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Maximum = 5.0 m."
+            },
+            {
+              "code": "A1",
+              "text": "Minimum = 2.2 m."
+            },
+            {
+              "code": "A1",
+              "text": "Period = 360/30 = 12 hours."
+            },
+            {
+              "code": "R1",
+              "text": "3.6 m is the model's midline, halfway between its extremes."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve cos(30t°) = −0.6/1.4."
+            },
+            {
+              "code": "A1",
+              "text": "First root t = 3.85 h."
+            },
+            {
+              "code": "A1",
+              "text": "Second root t = 8.15 h, by symmetry or a second intersection."
+            },
+            {
+              "code": "A1",
+              "text": "Clock times are 09:51 and 14:09."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Subtract 0.75 h from the unrounded first threshold crossing."
+            },
+            {
+              "code": "A1",
+              "text": "Latest start ≈ 09:06."
+            },
+            {
+              "code": "R1",
+              "text": "Until that crossing the depth decreases, so the end of this approach is its shallowest point."
+            },
+            {
+              "code": "R1",
+              "text": "A permissible depth at departure can fall below the threshold before arrival."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use interval width 2 h, adding adjacent averages times width."
+            },
+            {
+              "code": "M1",
+              "text": "Distance ≈ 2[(0.2 + 0.8)/2 + (0.8 + 1.1)/2 + (1.1 + 0.5)/2]."
+            },
+            {
+              "code": "A1",
+              "text": "Distance ≈ 4.50 km."
+            },
+            {
+              "code": "R1",
+              "text": "The marker follows the current; linear interpolation between readings approximates the true speed. Accept either relevant assumption."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Require modelled d(t) ≥ 3.20 m, not 2.80 m."
+            },
+            {
+              "code": "M1",
+              "text": "Find the first solution of 3.6 + 1.4 cos(30t°) = 3.20."
+            },
+            {
+              "code": "M1",
+              "text": "Subtract 0.75 h from this crossing and round down to a whole clock minute."
+            },
+            {
+              "code": "A1",
+              "text": "Depart at 08:48. A later whole-minute departure ends after the safe window."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 2.5",
+        "SL 2.6",
+        "SL 5.8"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context."
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 20,
+      "stem": "A transport authority takes an independent simple random sample of 160 commuters from its register. Among the 80 sampled from the north district, 46 used the bus, 24 cycled and 10 walked. Among the 80 from the south district, the counts were 30, 32 and 18. Each commuter reports exactly one main mode. Use a 5% significance level.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "State the null and alternative hypotheses for a chi-squared test of independence and calculate the column totals.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate all expected frequencies under H0. Explain why the usual expected-frequency condition is met.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Use technology to calculate the test statistic and p-value. State the degrees of freedom and draw a conclusion.",
+          "marks": 5
+        },
+        {
+          "label": "d",
+          "prompt": "For a randomly chosen sampled commuter who used the bus, find the probability that they live in the north. Compare the observed fraction of bus users in the north district with that in the south district.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "A planner claims that moving a person north will make them use the bus and that the result describes every traveller in the city. Evaluate both claims.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "H0: district and main mode are independent in the registered commuter population."
+            },
+            {
+              "code": "A1",
+              "text": "H1: there is an association between district and main mode."
+            },
+            {
+              "code": "A1",
+              "text": "Column totals are 76 bus, 56 cycle and 28 walk."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Expected count = row total × column total / 160."
+            },
+            {
+              "code": "A1",
+              "text": "Each district has expected counts 38, 28, 14."
+            },
+            {
+              "code": "A1",
+              "text": "All six expected counts exceed 5."
+            },
+            {
+              "code": "R1",
+              "text": "It is expected counts, rather than the observed counts or just the grand total, that matter for this condition."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the two rows of observed frequencies, without totals, in a chi-squared independence test."
+            },
+            {
+              "code": "A1",
+              "text": "χ² = 6.8."
+            },
+            {
+              "code": "A1",
+              "text": "df = (2 − 1)(3 − 1) = 2."
+            },
+            {
+              "code": "A1",
+              "text": "p = 0.0334."
+            },
+            {
+              "code": "R1",
+              "text": "Reject independence at 5%; the sample supports an association for registered commuters."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Condition on the 76 bus users."
+            },
+            {
+              "code": "A1",
+              "text": "46/76 = 0.605 (3 sf)."
+            },
+            {
+              "code": "A1",
+              "text": "The district-specific bus proportions are 46/80 = 0.575 and 30/80 = 0.375."
+            },
+            {
+              "code": "R1",
+              "text": "The north proportion is 0.20 higher, a difference of 20 percentage points, not a 20% relative increase."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Association from an observational survey does not establish that relocation causes a change."
+            },
+            {
+              "code": "R1",
+              "text": "Bus frequency, income or distance to work could explain part of the association."
+            },
+            {
+              "code": "R1",
+              "text": "The sampling frame contains registered commuters, not all travellers."
+            },
+            {
+              "code": "R1",
+              "text": "For example visitors, occasional travellers or unregistered commuters may have different mode patterns; extrapolation needs evidence."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.1",
+        "SL 4.5",
+        "SL 4.11"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context."
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 20,
+      "stem": "A rectangular sheet 30 cm by 24 cm is made into an open tray. Equal squares of side x cm are cut from its four corners. The flaps are folded vertically without overlap. Neglect thickness.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Express the two base dimensions in terms of x and state the physical domain for a tray with positive volume.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Show that V(x) = 4x³ − 108x² + 720x cm³. Find its derivative and both stationary x-values.",
+          "marks": 5
+        },
+        {
+          "label": "c",
+          "prompt": "Determine the maximum physical volume and justify why your stationary point is the maximum.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "The cutter can use only increments of 0.5 cm. Choose the best allowable cut and calculate the lost capacity relative to the continuous optimum.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "A liner reduces the usable volume of each 4.5 cm tray by 6%. A caterer orders 12 litres of total usable capacity. Determine the minimum number of trays and justify the rounding direction.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Base dimensions are 30 − 2x and 24 − 2x cm."
+            },
+            {
+              "code": "A1",
+              "text": "Domain 0 < x < 12."
+            },
+            {
+              "code": "R1",
+              "text": "The shorter side limits x; at either endpoint a tray dimension vanishes."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Multiply height by both base dimensions: x(30 − 2x)(24 − 2x)."
+            },
+            {
+              "code": "A1",
+              "text": "Expanding gives 4x³ − 108x² + 720x."
+            },
+            {
+              "code": "A1",
+              "text": "V′(x) = 12x² − 216x + 720."
+            },
+            {
+              "code": "M1",
+              "text": "Solve x² − 18x + 60 = 0."
+            },
+            {
+              "code": "A1",
+              "text": "Roots 9 − √21 and 9 + √21 (approximately 4.42 and 13.6)."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Only 9 − √21 lies in the physical domain."
+            },
+            {
+              "code": "M1",
+              "text": "Evaluate V at this root using unrounded x."
+            },
+            {
+              "code": "A1",
+              "text": "V ≈ 1417.87 cm³."
+            },
+            {
+              "code": "R1",
+              "text": "V′ changes from positive to negative there; equivalently both limiting endpoint volumes are zero and there is only one physical stationary point."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Test the adjacent allowable sizes 4.0 and 4.5 cm; monotonicity on either side excludes all others."
+            },
+            {
+              "code": "A1",
+              "text": "V(4.0) = 1408 cm³; V(4.5) = 1417.5 cm³."
+            },
+            {
+              "code": "A1",
+              "text": "Choose 4.5 cm."
+            },
+            {
+              "code": "A1",
+              "text": "Lost capacity ≈ 0.373 cm³ using the unrounded optimum."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Usable volume per tray = 0.94 × 1417.5 = 1332.45 cm³."
+            },
+            {
+              "code": "A1",
+              "text": "Required volume = 12 000 cm³."
+            },
+            {
+              "code": "A1",
+              "text": "Quotient ≈ 9.01."
+            },
+            {
+              "code": "R1",
+              "text": "Ten trays are needed; nine provide only 11 992.05 cm³."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 3.1",
+        "SL 5.2",
+        "SL 5.7",
+        "SL 2.6"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 450 200\"><line x1=\"95\" y1=\"35\" x2=\"345\" y2=\"35\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"345\" y1=\"35\" x2=\"345\" y2=\"166\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"345\" y1=\"166\" x2=\"95\" y2=\"166\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"95\" y1=\"166\" x2=\"95\" y2=\"35\" stroke=\"#346e77\" stroke-width=\"2\"/><text x=\"190\" y=\"22\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">30 cm</text><text x=\"350\" y=\"104\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">24 cm</text><line x1=\"123\" y1=\"35\" x2=\"123\" y2=\"63\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"95\" y1=\"63\" x2=\"123\" y2=\"63\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"123\" y1=\"166\" x2=\"123\" y2=\"138\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"95\" y1=\"138\" x2=\"123\" y2=\"138\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"317\" y1=\"35\" x2=\"317\" y2=\"63\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"345\" y1=\"63\" x2=\"317\" y2=\"63\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"317\" y1=\"166\" x2=\"317\" y2=\"138\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"345\" y1=\"138\" x2=\"317\" y2=\"138\" stroke=\"#346e77\" stroke-width=\"2\"/><text x=\"104\" y=\"52\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">x</text><text x=\"153\" y=\"188\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">Corner cuts (not to scale)</text></svg>"
+    }
+  ]
+}

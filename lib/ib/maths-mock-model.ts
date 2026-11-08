@@ -1,11 +1,13 @@
 import catalog from "@/content/ib/aa-mocks-2026/catalog.json";
 import aiCatalog from "@/content/ib/ai-mocks-2026/catalog.json";
 
+import aiSlCatalog from "@/content/ib/ai-sl-mocks-2026/catalog.json";
+
 export type MathsMockStrand = "aa" | "ai";
 export type MathsMockMeta = {
   id: string; strand?: MathsMockStrand; course: "sl" | "hl"; set: "A" | "B" | "C" | "D"; paper: "1" | "2" | "3";
   title: string; minutes: number; marks: number; calculator: boolean;
-  pdfUrl: string; status: "published" | "draft"; questionCount?: number; year: number; sections: ("A" | "B")[];
+  pdfUrl: string; questionPdfUrl?: string; status: "published" | "draft"; questionCount?: number; year: number; sections: ("A" | "B")[];
 };
 export type MathsMockPart = { label: string; prompt: string; marks: number };
 export type MathsMockQuestion = {
@@ -23,7 +25,8 @@ export type MathsMockStage = "instructions" | "running" | "pending" | "review";
 export type MathsMockDraft = { version: 1; attemptId: string; name: string; startedAt: number; deadline: number; elapsed: number; stage: MathsMockStage; index: number; answers: MathsMockAnswers; flags: Record<number, boolean>; marks: MathsMockMarks };
 export const MATHS_MOCKS = catalog as MathsMockMeta[];
 export const AI_MATHS_MOCKS = aiCatalog as MathsMockMeta[];
-export const ALL_MATHS_MOCKS = [...MATHS_MOCKS, ...AI_MATHS_MOCKS];
+export const AI_SL_MATHS_MOCKS = aiSlCatalog as MathsMockMeta[];
+export const ALL_MATHS_MOCKS = [...MATHS_MOCKS, ...AI_MATHS_MOCKS, ...AI_SL_MATHS_MOCKS];
 export const mathsStrand = (paper: Pick<MathsMockMeta, "strand">): MathsMockStrand => paper.strand ?? "aa";
 export const mathsStrandName = (paper: Pick<MathsMockMeta, "strand">) => mathsStrand(paper) === "ai" ? "Applications and interpretation" : "Analysis and approaches";
 export const mathsAnswerKey = (number: number, part: string) => `${number}:${part || "whole"}`;

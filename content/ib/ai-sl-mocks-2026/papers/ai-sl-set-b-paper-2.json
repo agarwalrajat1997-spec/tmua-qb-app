@@ -1,0 +1,603 @@
+{
+  "id": "ai-sl-set-b-paper-2",
+  "strand": "ai",
+  "course": "sl",
+  "set": "B",
+  "paper": "2",
+  "title": "Mathematics AI SL · Set B · Paper 2",
+  "minutes": 90,
+  "marks": 80,
+  "calculator": true,
+  "questions": [
+    {
+      "number": 1,
+      "section": "",
+      "marks": 20,
+      "stem": "Five controlled tests on one dry track record speed v (km/h) and stopping distance D (m): (20, 9), (30, 17), (40, 28), (50, 40), (60, 56). The engineer is deciding between a linear regression model L and a second model Q(v) = 0.20v + 0.012v². Do not round intermediate model coefficients.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Use technology to find the regression line of D on v and Pearson's correlation coefficient. Interpret the direction and strength of association.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Calculate observed-minus-predicted residuals for L at speeds 20, 40 and 60. Use their signs to explain a possible weakness of L.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "A separate test at 70 km/h records 74 m. Compare the absolute percentage prediction errors of L and Q, relative to the measured value. Which model performs better on this test?",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Using Q, calculate the greatest speed at which stopping distance does not exceed 43 m. Give both the mathematical boundary and the greatest safe whole number of km/h.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "In rain, the quadratic coefficient increases from 0.012 to 0.018 while the linear coefficient remains unchanged. Find the predicted increase in distance at 50 km/h. Explain which coefficient should change instead if only the driver's reaction time increases.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Fit distance as the response and speed as the predictor."
+            },
+            {
+              "code": "A1",
+              "text": "L(v) = 1.17v − 16.8."
+            },
+            {
+              "code": "A1",
+              "text": "r = 0.992."
+            },
+            {
+              "code": "R1",
+              "text": "Strong positive linear association over these observations; this alone does not show linearity beyond them."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Subtract each fitted distance from the corresponding observation."
+            },
+            {
+              "code": "A1",
+              "text": "Residuals at 20 and 40 are 2.4 and -2 m."
+            },
+            {
+              "code": "A1",
+              "text": "Residual at 60 is 2.6 m."
+            },
+            {
+              "code": "R1",
+              "text": "Positive residuals at both ends and a negative residual near the middle suggest curvature missed by the straight line."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "L(70) = 65.1 m and Q(70) = 72.8 m."
+            },
+            {
+              "code": "M1",
+              "text": "Use 100 × |prediction − 74|/74 for each."
+            },
+            {
+              "code": "A1",
+              "text": "Errors = 12% for L and 1.62% for Q."
+            },
+            {
+              "code": "R1",
+              "text": "Q has the smaller error on this held-out test; one observation does not establish universal superiority."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve 0.012v² + 0.20v − 43 = 0."
+            },
+            {
+              "code": "A1",
+              "text": "Positive intersection v ≈ 52.1 km/h."
+            },
+            {
+              "code": "R1",
+              "text": "Q is increasing for v ≥ 0, and the negative root is not a physical speed."
+            },
+            {
+              "code": "A1",
+              "text": "Maximum whole-number speed is 52 km/h; round down."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Difference at 50 is (0.018 − 0.012) × 50²."
+            },
+            {
+              "code": "A1",
+              "text": "Increase = 15 m."
+            },
+            {
+              "code": "R1",
+              "text": "Reaction distance at fixed reaction time is proportional to speed: it corresponds to the linear term."
+            },
+            {
+              "code": "R1",
+              "text": "A longer reaction time increases the coefficient of v; it does not by itself alter the braking coefficient."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.4",
+        "SL 2.5",
+        "SL 2.6",
+        "SL 1.6"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 450 200\"><text x=\"8\" y=\"16\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">distance (m)</text><text x=\"230\" y=\"194\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">speed (km/h)</text><line x1=\"52.0\" y1=\"31\" x2=\"52.0\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"48.0\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">10</text><line x1=\"104.5\" y1=\"31\" x2=\"104.5\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"100.5\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">20</text><line x1=\"157.0\" y1=\"31\" x2=\"157.0\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"153.0\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">30</text><line x1=\"209.5\" y1=\"31\" x2=\"209.5\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"205.5\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">40</text><line x1=\"262.0\" y1=\"31\" x2=\"262.0\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"258.0\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">50</text><line x1=\"314.5\" y1=\"31\" x2=\"314.5\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"310.5\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">60</text><line x1=\"367.0\" y1=\"31\" x2=\"367.0\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"363.0\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">70</text><line x1=\"52\" y1=\"162.0\" x2=\"367\" y2=\"162.0\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"166.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">0</text><line x1=\"52\" y1=\"140.16666666666666\" x2=\"367\" y2=\"140.16666666666666\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"144.16666666666666\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">10</text><line x1=\"52\" y1=\"118.33333333333334\" x2=\"367\" y2=\"118.33333333333334\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"122.33333333333334\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">20</text><line x1=\"52\" y1=\"96.5\" x2=\"367\" y2=\"96.5\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"100.5\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">30</text><line x1=\"52\" y1=\"74.66666666666667\" x2=\"367\" y2=\"74.66666666666667\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"78.66666666666667\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">40</text><line x1=\"52\" y1=\"52.83333333333333\" x2=\"367\" y2=\"52.83333333333333\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"56.83333333333333\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">50</text><line x1=\"52\" y1=\"31.0\" x2=\"367\" y2=\"31.0\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"35.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">60</text><line x1=\"52\" y1=\"162\" x2=\"371\" y2=\"162\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"52\" y1=\"162\" x2=\"52\" y2=\"27\" stroke=\"#346e77\" stroke-width=\"2\"/><circle cx=\"104.5\" cy=\"142.35\" r=\"3.5\" fill=\"#176977\"/><text x=\"111.5\" y=\"137.35\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\"></text><circle cx=\"157.0\" cy=\"124.88333333333333\" r=\"3.5\" fill=\"#176977\"/><text x=\"164.0\" y=\"119.88333333333333\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\"></text><circle cx=\"209.5\" cy=\"100.86666666666667\" r=\"3.5\" fill=\"#176977\"/><text x=\"216.5\" y=\"95.86666666666667\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\"></text><circle cx=\"262.0\" cy=\"74.66666666666667\" r=\"3.5\" fill=\"#176977\"/><text x=\"269.0\" y=\"69.66666666666667\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\"></text><circle cx=\"314.5\" cy=\"39.733333333333334\" r=\"3.5\" fill=\"#176977\"/><text x=\"321.5\" y=\"34.733333333333334\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\"></text></svg>"
+    },
+    {
+      "number": 2,
+      "section": "",
+      "marks": 20,
+      "stem": "Three emergency beacons have coordinates A(0, 0), B(8, 0) and C(2, 6), in kilometres. The patrol area is the closed triangular region ABC. A distress signal is assigned to its nearest beacon by straight-line distance. Ties may be assigned to either beacon.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the perpendicular bisectors of AB and AC.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the point O equidistant from all three beacons. Calculate that distance and check that O is inside the patrol triangle.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Every beacon has a guaranteed range of 4.4 km. A manager asserts there are no uncovered points in the triangle because adjacent coverage disks overlap. Assess the claim using a specific point; explain why overlap is insufficient.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "A fourth beacon must be at D(k, 1), with 0 ≤ k ≤ 8, and must be within 1.25 km of O. Determine the allowable interval for k.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "The integer-coordinate site closest to O is chosen. For the point P(5, 3), decide the original nearest beacon or beacons and the new nearest beacon. Could Euclidean assignment ever disagree with the quickest response? Give a reason.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "AB has midpoint (4, 0), so its bisector is x = 4."
+            },
+            {
+              "code": "A1",
+              "text": "AC has midpoint (1, 3) and slope 3."
+            },
+            {
+              "code": "M1",
+              "text": "Use perpendicular slope −1/3 through (1, 3)."
+            },
+            {
+              "code": "A1",
+              "text": "Bisector of AC is y = (10 − x)/3."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Intersect x = 4 with y = (10 − x)/3."
+            },
+            {
+              "code": "A1",
+              "text": "O = (4, 2)."
+            },
+            {
+              "code": "A1",
+              "text": "OA = √20 ≈ 4.47 km; equality follows from the two bisectors."
+            },
+            {
+              "code": "R1",
+              "text": "At x = 4 the triangle extends from y = 0 to y = 4 on BC, so O is inside."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Compare O's nearest-beacon distance with 4.4."
+            },
+            {
+              "code": "A1",
+              "text": "√20 > 4.4, so O is uncovered."
+            },
+            {
+              "code": "R1",
+              "text": "At O all three existing beacons are out of range, disproving the claim by counterexample."
+            },
+            {
+              "code": "R1",
+              "text": "Pairwise overlap near the sides does not guarantee simultaneous coverage of the central region."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use DO² = (k − 4)² + (1 − 2)²."
+            },
+            {
+              "code": "A1",
+              "text": "(k − 4)² ≤ 0.5625."
+            },
+            {
+              "code": "M1",
+              "text": "Take square roots on both sides as |k − 4| ≤ 0.75."
+            },
+            {
+              "code": "A1",
+              "text": "3.25 ≤ k ≤ 4.75."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "D = (4, 1)."
+            },
+            {
+              "code": "M1",
+              "text": "PA² = 34, PB² = 18, PC² = 18: B and C tie originally."
+            },
+            {
+              "code": "A1",
+              "text": "PD² = 5, so D now serves P."
+            },
+            {
+              "code": "R1",
+              "text": "Roads, terrain or barriers can make the shortest straight-line trip slower than a longer unobstructed route."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 2.1",
+        "SL 3.1",
+        "SL 3.5",
+        "SL 3.6"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context.",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 450 200\"><text x=\"8\" y=\"16\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">north (km)</text><text x=\"230\" y=\"194\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">east (km)</text><line x1=\"52.0\" y1=\"31\" x2=\"52.0\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"48.0\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">0</text><line x1=\"130.75\" y1=\"31\" x2=\"130.75\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"126.75\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">2</text><line x1=\"209.5\" y1=\"31\" x2=\"209.5\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"205.5\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">4</text><line x1=\"288.25\" y1=\"31\" x2=\"288.25\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"284.25\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">6</text><line x1=\"367.0\" y1=\"31\" x2=\"367.0\" y2=\"162\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"363.0\" y=\"178\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">8</text><line x1=\"52\" y1=\"162.0\" x2=\"367\" y2=\"162.0\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"166.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">0</text><line x1=\"52\" y1=\"118.33333333333334\" x2=\"367\" y2=\"118.33333333333334\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"122.33333333333334\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">2</text><line x1=\"52\" y1=\"74.66666666666667\" x2=\"367\" y2=\"74.66666666666667\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"78.66666666666667\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">4</text><line x1=\"52\" y1=\"31.0\" x2=\"367\" y2=\"31.0\" stroke=\"#dce7e7\" stroke-width=\"1\"/><text x=\"24\" y=\"35.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"11\">6</text><line x1=\"52\" y1=\"162\" x2=\"371\" y2=\"162\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"52\" y1=\"162\" x2=\"52\" y2=\"27\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"52.0\" y1=\"162.0\" x2=\"367.0\" y2=\"162.0\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"367.0\" y1=\"162.0\" x2=\"130.75\" y2=\"31.0\" stroke=\"#346e77\" stroke-width=\"2\"/><line x1=\"130.75\" y1=\"31.0\" x2=\"52.0\" y2=\"162.0\" stroke=\"#346e77\" stroke-width=\"2\"/><circle cx=\"52.0\" cy=\"162.0\" r=\"3.5\" fill=\"#176977\"/><text x=\"59.0\" y=\"157.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">A</text><circle cx=\"367.0\" cy=\"162.0\" r=\"3.5\" fill=\"#176977\"/><text x=\"374.0\" y=\"157.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">B</text><circle cx=\"130.75\" cy=\"31.0\" r=\"3.5\" fill=\"#176977\"/><text x=\"137.75\" y=\"26.0\" fill=\"#183b42\" font-family=\"Arial\" font-size=\"13\">C</text></svg>"
+    },
+    {
+      "number": 3,
+      "section": "",
+      "marks": 20,
+      "stem": "Pouches from a single filling line have independent normally distributed masses with mean 204 g and standard deviation 2.8 g. A pouch is classified as short if it is below 200 g. A fixed batch contains 16 pouches.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the probability p that a pouch is short, and the expected number of short pouches in a batch of 16.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "The batch is held if at least two pouches are short. Calculate the probability that a batch is held.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "The manager instead specifies that no more than 2% of individual pouches should be short, keeping the same standard deviation. Find the minimum population mean satisfying this target.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "If the actual short rate is exactly 0.02, determine the largest whole batch size n for which the probability of at least one short pouch is at most 0.30.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "A blocked nozzle can cause several consecutive shortages. Explain separately how clustering affects the single-pouch model, the expected count if the marginal short rate remains 0.02, and the binomial batch-risk calculation.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Standardize using (200 − 204)/2.8 or use the normal CDF."
+            },
+            {
+              "code": "A1",
+              "text": "p = 0.0766."
+            },
+            {
+              "code": "M1",
+              "text": "Expected count is 16p, not the probability of one or more short pouches."
+            },
+            {
+              "code": "A1",
+              "text": "Expected count = 1.23."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Given independent pouches with the same p, the short count is binomial with n = 16."
+            },
+            {
+              "code": "M1",
+              "text": "Use 1 − P(X = 0) − P(X = 1)."
+            },
+            {
+              "code": "A1",
+              "text": "P(X = 0) = 0.28, P(X = 1) = 0.371."
+            },
+            {
+              "code": "A1",
+              "text": "P(hold) = 0.35."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "At the boundary put P(X < 200) = 0.02."
+            },
+            {
+              "code": "A1",
+              "text": "Lower 2% standard normal quantile z ≈ −2.05375."
+            },
+            {
+              "code": "M1",
+              "text": "Solve (200 − μ)/2.8 = −2.05375."
+            },
+            {
+              "code": "A1",
+              "text": "μ ≈ 205.750 g; means at or above the unrounded boundary meet the target."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "P(at least one) = 1 − 0.98ⁿ."
+            },
+            {
+              "code": "M1",
+              "text": "Solve 0.98ⁿ ≥ 0.70 with a table or logarithms."
+            },
+            {
+              "code": "A1",
+              "text": "n ≤ 17.655 before taking whole numbers."
+            },
+            {
+              "code": "A1",
+              "text": "Maximum n = 17; 18 would exceed the 0.30 limit."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "Knowing only that events cluster does not by itself establish a change to the individual marginal short rate."
+            },
+            {
+              "code": "A1",
+              "text": "Expected count remains 0.02n if each pouch still has marginal probability 0.02."
+            },
+            {
+              "code": "R1",
+              "text": "Expectation adds over the pouches without requiring independence."
+            },
+            {
+              "code": "R1",
+              "text": "The binomial batch-risk formula no longer follows because the indicators are dependent; new joint or batch data are needed."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 4.5",
+        "SL 4.8",
+        "SL 4.9"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context."
+    },
+    {
+      "number": 4,
+      "section": "",
+      "marks": 20,
+      "stem": "A community battery discharges power P(t) = 2 + 1.2t − 0.2t² kW for a six-hour evening, 0 ≤ t ≤ 6. Energy in kWh is the area under the power graph. Assume that the model repeats on each operating evening unless otherwise stated.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Show that the power has the same value at both endpoints and find its largest value on the interval, stating when it occurs.",
+          "marks": 4
+        },
+        {
+          "label": "b",
+          "prompt": "Find the modelled energy discharged over six hours by integration, and hence the average power.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "A recorder samples model power only at t = 0, 2, 4 and 6. Use the trapezoidal rule on these four samples. Explain the direction of the error without relying only on the numerical difference.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "The electricity tariff is 0.28 dollars per kWh for the first two hours, then 0.42 dollars per kWh for the next four. Use the continuous energy model to calculate the value of the discharged energy to the nearest cent.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "A separate seasonal trial delivers 19.2 kWh on night 1 and 0.08 kWh less on each following night. Find total delivery over the first 30 nights and explain why using this model indefinitely would be unreasonable.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "P(0) = P(6) = 2 kW."
+            },
+            {
+              "code": "M1",
+              "text": "Use the vertex or solve 1.2 − 0.4t = 0."
+            },
+            {
+              "code": "A1",
+              "text": "At t = 3 hours, P = 3.8 kW."
+            },
+            {
+              "code": "R1",
+              "text": "The parabola opens down and the vertex lies inside the interval."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Integrate 2 + 1.2t − 0.2t² from 0 to 6."
+            },
+            {
+              "code": "A1",
+              "text": "An antiderivative is 2t + 0.6t² − (0.2/3)t³."
+            },
+            {
+              "code": "A1",
+              "text": "Energy = 19.2 kWh."
+            },
+            {
+              "code": "A1",
+              "text": "Average power = 19.2/6 = 3.2 kW."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "Sample powers = 2, 3.6, 3.6, 2 kW."
+            },
+            {
+              "code": "M1",
+              "text": "Use width 2 with half-weights at the endpoints."
+            },
+            {
+              "code": "A1",
+              "text": "Estimate = 18.4 kWh."
+            },
+            {
+              "code": "R1",
+              "text": "For this concave-down parabola the chords lie below the curve, so the rule underestimates energy."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Split the integral at t = 2; using an unweighted mean tariff is inappropriate."
+            },
+            {
+              "code": "A1",
+              "text": "First two hours deliver 5.86667 kWh; the remaining four deliver 13.33333 kWh."
+            },
+            {
+              "code": "M1",
+              "text": "Value = 0.28 × 5.86667 + 0.42 × 13.33333."
+            },
+            {
+              "code": "A1",
+              "text": "Value = 7.24 dollars (nearest cent)."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The 30th term is 19.2 − 29 × 0.08."
+            },
+            {
+              "code": "A1",
+              "text": "It equals 16.88 kWh."
+            },
+            {
+              "code": "M1",
+              "text": "Sum = 30(19.2 + 16.88)/2 = 541.2 kWh."
+            },
+            {
+              "code": "R1",
+              "text": "Continuing the arithmetic decline eventually predicts negative discharged energy, outside the meaning of this model."
+            }
+          ]
+        }
+      ],
+      "syllabusRefs": [
+        "SL 2.5",
+        "SL 2.6",
+        "SL 5.5",
+        "SL 5.8",
+        "SL 1.2"
+      ],
+      "cognitiveDemand": "Apply a model and interpret or justify its result in context."
+    }
+  ]
+}

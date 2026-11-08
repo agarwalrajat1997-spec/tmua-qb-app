@@ -46,9 +46,10 @@ assert.match(eq.stem,/reverse reaction.+0\.03125/);assert.match(eq.markScheme[0]
 let count=0, questions=0;
 for (const [subject,year] of Object.entries({aa:2026,ai:2026,biology:2025,chemistry:2025,physics:2026,economics:2022,psychology:2027})){
  const dir='content/ib/'+subject+'-mocks-'+year;
- for(const group of read(dir+'/catalog.json').filter(g=>g.status==='published')){
+ const catalogs=subject==='ai'?[dir,'content/ib/ai-sl-mocks-2026']:[dir];
+ for(const selected of catalogs) for(const group of read(selected+'/catalog.json').filter(g=>g.status==='published')){
   for(const meta of (group.papers??[group]).filter(m=>m.status==='published')){
-   const p=read(dir+'/papers/'+meta.id+'.json'), n=Number(meta.paper), hl=meta.course==='hl', q=p.questions;
+   const p=read(selected+'/papers/'+meta.id+'.json'), n=Number(meta.paper), hl=meta.course==='hl', q=p.questions;
    assert.equal(p.course,meta.course);assert.equal(p.paper,meta.paper);
    let minutes,marks,calc,attempt=sum(q,x=>x.marks);
    if(subject==='aa'||subject==='ai'){

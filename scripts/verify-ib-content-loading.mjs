@@ -75,4 +75,5 @@ await assert.rejects(()=>resilient.getIbQuestions('physics-space-time-motion'),/
 assert.equal((await resilient.getIbQuestions('physics-space-time-motion')).length,hl.length);
 assert.equal(attempts,2);
 await import('./verify-ib-syllabus-alignment.mjs');
+await import('./verify-ib-ai-sl-mocks.mjs');
 console.log(JSON.stringify({status:'passed',method:'Isolated local module loader; no live auth or network latency',moduleMs,firstBankMs,summaryAverageMs,collectionLookupAverageMs,overviewBanks:0,firstCollectionBanks:1,totalQuestions:total,physicsOverviewPayloadBytes:Buffer.byteLength(JSON.stringify(summary['physics-hl'])),allCoursesPayloadBytes:Buffer.byteLength(JSON.stringify(summary))}));

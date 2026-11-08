@@ -17,13 +17,13 @@ const { MATHS_MOCKS, AI_MATHS_MOCKS, ALL_MATHS_MOCKS, getMathsMock, mathsStrand,
 const normal = value => JSON.parse(JSON.stringify(value));
 const expectedIds = ['a', 'b', 'c', 'd'].flatMap(s => (['a', 'b'].includes(s) ? ['1', '2', '3'] : ['1', '2']).map(p => `ai-hl-set-${s}-paper-${p}`));
 assert.deepEqual(normal(AI_MATHS_MOCKS.map(p => p.id)), expectedIds);
-assert.equal(ALL_MATHS_MOCKS.length, 20); assert.equal(new Set(ALL_MATHS_MOCKS.map(p => p.id)).size, 20);
+assert.equal(ALL_MATHS_MOCKS.length, 24); assert.equal(new Set(ALL_MATHS_MOCKS.map(p => p.id)).size, 24);
 assert.equal(MATHS_MOCKS.length, 10); assert.equal(MATHS_MOCKS.reduce((s, p) => s + p.questionCount, 0), 90);
 assert.equal(AI_MATHS_MOCKS.reduce((s, p) => s + p.questionCount, 0), 92);
 assert.equal(AI_MATHS_MOCKS.reduce((s, p) => s + p.marks, 0), 990);
 assert.equal(mathsSubject('hl', 'ai'), 'math-ai-hl'); assert.equal(mathsSubject('hl'), 'math-aa-hl');
 assert.equal(mathsStrand(MATHS_MOCKS[0]), 'aa'); assert.equal(mathsStrandName(AI_MATHS_MOCKS[0]), 'Applications and interpretation');
-for (const id of ['ai-hl-set-c-paper-3', 'ai-hl-set-d-paper-3', 'ai-sl-set-a-paper-1', 'ai-hl-set-e-paper-1']) assert.equal(getMathsMock(id), undefined);
+for (const id of ['ai-hl-set-c-paper-3', 'ai-hl-set-d-paper-3', 'ai-sl-set-a-paper-3', 'ai-hl-set-e-paper-1']) assert.equal(getMathsMock(id), undefined);
 
 function fixture(meta) {
   const base = Math.floor(meta.marks / meta.questionCount), remainder = meta.marks % meta.questionCount;

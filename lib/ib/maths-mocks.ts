@@ -19,7 +19,8 @@ export function validateMathsMockPaper(input: unknown, meta: MathsMockMeta): Mat
   if (mathsStrand(p) !== mathsStrand(meta)) throw new Error("The mathematics strand does not match the catalogue.");
   if (p.course === "sl" && p.paper === "3") throw new Error("SL has no Paper 3.");
   if (p.calculator !== (mathsStrand(meta) === "ai" || p.paper !== "1")) throw new Error("The calculator rule does not match the paper.");
-  if (mathsStrand(meta) === "ai" && (p.strand !== "ai" || p.course !== "hl" || p.questions.some(q => q.section !== ""))) throw new Error("AI HL papers have no Sections A and B.");
+  if (mathsStrand(meta) === "ai" && (p.strand !== "ai" || p.questions.some(q => q.section !== ""))) throw new Error("AI papers have no Sections A and B.");
+  if (mathsStrand(meta) === "ai" && p.course === "sl" && (p.minutes !== 90 || p.marks !== 80)) throw new Error("AI SL papers require 90 minutes and 80 marks for this course.");
   if (meta.questionCount !== undefined && p.questions.length !== meta.questionCount) throw new Error("The question count does not match the catalogue.");
   if (new Set(p.questions.map(q => q.number)).size !== p.questions.length || p.questions.some((q, i) => q.number !== i + 1)) throw new Error("Questions must be numbered consecutively.");
   if (p.questions.reduce((total, q) => total + q.marks, 0) !== p.marks) throw new Error("Question marks do not match the paper total.");
@@ -36,6 +37,10 @@ export function validateMathsMockPaper(input: unknown, meta: MathsMockMeta): Mat
   return p;
 }
 const loaders = {
+  "ai-sl-set-a-paper-1": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-a-paper-1.json"),
+  "ai-sl-set-a-paper-2": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-a-paper-2.json"),
+  "ai-sl-set-b-paper-1": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-b-paper-1.json"),
+  "ai-sl-set-b-paper-2": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-b-paper-2.json"),
   "aa-hl-set-a-paper-1": () => import("@/content/ib/aa-mocks-2026/papers/aa-hl-set-a-paper-1.json"),
   "aa-hl-set-a-paper-2": () => import("@/content/ib/aa-mocks-2026/papers/aa-hl-set-a-paper-2.json"),
   "aa-hl-set-a-paper-3": () => import("@/content/ib/aa-mocks-2026/papers/aa-hl-set-a-paper-3.json"),
