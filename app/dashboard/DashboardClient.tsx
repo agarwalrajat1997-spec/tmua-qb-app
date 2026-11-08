@@ -257,7 +257,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         duration_minutes: 150,
         topics: ["All Topics", "2026 Predictive", "Paper 1 + Paper 2"],
         file: "tmua-2026-predictive-paper/index.html",
-        solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf",
+        solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/predictive-paper-worked.pdf",
         isNew: true,
       },
       {
@@ -289,7 +289,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
         duration_minutes: 150,
         topics: ["All Topics", "2024-2025 Informed", "Challenging"],
         file: "tmua-2024-2025-challenging-mock/index.html",
-        solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf",
+        solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/challenging-mock-worked.pdf",
       },
       {
         id: "full-official-2016",

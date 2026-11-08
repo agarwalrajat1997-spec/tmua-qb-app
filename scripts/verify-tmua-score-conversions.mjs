@@ -154,8 +154,7 @@ const challenge = fs.readFileSync(
 );
 
 const revisedPdf =
-  "https://apps.thrivingscholars.com/tmua-solutions/" +
-  "tmua-2024-2025-challenging-full-test-revised-solutions.pdf";
+  "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/challenging-mock-worked.pdf";
 
 if (!challenge.includes(revisedPdf)) {
   throw new Error("The revised challenge PDF URL was lost.");

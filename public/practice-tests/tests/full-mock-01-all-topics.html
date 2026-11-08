@@ -531,7 +531,7 @@ let examStage='instructions',paperDeadline=0,breakDeadline=0;
 let studentEmail='';
 const practicePresentation={durationSeconds:()=>practiceOptions.durationSeconds(),positionOf:index=>practiceOptions.positionOf(index),questionAt:(paper,position)=>practiceOptions.questionAt(paper-1,position),prepare:()=>practiceOptions.start(),decorateQuestion:(container,index)=>window.TS_TMUA_PRACTICE.decorate(practiceOptions,container,index,Math.floor(index/20)+1)};
 
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_b04ebb47b63b452ca25fcd9e8991aa7f.pdf";
+const solutionPDF = "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/full-mock-1-worked.pdf";
 // Placeholder — replace with real data if needed
 const averageScores = {
   paper1: 13.2,  // average out of 20
@@ -727,20 +727,11 @@ function confirmSubmit() {
   <label class="option"><input type="radio" name="q3" value="E"> \\(6+3\\sqrt{3}\\)</label>
 </div>`,
 
-    `<div class="question-number">Question 4</div>
-<p>
-  The positive number \\(a\\) satisfies
-  \\( \\int_{0}^{a} (\\sqrt{x} + x^{2})\\, dx = 5 \\).
-  The value of \\(a\\) is
-</p>
-
-<div class="options">
-  <label class="option"><input type="radio" name="q4" value="A"> \\( a = \\sqrt{3} \\)</label>
-  <label class="option"><input type="radio" name="q4" value="B"> \\( a = (\\sqrt{21} - 1)^{1/3} \\)</label>
-  <label class="option"><input type="radio" name="q4" value="C"> \\( a = 3^{2/3} \\)</label>
-  <label class="option"><input type="radio" name="q4" value="D"> \\( a = 5^{2/3} \\)</label>
-  <label class="option"><input type="radio" name="q4" value="E"> \\( a = (\\sqrt{6} - 1)^{2/3} \\)</label>
-</div>`,
+    `<div class="question-number">Question 4</div><p>A particle moves on a straight line with velocity \\(v(t)=k\\sqrt t-t\\) metres per second for \\(0\\leq t\\leq9\\). Its displacement during the first four seconds is 8 metres. How far does the particle travel during the full nine seconds?</p><div class="options"><label class="option"><input type="radio" name="q4" value="A"> \\(9\\) m</label>
+<label class="option"><input type="radio" name="q4" value="B"> \\(12\\) m</label>
+<label class="option"><input type="radio" name="q4" value="C"> \\(\\dfrac{27}{2}\\) m</label>
+<label class="option"><input type="radio" name="q4" value="D"> \\(18\\) m</label>
+<label class="option"><input type="radio" name="q4" value="E"> \\(\\dfrac{45}{2}\\) m</label></div>`,
 
     `<div class="question-number">Question 5</div>
 <p>
@@ -1573,8 +1564,7 @@ paper1: paper1Analysis.trim(),
       ${makePaperTable("Paper 2 Analysis", paper2Score, paper2Rows, "paper2")}
 
       <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
-  <iframe
-  id="solution-frame"
+  <p><a href="https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/full-mock-1-questions.pdf" target="_blank" rel="noopener">Download question paper (PDF)</a></p><iframe id="solution-frame"
   width="100%"
   height="600px"
   style="border: 1px solid #ccc; margin-top: 10px;">

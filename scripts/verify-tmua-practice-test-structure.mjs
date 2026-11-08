@@ -38,10 +38,10 @@ for (const text of [
   "{officialPastPapers.map(",
   'test_id: "tmua-2024-2025-challenging-mock"',
   'file: "tmua-2024-2025-challenging-mock/index.html"',
-  'solution_url: "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf"',
+  'solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/challenging-mock-worked.pdf"',
   'test_id: "tmua-2026-predictive-paper"',
   'file: "tmua-2026-predictive-paper/index.html"',
-  'solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf"',
+  'solution_url: "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/predictive-paper-worked.pdf"',
   "isNew: true",
   "styles.newBadge",
   "t.solution_url || (await fetchSolutionPdfForFile(t.file))"
@@ -71,7 +71,7 @@ for (const id of officialIds) {
 for (const text of [
   "/api/practice-tests/submit",
   "tmua-2024-2025-challenging-mock",
-  "https://apps.thrivingscholars.com/tmua-solutions/tmua-2024-2025-challenging-full-test-revised-solutions.pdf",
+  "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/challenging-mock-worked.pdf",
   "/shared/test-fullscreen.js?v=20260805-2"
 ]) {
   if (!challenge.includes(text)) fail(`Challenge test missing: ${text}`);
@@ -80,7 +80,7 @@ for (const text of [
 for (const text of [
   '"id":"tmua-2026-predictive-paper"',
   "/api/practice-tests/submit",
-  "https://apps.thrivingscholars.com/practice-tests/solutions/tmua-2026-predictive-paper-solutions.pdf",
+  "https://apps.thrivingscholars.com/practice-tests/solutions/2026-11-r1/predictive-paper-worked.pdf",
   "/shared/test-fullscreen.js?v=20260805-2",
   "result.status!=='saved'&&result.ok!==true",
   "portalAutoAttempted"
@@ -110,8 +110,8 @@ for (const paper of predictiveData.papers) {
 }
 
 const pdf = path.join(
-  "public","tmua-solutions",
-  "tmua-2024-2025-challenging-full-test-revised-solutions.pdf"
+  "public","practice-tests","solutions","2026-11-r1",
+  "challenging-mock-worked.pdf"
 );
 if (!fs.existsSync(pdf) || fs.statSync(pdf).size < 10000) {
   fail("Challenge solution PDF is missing or too small.");
