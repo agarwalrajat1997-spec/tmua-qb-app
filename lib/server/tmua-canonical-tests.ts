@@ -342,7 +342,7 @@ export const TMUA_CANONICAL_TESTS =
       20,
       40
     ],
-    "canonicalSha256": "890877c46c129aee63249c757b7207db9080a7aec8ee69d988da5efb5b447bcc",
+    "canonicalSha256": "1a839f4c25338f0dd4c06b013cb745393970ed1ee903e7e391d9df20e94627e1",
     "answers": [
       "A",
       "A",
@@ -372,7 +372,7 @@ export const TMUA_CANONICAL_TESTS =
       "D",
       "B",
       "E",
-      "C",
+      "D",
       "A",
       "A",
       "F",

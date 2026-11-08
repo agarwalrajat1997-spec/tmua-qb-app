@@ -1,3 +1,4 @@
+import { canonicalQuestionState } from "../qb/question-identities";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
@@ -60,7 +61,7 @@ export function resolveQuestion(qid: string, version?: string | null) {
 }
 export function questionMetadata(q: ReleasedQuestion) {
   return {
-    exam: "tmua" as const, qid: canonicalQid(q.qid), bank_qid: canonicalQid(q.qid), audit_qid: q.qid,
+    exam: "tmua" as const, qid: canonicalQid(q.qid), bank_qid: canonicalQid(q.qid), audit_qid: canonicalQid(q.qid),
     display_order: Number(q.app_question_id), app_question_id: q.app_question_id,
     ...(guidesByVersion.has(q.content_version) ? { revised: true } : {}),
     legacy_ids: legacyIds.get(canonicalQid(q.qid)) ?? [],
@@ -72,12 +73,17 @@ export function questionMetadata(q: ReleasedQuestion) {
 export const catalogue = main.map(questionMetadata).sort((a,b) =>
   a.topic.localeCompare(b.topic, undefined, {numeric:true}) || a.difficulty-b.difficulty || a.display_order-b.display_order);
 export function publicQuestion(q: ReleasedQuestion) {
-  return {...questionMetadata(q), prompt_html: q.prompt_html, options: q.options, updated_at: q.updated_at,
+  // This archived option is plain English wrapped in incomplete TeX. Keep its
+  // version and option label so existing attempts still resolve correctly.
+  const options = q.qid === "TMUA-P2-0528-38785261" && Array.isArray(q.options)
+    ? q.options.map(o => o.label === "E" && o.html === "\\(\\text{infinitely many\\)" ? {...o, html: "infinitely many"} : o)
+    : q.options;
+  return {...questionMetadata(q), prompt_html: q.prompt_html, options, updated_at: q.updated_at,
     guide_path: `/api/tmua/studio?action=guide&qid=${encodeURIComponent(canonicalQid(q.qid))}&contentVersion=${encodeURIComponent(q.content_version)}`};
 }
 export function questionGuide(q: ReleasedQuestion) {
   const replacementGuide = guidesByVersion.get(q.content_version);
-  if (replacementGuide) return {...replacementGuide, audit_qid: q.qid, qid: canonicalQid(q.qid)};
+  if (replacementGuide) return canonicalQuestionState({...replacementGuide, audit_qid: canonicalQid(q.qid), qid: canonicalQid(q.qid)});
   const file = guideFiles[q.content_version];
   if (!file || !/^[a-f0-9]{64}\.json\.gz$/.test(file)) return null;
   const guide = JSON.parse(gunzipSync(readFileSync(join(root,"guides",file))).toString("utf8"));
@@ -91,5 +97,5 @@ export function questionGuide(q: ReleasedQuestion) {
     return target && target.source_sha256 === route.target_source_sha256 &&
       (!replacement || target.content_version === replacement.question.content_version);
   }).map((route: Record<string,unknown>) => ({...route, audit_target_qid: route.target_qid, target_qid: canonicalQid(String(route.target_qid))}));
-  return guide;
+  return byCanonical.get(canonicalQid(q.qid))?.content_version === q.content_version ? canonicalQuestionState(guide) : guide;
 }

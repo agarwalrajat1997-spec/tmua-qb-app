@@ -9,6 +9,7 @@ import { API_QUOTA_ERROR_MESSAGE, classifyProviderError } from "./provider-error
 import { ReviewRequest } from "./contracts";
 import { startReview, reviewStatus } from "./reviews";
 import { readFileSync } from "node:fs";
+import { storedSolution } from "./solution";
 
 test("all 2178 eligible questions have unique stable identity, exact guide version/hash and easy-first order",()=>{
   assert.equal(catalogue.length,2178);
@@ -22,6 +23,8 @@ test("all 2178 eligible questions have unique stable identity, exact guide versi
     assert.equal(resolveQuestion(metadata.audit_qid,metadata.content_version),q);
     assert.equal(resolveQuestion(metadata.qid,"wrong-version"),undefined);
     const visible=publicQuestion(q);
+    assert.equal(visible.audit_qid,metadata.qid);
+    assert.ok(storedSolution(q).solutionHtml.trim(), "Missing worked solution for "+metadata.qid);
     assert.ok(!("answer" in visible)&&!("solution_html" in visible)&&!("audited_reference" in visible));
     if(i&&catalogue[i-1].topic===metadata.topic)assert.ok(catalogue[i-1].difficulty<=metadata.difficulty);
   }
