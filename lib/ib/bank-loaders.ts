@@ -9,7 +9,7 @@ export const IB_BANK_LOADERS = {
   "psychology-technology": () => import("@/content/ib/psychology/technology.json"),
   "economics-introduction": () => import("@/content/ib/economics/introduction.json"),
   "economics-microeconomics": () => import("@/content/ib/economics/microeconomics.json"),
-  "economics-macroeconomics": () => import("@/content/ib/economics/macroeconomics.json"),
+  "economics-macroeconomics": async () => { const [bank, fiscal] = await Promise.all([import("@/content/ib/economics/macroeconomics.json"), import("@/content/ib/syllabus-updates-2026/economics-macroeconomics.json")]); return { default: [...bank.default, ...fiscal.default] }; },
   "economics-global-economy": () => import("@/content/ib/economics/global-economy.json"),
   "business-introduction-business": () => import("@/content/ib/business-management/introduction-business.json"),
   "business-human-resources": () => import("@/content/ib/business-management/human-resources.json"),

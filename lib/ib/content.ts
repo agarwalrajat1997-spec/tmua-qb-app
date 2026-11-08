@@ -1,4 +1,5 @@
 import "server-only";
+import { applySyllabusAmendments } from "./syllabus-amendments";
 import { IB_BANK_LOADERS } from "./bank-loaders";
 import { collectionForQuestion } from "./content-index";
 import { ibQuestionSchema, questionAvailableForCourse, type IbQuestion } from "./question";
@@ -14,7 +15,7 @@ function loadBank(id: string): Promise<Bank> | undefined {
   let promise = banks.get(id);
   if (!promise) {
     promise = IB_BANK_LOADERS[id as keyof typeof IB_BANK_LOADERS]().then(module => {
-      const all = module.default.map(value => ibQuestionSchema.parse(value));
+      const all = module.default.map(value => applySyllabusAmendments(ibQuestionSchema.parse(value)));
       if (all.some(q => q.collectionId !== id) || new Set(all.map(q => q.id)).size !== all.length) throw new Error("Invalid IB bank identity");
       const hl = all.filter(q => q.status === "published");
       return { hl, sl: hl.filter(q => questionAvailableForCourse(q, "sl")), byId: new Map(hl.map(q => [q.id, q])) };

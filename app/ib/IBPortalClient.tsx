@@ -19,6 +19,7 @@ export default function IBPortalClient({ email, summary: counts, subject, view, 
   const course = IB_COURSES[subject];
   const courseLabel = ibCourseLabel(subject, courseLevel);
   const qualification = ibQualification(subject, courseLevel);
+  const syllabusLabel = ibIsMathSubject(subject) ? "2021 syllabus · final assessment November 2028" : subject === "psychology" ? "First assessment May 2027" : subject === "economics" ? "First assessment 2022" : subject === "business-management" ? "First assessment 2024" : "First assessment 2025";
   const [query, setQuery] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -59,7 +60,7 @@ export default function IBPortalClient({ email, summary: counts, subject, view, 
         {ibIsMathSubject(subject) ? <MathsCourseSwitch key={subject} subject={subject} links={{ "math-aa-sl": ibHref("math-aa-sl", view), "math-ai-sl": ibHref("math-ai-sl", view), "math-aa-hl": ibHref("math-aa-hl", view), "math-ai-hl": ibHref("math-ai-hl", view) }} /> : ibHasCourseChoice(subject) ? <ChemistryCourseSwitch subject={subject} course={courseLevel} links={{ sl: ibHref(subject, view, "sl"), hl: ibHref(subject, view, "hl") }} /> : null}
         {error ? <p role="alert" className={styles.error}>{error}</p> : null}
         <section className={styles.hero} aria-labelledby="course-heading">
-          <div><span className={styles.heroLabel}>IB {courseLabel.toUpperCase()} <span>{qualification.toUpperCase()}</span></span><h1 id="course-heading">{view === "questions" ? "Question bank" : "Mock tests"}<span className={styles.headingDot}>.</span></h1><p>{ibHasCourseChoice(subject) ? `${course.subtitle} · ${qualification}` : course.subtitle}</p></div>
+          <div><span className={styles.heroLabel}>IB {courseLabel.toUpperCase()} <span>{qualification.toUpperCase()}</span></span><h1 id="course-heading">{view === "questions" ? "Question bank" : "Mock tests"}<span className={styles.headingDot}>.</span></h1><p>{ibHasCourseChoice(subject) ? `${course.subtitle} · ${qualification}` : course.subtitle}</p><p>{syllabusLabel}</p></div>
           <div className={styles.heroArt} aria-hidden="true"><span className={styles.artRing} /><span className={styles.artRingTwo} /><span className={styles.artSymbol}>{course.symbol}</span><span className={styles.artSpark}>✦</span></div>
         </section>
         <div className={styles.stats}><div><strong>{view === "questions" ? counts.questions : counts.mocks}</strong><span>{view === "questions" ? "Questions available" : "Mock tests available"}</span></div><div><strong>{ibTopicsForCourse(subject, courseLevel).length}</strong><span>{ibIsMathSubject(subject) ? "Core topics" : subject === "psychology" ? "Content areas" : "Syllabus themes"}</span></div><div><strong className={styles.statText}>{qualification === "Standard Level" ? "SL" : "HL"}</strong><span>{qualification}</span></div></div>

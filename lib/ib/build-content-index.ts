@@ -1,4 +1,5 @@
 import psychologyMocks from "@/content/ib/psychology-mocks-2027/catalog.json";
+import { applySyllabusAmendments } from "./syllabus-amendments";
 import economicsMocks from "@/content/ib/economics-mocks-2022/catalog.json";
 import biologyMocks from "@/content/ib/biology-mocks-2025/catalog.json";
 import chemistryMocks from "@/content/ib/chemistry-mocks-2025/catalog.json";
@@ -13,7 +14,7 @@ import { ibTopicGroups } from "./topic-groups";
 /** Build-time navigation metadata. Never include prompts, diagrams or answers. */
 export function buildIbContentIndex(all: IbQuestion[]) {
   if (new Set(all.map(q => q.id)).size !== all.length) throw new Error("Duplicate IB question IDs");
-  const published = all.filter(q => q.status === "published");
+  const published = all.filter(q => q.status === "published").map(applySyllabusAmendments);
   function summary(course: IbCourseLevel): IbSummary {
     const result = {} as IbSummary;
     for (const subject of Object.keys(IB_COURSES) as IbSubject[]) {
