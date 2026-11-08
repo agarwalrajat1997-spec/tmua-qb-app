@@ -1,0 +1,1402 @@
+[
+  {
+    "id": "PT001",
+    "test_id": "full-mock-01-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-01-all-topics.html",
+    "paper": 1,
+    "question_number": 4,
+    "global_number": 4,
+    "original_question_sha256": "7748adb41a72fdcc1c463791a2e4c345af354ba167d619dfc05e47f4b3948500",
+    "topic": "Calculus",
+    "construction": "recover_quadratic_from_value_and_gradient",
+    "difficulty": 3,
+    "prompt_html": "<p>A quadratic polynomial \\(f\\) satisfies \\(f(0)=2\\), \\(f'(0)=-3\\) and \\(f(2)=4\\). Find \\(\\int_0^2 f(x)\\,dx\\).</p>",
+    "solution_html": "<p>Write \\(f(x)=ax^2+bx+c\\). The conditions at zero give \\(c=2\\) and \\(b=-3\\). Then \\(4a-6+2=4\\), so \\(a=2\\).</p><p>Therefore \\(\\int_0^2 f(x)\\,dx=\\left[\\frac23x^3-\\frac32x^2+2x\\right]_0^2=\\frac{16}{3}-6+4=\\frac{10}{3}\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{14}{3}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{10}{3}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac83\\)"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT002",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 5,
+    "global_number": 5,
+    "original_question_sha256": "3950525dadb1d033f061ed5a40468ca7a942ec8b667b085439263e1f584e370c",
+    "topic": "Algebra",
+    "construction": "integer_solutions_rational_sign_chart",
+    "difficulty": 3,
+    "prompt_html": "<p>How many integers \\(x\\) satisfy both \\(-4\\le x\\le4\\) and \\(\\frac{(x-2)(x+3)}{x-1}&gt;0\\)?</p>",
+    "solution_html": "<p>The critical values are \\(-3,1,2\\). A sign chart gives \\(-3&lt;x&lt;1\\) or \\(x&gt;2\\). The point \\(x=1\\) is excluded because the expression is undefined, and the two zeros are excluded by the strict inequality.</p><p>Within the specified integer range the solutions are \\(-2,-1,0,3,4\\), so there are \\(5\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(7\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(5\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(3\\)"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT003",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 6,
+    "global_number": 6,
+    "original_question_sha256": "0aa1a36274ed89c04ab55e34f62d662a1fb328c7bcf7fece06ebe2ac988a5224",
+    "topic": "Geometry",
+    "construction": "cuboid_ratio_space_diagonal_volume",
+    "difficulty": 3,
+    "prompt_html": "<p>The three edge lengths of a cuboid are in the ratio \\(2:3:6\\). Its space diagonal has length \\(14\\). What is its volume?</p>",
+    "solution_html": "<p>Let the edges be \\(2t,3t,6t\\), with \\(t&gt;0\\). By Pythagoras in three dimensions, the diagonal is \\(\\sqrt{4t^2+9t^2+36t^2}=7t\\). Thus \\(t=2\\).</p><p>The volume is \\((4)(6)(12)=288\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(288\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(336\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(216\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(144\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(576\\)"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT004",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 7,
+    "global_number": 7,
+    "original_question_sha256": "12a59e9a7789b11155fdb8c0db5c4472d4ae26456f55c70b3013e011ae006c79",
+    "topic": "Sequences",
+    "construction": "shift_affine_recurrence_then_sum",
+    "difficulty": 3,
+    "prompt_html": "<p>A sequence is defined by \\(u_1=2\\) and \\(u_{n+1}=2u_n+1\\) for \\(n\\ge1\\). Find \\(\\sum_{n=1}^6 u_n\\).</p>",
+    "solution_html": "<p>The shifted sequence \\(v_n=u_n+1\\) satisfies \\(v_{n+1}=2v_n\\) and \\(v_1=3\\). Hence \\(u_n=3\\cdot2^{n-1}-1\\).</p><p>The required sum is \\(3(1+2+4+8+16+32)-6=3(63)-6=183\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(186\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(183\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(180\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(189\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(177\\)"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT005",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 9,
+    "global_number": 9,
+    "original_question_sha256": "6c390dffb0639cd52c44c868b483602f2f13c9d6a6bd6b4ae9fd8097ca759198",
+    "topic": "Functions",
+    "construction": "inverse_equation_with_branch_restriction",
+    "difficulty": 4,
+    "prompt_html": "<p>Let \\(f(x)=(x-2)^2+1\\) for \\(x\\ge2\\), and let \\(g\\) be its inverse. Find the real solution of \\(g(2x+1)=x\\).</p>",
+    "solution_html": "<p>The range of \\(g\\) is \\([2,\\infty)\\), so any solution must have \\(x\\ge2\\). Applying \\(f\\) gives \\(2x+1=(x-2)^2+1\\), or \\(x^2-6x+4=0\\).</p><p>The algebraic candidates are \\(x=3\\pm\\sqrt5\\). Only \\(3+\\sqrt5\\) belongs to the required branch \\(x\\ge2\\), and its input \\(2x+1\\) is in the domain of \\(g\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(2+\\sqrt5\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(3+\\sqrt5\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\sqrt5-3\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(3-\\sqrt5\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT006",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 10,
+    "global_number": 10,
+    "original_question_sha256": "0c3d1a5b35ab11a3f14e0cf849a0b9c3d3a118df6d2b97cac0d73b972795e4d6",
+    "topic": "Coordinate geometry",
+    "construction": "circle_chord_from_distance_to_line",
+    "difficulty": 4,
+    "prompt_html": "<p>The line \\(3x+4y=16\\) cuts the circle \\(x^2+y^2-6x+4y-12=0\\). Find the length of the chord between the two intersections.</p>",
+    "solution_html": "<p>Completing squares gives \\((x-3)^2+(y+2)^2=25\\), so the centre is \\((3,-2)\\) and the radius is \\(5\\).</p><p>The perpendicular distance from the centre to the line is \\(\\frac{|3(3)+4(-2)-16|}{\\sqrt{3^2+4^2}}=3\\). The perpendicular from a circle centre bisects a chord; therefore half the chord has length \\(\\sqrt{5^2-3^2}=4\\). The full length is \\(8\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(2\\sqrt{21}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(4\\sqrt5\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(10\\)"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT007",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 11,
+    "global_number": 11,
+    "original_question_sha256": "57025cacfcd121bd3d801715a42ecda4693504c424eccd3a5075c214aa5bb180",
+    "topic": "Binomial expansion",
+    "construction": "coefficient_cancellation_then_next_coefficient",
+    "difficulty": 4,
+    "prompt_html": "<p>The coefficient of \\(x^2\\) in \\((1+2x)^5(1-kx)\\) is zero. What is the coefficient of \\(x^3\\) in the same expansion?</p>",
+    "solution_html": "<p>The first four terms of \\((1+2x)^5\\) are \\(1+10x+40x^2+80x^3\\). After multiplication, the coefficient of \\(x^2\\) is \\(40-10k\\). Thus \\(k=4\\).</p><p>The coefficient of \\(x^3\\) is then \\(80-40k=80-160=-80\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(40\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(-80\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(-40\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(-120\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(80\\)"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT008",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 12,
+    "global_number": 12,
+    "original_question_sha256": "d01941135fe1c9642c67e0c0b19fd46cc708834ec9c66fb2845bdfde94f3d89f",
+    "topic": "Trigonometry",
+    "construction": "discard_impossible_cosine_root_and_count_periods",
+    "difficulty": 4,
+    "prompt_html": "<p>Find the sum of all solutions of \\(2\\sin^2x-3\\cos x=0\\) in \\(0\\le x\\le3\\pi\\).</p>",
+    "solution_html": "<p>Using \\(\\sin^2x=1-\\cos^2x\\), the equation becomes \\((2\\cos x-1)(\\cos x+2)=0\\). The root \\(\\cos x=-2\\) is impossible, so \\(\\cos x=1/2\\).</p><p>The allowed solutions are \\(\\pi/3,5\\pi/3,7\\pi/3\\). Their sum is \\(13\\pi/3\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac{11\\pi}{3}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{7\\pi}{3}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{13\\pi}{3}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(4\\pi\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(5\\pi\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT009",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 14,
+    "global_number": 14,
+    "original_question_sha256": "f3408087e0c40fa5146235d6bcf71b7d4093c3507773b2cc2d6c356ea4b11ada",
+    "topic": "Logarithms",
+    "construction": "three_fixed_bases_from_exponent_definition",
+    "difficulty": 3,
+    "prompt_html": "<p>A positive real number \\(x\\) satisfies \\(\\log_2x+\\log_4x+\\log_8x=\\frac{11}{2}\\). Find \\(\\log_8(4x)\\).</p>",
+    "solution_html": "<p>Put \\(x=2^t\\). Since \\(4^{t/2}=2^t\\) and \\(8^{t/3}=2^t\\), the definitions of logarithms give \\(\\log_4x=t/2\\) and \\(\\log_8x=t/3\\).</p><p>Thus \\(t+\\frac t2+\\frac t3=\\frac{11}{2}\\), which gives \\(t=3\\) and \\(x=8\\). Since \\(4x=32=8^{5/3}\\), the requested value is \\(5/3\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac53\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac73\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac32\\)"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT010",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 15,
+    "global_number": 15,
+    "original_question_sha256": "2426a680e9c0a5ba1a2ac4e1a50aa4ed4a877cde3284cd607b6ee3068b5fbdf7",
+    "topic": "Algebraic optimisation",
+    "construction": "factorised_global_upper_bound",
+    "difficulty": 4,
+    "prompt_html": "<p>Positive real numbers \\(a,b\\) satisfy \\(a+b=6\\). What is the greatest possible value of \\(a^2b\\)?</p>",
+    "solution_html": "<p>Substitute \\(b=6-a\\), where \\(0&lt;a&lt;6\\). The identity \\(32-a^2(6-a)=(a-4)^2(a+2)\\) shows that \\(a^2b\\le32\\) throughout this domain.</p><p>Equality is attained at \\(a=4,b=2\\), so the greatest value is \\(32\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(27\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(54\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(32\\)"
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT011",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 1,
+    "question_number": 16,
+    "global_number": 16,
+    "original_question_sha256": "9119191858e07e9f4ece76e20a224483db70e57b20da7ff80656bdee6eaec26e",
+    "topic": "Functions",
+    "construction": "three_cycle_fractional_linear_iteration",
+    "difficulty": 4,
+    "prompt_html": "<p>Starting with \\(v_0=4\\), define \\(v_{n+1}=\\frac{v_n-3}{v_n-2}\\). What is \\(v_{2026}\\)?</p>",
+    "solution_html": "<p>The first three updates are \\(4\\mapsto\\frac12\\mapsto\\frac53\\mapsto4\\). None of these values is \\(2\\), so every subsequent update is defined and the same cycle repeats.</p><p>Since \\(2026=3\\cdot675+1\\), \\(v_{2026}=v_1=1/2\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac53\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(4\\)"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT012",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 5,
+    "global_number": 25,
+    "original_question_sha256": "cfb3c103c55c8cf972bdfda1d0bf33fcbd17f390912368a1b006dca54a1e9eb0",
+    "topic": "Counting",
+    "construction": "four_digit_divisibility_with_omitted_digit",
+    "difficulty": 4,
+    "prompt_html": "<p>How many four-digit positive integers can be formed from the digits \\(0,1,2,3,4\\), without repetition, that are divisible by \\(6\\)?</p>",
+    "solution_html": "<p>Divisibility by \\(3\\) requires a digit sum divisible by \\(3\\). As all five digits sum to \\(10\\), the omitted digit must be \\(1\\) or \\(4\\). The last digit must also be even, and the leading digit cannot be zero.</p><p>Omitting \\(1\\) leaves \\(0,2,3,4\\). There are \\(6\\) arrangements ending in zero and \\(4\\) ending in each of \\(2\\) and \\(4\\): \\(14\\) in total. Omitting \\(4\\) leaves \\(0,1,2,3\\), giving \\(6+4=10\\) arrangements ending in \\(0\\) or \\(2\\). Thus the total is \\(24\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(20\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(36\\)"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT013",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 6,
+    "global_number": 26,
+    "original_question_sha256": "8492a8d6503d50e740ac7249aaa767de2bc425c0f7cacd772c6a0aedbddc773e",
+    "topic": "Counterexamples",
+    "construction": "positive_samples_do_not_prove_positive_quadratic",
+    "difficulty": 4,
+    "prompt_html": "<p>A student claims that if a quadratic polynomial is positive at \\(x=0,1,2\\), it must be positive for every real \\(x\\). Which polynomial is a counterexample?</p>",
+    "solution_html": "<p>For \\(q(x)=16x^2-16x+3\\), the three sampled values are \\(3,3,35\\), all positive. But \\(q(1/2)=-1\\), so the conclusion fails.</p><p>\\(x^2+1\\) and \\(4x^2-4x+2=4(x-1/2)^2+1\\) are always positive, so they do not refute the conclusion. \\(x^2-1\\) and \\(x^2-3x+2\\) fail the stated positivity premise.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(16x^2-16x+3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(4x^2-4x+2\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(x^2+1\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(x^2-1\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(x^2-3x+2\\)"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT014",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 7,
+    "global_number": 27,
+    "original_question_sha256": "090246ad3344e4469f84fc7669ef996420cd684ab6ae45604d18de29ecc13301",
+    "topic": "Integration",
+    "construction": "quadratic_endpoint_midpoint_identity",
+    "difficulty": 4,
+    "prompt_html": "<p>Let \\(f(x)=ax^2+bx+c\\). Define \\(T=f(-1)+f(1)\\) and \\(M=2f(0)\\); these are the one-strip trapezium and midpoint estimates for the integral over \\([-1,1]\\). Which expression always equals \\(\\int_{-1}^1 f(x)\\,dx\\)?</p>",
+    "solution_html": "<p>The definitions give \\(T=2a+2c\\) and \\(M=2c\\). Direct integration gives \\(\\int_{-1}^1(ax^2+bx+c)\\,dx=\\frac{2a}{3}+2c\\); the odd term integrates to zero.</p><p>Substituting for \\(T\\) and \\(M\\) shows that \\(\\frac{T+2M}{3}=\\frac{2a+6c}{3}=\\frac{2a}{3}+2c\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(2T-M\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{T+M}{2}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{T+2M}{3}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{T+3M}{4}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{2T+M}{3}\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT015",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 8,
+    "global_number": 28,
+    "original_question_sha256": "31359c6c2516fc7bc15a963bf0097e510cbba7a5cd2cb4ef1c24941a4273b014",
+    "topic": "Necessary and sufficient conditions",
+    "construction": "quadratic_discriminant_compared_with_parameter_threshold",
+    "difficulty": 4,
+    "prompt_html": "<p>For a real parameter \\(k\\), consider these statements.</p><ul><li><strong>P:</strong> \\(x^2-2kx+2k+3=0\\) has two distinct real roots.</li><li><strong>Q:</strong> \\(k&gt;4\\).</li></ul><p>Which statement describes the relationship correctly?</p>",
+    "solution_html": "<p>The discriminant is \\(4k^2-4(2k+3)=4(k-3)(k+1)\\). Thus P holds exactly when \\(k&lt;-1\\) or \\(k&gt;3\\).</p><p>Every \\(k&gt;4\\) satisfies P, so Q implies P: P is necessary for Q. But P also holds at \\(k=-2\\), when Q is false, so P is not sufficient for Q.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "P is sufficient but not necessary for Q."
+      },
+      {
+        "label": "B",
+        "html": "P and Q cannot both be true."
+      },
+      {
+        "label": "C",
+        "html": "P is neither necessary nor sufficient for Q."
+      },
+      {
+        "label": "D",
+        "html": "P is both necessary and sufficient for Q."
+      },
+      {
+        "label": "E",
+        "html": "P is necessary but not sufficient for Q."
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT016",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 9,
+    "global_number": 29,
+    "original_question_sha256": "060666ab3d35273fa56df9590d4b3e76e7ea6a0c98c84140ff6d5bd771166be4",
+    "topic": "Proof analysis",
+    "construction": "division_by_unknown_sign_loses_inequality_direction",
+    "difficulty": 3,
+    "prompt_html": "<p>A student gives the following argument to claim that every positive real number \\(x\\) satisfies \\(x\\ge1\\).</p><ol type=\"I\"><li>\\((x-1)^2\\ge0\\).</li><li>\\(x(x-1)\\ge x-1\\).</li><li>Dividing by \\(x-1\\) gives \\(x\\ge1\\).</li><li>Therefore the claim holds for every \\(x&gt;0\\).</li></ol><p>Which is the first unjustified step?</p>",
+    "solution_html": "<p>Steps I and II are valid: the square is non-negative, and expanding and rearranging gives step II. Step III assumes that division by \\(x-1\\) preserves the inequality.</p><p>For \\(0&lt;x&lt;1\\) the divisor is negative, so the inequality must reverse; for \\(x=1\\) division is undefined. Thus step III is the first unjustified step.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Step I"
+      },
+      {
+        "label": "B",
+        "html": "Every step is justified."
+      },
+      {
+        "label": "C",
+        "html": "Step II"
+      },
+      {
+        "label": "D",
+        "html": "Step III"
+      },
+      {
+        "label": "E",
+        "html": "Step IV"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT017",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 10,
+    "global_number": 30,
+    "original_question_sha256": "03a5c64f9d9191466ca582ced580e6def794593280071328d1b26b017f31a3c6",
+    "topic": "Logarithms",
+    "construction": "exponential_substitution_with_domain_check",
+    "difficulty": 3,
+    "prompt_html": "<p>A real number \\(x\\) satisfies \\(\\log_3(9^x-2)=x\\). Find \\(3^{2x+1}\\).</p>",
+    "solution_html": "<p>By the definition of a logarithm, \\(9^x-2=3^x\\). Let \\(t=3^x&gt;0\\). Then \\(t^2-t-2=(t-2)(t+1)=0\\). Only \\(t=2\\) is positive.</p><p>This gives a positive logarithm argument \\(t^2-2=2\\), so it is valid. Finally, \\(3^{2x+1}=3t^2=12\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(27\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(6\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT018",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 11,
+    "global_number": 31,
+    "original_question_sha256": "3d7f27c517761cce6c23d6f0394c4655133d77efebfb58517bd072abd0fb0229",
+    "topic": "Number reasoning",
+    "construction": "nonlinear_recurrence_parity_invariant",
+    "difficulty": 4,
+    "prompt_html": "<p>The integer sequence \\(u_1=1\\), \\(u_{n+1}=u_n^2+2\\) is given. Which of the following statements are true?</p><ol type=\"I\"><li>Every term is odd.</li><li>For every \\(n\\ge2\\), \\(u_n-3\\) is divisible by \\(4\\).</li><li>For every \\(n\\ge2\\), \\(u_n\\) is divisible by \\(3\\).</li></ol>",
+    "solution_html": "<p>The first term is odd, and the square of an odd integer plus \\(2\\) is odd. Each update therefore preserves oddness, which proves I for every term. Every odd square has remainder \\(1\\) on division by \\(4\\), so each term after the first has remainder \\(3\\). This proves II.</p><p>The first three terms are \\(1,3,11\\). Since \\(11\\) is not divisible by \\(3\\), III is false.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "I and II only"
+      },
+      {
+        "label": "B",
+        "html": "I, II and III"
+      },
+      {
+        "label": "C",
+        "html": "I and III only"
+      },
+      {
+        "label": "D",
+        "html": "II only"
+      },
+      {
+        "label": "E",
+        "html": "I only"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT019",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 12,
+    "global_number": 32,
+    "original_question_sha256": "23c14306cfd8b0ab3df752da8e0a6c279989fee7f0f358e51e72eb85553acfd9",
+    "topic": "Functional reasoning",
+    "construction": "double_composition_implies_translation_rule",
+    "difficulty": 5,
+    "prompt_html": "<p>A function \\(f:\\mathbb R\\to\\mathbb R\\) satisfies \\(f(f(x))=x+2\\) for every real \\(x\\), and \\(f(0)=1\\). Find \\(f(12)\\).</p>",
+    "solution_html": "<p>Evaluate \\(f(f(f(x)))\\) in two ways. Applying \\(f\\) to the given equation gives \\(f(x+2)\\), while using the given equation with input \\(f(x)\\) gives \\(f(x)+2\\). Therefore \\(f(x+2)=f(x)+2\\).</p><p>Starting from \\(f(0)=1\\) and applying this relation six times gives \\(f(12)=1+6\\cdot2=13\\). The conditions are consistent, for example with \\(f(x)=x+1\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(7\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(11\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(14\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(13\\)"
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT020",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 13,
+    "global_number": 33,
+    "original_question_sha256": "74723297da5a597476842ce6085b92788b5c8b4c5a32c65cd11d4c8b12a0667f",
+    "topic": "Logical deduction",
+    "construction": "four_boxes_exactly_one_true_label",
+    "difficulty": 3,
+    "prompt_html": "<p>Exactly one of four boxes P, Q, R and S contains a coin. Their labels read:</p><ul><li>P: “The coin is in Q or R.”</li><li>Q: “The coin is in P.”</li><li>R: “The coin is in S.”</li><li>S: “The coin is not in R.”</li></ul><p>Exactly one label is true. Which box contains the coin?</p>",
+    "solution_html": "<p>If the coin is in P, labels Q and S are true. If it is in Q, labels P and S are true. If it is in S, labels R and S are true. Each of these cases gives two true labels.</p><p>If the coin is in R, only label P is true. Thus R is the unique possible location.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Box Q"
+      },
+      {
+        "label": "B",
+        "html": "Box R"
+      },
+      {
+        "label": "C",
+        "html": "These conditions are impossible."
+      },
+      {
+        "label": "D",
+        "html": "Box P"
+      },
+      {
+        "label": "E",
+        "html": "Box S"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT021",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 14,
+    "global_number": 34,
+    "original_question_sha256": "86995f1ee39c03a6c263af4df4ecdd549df1c9d83f8cf012b872f24a68b5b816",
+    "topic": "Integration",
+    "construction": "symmetric_weighted_integral_from_functional_pair",
+    "difficulty": 5,
+    "prompt_html": "<p>An integrable function \\(f\\) satisfies \\(f(x)+f(2-x)=6\\) for \\(0\\le x\\le2\\). Find \\(\\int_0^2 (x-1)^2f(x)\\,dx\\).</p>",
+    "solution_html": "<p>Call the required integral \\(I\\). Reflecting the interval by \\(x=2-t\\) leaves the weight unchanged: \\((x-1)^2=(t-1)^2\\). Hence \\(I=\\int_0^2(t-1)^2f(2-t)\\,dt\\).</p><p>Adding the two expressions gives \\(2I=\\int_0^2(x-1)^2[f(x)+f(2-x)]\\,dx=6\\int_0^2(x-1)^2\\,dx=6\\cdot\\frac23=4\\). Therefore \\(I=2\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(1\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac32\\)"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT022",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 15,
+    "global_number": 35,
+    "original_question_sha256": "736b5b3a74ec61bfd37a05bd7f2b41c4b313f3a357ddc313d0719c2b080c4684",
+    "topic": "Number reasoning",
+    "construction": "coprime_factor_pairs_assign_prime_powers",
+    "difficulty": 4,
+    "prompt_html": "<p>Positive integers \\(a,b\\) satisfy \\(ab=360\\) and have highest common factor \\(1\\). How many different values can \\(a+b\\) take?</p>",
+    "solution_html": "<p>Since \\(360=2^3\\cdot3^2\\cdot5\\) and the factors are coprime, the prime-power blocks \\(8,9,5\\) must each be assigned wholly to one factor. This gives \\(2^3=8\\) ordered assignments, paired by swapping \\(a\\) and \\(b\\).</p><p>The four unordered pairs are \\((1,360),(5,72),(8,45),(9,40)\\). Their sums \\(361,77,53,49\\) are distinct, so there are \\(4\\) possible values.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(6\\)"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT023",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 16,
+    "global_number": 36,
+    "original_question_sha256": "e6ba98fdf0651685b8d448ab53bc28495f261ba5a2dbb965ea13ee2f63f6c79b",
+    "topic": "Logical conditions",
+    "construction": "exactly_two_predicates_integer_interval_endpoints",
+    "difficulty": 4,
+    "prompt_html": "<p>For an integer \\(x\\), consider:</p><ol type=\"I\"><li>\\(x&gt;-2\\)</li><li>\\(x^2&lt;9\\)</li><li>\\(x\\le0\\)</li></ol><p>What is the complete set of integers for which exactly two statements are true?</p>",
+    "solution_html": "<p>For \\(x\\le-3\\), only III is true. At \\(x=-2\\), II and III are true. At \\(x=-1,0\\), all three are true. At \\(x=1,2\\), I and II are true. For \\(x\\ge3\\), only I is true.</p><p>Thus exactly two statements hold precisely for \\(\\{-2,1,2\\}\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\{-3,-2,1,2,3\\}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\{-2,1,2\\}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\{-1,0,1,2\\}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\{1,2\\}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\{-2,-1,0\\}\\)"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT024",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 18,
+    "global_number": 38,
+    "original_question_sha256": "62b7599f8badeab588f2ba1cff79dd7393ee898c54d9771dcccb776671d2a10e",
+    "topic": "Discrete reasoning",
+    "construction": "shortest_path_add_or_double_with_lower_bound",
+    "difficulty": 5,
+    "prompt_html": "<p>An integer sequence starts with \\(u_1=1\\). At each step, either \\(u_{n+1}=u_n+1\\) or \\(u_{n+1}=2u_n\\) is chosen. What is the smallest possible \\(k\\) for which \\(u_k=25\\)?</p>",
+    "solution_html": "<p>The sequence \\(1,2,3,6,12,24,25\\) reaches \\(25\\) in six updates, so \\(k\\le7\\). At most four updates cannot suffice, because even doubling each time reaches only \\(16\\).</p><p>In five updates with at most three doublings, the largest possible endpoint is \\((1+2)2^3=24\\): moving additions before doublings only increases the endpoint. Five doublings give \\(32\\). Four doublings and one addition give \\(16+2^j\\) for some \\(j\\in\\{0,1,2,3,4\\}\\), none of which is \\(25\\). Thus five updates cannot suffice, and \\(k=7\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(7\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(5\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT025",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 19,
+    "global_number": 39,
+    "original_question_sha256": "ce2f46c56c173cbb0a19af8b3a521cca2d56e67d43d6b4eb4950fe0351b0c44b",
+    "topic": "Quantifiers",
+    "construction": "real_neighbourhoods_and_nearest_integer",
+    "difficulty": 4,
+    "prompt_html": "<p>Which of these statements are true?</p><ol type=\"I\"><li>For every real \\(x\\), there is a real \\(y\\) such that \\(|x-y|&lt;1\\).</li><li>There is a real \\(y\\) such that \\(|x-y|&lt;1\\) for every real \\(x\\).</li><li>For every real \\(x\\), there is an integer \\(n\\) such that \\(|x-n|\\le1/2\\).</li></ol>",
+    "solution_html": "<p>I is true: for each \\(x\\), choose \\(y=x\\). II is false: after any fixed \\(y\\) is chosen, \\(x=y+2\\) violates the inequality.</p><p>III is true. Every real number lies between two consecutive integers, and at least one endpoint is within \\(1/2\\). At a midpoint either endpoint works. Thus I and III are true.</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "I and II only"
+      },
+      {
+        "label": "B",
+        "html": "II only"
+      },
+      {
+        "label": "C",
+        "html": "I, II and III"
+      },
+      {
+        "label": "D",
+        "html": "I and III only"
+      },
+      {
+        "label": "E",
+        "html": "I only"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT026",
+    "test_id": "full-mock-02-all-topics",
+    "source_file": "public/practice-tests/tests/full-mock-02-all-topics.html",
+    "paper": 2,
+    "question_number": 20,
+    "global_number": 40,
+    "original_question_sha256": "8b2372bb9768fe3de1ec8837d9e5c51ded01f2900fe4bf89b6567add291ed7ae",
+    "topic": "Algebraic reasoning",
+    "construction": "quartic_root_count_with_zero_and_double_boundaries",
+    "difficulty": 5,
+    "prompt_html": "<p>For which real values of \\(c\\) does \\(x^4-4x^2+c=0\\) have exactly two distinct real solutions?</p>",
+    "solution_html": "<p>Put \\(y=x^2\\ge0\\). Then \\(y=2\\pm\\sqrt{4-c}\\). If \\(c&lt;0\\), one \\(y\\) is positive and one is negative, giving exactly two real \\(x\\) values. If \\(c=4\\), the sole value \\(y=2\\) also gives exactly two distinct real \\(x\\) values.</p><p>At \\(c=0\\), \\(y=0,4\\) give three distinct values \\(x=0,\\pm2\\). For \\(0&lt;c&lt;4\\), both \\(y\\) values are positive and distinct, giving four roots. For \\(c&gt;4\\) there are none. Therefore the answer is \\(c&lt;0\\) or \\(c=4\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(c=0\\ \\text{or}\\ c=4\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(c&lt;0\\ \\text{or}\\ c=4\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(0&lt;c&lt;4\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(c\\le0\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(c\\le4\\)"
+      }
+    ],
+    "answer": "B",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT027",
+    "test_id": "p1-mock-01-algebra-sequences-functions-geometry",
+    "source_file": "public/practice-tests/tests/p1-mock-01-algebra-sequences-functions-geometry.html",
+    "paper": 1,
+    "question_number": 15,
+    "global_number": 15,
+    "original_question_sha256": "7f28d2a9875b19d05e72725f65609263cb085fb80f029472df750fc4cf22091c",
+    "topic": "Polynomials",
+    "construction": "equal_values_of_monic_cubic_factorisation",
+    "difficulty": 4,
+    "prompt_html": "<p>A monic cubic polynomial \\(P\\) satisfies \\(P(1)=P(3)=P(5)=7\\). Find \\(P(0)\\). (Monic means that the leading coefficient is \\(1\\).)</p>",
+    "solution_html": "<p>The monic cubic \\(P(x)-7\\) has the three roots \\(1,3,5\\). Therefore \\(P(x)-7=(x-1)(x-3)(x-5)\\).</p><p>At zero, \\(P(0)-7=(-1)(-3)(-5)=-15\\), so \\(P(0)=-8\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(-15\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(-22\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(22\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(-8\\)"
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT028",
+    "test_id": "p1-mock-01-algebra-sequences-functions-geometry",
+    "source_file": "public/practice-tests/tests/p1-mock-01-algebra-sequences-functions-geometry.html",
+    "paper": 1,
+    "question_number": 16,
+    "global_number": 16,
+    "original_question_sha256": "327c9c7bd87ec1ba5a9ca90ea5ea6c166f6bb6957404387a357c0b8b52efadde",
+    "topic": "Logarithms",
+    "construction": "reciprocal_exponent_roots_product",
+    "difficulty": 4,
+    "prompt_html": "<p>A real number \\(x&gt;0\\), \\(x\\ne1\\), satisfies \\(\\log_2x+\\log_x16=6\\). Find the product of the two possible values of \\(x\\).</p>",
+    "solution_html": "<p>Write \\(x=2^t\\), where \\(t\\ne0\\). The identity \\((2^t)^{4/t}=16\\) gives \\(\\log_x16=4/t\\) directly from the definition of a logarithm. Thus \\(t+4/t=6\\), or \\(t^2-6t+4=0\\).</p><p>The two roots \\(3\\pm\\sqrt5\\) are distinct and nonzero, so both give valid \\(x\\). Their sum is \\(6\\), hence the product of the corresponding \\(x\\) values is \\(2^{t_1+t_2}=2^6=64\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(32\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(128\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(256\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(64\\)"
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT029",
+    "test_id": "p1-mock-03-calculus",
+    "source_file": "public/practice-tests/tests/p1-mock-03-calculus.html",
+    "paper": 1,
+    "question_number": 11,
+    "global_number": 11,
+    "original_question_sha256": "ac6c4d6aad20ffa2a9f6e12ca925d95ed7b811d452465f9943450eb1cbd752ff",
+    "topic": "Calculus",
+    "construction": "tangent_cubic_bounded_area",
+    "difficulty": 5,
+    "prompt_html": "<p>The curve \\(y=(x+1)^3-2x\\) and its tangent at \\((0,1)\\) enclose a finite region. What is the area of that region?</p>",
+    "solution_html": "<p>The derivative is \\(3(x+1)^2-2\\), which equals \\(1\\) at zero. The tangent is therefore \\(y=x+1\\). Subtracting the line from the curve gives \\(x^3+3x^2=x^2(x+3)\\), so the intersections occur at \\(x=-3,0\\).</p><p>The curve lies above the line between these points. The area is \\(\\int_{-3}^0(x^3+3x^2)\\,dx=\\left[\\frac{x^4}{4}+x^3\\right]_{-3}^0=\\frac{27}{4}\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac{27}{4}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{27}{2}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac92\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac94\\)"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT030",
+    "test_id": "p1-mock-03-calculus",
+    "source_file": "public/practice-tests/tests/p1-mock-03-calculus.html",
+    "paper": 1,
+    "question_number": 12,
+    "global_number": 12,
+    "original_question_sha256": "7d2a6289eefc57af3096466fe514c9f486190db8cc7d9ceee415da5c8aa3b77e",
+    "topic": "Integration",
+    "construction": "absolute_area_piecewise_linear_with_zero_crossings",
+    "difficulty": 4,
+    "prompt_html": "<p>The graph of \\(f\\) consists of straight segments joining \\((0,4)\\) to \\((3,-2)\\) and then to \\((5,6)\\). Find \\(\\int_0^5|f(t)|\\,dt\\).</p>",
+    "solution_html": "<p>On the first segment, \\(f(t)=4-2t\\), so the zero occurs at \\(t=2\\). The two triangular areas have sizes \\(\\tfrac12(2)(4)=4\\) and \\(\\tfrac12(1)(2)=1\\).</p><p>On the second segment the slope is \\(4\\), so its zero is at \\(t=7/2\\). Its negative and positive triangular areas are \\(\\tfrac12(1/2)(2)=1/2\\) and \\(\\tfrac12(3/2)(6)=9/2\\). Adding all four positive areas gives \\(4+1+1/2+9/2=10\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(11\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(13\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(7\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT031",
+    "test_id": "p1-mock-05-all-topics",
+    "source_file": "public/practice-tests/tests/p1-mock-05-all-topics.html",
+    "paper": 1,
+    "question_number": 16,
+    "global_number": 16,
+    "original_question_sha256": "e42a675059aed9e376e3682c0ca30b08421a32fb5285272cba45f87f442ca83b",
+    "topic": "Binomial expansion",
+    "construction": "even_coefficient_sum_by_sign_filter",
+    "difficulty": 4,
+    "prompt_html": "<p>Write \\((2+x)^6=a_0+a_1x+\\cdots+a_6x^6\\). Find \\(a_0+a_2+a_4+a_6\\).</p>",
+    "solution_html": "<p>Evaluating the expansion at \\(x=1\\) gives the sum of all coefficients, \\(3^6=729\\). At \\(x=-1\\) it gives the even-coefficient sum minus the odd-coefficient sum, namely \\(1^6=1\\).</p><p>Adding these equations doubles the required sum. Thus \\(a_0+a_2+a_4+a_6=(729+1)/2=365\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(730\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(364\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(365\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(366\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(729\\)"
+      }
+    ],
+    "answer": "C",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT032",
+    "test_id": "tmua-2024-2025-challenging-mock",
+    "source_file": "public/practice-tests/tests/tmua-2024-2025-challenging-mock/index.html",
+    "paper": 1,
+    "question_number": 5,
+    "global_number": 5,
+    "original_question_sha256": "0511bea6ca06c59a0303b5fc8e44cf3df43cbe685ab8b7c0223603796590cd33",
+    "topic": "Coordinate geometry",
+    "construction": "two_circle_radii_from_two_points_and_tangent",
+    "difficulty": 5,
+    "prompt_html": "<p>A circle passes through \\((1,0)\\) and \\((5,0)\\) and is tangent to the line \\(y=x+3\\). What is the sum of all possible radii?</p>",
+    "solution_html": "<p>The centre lies on the perpendicular bisector of the two points, so write it as \\((3,k)\\). Its squared radius is \\(r^2=4+k^2\\). The squared distance from the centre to the line is \\((k-6)^2/2\\); this also follows by minimising \\((t-3)^2+(t+3-k)^2\\) over points \\((t,t+3)\\) on the line.</p><p>Tangency therefore requires \\((k-6)^2=2(4+k^2)\\), or \\(k^2+12k-28=(k-2)(k+14)=0\\). The centres have \\(k=2,-14\\), giving radii \\(2\\sqrt2,10\\sqrt2\\). Their sum is \\(12\\sqrt2\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(16\\sqrt2\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(10\\sqrt2\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(14\\sqrt2\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(8\\sqrt2\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(12\\sqrt2\\)"
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT033",
+    "test_id": "tmua-2026-predictive-paper",
+    "source_file": "public/practice-tests/tests/tmua-2026-predictive-paper/index.html",
+    "paper": 1,
+    "question_number": 15,
+    "global_number": 15,
+    "original_question_sha256": "01577a6314a64a59e42a84d1c9a1934dcd887dad54b881d4126c9f36bb84c52f",
+    "topic": "Calculus",
+    "construction": "parameter_for_balanced_cubic_extrema",
+    "difficulty": 5,
+    "prompt_html": "<p>For \\(a&gt;0\\), define \\(f_a(x)=x^3-3ax\\) on \\(0\\le x\\le2\\). Let \\(M\\) and \\(m\\) be its maximum and minimum values on this interval. Which value of \\(a\\) makes \\(M+m=0\\)?</p>",
+    "solution_html": "<p>The function is negative for sufficiently small positive \\(x\\), so \\(m&lt;0\\). Consequently \\(M+m=0\\) requires \\(M&gt;0\\). The derivative \\(3(x^2-a)\\) changes from negative to positive at its positive stationary point, so the maximum is at an endpoint. Since \\(f_a(0)=0\\), positivity of \\(M\\) requires \\(f_a(2)=8-6a&gt;0\\), hence \\(a&lt;4/3\\).</p><p>In that range \\(\\sqrt a\\) is inside the interval, giving \\(m=-2a^{3/2}\\) and \\(M=8-6a\\). Put \\(t=\\sqrt a&gt;0\\). The balancing equation becomes \\(t^3+3t^2-4=(t-1)(t+2)^2=0\\). Thus \\(t=1\\) and \\(a=1\\), which indeed gives \\(M=2,m=-2\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac43\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(1\\)"
+      }
+    ],
+    "answer": "E",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT034",
+    "test_id": "p1-mock-01-algebra-sequences-functions-geometry",
+    "source_file": "public/practice-tests/tests/p1-mock-01-algebra-sequences-functions-geometry.html",
+    "paper": 1,
+    "question_number": 14,
+    "global_number": 14,
+    "original_question_sha256": "0fe35786b6dff8e456a1f128d4b7503e6548c292a46b71a159a6fec40e603954",
+    "topic": "Sequences",
+    "construction": "second_order_recurrence_six_term_zero_sum_cycle",
+    "difficulty": 4,
+    "prompt_html": "<p>A sequence satisfies \\(u_1=2\\), \\(u_2=5\\) and \\(u_{n+2}=u_{n+1}-u_n\\) for \\(n\\ge1\\). Find \\(\\sum_{n=1}^{101}u_n\\).</p>",
+    "solution_html": "<p>The first eight terms are \\(2,5,3,-2,-5,-3,2,5\\). Since the initial ordered pair repeats, the recurrence repeats with period \\(6\\). Every block of six terms sums to zero.</p><p>There are \\(16\\) complete blocks in the first \\(96\\) terms. The remaining five sum to \\(2+5+3-2-5=3\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(7\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(0\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(-3\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(2\\)"
+      }
+    ],
+    "answer": "D",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  },
+  {
+    "id": "PT035",
+    "test_id": "p1-mock-01-algebra-sequences-functions-geometry",
+    "source_file": "public/practice-tests/tests/p1-mock-01-algebra-sequences-functions-geometry.html",
+    "paper": 1,
+    "question_number": 18,
+    "global_number": 18,
+    "original_question_sha256": "bbc2091f26234b7635ecedb7debe69d46d66cb3249aebd0600a69252adb93aef",
+    "topic": "Polynomials",
+    "construction": "positive_integer_roots_from_two_polynomial_values",
+    "difficulty": 4,
+    "prompt_html": "<p>A monic cubic polynomial \\(P\\) has three distinct positive integer roots. It satisfies \\(P(0)=-24\\) and \\(P(1)=-6\\). Find \\(P(5)\\).</p>",
+    "solution_html": "<p>Write the roots as \\(a&lt;b&lt;c\\). Since the polynomial is monic, \\(P(x)=(x-a)(x-b)(x-c)\\), and \\(abc=24\\). No root is \\(1\\) because \\(P(1)\\ne0\\). If \\(a\\ge3\\), the product is at least \\(3\\cdot4\\cdot5=60\\), impossible. Hence \\(a=2\\).</p><p>Now \\(bc=12\\) with \\(2&lt;b&lt;c\\), so \\(b=3,c=4\\). These roots also give \\(P(1)=(-1)(-2)(-3)=-6\\). Therefore \\(P(5)=(5-2)(5-3)(5-4)=6\\).</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(24\\)"
+      }
+    ],
+    "answer": "A",
+    "content_revision": "original-20261107",
+    "assets": [],
+    "authoring_note": "Newly authored problem and worked solution; no source image reused."
+  }
+]

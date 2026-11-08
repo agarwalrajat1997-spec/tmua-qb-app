@@ -2120,34 +2120,34 @@
     "difficulty": 3,
     "tags": [
       "counting with restrictions",
-      "three person precedence"
+      "precedence with ordered block"
     ],
-    "prompt_html": "<p>Six people are placed in a queue. A is ahead of B, and B is ahead of C. D, E and F have no restrictions. How many queues are possible?</p>",
+    "prompt_html": "<p>Six distinct people A, B, C, D, E and F are placed in a queue. A is ahead of B, B is ahead of C, and D stands immediately before E. How many queues are possible?</p>",
     "options": [
       {
         "label": "A",
-        "html": "\\(60\\)"
+        "html": "\\(12\\)"
       },
       {
         "label": "B",
-        "html": "\\(180\\)"
+        "html": "\\(24\\)"
       },
       {
         "label": "C",
-        "html": "\\(240\\)"
+        "html": "\\(40\\)"
       },
       {
         "label": "D",
-        "html": "\\(360\\)"
+        "html": "\\(60\\)"
       },
       {
         "label": "E",
-        "html": "\\(120\\)"
+        "html": "\\(20\\)"
       }
     ],
     "answer": "E",
-    "solution_html": "<p>For any chosen positions of A,B,C their relative order is forced. The other three people may be ordered freely. Thus \\(\\binom63\\,3!=120\\).</p>",
-    "family": "three_person_precedence",
+    "solution_html": "<p>Treat the ordered pair DE as one block. The five distinct objects A, B, C, DE and F have \\(5!\\) orders. For every set of positions occupied by A,B,C, exactly one of their \\(3!\\) relative orders is allowed. Thus \\(5!/3!=20\\).</p>",
+    "family": "precedence_with_ordered_block",
     "validation": {
       "method": "Exact enumeration and a complete counting argument",
       "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
@@ -2626,7 +2626,7 @@
       }
     ],
     "answer": "E",
-    "solution_html": "<p>If B has \\(n\\) observations, \\(96+18n=15.6(8+n)\\). Thus \\(2.4n=28.8\\), giving \\(n=12\\). Both group sizes are positive and the result lies between the two original means.</p>",
+    "solution_html": "<p>If B has \\(n\\) observations, \\(96+18n=15.6(8+n)\\). Thus \\(2.4n=28.8\\), giving \\(n=12\\). Both group sizes are positive, and the combined mean 15.6 lies between the original means 12 and 18.</p>",
     "family": "combine_mean_counts",
     "validation": {
       "method": "Exact enumeration and a complete counting argument",
@@ -3082,7 +3082,7 @@
       "implication between functions",
       "composition injectivity"
     ],
-    "prompt_html": "<p>Functions \\(g:A\\to B\\) and \\(f:B\\to C\\) have an injective composition \\(f\\circ g\\). Which conclusion must follow?</p>",
+    "prompt_html": "<p>Functions \\(g:A\\to B\\) and \\(f:B\\to C\\) have an injective composition \\(f\\circ g\\). Which conclusion must follow? (Injective means equal outputs require equal inputs; surjective means every element of the codomain is attained.)</p>",
     "options": [
       {
         "label": "A",
@@ -3394,7 +3394,7 @@
       }
     ],
     "answer": "A",
-    "solution_html": "<p>Factor the inequality as \\(x(x-1)&gt;0\\). The two factors have the same strict sign precisely when both are negative, giving x<0, or both are positive, giving x>1. The endpoints and the interval between them fail.</p>",
+    "solution_html": "<p>Factor the inequality as \\(x(x-1)&gt;0\\). The two factors have the same strict sign precisely when both are negative, giving \\(x&lt;0\\), or both are positive, giving \\(x&gt;1\\). The endpoints and the interval between them fail.</p>",
     "family": "interval_complement",
     "validation": {
       "method": "Complete logical proof and explicit counterexamples where needed",
@@ -3796,44 +3796,44 @@
     "app_number": 1739,
     "paper": 2,
     "topic": "11_Proofs",
-    "subtopic": "Contrapositive",
+    "subtopic": "Contrapositive with quantifiers",
     "difficulty": 3,
     "tags": [
-      "contrapositive",
-      "contrapositive divisibility"
+      "contrapositive with quantifiers",
+      "contrapositive root quantifier"
     ],
-    "prompt_html": "<p>What is the contrapositive of “If an integer is divisible by 12, then it is divisible by 4”?</p>",
+    "prompt_html": "<p>A polynomial P has real coefficients. Consider the claim: “If every real root of P is positive, then P has no negative integer root.” Which is its contrapositive?</p>",
     "options": [
       {
         "label": "A",
-        "html": "If an integer is divisible by 4, it is divisible by 12"
+        "html": "If P has no negative integer root, then every real root of P is positive."
       },
       {
         "label": "B",
-        "html": "If an integer is not divisible by 12, it is not divisible by 4"
+        "html": "If P has a nonpositive real root, then P has a negative integer root."
       },
       {
         "label": "C",
-        "html": "Every integer is divisible by 4 or 12"
+        "html": "If P has a positive real root, then P has no negative integer root."
       },
       {
         "label": "D",
-        "html": "No integer is divisible by both 4 and 12"
+        "html": "If P has no real roots, then it has a negative integer root."
       },
       {
         "label": "E",
-        "html": "If an integer is not divisible by 4, it is not divisible by 12"
+        "html": "If P has a negative integer root, then P has a real root that is not positive."
       }
     ],
     "answer": "E",
-    "solution_html": "<p>The contrapositive of P⇒Q is ¬Q⇒¬P. Here P is divisibility by 12 and Q is divisibility by 4. The converse and inverse are different statements and fail, for example, at 4.</p>",
-    "family": "contrapositive_divisibility",
+    "solution_html": "<p>Let A be “every real root is positive” and B be “there is no negative integer root”. The contrapositive of A⇒B is ¬B⇒¬A. Here ¬B asserts the existence of a negative integer root; ¬A asserts the existence of a real root that is not positive. Negating a universal statement changes it to an existence statement.</p>",
+    "family": "contrapositive_root_quantifier",
     "validation": {
       "method": "Complete logical proof and explicit counterexamples where needed",
       "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
     },
     "skills": [
-      "Contrapositive",
+      "Contrapositive with quantifiers",
       "Domain restrictions",
       "Verify the conclusion"
     ],
@@ -3994,7 +3994,7 @@
       "quantifiers and witnesses",
       "polynomial zero quantifiers"
     ],
-    "prompt_html": "<p>Which statement is true?</p>",
+    "prompt_html": "<p>Consider the following assertions about real numbers and squared differences. Which assertion is true?</p>",
     "options": [
       {
         "label": "A",
@@ -4450,7 +4450,7 @@
       }
     ],
     "answer": "C",
-    "solution_html": "<p>Rearrange as \\((n-6)(n+3)&lt;0\\). Since n≥0 makes n+3 positive, the inequality is equivalent to n<6. The greatest admissible integer is 5, and \\(25&lt;33\\) verifies it.</p>",
+    "solution_html": "<p>Rearrange as \\((n-6)(n+3)&lt;0\\). Since n≥0 makes n+3 positive, the inequality is equivalent to \\(n&lt;6\\). The greatest admissible integer is 5, and \\(25&lt;33\\) verifies it.</p>",
     "family": "least_integer_square_bound",
     "validation": {
       "method": "Complete logical proof and explicit counterexamples where needed",
