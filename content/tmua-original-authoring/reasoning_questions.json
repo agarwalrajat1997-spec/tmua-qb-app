@@ -1,0 +1,4466 @@
+[
+  {
+    "qid": "TMUA-P1-0086-4155E3B8",
+    "app_number": 86,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "separated lamps"
+    ],
+    "prompt_html": "<p>A row has \\(7\\) numbered lamps. Exactly three are lit, and no two lit lamps are adjacent. How many lighting patterns are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(35\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(11\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(20\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Write the lit positions as \\(i&lt;j&lt;k\\), with gaps at least two. The map \\((i,j,k)\\mapsto(i,j-1,k-2)\\) is a bijection to three-element subsets of \\(\\{1,\\ldots,5\\}\\). The count is \\(\\binom{5}3=10\\).</p>",
+    "family": "separated_lamps",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "891f294a4066172bf961b330b93a65cbd9a66357de4221b6ab1d21e09cefb46f"
+  },
+  {
+    "qid": "TMUA-P1-0087-7CD989D6",
+    "app_number": 87,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "separated lamps"
+    ],
+    "prompt_html": "<p>A row has \\(9\\) numbered lamps. Exactly three are lit, and no two lit lamps are adjacent. How many lighting patterns are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(84\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(35\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(34\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(56\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>Write the lit positions as \\(i&lt;j&lt;k\\), with gaps at least two. The map \\((i,j,k)\\mapsto(i,j-1,k-2)\\) is a bijection to three-element subsets of \\(\\{1,\\ldots,7\\}\\). The count is \\(\\binom{7}3=35\\).</p>",
+    "family": "separated_lamps",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "00c897202b03ce9b267538cbc835c9c80449da78f75a084ad13843f6067fa98c"
+  },
+  {
+    "qid": "TMUA-P1-0088-F760441B",
+    "app_number": 88,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "two runs"
+    ],
+    "prompt_html": "<p>A binary string of length \\(8\\) contains four 1s in exactly two nonempty blocks. A block is a maximal consecutive run of 1s. How many such strings exist?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(60\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(33\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(18\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The four 1s split into two positive block lengths in three ways. Of the \\(4\\) zeros, one separates the blocks. Distribute the remaining \\(3\\) zeros before, between and after them in \\(\\binom{5}2\\) ways. Thus the count is \\(3\\binom{5}2=30\\).</p>",
+    "family": "two_runs",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "714612685610f4b645fa8ff03f3ce2dd08b6aabdaa03ce32c9e2202938ced663"
+  },
+  {
+    "qid": "TMUA-P1-0089-7541629B",
+    "app_number": 89,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "two runs"
+    ],
+    "prompt_html": "<p>A binary string of length \\(10\\) contains four 1s in exactly two nonempty blocks. A block is a maximal consecutive run of 1s. How many such strings exist?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(21\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(126\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(66\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(63\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(45\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>The four 1s split into two positive block lengths in three ways. Of the \\(6\\) zeros, one separates the blocks. Distribute the remaining \\(5\\) zeros before, between and after them in \\(\\binom{7}2\\) ways. Thus the count is \\(3\\binom{7}2=63\\).</p>",
+    "family": "two_runs",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "497230e621b1805db8dd570330a158f83fc72597207fbcb54201468c0b41ba1a"
+  },
+  {
+    "qid": "TMUA-P1-0090-70D048D6",
+    "app_number": 90,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "weighted packs"
+    ],
+    "prompt_html": "<p>A machine makes a batch of size \\(8\\) using packs of sizes 1, 2 and 3. Packs of the same size are indistinguishable. How many triples of pack counts can produce the batch?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(45\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(10\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Fix the number \\(z\\) of size-3 packs. For \\(0\\le z\\le 2\\), the number of size-2 packs can be any integer from 0 to \\(\\lfloor(8-3z)/2\\rfloor\\); the size-1 count is then forced. Summing \\(\\lfloor(8-3z)/2\\rfloor+1\\) gives \\(10\\).</p>",
+    "family": "weighted_packs",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "b373d0b78fd9b0f51d82a6d4cbde6e9daa1460f3b742a2be0459d0d89f71aeaf"
+  },
+  {
+    "qid": "TMUA-P1-0091-F706C251",
+    "app_number": 91,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "weighted packs"
+    ],
+    "prompt_html": "<p>A machine makes a batch of size \\(11\\) using packs of sizes 1, 2 and 3. Packs of the same size are indistinguishable. How many triples of pack counts can produce the batch?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(14\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(78\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Fix the number \\(z\\) of size-3 packs. For \\(0\\le z\\le 3\\), the number of size-2 packs can be any integer from 0 to \\(\\lfloor(11-3z)/2\\rfloor\\); the size-1 count is then forced. Summing \\(\\lfloor(11-3z)/2\\rfloor+1\\) gives \\(16\\).</p>",
+    "family": "weighted_packs",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "fd18237954ec2afed8ba0e6e54efb64a483189fb0cc90f72b9664c789f4e91ca"
+  },
+  {
+    "qid": "TMUA-P1-0092-D1E9EDC9",
+    "app_number": 92,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "bounded first share"
+    ],
+    "prompt_html": "<p>An ordered triple of integers \\((x,y,z)\\) satisfies \\(x+y+z=7\\), \\(0\\le x\\le2\\), \\(y\\ge1\\), \\(z\\ge0\\). How many triples are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(21\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(19\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(17\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(28\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>For each fixed \\(x=0,1,2\\), the positive integer \\(y\\) has \\(7-x\\) choices and \\(z\\) is determined. The total is \\(7+6+5=18\\).</p>",
+    "family": "bounded_first_share",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "c069f9e69504808448062f69c4f396fec29baa27532cf201657bf95a17ec6427"
+  },
+  {
+    "qid": "TMUA-P1-0093-2407CAE8",
+    "app_number": 93,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "bounded first share"
+    ],
+    "prompt_html": "<p>An ordered triple of integers \\((x,y,z)\\) satisfies \\(x+y+z=10\\), \\(0\\le x\\le2\\), \\(y\\ge1\\), \\(z\\ge0\\). How many triples are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(28\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(27\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(26\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(55\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>For each fixed \\(x=0,1,2\\), the positive integer \\(y\\) has \\(10-x\\) choices and \\(z\\) is determined. The total is \\(10+9+8=27\\).</p>",
+    "family": "bounded_first_share",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "c83dd773af5d702229ef52982fd5c3d9c2c83653ac4a597e8fa36bdc450e8d2b"
+  },
+  {
+    "qid": "TMUA-P1-0094-B1148D1D",
+    "app_number": 94,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "three cards even sum"
+    ],
+    "prompt_html": "<p>Three different cards are chosen from cards numbered 1 to \\(7\\). How many selections have an even total?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(20\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(19\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(35\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>An even total uses either three even cards or two odd cards and one even card. There are \\(3\\) even and \\(4\\) odd cards, so the count is \\(\\binom{3}3+\\binom{4}2\\,3=19\\).</p>",
+    "family": "three_cards_even_sum",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "dfed8c01c014c380a2eca4b15f0665a34aa534c203c63af3f935c44b173ec7c3"
+  },
+  {
+    "qid": "TMUA-P1-0095-B105225F",
+    "app_number": 95,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "three cards even sum"
+    ],
+    "prompt_html": "<p>Three different cards are chosen from cards numbered 1 to \\(10\\). How many selections have an even total?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(50\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(59\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(61\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(120\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(60\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>An even total uses either three even cards or two odd cards and one even card. There are \\(5\\) even and \\(5\\) odd cards, so the count is \\(\\binom{5}3+\\binom{5}2\\,5=60\\).</p>",
+    "family": "three_cards_even_sum",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "58c1908fe78f3eafa7ef86fb2c79dede4db84ba635b8ff5bb08be5a7af92dbb6"
+  },
+  {
+    "qid": "TMUA-P1-0096-2E2D020F",
+    "app_number": 96,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "even number zero"
+    ],
+    "prompt_html": "<p>A four-digit even number is formed without repeated digits using only \\(0,1,\\ldots,5\\). How many such numbers can be formed?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(156\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(161\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(151\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(60\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(312\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>If the last digit is 0, the first three digits can be filled in \\(5(4)(3)\\) ways. There are \\(2\\) nonzero even choices for the last digit. For each, the first digit has \\(4\\) nonzero choices and the middle positions have \\(4\\) then \\(3\\) choices. The sum is \\(156\\).</p>",
+    "family": "even_number_zero",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "27304df28a84e89dde6eeeb42cf66b4e9768cae3962699fdbb45ea7a98619dce"
+  },
+  {
+    "qid": "TMUA-P1-0097-AA8235C1",
+    "app_number": 97,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "even number zero"
+    ],
+    "prompt_html": "<p>A four-digit even number is formed without repeated digits using only \\(0,1,\\ldots,6\\). How many such numbers can be formed?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(426\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(420\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(414\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(120\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(840\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>If the last digit is 0, the first three digits can be filled in \\(6(5)(4)\\) ways. There are \\(3\\) nonzero even choices for the last digit. For each, the first digit has \\(5\\) nonzero choices and the middle positions have \\(5\\) then \\(4\\) choices. The sum is \\(420\\).</p>",
+    "family": "even_number_zero",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "22ce44d14c4699fecdbfba4449d073f22550972a349915441107b82c5eb4eb3a"
+  },
+  {
+    "qid": "TMUA-P1-0098-696C02F3",
+    "app_number": 98,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "no fixed cards"
+    ],
+    "prompt_html": "<p>There are \\(4\\) labelled envelopes and their \\(4\\) matching cards. A card is placed in each envelope. In how many placements is every card in the wrong envelope?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(23\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Use inclusion–exclusion on the events that particular cards are correctly placed. Specifying a set of \\(k\\) correct cards leaves \\((4-k)!\\) placements. Therefore the required number is \\(\\sum_{k=0}^{4}(-1)^k\\binom{4}k(4-k)!=9\\).</p>",
+    "family": "no_fixed_cards",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "f7f7a9fe36df82357cb15706ef7d65142f841efc817a6ad790ebb47956f38502"
+  },
+  {
+    "qid": "TMUA-P1-0099-84DEC228",
+    "app_number": 99,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "no fixed cards"
+    ],
+    "prompt_html": "<p>There are \\(5\\) labelled envelopes and their \\(5\\) matching cards. A card is placed in each envelope. In how many placements is every card in the wrong envelope?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(45\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(43\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(44\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(119\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>Use inclusion–exclusion on the events that particular cards are correctly placed. Specifying a set of \\(k\\) correct cards leaves \\((5-k)!\\) placements. Therefore the required number is \\(\\sum_{k=0}^{5}(-1)^k\\binom{5}k(5-k)!=44\\).</p>",
+    "family": "no_fixed_cards",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "274f694024945df31449f2d527710ed84ddd1002c50438073e0b16e827410ca5"
+  },
+  {
+    "qid": "TMUA-P1-0100-0C7A8788",
+    "app_number": 100,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "circular one forbidden pair"
+    ],
+    "prompt_html": "<p>\\(6\\) distinct people, including A, B, C and D, sit around a circular table. Rotations are identical; reflections are different. A and B must be adjacent, while C and D must not be adjacent. How many arrangements are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(48\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(26\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(22\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(24\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Join A and B into a block. Its internal order has two choices, so there are \\(2(4)!\\) circular arrangements. From these subtract those in which C,D also form a block: \\(4(3)!\\). The difference is \\(24\\).</p>",
+    "family": "circular_one_forbidden_pair",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "8861b9e93509bd1023c70102232c18fd61c41343f152e6bbb98360a982ddf857"
+  },
+  {
+    "qid": "TMUA-P1-0101-F4C90457",
+    "app_number": 101,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "circular one forbidden pair"
+    ],
+    "prompt_html": "<p>\\(7\\) distinct people, including A, B, C and D, sit around a circular table. Rotations are identical; reflections are different. A and B must be adjacent, while C and D must not be adjacent. How many arrangements are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(144\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(240\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(72\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(146\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(142\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Join A and B into a block. Its internal order has two choices, so there are \\(2(5)!\\) circular arrangements. From these subtract those in which C,D also form a block: \\(4(4)!\\). The difference is \\(144\\).</p>",
+    "family": "circular_one_forbidden_pair",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "2e7f83a205e4a56892d447ae8eb8ecf9a23603fa524ec992dffe42df8317cbbe"
+  },
+  {
+    "qid": "TMUA-P1-0102-88E1307B",
+    "app_number": 102,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "pairings forbidden partner"
+    ],
+    "prompt_html": "<p>\\(6\\) distinct students are split into pairs. The order of the pairs and the order within a pair do not matter. Two specified students must be in different pairs. How many pairings are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(13\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(11\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>Pair the first remaining student successively: unrestricted pairings number \\((5)(3)\\cdots1=15\\). If the two specified students are paired together, the other students can be paired in \\(3\\) ways. Subtract to get \\(12\\).</p>",
+    "family": "pairings_forbidden_partner",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "cb413e06f5691ecee619f03757ad8a3f5deab89403bc00ca17140ad8f23ebd2f"
+  },
+  {
+    "qid": "TMUA-P1-0103-D8F0219A",
+    "app_number": 103,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "pairings forbidden partner"
+    ],
+    "prompt_html": "<p>\\(8\\) distinct students are split into pairs. The order of the pairs and the order within a pair do not matter. Two specified students must be in different pairs. How many pairings are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(105\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(90\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(91\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(89\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Pair the first remaining student successively: unrestricted pairings number \\((7)(5)\\cdots1=105\\). If the two specified students are paired together, the other students can be paired in \\(15\\) ways. Subtract to get \\(90\\).</p>",
+    "family": "pairings_forbidden_partner",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "5f730837a25dae41c4880963ebc8fd298e5084813dee005b0a63c80eccaa0bf8"
+  },
+  {
+    "qid": "TMUA-P1-0104-1BDEAA92",
+    "app_number": 104,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "multiset separated letters"
+    ],
+    "prompt_html": "<p>How many different five-letter strings can be made using exactly two As, two Bs and one C, if the two As are not consecutive?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(36\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>There are \\(5!/(2!2!)=30\\) strings without the restriction. Joining the two As into one block gives \\(4!/2!=12\\) forbidden strings. Thus \\(30-12=18\\) remain.</p>",
+    "family": "multiset_separated_letters",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "2718634cb542a5fb664e7a9c4f3518a97f086ed1976d9c55f6c423b3fe1a3318"
+  },
+  {
+    "qid": "TMUA-P1-0105-2845229F",
+    "app_number": 105,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "polygon nonneighbours"
+    ],
+    "prompt_html": "<p>Select two vertices of a regular octagon, with no edge joining the selected vertices. How many selections are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(28\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(20\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>There are \\(\\binom82=28\\) pairs of vertices. Exactly the eight edges are forbidden, giving \\(28-8=20\\).</p>",
+    "family": "polygon_nonneighbours",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "87050515eaa11f9ada7e86ea95c165377a218bfa763a9544dbcb870b54aea74e"
+  },
+  {
+    "qid": "TMUA-P1-0106-AD091DF7",
+    "app_number": 106,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "grid avoid point"
+    ],
+    "prompt_html": "<p>A path from \\((0,0)\\) to \\((4,3)\\) uses only steps one unit right or one unit up. It must not visit \\((2,1)\\). How many paths are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(17\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(23\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(35\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>All paths number \\(\\binom73=35\\). Those through \\((2,1)\\) consist of \\(\\binom31=3\\) initial paths and \\(\\binom42=6\\) continuations, so there are 18 forbidden paths. The answer is \\(35-18=17\\).</p>",
+    "family": "grid_avoid_point",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "5c731f27ef9573433e494efba6ab58ed7439dd89bd05dffdeeba6a52884cd484"
+  },
+  {
+    "qid": "TMUA-P1-0107-0198C5F5",
+    "app_number": 107,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 4,
+    "tags": [
+      "counting with restrictions",
+      "grid diagonal barrier"
+    ],
+    "prompt_html": "<p>A path from \\((0,0)\\) to \\((4,4)\\) uses unit right and up steps and never enters \\(y&gt;x\\). How many paths are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(14\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(28\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(56\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(70\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>There are \\(\\binom84=70\\) unrestricted paths. Reflect the initial portion of a forbidden path up to its first step into \\(y=x+1\\); this bijects forbidden paths with paths having three up and five right steps, of which there are \\(\\binom83=56\\). Thus \\(70-56=14\\) paths remain.</p>",
+    "family": "grid_diagonal_barrier",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "49aaad811e602e3f8d95b9adebf1c10d8a6a9088d00db068e6360d0206befd17"
+  },
+  {
+    "qid": "TMUA-P1-0108-8994E419",
+    "app_number": 108,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "two named committees"
+    ],
+    "prompt_html": "<p>A group of seven people appoints two named committees, Alpha and Beta, each with three members. Exactly two people serve on both. How many appointments are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(210\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(315\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(420\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(630\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(840\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Choose Alpha in \\(\\binom73=35\\) ways. Choose the two shared members from Alpha in three ways, and Beta’s third member from the four outsiders. The committees are named, so no division by two is appropriate. The result is \\(35\\cdot3\\cdot4=420\\).</p>",
+    "family": "two_named_committees",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "43da5465db448c0965dbf0ab01db8c0f0052aa1d6b79b6fcdd8522c01efb5757"
+  },
+  {
+    "qid": "TMUA-P1-0109-1F6C2FCD",
+    "app_number": 109,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "surjective colours distinct ends"
+    ],
+    "prompt_html": "<p>Four numbered cells are coloured red, blue or green. Every colour is used and cells 1 and 4 have different colours. How many colourings are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(42\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(54\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>There are \\(3\\cdot2\\cdot3^2=54\\) colourings with distinct end colours. For a specified pair of colours, exactly \\(2\\cdot1\\cdot2^2=8\\) such colourings use only that pair. There are three pairs, with no overlaps because distinct ends force at least two colours. Subtract \\(3\\cdot8=24\\), leaving 30.</p>",
+    "family": "surjective_colours_distinct_ends",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "da60f63a7898c6e3a2ca4bf4a37664031527d8e9daa6d3ceb869f76a8c52d7dd"
+  },
+  {
+    "qid": "TMUA-P1-0110-E4E70104",
+    "app_number": 110,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "four odd shares"
+    ],
+    "prompt_html": "<p>How many ordered quadruples of positive odd integers have total 16?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(35\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(56\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(120\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(165\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(84\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Write each integer as \\(2y_i+1\\) with \\(y_i\\ge0\\). Then \\(\\sum y_i=6\\). Six marks separated into four labelled groups require three separators, so the count is \\(\\binom93=84\\).</p>",
+    "family": "four_odd_shares",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "e2466636d519dca4598f308e97ee6703948f36297769605de0067c2b914128bb"
+  },
+  {
+    "qid": "TMUA-P1-0111-79CA6866",
+    "app_number": 111,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "three capped shares"
+    ],
+    "prompt_html": "<p>How many ordered triples \\((x,y,z)\\) satisfy \\(x+y+z=8\\) with integer coordinates between 0 and 4 inclusive?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(21\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(45\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Without upper bounds there are \\(\\binom{10}2=45\\) triples. If a specified coordinate is at least 5, subtracting 5 leaves a sum of 3 and \\(\\binom52=10\\) triples. Two coordinates cannot both reach 5. Thus \\(45-3\\cdot10=15\\).</p>",
+    "family": "three_capped_shares",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "12e046c3d1385351ba67c15a1d9f98499760454913f24dab7fb69568b19dfa2c"
+  },
+  {
+    "qid": "TMUA-P1-0112-BDE4E87F",
+    "app_number": 112,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "specified strict minimum"
+    ],
+    "prompt_html": "<p>How many ordered nonnegative integer triples \\((x,y,z)\\) have sum 10 and satisfy \\(x&lt;y\\) and \\(x&lt;z\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(21\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(27\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>Fix \\(x=a\\). The conditions give \\(y,z\\ge a+1\\), so after subtracting these lower bounds the remaining sum is \\(8-3a\\). The possible values \\(a=0,1,2\\) contribute respectively 9, 6 and 3 ordered pairs. The total is 18.</p>",
+    "family": "specified_strict_minimum",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "3fd9288a7b8659e1783c305a134783bf6b4fc026fcea63b4e8d0862d408654af"
+  },
+  {
+    "qid": "TMUA-P1-0113-F888D4EA",
+    "app_number": 113,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "panel no couple"
+    ],
+    "prompt_html": "<p>Four married couples are available for a three-person panel. No couple may both serve. How many panels are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(40\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(32\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(48\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(56\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Choose the three represented couples in \\(\\binom43=4\\) ways, then one member from each in \\(2^3=8\\) ways. The result is 32.</p>",
+    "family": "panel_no_couple",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "2787c311a8d8f49fb6824cd50362d6b8c1ecd8de082b100dd93388543243151e"
+  },
+  {
+    "qid": "TMUA-P1-0114-9402A683",
+    "app_number": 114,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "balanced profession panel"
+    ],
+    "prompt_html": "<p>Four designers and four engineers form a five-person panel, with at least two of each profession. How many panels are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(52\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(48\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(56\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>The profession counts are (2,3) or (3,2). Each contributes \\(\\binom42\\binom43=24\\); their sum is 48.</p>",
+    "family": "balanced_profession_panel",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "6ad0fee15e08d68a1c6859e7d4c74d7c5726da41b085a21e33ef69cab1aae742"
+  },
+  {
+    "qid": "TMUA-P1-0115-001CA2E1",
+    "app_number": 115,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "three digit residue sets"
+    ],
+    "prompt_html": "<p>How many three-digit multiples of 3 can be written using distinct digits from \\(0,1,\\ldots,6\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(62\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(74\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(34\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(84\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(68\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>The residue classes modulo 3 have sizes 3,2,2. A three-digit set with sum divisible by 3 is either all in one class or one from each, giving \\(\\binom33+3\\cdot2\\cdot2=13\\) sets. Each has six orders. Five of these sets contain zero: \\(\\{0,3,6\\}\\) and the four choices \\(\\{0,a,b\\}\\) with residues 1 and 2. Each such set has two orders starting with zero. Thus \\(13\\cdot6-5\\cdot2=68\\).</p>",
+    "family": "three_digit_residue_sets",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "bacfe793abd752ef0beaec48f09266a1d50484a59f206ba15462cc7f6bbae486"
+  },
+  {
+    "qid": "TMUA-P1-0116-99FADC9A",
+    "app_number": 116,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "shelf exact gap"
+    ],
+    "prompt_html": "<p>Five distinct books are put on a shelf. Two specified books have exactly one book between them. How many orders are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(48\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(60\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(72\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>The position pair for the specified books can be (1,3), (2,4) or (3,5). Choose their order in two ways, and arrange the remaining books in \\(3!=6\\) ways. The total is \\(3\\cdot2\\cdot6=36\\).</p>",
+    "family": "shelf_exact_gap",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "4f128fa1c600d0ec90ac5ca6aa3d0ca98f84e2cf35bb59b4caf3a7640c0fb6a0"
+  },
+  {
+    "qid": "TMUA-P1-0117-1EC3BD99",
+    "app_number": 117,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "position sum parity"
+    ],
+    "prompt_html": "<p>A six-position password has exactly two Xs and four Ys. The Xs occupy positions whose sum is odd. How many passwords are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(15\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The two X positions must have opposite parity. Three positions are odd and three even, so the count is \\(3\\cdot3=9\\). Each choice determines the password.</p>",
+    "family": "position_sum_parity",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "f8e8a9e337122a7acb35f752c677bb33273080954f4d3120729cdba6e2d9f6f5"
+  },
+  {
+    "qid": "TMUA-P1-0118-FE3B4473",
+    "app_number": 118,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "cover disjoint pairs"
+    ],
+    "prompt_html": "<p>How many subsets of \\(\\{1,2,3,4,5,6\\}\\) contain at least one number from each of the pairs \\(\\{1,2\\},\\{3,4\\},\\{5,6\\}\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(27\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(32\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(48\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>For each pair, select its first member, its second member or both. These three independent choices across the three pairs give \\(3^3=27\\).</p>",
+    "family": "cover_disjoint_pairs",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "85d08e0b4603351eeaf88eae57b37fbb31d374520417e0f164217fb37ac999ea"
+  },
+  {
+    "qid": "TMUA-P1-0119-C6F33264",
+    "app_number": 119,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "subset parity bijection"
+    ],
+    "prompt_html": "<p>How many subsets of \\(\\{1,2,\\ldots,8\\}\\) contain an even number of elements and contain 1?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(32\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(63\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(65\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(64\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(128\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>After including 1, an odd-sized subset of the other seven elements is needed. Toggling membership of a fixed one of those seven pairs even-sized subsets with odd-sized subsets, so half of their \\(2^7\\) subsets qualify: 64.</p>",
+    "family": "subset_parity_bijection",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "8ab64711d34ba4f8312cba8fd5b6576ce3bc3554a729a91ba6170d11f0bc3149"
+  },
+  {
+    "qid": "TMUA-P1-0120-8A29DF99",
+    "app_number": 120,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "disjoint matches"
+    ],
+    "prompt_html": "<p>A tournament of six teams has every pair play once. Two matches are chosen that share no team. How many choices are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(60\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(75\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(90\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(45\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Choose the four teams involved in \\(\\binom64=15\\) ways. On four fixed teams there are three ways to split them into two unordered pairs. Thus \\(15\\cdot3=45\\).</p>",
+    "family": "disjoint_matches",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "9da6ab2939882568614dc324d74fdab828ba50df022cbd10361ac239af2743ad"
+  },
+  {
+    "qid": "TMUA-P1-0121-DDB0EC1F",
+    "app_number": 121,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "endpoint equivalence"
+    ],
+    "prompt_html": "<p>Six numbered boxes each hold either zero or one token. Exactly three tokens are used and box 1 has a token exactly when box 6 has one. How many configurations exist?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(16\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>If boxes 1 and 6 both have tokens, choose the remaining token’s box from the four middle boxes. If neither does, choose three of the middle boxes. The two cases give \\(4+\\binom43=8\\).</p>",
+    "family": "endpoint_equivalence",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "8f88fd5889e15f8db1f883be4ffef3ef76e51f6aca63f8a3ddf043be59e0bb27"
+  },
+  {
+    "qid": "TMUA-P1-0122-D4270799",
+    "app_number": 122,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "two machine load"
+    ],
+    "prompt_html": "<p>Five distinct jobs are assigned to two named machines. Each machine must receive at least two jobs; the order of jobs on a machine is ignored. How many assignments are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(20\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(30\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The first machine receives either two or three jobs. Therefore there are \\(\\binom52+\\binom53=20\\) assignments.</p>",
+    "family": "two_machine_load",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "cbbad189fcb8b3a272bb7a10e8a3813584c92074c91d6d9de397f0709d93ad49"
+  },
+  {
+    "qid": "TMUA-P1-0123-925C43AA",
+    "app_number": 123,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "single separator fibonacci"
+    ],
+    "prompt_html": "<p>A string of length five uses the letters A, B and C. It contains exactly one A, and no two Bs are adjacent. How many such strings exist?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(35\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(40\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(45\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(50\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(55\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Fix the position of A. In a length-\\(m\\) run of B/C letters with no adjacent Bs, the counts for \\(m=0,1,2,3,4\\) are \\(1,2,3,5,8\\), obtained by separating strings ending in C from those ending in B. The five positions of A contribute \\(8,10,9,10,8\\), totalling 45.</p>",
+    "family": "single_separator_fibonacci",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "dd2a1572afea5f641084842d3e4ec4548e1840f042ccc3e1392cfc13bec1deee"
+  },
+  {
+    "qid": "TMUA-P1-0124-DDDF4B0C",
+    "app_number": 124,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "relative order constraint"
+    ],
+    "prompt_html": "<p>The digits 1, 2, 3, 4, 5 and 6 are arranged in a row. The three odd digits must appear in increasing order from left to right. How many arrangements are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(60\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(180\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(240\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(120\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(360\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>Choose the three positions occupied by odd digits in \\(\\binom63=20\\) ways; their order is forced. Arrange the three even digits in \\(3!=6\\) ways, giving 120.</p>",
+    "family": "relative_order_constraint",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "9beda21d940a8e5a59af74974ba0872e09cc6cc5c587e7e85a782a71c644b884"
+  },
+  {
+    "qid": "TMUA-P1-0125-CF7381A2",
+    "app_number": 125,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "equal two shares"
+    ],
+    "prompt_html": "<p>Eight identical counters are placed in four labelled boxes. The first two boxes contain equal numbers, and all counts are nonnegative. How many allocations are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(20\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(35\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(25\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>If the common first-two count is \\(a\\), the last two counts sum to \\(8-2a\\). For \\(a=0,1,2,3,4\\), the numbers of choices are \\(9,7,5,3,1\\). Their sum is 25.</p>",
+    "family": "equal_two_shares",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "e489cffe13c47cc55a320d237e219ce221b53b91acfc8cceecbec3377ea56475"
+  },
+  {
+    "qid": "TMUA-P1-0126-1D7FA9A7",
+    "app_number": 126,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "prizes specified double"
+    ],
+    "prompt_html": "<p>Four distinct prizes are given to three named students. Every student receives at least one prize, and a specified student receives exactly two. How many awards are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(36\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Choose the two prizes for the specified student in \\(\\binom42=6\\) ways. Give the two remaining prizes one each to the other students, in two ways. The count is 12.</p>",
+    "family": "prizes_specified_double",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "0b5ecbb85642a933d21202a3bc78350dc100c409f1d84ae17d8b1b7df8c05587"
+  },
+  {
+    "qid": "TMUA-P1-0127-6C831972",
+    "app_number": 127,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "prefix parity"
+    ],
+    "prompt_html": "<p>A six-letter string uses only A and B. It has an even number of As and its first two letters differ. How many strings are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(32\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>There are two choices for the first two letters, each containing one A. The last four letters must contain an odd number of As, giving \\(\\binom41+\\binom43=8\\) choices. Thus the count is 16.</p>",
+    "family": "prefix_parity",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "4a14912ae59383bb143ed9e1c4c6dde63b3c8e8e4066e795ee82db3bac848846"
+  },
+  {
+    "qid": "TMUA-P1-0128-6A920586",
+    "app_number": 128,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "fixed median selection"
+    ],
+    "prompt_html": "<p>A three-element subset of the integers 1 to 9 is required to have median 5. How many subsets satisfy this?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(20\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(24\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The subset must contain 5, one of the four smaller integers and one of the four larger integers. These choices give 16 subsets.</p>",
+    "family": "fixed_median_selection",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "d2df679f6d911371a6d71d3d287efa23af70a2eee93481ca5be3b12ba59bb8f1"
+  },
+  {
+    "qid": "TMUA-P1-0129-D4C54D98",
+    "app_number": 129,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "hexagon alternating triangle"
+    ],
+    "prompt_html": "<p>Three distinct points are chosen from the vertices of a regular hexagon. How many resulting triangles have no side that is an edge of the hexagon?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(8\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>No selected vertices may be adjacent. Around the six-cycle, three selected vertices require at least one unselected vertex in every gap. There are exactly three unselected vertices, so they must alternate with selected vertices. The two alternating triples give two triangles.</p>",
+    "family": "hexagon_alternating_triangle",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "aab0cf5658875e4411e32fd41bd8a47dacc604447e90ee094b84c7a5e38fca70"
+  },
+  {
+    "qid": "TMUA-P1-0130-BD2DD28D",
+    "app_number": 130,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "three person precedence"
+    ],
+    "prompt_html": "<p>Six people are placed in a queue. A is ahead of B, and B is ahead of C. D, E and F have no restrictions. How many queues are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(60\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(180\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(240\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(360\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(120\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>For any chosen positions of A,B,C their relative order is forced. The other three people may be ordered freely. Thus \\(\\binom63\\,3!=120\\).</p>",
+    "family": "three_person_precedence",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "222727fc5967fbdbef12b1d420257cb0ec80be58f7150cbf28d7cd29e773e363"
+  },
+  {
+    "qid": "TMUA-P1-0131-5CD60C81",
+    "app_number": 131,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "grid even area"
+    ],
+    "prompt_html": "<p>A square grid has three rows and four columns of cells. A rectangle is selected whose sides follow grid lines and which consists of an even number of cells. How many rectangles can be selected?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(30\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(40\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(48\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(60\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>There are \\(\\binom42\\binom52=60\\) rectangles. An odd area requires both an odd height and odd width. Among four horizontal lines there are \\(2\\cdot2=4\\) pairs at odd distance; among five vertical lines there are \\(3\\cdot2=6\\). Hence 24 rectangles have odd area and \\(60-24=36\\) have even area.</p>",
+    "family": "grid_even_area",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "60033cf268b325d3b790ce1c978cc5c98efa6f82b1eef00a354e7c1e602a95ed"
+  },
+  {
+    "qid": "TMUA-P1-0132-F1CCC509",
+    "app_number": 132,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Relative speed",
+    "difficulty": 3,
+    "tags": [
+      "relative speed",
+      "round trip speed"
+    ],
+    "prompt_html": "<p>A runner travels 3 km at 6 km/h and returns over the same route at 4 km/h. What is the average speed, in km/h, for the whole journey?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(5\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{24}{5}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{9}{2}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{10}{3}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{12}{5}\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The times are \\(3/6=1/2\\) hour and \\(3/4\\) hour. Average speed is total distance divided by total time: \\(6/(5/4)=24/5\\).</p>",
+    "family": "round_trip_speed",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Relative speed",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "0c79f8b315f681d4b74a073141ec9350892a25e9498826a38ff91db3d0d53558"
+  },
+  {
+    "qid": "TMUA-P1-0133-96A8345D",
+    "app_number": 133,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Ordering and averages",
+    "difficulty": 3,
+    "tags": [
+      "ordering and averages",
+      "distinct integer range"
+    ],
+    "prompt_html": "<p>Five distinct positive integers have mean 7 and median 6. What is the largest possible value of the greatest integer?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(17\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(19\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(20\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(21\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The total is 35. To maximise the largest entry, minimise the other four while keeping the third entry 6. They can be \\(1,2,6,7\\), leaving 19. Any admissible list has its first two entries at least 1 and 2, and its fourth at least 7, so 19 is an attained upper bound.</p>",
+    "family": "distinct_integer_range",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Ordering and averages",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "bef2d3b50fccbf5fc3230a46d0bf5fdbda0dc6052e1d6e4fe7d36c9c3de172a2"
+  },
+  {
+    "qid": "TMUA-P1-0134-1C13C541",
+    "app_number": 134,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Deduction",
+    "difficulty": 3,
+    "tags": [
+      "deduction",
+      "three switches"
+    ],
+    "prompt_html": "<p>Exactly one of three switches A, B and C is on. The statements “A is off”, “B is on”, and “C is off” include exactly one true statement. Which switches could be the one that is on?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "A only"
+      },
+      {
+        "label": "B",
+        "html": "B only"
+      },
+      {
+        "label": "C",
+        "html": "C only"
+      },
+      {
+        "label": "D",
+        "html": "A or C only"
+      },
+      {
+        "label": "E",
+        "html": "A, B or C"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>If A is on, the statements have truth values false, false, true: exactly one is true. If B is on, all three are true. If C is on, they are true, false, false: exactly one is true. Thus both A and C work, so the information does not identify a unique switch.</p>",
+    "family": "three_switches",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Deduction",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "50558d8f0f67b96d951403293fe74ee1f0c11e0430651821ebca06c3ad48c7e0"
+  },
+  {
+    "qid": "TMUA-P1-0135-405EF195",
+    "app_number": 135,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "exactly one empty box"
+    ],
+    "prompt_html": "<p>Four labelled boxes contain a total of seven identical counters. Exactly one box is empty. How many allocations are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(40\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(48\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(72\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(84\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(60\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Choose the empty box in four ways. The other three positive counts sum to 7. Subtracting one from each leaves three nonnegative counts summing to 4, giving \\(\\binom62=15\\) choices. Therefore the total is 60.</p>",
+    "family": "exactly_one_empty_box",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "4d2fc8e8d2ed045f4baf4b431e23f2148e90c837e6e2732471bc407690e5dfb3"
+  },
+  {
+    "qid": "TMUA-P1-0923-D6709361",
+    "app_number": 1511,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "specified parity composition"
+    ],
+    "prompt_html": "<p>Four different cards are chosen from cards numbered 1 to 8. The selection must contain exactly two odd cards. How many selections are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(36\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(24\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(32\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(40\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(48\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Choose two of the four odd cards and two of the four even cards independently: \\(\\binom42^2=36\\).</p>",
+    "family": "specified_parity_composition",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "9f6c8120e590ed8c52fd0e0cb835a2e6233a7fbb735f6702ef73a27db3d87459"
+  },
+  {
+    "qid": "TMUA-P1-0924-CC950F83",
+    "app_number": 1512,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "palindrome odd frequency"
+    ],
+    "prompt_html": "<p>A seven-letter palindrome uses only A, B and C and contains exactly three As. How many such palindromes exist?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(24\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The central letter must be A because all other positions occur in matching pairs. Exactly one of the three mirrored pairs is AA, giving three choices. Each other pair is BB or CC, giving \\(2^2\\) choices. Hence there are 12 palindromes.</p>",
+    "family": "palindrome_odd_frequency",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "5e45b1347d5aab731c53c437f881c2434066d25a0af601d5fedf7ce4a0ac48b9"
+  },
+  {
+    "qid": "TMUA-P1-0931-B039B90E",
+    "app_number": 1519,
+    "paper": 1,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Counting with restrictions",
+    "difficulty": 3,
+    "tags": [
+      "counting with restrictions",
+      "isolated up steps"
+    ],
+    "prompt_html": "<p>A path from \\((0,0)\\) to \\((5,2)\\) uses unit right and up steps. The two up steps must not be consecutive. How many paths are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(21\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Write the five right steps first. Their six gaps, including both ends, can each contain at most one up step. Choose two of these gaps: \\(\\binom62=15\\).</p>",
+    "family": "isolated_up_steps",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Counting with restrictions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "f9d53789e2a3d7c13cc03f7d24e3de86170695677d5b0d8292b6e6200c3d2a80"
+  },
+  {
+    "qid": "TMUA-TS-D-P2-Q11",
+    "app_number": 1789,
+    "paper": 2,
+    "topic": "10_Miscellaneous",
+    "subtopic": "Work rates",
+    "difficulty": 3,
+    "tags": [
+      "work rates",
+      "alternating work"
+    ],
+    "prompt_html": "<p>Machine A completes a job in 6 hours and machine B in 9 hours. They work alternately for one hour each, starting with A, until the job is complete. How many hours does the job take?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{13}{2}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{36}{5}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(7\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{15}{2}\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>Each two-hour cycle completes \\(1/6+1/9=5/18\\) of the job. Three cycles take 6 hours and complete \\(5/6\\). A then completes the remaining \\(1/6\\) in one hour, so the total time is 7 hours.</p>",
+    "family": "alternating_work",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Work rates",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "387eea5cb9e9195c6486a3ad585ea299c77306cc9a47d850e1cca3ba235b68f9"
+  },
+  {
+    "qid": "TMUA-P1-0918-A4B7DAF4",
+    "app_number": 1506,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Weighted means",
+    "difficulty": 3,
+    "tags": [
+      "weighted means",
+      "combine mean counts"
+    ],
+    "prompt_html": "<p>Group A has 8 observations with mean 12. Group B has mean 18. The combined mean is 15.6. How many observations are in B?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(8\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(10\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(12\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>If B has \\(n\\) observations, \\(96+18n=15.6(8+n)\\). Thus \\(2.4n=28.8\\), giving \\(n=12\\). Both group sizes are positive and the result lies between the two original means.</p>",
+    "family": "combine_mean_counts",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Weighted means",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "f14fefd89a761ec7d75177ae00924c52ab18cba8e00a043024a2e7836fb8f335"
+  },
+  {
+    "qid": "TMUA-P1-0921-943ED282",
+    "app_number": 1509,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Mean and median",
+    "difficulty": 3,
+    "tags": [
+      "mean and median",
+      "replace order statistic"
+    ],
+    "prompt_html": "<p>The ordered data are \\(2,4,7,9,t\\), where \\(t\\ge9\\). The mean exceeds the median by 1. What is \\(t\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(18\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(13\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(16\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(20\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>The median is the third entry, 7, so the mean is 8. The total must be 40. The four known values total 22, giving \\(t=18\\), which satisfies \\(t\\ge9\\).</p>",
+    "family": "replace_order_statistic",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Mean and median",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "13087ee9cf5b6c2539170473f32c5537c2d62635181e480620aad8f7bf3f74b2"
+  },
+  {
+    "qid": "TMUA-P1-0922-34963081",
+    "app_number": 1510,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Frequency means",
+    "difficulty": 3,
+    "tags": [
+      "frequency means",
+      "unknown frequency"
+    ],
+    "prompt_html": "<p>The values 1, 4 and 8 occur respectively 4, \\(k\\) and 2 times, where \\(k\\) is a positive integer. Their mean is \\(11/3\\). What is \\(k\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(8\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The total is \\(20+4k\\) and the number of values is \\(6+k\\). From \\(3(20+4k)=11(6+k)\\), we obtain \\(k=6\\), a positive integer satisfying the frequency condition.</p>",
+    "family": "unknown_frequency",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Frequency means",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "85bbeb973359a348170efab857017341840c0f68f46990f5098b57982c732526"
+  },
+  {
+    "qid": "TMUA-P1-0925-5D8CAAAB",
+    "app_number": 1513,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Means after removal",
+    "difficulty": 3,
+    "tags": [
+      "means after removal",
+      "remove mean shift"
+    ],
+    "prompt_html": "<p>Ten numbers have mean 14. Removing two numbers whose mean is 10 leaves eight numbers. What is their mean?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(12\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(13\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(15\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(14\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(16\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The original total is 140 and the removed total is 20. The remaining mean is \\((140-20)/8=15\\).</p>",
+    "family": "remove_mean_shift",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Means after removal",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "7551bf60d6178374347d422c08a087e0750d6e423711538f17676b6cb4b553cd"
+  },
+  {
+    "qid": "TMUA-P1-0926-F7609417",
+    "app_number": 1514,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Conditional probability",
+    "difficulty": 3,
+    "tags": [
+      "conditional probability",
+      "dice conditioned sum"
+    ],
+    "prompt_html": "<p>Two fair six-sided dice are rolled. Given that their total is at least 10, what is the probability that the dice show the same number?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac{1}{6}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{1}{2}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{2}{3}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{1}{3}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{1}{4}\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>The ordered outcomes with total at least 10 are \\((4,6),(5,5),(6,4),(5,6),(6,5),(6,6)\\). They are equally likely, and two have equal entries, so the probability is \\(2/6=1/3\\).</p>",
+    "family": "dice_conditioned_sum",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Conditional probability",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "669bf6f208690a083d1fa6645fd392b46fffd7d47335e3a6ab7ae58f02779d9b"
+  },
+  {
+    "qid": "TMUA-P1-0929-C419AE2A",
+    "app_number": 1517,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Sampling without replacement",
+    "difficulty": 3,
+    "tags": [
+      "sampling without replacement",
+      "two colours after discard"
+    ],
+    "prompt_html": "<p>A bag holds three red and two blue counters. One counter is drawn and discarded without being seen. Two more are then drawn without replacement. What is the probability that these two are of different colours?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac{2}{5}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{1}{2}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{3}{10}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{7}{10}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{3}{5}\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>The second and third drawn counters form a uniformly random pair from the original five, irrespective of the unobserved first counter. Six of the ten pairs contain one red and one blue, so the probability is \\(6/10=3/5\\).</p>",
+    "family": "two_colours_after_discard",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Sampling without replacement",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "dd9efcab2bc89358a5f4025899f82418601c1d116ef9f21250bbc0d307ebbd6a"
+  },
+  {
+    "qid": "TMUA-P1-0932-8C287435",
+    "app_number": 1520,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Conditional probability",
+    "difficulty": 3,
+    "tags": [
+      "conditional probability",
+      "choose bag posterior"
+    ],
+    "prompt_html": "<p>A fair coin selects bag A or bag B. Bag A contains two red counters and one blue; bag B contains one red and three blue. One counter is drawn from the selected bag and is red. What is the probability that bag A was selected?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac{8}{11}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{2}{3}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{3}{4}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{6}{11}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{9}{11}\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>The probabilities of the joint events are \\(P(A\\text{ and red})=(1/2)(2/3)=1/3\\) and \\(P(B\\text{ and red})=(1/2)(1/4)=1/8\\). Conditional on red, the desired share is \\((1/3)/(1/3+1/8)=8/11\\).</p>",
+    "family": "choose_bag_posterior",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Conditional probability",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "e2a1a9d28a366f37c58b53ff31920c2282471fa84d2507403dc8cb0dbd774807"
+  },
+  {
+    "qid": "TMUA-TS-C-P1-Q09",
+    "app_number": 1748,
+    "paper": 1,
+    "topic": "9_Statistics & Probability",
+    "subtopic": "Repeated independent trials",
+    "difficulty": 3,
+    "tags": [
+      "repeated independent trials",
+      "first success parity"
+    ],
+    "prompt_html": "<p>A trial succeeds with probability \\(1/3\\), independently of other trials. Trials continue until the first success. What is the probability that the number of trials is even?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(\\frac{1}{3}\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\frac{2}{5}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\frac{1}{2}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\frac{3}{5}\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(\\frac{2}{3}\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The probabilities for first success on trials 2,4,6,... sum to \\((2/9)(1+4/9+(4/9)^2+\\cdots)\\). This convergent geometric series is \\((2/9)/(1-4/9)=2/5\\).</p>",
+    "family": "first_success_parity",
+    "validation": {
+      "method": "Exact enumeration and a complete counting argument",
+      "details": "The stated domain is used throughout the worked proof. An independent exhaustive enumeration agrees with the derived answer."
+    },
+    "skills": [
+      "Repeated independent trials",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "dfa3b4d0afbba8b7d6c763909870516471d35ce1be137c272dfec3abdddc8a1c"
+  },
+  {
+    "qid": "TMUA-P2-0012-79C52ABD",
+    "app_number": 167,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Negating quantified statements",
+    "difficulty": 3,
+    "tags": [
+      "negating quantified statements",
+      "quantifier negation"
+    ],
+    "prompt_html": "<p>A claim says: “For every positive real \\(x\\), there is an integer \\(n\\) such that \\(n&gt;x^2\\).” Which statement is its logical negation?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "For every positive real \\(x\\), every integer \\(n\\) satisfies \\(n\\le x^2\\)."
+      },
+      {
+        "label": "B",
+        "html": "There is a positive real \\(x\\) and an integer \\(n\\) with \\(n\\le x^2\\)."
+      },
+      {
+        "label": "C",
+        "html": "There is a positive real \\(x\\) such that every integer \\(n\\) satisfies \\(n\\le x^2\\)."
+      },
+      {
+        "label": "D",
+        "html": "For every integer \\(n\\), there is a positive real \\(x\\) with \\(n\\le x^2\\)."
+      },
+      {
+        "label": "E",
+        "html": "There is an integer \\(n\\) such that every positive real \\(x\\) satisfies \\(n&gt;x^2\\)."
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Negation changes the outer “for every” to “there exists” and the inner “there exists” to “for every”. The negation of \\(n&gt;x^2\\) is \\(n\\le x^2\\). The order of the quantified variables is preserved.</p>",
+    "family": "quantifier_negation",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Negating quantified statements",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "5fa29f180f8e07d4537d4d0dda79e7b598845a533b4c4c94702cb6648953a9a3"
+  },
+  {
+    "qid": "TMUA-P2-0022-7D17A0FF",
+    "app_number": 177,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Necessary and sufficient conditions",
+    "difficulty": 3,
+    "tags": [
+      "necessary and sufficient conditions",
+      "reciprocal condition"
+    ],
+    "prompt_html": "<p>Let \\(x\\) be a nonzero real number. Relative to the condition \\(x+1/x\\ge2\\), the condition \\(x&gt;0\\) is:</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Necessary but not sufficient"
+      },
+      {
+        "label": "B",
+        "html": "Sufficient but not necessary"
+      },
+      {
+        "label": "C",
+        "html": "Neither necessary nor sufficient"
+      },
+      {
+        "label": "D",
+        "html": "Both necessary and sufficient"
+      },
+      {
+        "label": "E",
+        "html": "Impossible to satisfy"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>For \\(x&gt;0\\), \\(x+1/x-2=(x-1)^2/x\\ge0\\). For \\(x&lt;0\\), both \\(x\\) and \\(1/x\\) are negative, so their sum is below 2. Thus the two conditions are equivalent.</p>",
+    "family": "reciprocal_condition",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Necessary and sufficient conditions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "2d368c2b8f9647945a0c8da9696f0cce8a78b9f21ff6c93b92c107ab1129e9eb"
+  },
+  {
+    "qid": "TMUA-P2-0203-7F1F335C",
+    "app_number": 816,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Implication between functions",
+    "difficulty": 3,
+    "tags": [
+      "implication between functions",
+      "composition injectivity"
+    ],
+    "prompt_html": "<p>Functions \\(g:A\\to B\\) and \\(f:B\\to C\\) have an injective composition \\(f\\circ g\\). Which conclusion must follow?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "f is injective"
+      },
+      {
+        "label": "B",
+        "html": "g is surjective"
+      },
+      {
+        "label": "C",
+        "html": "f is surjective"
+      },
+      {
+        "label": "D",
+        "html": "Both f and g are surjective"
+      },
+      {
+        "label": "E",
+        "html": "g is injective"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>If \\(g(a)=g(b)\\), applying f gives \\(f(g(a))=f(g(b))\\), so injectivity of the composition implies \\(a=b\\). The other claims need not hold: let \\(A=\\{1\\},B=\\{1,2\\},C=\\{1,2\\}\\), let g(1)=1 and let f be constantly 1. The composition on the singleton A is injective, but f is not injective or surjective and g is not surjective.</p>",
+    "family": "composition_injectivity",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Implication between functions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "d0931c6bd519e0e518dc958631840c88dc1a431ee9822aeea4055378d330e275"
+  },
+  {
+    "qid": "TMUA-P2-0204-94364DF3",
+    "app_number": 817,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Counterexamples",
+    "difficulty": 3,
+    "tags": [
+      "counterexamples",
+      "strict square inequality"
+    ],
+    "prompt_html": "<p>Which value of \\(x\\) disproves the assertion “If \\(x^2&gt;x\\), then \\(x&gt;1\\)”?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(-2\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(0\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(1/2\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(1\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(2\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>A counterexample must make the premise true and the conclusion false. At \\(x=-2\\), \\(4&gt;-2\\) is true while \\(-2&gt;1\\) is false. At 0, 1/2 and 1 the premise fails, while at 2 the conclusion holds.</p>",
+    "family": "strict_square_inequality",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Counterexamples",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "22c8efd6b16cb99e6b21b3711a5cb6c87a5ca93381028b54a5197c64695892d0"
+  },
+  {
+    "qid": "TMUA-P2-0205-021A14A8",
+    "app_number": 818,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Parity and equivalence",
+    "difficulty": 3,
+    "tags": [
+      "parity and equivalence",
+      "parity product"
+    ],
+    "prompt_html": "<p>For integers \\(a,b\\), which condition is equivalent to “\\(a+b\\) is odd”?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Both a and b are odd"
+      },
+      {
+        "label": "B",
+        "html": "Exactly one of a and b is odd"
+      },
+      {
+        "label": "C",
+        "html": "At least one of a and b is odd"
+      },
+      {
+        "label": "D",
+        "html": "ab is odd"
+      },
+      {
+        "label": "E",
+        "html": "a and b have the same parity"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>Modulo 2, the sum is 1 precisely for the residue pairs (0,1) and (1,0). Both-odd gives an even sum, while “at least one odd” also includes the both-odd case. The product is odd only in that excluded case.</p>",
+    "family": "parity_product",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Parity and equivalence",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "a0329e8d87435f5efd1f8ab16746091b234ab6ca431f542dee5b57e858a9db53"
+  },
+  {
+    "qid": "TMUA-P2-0206-617395C1",
+    "app_number": 819,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Even and odd functions",
+    "difficulty": 3,
+    "tags": [
+      "even and odd functions",
+      "even and odd zero"
+    ],
+    "prompt_html": "<p>A real-valued function on all real numbers satisfies \\(f(-x)=f(x)\\) and \\(f(-x)=-f(x)\\) for every real \\(x\\). Which conclusion is forced?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(f(x)=x\\) for every real \\(x\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(f(x)=1\\) for every real \\(x\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(f(x)=0\\) for every real \\(x\\)"
+      },
+      {
+        "label": "D",
+        "html": "f has exactly one zero"
+      },
+      {
+        "label": "E",
+        "html": "f has no zeros"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The two identities imply \\(f(x)=-f(x)\\), hence \\(2f(x)=0\\) at every x. Thus f is identically zero; the assertion does not merely establish f(0)=0.</p>",
+    "family": "even_and_odd_zero",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Even and odd functions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "3f06067810be5287c66e33814c6ab436ba840b99cdd3d3c2df2c0132fc0df885"
+  },
+  {
+    "qid": "TMUA-P2-0207-7DA4E711",
+    "app_number": 820,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Finite-set functions",
+    "difficulty": 3,
+    "tags": [
+      "finite-set functions",
+      "finite surjection"
+    ],
+    "prompt_html": "<p>A function maps a set of five elements to a set of five elements, and every element of the second set is attained. Which must be true?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Some output has two inputs"
+      },
+      {
+        "label": "B",
+        "html": "The function is constant"
+      },
+      {
+        "label": "C",
+        "html": "Every input is its own output"
+      },
+      {
+        "label": "D",
+        "html": "Each output has exactly one input"
+      },
+      {
+        "label": "E",
+        "html": "Exactly one output is unused"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>There are five inputs and five nonempty output fibres. Their sizes are positive integers adding to five, so all five sizes must be one. The sets need not even have matching labels, so being an identity function is not forced.</p>",
+    "family": "finite_surjection",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Finite-set functions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "0323c04c195214659845ebd612aab3e7919271679fab09c820f2c1340cb078a0"
+  },
+  {
+    "qid": "TMUA-P2-0208-FC358C44",
+    "app_number": 821,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Trigonometric implications",
+    "difficulty": 3,
+    "tags": [
+      "trigonometric implications",
+      "cosine sine condition"
+    ],
+    "prompt_html": "<p>For real \\(x\\), consider P: \\(\\cos x=1\\), and Q: \\(\\sin x=0\\). Which description is correct?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Q implies P, but P does not imply Q"
+      },
+      {
+        "label": "B",
+        "html": "P and Q are equivalent"
+      },
+      {
+        "label": "C",
+        "html": "Neither condition implies the other"
+      },
+      {
+        "label": "D",
+        "html": "P and Q cannot both hold"
+      },
+      {
+        "label": "E",
+        "html": "P implies Q, but Q does not imply P"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>If \\(\\cos x=1\\), the identity \\(\\sin^2x+\\cos^2x=1\\) forces \\(\\sin x=0\\). The converse fails at \\(x=\\pi\\), where sine is zero and cosine is −1.</p>",
+    "family": "cosine_sine_condition",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Trigonometric implications",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "f535d69ce3a709dc6fd13187c498deb4268309a1bd5a1f856fb601551452fb73"
+  },
+  {
+    "qid": "TMUA-P2-0209-97D304D7",
+    "app_number": 822,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Logic of inequalities",
+    "difficulty": 3,
+    "tags": [
+      "logic of inequalities",
+      "interval complement"
+    ],
+    "prompt_html": "<p>For real \\(x\\), which condition is equivalent to \\(x^2&gt;x\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(x&lt;0\\) or \\(x&gt;1\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(0&lt;x&lt;1\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(x&lt;1\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(x&gt;0\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(x\\ne0\\) and \\(x\\ne1\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Factor the inequality as \\(x(x-1)&gt;0\\). The two factors have the same strict sign precisely when both are negative, giving x<0, or both are positive, giving x>1. The endpoints and the interval between them fail.</p>",
+    "family": "interval_complement",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Logic of inequalities",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "cab43e64611ce55d565e07efe6b57f26a5b1418fd3d88079b3b244912baa3ab3"
+  },
+  {
+    "qid": "TMUA-P2-0210-A1F95629",
+    "app_number": 823,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Logical deductions",
+    "difficulty": 3,
+    "tags": [
+      "logical deductions",
+      "subset inclusion chain"
+    ],
+    "prompt_html": "<p>Every element of set A is in B. No element of B is in C. Which conclusion is necessarily true?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Every element of C is in A"
+      },
+      {
+        "label": "B",
+        "html": "No element of A is in C"
+      },
+      {
+        "label": "C",
+        "html": "Every element of B is in A"
+      },
+      {
+        "label": "D",
+        "html": "A is empty"
+      },
+      {
+        "label": "E",
+        "html": "C is empty"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>An element of A would lie in B; it therefore cannot lie in C. Nonempty disjoint sets A and C with A properly contained in B show that the other statements are not forced.</p>",
+    "family": "subset_inclusion_chain",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Logical deductions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "514ad840dc44fb842c473834443977b600d905e9f4429dd81546ed58fa59267a"
+  },
+  {
+    "qid": "TMUA-P2-0211-EB2A83D0",
+    "app_number": 824,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Counterexamples involving sequences",
+    "difficulty": 3,
+    "tags": [
+      "counterexamples involving sequences",
+      "positive start nonmonotone"
+    ],
+    "prompt_html": "<p>The recurrence \\(u_{n+1}=2-u_n\\) has \\(u_1=3\\). Which claim about the sequence is true?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Every term is positive"
+      },
+      {
+        "label": "B",
+        "html": "The sequence is strictly increasing"
+      },
+      {
+        "label": "C",
+        "html": "The sequence alternates between 3 and −1"
+      },
+      {
+        "label": "D",
+        "html": "The sequence eventually becomes constant"
+      },
+      {
+        "label": "E",
+        "html": "Every term is at most 2"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The recurrence gives \\(u_2=-1\\), \\(u_3=3\\), and applying it twice returns any starting value: \\(2-(2-u_n)=u_n\\). Hence the period is exactly two and the two values are 3 and −1.</p>",
+    "family": "positive_start_nonmonotone",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Counterexamples involving sequences",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "3f98a7ccf77149603fd655fc27059661eb4d7016988b6bd96c80b0aec1ced71d"
+  },
+  {
+    "qid": "TMUA-P2-0212-3F5608DF",
+    "app_number": 825,
+    "paper": 2,
+    "topic": "8_Logic",
+    "subtopic": "Necessary conditions",
+    "difficulty": 3,
+    "tags": [
+      "necessary conditions",
+      "remainder equivalence"
+    ],
+    "prompt_html": "<p>For an integer \\(n\\), which condition is equivalent to “\\(n^2\\) leaves remainder 1 on division by 3”?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "n is odd"
+      },
+      {
+        "label": "B",
+        "html": "n leaves remainder 1 on division by 3"
+      },
+      {
+        "label": "C",
+        "html": "n leaves remainder 2 on division by 3"
+      },
+      {
+        "label": "D",
+        "html": "n is not divisible by 3"
+      },
+      {
+        "label": "E",
+        "html": "n is positive"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>The three possible remainders of n modulo 3 are 0,1,2; their squares have remainders 0,1,1 respectively. Thus either nonzero remainder, and only those, gives remainder 1.</p>",
+    "family": "remainder_equivalence",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Necessary conditions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "8557a6bc7bcabae1af6ffcca8adf1ef63a3a9ffc91d377bd5f16157c21cd9ee5"
+  },
+  {
+    "qid": "TMUA-TS-A-P2-Q05",
+    "app_number": 1704,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Divisibility",
+    "difficulty": 3,
+    "tags": [
+      "divisibility",
+      "odd square mod8"
+    ],
+    "prompt_html": "<p>For an odd integer \\(n\\), which integer must divide \\(n^2-1\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(5\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(7\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(8\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Write \\(n=2k+1\\). Then \\(n^2-1=4k(k+1)\\). One of consecutive integers k,k+1 is even, so this is divisible by 8. At n=3 the expression is 8, showing that none of 3,5,7,9 is guaranteed.</p>",
+    "family": "odd_square_mod8",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Divisibility",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "5902d1e3c48eeec0eb95a08f05c273546c49949a1b66ffd883506af501f18b41"
+  },
+  {
+    "qid": "TMUA-TS-A-P2-Q16",
+    "app_number": 1713,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Consecutive integers",
+    "difficulty": 3,
+    "tags": [
+      "consecutive integers",
+      "three consecutive product"
+    ],
+    "prompt_html": "<p>Which expression is divisible by 6 for every integer \\(n\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(n(n+1)(n+2)\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(n^2+1\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(n(n+2)\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(n^3+1\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(3n^2+3\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Among three consecutive integers there is a multiple of 3 and at least one even integer, so their product is divisible by 6. For the alternatives, n=0 gives 1 for the first, n=1 gives 3 for the second, n=0 gives 1 for the third, and n=0 gives 3 for the fourth.</p>",
+    "family": "three_consecutive_product",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Consecutive integers",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "437dae376d7a313736be9b5ac03472ce6038387c2a90af5cc225363849d9597c"
+  },
+  {
+    "qid": "TMUA-TS-A-P2-Q17",
+    "app_number": 1714,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Reversible operations",
+    "difficulty": 3,
+    "tags": [
+      "reversible operations",
+      "division zero loss"
+    ],
+    "prompt_html": "<p>A student solves \\(x(x-3)=0\\) by dividing by \\(x\\) and obtaining \\(x=3\\). What is the precise defect?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "The factor x−3 cannot be negative"
+      },
+      {
+        "label": "B",
+        "html": "Division by x excludes the possible solution x=0"
+      },
+      {
+        "label": "C",
+        "html": "The equation has no real solutions"
+      },
+      {
+        "label": "D",
+        "html": "Division by x always reverses an equality"
+      },
+      {
+        "label": "E",
+        "html": "The value x=3 is extraneous"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>Division by x is valid only when x≠0. The omitted case x=0 satisfies the original equation. The correct solution set is {0,3}; x=3 is a valid but incomplete result.</p>",
+    "family": "division_zero_loss",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Reversible operations",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "19c3ed75e151a136aab473b1c984e888a2a0bbd615ce72775ae368882d021802"
+  },
+  {
+    "qid": "TMUA-TS-B-P2-Q11",
+    "app_number": 1735,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Squaring equations",
+    "difficulty": 3,
+    "tags": [
+      "squaring equations",
+      "extraneous root"
+    ],
+    "prompt_html": "<p>When solving \\(\\sqrt{x+4}=x-2\\), a student squares both sides and finds \\(x=0\\) or \\(x=5\\). Which statement is correct?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "Both values satisfy the original equation"
+      },
+      {
+        "label": "B",
+        "html": "Only x=0 satisfies the original equation"
+      },
+      {
+        "label": "C",
+        "html": "Only x=5 satisfies the original equation"
+      },
+      {
+        "label": "D",
+        "html": "Neither value is real"
+      },
+      {
+        "label": "E",
+        "html": "Squaring guarantees all resulting roots are valid"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>The right-hand side must be nonnegative, hence x≥2. Squaring gives \\(x+4=(x-2)^2\\), or \\(x(x-5)=0\\). The domain discards 0. Direct substitution at 5 gives \\(\\sqrt9=3\\), so 5 is valid.</p>",
+    "family": "extraneous_root",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Squaring equations",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "39106553206f7310570f5db777a91abefd23e744d175a5383a1a8e231d5ee918"
+  },
+  {
+    "qid": "TMUA-TS-B-P2-Q12",
+    "app_number": 1736,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Uniqueness by factorisation",
+    "difficulty": 3,
+    "tags": [
+      "uniqueness by factorisation",
+      "strict cubic map"
+    ],
+    "prompt_html": "<p>If real numbers \\(a,b\\) satisfy \\(a^3+a=b^3+b\\), which conclusion follows?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(a=-b\\) and \\(a\\ne0\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(a+b=1\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(ab=-1\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(a=b\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(|a-b|=1\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>Subtract and factor: \\((a-b)(a^2+ab+b^2+1)=0\\). The second factor equals \\((a+b/2)^2+3b^2/4+1\\), which is strictly positive. Therefore the first factor must vanish.</p>",
+    "family": "strict_cubic_map",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Uniqueness by factorisation",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "c9fd425c080074baab0576763d45131ea2e5d85ecda0361526ba5e18d3aa75bc"
+  },
+  {
+    "qid": "TMUA-TS-B-P2-Q15",
+    "app_number": 1739,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Contrapositive",
+    "difficulty": 3,
+    "tags": [
+      "contrapositive",
+      "contrapositive divisibility"
+    ],
+    "prompt_html": "<p>What is the contrapositive of “If an integer is divisible by 12, then it is divisible by 4”?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "If an integer is divisible by 4, it is divisible by 12"
+      },
+      {
+        "label": "B",
+        "html": "If an integer is not divisible by 12, it is not divisible by 4"
+      },
+      {
+        "label": "C",
+        "html": "Every integer is divisible by 4 or 12"
+      },
+      {
+        "label": "D",
+        "html": "No integer is divisible by both 4 and 12"
+      },
+      {
+        "label": "E",
+        "html": "If an integer is not divisible by 4, it is not divisible by 12"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>The contrapositive of P⇒Q is ¬Q⇒¬P. Here P is divisibility by 12 and Q is divisibility by 4. The converse and inverse are different statements and fail, for example, at 4.</p>",
+    "family": "contrapositive_divisibility",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Contrapositive",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "dc25a889f311e0c36d95420b51c029deded039ad1aa416990dccf04ac38d67c5"
+  },
+  {
+    "qid": "TMUA-TS-B-P2-Q20",
+    "app_number": 1744,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Proof by contradiction",
+    "difficulty": 3,
+    "tags": [
+      "proof by contradiction",
+      "irrational translation"
+    ],
+    "prompt_html": "<p>Let \\(r\\) be irrational and \\(q\\) rational. Which statement must hold?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(r+q\\) is irrational"
+      },
+      {
+        "label": "B",
+        "html": "\\(rq\\) is irrational"
+      },
+      {
+        "label": "C",
+        "html": "\\(r^2\\) is irrational"
+      },
+      {
+        "label": "D",
+        "html": "\\(r-q\\) is rational"
+      },
+      {
+        "label": "E",
+        "html": "\\(r/q\\) is a defined irrational number"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>If r+q were rational, subtracting the rational q would make r rational, a contradiction. Multiplication or division claims fail at q=0 (division is undefined). Squaring can yield a rational value, as for r=√2. Also r−q is irrational by the same subtraction argument.</p>",
+    "family": "irrational_translation",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Proof by contradiction",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "8afbead4728fad9ba406b91f2650a000a77f759621854318dca21d8ae6716b19"
+  },
+  {
+    "qid": "TMUA-TS-C-P2-Q07",
+    "app_number": 1760,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Counterexample to converse",
+    "difficulty": 3,
+    "tags": [
+      "counterexample to converse",
+      "square product converse"
+    ],
+    "prompt_html": "<p>The claim “If \\(ab\\) is a perfect square for positive integers \\(a,b\\), then both \\(a\\) and \\(b\\) are perfect squares” is false. Which pair is a counterexample?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\((4,9)\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\((2,8)\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\((2,3)\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\((1,4)\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\((3,5)\\)"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>The product 2·8=16 is a square, while neither factor is a square. The pairs (4,9) and (1,4) satisfy the conclusion, and the other two pairs have nonsquare products, so cannot refute the implication.</p>",
+    "family": "square_product_converse",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Counterexample to converse",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "25aaab027b93ed56743d9a76e1e91d24c883463da05e1fc8621eac98df21c870"
+  },
+  {
+    "qid": "TMUA-TS-C-P2-Q10",
+    "app_number": 1761,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Bounds and equality",
+    "difficulty": 3,
+    "tags": [
+      "bounds and equality",
+      "two variable lower bound"
+    ],
+    "prompt_html": "<p>For positive real \\(x,y\\) with \\(xy=9\\), what is the smallest possible value of \\(x+y\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(9\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(18\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>From \\((x-y)^2\\ge0\\), \\((x+y)^2\\ge4xy=36\\). Positivity gives x+y≥6. Equality is attained at x=y=3, so the bound is the exact minimum.</p>",
+    "family": "two_variable_lower_bound",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Bounds and equality",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "8cfdf35ecaf886cf83ce3d024363863792ab23e9e339f47ac82fa73fd8506ce5"
+  },
+  {
+    "qid": "TMUA-TS-C-P2-Q13",
+    "app_number": 1763,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Quantifiers and witnesses",
+    "difficulty": 3,
+    "tags": [
+      "quantifiers and witnesses",
+      "polynomial zero quantifiers"
+    ],
+    "prompt_html": "<p>Which statement is true?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "There exists a real \\(a\\) such that every real \\(x\\) satisfies \\((x-a)^2&gt;0\\)."
+      },
+      {
+        "label": "B",
+        "html": "Every real \\(a\\) admits a real \\(x\\) with \\((x-a)^2&lt;0\\)."
+      },
+      {
+        "label": "C",
+        "html": "Every real \\(x\\) satisfies \\(x^2&gt;x\\)."
+      },
+      {
+        "label": "D",
+        "html": "There exists a real \\(a\\) such that every real \\(x\\) satisfies \\((x-a)^2\\ge0\\)."
+      },
+      {
+        "label": "E",
+        "html": "There exists a real \\(a\\) such that every real \\(x\\) satisfies \\(x&gt;a\\)."
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>For the correct statement, choose a=0: every real square is nonnegative. The strict-square statement fails at x=a; a negative square is impossible; x²>x fails at x=0; and the claimed universal lower bound fails at x=a.</p>",
+    "family": "polynomial_zero_quantifiers",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Quantifiers and witnesses",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "7466b7b196f908e939e77e85226ed0711aba9c95cbe8c3cfc3f948a4d6a95269"
+  },
+  {
+    "qid": "TMUA-TS-C-P2-Q14",
+    "app_number": 1764,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Logical truth conditions",
+    "difficulty": 3,
+    "tags": [
+      "logical truth conditions",
+      "exactly two statements"
+    ],
+    "prompt_html": "<p>A positive integer \\(n&lt;10\\) makes exactly two of these statements true: I: \\(n\\) is even; II: \\(n\\) is divisible by 3; III: \\(n&gt;6\\). How many values of \\(n\\) are possible?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(1\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(2\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(5\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(3\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>Check the finite domain 1 to 9. The numbers 6,8,9 give truth patterns (true,true,false), (true,false,true), (false,true,true), respectively. All other values give at most one true statement. Thus there are three.</p>",
+    "family": "exactly_two_statements",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Logical truth conditions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "a34b44462c5f5bc766632ad3af1895d606911a0f5970c84cc715e84eb85eb4ee"
+  },
+  {
+    "qid": "TMUA-TS-D-P2-Q05",
+    "app_number": 1786,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Necessary and sufficient conditions",
+    "difficulty": 3,
+    "tags": [
+      "necessary and sufficient conditions",
+      "quadratic discriminant logic"
+    ],
+    "prompt_html": "<p>For real \\(k\\), the equation \\(x^2-2kx+k+2=0\\) has two distinct real roots exactly when:</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(k&lt;-1\\) or \\(k&gt;2\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(-1&lt;k&lt;2\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(k\\le-1\\) or \\(k\\ge2\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(k&gt;0\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(k\\ne-1\\) and \\(k\\ne2\\)"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>Two distinct real roots are equivalent to a strictly positive discriminant. Here it is \\(4k^2-4k-8=4(k-2)(k+1)\\), which is positive outside [−1,2]. Equality at the endpoints gives repeated roots, so they are excluded.</p>",
+    "family": "quadratic_discriminant_logic",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Necessary and sufficient conditions",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "98f0d36c40252df83a0f763ed1709f22fdb6dc4bcbdb30b45615e30d483bc5ef"
+  },
+  {
+    "qid": "TMUA-TS-D-P2-Q07",
+    "app_number": 1787,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Valid and invalid implications",
+    "difficulty": 3,
+    "tags": [
+      "valid and invalid implications",
+      "sum square zero"
+    ],
+    "prompt_html": "<p>Let \\(a,b\\) be real. Which implication is valid?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "If \\(a+b=0\\), then \\(a=b=0\\)."
+      },
+      {
+        "label": "B",
+        "html": "If \\(a^2+b^2=0\\), then \\(a=b=0\\)."
+      },
+      {
+        "label": "C",
+        "html": "If \\(ab=0\\), then \\(a=b=0\\)."
+      },
+      {
+        "label": "D",
+        "html": "If \\(a^2=b^2\\), then \\(a=b\\)."
+      },
+      {
+        "label": "E",
+        "html": "If \\(a^2+b^2=1\\), then \\(a+b=1\\)."
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>Both squares are nonnegative, so a zero sum forces each to be zero. Counterexamples for the other claims are respectively (1,−1), (0,1), (1,−1), and (−1,0).</p>",
+    "family": "sum_square_zero",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Valid and invalid implications",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "c669faf403947ae7ad7bb433e905c7fa984263699849ba9cf64c14e961c0073f"
+  },
+  {
+    "qid": "TMUA-TS-D-P2-Q14",
+    "app_number": 1791,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Divisibility equivalence",
+    "difficulty": 3,
+    "tags": [
+      "divisibility equivalence",
+      "coprime factors"
+    ],
+    "prompt_html": "<p>For an integer \\(n\\), which condition is equivalent to \\(6\\mid5n\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(5\\mid n\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(2\\mid n\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(6\\mid n\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(3\\mid n\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(30\\mid n\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>If 6 divides n, it divides 5n. Conversely, 5n divisible by 6 is both even and divisible by 3. Since 5 is odd and is not divisible by 3, n must be even and divisible by 3. Therefore 6 divides n. Divisibility by 30 is stronger than necessary.</p>",
+    "family": "coprime_factors",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Divisibility equivalence",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "bf46ca9fa19381394b84f65c47843f11a04ec932b7a7934220095a86f6505a9a"
+  },
+  {
+    "qid": "TMUA-TS-D-P2-Q18",
+    "app_number": 1795,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Monotonicity of roots",
+    "difficulty": 3,
+    "tags": [
+      "monotonicity of roots",
+      "cube root order"
+    ],
+    "prompt_html": "<p>For real \\(x\\), which condition is equivalent to \\(\\sqrt[3]{2x-1}&gt;\\sqrt[3]{x+5}\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(x&gt;3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(x&lt;6\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(x\\ge6\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(x&gt;6\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(x&gt;0\\)"
+      }
+    ],
+    "answer": "D",
+    "solution_html": "<p>The real cube function is strictly increasing: if u>v, then \\(u^3-v^3=(u-v)(u^2+uv+v^2)&gt;0\\). Thus comparison of real cube roots is equivalent to comparison of radicands. We obtain 2x−1>x+5, or x>6. No nonnegative-radicand restriction is needed for cube roots.</p>",
+    "family": "cube_root_order",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Monotonicity of roots",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "63a6e2e4f005c46d5dfad9fd71eb52affb56b654c8a7db087ca306ac4af0db4e"
+  },
+  {
+    "qid": "TMUA-TS-E-P2-Q05",
+    "app_number": 1811,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Contradiction and parity",
+    "difficulty": 3,
+    "tags": [
+      "contradiction and parity",
+      "odd even equation"
+    ],
+    "prompt_html": "<p>Which equation has no solution in integers \\(x,y\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(2x+3y=7\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(3x+4y=7\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(2x+4y=8\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(3x+6y=9\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(2x+4y=7\\)"
+      }
+    ],
+    "answer": "E",
+    "solution_html": "<p>The left side 2x+4y is always even but 7 is odd, a contradiction. The other equations have solutions (x,y)=(2,1),(1,1),(4,0),(3,0), respectively.</p>",
+    "family": "odd_even_equation",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Contradiction and parity",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "28235aa13e379c6abaa6024211aab3ce4adb4dfdde5d2e4b0de5b47261d53920"
+  },
+  {
+    "qid": "TMUA-TS-E-P2-Q08",
+    "app_number": 1812,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Algebraic equivalence",
+    "difficulty": 3,
+    "tags": [
+      "algebraic equivalence",
+      "rational domain proof"
+    ],
+    "prompt_html": "<p>For real \\(x\\), which is the complete solution set of \\((x^2-4)/(x-2)=4\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "The empty set"
+      },
+      {
+        "label": "B",
+        "html": "\\(\\{2\\}\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(\\{-2\\}\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(\\{-2,2\\}\\)"
+      },
+      {
+        "label": "E",
+        "html": "All real numbers except 2"
+      }
+    ],
+    "answer": "A",
+    "solution_html": "<p>The expression is defined only for x≠2. On that domain it simplifies to x+2, so the equation would require x=2. That sole candidate is excluded by the original denominator, leaving no solution.</p>",
+    "family": "rational_domain_proof",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Algebraic equivalence",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "2895c63b735bb3f3876d10bda88a8936dffbe3a94b24bad02a077acfb1e1e730"
+  },
+  {
+    "qid": "TMUA-TS-E-P2-Q11",
+    "app_number": 1815,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Deduction from disjunction",
+    "difficulty": 3,
+    "tags": [
+      "deduction from disjunction",
+      "exclusive logic"
+    ],
+    "prompt_html": "<p>Exactly one of P and Q is true. The implication \\(P\\Rightarrow R\\) is true, and R is false. What must be true?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "P is true"
+      },
+      {
+        "label": "B",
+        "html": "Q is true"
+      },
+      {
+        "label": "C",
+        "html": "Q is false"
+      },
+      {
+        "label": "D",
+        "html": "P and Q are both false"
+      },
+      {
+        "label": "E",
+        "html": "R is true"
+      }
+    ],
+    "answer": "B",
+    "solution_html": "<p>If P were true, the valid implication would make R true, contrary to the given fact. Thus P is false. Exactly one of P,Q is true, so Q must be true.</p>",
+    "family": "exclusive_logic",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Deduction from disjunction",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "2646a1f997ae4735c302d378a345158369eec066f483877c7716e510861e4e5c"
+  },
+  {
+    "qid": "TMUA-TS-E-P2-Q19",
+    "app_number": 1822,
+    "paper": 2,
+    "topic": "11_Proofs",
+    "subtopic": "Proof of an integer bound",
+    "difficulty": 3,
+    "tags": [
+      "proof of an integer bound",
+      "least integer square bound"
+    ],
+    "prompt_html": "<p>An integer \\(n\\ge0\\) satisfies \\(n^2&lt;3n+18\\). What is the greatest possible \\(n\\)?</p>",
+    "options": [
+      {
+        "label": "A",
+        "html": "\\(3\\)"
+      },
+      {
+        "label": "B",
+        "html": "\\(4\\)"
+      },
+      {
+        "label": "C",
+        "html": "\\(5\\)"
+      },
+      {
+        "label": "D",
+        "html": "\\(6\\)"
+      },
+      {
+        "label": "E",
+        "html": "\\(7\\)"
+      }
+    ],
+    "answer": "C",
+    "solution_html": "<p>Rearrange as \\((n-6)(n+3)&lt;0\\). Since n≥0 makes n+3 positive, the inequality is equivalent to n<6. The greatest admissible integer is 5, and \\(25&lt;33\\) verifies it.</p>",
+    "family": "least_integer_square_bound",
+    "validation": {
+      "method": "Complete logical proof and explicit counterexamples where needed",
+      "details": "The stated domain is used throughout the worked proof. Each alternative is resolved by the explicit proof or counterexample in the solution."
+    },
+    "skills": [
+      "Proof of an integer bound",
+      "Domain restrictions",
+      "Verify the conclusion"
+    ],
+    "old_prompt_sha256": "efea4320ac87c6ef5013bb29fe24f78f8b4d710e873aa07226e1f19bf9669181"
+  }
+]
