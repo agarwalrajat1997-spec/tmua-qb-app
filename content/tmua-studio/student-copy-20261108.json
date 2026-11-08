@@ -1,0 +1,47 @@
+{
+  "studio-20261029-e08cc5507cf6fb1ab847d718": {
+    "solutionHtml": "<p>For \\(-3&lt;x&lt;-1\\), we have \\(x&lt;0\\), so \\(x^2&gt;0\\) while \\(2x&lt;0\\).</p><p>Therefore, a positive number is always greater than a negative number:</p><p>\\[x^2&gt;2x.\\]</p><p>So only III can be true.</p><p>The answer is C.</p>"
+  },
+  "studio-20261029-ed045d6a5c8db20bf6cf4438": {
+    "solutionHtml": "<p>The displayed graph is \\(y=f(x)\\), and we are given \\(F\\) by \\(F^{\\prime}(x)=f(x)\\). From left to right the signs of \\(F^{\\prime}\\) at the three interior crossings are negative to positive, positive to negative, and negative to positive.</p><p>Thus \\(F\\) has a relative minimum, then a relative maximum, then another relative minimum. The endpoints \\(a,b\\) are excluded. There is one relative maximum and two relative minima, so the answer is A.</p>"
+  },
+  "studio-20261029-224a894a621087a94c91c023": {
+    "solutionHtml": "<p>Attaining \\(x-y=-1\\) requires \\(y=x+1\\), so \\(y\\le2x-1\\) implies \\(x\\ge2\\) and \\(x+y\\ge5\\). Equality occurs at \\((2,3)\\), hence \\(m\\ge5\\) is necessary and sufficient to allow -1.</p><p>If \\(x-y\\le-2\\), then \\(y\\ge x+2\\), so the same upper bound gives \\(x\\ge3\\) and \\(x+y\\ge8\\). The pair \\((3,5)\\) attains this threshold. Therefore no value below -1 is possible when \\(m&lt;8\\), and one is possible as soon as \\(m\\ge8\\).</p><p>The minimum is exactly -1 precisely for \\(5\\le m&lt;8\\). Since \\(m\\) is an integer, the maximum is \\(7\\), F. Without that integer condition, the real interval has no maximum.</p>"
+  },
+  "studio-20261029-d00308d8310c78db6a5cbc65": {
+    "solutionHtml": "<p>Since \\(n\\) is an integer with \\(n\\ge 8\\), both terms occur. Their coefficients are C(n,7)2^(n-7)/3^7 and C(n,8)2^(n-8)/3^8. The coefficient of x^8 divided by the coefficient of x^7 is (n-7)/(8*6)=(n-7)/48.</p><p>Equality requires (n-7)/48=1, giving n=55, option C. For n=15 and 45 the ratios are 1/6 and 19/24 respectively, so neither works.</p>"
+  },
+  "studio-20261029-46cd1676f2b242af1b2004fb": {
+    "solutionHtml": "<p>Tangent has period \\(180^\\circ\\), so the full family is \\(x=60^\\circ+180^\\circ k\\), where \\(k\\) is any integer.</p><p>Doubling gives \\(2x=120^\\circ+360^\\circ k\\). Every such angle has sine \\(\\sqrt3/2\\).</p><p>The student checked only \\(x=60^\\circ\\), so the value is right but the reasoning does not cover every solution of the tangent equation. This is B.</p>",
+    "steps": [
+      "Tangent has period \\(180^\\circ\\), so the full family is \\(x=60^\\circ+180^\\circ k\\), where \\(k\\) is any integer.",
+      "Doubling gives \\(2x=120^\\circ+360^\\circ k\\). Every such angle has sine \\(\\sqrt3/2\\).",
+      "The student checked only \\(x=60^\\circ\\), so the value is right but the reasoning does not cover every solution of the tangent equation. This is B."
+    ],
+    "hints": [
+      "How often does tangent repeat? Use its period to write down every possible \\(x\\).",
+      "After doubling each possible angle, compare the spacing with the period of sine."
+    ]
+  },
+  "studio-20261029-19f14fa0b5c1894c4ddbb028": {
+    "solutionHtml": "<p>Let \\(F(u)=\\int_0^u e^{t^2}\\,dt\\). The integrand is continuous, so \\(F^{\\prime}(u)=e^{u^2}\\). Line I uses additivity of integrals; line II correctly differentiates \\(F(x)\\).</p><p>Line III differentiates \\(F(x^2)\\). The chain rule gives \\(F^{\\prime}(x^2)\\cdot 2x=2x e^{x^4}\\). Line III omits the factor \\(2x\\), so the first error is III: option D.</p><p>The derivative of the original integral is therefore \\(2x e^{x^4}-e^{x^2}\\).</p>",
+    "steps": [
+      "Let \\(F(u)=\\int_0^u e^{t^2}\\,dt\\). The integrand is continuous, so \\(F^{\\prime}(u)=e^{u^2}\\). Line I uses additivity of integrals; line II correctly differentiates \\(F(x)\\).",
+      "Line III differentiates \\(F(x^2)\\). The chain rule gives \\(F^{\\prime}(x^2)\\cdot 2x=2x e^{x^4}\\). Line III omits the factor \\(2x\\), so the first error is III: option D.",
+      "The derivative of the original integral is therefore \\(2x e^{x^4}-e^{x^2}\\)."
+    ],
+    "hints": [
+      "Call the integral from 0 to \\(u\\) by the name \\(F(u)\\). What does the fundamental theorem tell you about \\(F^{\\prime}(u)\\)?",
+      "Compare the derivatives of \\(F(x)\\) and \\(F(x^2)\\). Which one needs the chain rule?"
+    ]
+  },
+  "studio-20261029-16b44b0895427830e9480788": {
+    "solutionHtml": "<p>The jump directions are independent and uniform in the plane. Rotate the coordinate system so the first jump is (1,0); the other relative angles alpha,beta remain independent uniform variables on [-pi,pi]. The final displacement is (1+cos alpha+cos beta, sin alpha+sin beta).</p><p>Its squared length is R^2=3+2[cos alpha+cos beta+cos(alpha-beta)]. Using addition identities, R^2-1=8 cos(alpha/2) cos(beta/2) cos((alpha-beta)/2).</p><p>Except on boundary lines of probability zero, the first two cosine factors are positive. Hence R&lt;=1 exactly when cos((alpha-beta)/2)&lt;=0, or |alpha-beta|&gt;=pi. In the angular square of side 2pi this is two corner triangles, each with legs pi and area pi^2/2. The favorable area pi^2 divided by total area 4pi^2 is 1/4.</p>"
+  },
+  "studio-20261029-f378d4069089fa5075c9c461": {
+    "solutionHtml": "<p>Under \\(1&lt;a&lt;b\\), the largest side in the first triple is \\(b\\), so failure to form a positive-area triangle means \\(b\\ge a+1\\). The largest reciprocal side is 1, so the other failure condition is \\(1/a+1/b\\le1\\), equivalently \\(b\\ge a/(a-1)\\).</p><p>For \\(a&gt;1\\), the function \\(a+1\\) increases and \\(a/(a-1)=1+1/(a-1)\\) decreases. Their maximum is minimized at their crossing: \\[a+1=\\frac{a}{a-1}\\quad\\Longrightarrow\\quad a^2-a-1=0.\\] The allowed root is \\(a=(1+\\sqrt5)/2\\), giving \\(b=(3+\\sqrt5)/2\\). Below the crossing the decreasing bound is at least this value; above it the increasing bound is at least this value, proving global minimality.</p><p>At equality both triples are degenerate, which is allowed because only positive-area triangles are prohibited. Therefore the answer is C.</p>"
+  },
+  "studio-20261030-3211339aa82e502a8261ff8f": {
+    "solutionHtml": "<p>For a real polynomial of odd degree, the leading term has opposite signs at sufficiently large negative and positive inputs, and lower-degree terms do not change those eventual signs. Choose finite inputs \\(u&lt;v\\) with \\(P(u)P(v)&lt;0\\). A polynomial is continuous on \\([u,v]\\), so the intermediate value theorem gives \\(c\\in(u,v)\\) with \\(P(c)=0\\). Thus E directly supplies the required hypotheses.</p><p>Option D can also lead to a proof: an even-degree derivative implies an odd-degree leading term for the original polynomial, from which opposite end signs follow. However, D does not itself state the hypotheses for a direct application of the intermediate value theorem.</p>"
+  }
+}

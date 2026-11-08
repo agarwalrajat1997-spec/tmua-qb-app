@@ -13,8 +13,17 @@ export type ReleasedQuestion = SourceQuestion & {
 const root = join(process.cwd(), "content", "tmua-studio");
 const read = <T,>(name: string): T => JSON.parse(readFileSync(join(root, name), "utf8")) as T;
 const eligibility = read<{active_audit_ids: string[]; excluded_ids: string[]; bank_aliases: Record<string,string>}>("eligibility.json");
-const originalQuestions = read<ReleasedQuestion[]>("questions.json");
-const versions = read<ReleasedQuestion[]>("versions.json");
+const studentCopy = read<Record<string,{solutionHtml:string;steps?:string[];hints?:string[]}>>("student-copy-20261108.json");
+function withStudentCopy(q: ReleasedQuestion): ReleasedQuestion {
+  const edit = studentCopy[q.content_version];
+  if (!edit) return q;
+  const ref = q.audited_reference as Record<string,unknown> | undefined;
+  return {...q, solution_html:edit.solutionHtml, ...(edit.steps && ref ? {audited_reference:{
+    ...ref, ordinary_method:edit.steps.join(" "), concise_proof:edit.steps.join(" "),
+  }} : {})};
+}
+const originalQuestions = read<ReleasedQuestion[]>("questions.json").map(withStudentCopy);
+const versions = read<ReleasedQuestion[]>("versions.json").map(withStudentCopy);
 const guideFiles = read<Record<string,string>>("guide-index.json");
 const active = new Set(eligibility.active_audit_ids);
 export const canonicalQid = (qid: string) => eligibility.bank_aliases[qid] ?? qid;
@@ -101,6 +110,19 @@ export function questionGuide(q: ReleasedQuestion) {
   const hint = firstStepHints[q.content_version];
   if (hint && !guide.enrichment.hints?.length) {
     guide.enrichment.hints = [{hint_id:"first-step",stage:"orient",text:hint,skill_ids:[]}];
+  }
+  const edit = studentCopy[q.content_version];
+  if (edit?.steps && edit.hints) {
+    const e = guide.enrichment;
+    e.ordinary_method = e.concise_proof = edit.steps.join(" ");
+    e.hints = edit.hints.map((text,i)=>({hint_id:"H"+(i+1),stage:i?"method":"orient",text,skill_ids:[]}));
+    e.solution_steps = edit.steps.map((explanation,i)=>({step_id:"S"+(i+1),explanation,check:"",skill_ids:[]}));
+    // Earlier annotations discuss wording no longer present in these two questions.
+    e.error_hypotheses = []; e.shortcut_assessments = []; e.teaching_note = "";
+  }
+  if (q.content_version === "studio-20261029-30918975bbc41ae9983d6645") {
+    for (const step of guide.enrichment.solution_steps) step.explanation = step.explanation.replace(
+      "The two ranges are separate intervals, as the corrected prompt explicitly states.", "The two ranges are separate intervals.");
   }
   // Adapt public identities without rewriting the original audit archive or its hashes.
   guide.audit_qid = guide.qid;
