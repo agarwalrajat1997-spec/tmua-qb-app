@@ -94,6 +94,9 @@ function QuestionCard({ q, index, viewerId, state, onSave, onSolution, onStudio,
     } catch(e) { setError(e instanceof Error ? e.message : 'Please try again.'); }
     finally { setBusy(false); }
   }
+  const fromPreviousVersion = q.revised && hasAttempt(state) &&
+    !state?.submission_id?.startsWith(`tmua-stable-v1|${q.display_order}|version=${q.content_version}|`);
+  const attemptLabel = fromPreviousVersion ? `Earlier version · ${stateLabel(state)}` : stateLabel(state);
   const longOptions = detail?.question.options.some(o => o.html.replace(/<[^>]*>/g,'').length > 70);
   return <article ref={container} className="question-card" id={`question-${q.qid}`} data-question={q.qid} aria-labelledby={`title-${q.qid}`} tabIndex={-1}>
     <div className="question-layout"><div className="question-content">
@@ -103,11 +106,11 @@ function QuestionCard({ q, index, viewerId, state, onSave, onSolution, onStudio,
           {detail.question.options.map(o => <button key={o.label} className={`answer-option ${selection===o.label?'selected':''} ${checked && o.label===checked.answer?'correct':''} ${checked && selection===o.label && !checked.correct?'incorrect':''}`} aria-pressed={selection===o.label} disabled={!!checked || busy} onClick={() => setSelection(o.label)}><span className="answer-letter">{o.label}</span><MathHtml html={o.html} className="option-value" inline/></button>)}
         </div>
         {hints>0 && <div className="hint-box"><div className="hint-label"><Lightbulb className="icon small"/>Hint · {hints} / {detail.guide.enrichment.hints.length}</div>{detail.guide.enrichment.hints.slice(0,hints).map(h => <MathText key={h.hint_id} text={h.text} inline={false}/>)}{hints<detail.guide.enrichment.hints.length && <button className="text-link" onClick={() => setHints(n=>n+1)}>A little more help <ArrowRight className="icon small"/></button>}</div>}
-        <div className="check-row"><button className="btn primary" disabled={!selection || busy} onClick={() => { if(checked){setChecked(undefined);setSelection('');elapsed.current=0;if(activeSince.current!==null)activeSince.current=Date.now();} else void check(); }}>{busy?'Checking…':checked?'Try again':'Check answer'}</button><p className="check-message" role="status">{checked ? checked.correct ? 'Correct — well done.' : 'That answer needs another look. Try a hint or open the solution.' : state?.selected_answer ? `Previous attempt: ${state.selected_answer} · ${stateLabel(state)}` : ''}</p></div>
+        <div className="check-row"><button className="btn primary" disabled={!selection || busy} onClick={() => { if(checked){setChecked(undefined);setSelection('');elapsed.current=0;if(activeSince.current!==null)activeSince.current=Date.now();} else void check(); }}>{busy?'Checking…':checked?'Try again':'Check answer'}</button><p className="check-message" role="status">{checked ? checked.correct ? 'Correct — well done.' : 'That answer needs another look. Try a hint or open the solution.' : state?.selected_answer ? `Previous attempt: ${state.selected_answer} · ${attemptLabel}` : ''}</p></div>
       </> : <div className="question-loading" role="status">{error ? <><p>{error}</p><button className="btn" onClick={load}>Retry</button></> : 'Loading question…'}</div>}
       {detail && error && <p className="bank-error" role="alert">{error}</p>}
     </div><aside className="question-tools" aria-label={`Tools for question ${index}`}>
-      <div className="tools-top"><span className={`pill ${state?.status==='correct'?'green':state?.status==='wrong'?'warning':'grey'}`}>{stateLabel(state)}</span><button className={`icon-btn ${state?.flagged?'saved':''}`} aria-label={state?.flagged?'Unsave question':'Save question'} aria-pressed={!!state?.flagged} onClick={() => onSave(q,{flagged:!state?.flagged})}><Bookmark className="icon small"/></button></div>
+      <div className="tools-top"><span className={`pill ${state?.status==='correct'?'green':state?.status==='wrong'?'warning':'grey'}`}>{attemptLabel}</span><button className={`icon-btn ${state?.flagged?'saved':''}`} aria-label={state?.flagged?'Unsave question':'Save question'} aria-pressed={!!state?.flagged} onClick={() => onSave(q,{flagged:!state?.flagged})}><Bookmark className="icon small"/></button></div>
       <button className="tool-button solution-button" onClick={() => onSolution(q)}><BookOpen className="icon"/>Solution</button>
       <button className="tool-button ai-button" onClick={() => onStudio(q)}><Sparkles className="icon"/>AI feedback</button>
       <button className="tool-button hint-button" disabled={!detail} aria-expanded={hints>0} onClick={() => setHints(n=>n?0:1)}><Lightbulb className="icon"/>Hint</button>

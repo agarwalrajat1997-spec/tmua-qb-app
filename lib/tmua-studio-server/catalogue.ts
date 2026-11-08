@@ -12,11 +12,33 @@ export type ReleasedQuestion = SourceQuestion & {
 const root = join(process.cwd(), "content", "tmua-studio");
 const read = <T,>(name: string): T => JSON.parse(readFileSync(join(root, name), "utf8")) as T;
 const eligibility = read<{active_audit_ids: string[]; excluded_ids: string[]; bank_aliases: Record<string,string>}>("eligibility.json");
-const main = read<ReleasedQuestion[]>("questions.json");
+const originalQuestions = read<ReleasedQuestion[]>("questions.json");
 const versions = read<ReleasedQuestion[]>("versions.json");
 const guideFiles = read<Record<string,string>>("guide-index.json");
 const active = new Set(eligibility.active_audit_ids);
 export const canonicalQid = (qid: string) => eligibility.bank_aliases[qid] ?? qid;
+type OriginalRelease = {
+  previous_version: string;
+  question: ReleasedQuestion;
+  guide: import("../../src/tmua-studio/lib/audited-content").Guide;
+};
+const replacements: OriginalRelease[] = JSON.parse(gunzipSync(
+  readFileSync(join(root, "originals-20261108.json.gz"))
+).toString("utf8"));
+const replacementsById = new Map(replacements.map(r => [canonicalQid(r.question.qid), r]));
+const guidesByVersion = new Map(replacements.map(r => [r.question.content_version, r.guide]));
+const main = originalQuestions.map(old => {
+  const release = replacementsById.get(canonicalQid(old.qid));
+  if (!release) return old;
+  if (release.previous_version !== old.content_version ||
+      release.guide.version_id !== release.question.content_version ||
+      release.guide.source_sha256 !== release.question.source_sha256 ||
+      release.question.app_question_id !== old.app_question_id) throw new Error("TMUA replacement identity mismatch");
+  return release.question;
+});
+if (replacementsById.size !== 447 || main.filter(q => guidesByVersion.has(q.content_version)).length !== 447) {
+  throw new Error("Incomplete TMUA replacement release");
+}
 const byCanonical = new Map(main.map(q => [canonicalQid(q.qid), q]));
 // Historical paper numbers were reused. Only aliases proved against both
 // immutable source banks are eligible; excluded questions remain excluded.
@@ -26,8 +48,8 @@ for (const [alias, qid] of Object.entries(read<Record<string,string>>("legacy-id
   if (!/^PAPER[12]-Q[1-9]\d*$/.test(alias)) throw new Error("Invalid legacy question identity");
   if (byCanonical.has(canonical)) legacyIds.set(canonical, [...(legacyIds.get(canonical) ?? []), alias]);
 }
-const byVersion = new Map(versions.map(q => [JSON.stringify([canonicalQid(q.qid), q.content_version]), q]));
-if (main.length !== 2178 || active.size !== 2178 || eligibility.excluded_ids.length !== 22 || byCanonical.size !== main.length || main.some(q => !active.has(q.qid) || !guideFiles[q.content_version])) {
+const byVersion = new Map([...versions,...replacements.map(r => r.question)].map(q => [JSON.stringify([canonicalQid(q.qid), q.content_version]), q]));
+if (main.length !== 2178 || active.size !== 2178 || eligibility.excluded_ids.length !== 22 || byCanonical.size !== main.length || main.some(q => !active.has(q.qid) || (!guideFiles[q.content_version] && !guidesByVersion.has(q.content_version)))) {
   throw new Error("TMUA release completeness validation failed");
 }
 
@@ -40,6 +62,7 @@ export function questionMetadata(q: ReleasedQuestion) {
   return {
     exam: "tmua" as const, qid: canonicalQid(q.qid), bank_qid: canonicalQid(q.qid), audit_qid: q.qid,
     display_order: Number(q.app_question_id), app_question_id: q.app_question_id,
+    ...(guidesByVersion.has(q.content_version) ? { revised: true } : {}),
     legacy_ids: legacyIds.get(canonicalQid(q.qid)) ?? [],
     paper: q.paper, topic: q.topic, subtopic: q.subtopic, difficulty: q.difficulty,
     tags: q.tags ?? [], content_version: q.content_version, source_sha256: q.source_sha256,
@@ -53,6 +76,8 @@ export function publicQuestion(q: ReleasedQuestion) {
     guide_path: `/api/tmua/studio?action=guide&qid=${encodeURIComponent(canonicalQid(q.qid))}&contentVersion=${encodeURIComponent(q.content_version)}`};
 }
 export function questionGuide(q: ReleasedQuestion) {
+  const replacementGuide = guidesByVersion.get(q.content_version);
+  if (replacementGuide) return {...replacementGuide, audit_qid: q.qid, qid: canonicalQid(q.qid)};
   const file = guideFiles[q.content_version];
   if (!file || !/^[a-f0-9]{64}\.json\.gz$/.test(file)) return null;
   const guide = JSON.parse(gunzipSync(readFileSync(join(root,"guides",file))).toString("utf8"));
@@ -62,7 +87,9 @@ export function questionGuide(q: ReleasedQuestion) {
   guide.qid = canonicalQid(q.qid);
   guide.routes = (guide.routes ?? []).filter((route: {target_qid:string; target_content_version?:string; target_source_sha256?:string}) => {
     const target = resolveQuestion(route.target_qid, route.target_content_version);
-    return target && target.source_sha256 === route.target_source_sha256;
+    const replacement = replacementsById.get(canonicalQid(route.target_qid));
+    return target && target.source_sha256 === route.target_source_sha256 &&
+      (!replacement || target.content_version === replacement.question.content_version);
   }).map((route: Record<string,unknown>) => ({...route, audit_target_qid: route.target_qid, target_qid: canonicalQid(String(route.target_qid))}));
   return guide;
 }

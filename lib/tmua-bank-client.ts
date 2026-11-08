@@ -2,6 +2,7 @@
 export type BankQuestion = {
   qid: string;
   audit_qid?: string;
+  revised?: boolean;
   /** Only immutable, collision-checked historical IDs supplied by the catalogue. */
   legacy_ids?: string[];
   display_order: number;
@@ -394,6 +395,12 @@ export async function saveQuestionProgress(
     progress.submission_id = `tmua-stable-v1|${question.display_order}|${crypto.randomUUID()}`;
   } else if (!progress.submission_id?.startsWith(`tmua-stable-v1|${question.display_order}|`)) {
     progress.submission_id = null;
+  }
+  if (checkedAction && question.revised && progress.submission_id) {
+    const prefix = `tmua-stable-v1|${question.display_order}|`;
+    const token = `version=${question.content_version}|`;
+    const suffix = progress.submission_id.slice(prefix.length);
+    if (!suffix.startsWith(token)) progress.submission_id = prefix + token + suffix;
   }
   const legacy = makeLegacy(progress, legacyAnswers.get(`${viewerId}:${question.qid}`) ?? {});
   legacyAnswers.set(`${viewerId}:${question.qid}`, legacy);
