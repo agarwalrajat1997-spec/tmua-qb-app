@@ -80,7 +80,8 @@ export async function GET(req: Request) {
 
   const supabase = adminClient();
 
-  const { data, error } = await supabase
+  const pageSize = 500;
+  const readPage = (offset: number, withCount = false) => supabase
     .from("amc_questions")
     .select(`
       qid,
@@ -97,17 +98,22 @@ export async function GET(req: Request) {
       amc_8,
       amc_10,
       amc_12
-    `)
+    `, withCount ? { count: "exact" } : {})
     .eq("is_active", true)
     .eq(exam.column, true)
-    .order("display_order", { ascending: true });
+    .order("display_order", { ascending: true })
+    .order("qid", { ascending: true })
+    .range(offset, offset + pageSize - 1);
 
-  if (error) {
-    console.error("AMC list load failed:", error);
-    return json({ ok: false, error: error.message }, 500);
+  const first = await readPage(0, true);
+  if (first.error || first.count === null) return json({ ok: false, error: "Could not load the question list." }, 500);
+  const rows = [...(first.data || [])];
+  while (rows.length < first.count) {
+    const next = await readPage(rows.length);
+    if (next.error || !next.data?.length) return json({ ok: false, error: "The question list changed. Please reload." }, 503);
+    rows.push(...next.data);
   }
-
-  const sortedRows = [...(data || [])].sort(amcOriginalOrder);
+  const sortedRows = rows.sort(amcOriginalOrder);
 
   if (searchParams.get("summary") === "1") {
     const topics = new Map<string, { topic: string; count: number; examples: Set<string> }>();

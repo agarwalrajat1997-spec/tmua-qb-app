@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "../ib/ib.module.css";
-import PastPaperPracticeLink from "../components/PastPaperPracticeLink";
+import { PAST_PAPER_PRACTICE_URL } from "@/lib/past-paper-practice";
 import { PRACTICE_TESTS, AMC_RESOURCE_SECTIONS, AMC12_ARCHIVE } from "./amc-catalogue";
 
 const exams = ["8", "10", "12"] as const;
@@ -17,7 +17,7 @@ const sections = [
 type Section = typeof sections[number][0];
 type Props = { email?: string | null; hasTmua?: boolean; initialSection?: Section | null };
 const href = (exam: Exam, view: Section) => "/amc?exam=" + exam + (view === "questions" ? "" : "&section=" + view);
-const bank = (exam: Exam, topic?: string) => "/amc-" + exam + "-question-bank/index.html" + (topic ? "?topic=" + encodeURIComponent(topic) : "?scope=all");
+const bank = (exam: Exam, topic: string) => "/amc-" + exam + "-question-bank/index.html?topic=" + encodeURIComponent(topic);
 type Topic = { topic: string; count: number; examples: string[] };
 type Summary = { exam: string; topics: Topic[]; count: number };
 
@@ -61,7 +61,7 @@ export default function AMCDashboardClient({ email, hasTmua, initialSection }: P
         {!live && <p role="status">{failure === exam ? "The topic counts could not be loaded." : "Loading topics…"}</p>}
         {live && !filtered.length && <p role="status">No matching topics. Try a different search.</p>}
         <div className={styles.topicGrid}>{filtered.map(t => card(bank(exam,t.topic),t.count + " questions",t.topic.replace(/^\d+[_\s-]*/, ""),t.examples.slice(0,3).join(" · "),"Practise topic","AMC " + exam))}</div>
-        <p style={{margin:"20px 0"}}><a href={bank(exam)} className={styles.primaryButton}>Open full AMC {exam} question bank ↗</a></p>{exam !== "12" && <PastPaperPracticeLink/>}</>}
+        <p style={{margin:"20px 0"}}><a className={styles.cardAction} href={PAST_PAPER_PRACTICE_URL} target="_blank" rel="noopener noreferrer">Practise with past papers <span aria-hidden="true">↗</span><span className={styles.srOnly}> (opens in a new tab)</span></a></p></>}
       {view === "practice-tests" && <><div className={styles.sectionHeading}><div><span className={styles.eyebrow}>TIMED PRACTICE</span><h2>AMC {exam} papers</h2></div></div><div className={styles.topicGrid}>{[...tests].sort((a,b) => Number(!/Diagnostic|Pre-AMC/.test(a.title)) - Number(!/Diagnostic|Pre-AMC/.test(b.title))).map(t => card(t.href,t.tags.slice(0,2).join(" · "),t.title,t.detail,"Start test",t.level))}
         {exam === "12" && AMC12_ARCHIVE.map(p => <article key={p.title} className={styles.topicCard}><div className={styles.collectionLink}><div className={styles.cardTop}><span className={styles.topicCount}>25 questions · 75 minutes</span></div><h3>{p.title}</h3><p>Past paper · Self-marked. {"note" in p ? p.note : "Use the printed key when you finish."}</p><div className={styles.cardBottom}><a href={resources.resources[1].href+"#page="+p.keyPage}>Answer key · p. {p.keyPage}</a><a className={styles.cardAction} href={resources.resources[1].href+"#page="+p.page}>Open paper · p. {p.page} ↗</a></div></div></article>)}</div>{exam === "12" && <p className={styles.emptyCaption}>These papers open in the AMC 12 compendium. They do not submit a digital score.</p>}</>}
       {view === "resources" && <><div className={styles.sectionHeading}><div><span className={styles.eyebrow}>REVISION LIBRARY</span><h2>AMC {exam} resources</h2></div></div><div className={styles.topicGrid}>{resources.resources.map(r => card(r.href,r.kind,r.title,r.description,"Open PDF",r.pages+" pages"))}</div></>}

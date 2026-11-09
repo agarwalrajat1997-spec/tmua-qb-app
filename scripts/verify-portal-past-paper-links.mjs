@@ -86,7 +86,8 @@ assert.ok(/\{!loading\s*&&\s*<footer\s+className=["']bank-past-paper-link["']\s*
 assert.doesNotMatch(amc, /["']Past Papers["']|["']past-papers["']|>\s*(?:AMC\s+)?Past Papers\s*</, "AMC must not retain its removed Past Papers view or navigation.");
 assert.doesNotMatch(amc, /amc-past-paper-practice|pastPaperFrame|<iframe\b/, "AMC must not retain the embedded archive section.");
 assert.ok(amc.includes('["8", "10", "12"]') && amc.includes('"Practice tests"') && amc.includes('"Resources"'), "Preserve all exam libraries.");
-assert.match(amc, /Open full AMC .{0,40}question bank[\s\S]{0,110}<PastPaperPracticeLink/, "Link eligible AMC students to past papers beside their full-bank action.");
+assert.doesNotMatch(amc, /Open full AMC|scope=all|<PastPaperPracticeLink/, "Topic tiles are the complete bank entry points.");
+assert.match(amc, /href=\{PAST_PAPER_PRACTICE_URL\}[^>]*>Practise with past papers/, "Show the canonical past-paper link for every AMC pathway.");
 
 assert.match(amcRoute, /import\s*\{\s*PAST_PAPER_PRACTICE_URL\s*\}\s*from\s*["']@\/lib\/past-paper-practice["']/);
 const legacyRedirect = amcRoute.match(/if\s*\(section\s*===\s*["']past-papers["']\)\s*(?:\{\s*)?redirect\(PAST_PAPER_PRACTICE_URL\)/);
