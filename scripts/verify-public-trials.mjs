@@ -33,7 +33,7 @@ const rpcCalls = [];
 const queryCalls = [];
 const loginMails = [];
 const welcomeMails = [];
-let grantFailure, claimFailure, otpFailure, welcomeOk = true, markerFailure, uniqueFailure;
+let grantFailure, grantResultOverride, claimFailure, otpFailure, welcomeOk = true, markerFailure, uniqueFailure;
 const tableKey = (program, email) => `${program}:${email}`;
 function query(table) {
   assert.match(table, /^(tmua|esat|ib)_free_trials$/);
@@ -72,6 +72,9 @@ const db = {
       assert.deepEqual(Object.keys(args).sort(), ['p_email', 'p_student_name']);
       if (uniqueFailure) { uniqueFailure = false; return Promise.resolve({ error: { code: '23505' } }); }
       if (grantFailure) return Promise.resolve({ error: grantFailure });
+      // Contract fixtures exercise the route's response to database decisions;
+      // the shared lifetime-claim rules are tested against Postgres separately.
+      if (grantResultOverride) return Promise.resolve({ data: [grantResultOverride], error: null });
       const program = name.split('_')[1];
       const key = tableKey(program, args.p_email);
       let row = trialRows.get(key);
@@ -148,9 +151,43 @@ for (const program of ['tmua', 'esat', 'ib']) {
   assert.equal(results.filter(result => result.login_email_sent).length, 1, 'Only one concurrent resend wins');
   assert.equal(loginMails.length, sent + 1);
   assert.ok(results.every(result => result.expires_at === data.expires_at));
+  assert.equal(trialRows.get(tableKey(program, email)).started_at, new Clock(Date.parse(data.expires_at) - 48 * 3_600_000).toISOString());
+  assert.equal(trialRows.get(tableKey(program, email)).expires_at, data.expires_at);
+  assert.equal(welcomeMails.at(-1).expiresAt, data.expires_at);
   assert.ok(queryCalls.filter(call => call.table === `${program}_free_trials`)
     .every(call => call.conditions.some(([op, field]) => op === 'gt' && field === 'expires_at')));
 }
+
+// A trial used in another portal is an HTTP 409 even when that original trial
+// is still active. The route must not resend emails, update cooldown metadata,
+// or write access records after the database rejects the new claim. We supply
+// the RPC decision explicitly instead of reimplementing the ledger in this mock.
+for (const priorProgram of ['tmua', 'esat', 'ib']) {
+  const email = `${priorProgram}_student@example.com`;
+  const original = trialRows.get(tableKey(priorProgram, email));
+  assert.ok(Date.parse(original.expires_at) > now);
+  grantResultOverride = { out_status: 'trial_already_used',
+    out_started_at: original.started_at, out_expires_at: original.expires_at };
+  for (const requestedProgram of ['tmua', 'esat', 'ib'].filter(program => program !== priorProgram)) {
+    const before = { rpc: rpcCalls.length, queries: queryCalls.length,
+      login: loginMails.length, welcome: welcomeMails.length, rows: plain([...trialRows]) };
+    const denied = await post(requestedProgram, ` ${email.toUpperCase()} `);
+    assert.equal(denied.status, 409, `${priorProgram} claim blocks a new ${requestedProgram} trial`);
+    const deniedBody = await denied.json();
+    assert.equal(deniedBody.ok, false);
+    assert.equal(deniedBody.status, 'trial_already_used');
+    assert.match(deniedBody.message, /one lifetime trial across TMUA, ESAT and IB/);
+    assert.equal(deniedBody.expires_at, undefined, 'Do not present another portal expiry as a new trial');
+    assert.equal(rpcCalls.length, before.rpc + 1, 'No email marker or second grant call after rejection');
+    assert.deepEqual(rpcCalls.at(-1), { name: `grant_${requestedProgram}_free_trial`,
+      args: { p_email: email, p_student_name: 'Example Student' } });
+    assert.equal(queryCalls.length, before.queries, 'No cooldown metadata writes after rejection');
+    assert.equal(loginMails.length, before.login);
+    assert.equal(welcomeMails.length, before.welcome);
+    assert.deepEqual(plain([...trialRows]), before.rows);
+  }
+}
+grantResultOverride = undefined;
 
 const beforeInvalid = rpcCalls.length;
 for (const [body, status] of [[null, 400], [[], 400], ['not an object', 400],
@@ -177,10 +214,18 @@ assert.equal((await routes.tmua.OPTIONS(new Request('https://portal.invalid'))).
 
 now = BASE_TIME + 49 * 3_600_000;
 const expiredMailCount = loginMails.length;
-const expired = await post('tmua', 'tmua_student@example.com');
-assert.equal(expired.status, 409);
-assert.equal((await expired.json()).status, 'trial_already_used');
+const expiredWelcomeCount = welcomeMails.length;
+const expiredQueryCount = queryCalls.length;
+const expiredRows = plain([...trialRows]);
+for (const program of ['tmua', 'esat', 'ib']) {
+  const expired = await post(program, `${program}_student@example.com`);
+  assert.equal(expired.status, 409);
+  assert.equal((await expired.json()).status, 'trial_already_used');
+}
 assert.equal(loginMails.length, expiredMailCount);
+assert.equal(welcomeMails.length, expiredWelcomeCount);
+assert.equal(queryCalls.length, expiredQueryCount);
+assert.deepEqual(plain([...trialRows]), expiredRows);
 grantFailure = { code: 'database_down' };
 assert.equal((await post('esat', 'failure@example.com')).status, 500);
 grantFailure = undefined;
@@ -404,5 +449,5 @@ assert.equal(new Set(dashboardIds).size, 19);
 for (const id of dashboardIds) {
   assert.ok(canonicalRegistry.getCanonicalTmuaTest(id), `${id}: must be covered by request-time TMUA access gate`);
 }
-console.log('Public TMUA/ESAT/IB trials passed: validation, exact RPC contract, 48h/repeats, atomic cooldown, delivery failures, and ESAT class expiry protection (all isolated mocks).');
+console.log('Public TMUA/ESAT/IB trials passed: validation, exact RPC contract, 48h/repeats, cross-portal and expired-trial rejection without email/writes, atomic cooldown, delivery failures, and ESAT class expiry protection (all isolated mocks).');
 console.log('TMUA request-time trial expiry passed: QB and new mock submissions reject expired/equal/invalid expiry; permanent and longer paid access preserved; outages fail closed before scoring.');
