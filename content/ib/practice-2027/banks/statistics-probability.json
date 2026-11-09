@@ -1,0 +1,398 @@
+[
+  {
+    "title": "Can a regression be reversed?",
+    "stem": "Six ridge monitoring sites record exposure $x$ and weathering index $y$. The paired observations are (2,3), (4,4), (5,7), (7,6), (8,9), (10,10). Use a GDC. A site is selected uniformly from these six.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Find the means and the regression of $y$ on $x$. Use it to predict $y$ when $x=6.5$.",
+        "marks": 4
+      },
+      {
+        "label": "b",
+        "prompt": "Estimate $x$ for $y=8$ using the appropriate regression. Compare with inverting the first line.",
+        "marks": 4
+      },
+      {
+        "label": "c",
+        "prompt": "Show that the product of the two fitted slopes agrees with the square of the correlation coefficient. Explain when the two regression lines would coincide for data with non-zero variances.",
+        "marks": 4
+      },
+      {
+        "label": "d",
+        "prompt": "Let $H$ denote an observed index at least 7 and $E$ denote exposure at least 7. Calculate $P(H|E)$ and assess independence in this empirical distribution.",
+        "marks": 4
+      },
+      {
+        "label": "e",
+        "prompt": "A colleague substitutes the fitted values for measured $y$ before estimating $P(H|E)$. Find their answer and explain the discrepancy.",
+        "marks": 3
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "A1",
+            "text": "The means are 6 and 6.5."
+          },
+          {
+            "code": "M1",
+            "text": "Fit $y$ on $x$ by least squares."
+          },
+          {
+            "code": "A1",
+            "text": "$y=1.21429+0.880952x$."
+          },
+          {
+            "code": "A1",
+            "text": "Prediction 6.94."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Fit $x$ on $y$."
+          },
+          {
+            "code": "A1",
+            "text": "$x=-0.413333+0.986667y$, giving 7.48."
+          },
+          {
+            "code": "M1",
+            "text": "Invert the first prediction line to obtain 7.70."
+          },
+          {
+            "code": "R1",
+            "text": "The least-squares residuals are measured in different coordinate directions."
+          }
+        ]
+      },
+      {
+        "part": "c",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Multiply 0.880952 by 0.986667."
+          },
+          {
+            "code": "A1",
+            "text": "Product is 0.8692, agreeing with $0.932312^2$."
+          },
+          {
+            "code": "M1",
+            "text": "Coincidence requires reciprocal slopes, hence a product of 1."
+          },
+          {
+            "code": "R1",
+            "text": "This occurs when $|r|=1$ and all points lie on one non-horizontal, non-vertical line."
+          }
+        ]
+      },
+      {
+        "part": "d",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Three sites meet E and two also meet H."
+          },
+          {
+            "code": "A1",
+            "text": "$P(H|E)=2/3$."
+          },
+          {
+            "code": "A1",
+            "text": "$P(H)=3/6=1/2$."
+          },
+          {
+            "code": "R1",
+            "text": "These differ, so the events are dependent."
+          }
+        ]
+      },
+      {
+        "part": "e",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "At $x=7,8,10$ the fitted values are approximately 7.38, 8.26 and 10.0."
+          },
+          {
+            "code": "A1",
+            "text": "The resulting fraction is 1."
+          },
+          {
+            "code": "R1",
+            "text": "Thresholding a conditional mean discards residual variation, including the observed (7,6)."
+          }
+        ]
+      }
+    ],
+    "marks": 19,
+    "id": "ib-aa-sp-841",
+    "subject": "math-aa-hl",
+    "collectionId": "statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 841,
+    "syllabusCode": "4.10",
+    "subtopic": "Reverse regression and conditional probability",
+    "difficulty": "hard",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "problem-solving",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 841
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  },
+  {
+    "title": "What happens when the sample is reweighted?",
+    "stem": "A survey has two regions. In region A, 60 of 100 shops sell an item and, among those 60, 24 offer delivery. In B, 20 of 50 sell it and, among those 20, 16 offer delivery. A sampling scheme first chooses A with probability $w$ and B otherwise, then chooses one shop uniformly from the selected region. Let $S$ mean the shop sells the item and $D$ mean it sells the item with delivery.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Derive expressions for $P(S)$ and $P(D)$ and hence for $P(D|S)$.",
+        "marks": 3
+      },
+      {
+        "label": "b",
+        "prompt": "Find the choice of $w$ for which half the selling shops offer delivery under this scheme. Compare with choosing uniformly from all 150 shops.",
+        "marks": 3
+      },
+      {
+        "label": "c",
+        "prompt": "For $0<w<1$ determine whether region and delivery are independent given that the shop sells the item. Justify.",
+        "marks": 3
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "A1",
+            "text": "$P(S)=0.6w+0.4(1-w)=0.4+0.2w$."
+          },
+          {
+            "code": "A1",
+            "text": "$P(D)=0.24w+0.32(1-w)=0.32-0.08w$."
+          },
+          {
+            "code": "M1",
+            "text": "Since $D$ is contained in $S$, divide the second expression by the first."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Equate $0.32-0.08w$ to $0.5(0.4+0.2w)$."
+          },
+          {
+            "code": "A1",
+            "text": "$w=2/3$."
+          },
+          {
+            "code": "R1",
+            "text": "A contains two-thirds of the shops, so this matches uniform selection from all shops."
+          }
+        ]
+      },
+      {
+        "part": "c",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Conditional delivery proportions among sellers are $24/60$ and $16/20$."
+          },
+          {
+            "code": "A1",
+            "text": "These are 0.4 and 0.8."
+          },
+          {
+            "code": "R1",
+            "text": "Both regions have positive conditional weight, so the different probabilities rule out conditional independence."
+          }
+        ]
+      }
+    ],
+    "marks": 9,
+    "id": "ib-aa-sp-842",
+    "subject": "math-aa-hl",
+    "collectionId": "statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 842,
+    "syllabusCode": "4.11",
+    "subtopic": "Conditional probability and sampling",
+    "difficulty": "hard",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 842
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  },
+  {
+    "title": "Two different faces",
+    "stem": "A fair tetrahedral die has faces numbered 1 to 4. It is rolled twice. A technician records the larger score, using the common score if there is a tie.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Find the probability that the score recorded is 3.",
+        "marks": 3
+      },
+      {
+        "label": "b",
+        "prompt": "In 256 independent trials, give the expected number recording 3. A student predicts exactly this many. Comment.",
+        "marks": 3
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "There are 16 equally likely ordered outcomes."
+          },
+          {
+            "code": "M1",
+            "text": "Count outcomes with both values at most 3 and subtract those with both at most 2."
+          },
+          {
+            "code": "A1",
+            "text": "$(9-4)/16=5/16$."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Multiply the event probability by 256."
+          },
+          {
+            "code": "A1",
+            "text": "The expectation is 80."
+          },
+          {
+            "code": "R1",
+            "text": "Actual counts vary between runs. An expectation is a long-run average."
+          }
+        ]
+      }
+    ],
+    "marks": 6,
+    "id": "ib-aa-sp-843",
+    "subject": "math-aa-hl",
+    "collectionId": "statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 843,
+    "syllabusCode": "4.5",
+    "subtopic": "Sample spaces and expected counts",
+    "difficulty": "medium",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 843
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  },
+  {
+    "title": "A survey of two shifts",
+    "stem": "A factory employs 240 day-shift workers and 60 night-shift workers. A manager surveys the first 20 arrivals for each shift and reports that 9 day-shift respondents and 15 night-shift respondents want a later start.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Estimate the proportion favouring the change after allowing for the different shift sizes. Compare with the unweighted survey proportion.",
+        "marks": 3
+      },
+      {
+        "label": "b",
+        "prompt": "Propose a probability sample of 40 workers, with proportional representation. Explain one plausible source of bias that weighting alone cannot remove.",
+        "marks": 3
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Weight 9/20 and 15/20 by 240/300 and 60/300."
+          },
+          {
+            "code": "A1",
+            "text": "The weighted estimate is 0.51."
+          },
+          {
+            "code": "A1",
+            "text": "The unweighted proportion is 24/40 or 0.60."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "A1",
+            "text": "Select 32 day and 8 night workers."
+          },
+          {
+            "code": "M1",
+            "text": "Randomly select workers without replacement from each complete roster."
+          },
+          {
+            "code": "R1",
+            "text": "First arrivals may systematically prefer earlier starts even within the same shift."
+          }
+        ]
+      }
+    ],
+    "marks": 6,
+    "id": "ib-aa-sp-844",
+    "subject": "math-aa-hl",
+    "collectionId": "statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 844,
+    "syllabusCode": "4.1",
+    "subtopic": "Sampling and bias",
+    "difficulty": "medium",
+    "calculator": false,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 844
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  }
+]

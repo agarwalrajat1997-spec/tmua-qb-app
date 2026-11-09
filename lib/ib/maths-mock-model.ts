@@ -1,6 +1,7 @@
 import catalog from "@/content/ib/aa-mocks-2026/catalog.json";
 import aiCatalog from "@/content/ib/ai-mocks-2026/catalog.json";
 
+import extraAi from "@/content/ib/practice-2027/ai-catalog.json";
 import aiSlCatalog from "@/content/ib/ai-sl-mocks-2026/catalog.json";
 
 export type MathsMockStrand = "aa" | "ai";
@@ -24,7 +25,7 @@ export type MathsMockMarks = Record<string, number>;
 export type MathsMockStage = "instructions" | "running" | "pending" | "review";
 export type MathsMockDraft = { version: 1; attemptId: string; name: string; startedAt: number; deadline: number; elapsed: number; stage: MathsMockStage; index: number; answers: MathsMockAnswers; flags: Record<number, boolean>; marks: MathsMockMarks };
 export const MATHS_MOCKS = catalog as MathsMockMeta[];
-export const AI_MATHS_MOCKS = aiCatalog as MathsMockMeta[];
+export const AI_MATHS_MOCKS = [...aiCatalog, ...extraAi].sort((a,b)=>a.id.localeCompare(b.id)) as MathsMockMeta[];
 export const AI_SL_MATHS_MOCKS = aiSlCatalog as MathsMockMeta[];
 export const ALL_MATHS_MOCKS = [...MATHS_MOCKS, ...AI_MATHS_MOCKS, ...AI_SL_MATHS_MOCKS];
 export const mathsStrand = (paper: Pick<MathsMockMeta, "strand">): MathsMockStrand => paper.strand ?? "aa";

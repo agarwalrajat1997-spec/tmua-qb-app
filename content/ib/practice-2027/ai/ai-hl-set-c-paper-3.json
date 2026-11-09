@@ -1,0 +1,402 @@
+{
+  "id": "ai-hl-set-c-paper-3",
+  "title": "Mathematics AI HL · Set C · Paper 3",
+  "minutes": 75,
+  "marks": 55,
+  "questions": [
+    {
+      "stem": "**Redistributing a shared fleet**\n\nSix hundred reusable crates circulate between depots A and B. Each evening 30% of the crates at A go to B and 20% of those at B go to A. The rest stay. Let $x_n$ be the expected number at A after $n$ evenings. Initially $x_0=480$. Use a column state vector in the order A, B.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Write the transition matrix and find the expected numbers at both depots after one evening.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Show that $x_{n+1}=0.5x_n+120$. Explain why the constant is independent of $n$.",
+          "marks": 3
+        },
+        {
+          "label": "c",
+          "prompt": "Find the equilibrium allocation. Use a deviation from equilibrium to obtain a formula for $x_n$.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Determine the first evening on which A is within five crates of equilibrium. Show that your answer is the first.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "The manager claims that if the fleet starts at any allocation, A will eventually have exactly 240 crates in expectation. Evaluate the claim.",
+          "marks": 3
+        },
+        {
+          "label": "f",
+          "prompt": "A van now returns $s$ extra crates from B to A after each ordinary transfer. Find the least whole $s$ for which A’s long-run expected stock is at least 300. Check availability at equilibrium.",
+          "marks": 5
+        },
+        {
+          "label": "g",
+          "prompt": "Operating the van costs 18 units per crate moved per evening. A shortage below 300 at A costs 50 units per missing crate per evening. For whole $0≤s≤60$, determine the long-run cost-minimizing policy under this expected-stock model. Explain one limitation of the cost model.",
+          "marks": 6
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use starting depots as columns."
+            },
+            {
+              "code": "A1",
+              "text": "Rows are (0.7, 0.2) and (0.3, 0.8)."
+            },
+            {
+              "code": "A1",
+              "text": "Multiplying by (480,120) gives (360,240)."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The contribution arriving from B is $0.2(600-x_n)$."
+            },
+            {
+              "code": "A1",
+              "text": "Adding $0.7x_n$ gives the stated recurrence."
+            },
+            {
+              "code": "R1",
+              "text": "The fleet size stays at 600 and the fraction transferred from B is fixed."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $L=0.5L+120$."
+            },
+            {
+              "code": "A1",
+              "text": "The allocation is (240,360)."
+            },
+            {
+              "code": "M1",
+              "text": "The deviation obeys $x_{n+1}-240=0.5(x_n-240)$."
+            },
+            {
+              "code": "A1",
+              "text": "Thus $x_n=240+240(0.5)^n$."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Require $240(0.5)^n≤5$."
+            },
+            {
+              "code": "A1",
+              "text": "The real boundary is approximately 5.585."
+            },
+            {
+              "code": "A1",
+              "text": "Evening 6 has deviation 3.75."
+            },
+            {
+              "code": "R1",
+              "text": "Evening 5 has deviation 7.5, and deviations decrease."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "For any start $x_n-240=(x_0-240)(0.5)^n$."
+            },
+            {
+              "code": "R1",
+              "text": "A non-zero deviation keeps its sign at every finite time."
+            },
+            {
+              "code": "A1",
+              "text": "Equality occurs at finite time only if the start is already the equilibrium."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Add $s$ after the transfer."
+            },
+            {
+              "code": "M1",
+              "text": "Solve $L=0.5L+120+s$."
+            },
+            {
+              "code": "A1",
+              "text": "$L=240+2s$."
+            },
+            {
+              "code": "A1",
+              "text": "The least integer is 30."
+            },
+            {
+              "code": "R1",
+              "text": "At the (300,300) equilibrium the regular transfer leaves 330 at B, enough to return 30."
+            }
+          ]
+        },
+        {
+          "part": "g",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Long-run shortage is $\\max(60-2s,0)$."
+            },
+            {
+              "code": "M1",
+              "text": "Total modelled cost is $18s+50\\max(60-2s,0)$."
+            },
+            {
+              "code": "A1",
+              "text": "Up to 30 the cost is $3000-82s$."
+            },
+            {
+              "code": "A1",
+              "text": "From 30 it is $18s$."
+            },
+            {
+              "code": "R1",
+              "text": "The first decreases and the second increases, so use 30 at a cost of 540."
+            },
+            {
+              "code": "R1",
+              "text": "Actual daily shortages vary. A penalty computed from mean stock can understate expected shortage cost."
+            }
+          ]
+        }
+      ],
+      "marks": 28,
+      "number": 1,
+      "section": "",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 610 210\"><title>Evening crate movements between depots</title><rect width=\"610\" height=\"210\" fill=\"white\"/><g font-family=\"Arial,sans-serif\" font-size=\"17\" fill=\"black\"><rect x=\"35\" y=\"72\" width=\"110\" height=\"66\" rx=\"5\" stroke=\"black\" fill=\"white\" stroke-width=\"2\"/><rect x=\"465\" y=\"72\" width=\"110\" height=\"66\" rx=\"5\" stroke=\"black\" fill=\"white\" stroke-width=\"2\"/><text x=\"90\" y=\"111\" text-anchor=\"middle\">Depot A</text><text x=\"520\" y=\"111\" text-anchor=\"middle\">Depot B</text><path d=\"M145 88 H464 M453 82 L464 88 L453 94 M465 122 H146 M157 116 L146 122 L157 128\" stroke=\"black\" stroke-width=\"2\" fill=\"none\"/><text x=\"305\" y=\"74\" text-anchor=\"middle\">30% of depot A stock</text><text x=\"305\" y=\"155\" text-anchor=\"middle\">20% of depot B stock</text><text x=\"305\" y=\"193\" text-anchor=\"middle\">Other crates stay at their starting depot.</text></g></svg>",
+      "syllabusRefs": [
+        "AHL 1.14",
+        "AHL 4.19"
+      ]
+    },
+    {
+      "stem": "**Water storage through a tide**\n\nA collection tank starts with 18 cubic metres of water. From $t=0$ to $12$ hours its inflow is $6+4\\sin(\\pi t/6)$ cubic metres per hour, and a pump removes 7 cubic metres per hour. Begin with an unlimited tank. Use radians.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the net rate at $t=0$ and at $t=3$.",
+          "marks": 2
+        },
+        {
+          "label": "b",
+          "prompt": "Find an expression for the stored volume $V(t)$ and verify the initial condition.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Determine when the unlimited tank reaches its greatest volume and find this volume. Justify your choice on the whole interval.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "The actual tank holds 25 cubic metres. Find when spillage first occurs and how much is spilled before inflow next falls below pump output.",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Find the actual volume at 12 hours. Explain whether the pump runs dry at any time.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "The operator can change the starting volume while leaving both rates unchanged. Find the full interval of starting volumes that avoid overflow and keep the tank from emptying throughout the 12 hours. Touching full capacity is allowed.",
+          "marks": 5
+        },
+        {
+          "label": "g",
+          "prompt": "A technician estimates volume change using readings of net rate at $t=0,6,12$ and two trapezia. Compare the estimate with the true net change, and judge whether those readings can certify that no spill occurred.",
+          "marks": 4
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "At 0 the net rate is −1 cubic metre per hour."
+            },
+            {
+              "code": "A1",
+              "text": "At 3 it is 3 cubic metres per hour."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Integrate $-1+4\\sin(\\pi t/6)$."
+            },
+            {
+              "code": "A1",
+              "text": "An antiderivative is $-t-(24/\\pi)\\cos(\\pi t/6)$."
+            },
+            {
+              "code": "A1",
+              "text": "$V(t)=18-t+(24/\\pi)(1-\\cos(\\pi t/6))$."
+            },
+            {
+              "code": "R1",
+              "text": "Substitution gives $V(0)=18$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $\\sin(\\pi t/6)=1/4$."
+            },
+            {
+              "code": "A1",
+              "text": "Critical times are 0.483 and 5.517 hours."
+            },
+            {
+              "code": "R1",
+              "text": "Net rate changes from positive to negative at the second root. End volumes are 18 and 6, both smaller."
+            },
+            {
+              "code": "A1",
+              "text": "Maximum is 27.5 cubic metres at 5.52 h."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Solve $V(t)=25$ on its increasing branch."
+            },
+            {
+              "code": "A1",
+              "text": "First reaches capacity at 3.820 h."
+            },
+            {
+              "code": "M1",
+              "text": "Integrate the positive net inflow from this crossing to the maximum, or subtract 25 from peak unlimited volume."
+            },
+            {
+              "code": "A1",
+              "text": "Total spilled is 2.52 cubic metres."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "After the rate changes sign the tank falls below capacity and stays below it."
+            },
+            {
+              "code": "A1",
+              "text": "Final volume is $6-2.51887=3.48$ cubic metres."
+            },
+            {
+              "code": "R1",
+              "text": "Before spilling, the early local minimum is approximately 17.76."
+            },
+            {
+              "code": "R1",
+              "text": "The post-spill minimum is at 12 h and is positive, so pumping was continuous."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Changing the starting volume translates the unlimited-volume graph vertically."
+            },
+            {
+              "code": "M1",
+              "text": "Relative to the start, the greatest rise is 9.51887 cubic metres."
+            },
+            {
+              "code": "A1",
+              "text": "Upper bound is $25-9.51887=15.48113$."
+            },
+            {
+              "code": "M1",
+              "text": "Greatest fall is 12, attained at the endpoint (the early dip is smaller)."
+            },
+            {
+              "code": "A1",
+              "text": "Required starting volume lies in $(12,15.48113\\ldots]$ cubic metres."
+            }
+          ]
+        },
+        {
+          "part": "g",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "All three readings are −1, so the trapezoidal change is −12 cubic metres."
+            },
+            {
+              "code": "A1",
+              "text": "The exact unlimited change is also −12 over one full period."
+            },
+            {
+              "code": "R1",
+              "text": "Positive and negative oscillatory contributions cancel over this interval."
+            },
+            {
+              "code": "R1",
+              "text": "The sparse readings miss the interior maximum. With the original starting volume an overflow did occur."
+            }
+          ]
+        }
+      ],
+      "marks": 27,
+      "number": 2,
+      "section": "",
+      "syllabusRefs": [
+        "AHL 5.11",
+        "AHL 5.12"
+      ]
+    }
+  ],
+  "course": "hl",
+  "strand": "ai",
+  "set": "C",
+  "paper": "3",
+  "calculator": true
+}

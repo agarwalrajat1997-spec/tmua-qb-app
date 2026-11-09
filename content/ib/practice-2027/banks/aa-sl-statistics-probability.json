@@ -1,0 +1,340 @@
+[
+  {
+    "title": "Two different faces",
+    "stem": "A fair tetrahedral die has faces numbered 1 to 4. It is rolled twice. A technician records the larger score, using the common score if there is a tie.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Find the probability that the score recorded is 3.",
+        "marks": 3
+      },
+      {
+        "label": "b",
+        "prompt": "In 256 independent trials, give the expected number recording 3. A student predicts exactly this many. Comment.",
+        "marks": 3
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "There are 16 equally likely ordered outcomes."
+          },
+          {
+            "code": "M1",
+            "text": "Count outcomes with both values at most 3 and subtract those with both at most 2."
+          },
+          {
+            "code": "A1",
+            "text": "$(9-4)/16=5/16$."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Multiply the event probability by 256."
+          },
+          {
+            "code": "A1",
+            "text": "The expectation is 80."
+          },
+          {
+            "code": "R1",
+            "text": "Actual counts vary between runs. An expectation is a long-run average."
+          }
+        ]
+      }
+    ],
+    "marks": 6,
+    "id": "ib-aasl-sp-841",
+    "subject": "math-aa-sl",
+    "collectionId": "aa-sl-statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 841,
+    "syllabusCode": "4.5",
+    "subtopic": "Sample spaces and expected counts",
+    "difficulty": "medium",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 841
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  },
+  {
+    "title": "A fair simulation from digits",
+    "stem": "A simulator produces independent random digits 0–9 with equal probabilities. A game needs three equally likely colours. Lin assigns 0–3 to red, 4–6 to blue and 7–9 to green.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Calculate the probability of two reds in the first two colours under Lin’s rule. Compare with a fair game.",
+        "marks": 2
+      },
+      {
+        "label": "b",
+        "prompt": "Design a colour rule using the same generator that gives three equally likely colours. Justify it.",
+        "marks": 3
+      },
+      {
+        "label": "c",
+        "prompt": "For your rule using one discarded digit, find the probability that at least one redraw is required while producing the first four colours.",
+        "marks": 2
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Use independence to square the probability of red."
+          },
+          {
+            "code": "A1",
+            "text": "Lin gives 0.16, whereas fairness gives $1/9$."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Assign three digits apiece, for example 0–2, 3–5 and 6–8."
+          },
+          {
+            "code": "A1",
+            "text": "Discard 9 and draw again."
+          },
+          {
+            "code": "R1",
+            "text": "Conditional on acceptance each group has probability $3/9$."
+          }
+        ]
+      },
+      {
+        "part": "c",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Use the complement of four immediate acceptances."
+          },
+          {
+            "code": "A1",
+            "text": "$1-0.9^4=0.3439$."
+          }
+        ]
+      }
+    ],
+    "marks": 7,
+    "id": "ib-aasl-sp-842",
+    "subject": "math-aa-sl",
+    "collectionId": "aa-sl-statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 842,
+    "syllabusCode": "4.5",
+    "subtopic": "Random simulations",
+    "difficulty": "medium",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 842
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  },
+  {
+    "title": "A second check on a parcel",
+    "stem": "At a sorting depot, 12% of parcels need relabelling. A scanner flags 85% of those needing relabelling and 5% of all other parcels. A random parcel is selected.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Find the probability it is flagged.",
+        "marks": 2
+      },
+      {
+        "label": "b",
+        "prompt": "Given that it is flagged, find the probability it needs relabelling. Explain why the answer differs from 0.85.",
+        "marks": 3
+      },
+      {
+        "label": "c",
+        "prompt": "The false-flag rate is adjustable. Find the largest false-flag rate for which at least 80% of flagged parcels need relabelling, with other rates fixed.",
+        "marks": 3
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Add the two mutually exclusive routes to a flag."
+          },
+          {
+            "code": "A1",
+            "text": "$0.12(0.85)+0.88(0.05)=0.146$."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Divide $0.12(0.85)$ by 0.146."
+          },
+          {
+            "code": "A1",
+            "text": "$51/73≈0.699$."
+          },
+          {
+            "code": "R1",
+            "text": "The 85% is conditioned on a parcel needing relabelling. The group of flagged parcels also contains false alarms."
+          }
+        ]
+      },
+      {
+        "part": "c",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Set $0.102/(0.102+0.88f)≥0.8$."
+          },
+          {
+            "code": "M1",
+            "text": "Rearrangement gives $0.0255≥0.88f$."
+          },
+          {
+            "code": "A1",
+            "text": "$f≤0.02898$ approximately, so at most 2.90% to three significant figures."
+          }
+        ]
+      }
+    ],
+    "marks": 8,
+    "id": "ib-aasl-sp-843",
+    "subject": "math-aa-sl",
+    "collectionId": "aa-sl-statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 843,
+    "syllabusCode": "4.6",
+    "subtopic": "Conditional probability and thresholds",
+    "difficulty": "hard",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 843
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  },
+  {
+    "title": "Two gates at a venue",
+    "stem": "At a concert, 120 people used the east gate and 80 the west gate during a recorded interval. Of these, 18 east-gate and 4 west-gate visitors waited more than five minutes.",
+    "parts": [
+      {
+        "label": "a",
+        "prompt": "Estimate the probability of a long wait for a randomly selected visitor in that interval.",
+        "marks": 2
+      },
+      {
+        "label": "b",
+        "prompt": "On another evening 40% use the east gate. Assuming the gate-specific rates stay the same, estimate the number of long waits among 600 visitors.",
+        "marks": 3
+      },
+      {
+        "label": "c",
+        "prompt": "A manager attributes any change from 11% solely to faster service. Evaluate that conclusion.",
+        "marks": 2
+      }
+    ],
+    "markScheme": [
+      {
+        "part": "a",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Pool the counts of long waits and visitors."
+          },
+          {
+            "code": "A1",
+            "text": "$22/200=0.11$."
+          }
+        ]
+      },
+      {
+        "part": "b",
+        "steps": [
+          {
+            "code": "M1",
+            "text": "Weight 0.15 and 0.05 by 0.4 and 0.6."
+          },
+          {
+            "code": "A1",
+            "text": "The probability is 0.09."
+          },
+          {
+            "code": "A1",
+            "text": "Expect 54 visitors."
+          }
+        ]
+      },
+      {
+        "part": "c",
+        "steps": [
+          {
+            "code": "R1",
+            "text": "The mix of gates changed."
+          },
+          {
+            "code": "R1",
+            "text": "With both gate-specific wait rates unchanged the overall estimate still falls by two percentage points."
+          }
+        ]
+      }
+    ],
+    "marks": 7,
+    "id": "ib-aasl-sp-844",
+    "subject": "math-aa-sl",
+    "collectionId": "aa-sl-statistics-probability",
+    "topicId": "statistics-probability",
+    "number": 844,
+    "syllabusCode": "4.5",
+    "subtopic": "Relative frequency and interpretation",
+    "difficulty": "hard",
+    "calculator": true,
+    "level": "sl",
+    "examStyle": "extended-response",
+    "status": "published",
+    "source": {
+      "document": "Independent syllabus-authored practice",
+      "question": 844
+    },
+    "verification": {
+      "method": "Independent recalculation and mark allocation review",
+      "notes": "Original 2027–28 cohort practice. Each marking point corresponds to the named part."
+    }
+  }
+]

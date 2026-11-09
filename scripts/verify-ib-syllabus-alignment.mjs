@@ -84,4 +84,18 @@ for (const [subject,year] of Object.entries({aa:2026,ai:2026,biology:2025,chemis
   }
  }
 }
+for (const m of read('content/ib/practice-2027/ai-catalog.json')) {
+ const p=read('content/ib/practice-2027/ai/'+m.id+'.json');
+ assert.equal(p.questions.length,2);assert.equal(p.minutes,75);assert.equal(p.marks,55);
+ assert.equal(sum(p.questions,q=>q.marks),55);count++;questions+=p.questions.length;
+}
+for (const m of read('content/ib/practice-2027/business-catalog.json')) {
+ const p=read('content/ib/practice-2027/business/'+m.id+'.json');
+ const options=p.questions.filter(q=>q.optional);
+ assert.equal(options.length,p.number===3?0:2);
+ if(options.length)assert.equal(options[0].marks,options[1].marks);
+ assert.equal(sum(p.questions.filter(q=>!q.optional),q=>q.marks)+(options[0]?.marks??0),p.marks);
+ assert.deepEqual([p.minutes,p.marks],p.number===1?[90,30]:p.number===3?[75,25]:p.course==='sl'?[90,40]:[105,50]);
+ count++;questions+=p.questions.length;
+}
 assert(count>0);console.log(JSON.stringify({publishedQuestions:seen.size,publishedPapers:count,mockQuestionAppearances:questions,assessmentModel:'exams in 2027 and 2028'}));

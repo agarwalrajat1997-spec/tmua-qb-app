@@ -105,6 +105,8 @@ export function ibMathCourseHref(subject: IbMathSubject, topicId?: string) {
 }
 /** Identify the subject of an authenticated deep link without importing question content into the client. */
 export function ibSubjectForPath(pathname: string): IbSubject {
+  if (pathname.startsWith("/ib/practice/business-")) return "business-management";
+  if (pathname.startsWith("/ib/practice/aa-sl-")) return "math-aa-sl";
   const mathsPaper = /^\/ib\/maths-mocks\/(aa|ai)-(sl|hl)-set-[a-d]-paper-[123](?:\/|$)/.exec(pathname);
   if (mathsPaper) return ("math-" + mathsPaper[1] + "-" + mathsPaper[2]) as IbMathSubject;
   if (pathname.startsWith("/ib/psychology-mocks/")) return "psychology";
