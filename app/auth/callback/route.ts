@@ -35,10 +35,12 @@ export async function GET(req: Request) {
   );
   const destinationPath = new URL(next, url.origin).pathname;
   const isIb = destinationPath === "/ib" || destinationPath.startsWith("/ib/");
+  const isAmc = destinationPath === "/amc" || destinationPath.startsWith("/amc/") ||
+    destinationPath.startsWith("/amc-");
   function retryUrl(error: string) {
-    const retry = new URL(isIb ? "/ib-login" : "/login", url.origin);
+    const retry = new URL(isAmc ? "/amc-login" : isIb ? "/ib-login" : "/login", url.origin);
     retry.searchParams.set("e", error);
-    if (isIb) retry.searchParams.set("next", next);
+    if (isIb || isAmc) retry.searchParams.set("next", next);
     return retry;
   }
 
@@ -102,3 +104,4 @@ export async function GET(req: Request) {
 
   return res;
 }
+

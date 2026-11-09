@@ -5,7 +5,7 @@ const DEFAULT_EMAILJS_PUBLIC_KEY = "9jjn3yBHl6S88hITy";
 const WORKSPACE_IMAGE =
   "https://assets.thrivingscholars.com/images/tmua/ada627ec-3463-4939-9614-054780611760.png";
 
-export type TrialProgram = "tmua" | "esat" | "ib";
+export type TrialProgram = "tmua" | "esat" | "ib" | "amc";
 type TrialWelcomeEmailInput = {
   program: TrialProgram;
   studentName: string;
@@ -13,6 +13,14 @@ type TrialWelcomeEmailInput = {
   expiresAt: string | null;
 };
 const PROGRAM_DETAILS = {
+  amc: {
+    examName: "AMC", portalLabel: "AMC 8, 10 & 12 Prep Portal",
+    loginUrl: "https://apps.thrivingscholars.com/amc-login",
+    programmeUrl: "https://www.thrivingscholars.com/amc-prep-portal",
+    featureOne: "AMC 8, 10 and 12 question banks",
+    featureTwo: "Timed practice tests and worked solutions",
+    featureThree: "Study guides and progress tools",
+  },
   ib: {
     examName: "IB", portalLabel: "IB Prep Portal",
     loginUrl: "https://apps.thrivingscholars.com/ib-login?next=%2Fib",
@@ -52,7 +60,10 @@ export function trialEmailTemplateParams(input: TrialWelcomeEmailInput) {
     to_email: input.studentEmail, student_name: input.studentName || "Student",
     student_email: input.studentEmail, exam_name: programme.examName,
     portal_label: programme.portalLabel, login_url: programme.loginUrl,
-    programme_url: programme.programmeUrl, workspace_image: input.program === "ib" ? "https://www.thrivingscholars.com/images/ib-prep/ib-maths-dashboard.png" : WORKSPACE_IMAGE,
+    programme_url: programme.programmeUrl,
+    workspace_image: input.program === "amc"
+      ? "https://media.thrivingscholars.com/images/marketing/amc/amc-question-bank-v1.png"
+      : input.program === "ib" ? "https://www.thrivingscholars.com/images/ib-prep/ib-maths-dashboard.png" : WORKSPACE_IMAGE,
     access_duration: "2 days", expires_at: expiryLabel(input.expiresAt),
     feature_one: programme.featureOne, feature_two: programme.featureTwo,
     feature_three: programme.featureThree, current_year: String(new Date().getUTCFullYear()),
@@ -85,3 +96,4 @@ export async function sendTrialWelcomeEmail(input: TrialWelcomeEmailInput) {
     return { ok: false } as const;
   } finally { clearTimeout(timeout); }
 }
+

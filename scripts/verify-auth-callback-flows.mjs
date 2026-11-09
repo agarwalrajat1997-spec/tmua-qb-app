@@ -85,6 +85,22 @@ assert.equal(new URL(response.headers.get('location')).searchParams.get('next'),
 modeError = null;
 intent = null;
 
+// AMC trial emails enter AMC, and failed PKCE/token links retry its own login.
+for (const next of ['/amc', '/amc?section=practice-tests', '/amc-10-question-bank']) {
+  for (const token of ['code=synthetic-amc-code', 'token_hash=synthetic-amc-hash&type=magiclink']) {
+    response = await runCallback(`/auth/callback?${token}&next=${encodeURIComponent(next)}`);
+    assert.equal(response.headers.get('location'), `https://apps.thrivingscholars.com${next}`);
+    modeError = { message: 'synthetic expired AMC link' };
+    response = await runCallback(`/auth/callback?${token}&next=${encodeURIComponent(next)}`);
+    const retry = new URL(response.headers.get('location'));
+    assert.equal(retry.pathname, '/amc-login');
+    assert.equal(retry.searchParams.get('next'), next);
+    assert.equal(retry.searchParams.get('e'), 'invalid_or_consumed_link');
+    assert.doesNotMatch(retry.href, /synthetic|token_hash|code=/);
+    modeError = null;
+  }
+}
+
 // A question/solution tab survives sign-in and an expired-link retry intact.
 for (const next of ['/ib/mark-scheme/ib-aa-fn-001', '/ib/question-bank/functions?difficulty=hard&calculator=no&page=2']) {
   intent = encodeURIComponent(next);
@@ -219,3 +235,4 @@ for (const file of ['app/auth/complete/CallbackBridge.tsx', 'app/auth/complete/p
   assert.doesNotMatch(readFileSync(file, 'utf8'), /console\.|localStorage|sessionStorage|sendBeacon|gtag|dataLayer/);
 }
 console.log('Auth callback flows passed: unchanged PKCE/token_hash; fragment cleanup before SDK; verified implicit session; safe programme redirects; provider failures; no token logging/storage; no-referrer/no-store (isolated synthetic tests only).');
+
