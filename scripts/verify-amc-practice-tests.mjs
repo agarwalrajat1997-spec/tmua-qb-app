@@ -73,8 +73,9 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const [dashboard, amcPage, proxy, emailReport] = await Promise.all([
+const [dashboard, catalogue, amcPage, proxy, emailReport] = await Promise.all([
   readFile(dashboardPath, "utf8"),
+  readFile("app/dashboard/amc-catalogue.ts", "utf8"),
   readFile(amcPagePath, "utf8"),
   readFile(proxyPath, "utf8"),
   readFile(emailReportPath, "utf8"),
@@ -102,13 +103,22 @@ for (const test of tests) {
   const filePath = `public/amc-practice-tests/tests/${test.slug}/index.html`;
   const [html, file] = await Promise.all([readFile(filePath, "utf8"), stat(filePath)]);
   assert(file.size > 10_000, `${test.title} is unexpectedly small.`);
-  assert(dashboard.includes(test.title), `${test.title} is missing from the AMC catalogue.`);
-  assert(dashboard.includes(href), `${test.title} has no AMC catalogue link.`);
+  assert(catalogue.includes(test.title), `${test.title} is missing from the AMC catalogue.`);
+  assert(catalogue.includes(href), `${test.title} has no AMC catalogue link.`);
   assert(
     html.toLowerCase().includes(test.htmlTitle.toLowerCase()),
     `${test.title} title is missing.`,
   );
-  assert(html.includes(test.solution), `${test.title} solution booklet is missing.`);
+  const reviewPath = `public/amc-practice-tests/tests/${test.slug}/solutions.html`;
+  const review = await readFile(reviewPath, "utf8");
+  assert(html.includes(reviewPath.slice(6)), `${test.title} does not link to its reviewed solutions.`);
+  const sourceKey = html.match(/"answers":(\[[^\]]+\])/)?.[1] || html.match(/const correctAnswers\s*=\s*(\[[^\]]+\])/)?.[1];
+  const answers = JSON.parse(sourceKey);
+  assert(answers.length === 25, "Expected 25 scored items");
+  for (const [i, letter] of answers.entries()) {
+    assert(review.includes(`<section id="q${i+1}"><h2>Question ${i+1} · Answer ${letter}</h2>`), `Missing or mismatched reviewed answer: ${test.slug} Q${i+1}`);
+  }
+  for (const m of review.matchAll(/src="(review\/[^"]+)"/g)) await access(`public/amc-practice-tests/tests/${test.slug}/${m[1]}`);
   assert(html.includes(test.timer), `${test.title} timer is missing.`);
   assert(
     html.includes('/amc-practice-tests/email-report.js'),
@@ -211,44 +221,14 @@ for (const [title, filename, pages] of resources) {
   const [pdf, file] = await Promise.all([readFile(filePath), stat(filePath)]);
   assert(file.size > 900_000, `${title} PDF is unexpectedly small.`);
   assert(pdf.subarray(0, 5).toString("ascii") === "%PDF-", `${title} is not a valid PDF file.`);
-  assert(dashboard.includes(title), `${title} is missing from the AMC resources tab.`);
-  assert(dashboard.includes(href), `${title} has no download link.`);
-  assert(dashboard.includes(`pages: ${pages}`), `${title} page count is missing.`);
+  assert(catalogue.includes(title), `${title} is missing from the AMC resources tab.`);
+  assert(catalogue.includes(href), `${title} has no download link.`);
+  assert(catalogue.includes(`pages: ${pages}`), `${title} page count is missing.`);
 }
 
-assert(
-  dashboard.includes('AMCView = AMCPaper | "Practice Tests" | "Resources"'),
-  "AMC question banks, Practice Tests and Resources must all be selectable views.",
-);
-assert(dashboard.includes('url.searchParams.set("section", "resources")'), "AMC Resources does not preserve its URL state.");
-assert(amcPage.includes('section === "resources"'), "The AMC route does not open the Resources tab directly.");
-
-for (const heading of [
-  "Diagnostic Tests",
-  "Pre-AMC 8 & AMC 10",
-  "AMC 8 Full-Length Practice",
-  "Full Mock Tests",
-  "AMC 10 Topical Practice Tests",
-  "Number Theory",
-  "Algebra",
-  "Geometry",
-  "Combinatorics & Logic",
-]) {
-  assert(dashboard.includes(heading), `Catalogue heading is missing: ${heading}`);
-}
-
-const diagnosticPosition = dashboard.indexOf('heading: "Diagnostic Tests"');
-const amc8Position = dashboard.indexOf('heading: "AMC 8 Full-Length Practice"');
-const amc10Position = dashboard.indexOf('heading: "AMC 10 Topical Practice Tests"');
-assert(
-  diagnosticPosition < amc8Position && amc8Position < amc10Position,
-  "Catalogue order must be Diagnostic Tests, AMC 8, then AMC 10.",
-);
-
-assert(
-  dashboard.includes('<a className={styles.go} href={test.href}>'),
-  "Start test controls must be real links to the standalone test pages.",
-);
+assert(dashboard.includes('aria-label="Exam"'), "The portal needs a single, labelled exam selector.");
+assert(dashboard.includes('resources.resources.map') && dashboard.includes('PRACTICE_TESTS.filter'), "Libraries must follow the selected exam.");
+assert(amcPage.includes('section === "resources"'), "Saved resource links must still open.");
 
 for (const internalPhrase of ["restored", "original Wix", "preserved exactly"]) {
   assert(

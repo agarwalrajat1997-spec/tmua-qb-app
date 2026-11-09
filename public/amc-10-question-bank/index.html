@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -2274,7 +2274,7 @@ input[type="radio"]{
   <div class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <a class="btn menu" href="/dashboard" style="text-decoration:none;">← AMC Workspace</a>
+        <a class="btn menu" href="/amc?exam=10" style="text-decoration:none;">← AMC Workspace</a>
       </div>
       <div class="footer-right">
         <button type="button" id="prevBtn">← Previous</button>
@@ -2477,8 +2477,9 @@ input[type="radio"]{
 
       if (label === selected) cls += " selected";
 
-      if (checked && label === q.answer) cls += " correct";
-      if (checked && label === selected && label !== q.answer) cls += " wrong";
+      const markedAnswer = q.answer || a.checkedAnswer || (a.isCorrect ? selected : "");
+      if (checked && label === markedAnswer) cls += " correct";
+      if (checked && label === selected && a.isCorrect === false) cls += " wrong";
 
       return `
         <label class="${cls}" data-label="${escapeHtml(label)}">
@@ -2593,6 +2594,16 @@ input[type="radio"]{
     const data = await api(`/api/amc/qb/list?paper=${encodeURIComponent(EXAM)}`);
     allSummaries = data.questions || data.items || [];
 
+    const params = new URLSearchParams(location.search);
+    const requestedTopic = params.get("topic");
+    const availableTopics = new Set(allSummaries.map(q => q.topic));
+    state.__topics = (state.__topics || []).filter(t => availableTopics.has(t));
+    if (params.get("scope") === "all") {
+      state.__topics = []; state.__status = "all"; state.__diffs = [];
+    }
+    if (requestedTopic && allSummaries.some(q => q.topic === requestedTopic)) {
+      state.__topics = [requestedTopic]; state.__status = "all"; state.__diffs = [];
+    }
     buildFilters();
     applyFilters();
 
@@ -2665,6 +2676,7 @@ input[type="radio"]{
     a.checked = true;
     a.isCorrect = !!(data.correct || data.isCorrect);
     currentQuestion.answer = data.answer;
+    a.checkedAnswer = data.answer;
     saveState();
 
     $("statusMeta").textContent = a.isCorrect ? "Correct" : "Incorrect";

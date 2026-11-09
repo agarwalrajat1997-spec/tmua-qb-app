@@ -73,7 +73,7 @@
     }
   </style>
 </head>
-<body>
+<body><div style="padding:10px 16px;background:#fff9e9;text-align:left"><a style="color:#69252a;font:600 14px system-ui" href="/amc?exam=10&amp;section=practice-tests">← AMC 10 practice tests</a></div>
   <header class="top">
     <a class="back" href="/amc?section=practice-tests">← Practice tests</a>
     <div class="brand"><span>Thriving</span>Scholars</div>
@@ -123,12 +123,12 @@
       <p class="email-status" id="emailStatus" role="status"></p>
       <div class="review" id="review"></div>
       <div class="facts"><span class="fact">Green = correct</span><span class="fact">Red = incorrect</span><span class="fact">Grey = unanswered</span></div>
-      <a class="primary" href="https://www.thrivingscholars.com/_files/ugd/98f2c5_69d6293577104a948660692af847e340.pdf" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none">Open worked solutions ↗</a>
+      <a class="primary" href="/amc-practice-tests/tests/amc-10-topical-test-3/solutions.html" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none">Open worked solutions ↗</a>
       <button class="secondary" id="restart" style="margin-left:8px">Retake test</button>
     </section>
   </main>
   <script>
-    const config = {"title":"AMC 10 Topical Test 3","subtitle":"Arithmetic and Algebra","minutes":75,"solution":"https://www.thrivingscholars.com/_files/ugd/98f2c5_69d6293577104a948660692af847e340.pdf","answers":["C","C","C","B","C","B","D","D","B","D","D","D","A","D","E","B","A","D","B","C","A","A","E","C","E"],"specialQuestions":{}};
+    const config = {"title":"AMC 10 Topical Test 3","subtitle":"Arithmetic and Algebra","minutes":75,"solution":"/amc-practice-tests/tests/amc-10-topical-test-3/solutions.html","answers":["C","C","C","B","C","B","D","D","B","D","D","D","A","D","E","B","A","D","B","C","A","A","E","C","E"],"specialQuestions":{}};
     const letters = ["A", "B", "C", "D", "E"];
     const responses = Array(25).fill(null);
     const flagged = Array(25).fill(false);
@@ -251,7 +251,7 @@
         item.className = answer ? (answer === config.answers[index] ? "right" : "wrong") : "empty";
         item.textContent = "Q" + (index + 1) + " · " + (answer || "—");
         item.title = "Correct answer: " + config.answers[index];
-        review.appendChild(item);
+        const link = document.createElement("a"); link.href = config.solution + "#q" + (index+1); link.textContent = item.textContent + " · Answer " + config.answers[index]; item.replaceChildren(link); review.appendChild(item);
       });
       const incorrectList = responses
         .map((answer, index) => (answer === config.answers[index] ? null : index + 1))
@@ -273,7 +273,7 @@
             timestamp: new Date().toLocaleString(),
             incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
             paper1: config.title + " Analysis\n\n" + analysis,
-            solutionLink: config.solution,
+            solutionLink: new URL(config.solution, location.origin).href,
             testTitle: config.title,
           })
         : Promise.reject(new Error("The score-report service did not load."));

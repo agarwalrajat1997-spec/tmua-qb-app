@@ -109,6 +109,19 @@ export async function GET(req: Request) {
 
   const sortedRows = [...(data || [])].sort(amcOriginalOrder);
 
+  if (searchParams.get("summary") === "1") {
+    const topics = new Map<string, { topic: string; count: number; examples: Set<string> }>();
+    for (const row of sortedRows) {
+      const name = String(row.topic || "Problem solving");
+      const group = topics.get(name) ?? { topic: name, count: 0, examples: new Set<string>() };
+      group.count++;
+      if (row.subtopic) group.examples.add(String(row.subtopic).replaceAll("_", " ").replaceAll("&amp;", "&"));
+      topics.set(name, group);
+    }
+    return json({ ok: true, paper: exam.paper, total: sortedRows.length,
+      topics: Array.from(topics.values(), g => ({ ...g, examples: Array.from(g.examples) })) });
+  }
+
   const cleaned = sortedRows.map((row: any, index: number) => ({
     qid: row.qid,
 

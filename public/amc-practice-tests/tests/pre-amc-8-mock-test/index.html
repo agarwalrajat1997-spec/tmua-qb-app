@@ -496,7 +496,7 @@ input[type="radio"] {
 </style>
 
 </head>
-<body>
+<body><div style="padding:10px 16px;background:#fff9e9;text-align:left"><a style="color:#69252a;font:600 14px system-ui" href="/amc?exam=8&amp;section=practice-tests">← AMC 8 practice tests</a></div>
 
 <div id="instructions">
     <h2 id="test-title">PRE-AMC 8 MOCK TEST</h2>
@@ -621,7 +621,7 @@ input[type="radio"] {
 
 
 <script>
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_d71abefa5d324789867cf4eee34262ab.pdf";
+const solutionPDF = "/amc-practice-tests/tests/pre-amc-8-mock-test/solutions.html";
 
 let flags = new Array(25).fill(false); // Assuming 25 questions per section
 let timeSpent = new Array(25).fill(0); // 25 questions
@@ -897,7 +897,7 @@ function updateFlagButton() {
   </p>
 
   <div class="question-image">
-    <img src="https://media.thrivingscholars.com/images/98f2c5_d0e2fed9ef5c43a4b9dc87f9d01b3a73~mv2.png"
+    <img src="figures/figure-05.png"
          alt="Shaded L-shape diagram with 3 smaller squares" width="300">
   </div>
 
@@ -967,7 +967,7 @@ function updateFlagButton() {
 
   <div class="question-image">
     <img
-      src="https://media.thrivingscholars.com/images/98f2c5_09532046a0aa4a7e897b60f207028db2~mv2.png"
+      src="figures/figure-01.png"
       alt="Stacked dice view with visible faces"
       width="300"
     >
@@ -1543,7 +1543,7 @@ function updateFlagButton() {
   </p>
 
   <div class="figure">
-    <img src="https://media.thrivingscholars.com/images/98f2c5_b5335306610247f79da7ae340907a166~mv2.png" alt="Figure for Question 22">
+    <img src="figures/figure-04.png" alt="Figure for Question 22">
   </div>
 
   <div class="options">
@@ -1584,7 +1584,7 @@ function updateFlagButton() {
   </p>
 
   <div class="figure">
-    <img src="https://media.thrivingscholars.com/images/98f2c5_9778974cff6c467b9b863dbc0aaf788f~mv2.png" alt="Figure for Question 23">
+    <img src="figures/figure-03.png" alt="Figure for Question 23">
   </div>
 
   <div class="options">
@@ -1625,7 +1625,7 @@ function updateFlagButton() {
   </p>
 
   <div class="figure">
-    <img src="https://media.thrivingscholars.com/images/98f2c5_8d4b64b2d22540c693a92a4c018de16e~mv2.png"
+    <img src="figures/figure-02.png"
          alt="Cryptarithm addition problem with T W O + T W O = F O U R">
   </div>
 
@@ -1878,7 +1878,7 @@ const emailPromise = window.TS_AMC_EMAIL_REPORT
   incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
   paper1: plainTextSummary.trim(),
   studentEmail,
-  solutionLink: solutionPDF,
+  solutionLink: new URL(solutionPDF, location.origin).href,
   testTitle
 })
   : Promise.reject(new Error("The score-report service did not load."));
@@ -1946,7 +1946,7 @@ const emailPromise = window.TS_AMC_EMAIL_REPORT
       </table>
 
       <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
-  <iframe
+  <a href="/amc-practice-tests/tests/pre-amc-8-mock-test/solutions.html" target="_blank" rel="noopener">Open all 25 worked solutions ↗</a><iframe
   id="solution-frame"
   width="100%"
   height="600px"

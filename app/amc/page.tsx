@@ -66,7 +66,7 @@ export default async function AMCPortalPage({ searchParams }: Props) {
   return (
     <AMCDashboardClient
       email={user.email}
-      hasTmua={false}
+      hasTmua={["practice-tests", "tmua-question-bank", "tmua-classes"].some(id => products.has(id))}
       initialSection={
         section === "practice-tests" || section === "resources"
           ? section

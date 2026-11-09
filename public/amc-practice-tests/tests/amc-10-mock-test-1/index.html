@@ -255,7 +255,7 @@
 
   </style>
 </head>
-<body>
+<body><div style="padding:10px 16px;background:#fff9e9;text-align:left"><a style="color:#69252a;font:600 14px system-ui" href="/amc?exam=10&amp;section=practice-tests">← AMC 10 practice tests</a></div>
 
 <div id="instructions">
     <h2 id="test-title">AMC 10 MOCK TEST 1 (Number Theory)</h2>
@@ -357,7 +357,7 @@
 
 
 <script>
-const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_0918321e79a145038286a73fbfb3129f.pdf";
+const solutionPDF = "/amc-practice-tests/tests/amc-10-mock-test-1/solutions.html";
 
 let flags = new Array(25).fill(false); // Assuming 25 questions per section
 let timeSpent = new Array(25).fill(0); // 25 questions
@@ -984,7 +984,7 @@ const emailPromise = window.TS_AMC_EMAIL_REPORT
   incorrect: incorrectList.length > 0 ? incorrectList.join(", ") : "None",
   paper1: plainTextSummary.trim(),
   studentEmail,
-  solutionLink: solutionPDF,
+  solutionLink: new URL(solutionPDF, location.origin).href,
   testTitle
 })
   : Promise.reject(new Error("The score-report service did not load."));
@@ -1052,7 +1052,7 @@ const emailPromise = window.TS_AMC_EMAIL_REPORT
       </table>
 
       <h3 style="margin-top: 40px;">📄 View Full Solutions</h3>
-  <iframe 
+  <a href="/amc-practice-tests/tests/amc-10-mock-test-1/solutions.html" target="_blank" rel="noopener">Open all 25 worked solutions ↗</a><iframe
   id="solution-frame"
   width="100%" 
   height="600px" 

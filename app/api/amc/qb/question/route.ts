@@ -29,7 +29,6 @@ export async function GET(req: Request) {
       tags,
       prompt_html,
       options,
-      answer,
       shortcut_available,
       nice_tip_html,
       amc_exams,

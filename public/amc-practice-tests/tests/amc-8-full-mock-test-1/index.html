@@ -73,7 +73,7 @@
     }
   </style>
 </head>
-<body>
+<body><div style="padding:10px 16px;background:#fff9e9;text-align:left"><a style="color:#69252a;font:600 14px system-ui" href="/amc?exam=8&amp;section=practice-tests">← AMC 8 practice tests</a></div>
   <header class="top">
     <a class="back" href="/amc?section=practice-tests">← Practice tests</a>
     <div class="brand"><span>Thriving</span>Scholars</div>
@@ -123,12 +123,12 @@
       <p class="email-status" id="emailStatus" role="status"></p>
       <div class="review" id="review"></div>
       <div class="facts"><span class="fact">Green = correct</span><span class="fact">Red = incorrect</span><span class="fact">Grey = unanswered</span></div>
-      <a class="primary" href="https://www.thrivingscholars.com/_files/ugd/98f2c5_be5e05b4b67d490fa58a618bd43dce7f.pdf" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none">Open worked solutions ↗</a>
+      <a class="primary" href="/amc-practice-tests/tests/amc-8-full-mock-test-1/solutions.html" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none">Open worked solutions ↗</a>
       <button class="secondary" id="restart" style="margin-left:8px">Retake test</button>
     </section>
   </main>
   <script>
-    const config = {"title":"AMC 8 Full Mock Test 1","subtitle":"All Topics","minutes":40,"solution":"https://www.thrivingscholars.com/_files/ugd/98f2c5_be5e05b4b67d490fa58a618bd43dce7f.pdf","answers":["A","E","C","B","D","E","D","E","B","E","D","A","C","E","C","B","C","B","A","D","A","E","D","A","B"],"specialQuestions":{}};
+    const config = {"title":"AMC 8 Full Mock Test 1","subtitle":"All Topics","minutes":40,"solution":"/amc-practice-tests/tests/amc-8-full-mock-test-1/solutions.html","answers":["A","E","C","B","D","E","D","E","B","E","D","A","C","E","C","B","C","B","A","D","A","E","D","A","B"],"specialQuestions":{"14":"<div class=\"text-question\"><div class=\"q-number\">14.</div><div><p>The side lengths of a right triangle form an increasing geometric sequence with common ratio <i>r</i>. In simplest radical form, <i>r</i> = √((√<i>x</i> + <i>z</i>)/<i>y</i>), where <i>x</i> is square-free and <i>x</i>, <i>y</i> and <i>z</i> are positive integers. What is <i>x</i> + <i>y</i>?</p><div class=\"source-options\"><span>A 1/2</span><span>B 3/2</span><span>C 4</span><span>D 4√2</span><span>E 7</span></div></div></div>","15":"<div class=\"text-question\"><div class=\"q-number\">15.</div><div><p>How many unordered pairs of positive unit fractions sum to 1/8? The two fractions may be equal. A unit fraction has numerator 1 and a positive integer denominator.</p><div class=\"source-options\"><span>A 1</span><span>B 2</span><span>C 4</span><span>D 7</span><span>E 8</span></div></div></div>"}};
     const letters = ["A", "B", "C", "D", "E"];
     const responses = Array(25).fill(null);
     const flagged = Array(25).fill(false);
@@ -251,7 +251,7 @@
         item.className = answer ? (answer === config.answers[index] ? "right" : "wrong") : "empty";
         item.textContent = "Q" + (index + 1) + " · " + (answer || "—");
         item.title = "Correct answer: " + config.answers[index];
-        review.appendChild(item);
+        const link = document.createElement("a"); link.href = config.solution + "#q" + (index+1); link.textContent = item.textContent + " · Answer " + config.answers[index]; item.replaceChildren(link); review.appendChild(item);
       });
       const incorrectList = responses
         .map((answer, index) => (answer === config.answers[index] ? null : index + 1))
@@ -273,7 +273,7 @@
             timestamp: new Date().toLocaleString(),
             incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
             paper1: config.title + " Analysis\n\n" + analysis,
-            solutionLink: config.solution,
+            solutionLink: new URL(config.solution, location.origin).href,
             testTitle: config.title,
           })
         : Promise.reject(new Error("The score-report service did not load."));

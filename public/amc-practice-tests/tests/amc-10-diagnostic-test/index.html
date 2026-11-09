@@ -492,7 +492,7 @@ body.exam-active {
 }
   </style>
 </head>
-<body>
+<body><div style="padding:10px 16px;background:#fff9e9;text-align:left"><a style="color:#69252a;font:600 14px system-ui" href="/amc?exam=10&amp;section=practice-tests">← AMC 10 practice tests</a></div>
 
 <section id="instructions">
   <h1 id="test-title">AMC 10 Diagnostic Test</h1>
@@ -586,7 +586,7 @@ body.exam-active {
 </div>
 
 <script>
-  const solutionPDF = "https://www.thrivingscholars.com/_files/ugd/98f2c5_baae373bc18b47daafe42e24e61476ae.pdf";
+  const solutionPDF = "/amc-practice-tests/tests/amc-10-diagnostic-test/solutions.html";
   const publicSolutionURL = ""; // Optional: replace with the hosted public PDF URL for emails.
 
   const questions = [
@@ -674,7 +674,7 @@ body.exam-active {
       topic: "Similarity",
       bigIdea: "Geometry",
       prompt: String.raw`In square \(ABCD\), point \(E\) lies on segment \(AD\), and segments \(BD\) and \(CE\) intersect at \(F\). The line \(CE\) is extended past \(E\) to meet the extension of \(AB\) at \(G\). If \(EF=9\) and \(CF=15\), what is \(EG\)?`,
-      image: "https://assets.thrivingscholars.com/images/tmua/d3a91bde-835b-41ca-883b-eebf26bb1fb1.png",
+      image: "figures/figure-01.png",
       imageAlt: "Square ABCD with points E, F, and G for Question 13",
       choices: [String.raw`\(6\)`, String.raw`\(12\)`, String.raw`\(16\)`, String.raw`\(20\)`, String.raw`\(24\)`]
     },
@@ -716,7 +716,7 @@ body.exam-active {
       topic: "Circles",
       bigIdea: "Geometry",
       prompt: String.raw`Points \(A,B,C,D\) lie on a circle. Chords \(AC\) and \(BD\) are perpendicular and intersect at \(E\) inside the circle. If \(AC=27\), \(AD=5\), and \(AE=3\), what is the distance from \(E\) to the centre of the circle?`,
-      image: "https://assets.thrivingscholars.com/images/tmua/f409ab21-0873-4873-869b-52ffa29bbc34.png",
+      image: "figures/figure-02.png",
       imageAlt: "Perpendicular chords AC and BD inside a circle for Question 19",
       choices: [String.raw`\(7\)`, String.raw`\(\frac{7\sqrt5}{2}\)`, String.raw`\(\frac{21}{2}\)`, String.raw`\(\frac{7\sqrt{10}}{2}\)`, String.raw`\(\frac{7\sqrt{13}}{2}\)`]
     },
@@ -1092,7 +1092,7 @@ body.exam-active {
       incorrect: incorrectList.length ? incorrectList.join(", ") : "None",
       paper1: `AMC 10 Diagnostic Analysis\n\n${analysisLines}\n\nTopic breakdown\n${topicReport.plainText}`,
       studentEmail: document.getElementById("studentEmail").value.trim(),
-      solutionLink: publicSolutionURL || solutionPDF,
+      solutionLink: new URL(publicSolutionURL || solutionPDF, location.origin).href,
       testTitle: "AMC 10 Diagnostic Test"
     });
   }

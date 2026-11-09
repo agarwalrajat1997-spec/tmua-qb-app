@@ -96,7 +96,7 @@ export async function requireAMCAccess() {
 
   const { data, error } = await supabase
     .from("student_access")
-    .select("approved")
+    .select("approved, expires_at")
     .eq("email", email)
     .eq("product", "amc-question-bank")
     .maybeSingle();
@@ -109,7 +109,7 @@ export async function requireAMCAccess() {
     };
   }
 
-  if (!data?.approved) {
+  if (!data?.approved || (data.expires_at && !(Date.parse(data.expires_at) > Date.now()))) {
     return {
       ok: false as const,
       response: json({ ok: false, error: "No AMC Question Bank access" }, 403),
