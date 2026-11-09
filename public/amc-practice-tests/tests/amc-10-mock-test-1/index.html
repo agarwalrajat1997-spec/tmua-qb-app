@@ -849,7 +849,7 @@ function updateFlagButton() {
 
 
 
-function startExam() {
+async function startExam() {
   const nameInput = document.getElementById("student-name").value.trim();
   const emailInput = document.getElementById("studentEmail").value.trim();
   const testSelect = document.getElementById("test-date").value;
@@ -864,7 +864,8 @@ function startExam() {
     return;
   }
 
-  studentName = nameInput;
+  try { await window.TS_AMC_ATTEMPT.start(() => userAnswers); } catch (error) { window.alert("Could not start the saved attempt. " + error.message); return; }
+    studentName = nameInput;
   testSession = testSelect;
 
   document.getElementById("instructions").style.display = "none";
@@ -1108,6 +1109,7 @@ window.onload = function () {
 </div>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script src="/amc-practice-tests/email-report.js"></script>
+<script src="/amc-practice-tests/attempt.js"></script>
 
 </body>
 </html>

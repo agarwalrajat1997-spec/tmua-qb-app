@@ -1,0 +1,7 @@
+# AMC November 2026 edition
+
+Run `python scripts/amc-edition/build.py --export <private-staging-directory>` from the repository to regenerate the three original student papers, answer registry, and 30 batches of 15 append-only bank records. The generated bank IDs are stable and unique to this edition. The SQL import must name explicit columns: preserve database-assigned IDs and pre-existing student records. The build checks the answer using a second calculation before assigning option letters. Grades use the exact key and level recorded when each attempt starts.
+
+The paper review covered 36 released contests: AMC 8 in 2020 and 2022–26; for both AMC 10 and AMC 12, 2020 A/B, 2021 winter A/B and fall A/B, 2022–25 A/B, and 2026 A. The 2026 B sitting was still in the future on November 9. Historical problems are research references only. See [MAA contest rules](https://maa.org/wp-content/uploads/2026/10/2026-2027-AMC-8-10-12-Policies.pdf), the [licensed archive](https://live.poshenloh.com/past-contests), and the [2026 AMC 10A](https://wiki.randommath.com/amc10/2026/part-a) and [AMC 12A](https://wiki.randommath.com/amc12/2026/part-a) papers.
+
+`install-repairs.py` updates 40 matched slots in existing topical tests while keeping their previous answer letter, URL and earlier worked solutions. The exact slots are recorded in `legacy-slots.json`. It does not touch the existing question bank.

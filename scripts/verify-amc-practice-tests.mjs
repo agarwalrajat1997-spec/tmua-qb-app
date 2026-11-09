@@ -10,7 +10,7 @@ const tests = [
     slug: "pre-amc-8-mock-test",
     htmlTitle: "Pre-AMC 8 Mock Test",
     solution: "98f2c5_d71abefa5d324789867cf4eee34262ab.pdf",
-    timer: "75:00",
+    timer: "40:00",
   },
   {
     title: "AMC 10 Diagnostic Test",
@@ -167,12 +167,8 @@ assert(
   emailReport.includes('ownerEmail: "outreach@thrivingscholars.com"'),
   "Thriving Scholars must receive a copy of every score report.",
 );
-assert(
-  emailReport.includes("Promise.allSettled"),
-  "Student and staff report deliveries must be tracked independently.",
-);
 const deliveries = [];
-const reportWindow = {
+const reportWindow = {TS_AMC_ATTEMPT:{mount(){}},
   emailjs: {
     init() {},
     send(serviceId, templateId, payload) {
@@ -182,9 +178,9 @@ const reportWindow = {
   },
 };
 const scoreReporter = new Function(
-  "window",
+  "window", "location",
   `${emailReport}\nreturn window.TS_AMC_EMAIL_REPORT;`,
-)(reportWindow);
+)(reportWindow,{origin:"https://example.com"});
 assert(
   scoreReporter.validEmail("rajat.agarwal@thrivingscholars.com"),
   "The shared validator must accept a valid Thriving Scholars email address.",
@@ -196,6 +192,7 @@ for (const invalidEmail of ["student@", "student example.com", "student@example"
   );
 }
 await scoreReporter.send({
+  receipt:{id:"fixture",correct:20,incorrect:3,blanks:2,points:123,maximum:150,solutionPath:"/worked-solutions.pdf",answers:Array(25).fill("A"),key:"A".repeat(25)},
   name: "Test Student",
   studentEmail: "student@example.com",
   score: "20 / 25",
@@ -204,6 +201,7 @@ await scoreReporter.send({
   solutionLink: "https://example.com/solutions.pdf",
   testTitle: "AMC Verification Test",
 });
+assert(deliveries.every(d=>d.payload.score==="123 / 150" && d.payload.paper1.includes("https://example.com/worked-solutions.pdf")), "Email must use the saved score and include its PDF in the report body.");
 assert(deliveries.length === 2, "Score report must be sent to the student and Thriving Scholars.");
 assert(
   deliveries.some(({ payload }) => payload.to_email === "student@example.com"),

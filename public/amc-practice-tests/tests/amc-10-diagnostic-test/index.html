@@ -17,6 +17,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script defer src="/amc-practice-tests/email-report.js"></script>
+<script src="/amc-practice-tests/attempt.js"></script>
 
   <style>
     :root {
@@ -872,7 +873,7 @@ body.exam-active {
     }
   }
 
- function startExam() {
+ async function startExam() {
   const nameInput = document
     .getElementById("student-name")
     .value
@@ -893,7 +894,8 @@ body.exam-active {
     return;
   }
 
-  studentName = nameInput;
+  try { await window.TS_AMC_ATTEMPT.start(() => userAnswers); } catch (error) { window.alert("Could not start the saved attempt. " + error.message); return; }
+    studentName = nameInput;
   testSession = document.getElementById("test-date").value;
 
   document.getElementById("instructions").style.display = "none";

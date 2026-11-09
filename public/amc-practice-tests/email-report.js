@@ -35,55 +35,37 @@
       throw new Error("A valid student email is required.");
     }
 
+    const receipt = report.receipt || await window.TS_AMC_ATTEMPT.finish();
+    window.TS_AMC_ATTEMPT.mount(receipt);
+    const pdf = new URL(receipt.solutionPath, location.origin).href;
+    const pointsLine = receipt.points + " / " + receipt.maximum;
+    const counts = receipt.correct + " correct · " + receipt.incorrect + " incorrect · " + receipt.blanks + " blank";
+    const details = "Saved attempt: " + receipt.id + "\nAMC score: " + pointsLine + " (" + counts + ")\nWorked solutions (PDF): " + pdf + "\n\n" + text(report.paper1);
     initialise();
 
     const basePayload = {
       name: text(report.name) || "Student",
       session: text(report.session) || "Independent practice",
-      score: text(report.score),
+      score: pointsLine,
       timestamp: text(report.timestamp) || new Date().toLocaleString(),
-      incorrect: text(report.incorrect) || "None",
-      paper1: text(report.paper1),
+      incorrect: receipt.answers.flatMap((a,i)=>a===receipt.key[i]?[]:[i+1]).join(", ") || "None",
+      paper1: details,
       to_email: studentEmail,
       student_email: studentEmail,
-      solution_link: text(report.solutionLink),
+      solution_link: pdf,
       test_title: text(report.testTitle) || "AMC Practice Test",
       report_recipient: "Student",
     };
 
-    const studentDelivery = window.emailjs.send(
-      EMAIL_CONFIG.serviceId,
-      EMAIL_CONFIG.templateId,
-      basePayload,
-    );
-
-    const ownerDelivery =
-      studentEmail.toLowerCase() === EMAIL_CONFIG.ownerEmail.toLowerCase()
-        ? Promise.resolve()
-        : window.emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, {
-            ...basePayload,
-            to_email: EMAIL_CONFIG.ownerEmail,
-            paper1: `Student email: ${studentEmail}\n\n${basePayload.paper1}`,
-            report_recipient: "Thriving Scholars",
-          });
-
-    const [studentResult, ownerResult] = await Promise.allSettled([
-      studentDelivery,
-      ownerDelivery,
-    ]);
-
-    if (ownerResult.status === "rejected") {
-      console.error("Thriving Scholars score-report copy failed", ownerResult.reason);
+    await window.emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, basePayload);
+    // The provider rate-limits consecutive sends. A student delivery never depends on the staff copy.
+    const isControlledCheck = Boolean(receipt.testMailbox) && studentEmail.toLowerCase() === receipt.testMailbox;
+    if (!isControlledCheck && studentEmail.toLowerCase() !== EMAIL_CONFIG.ownerEmail.toLowerCase()) {
+      await new Promise(resolve => setTimeout(resolve, 1200));
+      try { await window.emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.templateId, {...basePayload, to_email:EMAIL_CONFIG.ownerEmail, paper1:"Student email: "+studentEmail+"\\n\\n"+details, report_recipient:"Thriving Scholars"}); }
+      catch (error) { console.error("Thriving Scholars score-report copy failed",error); return {studentSent:true,ownerSent:false}; }
     }
-
-    if (studentResult.status === "rejected") {
-      throw studentResult.reason;
-    }
-
-    return {
-      studentSent: true,
-      ownerSent: ownerResult.status === "fulfilled",
-    };
+    return {studentSent:true,ownerSent:!isControlledCheck};
   }
 
   window.TS_AMC_EMAIL_REPORT = Object.freeze({
@@ -92,4 +74,3 @@
     validEmail,
   });
 })();
-

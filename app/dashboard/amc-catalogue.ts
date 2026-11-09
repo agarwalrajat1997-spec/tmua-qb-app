@@ -1,4 +1,7 @@
 export const PRACTICE_TESTS = [
+  { exam: "8", title: "AMC 8 November Full Mock", level: "AMC 8 · All topics", detail: "An original full-length paper with a saved score, email report and numbered worked-solutions PDF.", tags: ["25 questions", "40 minutes", "Worked PDF"], href: "/amc-practice-tests/tests/november-amc-8-full-mock/index.html" },
+  { exam: "10", title: "AMC 10 November Full Mock", level: "AMC 10 · All topics", detail: "An original full-length paper with a saved score, email report and numbered worked-solutions PDF.", tags: ["25 questions", "75 minutes", "Worked PDF"], href: "/amc-practice-tests/tests/november-amc-10-full-mock/index.html" },
+  { exam: "12", title: "AMC 12 November Full Mock", level: "AMC 12 · All topics", detail: "An original full-length paper with a saved score, email report and numbered worked-solutions PDF.", tags: ["25 questions", "75 minutes", "Worked PDF"], href: "/amc-practice-tests/tests/november-amc-12-full-mock/index.html" },
   {
     exam: "10",
     title: "AMC 10 Topical Test 1",
@@ -84,7 +87,7 @@ export const PRACTICE_TESTS = [
     title: "Pre-AMC 8 Mock Test",
     level: "AMC 8 Foundations",
     detail: "A full timed foundation paper for students building toward AMC 8.",
-    tags: ["25 questions", "75 minutes", "Instant score"],
+    tags: ["25 questions", "40 minutes", "Instant score"],
     href: "/amc-practice-tests/tests/pre-amc-8-mock-test/index.html",
   },
   {

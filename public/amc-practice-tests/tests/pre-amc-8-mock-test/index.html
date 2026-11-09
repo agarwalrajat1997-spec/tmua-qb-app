@@ -502,7 +502,7 @@ input[type="radio"] {
     <h2 id="test-title">PRE-AMC 8 MOCK TEST</h2>
 
 
-  <p><strong>Time allowed:</strong> 75 minutes</p>
+  <p><strong>Time allowed:</strong> 40 minutes</p>
   <p><strong>Calculators are not permitted.</strong></p>
 
 
@@ -550,7 +550,7 @@ input[type="radio"] {
         </ul>
       </td>
       <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">25</td>
-      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">75 minutes</td>
+      <td style="border: 1px solid #ccc; padding: 10px; text-align: center;">40 minutes</td>
     </tr>
   </tbody>
 </table>
@@ -582,7 +582,7 @@ input[type="radio"] {
     <!-- CENTER SECTION (timer + counter) -->
     <div class="header-center">
       <div class="timer">
-         <strong>Time Remaining <span id="time">75:00</span></strong><br>
+         <strong>Time Remaining <span id="time">40:00</span></strong><br>
          <strong><span id="counter">1 of 24</span></strong>
       </div>
     </div>
@@ -735,7 +735,7 @@ function updateFlagButton() {
 
   let userAnswers = new Array(25).fill(null);
   let current = 0;
-  let minutes = 75;
+  let minutes = 40;
   let seconds = 0;
   let timerInterval;
 
@@ -1729,7 +1729,7 @@ function updateFlagButton() {
 
 
 
-function startExam() {
+async function startExam() {
   const nameInput = document.getElementById("student-name").value.trim();
   const emailInput = document.getElementById("studentEmail").value.trim();
   const testSelect = document.getElementById("test-date").value;
@@ -1744,7 +1744,8 @@ function startExam() {
     return;
   }
 
-  studentName = nameInput;
+  try { await window.TS_AMC_ATTEMPT.start(() => userAnswers); } catch (error) { window.alert("Could not start the saved attempt. " + error.message); return; }
+    studentName = nameInput;
   testSession = testSelect;
 
   document.getElementById("instructions").style.display = "none";
@@ -2002,6 +2003,7 @@ window.onload = function () {
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script src="/amc-practice-tests/email-report.js"></script>
+<script src="/amc-practice-tests/attempt.js"></script>
 
 </body>
 </html>

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/amc-practice-tests/email-report.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script defer src="/amc-practice-tests/email-report.js"></script>
+<script src="/amc-practice-tests/attempt.js"></script>
   <style>
     :root { --ink:#1b1c20; --muted:#6b6d76; --cream:#fffaf2; --orange:#f28a12; --red:#6f1717; --line:#eadfce; --green:#1f7a4f; }
     * { box-sizing:border-box; }
@@ -128,7 +129,7 @@
     </section>
   </main>
   <script>
-    const config = {"title":"AMC 10 Topical Test 7","subtitle":"Combinatorics and Probability","minutes":75,"solution":"/amc-practice-tests/tests/amc-10-topical-test-7/solutions.html","answers":["E","C","C","B","B","D","D","B","C","B","C","A","D","D","E","C","C","B","A","B","D","B","C","C","D"],"specialQuestions":{"2":"<div class=\"text-question\"><div class=\"q-number\">2.<\/div><div><p>A bag contains hundreds of glass marbles, each one coloured either red, orange, green or blue. There are more than 2 marbles of each colour.<\/p><p>Marbles are drawn randomly from the bag, one at a time, and not replaced. How many marbles must be drawn from the bag in order to ensure at least three marbles of the same colour are drawn?<\/p><div class=\"source-options\"><span>A 4<\/span><span>B 7<\/span><span>C 9<\/span><span>D 12<\/span><span>E 13<\/span><\/div><\/div><\/div>"}};
+    const config = {"title":"AMC 10 Topical Test 7","subtitle":"Combinatorics and Probability","minutes":75,"solution":"/amc-practice-tests/tests/amc-10-topical-test-7/solutions.html","answers":["E","C","C","B","B","D","D","B","C","B","C","A","D","D","E","C","C","B","A","B","D","B","C","C","D"],"specialQuestions":{"2":"<div class=\"text-question\"><div class=\"q-number\">2.</div><div><p>A bag contains hundreds of glass marbles, each one coloured either red, orange, green or blue. There are more than 2 marbles of each colour.</p><p>Marbles are drawn randomly from the bag, one at a time, and not replaced. How many marbles must be drawn from the bag in order to ensure at least three marbles of the same colour are drawn?</p><div class=\"source-options\"><span>A 4</span><span>B 7</span><span>C 9</span><span>D 12</span><span>E 13</span></div></div></div>","14":"<p>A set of seven different coloured tiles contains one gold tile and one silver tile. Four tiles are chosen. How many choices contain exactly one of gold and silver?</p><p><b>A.</b> 10 &nbsp; <b>B.</b> 25 &nbsp; <b>C.</b> 15 &nbsp; <b>D.</b> 20 &nbsp; <b>E.</b> 30</p>","22":"<p>A fair coin selects a tray: heads selects one with two red and one white bead, tails selects one with one red and three white. One random bead is drawn. Given that it is red, what is the probability the coin showed heads?</p><p><b>A.</b> 2/3 &nbsp; <b>B.</b> 8/11 &nbsp; <b>C.</b> 1/2 &nbsp; <b>D.</b> 3/11 &nbsp; <b>E.</b> 3/4</p>"}};
     const letters = ["A", "B", "C", "D", "E"];
     const responses = Array(25).fill(null);
     const flagged = Array(25).fill(false);
@@ -201,7 +202,7 @@
       renderGrid();
     }
 
-    function startExam() {
+    async function startExam() {
       const nameInput = document.getElementById("studentName").value.trim();
       const emailInput = document.getElementById("studentEmail").value.trim();
 
@@ -215,7 +216,8 @@
         return;
       }
 
-      studentName = nameInput;
+      try { await window.TS_AMC_ATTEMPT.start(() => responses); } catch (error) { window.alert("Could not start the saved attempt. " + error.message); return; }
+    studentName = nameInput;
       studentEmail = emailInput;
       intro.hidden = true;
       exam.hidden = false;
