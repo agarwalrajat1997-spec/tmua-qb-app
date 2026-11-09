@@ -85,7 +85,7 @@ export default function ExamMagicLinkLogin({ exam, destination, uiMark }: Props)
           <div className={styles.brand}>Thriving Scholars</div>
           <div className={styles.tag}>{exam} Student Portal</div>
         </div>
-        <div className={styles.secure}>Paid Access &bull; Secure Login</div>
+        <div className={styles.secure}>{exam === "AMC" ? "AMC Access" : "Paid Access"} &bull; Secure Login</div>
       </header>
 
       <main className={styles.main}>
