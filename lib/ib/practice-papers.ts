@@ -4,6 +4,10 @@ import { getIbQuestion } from "./content";
 import { practiceMeta, type PracticePaper, type PracticePrompt } from "./practice-catalog";
 
 const businessLoaders = {
+  "business-b-paper-1": () => import("@/content/ib/practice-2027/business/business-b-paper-1.json"),
+  "business-sl-b-paper-2": () => import("@/content/ib/practice-2027/business/business-sl-b-paper-2.json"),
+  "business-hl-b-paper-2": () => import("@/content/ib/practice-2027/business/business-hl-b-paper-2.json"),
+  "business-hl-b-paper-3": () => import("@/content/ib/practice-2027/business/business-hl-b-paper-3.json"),
   "business-a-paper-1": () => import("@/content/ib/practice-2027/business/business-a-paper-1.json"),
   "business-sl-a-paper-2": () => import("@/content/ib/practice-2027/business/business-sl-a-paper-2.json"),
   "business-hl-a-paper-2": () => import("@/content/ib/practice-2027/business/business-hl-a-paper-2.json"),

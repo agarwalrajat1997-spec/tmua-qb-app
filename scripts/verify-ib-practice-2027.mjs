@@ -13,7 +13,7 @@ const all=await bank.getIbQuestions();
 const dir='content/ib/practice-2027', topics=read(dir+'/topic-tests.json'), business=read(dir+'/business-catalog.json'), ai=read(dir+'/ai-catalog.json');
 const index=read('content/ib/content-index.json');
 assert.equal(index.summaries.hl['math-ai-hl'].mocks,12);
-assert.equal(index.summaries.sl['business-management'].mocks,2);assert.equal(index.summaries.hl['business-management'].mocks,3);
+assert.equal(index.summaries.sl['business-management'].mocks,4);assert.equal(index.summaries.hl['business-management'].mocks,6);
 const primary=new Set(all.filter(q=>q.subject==='math-aa-hl').map(q=>q.syllabusCode));
 for(const [i,max] of [16,16,18,14,19].entries())for(let n=1;n<=max;n++)assert(primary.has(`${i+1}.${n}`));
 for(const [id,code] of [['ib-aa-sp-008','4.10'],['ib-aa-sp-021','4.11'],['ib-aa-c2-017','5.10']])assert.equal((await bank.getIbQuestion(id)).syllabusCode,code);
@@ -47,6 +47,7 @@ for(const entry of [...business,...topics]){
  Object.values(cat.practiceFiles(entry.id)).forEach(pdf);
 }
 pdf('/ib-practice-2027/business-a-pre-release.pdf');
+pdf('/ib-practice-2027/business-b-pre-release.pdf');
 for(const q of all.filter(q=>q.number>=841&&q.number<=844&&q.subject.startsWith('math-aa-')))verify(q);
 assert.equal(svgs.size,4);
 // Independent numeric checks for all four AI investigations.
@@ -87,7 +88,48 @@ const pool=[...svgs].find(s=>s.includes('No follow-up tests'));assert(pool.inclu
 const View=h.load('app/ib/components/PracticePaperList.tsx').default;
 for(const level of ['sl','hl']){
  const html=renderToStaticMarkup(React.createElement(View,{subject:'business-management',course:level}));
- assert.equal((html.match(/Open timed paper/g)||[]).length,level==='sl'?2:3);assert(!html.includes('-solutions.pdf'));assert(html.includes('business-a-pre-release.pdf'));
+ assert.equal((html.match(/Open timed paper/g)||[]).length,level==='sl'?4:6);assert(!html.includes('-solutions.pdf'));assert(html.includes('business-a-pre-release.pdf')&&html.includes('business-b-pre-release.pdf'));
  const aa=renderToStaticMarkup(React.createElement(View,{subject:'math-aa-'+level,course:level}));assert.equal((aa.match(/Open timed paper/g)||[]).length,2);
 }
-console.log(JSON.stringify({aiPapers:ai.length,businessPapers:business.length,topicTests:topics.length,aaHlPrimaryCodes:primary.size,markAllocationsChecked:parts,formulae,distinctFigures:svgs.size}));
+const formatQuestions=[];
+for(const collection of ['physics-fields','chemistry-structure-2','economics-macroeconomics']){
+ for(const q of read(dir+'/formats/'+collection+'.json')){
+  assert.equal((await bank.getIbQuestion(q.id,'sl')).id,q.id);
+  assert.equal((await bank.getIbQuestion(q.id,'hl')).id,q.id);
+  const publishedPrompt=h.model.questionPrompt(q);assert(!('markSchemeDiagramSvg' in publishedPrompt));
+  if(q.subject==='economics'){
+   assert.equal(q.examStyle,'paper-1');assert.equal(q.calculator,false);assert.equal(q.syllabusCode,'3.6');
+   assert.deepEqual(q.parts.map(p=>p.marks),[10,15]);assert.deepEqual(q.markScheme.map(g=>g.rubric.maxMarks),[10,15]);
+   assert(q.markScheme[1].steps.some(s=>s.text.includes('12.9%')&&s.text.includes('13.6%')));
+  }else{
+   assert.equal(q.syllabusCode,q.subject==='physics-hl'?'D.3':'S2.3');assert.equal(q.questionType,'data-based');verify(q);
+  }
+  if(q.markSchemeDiagramSvg){assert(h.model.safeDiagram(q.markSchemeDiagramSvg));svgs.add(q.markSchemeDiagramSvg);}
+  formatQuestions.push(q);
+ }
+}
+assert.equal(formatQuestions.length,7);assert.equal(svgs.size,6);
+for(const k of ['questions','solutions'])pdf('/ib-practice-2027/science-and-economics-'+k+'.pdf');
+const [curvature, , , , , , fiscal]=formatQuestions;
+const measured=[20,25,40,50].map((B,i)=>[Math.round((1/(B/1000))*100)/100,[10,8.1,5,4.1][i]]);
+const svgPoints=s=>Array.from(s.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)"/g),m=>[+m[1],+m[2]]);
+const pointsOfCurve=svgPoints(curvature.markSchemeDiagramSvg);
+for(const [i,[x,y]] of pointsOfCurve.entries()){near((x-62)/7,measured[i][0]);near((230-y)/17,measured[i][1]);}
+const eqPoints=svgPoints(fiscal.markSchemeDiagramSvg);
+for(const [i,[x,y]] of eqPoints.entries()){
+ near(y,268-0.4*x);near(y,(i?-20:70)+0.5*x);assert(x<405);
+}
+assert(eqPoints[0][0]<eqPoints[1][0]&&eqPoints[0][1]>eqPoints[1][1]);
+near(400000/(0.025*0.081)/1e8,1.97530864);
+near((5.3-(-4.3))/2,4.8);near((5.3+(-4.3))/2,0.5);
+near((2*0.0048/(0.08/2e5)**2)/(40/0.02)/1e7,3);
+near((5400-2400)/(0.010-0.004),5e5);near((2400-5e5*.004)/5e5,.0008);
+near(100*(453.7-336.5)/453.7,25.8,.05);near(36/20,1.8);
+near((648+651+651)/3,650);near((658+661+661)/3,660);
+near(100*((216000/96)/(192000/80)-1),-6.25);
+near((200-60)*18-2400,120);near(Math.ceil((2400+60*18)/18),194);
+near(9000-5400+3000-5400,1200);near(9000+9000-10800,7200);
+near((390000/750000)*100,52);near(15000-150000*.08,3000);
+near((.6*80000+.4*35000)*3.31-180000,25220);near((.6*45000+.4*32000)*3.31-100000,31738);
+near((18600-1200)/(30000-1200+6000),.5);near((30000-18600+6000)*.6/.4-(18600-1200),8700);
+console.log(JSON.stringify({aiPapers:ai.length,businessPapers:business.length,topicTests:topics.length,scienceAndEconomicsQuestions:formatQuestions.length,aaHlPrimaryCodes:primary.size,markAllocationsChecked:parts,formulae,distinctFigures:svgs.size}));
