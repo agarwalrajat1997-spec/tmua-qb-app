@@ -12,8 +12,8 @@ const moduleMs=performance.now()-started;
 const bankImports=()=>imports.filter(name=>/^@\/content\/ib\/[^/]+\/[^/]+\.json$/.test(name));
 assert.equal(bankImports().length,0,'importing navigation does not load any question banks');
 const summary=content.getIbSummary('hl');
-assert.equal(summary['physics-hl'].questions,740);
-assert.equal(content.getIbSummary('sl')['physics-hl'].questions,518);
+assert.equal(summary['physics-hl'].questions,743);
+assert.equal(content.getIbSummary('sl')['physics-hl'].questions,521);
 assert.equal(content.getIbSummary('hl'),summary,'summary reuses immutable build metadata');
 assert.equal(bankImports().length,0,'overview requires zero question banks');
 
@@ -53,7 +53,9 @@ for(const collection of h.model.IB_COLLECTIONS){
  const fnPractice=fnCourse?JSON.parse(readFileSync('content/ib/aa-functions-practice/'+fnCourse+'.json','utf8')):[];
  const practicePath='content/ib/practice-2027/banks/'+collection.id+'.json';
  const assessmentPractice=existsSync(practicePath)?JSON.parse(readFileSync(practicePath,'utf8')):[];
- const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice,...fiscal,...fnPractice,...assessmentPractice].filter(q=>q.status==='published');
+ const formatPath='content/ib/practice-2027/formats/'+collection.id+'.json';
+ const formatPractice=existsSync(formatPath)?JSON.parse(readFileSync(formatPath,'utf8')):[];
+ const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice,...fiscal,...fnPractice,...assessmentPractice,...formatPractice].filter(q=>q.status==='published');
  const actual=await content.getIbQuestions(collection.id,'hl');
  assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'question order preserved');
  assert.deepEqual(Array.from(await content.getIbQuestions(collection.id,'sl'),q=>q.id),expected.filter(q=>h.model.questionAvailableForCourse(q,'sl')).map(q=>q.id));
@@ -63,12 +65,12 @@ for(const collection of h.model.IB_COLLECTIONS){
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject!=='psychology').length,45,'all established banks remain');
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject==='psychology').length,7);
 assert.equal(bankImports().length,61,'52 established banks, six Chemistry chunks, a fiscal-policy chunk and two AA Functions chunks');
-assert.equal(total,6543);
-assert.equal(total-content.getIbSummary('hl').psychology.questions,6303,'non-Psychology banks including both Functions additions');
+assert.equal(total,6550);
+assert.equal(total-content.getIbSummary('hl').psychology.questions,6310,'non-Psychology banks including the targeted science and economics questions');
 assert.equal((await content.getIbQuestions('aa-sl-functions')).length,160);
 assert.equal((await content.getIbQuestions('functions')).length,269);
-assert.equal(content.getIbSummary('hl').chemistry.questions,1000);
-assert.equal(content.getIbSummary('sl').chemistry.questions,606);
+assert.equal(content.getIbSummary('hl').chemistry.questions,1003);
+assert.equal(content.getIbSummary('sl').chemistry.questions,609);
 assert.equal(content.getIbSummary('hl').psychology.questions,240);
 assert.equal(content.getIbSummary('sl').psychology.questions,180);
 
