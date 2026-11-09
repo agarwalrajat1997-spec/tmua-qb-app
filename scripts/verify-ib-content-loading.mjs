@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { performance } from 'node:perf_hooks';
 import { ibHarness } from './ib-component-harness.mjs';
 
@@ -51,7 +51,9 @@ for(const collection of h.model.IB_COLLECTIONS){
  const fiscal=collection.id==='economics-macroeconomics'?JSON.parse(readFileSync('content/ib/syllabus-updates-2026/economics-macroeconomics.json','utf8')):[];
  const fnCourse={'functions':'hl','aa-sl-functions':'sl'}[collection.id];
  const fnPractice=fnCourse?JSON.parse(readFileSync('content/ib/aa-functions-practice/'+fnCourse+'.json','utf8')):[];
- const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice,...fiscal,...fnPractice].filter(q=>q.status==='published');
+ const practicePath='content/ib/practice-2027/banks/'+collection.id+'.json';
+ const assessmentPractice=existsSync(practicePath)?JSON.parse(readFileSync(practicePath,'utf8')):[];
+ const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice,...fiscal,...fnPractice,...assessmentPractice].filter(q=>q.status==='published');
  const actual=await content.getIbQuestions(collection.id,'hl');
  assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'question order preserved');
  assert.deepEqual(Array.from(await content.getIbQuestions(collection.id,'sl'),q=>q.id),expected.filter(q=>h.model.questionAvailableForCourse(q,'sl')).map(q=>q.id));
@@ -61,8 +63,8 @@ for(const collection of h.model.IB_COLLECTIONS){
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject!=='psychology').length,45,'all established banks remain');
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject==='psychology').length,7);
 assert.equal(bankImports().length,61,'52 established banks, six Chemistry chunks, a fiscal-policy chunk and two AA Functions chunks');
-assert.equal(total,6524);
-assert.equal(total-content.getIbSummary('hl').psychology.questions,6284,'non-Psychology banks including both Functions additions');
+assert.equal(total,6543);
+assert.equal(total-content.getIbSummary('hl').psychology.questions,6303,'non-Psychology banks including both Functions additions');
 assert.equal((await content.getIbQuestions('aa-sl-functions')).length,160);
 assert.equal((await content.getIbQuestions('functions')).length,269);
 assert.equal(content.getIbSummary('hl').chemistry.questions,1000);

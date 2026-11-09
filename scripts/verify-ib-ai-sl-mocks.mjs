@@ -8,7 +8,7 @@ const ids=['a','b'].flatMap(set=>['1','2'].map(p=>'ai-sl-set-'+set+'-paper-'+p))
 assert.deepEqual(norm(m.AI_SL_MATHS_MOCKS.map(p=>p.id)),ids);assert.equal(m.getMathsMock('ai-sl-set-a-paper-3'),undefined);
 const List=h.load('app/ib/components/MathsMockList.tsx').default,html=renderToStaticMarkup(React.createElement(List,{course:'sl',strand:'ai'}));
 assert(!html.includes('ai-hl-set-'));assert(!html.includes('aa-sl-set-'));assert(!html.includes('Paper 3'));assert.match(html,/Paper 2 follows connected problems/);
-const index=JSON.parse(readFileSync('content/ib/content-index.json','utf8'));assert.equal(index.summaries.sl['math-ai-sl'].mocks,4);assert.equal(index.summaries.hl['math-ai-hl'].mocks,10);
+const index=JSON.parse(readFileSync('content/ib/content-index.json','utf8'));assert.equal(index.summaries.sl['math-ai-sl'].mocks,4);assert.equal(index.summaries.hl['math-ai-hl'].mocks,12);
 let parts=0,figures=0;const unique=new Set(),submax=[8,6,6,11,8];
 for(const id of ids){
  const meta=m.getMathsMock(id),p=await server.getMathsMockPaper(id);assert(p);

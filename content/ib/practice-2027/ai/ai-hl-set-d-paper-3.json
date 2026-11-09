@@ -1,0 +1,403 @@
+{
+  "id": "ai-hl-set-d-paper-3",
+  "title": "Mathematics AI HL · Set D · Paper 3",
+  "minutes": 75,
+  "marks": 55,
+  "questions": [
+    {
+      "stem": "**Cooling under a changing air temperature**\n\nA temperature probe starts at 34 °C. During the next 20 minutes the air temperature is $A(t)=18+0.5t$ °C. The probe model is $T'(t)=-0.2(T(t)-A(t))$, with $t$ in minutes.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "Find the initial rate of temperature change and interpret its sign.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Use Euler’s method with a four-minute step to estimate $T(4)$ and $T(8)$. Show both updates.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "For a step length $h$, derive a recurrence for the Euler estimates of the gap $g_n=T_n-A(nh)$. Find its fixed point.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "Use the recurrence to find the range of positive step sizes for which deviations from the fixed gap converge to zero. For which of these do the deviations alternate in sign?",
+          "marks": 4
+        },
+        {
+          "label": "e",
+          "prompt": "Verify that $T(t)=15.5+0.5t+18.5e^{-0.2t}$ satisfies both model conditions. Use it to calculate the absolute error of the four-minute-step estimate at $t=8$.",
+          "marks": 5
+        },
+        {
+          "label": "f",
+          "prompt": "Find the minimum probe temperature on the stated interval. Will the probe ever match the air temperature during that interval? Justify the connection.",
+          "marks": 5
+        },
+        {
+          "label": "g",
+          "prompt": "A technician uses $h=5$ and concludes that after five minutes the temperature gap is exactly −2.5 °C. Evaluate that inference using both models.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Substitute the two initial temperatures."
+            },
+            {
+              "code": "A1",
+              "text": "The rate is −3.2 °C per minute."
+            },
+            {
+              "code": "R1",
+              "text": "The probe initially loses heat because it is warmer than the air."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use the slope at the beginning of each step."
+            },
+            {
+              "code": "A1",
+              "text": "$T(4)≈34+4(-3.2)=21.2$."
+            },
+            {
+              "code": "M1",
+              "text": "At 4 min the slope estimate is $-0.2(21.2-20)=-0.24$."
+            },
+            {
+              "code": "A1",
+              "text": "$T(8)≈20.24$ °C."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Subtract $18+0.5(n+1)h$ from the temperature update."
+            },
+            {
+              "code": "A1",
+              "text": "$g_{n+1}=(1-0.2h)g_n-0.5h$."
+            },
+            {
+              "code": "M1",
+              "text": "Solve $0.2h g=-0.5h$ for positive $h$."
+            },
+            {
+              "code": "A1",
+              "text": "The fixed gap is −2.5 °C."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The deviation from −2.5 has multiplier $1-0.2h$."
+            },
+            {
+              "code": "M1",
+              "text": "Require $|1-0.2h|<1$."
+            },
+            {
+              "code": "A1",
+              "text": "$0<h<10$ minutes."
+            },
+            {
+              "code": "A1",
+              "text": "Alternation requires $5<h<10$."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Differentiate to get $0.5-3.7e^{-0.2t}$."
+            },
+            {
+              "code": "A1",
+              "text": "Substitution into the right-hand side gives the same expression."
+            },
+            {
+              "code": "A1",
+              "text": "It gives 34 at zero."
+            },
+            {
+              "code": "M1",
+              "text": "$T(8)=23.2351$ °C."
+            },
+            {
+              "code": "A1",
+              "text": "Absolute error is 3.00 °C to three significant figures."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Set $0.5-3.7e^{-0.2t}=0$."
+            },
+            {
+              "code": "A1",
+              "text": "$t=5\\ln(7.4)=10.0074$ min."
+            },
+            {
+              "code": "R1",
+              "text": "The derivative changes from negative to positive."
+            },
+            {
+              "code": "A1",
+              "text": "Minimum temperature is 23.0 °C."
+            },
+            {
+              "code": "R1",
+              "text": "At a stationary point the model gives $T=A$ and the gap crosses zero just once."
+            }
+          ]
+        },
+        {
+          "part": "g",
+          "steps": [
+            {
+              "code": "A1",
+              "text": "The Euler multiplier is zero, so the numerical gap reaches −2.5 after one step."
+            },
+            {
+              "code": "A1",
+              "text": "The exact gap is $-2.5+18.5e^{-0.2t}$."
+            },
+            {
+              "code": "R1",
+              "text": "The exponential is positive for finite time. Immediate equality is a numerical artefact."
+            }
+          ]
+        }
+      ],
+      "marks": 28,
+      "number": 1,
+      "section": "",
+      "syllabusRefs": [
+        "AHL 5.14",
+        "AHL 5.16"
+      ]
+    },
+    {
+      "stem": "**Pooling tests in a plant nursery**\n\nEach seedling independently carries an infection with probability 0.04. In a two-stage protocol, samples from $n$ seedlings are pooled into one test. A positive pooled result triggers individual tests of all $n$ seedlings. Begin with perfectly accurate tests. Use $2≤n≤10$ unless stated otherwise.",
+      "parts": [
+        {
+          "label": "a",
+          "prompt": "For a pool of five, find the probabilities of no infections and exactly one infection.",
+          "marks": 3
+        },
+        {
+          "label": "b",
+          "prompt": "Derive the expected number of tests per seedling as a function $f(n)$.",
+          "marks": 4
+        },
+        {
+          "label": "c",
+          "prompt": "Use technology to find the minimizing integer pool size. Give sufficient evidence over the allowed range.",
+          "marks": 4
+        },
+        {
+          "label": "d",
+          "prompt": "For 600 seedlings arranged in 100 such pools, find the expected total number of tests and its standard deviation.",
+          "marks": 5
+        },
+        {
+          "label": "e",
+          "prompt": "A pooled test now has sensitivity 0.95 when a pool contains at least one infection. Its false-positive probability for a clean pool is 0.02. Individual tests are accurate. For $n=5$, given a positive pool, find the probability that at least one seedling is infected.",
+          "marks": 4
+        },
+        {
+          "label": "f",
+          "prompt": "Derive a revised expression for expected tests per seedling. Reassess the minimizing size. Explain why the testing cost alone is inadequate as a criterion.",
+          "marks": 4
+        },
+        {
+          "label": "g",
+          "prompt": "A field worker puts seedlings from the same tray in each pool. Within-tray infections tend to cluster. Identify the term in the model that needs new evidence and propose a field comparison that would measure it.",
+          "marks": 3
+        }
+      ],
+      "markScheme": [
+        {
+          "part": "a",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Use a binomial model with five trials."
+            },
+            {
+              "code": "A1",
+              "text": "$0.96^5=0.815373$."
+            },
+            {
+              "code": "A1",
+              "text": "$5(0.04)(0.96)^4=0.169869$."
+            }
+          ]
+        },
+        {
+          "part": "b",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "The pool is positive with probability $1-0.96^n$."
+            },
+            {
+              "code": "M1",
+              "text": "Test counts are 1 if negative and $1+n$ if positive."
+            },
+            {
+              "code": "A1",
+              "text": "Expected tests per pool are $1+n(1-0.96^n)$."
+            },
+            {
+              "code": "A1",
+              "text": "$f(n)=1/n+1-0.96^n$."
+            }
+          ]
+        },
+        {
+          "part": "c",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Compare all integers from 2 through 10."
+            },
+            {
+              "code": "A1",
+              "text": "Values for 2–5 are 0.5784, 0.4486, 0.4007, 0.3846."
+            },
+            {
+              "code": "A1",
+              "text": "Values for 6–10 are 0.3839, 0.3914, 0.4036, 0.4186, 0.4352."
+            },
+            {
+              "code": "A1",
+              "text": "Choose six seedlings per pool."
+            }
+          ]
+        },
+        {
+          "part": "d",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "If $Y$ counts positive pools, $Y$ is binomial with 100 trials and $q=1-0.96^6$."
+            },
+            {
+              "code": "A1",
+              "text": "Total tests $N=100+6Y$."
+            },
+            {
+              "code": "A1",
+              "text": "$E(N)=230.345$ tests."
+            },
+            {
+              "code": "M1",
+              "text": "$\\operatorname{sd}(N)=6\\sqrt{100q(1-q)}$."
+            },
+            {
+              "code": "A1",
+              "text": "Approximately 24.7 tests."
+            }
+          ]
+        },
+        {
+          "part": "e",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Prior positive-pool infection probability is $a=1-0.96^5$."
+            },
+            {
+              "code": "M1",
+              "text": "The joint true-positive probability is $0.95a$."
+            },
+            {
+              "code": "A1",
+              "text": "Total positive probability is $0.95a+0.02(1-a)$."
+            },
+            {
+              "code": "A1",
+              "text": "The conditional probability is 0.914934."
+            }
+          ]
+        },
+        {
+          "part": "f",
+          "steps": [
+            {
+              "code": "M1",
+              "text": "Positive probability is $0.95(1-0.96^n)+0.02(0.96^n)$."
+            },
+            {
+              "code": "A1",
+              "text": "Add $1/n$ to obtain the revised function."
+            },
+            {
+              "code": "A1",
+              "text": "Numerical minimum over 2–10 is still at 6, giving 0.388702 (5 gives 0.391703 and 7 gives 0.394011)."
+            },
+            {
+              "code": "R1",
+              "text": "Infected plants in false-negative pools receive no individual follow-up."
+            }
+          ]
+        },
+        {
+          "part": "g",
+          "steps": [
+            {
+              "code": "R1",
+              "text": "The independence calculation for the clean-pool probability $0.96^n$ is in doubt."
+            },
+            {
+              "code": "M1",
+              "text": "Sample many trays and form same-tray and mixed-tray pools at the same size."
+            },
+            {
+              "code": "A1",
+              "text": "Individually verify the seedlings to estimate each design’s fraction of completely clean pools."
+            }
+          ]
+        }
+      ],
+      "marks": 27,
+      "number": 2,
+      "section": "",
+      "diagramSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 610 210\"><title>Two-stage pooled testing protocol</title><rect width=\"610\" height=\"210\" fill=\"white\"/><g font-family=\"Arial,sans-serif\" font-size=\"17\" fill=\"black\"><rect x=\"35\" y=\"79\" width=\"135\" height=\"53\" rx=\"5\" stroke=\"black\" fill=\"white\" stroke-width=\"2\"/><text x=\"102\" y=\"111\" text-anchor=\"middle\">Test one pool</text><path d=\"M170 105 H220 L285 52 H335 M325 46 L335 52 L325 58 M220 105 L285 157 H335 M325 151 L335 157 L325 163\" stroke=\"black\" stroke-width=\"2\" fill=\"none\"/><text x=\"258\" y=\"41\" text-anchor=\"middle\">Negative</text><text x=\"260\" y=\"187\" text-anchor=\"middle\">Positive</text><rect x=\"337\" y=\"27\" width=\"245\" height=\"49\" rx=\"5\" stroke=\"black\" fill=\"white\" stroke-width=\"2\"/><text x=\"459\" y=\"57\" text-anchor=\"middle\">No follow-up tests</text><rect x=\"337\" y=\"132\" width=\"245\" height=\"50\" rx=\"5\" stroke=\"black\" fill=\"white\" stroke-width=\"2\"/><text x=\"459\" y=\"162\" text-anchor=\"middle\">Test each seedling separately</text></g></svg>",
+      "syllabusRefs": [
+        "SL 4.6",
+        "SL 4.7",
+        "SL 4.8"
+      ]
+    }
+  ],
+  "course": "hl",
+  "strand": "ai",
+  "set": "D",
+  "paper": "3",
+  "calculator": true
+}

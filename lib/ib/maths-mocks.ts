@@ -37,6 +37,9 @@ export function validateMathsMockPaper(input: unknown, meta: MathsMockMeta): Mat
   return p;
 }
 const loaders = {
+  "ai-hl-set-c-paper-3": () => import("@/content/ib/practice-2027/ai/ai-hl-set-c-paper-3.json"),
+  "ai-hl-set-d-paper-3": () => import("@/content/ib/practice-2027/ai/ai-hl-set-d-paper-3.json"),
+
   "ai-sl-set-a-paper-1": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-a-paper-1.json"),
   "ai-sl-set-a-paper-2": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-a-paper-2.json"),
   "ai-sl-set-b-paper-1": () => import("@/content/ib/ai-sl-mocks-2026/papers/ai-sl-set-b-paper-1.json"),

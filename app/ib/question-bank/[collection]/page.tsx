@@ -42,7 +42,11 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const user = await requireIbUser(pathname + (paramsForLogin.size ? "?" + paramsForLogin : ""));
   const [all, slQuestions, hlQuestions] = await Promise.all([getIbQuestions(id, courseLevel), getIbQuestions(id, "sl"), getIbQuestions(id, "hl")]);
   const subtopics = [...new Set(all.map(q => q.subtopic))].sort();
-  const syllabusTopics = ibSyllabusSubtopics(collection.subject, collection.topicId, courseLevel);
+  const isAA = collection.subject.startsWith("math-aa-");
+  const syllabusTopics = isAA
+    ? [...new Set(all.flatMap(q => q.syllabusCode ? [q.syllabusCode] : []))]
+      .sort((a,b)=>a.localeCompare(b,"en",{numeric:true})).map(code=>({code,title:"Syllabus statement"}))
+    : ibSyllabusSubtopics(collection.subject, collection.topicId, courseLevel);
   const groups = ibTopicGroups(collection, all, courseLevel);
   const search = single(raw.q).trim().slice(0, 160);
   const difficulty = selectedValues(raw.difficulty, ["easy", "medium", "hard"]);
@@ -59,7 +63,7 @@ export default async function QuestionBank({ params, searchParams }: { params: P
   const selectedGroups = groups.filter(group => selectedCategories.includes(group.id));
   const categoryOptions = [
     ...groups.map(group => ({ value: group.id, label: group.title, detail: [group.syllabusCodes.join(", "), `${group.count} questions`].filter(Boolean).join(" · ") })),
-    ...specificOptions.filter(option => selectedCategories.includes(option.value) && !groups.some(group => group.id === option.value)),
+    ...specificOptions.filter(option => (selectedCategories.includes(option.value) || isAA && option.value.startsWith("syllabus:")) && !groups.some(group => group.id === option.value)),
   ];
   const allowedLevels = courseChoice ? courseLevel === "sl" ? [coreLevel] : [coreLevel, "ahl"] : [];
   const level = selectedValues(raw.level, allowedLevels);
