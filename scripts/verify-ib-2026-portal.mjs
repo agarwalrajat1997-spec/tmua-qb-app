@@ -75,7 +75,8 @@ for(const course of courses){
  assert.equal(newQuestions.length,100);
  const topicCounts=Object.fromEntries(catalog.IB_COURSES[subject].topics.map(t=>[t.id,newQuestions.filter(q=>q.topicId===t.id).length]));
  assert.deepEqual(Object.values(topicCounts),[20,20,20,20,20],'exactly20 additions per specification topic');
- assert.equal(summaries[subject].questions,old.filter(q=>q.status==='published').length+100);
+ const practice=course.startsWith('aa-')?JSON.parse(readFileSync('content/ib/aa-functions-practice/'+course.slice(3)+'.json','utf8')):[];
+ assert.equal(summaries[subject].questions,old.filter(q=>q.status==='published').length+100+practice.length);
  assert.equal(content.getIbSummary('sl')[subject].questions,summaries[subject].questions,'four separate Maths streams retain their own course bank');
  for(const collection of real.model.IB_COLLECTIONS.filter(c=>c.subject===subject)){
   const enrich=newQuestions.filter(q=>q.collectionId===collection.id);
@@ -83,7 +84,7 @@ for(const course of courses){
   const normalizedChunk=JSON.stringify(enrich.map(q=>real.model.ibQuestionSchema.parse(q)))+'\n';
   assert.equal(hash(readFileSync(derivedPath)),hash(normalizedChunk),'topicwise derived chunk is stale: '+derivedPath);
   const actual=await content.getIbQuestions(collection.id);
-  const expected=[...old.filter(q=>q.collectionId===collection.id&&q.status==='published'),...enrich];
+  const expected=[...old.filter(q=>q.collectionId===collection.id&&q.status==='published'),...enrich,...practice.filter(q=>q.collectionId===collection.id)];
   assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'legacy ordering followed by this topic additions only');
   assert.equal(new Set(actual.map(q=>q.id)).size,actual.length,'no repeated merged record');
   const groups=grouping.ibTopicGroups(collection,actual);

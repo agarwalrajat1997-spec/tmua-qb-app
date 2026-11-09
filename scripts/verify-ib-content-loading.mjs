@@ -49,7 +49,9 @@ for(const collection of h.model.IB_COLLECTIONS){
  const enrichment=[...['aa-sl','aa-hl','ai-sl','ai-hl'].flatMap(course=>JSON.parse(readFileSync('content/ib/math-2026-expansion/'+course+'.json','utf8'))),...['structure','periodicity','reactivity','mechanisms'].flatMap(batch=>JSON.parse(readFileSync('content/ib/chemistry-2026-expansion/'+batch+'.json','utf8'))),...['unity-diversity','form-function','interaction-interdependence','continuity-change'].flatMap(batch=>JSON.parse(readFileSync('content/ib/biology-2026-expansion/'+batch+'.json','utf8')))].filter(q=>q.collectionId===collection.id);
  const chemistryPractice=['s1','s2','s3','r1','r2','r3'].flatMap(theme=>JSON.parse(readFileSync('content/ib/chemistry-2025-practice/'+theme+'.json','utf8'))).filter(q=>q.collectionId===collection.id);
  const fiscal=collection.id==='economics-macroeconomics'?JSON.parse(readFileSync('content/ib/syllabus-updates-2026/economics-macroeconomics.json','utf8')):[];
- const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice,...fiscal].filter(q=>q.status==='published');
+ const fnCourse={'functions':'hl','aa-sl-functions':'sl'}[collection.id];
+ const fnPractice=fnCourse?JSON.parse(readFileSync('content/ib/aa-functions-practice/'+fnCourse+'.json','utf8')):[];
+ const expected=[...JSON.parse(readFileSync(file,'utf8')),...enrichment,...chemistryPractice,...fiscal,...fnPractice].filter(q=>q.status==='published');
  const actual=await content.getIbQuestions(collection.id,'hl');
  assert.deepEqual(Array.from(actual,q=>q.id),expected.map(q=>q.id),'question order preserved');
  assert.deepEqual(Array.from(await content.getIbQuestions(collection.id,'sl'),q=>q.id),expected.filter(q=>h.model.questionAvailableForCourse(q,'sl')).map(q=>q.id));
@@ -58,9 +60,11 @@ for(const collection of h.model.IB_COLLECTIONS){
 }
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject!=='psychology').length,45,'all established banks remain');
 assert.equal(h.model.IB_COLLECTIONS.filter(c=>c.subject==='psychology').length,7);
-assert.equal(bankImports().length,59,'52 established bank files and six Chemistry chunks and the fiscal-policy chunk each loaded once');
-assert.equal(total,6364);
-assert.equal(total-content.getIbSummary('hl').psychology.questions,6124,'established questions plus Chemistry and fiscal-policy additions');
+assert.equal(bankImports().length,61,'52 established banks, six Chemistry chunks, a fiscal-policy chunk and two AA Functions chunks');
+assert.equal(total,6524);
+assert.equal(total-content.getIbSummary('hl').psychology.questions,6284,'non-Psychology banks including both Functions additions');
+assert.equal((await content.getIbQuestions('aa-sl-functions')).length,160);
+assert.equal((await content.getIbQuestions('functions')).length,269);
 assert.equal(content.getIbSummary('hl').chemistry.questions,1000);
 assert.equal(content.getIbSummary('sl').chemistry.questions,606);
 assert.equal(content.getIbSummary('hl').psychology.questions,240);
