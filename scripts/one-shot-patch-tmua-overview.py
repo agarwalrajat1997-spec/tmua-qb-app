@@ -116,12 +116,14 @@ if route.count(fast_marker) != 1:
 ROUTE_PATH.write_text(route, encoding="utf-8")
 
 component = COMPONENT_PATH.read_text(encoding="utf-8")
-component, replacements = re.subn(
-    r'\n\s*\|\|\s*\n\s*predictor\.score\s*<\s*\n\s*3\.5',
-    '',
-    component,
-    count=1,
-)
-if replacements != 1 and re.search(r'predictor\.score\s*<\s*3\.5', component):
+score_gate = """    predictor.score ===
+      null ||
+    predictor.score <
+      3.5"""
+score_without_gate = """    predictor.score ===
+      null"""
+if score_gate in component:
+    component = component.replace(score_gate, score_without_gate, 1)
+elif re.search(r'predictor\.score\s*<\s*3\.5', component):
     raise SystemExit("low-score display gate was not removed")
 COMPONENT_PATH.write_text(component, encoding="utf-8")
