@@ -1,0 +1,156 @@
+name: One-shot restore TMUA overview
+
+on:
+  push:
+    paths:
+      - ".github/workflows/one-shot-restore-tmua-overview.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply bounded production overview patch
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          route_path = Path("app/api/tmua/overview/route.ts")
+          route = route_path.read_text(encoding="utf-8")
+
+          helper_marker = "function useSavedTmuaOverview()"
+          get_anchor = "export async function GET(request: Request) {"
+          helper = r'''
+function finiteOverviewNumber(value: unknown): number | null {
+  const result = Number(value);
+  return Number.isFinite(result) ? result : null;
+}
+
+function overviewInteger(value: unknown): number {
+  const result = Number(value);
+  return Number.isInteger(result) && result >= 0 ? result : 0;
+}
+
+function overviewFraction(value: unknown): number {
+  const result = finiteOverviewNumber(value);
+  return result === null ? 0 : Math.min(1, Math.max(0, result));
+}
+
+function predictorFromPreparationRank(preparationRank: any) {
+  const score = finiteOverviewNumber(preparationRank?.predictedTmuaScore9);
+  const hasEvidence =
+    preparationRank?.hasGenuinePreparationEvidence === true &&
+    score !== null;
+  const broadTestFamilies = overviewInteger(
+    preparationRank?.broadOrFullIndependentTestFamilies,
+  );
+  const recentTestFamilies = overviewInteger(
+    preparationRank?.independentRecognisedTestFamilies30d,
+  );
+
+  return {
+    modelVersion: `${String(
+      preparationRank?.modelVersion ?? "tmua-preparation-rank-v1-20260810",
+    )}-saved-overview`,
+    status: hasEvidence ? "predicted" : "insufficient_evidence",
+    score: hasEvidence ? score : null,
+    lowerBound: null,
+    upperBound: null,
+    confidence: null,
+    testEvidenceCount: broadTestFamilies,
+    independentTestCount: Math.max(
+      broadTestFamilies,
+      recentTestFamilies,
+    ),
+    qbUniqueQuestions: overviewInteger(
+      preparationRank?.trustedUniqueFirstExposures,
+    ),
+    qbTopicCoverage: overviewFraction(
+      preparationRank?.trustedCanonicalTopicCoverage,
+    ),
+    calculatedAt:
+      typeof preparationRank?.calculatedAt === "string"
+        ? preparationRank.calculatedAt
+        : new Date().toISOString(),
+  };
+}
+
+function useSavedTmuaOverview() {
+  // Vercel serves the bounded, already-computed current-user snapshot.
+  // Local and verification environments retain the full authoritative path.
+  return (
+    process.env.VERCEL === "1" &&
+    process.env.TMUA_OVERVIEW_FORCE_LIVE !== "1"
+  );
+}
+'''.strip()
+
+          if helper_marker not in route:
+            if get_anchor not in route:
+              raise SystemExit("GET route anchor not found")
+            route = route.replace(get_anchor, helper + "\n\n" + get_anchor, 1)
+
+          fast_marker = "predictorFromPreparationRank(preparationRank)"
+          refresh_anchor = '    requestPreparationRankRefresh(admin, "tmua");\n\n'
+          fast_path = r'''    if (useSavedTmuaOverview()) {
+      const preparationRank = await readPreparationRankSnapshot(
+        admin,
+        user.id,
+        "tmua",
+        user.email,
+      );
+
+      return json({
+        ok: true,
+        viewerId: user.id,
+        predictor: predictorFromPreparationRank(preparationRank),
+        preparationRank,
+        countdown: preparationCountdown(new Date()),
+      });
+    }
+
+'''
+          if fast_marker not in route:
+            if refresh_anchor not in route:
+              raise SystemExit("rank refresh anchor not found")
+            route = route.replace(refresh_anchor, refresh_anchor + fast_path, 1)
+
+          route_path.write_text(route, encoding="utf-8")
+
+          component_path = Path("app/dashboard/TmuaPredictionStrip.tsx")
+          component = component_path.read_text(encoding="utf-8")
+          component, replacements = re.subn(
+            r'\n\s*\|\|\s*\n\s*predictor\.score\s*<\s*\n\s*3\.5',
+            '',
+            component,
+            count=1,
+          )
+          if replacements != 1 and "predictor.score <" in component:
+            raise SystemExit("low-score display gate was not removed")
+          component_path.write_text(component, encoding="utf-8")
+          PY
+
+      - name: Run focused structural checks
+        shell: bash
+        run: |
+          node scripts/verify-tmua-predictor-overview.mjs
+          node scripts/verify-tmua-preparation-rank-overview.mjs
+          node scripts/verify-tmua-dashboard-display-calibration.mjs
+
+      - name: Commit production fix and remove one-shot workflow
+        shell: bash
+        run: |
+          rm .github/workflows/one-shot-restore-tmua-overview.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Restore fast TMUA score and rank overview"
+          git push origin HEAD:main
