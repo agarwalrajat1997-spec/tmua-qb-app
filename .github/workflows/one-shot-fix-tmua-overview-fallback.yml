@@ -1,0 +1,36 @@
+name: One-shot fix TMUA overview fallback
+
+on:
+  push:
+    paths:
+      - ".github/workflows/one-shot-fix-tmua-overview-fallback.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply current-user overview fallback
+        run: python3 scripts/one-shot-fix-tmua-overview-fallback.py
+
+      - name: Run focused TMUA checks
+        run: |
+          node scripts/verify-tmua-predictor-overview.mjs
+          node scripts/verify-tmua-predictor-refresh.mjs
+          node scripts/verify-tmua-dashboard-display-calibration.mjs
+
+      - name: Commit fix and remove one-shot files
+        run: |
+          rm .github/workflows/one-shot-fix-tmua-overview-fallback.yml
+          rm scripts/one-shot-fix-tmua-overview-fallback.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Make TMUA score and rank resilient"
+          git push origin HEAD:main
