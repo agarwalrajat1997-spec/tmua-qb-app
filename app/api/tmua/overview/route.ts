@@ -302,6 +302,69 @@ function preparationCountdown(
   };
 }
 
+function finiteOverviewNumber(value: unknown): number | null {
+  const result = Number(value);
+  return Number.isFinite(result) ? result : null;
+}
+
+function overviewInteger(value: unknown): number {
+  const result = Number(value);
+  return Number.isInteger(result) && result >= 0 ? result : 0;
+}
+
+function overviewFraction(value: unknown): number {
+  const result = finiteOverviewNumber(value);
+  return result === null ? 0 : Math.min(1, Math.max(0, result));
+}
+
+function predictorFromPreparationRank(preparationRank: any) {
+  const score = finiteOverviewNumber(preparationRank?.predictedTmuaScore9);
+  const hasEvidence =
+    preparationRank?.hasGenuinePreparationEvidence === true &&
+    score !== null;
+  const broadTestFamilies = overviewInteger(
+    preparationRank?.broadOrFullIndependentTestFamilies,
+  );
+  const recentTestFamilies = overviewInteger(
+    preparationRank?.independentRecognisedTestFamilies30d,
+  );
+
+  return {
+    modelVersion: `${String(
+      preparationRank?.modelVersion ?? "tmua-preparation-rank-v1-20260810",
+    )}-saved-overview`,
+    status: hasEvidence ? "predicted" : "insufficient_evidence",
+    score: hasEvidence ? score : null,
+    lowerBound: null,
+    upperBound: null,
+    confidence: null,
+    testEvidenceCount: broadTestFamilies,
+    independentTestCount: Math.max(
+      broadTestFamilies,
+      recentTestFamilies,
+    ),
+    qbUniqueQuestions: overviewInteger(
+      preparationRank?.trustedUniqueFirstExposures,
+    ),
+    qbTopicCoverage: overviewFraction(
+      preparationRank?.trustedCanonicalTopicCoverage,
+    ),
+    calculatedAt:
+      typeof preparationRank?.calculatedAt === "string"
+        ? preparationRank.calculatedAt
+        : new Date().toISOString(),
+  };
+}
+
+function useSavedTmuaOverview() {
+  // Production serves the bounded, already-computed current-user snapshot.
+  // Local and verification environments retain the full authoritative path.
+  return (
+    process.env.VERCEL === "1" &&
+    process.env.TMUA_OVERVIEW_FORCE_LIVE !== "1"
+  );
+}
+
 export async function GET(request: Request) {
   try {
     // Authentication uses the existing user session.
@@ -349,6 +412,25 @@ export async function GET(request: Request) {
     // Coalesced, leased maintenance runs after the response; never scan the
     // cohort while a student waits for their current-user predictor.
     requestPreparationRankRefresh(admin, "tmua");
+
+
+
+    if (useSavedTmuaOverview()) {
+      const preparationRank = await readPreparationRankSnapshot(
+        admin,
+        user.id,
+        "tmua",
+        user.email,
+      );
+
+      return json({
+        ok: true,
+        viewerId: user.id,
+        predictor: predictorFromPreparationRank(preparationRank),
+        preparationRank,
+        countdown: preparationCountdown(new Date()),
+      });
+    }
 
     const [
       conversionRows,
