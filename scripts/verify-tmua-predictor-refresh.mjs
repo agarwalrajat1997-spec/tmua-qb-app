@@ -18,6 +18,10 @@ const context = vm.createContext({
     if (id === "react/jsx-runtime") return require(id);
     if (id.endsWith(".module.css")) return {};
     if (id === "@/app/_components/ExamCountdown") return () => null;
+    if (id === "@/utils/supabase/browser") return { supabaseBrowser: () => ({
+      auth: { getSession: async () => ({ data: { session: null }, error: null }) },
+      rpc: async () => ({ data: null, error: { message: "fallback disabled in controller fixture" } }),
+    }) };
     throw new Error(`Unexpected component dependency: ${id}`);
   },
 });

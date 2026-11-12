@@ -7,6 +7,7 @@ import {
 } from "react";
 
 import ExamCountdown from "@/app/_components/ExamCountdown";
+import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./TmuaPredictionStrip.module.css";
 
 // Internal model identity. Visible student-facing label begins "You rank".
@@ -139,6 +140,87 @@ type OverviewResponse = {
 
   error?:
     string;
+};
+
+
+function isOverviewResponse(value: unknown): value is OverviewResponse {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+
+  const overview = value as OverviewResponse;
+  return (
+    overview.ok === true &&
+    typeof overview.viewerId === "string" &&
+    overview.viewerId.length > 0 &&
+    !!overview.predictor
+  );
+}
+
+async function fetchSavedTmuaOverview(): Promise<OverviewResponse | null> {
+  try {
+    const supabase = supabaseBrowser();
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.getSession();
+    const viewerId = sessionData.session?.user.id;
+
+    if (sessionError || !viewerId) {
+      return null;
+    }
+
+    const { data, error } =
+      await supabase.rpc("get_my_tmua_overview");
+
+    if (
+      error ||
+      !isOverviewResponse(data) ||
+      data.viewerId !== viewerId
+    ) {
+      return null;
+    }
+
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+const tmuaOverviewFetch: typeof fetch = async (input, init) => {
+  // Start the server endpoint so it can schedule rank maintenance, but render
+  // from the caller-bound RPC immediately. This avoids a blank strip when the
+  // Next.js session bridge or function runtime is temporarily unavailable.
+  const primary = fetch(input, init).catch(() => null);
+  const savedOverview = await fetchSavedTmuaOverview();
+
+  if (savedOverview) {
+    void primary;
+    return new Response(
+      JSON.stringify(savedOverview),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store",
+        },
+      },
+    );
+  }
+
+  const primaryResponse = await primary;
+  if (primaryResponse) {
+    return primaryResponse;
+  }
+
+  return new Response(
+    JSON.stringify({ ok: false, error: "TMUA overview unavailable" }),
+    {
+      status: 503,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+      },
+    },
+  );
 };
 
 function scoreText(
@@ -371,7 +453,7 @@ export default function TmuaPredictionStrip() {
   useEffect(
     () => {
       const controller = createTmuaOverviewRefresh({
-        fetcher: fetch,
+        fetcher: tmuaOverviewFetch,
         schedule: (callback, delay) => window.setTimeout(callback, delay),
         cancel: timer => window.clearTimeout(timer),
         now: Date.now,
@@ -399,7 +481,20 @@ export default function TmuaPredictionStrip() {
     !loaded ||
     !overview?.predictor
   ) {
-    return null;
+    return (
+      <section
+        className={styles.strip}
+        aria-label="TMUA preparation overview"
+        data-preparation-rank-model={PREPARATION_RANK_MODEL_NAME}
+      >
+        <div className={styles.copy}>
+          <span className={styles.label}>TMUA score and rank</span>
+          <strong className={styles.building}>
+            {!loaded ? "are loading…" : "are temporarily unavailable."}
+          </strong>
+        </div>
+      </section>
+    );
   }
 
   const predictor =
