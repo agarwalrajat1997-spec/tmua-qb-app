@@ -302,60 +302,6 @@ function preparationCountdown(
   };
 }
 
-function finiteOverviewNumber(value: unknown): number | null {
-  const result = Number(value);
-  return Number.isFinite(result) ? result : null;
-}
-
-function overviewInteger(value: unknown): number {
-  const result = Number(value);
-  return Number.isInteger(result) && result >= 0 ? result : 0;
-}
-
-function overviewFraction(value: unknown): number {
-  const result = finiteOverviewNumber(value);
-  return result === null ? 0 : Math.min(1, Math.max(0, result));
-}
-
-function predictorFromPreparationRank(preparationRank: any) {
-  const score = finiteOverviewNumber(preparationRank?.predictedTmuaScore9);
-  const hasEvidence =
-    preparationRank?.hasGenuinePreparationEvidence === true &&
-    score !== null;
-  const broadTestFamilies = overviewInteger(
-    preparationRank?.broadOrFullIndependentTestFamilies,
-  );
-  const recentTestFamilies = overviewInteger(
-    preparationRank?.independentRecognisedTestFamilies30d,
-  );
-
-  return {
-    modelVersion: `${String(
-      preparationRank?.modelVersion ?? "tmua-preparation-rank-v1-20260810",
-    )}-saved-overview`,
-    status: hasEvidence ? "predicted" : "insufficient_evidence",
-    score: hasEvidence ? score : null,
-    lowerBound: null,
-    upperBound: null,
-    confidence: null,
-    testEvidenceCount: broadTestFamilies,
-    independentTestCount: Math.max(
-      broadTestFamilies,
-      recentTestFamilies,
-    ),
-    qbUniqueQuestions: overviewInteger(
-      preparationRank?.trustedUniqueFirstExposures,
-    ),
-    qbTopicCoverage: overviewFraction(
-      preparationRank?.trustedCanonicalTopicCoverage,
-    ),
-    calculatedAt:
-      typeof preparationRank?.calculatedAt === "string"
-        ? preparationRank.calculatedAt
-        : new Date().toISOString(),
-  };
-}
-
 function useSavedTmuaOverview() {
   // Production serves the bounded, already-computed current-user snapshot.
   // Local and verification environments retain the full authoritative path.
@@ -404,33 +350,47 @@ export async function GET(request: Request) {
       return json({ ok: false, code: "ACCOUNT_CHANGED", error: "ACCOUNT_CHANGED" }, 409);
     }
 
-    // All authority-sensitive reads and snapshot insertion
-    // occur server-side using the service role.
-    const admin =
-      adminClient();
-
-    // Coalesced, leased maintenance runs after the response; never scan the
-    // cohort while a student waits for their current-user predictor.
-    requestPreparationRankRefresh(admin, "tmua");
-
-
-
     if (useSavedTmuaOverview()) {
-      const preparationRank = await readPreparationRankSnapshot(
-        admin,
-        user.id,
-        "tmua",
-        user.email,
-      );
+      let overview;
+      try {
+        // The RPC binds auth.uid() and checks access in the database. Reading
+        // the student's saved overview does not require a service-role key.
+        const { data, error } = await withServiceTimeout(
+          supabase.rpc("get_my_tmua_overview").retry(false),
+        );
+        if (
+          error || !data || typeof data !== "object" || Array.isArray(data) ||
+          data.ok !== true || data.viewerId !== user.id ||
+          !data.predictor || typeof data.predictor !== "object" ||
+          Array.isArray(data.predictor)
+        ) {
+          throw error ?? new Error("Invalid current-user TMUA overview");
+        }
+        overview = data;
+      } catch (error) {
+        console.error("TMUA saved overview unavailable", error);
+        return json({ ok: false, error: "TMUA overview temporarily unavailable" }, 503);
+      }
+
+      // Refresh remains coalesced and post-response. Missing maintenance
+      // credentials or scheduling failures must not hide a valid saved read.
+      try {
+        requestPreparationRankRefresh(adminClient(), "tmua");
+      } catch (error) {
+        console.error("TMUA ranking maintenance unavailable", error);
+      }
 
       return json({
-        ok: true,
-        viewerId: user.id,
-        predictor: predictorFromPreparationRank(preparationRank),
-        preparationRank,
+        ...overview,
         countdown: preparationCountdown(new Date()),
       });
     }
+
+    // Full authoritative calculation and snapshot insertion still require the
+    // service role; the saved-read path above never enters these table scans.
+    const admin =
+      adminClient();
+    requestPreparationRankRefresh(admin, "tmua");
 
     const [
       conversionRows,
