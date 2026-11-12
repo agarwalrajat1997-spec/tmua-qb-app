@@ -22,20 +22,29 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Fix CSS module mock for visible loading state
+      - name: Fix regression harness for the browser fallback
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
           path = Path("scripts/verify-tmua-predictor-refresh.mjs")
           source = path.read_text(encoding="utf-8")
-          old = '    if (id.endsWith(".module.css")) return {};'
-          new = '    if (id.endsWith(".module.css")) return { default: new Proxy({}, { get: (_target, key) => String(key) }) };'
-          if old not in source:
-              if new in source:
-                  raise SystemExit(0)
+
+          css_old = '    if (id.endsWith(".module.css")) return {};'
+          css_new = '    if (id.endsWith(".module.css")) return { default: new Proxy({}, { get: (_target, key) => String(key) }) };'
+          if css_old in source:
+              source = source.replace(css_old, css_new, 1)
+          elif css_new not in source:
               raise SystemExit("CSS module mock anchor not found")
-          path.write_text(source.replace(old, new, 1), encoding="utf-8")
+
+          settle_old = '  await h.respond(0);\n  assert.equal(win.listeners.size, 2);'
+          settle_new = '  await h.respond(0); await h.tick(0);\n  assert.equal(win.listeners.size, 2);'
+          if settle_old in source:
+              source = source.replace(settle_old, settle_new, 1)
+          elif settle_new not in source:
+              raise SystemExit("actual hook settlement anchor not found")
+
+          path.write_text(source, encoding="utf-8")
           PY
 
       - name: Install dependencies
