@@ -16,7 +16,7 @@ const context = vm.createContext({
   require(id) {
     if (id === "react") return { useEffect(fn) { effect = fn; }, useState(value) { return [value, next => stateWrites.push(next)]; }, useId: () => "qa-id" };
     if (id === "react/jsx-runtime") return require(id);
-    if (id.endsWith(".module.css")) return {};
+    if (id.endsWith(".module.css")) return { default: new Proxy({}, { get: (_target, key) => String(key) }) };
     if (id === "@/app/_components/ExamCountdown") return () => null;
     if (id === "@/utils/supabase/browser") return { supabaseBrowser: () => ({
       auth: { getSession: async () => ({ data: { session: null }, error: null }) },
@@ -233,7 +233,7 @@ for (const status of [401, 403, 409]) {
   context.window = win; context.document = doc; context.fetch = h.fetcher;
   context.Date = { now: h.clock.now };
   module.exports.default(); const cleanup = effect();
-  await h.respond(0);
+  await h.respond(0); await h.tick(0);
   assert.equal(win.listeners.size, 2); assert.equal(doc.listeners.size, 1);
   win.dispatch("ts-tmua-attempt-saved", { viewerId: "viewer-a", submissionId: "actual-hook-save" });
   await h.tick(500); assert.equal(h.requests.length, 2, "Actual hook wires saved event into controller");
