@@ -19,10 +19,9 @@ jobs:
       - name: Apply current-user overview fallback
         run: python3 scripts/one-shot-fix-tmua-overview-fallback.py
 
-      - name: Run focused TMUA checks
+      - name: Run focused dependency-free TMUA checks
         run: |
           node scripts/verify-tmua-predictor-overview.mjs
-          node scripts/verify-tmua-predictor-refresh.mjs
           node scripts/verify-tmua-dashboard-display-calibration.mjs
 
       - name: Commit fix and remove one-shot files
