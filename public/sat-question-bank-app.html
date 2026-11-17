@@ -262,8 +262,11 @@
       .option.selected { padding: 10px; }
     }
   </style>
+  <link rel="stylesheet" href="/sat-question-bank-portal.css">
+  <script src="/sat-question-bank-catalog.js"></script>
 </head>
 <body>
+  <a class="portal-skip" href="#portalMain">Skip to topics</a>
   <header class="app-header">
     <div class="brand">
       <div class="brand-mark">TS</div>
@@ -272,14 +275,37 @@
     <div class="header-center"><strong>SAT Question Bank</strong><span id="headerCount">Loading questions…</span></div>
     <div class="header-actions">
       <button id="mobileFilterButton" class="icon-button mobile-filter-button" type="button">Filters</button>
-      <a class="header-link" href="/sat">SAT dashboard</a>
+      <a class="header-link" href="/sat" target="_top">SAT dashboard</a>
     </div>
   </header>
 
-  <div class="shell">
+  <p id="progressNotice" class="portal-progress-note hidden" role="status"></p>
+  <div id="portalHome" class="portal-shell hidden">
+    <aside class="portal-sidebar">
+      <span class="portal-eyebrow">Your learning space</span>
+      <nav class="portal-nav" aria-label="SAT portal">
+        <a href="#" aria-current="page">▤ Question bank<small>Build understanding by topic</small></a>
+        <a href="/sat?section=tests" target="_top">◷ Practice tests<small>Put your learning into practice</small></a>
+        <a href="/sat?section=resources" target="_top">↗ Resources<small>Revision and reference guides</small></a>
+      </nav>
+      <div class="portal-note"><strong>A little practice.<br>A lot of possibility.</strong><p>Choose a topic. Find your focus. Work through one question at a time.</p></div>
+    </aside>
+    <main id="portalMain" class="portal-main">
+      <div class="portal-coursebar"><span class="portal-eyebrow">Choose your section</span><div class="portal-subjects" role="group" aria-label="SAT section"><button type="button" data-paper="Math" aria-pressed="true">ƒ &nbsp; Math</button><button type="button" data-paper="Reading and Writing" aria-pressed="false">Aa &nbsp; Reading & Writing</button></div></div>
+      <section class="portal-hero"><div><span id="homeSubject" class="portal-eyebrow">DIGITAL SAT · MATH</span><h1>Question bank<span>.</span></h1><p>Start with a broad topic, narrow it down to a study category, and practise at your own pace.</p></div><div id="homeSymbol" class="portal-art" aria-hidden="true">ƒ</div></section>
+      <div class="portal-stats"><div><strong id="homeQuestionCount">0</strong><span>Questions available</span></div><div><strong id="homeTopicCount">4</strong><span>Core topics</span></div><div><strong id="homeAnsweredCount">0</strong><span>Answered</span></div></div>
+      <div class="portal-section-heading"><div><span class="portal-eyebrow">Start with a topic</span><h2 id="exploreHeading">Explore Math</h2></div><label class="portal-search" for="topicSearch">Search topics or subtopics<input id="topicSearch" type="search" placeholder="Try quadratics, ratios or circles"></label></div>
+      <div id="topicGrid" class="portal-grid"></div>
+      <nav id="homeTools" class="portal-tools" aria-label="Quick practice filters"></nav>
+      <footer class="portal-footer"><strong>THRIVING SCHOLARS</strong><span>Learn with purpose. Practise with confidence.</span></footer>
+    </main>
+  </div>
+
+  <div id="practiceShell" class="shell">
     <aside id="filters" class="filters" aria-label="Question filters">
+      <button id="browseTopics" class="secondary" type="button" style="margin-bottom:20px">← All topics</button>
       <h2>Build your practice</h2>
-      <p class="filters-intro">Choose a section, topic, difficulty, or progress state. Your answers and flags save automatically.</p>
+      <p class="filters-intro">Choose a topic, study category, difficulty, or progress state. Your answers and flags save automatically.</p>
 
       <div class="field">
         <label for="paperFilter">Section</label>
@@ -289,6 +315,7 @@
         <label for="topicFilter">Domain / topic</label>
         <select id="topicFilter"><option value="">All topics</option></select>
       </div>
+      <div class="field"><label for="categoryFilter">Study category</label><select id="categoryFilter"><option value="">All study categories</option></select></div>
       <div class="field">
         <label for="difficultyFilter">Difficulty</label>
         <select id="difficultyFilter"><option value="">All difficulties</option><option value="1">1 — Foundation</option><option value="2">2 — Developing</option><option value="3">3 — Medium</option><option value="4">4 — Hard</option><option value="5">5 — Very hard</option></select>
@@ -311,6 +338,15 @@
     </aside>
 
     <main class="workspace">
+      <section id="questionList" class="portal-list hidden" aria-labelledby="listHeading">
+        <nav id="listBreadcrumb" class="portal-breadcrumb" aria-label="Breadcrumb"></nav>
+        <div class="portal-list-heading"><div><span class="portal-eyebrow">Your focused practice</span><h1 id="listHeading">Question bank</h1></div></div>
+        <p id="listDescription" class="portal-list-description"></p>
+        <div class="portal-list-actions"><p id="listCount" role="status"></p><button id="startPractice" type="button" class="primary">Start practice →</button></div>
+        <div id="questionRows" class="portal-rows"></div>
+        <nav id="listPagination" class="portal-pagination" aria-label="Question pages"><button id="listPrevious" class="secondary" type="button">← Previous</button><span id="listPageLabel"></span><button id="listNext" class="secondary" type="button">Next →</button></nav>
+      </section>
+      <button id="backToList" class="practice-back hidden" type="button">← Back to question list</button>
       <section id="loading" class="loading" aria-live="polite">
         <div class="spinner"></div>
         <h1>Preparing your SAT Question Bank</h1>
@@ -405,7 +441,7 @@
 
     const $ = (id) => document.getElementById(id);
     const els = {
-      filters: $('filters'), paper: $('paperFilter'), topic: $('topicFilter'), difficulty: $('difficultyFilter'),
+      category: $('categoryFilter'), filters: $('filters'), paper: $('paperFilter'), topic: $('topicFilter'), difficulty: $('difficultyFilter'),
       status: $('statusFilter'), search: $('searchFilter'), flagged: $('flaggedFilter'), summary: $('filterSummary'),
       loading: $('loading'), loadingText: $('loadingText'), empty: $('emptyState'), workspace: $('questionWorkspace'),
       qNumber: $('questionNumber'), qLabel: $('questionLabel'), qid: $('questionQid'), timer: $('questionTimer'),
@@ -468,15 +504,125 @@
       return 'unanswered';
     }
 
+    const catalog = window.SATCatalog;
+    let view = 'home', homePaper = 'Math', listPage = 1;
+    const PAGE_SIZE = 20;
+    const topicInfo = id => catalog.catalogFor(els.paper.value, state.all).find(d => d.id === id);
+    function routeHash(values) { return '#' + new URLSearchParams(values).toString(); }
+    function filterRoute(extra = {}) {
+      return { view: 'list', paper: els.paper.value, topic: els.topic.value, category: els.category.value,
+        difficulty: els.difficulty.value, status: els.status.value, search: els.search.value,
+        flagged: els.flagged.checked ? '1' : '', page: String(listPage), ...extra };
+    }
+    function navigate(values) {
+      const hash = routeHash(values);
+      if (location.hash === hash) readRoute(); else location.hash = hash;
+    }
+    function updateRoute() { history.replaceState(null, '', routeHash(filterRoute({ view }))); }
+    function setView(next) {
+      stopTimer(true); ++state.requestToken;
+      view = next;
+      document.body.className = next + '-view';
+      $('portalHome').classList.toggle('hidden', next !== 'home');
+      $('practiceShell').classList.toggle('hidden', next === 'home');
+      $('questionList').classList.toggle('hidden', next !== 'list');
+      $('backToList').classList.toggle('hidden', next !== 'practice');
+      els.workspace.classList.add('hidden'); els.empty.classList.add('hidden'); els.reportButton.classList.add('hidden');
+      els.filters.classList.remove('open');
+    }
+    function updateCategories() {
+      const current = els.category.value;
+      const domain = topicInfo(els.topic.value);
+      const groups = domain ? Object.entries(domain.groups).filter(([id]) => state.all.some(q => (!els.paper.value || q.paper === els.paper.value) && q.domain === domain.id && q.category === id)) : [];
+      els.category.innerHTML = '<option value="">All study categories</option>' + groups.map(([id, title]) => `<option value="${escapeHtml(id)}">${escapeHtml(title)}</option>`).join('');
+      els.category.disabled = !domain;
+      if (groups.some(([id]) => id === current)) els.category.value = current;
+    }
+    function readRoute() {
+      if (!state.all.length) return;
+      const params = new URLSearchParams(location.hash.slice(1));
+      homePaper = params.get('paper') === 'Reading and Writing' ? 'Reading and Writing' : 'Math';
+      els.paper.value = params.get('paper') === '' ? '' : homePaper;
+      updateTopics(); els.topic.value = params.get('topic') || '';
+      updateCategories(); els.category.value = params.get('category') || '';
+      els.difficulty.value = params.get('difficulty') || ''; els.status.value = params.get('status') || '';
+      els.search.value = params.get('search') || ''; els.flagged.checked = params.get('flagged') === '1';
+      listPage = Math.max(1, Number(params.get('page')) || 1);
+      setView(['list', 'practice'].includes(params.get('view')) ? params.get('view') : 'home');
+      if (view === 'home') renderHome(); else applyFilters(params.get('qid'));
+    }
+    function renderHome() {
+      const questions = state.all.filter(q => q.paper === homePaper);
+      const search = $('topicSearch').value.trim().toLowerCase();
+      const domains = catalog.catalogFor(homePaper, questions);
+      $('homeSubject').textContent = homePaper === 'Math' ? 'DIGITAL SAT · MATH' : 'DIGITAL SAT · READING & WRITING';
+      $('exploreHeading').textContent = homePaper === 'Math' ? 'Explore Math' : 'Explore Reading & Writing';
+      $('homeSymbol').textContent = homePaper === 'Math' ? 'ƒ' : 'Aa';
+      $('topicSearch').placeholder = homePaper === 'Math' ? 'Try quadratics, ratios or circles' : 'Try evidence, transitions or punctuation';
+      $('homeQuestionCount').textContent = questions.length;
+      $('homeTopicCount').textContent = domains.filter(d => !d.supplementary && questions.some(q => q.domain === d.id)).length;
+      $('homeAnsweredCount').textContent = questions.filter(q => normalStatus(q.qid) !== 'unanswered').length;
+      $('headerCount').textContent = `${state.all.length} live questions`;
+      document.querySelectorAll('[data-paper]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.paper === homePaper)));
+      $('homeTools').innerHTML = `<a href="${routeHash({ view:'list', paper:homePaper })}">Browse all ${questions.length} questions →</a><a href="${routeHash({ view:'list', paper:homePaper, status:'unanswered' })}">Unanswered</a><a href="${routeHash({ view:'list', paper:homePaper, status:'incorrect' })}">Needs another try</a><a href="${routeHash({ view:'list', paper:homePaper, flagged:'1' })}">Flagged for review</a>`;
+      let shown = 0;
+      $('topicGrid').innerHTML = domains.map(domain => {
+        const rows = questions.filter(q => q.domain === domain.id);
+        if (!rows.length) return '';
+        const groups = Object.entries(domain.groups).map(([id, title]) => ({ id, title, count:rows.filter(q => q.category === id).length })).filter(g => g.count);
+        if (search && ![domain.title, domain.description, ...groups.map(g => g.title), ...rows.map(q => q.subtopic)].join(' ').toLowerCase().includes(search)) return '';
+        shown++;
+        const href = routeHash({ view:'list', paper:homePaper, topic:domain.id });
+        const answered = rows.filter(q => normalStatus(q.qid) !== 'unanswered').length;
+        return `<article class="portal-card"><a class="portal-card-link" href="${href}"><div class="portal-card-top"><span class="portal-code">${domain.code}</span><span>${rows.length} questions${domain.supplementary ? ' · Extra practice' : ''}</span></div><h3>${escapeHtml(domain.title)}</h3><p>${escapeHtml(domain.description)}</p><div class="portal-card-bottom"><span>${groups.length} study categories · ${answered} answered</span><strong>Open bank ↗</strong></div></a><details><summary>Browse study categories</summary><ul>${groups.map(g => `<li><a href="${routeHash({view:'list', paper:homePaper, topic:domain.id, category:g.id})}">${escapeHtml(g.title)}<span>${g.count} ↗</span></a></li>`).join('')}</ul></details></article>`;
+      }).join('');
+      if (!shown) $('topicGrid').innerHTML = '<div class="portal-empty"><h3>No matching topics</h3><p>Try a topic such as quadratics, evidence or punctuation.</p><button type="button" class="secondary" id="clearTopicSearch">Clear search</button></div>';
+      $('clearTopicSearch')?.addEventListener('click', () => { $('topicSearch').value = ''; renderHome(); $('topicSearch').focus(); });
+    }
+    function renderList() {
+      const domain = topicInfo(els.topic.value), group = domain?.groups[els.category.value];
+      const title = domain?.title || (els.paper.value ? `${els.paper.value} question bank` : 'All SAT questions');
+      $('listHeading').textContent = title;
+      $('listDescription').textContent = group || domain?.description || 'Choose a topic, study category, difficulty or progress filter to build your practice.';
+      $('listBreadcrumb').innerHTML = `<a href="${routeHash({paper:els.paper.value || homePaper})}">Question bank</a><span>/</span><span>${escapeHtml(title)}</span>${group ? `<span>/</span><span>${escapeHtml(group)}</span>` : ''}`;
+      const pages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+      listPage = Math.min(pages, Math.max(1, Math.floor(listPage)));
+      const start = (listPage - 1) * PAGE_SIZE, visible = state.filtered.slice(start, start + PAGE_SIZE);
+      $('listCount').textContent = state.filtered.length ? `${start + 1}–${Math.min(start + PAGE_SIZE, state.filtered.length)} of ${state.filtered.length} questions` : 'No matching questions';
+      $('startPractice').disabled = !state.filtered.length;
+      $('questionRows').innerHTML = visible.map((q, index) => {
+        const status = normalStatus(q.qid), statusLabel = {unanswered:'Unanswered', answered:'Answered', correct:'Correct', incorrect:'Needs another try'}[status];
+        const d = catalog.domains.find(item => item.id === q.domain);
+        return `<a class="portal-row" href="${routeHash(filterRoute({view:'practice', qid:q.qid}))}"><span class="portal-code">${start + index + 1}</span><span><strong>${escapeHtml(q.subtopic || d?.title || 'Additional practice')}</strong><small>${escapeHtml(q.qid)} · ${escapeHtml(d?.groups[q.category] || 'Additional practice')} · ${q.difficulty ? `Difficulty ${escapeHtml(q.difficulty)}` : 'Unrated'}</small></span><span class="portal-status">${progressFor(q.qid).flagged ? '★ ' : ''}${statusLabel} ↗</span></a>`;
+      }).join('') || '<div class="portal-empty"><h2>No questions match these filters</h2><p>Try another category or clear the difficulty, progress and search filters.</p><button id="clearListFilters" class="primary" type="button">Clear filters</button></div>';
+      $('clearListFilters')?.addEventListener('click', () => { els.difficulty.value=''; els.status.value=''; els.search.value=''; els.flagged.checked=false; els.category.value=''; listPage=1; applyFilters(); });
+      $('listPageLabel').textContent = `Page ${listPage} of ${pages}`;
+      $('listPrevious').disabled = listPage <= 1; $('listNext').disabled = listPage >= pages;
+      $('listPagination').classList.toggle('hidden', pages === 1);
+      updateRoute();
+    }
+    $('topicSearch').addEventListener('input', renderHome);
+    document.querySelectorAll('[data-paper]').forEach(button => button.addEventListener('click', () => { $('topicSearch').value=''; navigate({paper:button.dataset.paper}); }));
+    $('browseTopics').addEventListener('click', () => navigate({paper:els.paper.value || homePaper}));
+    $('backToList').addEventListener('click', () => navigate(filterRoute()));
+    $('startPractice').addEventListener('click', () => { const q = state.filtered.find(q => normalStatus(q.qid) === 'unanswered') || state.filtered[0]; if (q) navigate(filterRoute({view:'practice', qid:q.qid})); });
+    $('listPrevious').addEventListener('click', () => { listPage--; renderList(); $('questionList').scrollTop=0; });
+    $('listNext').addEventListener('click', () => { listPage++; renderList(); $('questionList').scrollTop=0; });
+    els.category.addEventListener('change', () => { listPage=1; applyFilters(); });
+    addEventListener('hashchange', readRoute);
+
+
     function updateTopics() {
       const current = els.topic.value;
       const paper = els.paper.value;
-      const topics = [...new Set(state.all.filter(q => !paper || q.paper === paper).map(q => q.topic).filter(Boolean))].sort();
-      els.topic.innerHTML = '<option value="">All topics</option>' + topics.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
-      if (topics.includes(current)) els.topic.value = current;
+      const topics = catalog.catalogFor(paper, state.all).filter(d => state.all.some(q => (!paper || q.paper === paper) && q.domain === d.id));
+      els.topic.innerHTML = '<option value="">All topics</option>' + topics.map(d => `<option value="${d.id}">${escapeHtml(d.title)}</option>`).join('');
+      if (topics.some(d => d.id === current)) els.topic.value = current;
+      updateCategories();
     }
 
     function applyFilters(preferredQid) {
+      stopTimer(true); ++state.requestToken;
       const paper = els.paper.value;
       const topic = els.topic.value;
       const difficulty = els.difficulty.value;
@@ -485,17 +631,20 @@
       const flaggedOnly = els.flagged.checked;
       state.filtered = state.all.filter((q) => {
         if (paper && q.paper !== paper) return false;
-        if (topic && q.topic !== topic) return false;
+        if (topic && q.domain !== topic) return false;
+        if (els.category.value && q.category !== els.category.value) return false;
         if (difficulty && String(q.difficulty) !== difficulty) return false;
         if (status && normalStatus(q.qid) !== status) return false;
         if (flaggedOnly && !progressFor(q.qid).flagged) return false;
-        if (search && ![q.qid, q.paper, q.topic, q.subtopic].join(' ').toLowerCase().includes(search)) return false;
+        if (search && ![q.qid, q.paper, q.topic, q.subtopic, topicInfo(q.domain)?.title, topicInfo(q.domain)?.groups[q.category]].join(' ').toLowerCase().includes(search)) return false;
         return true;
       });
 
       els.summary.innerHTML = `${state.filtered.length.toLocaleString()} questions<span>${state.all.length.toLocaleString()} in the complete bank</span>`;
       $('headerCount').textContent = `${state.all.length.toLocaleString()} live questions`;
 
+      if (view === 'list') { renderList(); return; }
+      updateRoute();
       if (!state.filtered.length) {
         stopTimer(true);
         els.loading.classList.add('hidden'); els.workspace.classList.add('hidden'); els.empty.classList.remove('hidden');
@@ -511,7 +660,7 @@
     }
 
     function resetFilters() {
-      els.paper.value = ''; updateTopics(); els.topic.value = ''; els.difficulty.value = '';
+      els.paper.value = ''; updateTopics(); els.topic.value = ''; updateCategories(); els.category.value=''; els.difficulty.value = ''; listPage=1;
       els.status.value = ''; els.search.value = ''; els.flagged.checked = false; state.currentIndex = 0; applyFilters();
     }
 
@@ -604,12 +753,14 @@
         if (!restore) alert('Choose an answer first.');
         return;
       }
+      const checkedQid = state.current.qid, checkedSelection = state.selected, token = state.requestToken;
       $('checkAnswer').disabled = true;
       try {
         const result = await api('/api/sat/qb/check', {
           method: 'POST', headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ qid: state.current.qid, selected: state.selected })
+          body: JSON.stringify({ qid: checkedQid, selected: checkedSelection })
         });
+        if (checkedQid !== state.current?.qid || checkedSelection !== state.selected || token !== state.requestToken || view !== 'practice') return;
         state.checked = result; const status = result.isCorrect ? 'correct' : 'incorrect';
         els.feedback.className = `feedback ${status}`;
         els.feedbackTitle.textContent = result.isCorrect ? 'Correct' : `Not quite — the correct answer is ${result.answer}`;
@@ -628,12 +779,15 @@
     }
 
     function renderQuestion(question) {
+      $('checkAnswer').disabled = false;
       state.current = question; state.eliminated = new Set();
       const p = progressFor(question.qid); state.selected = p.selected_answer || ''; state.checked = null;
       state.timerBase = Number(p.time_spent || 0); state.timerStartedAt = 0;
       els.prompt.innerHTML = safeHtml(question.prompt_html || '<p>Question text unavailable.</p>');
       renderAssets(question.page_assets); renderOptions(question);
-      els.chips.innerHTML = [question.paper, question.topic, question.subtopic].filter(Boolean).map(v => `<span class="chip">${escapeHtml(v)}</span>`).join('') + (question.difficulty ? `<span class="chip difficulty">Difficulty ${escapeHtml(question.difficulty)}</span>` : '');
+      const navigation = state.all.find(meta => meta.qid === question.qid);
+      const domain = navigation && topicInfo(navigation.domain);
+      els.chips.innerHTML = [question.paper, domain?.title || question.topic, question.subtopic].filter(Boolean).map(v => `<span class="chip">${escapeHtml(v)}</span>`).join('') + (question.difficulty ? `<span class="chip difficulty">Difficulty ${escapeHtml(question.difficulty)}</span>` : '');
       const activeNumber = state.currentIndex + 1;
       els.qNumber.textContent = activeNumber;
       els.qLabel.textContent = `Question ${activeNumber}`;
@@ -645,9 +799,12 @@
     }
 
     async function showQuestion(index) {
-      if (!state.filtered.length) return;
+      if (view !== 'practice' || !state.filtered.length) return;
       stopTimer(true); state.currentIndex = Math.max(0, Math.min(index, state.filtered.length - 1));
       const meta = state.filtered[state.currentIndex]; const token = ++state.requestToken;
+      state.current = null; state.selected = ''; state.checked = null; $('checkAnswer').disabled = true;
+      history.replaceState(null, '', routeHash(filterRoute({view:'practice', qid:meta.qid})));
+      $('backToList').textContent = '← ' + (topicInfo(els.topic.value)?.title || 'Question list');
       els.prompt.innerHTML = '<p>Loading question…</p>'; els.assets.innerHTML = ''; els.options.innerHTML = '';
       els.feedback.classList.add('hidden'); refreshPosition();
       try {
@@ -712,12 +869,12 @@
       try {
         const [listData, progressData] = await Promise.all([
           api('/api/sat/qb/list'),
-          api('/api/sat/qb/progress/load').catch((error) => { console.warn(error); return { progress: {} }; })
+          api('/api/sat/qb/progress/load').catch((error) => { console.warn(error); $('progressNotice').textContent='Saved progress could not be loaded. Refresh before continuing if you want to resume your previous answers.'; $('progressNotice').classList.remove('hidden'); return { progress: {} }; })
         ]);
-        state.all = Array.isArray(listData.questions) ? listData.questions : [];
+        state.all = Array.isArray(listData.questions) ? listData.questions.map(q => ({ ...q, ...catalog.classify(q) })) : [];
         state.progress = progressData.progress || {};
         if (!state.all.length) throw new Error('The SAT Question Bank is not published yet.');
-        updateTopics(); els.loading.classList.add('hidden'); applyFilters();
+        updateTopics(); els.loading.classList.add('hidden'); readRoute();
       } catch (error) {
         els.loadingText.textContent = error.message || 'Could not load the SAT Question Bank.';
         els.loading.querySelector('.spinner').classList.add('hidden');
@@ -725,12 +882,12 @@
     }
 
     [els.paper, els.difficulty, els.status, els.flagged].forEach((node) => node.addEventListener('change', () => {
-      if (node === els.paper) updateTopics(); applyFilters();
+      listPage=1; if (node === els.paper) { els.topic.value=''; updateTopics(); } applyFilters();
     }));
-    els.topic.addEventListener('change', () => applyFilters());
-    let searchTimer; els.search.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(() => applyFilters(), 180); });
+    els.topic.addEventListener('change', () => { listPage=1; els.category.value=''; updateCategories(); applyFilters(); });
+    let searchTimer; els.search.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(() => { listPage=1; applyFilters(); }, 180); });
     $('resetFilters').addEventListener('click', resetFilters); $('emptyReset').addEventListener('click', resetFilters);
-    $('randomQuestion').addEventListener('click', () => { if (state.filtered.length) showQuestion(Math.floor(Math.random() * state.filtered.length)); });
+    $('randomQuestion').addEventListener('click', () => { if (state.filtered.length) navigate(filterRoute({ view:'practice', qid:state.filtered[Math.floor(Math.random() * state.filtered.length)].qid })); });
     $('mobileFilterButton').addEventListener('click', () => els.filters.classList.toggle('open'));
     els.prev.addEventListener('click', () => showQuestion(state.currentIndex - 1)); els.next.addEventListener('click', () => showQuestion(state.currentIndex + 1));
     $('clearAnswer').addEventListener('click', () => { if (!state.current) return; state.selected = ''; state.checked = null; els.feedback.classList.add('hidden'); [...els.options.querySelectorAll('.option')].forEach(n => { n.classList.remove('selected','correct','incorrect'); n.querySelector('input').checked = false; }); saveProgress(state.current.qid, { selected_answer: null, status: null, time_spent: currentSeconds() }); refreshPosition(); });
@@ -742,7 +899,7 @@
     [els.reportOverlay, els.navigatorOverlay].forEach(overlay => overlay.addEventListener('click', (event) => { if (event.target === overlay) overlay.classList.add('hidden'); }));
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') { els.reportOverlay.classList.add('hidden'); els.navigatorOverlay.classList.add('hidden'); els.filters.classList.remove('open'); }
-      if (event.target.matches('input, textarea, select')) return;
+      if (view !== 'practice' || event.target.matches('input, textarea, select, button, a, summary') || !els.reportOverlay.classList.contains('hidden') || !els.navigatorOverlay.classList.contains('hidden')) return;
       if (event.key === 'ArrowLeft' && state.currentIndex > 0) showQuestion(state.currentIndex - 1);
       if (event.key === 'ArrowRight' && state.currentIndex < state.filtered.length - 1) showQuestion(state.currentIndex + 1);
       if (/^[1-4]$/.test(event.key) && state.current?.options?.[Number(event.key)-1]) selectAnswer(state.current.options[Number(event.key)-1].key);
@@ -753,3 +910,4 @@
   </script>
 </body>
 </html>
+

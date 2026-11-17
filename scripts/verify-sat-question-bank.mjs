@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import "./verify-sat-catalog.mjs";
 
 const root = process.cwd();
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
@@ -60,7 +61,7 @@ assert.doesNotMatch(
   "Currency values must not be interpreted as inline math delimiters"
 );
 assert.doesNotMatch(html, /EMAILJS_(PUBLIC_KEY|SERVICE_ID|TEMPLATE_ID)/);
-assert.match(pageRoute, /src="\/sat-question-bank-app\.html"/);
+assert.match(pageRoute, /redirect\("\/sat-question-bank-app\.html"\)/);
 assert.doesNotMatch(pageRoute, /src="\/sat-question-bank\/index\.html"/);
 assert.doesNotMatch(pageRoute, /src="\/sat-qb-app\/index\.html"/);
 assert.match(proxy, /prefix: "\/sat-question-bank-app\.html", product: "sat-question-bank"/);
@@ -120,3 +121,4 @@ assert.doesNotMatch(releasePowerShell, /\$LASTEXITCODE:/);
 console.log(
   "SAT Question Bank verifier passed: client, lowercase Supabase tables, secure reports, and guarded publication contract."
 );
+

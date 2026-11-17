@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { domains, classify, catalogFor } = require('../public/sat-question-bank-catalog.js');
+const check = (paper, topic, subtopic, domain, category, qid) => assert.deepEqual(classify({paper,topic,subtopic,qid}),{domain,category},subtopic);
+check('Math','General Algebra','Rational Equations','advanced-math','rational');
+check('Math','General Algebra','Ratios and Proportions','data-analysis','ratios');
+check('Math','Advanced Math','Nonlinear functions','advanced-math','functions');
+check('Math','Functions','Linear Functions','algebra','functions');
+check('Math','Geometry','Angle Bisectors and Vertical Angles','geometry','angles');
+check('Math','Geometry','Sectors and Arc Length','geometry','circles');
+check('Math','Graphing','Vertex Form','advanced-math','quadratics');
+check('Math','Graphing','Intersection of Graphs','advanced-math','nonlinear');
+check('Math','Advanced Algebra','System of Equations','advanced-math','nonlinear','sat-xlsx-000239');
+check('Math','Advanced Algebra','System of Equations','algebra','systems','sat-xlsx-000235');
+check('Reading and Writing','Grammar','Transition Words','expression','transitions');
+check('Reading and Writing','Information and Ideas','Cross-Text Connections','craft','connections');
+check('Reading and Writing','Reading','Supporting Evidence','information','evidence');
+check('Reading and Writing','Reading','Words in Context','craft','words');
+check('Reading and Writing','Grammar','Dangling Modifiers','conventions','modifiers');
+assert.equal(new Set(domains.map(d=>d.id)).size, domains.length);
+assert.equal(domains.filter(d=>d.paper==='Math' && !d.supplementary).length,4);
+assert.equal(domains.filter(d=>d.paper==='Reading and Writing').length,4);
+const unknown = {paper:'Math',...classify({paper:'Math',topic:'New published topic'})};
+assert.equal(unknown.domain,'other');
+assert.ok(catalogFor('Math',[unknown]).some(d=>d.id==='other'),'Unrecognised questions must remain browsable');
+console.log('SAT catalog verified: domain mapping, legacy-label regressions, and uncategorised fallback.');
+

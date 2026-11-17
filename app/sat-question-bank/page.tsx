@@ -1,16 +1,12 @@
-﻿export const metadata = {
+export const metadata = {
   title: "SAT Question Bank",
 };
 
+import { redirect } from "next/navigation";
+
 export default function SATQuestionBankPage() {
-  return (
-    <main style={{ margin: 0 }}>
-      <iframe
-        className="tsQbIframe"
-        src="/sat-question-bank-app.html"
-        style={{ width: "100%", height: "100vh", border: "0" }}
-        title="SAT Question Bank"
-      />
-    </main>
-  );
+  // Top-level navigation preserves topic/category links on refresh and sharing.
+  // Both routes retain their existing SAT access checks in proxy.ts.
+  redirect("/sat-question-bank-app.html");
 }
+
