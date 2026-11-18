@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
 import type { SourceQuestion } from "./question-reference";
+import { canonicalTmuaQuestionTaxonomy } from "../tmua-taxonomy.ts";
 
 export type ReleasedQuestion = SourceQuestion & {
   exam: "tmua"; paper: string; topic: string; subtopic: string; difficulty: number;
@@ -69,14 +70,15 @@ export function resolveQuestion(qid: string, version?: string | null) {
   return version ? byVersion.get(JSON.stringify([canonical, version])) : byCanonical.get(canonical);
 }
 export function questionMetadata(q: ReleasedQuestion) {
+  const taxonomy = canonicalTmuaQuestionTaxonomy({ ...q, qid: canonicalQid(q.qid) });
   return {
     exam: "tmua" as const, qid: canonicalQid(q.qid), bank_qid: canonicalQid(q.qid), audit_qid: canonicalQid(q.qid),
     display_order: Number(q.app_question_id), app_question_id: q.app_question_id,
     ...(guidesByVersion.has(q.content_version) ? { revised: true } : {}),
     legacy_ids: legacyIds.get(canonicalQid(q.qid)) ?? [],
-    paper: q.paper, topic: q.topic, subtopic: q.subtopic, difficulty: q.difficulty,
+    paper: q.paper, topic: taxonomy.topic, subtopic: taxonomy.subtopic, difficulty: q.difficulty,
     tags: q.tags ?? [], content_version: q.content_version, source_sha256: q.source_sha256,
-    skill_search: q.skill_search ?? "", audited: true, answer_verified: true,
+    skill_search: taxonomy.skill_search, taxonomy_version: taxonomy.taxonomy_version, audited: true, answer_verified: true,
   };
 }
 export const catalogue = main.map(questionMetadata).sort((a,b) =>

@@ -3186,6 +3186,12 @@ window.TS_QB_SYNC = window.TS_QB_COMPACT.start("tmua-question-bank", "ts_tmua_su
       filters[key] = Array.isArray(filters[key]) ? filters[key].slice()
         : Array.isArray(priorFilters[key]) ? priorFilters[key].slice() : [];
     }
+    // Retain saved topic selections after the taxonomy's chapter-10 rename.
+    // This runs before TS_CHAPTER_ORDER is initialised, so it is self-contained.
+    filters.topics = [...new Set(filters.topics.map(topic =>
+      String(topic).replace(/^\s*\d+[._\-):\s]+/, "").replaceAll("_", " ").trim().toLowerCase() === "miscellaneous"
+        ? "10_Number & Counting" : topic
+    ))];
     const statuses = ["all", "unseen", "attempted", "correct", "incorrect", "flagged"];
     filters.status = statuses.includes(filters.status) ? filters.status
       : statuses.includes(priorFilters.status) ? priorFilters.status : "all";
@@ -3376,7 +3382,7 @@ function uniqueSorted(arr) {
     "7_Calculus",
     "8_Logic",
     "9_Statistics & Probability",
-    "10_Miscellaneous",
+    "10_Number & Counting",
     "11_Proofs"
   ];
 
@@ -3396,7 +3402,7 @@ function uniqueSorted(arr) {
     if (lower.includes("calculus") || lower.includes("differentiation") || lower.includes("integration")) return 7;
     if (lower.includes("logic")) return 8;
     if (lower.includes("statistic") || lower.includes("probability")) return 9;
-    if (lower.includes("misc")) return 10;
+    if (lower.includes("misc") || /\bnumber\s*(?:&|and)\s*counting\b/.test(lower)) return 10;
     if (lower.includes("proof")) return 11;
 
     return 999;
