@@ -276,7 +276,7 @@ assert.equal((await (await post(checker, { qid: questionRow.qid, selected: 'B' }
 
 // Execute the real nested TMUA dashboard effect and render branches. An access
 // query failure must render the retry control, never the empty-products screen.
-async function dashboardScenario(failure, accessRows = []) {
+async function dashboardScenario(failure, accessRows = [], section = '') {
   let stateIndex = 0, effectIndex = 0;
   const states = [], effects = [], redirects = [];
   let nextFailure = failure;
@@ -306,12 +306,13 @@ async function dashboardScenario(failure, accessRows = []) {
     'next/navigation': { useRouter: () => ({ replace: value => redirects.push(value) }) },
     '@/utils/supabase/browser': { supabaseBrowser: () => dashboardDb },
     './dashboard.module.css': { default: {} }, './TmuaPredictionStrip': { default() {} },
+    './OneToOneSessions': { default: 'OneToOneSessions' },
     '../components/PastPaperPracticeLink': { default() {} },
     '../components/JanuaryAccessOffer': { default() {} },
     '../components/PracticeAttemptSettings': { default() {} },
     '../components/ServiceRetry': { default: RetryComponent }, '@/lib/auth/service-recovery': recovery,
     '@/lib/tmua/past-paper-settings': pastPaperSettings
-  }, { window: { location: { href: 'https://portal.test/dashboard' }, history: { replaceState() {} } } });
+  }, { window: { location: { href: 'https://portal.test/dashboard', search: section ? `?section=${section}` : '' }, history: { replaceState() {} } } });
   function render() { stateIndex = 0; effectIndex = 0; return component.default({ uiMark: 'test' }); }
   render(); effects[0]();
   for (let i = 0; i < 20; i++) await Promise.resolve();
@@ -324,9 +325,17 @@ async function dashboardScenario(failure, accessRows = []) {
     view = render();
     assert.notEqual(view.type, RetryComponent, 'Retry recovers when access service is available');
   }
+  if (section) { effects[1](); view = render(); }
   return JSON.stringify(view);
 }
 for (const failure of ['session-throws', 'session-error', 'access-error']) await dashboardScenario(failure);
 assert.match(await dashboardScenario(null), /No products enabled/, 'A successful empty entitlement response remains a genuine no-access state');
 assert.doesNotMatch(await dashboardScenario(null, [{ product: 'tmua-question-bank' }]), /No products enabled/);
+const privateClasses = await dashboardScenario(null, [{ product: 'tmua-question-bank' }], 'classes');
+assert.match(privateClasses, /OneToOneSessions/, 'TMUA students can open the 1:1 section without a group-class entitlement');
+assert.doesNotMatch(privateClasses, /tmua-classes\/index\.html/, '1:1 access must not grant access to the group schedule');
+const groupClasses = await dashboardScenario(null, [{ product: 'tmua-classes' }], 'classes');
+assert.match(groupClasses, /OneToOneSessions/, 'Group-class students also see the 1:1 section');
+assert.match(groupClasses, /tmua-classes\/index\.html/, 'Existing group-class access keeps the original schedule iframe');
 console.log('PASS: Owner-bound writes reject account changes without mutation; >1,000 progress rows retained; partial-save retry preserves event identity; transient outages return503 without table-fallback fanout; critical reads disable SDK retries and timeouts abort without retry.');
+
