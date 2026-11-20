@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import OneToOneSessions from './OneToOneSessions';
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/utils/supabase/browser";
 import styles from "./dashboard.module.css";
@@ -474,7 +475,7 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
     const section = new URLSearchParams(window.location.search).get("section");
     if (section === "resources") setActive("resources");
     else if (section === "bank" && hasBank) setActive("bank");
-    else if (section === "classes" && hasClasses) setActive("classes");
+    else if (section === "classes") setActive("classes");
     else if (hasPractice) setActive("practice");
     else if (hasBank) setActive("bank");
     else if (hasClasses) setActive("classes");
@@ -675,12 +676,9 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
             <li>
               <button
                 className={`${styles.navBtn} ${active === "classes" ? styles.navBtnOn : ""}`}
-                onClick={() => hasClasses && setActive("classes")}
+                onClick={() => setActive("classes")}
                 type="button"
-                aria-disabled={!hasClasses}
-                disabled={!hasClasses}
-                style={!hasClasses ? lockStyle : undefined}
-                title={!hasClasses ? "Locked: tmua-classes not enabled" : "Classes"}
+                title="Classes and 1:1 sessions"
               >
                 <span className={styles.step}>3</span>
                 <span className={styles.navLabel}>Classes</span>
@@ -1149,6 +1147,9 @@ export default function DashboardClient({ uiMark }: { uiMark: string }) {
             <>
               <div className={styles.h1}>Classes</div>
 
+              <OneToOneSessions />
+
+              {hasClasses ? <>
               <div className={styles.metaRow}>
                 <div className={styles.meta}>
                   <span className={styles.dot} /> TMUA Live Classes
@@ -1186,6 +1187,10 @@ src="/tmua-classes/index.html"
                   />
                 </div>
               </div>
+              </> : <div className={styles.card}>
+                <div className={styles.cardTitle}>TMUA Group Sessions</div>
+                <p className={styles.muted}>Group classes are not included in your current access.</p>
+              </div>}
             </>
           )}
         </main>
@@ -1359,6 +1364,7 @@ src="/tmua-classes/index.html"
     </div>
   );
 }
+
 
 
 
